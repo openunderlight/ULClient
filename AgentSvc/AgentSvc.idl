@@ -1,0 +1,20 @@
+// AgentSvc.idl : IDL source for AgentSvc.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (AgentSvc.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(160AA877-96CA-11D3-8230-0080C8586EC1),
+	version(1.0),
+	helpstring("AgentSvc 1.0 Type Library")
+]
+library AGENTSVCLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+};

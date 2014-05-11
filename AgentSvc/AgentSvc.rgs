@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{160AA878-96CA-11D3-8230-0080C8586EC1} = s 'AgentSvc'
+		'AgentSvc.EXE'
+		{
+			val AppID = s {160AA878-96CA-11D3-8230-0080C8586EC1}
+		}
+	}
+}
