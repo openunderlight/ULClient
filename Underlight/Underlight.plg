@@ -1,0 +1,697 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: MessageMaker - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\Brian\AppData\Local\Temp\RSP3F28.tmp" with contents
+[
+/nologo /G5 /Gr /ML /W3 /Zi /I "..\MPSDK\inc" /I "../Underlight" /I "../MessageMaker" /I "../AgentMessages" /I "..\AgentMessages" /I "..\AgentSvr" /I "..\Underlight" /I "..\DXSDK\SDK\inc" /I "..\RWSDK\inc" /D "WIN32" /D "_WINDOWS" /D "USE_INLINE" /Fp"Release/MessageMaker.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\Projects\messagemaker\AMsg_AgentInfo.cpp"
+"C:\Projects\messagemaker\AMsg_ControlAgent.cpp"
+"C:\Projects\messagemaker\AMsg_ControlAgentAck.cpp"
+"C:\Projects\messagemaker\AMsg_Login.cpp"
+"C:\Projects\messagemaker\AMsg_Loginack.cpp"
+"C:\Projects\messagemaker\AMsg_Logout.cpp"
+"C:\Projects\messagemaker\AMsg_PosessInfo.cpp"
+"C:\Projects\Underlight\cDDraw.cpp"
+"C:\Projects\messagemaker\GMsg_AgentLogin.cpp"
+"C:\Projects\messagemaker\GMsg_ChangeAvatar.cpp"
+"C:\Projects\messagemaker\GMsg_ChangeStat.cpp"
+"C:\Projects\messagemaker\GMsg_CreateItem.cpp"
+"C:\Projects\messagemaker\GMsg_DestroyItem.cpp"
+"C:\Projects\messagemaker\GMsg_DestroyRoomItem.cpp"
+"C:\Projects\messagemaker\GMsg_Error.cpp"
+"C:\Projects\messagemaker\GMsg_GetGoalHdrs.cpp"
+"C:\Projects\messagemaker\GMsg_GetItem.cpp"
+"C:\Projects\messagemaker\GMsg_GetItemDescription.cpp"
+"C:\Projects\messagemaker\GMsg_GetLevelPlayers.cpp"
+"C:\Projects\messagemaker\GMsg_GetPlayerName.cpp"
+"C:\Projects\messagemaker\GMsg_GetReportHdrs.cpp"
+"C:\Projects\messagemaker\GMsg_GiveItem.cpp"
+"C:\Projects\messagemaker\GMsg_GiveItemAck.cpp"
+"C:\Projects\messagemaker\GMsg_Goal.cpp"
+"C:\Projects\messagemaker\GMsg_GotoLevel.cpp"
+"C:\Projects\messagemaker\GMsg_GrantPPoint.cpp"
+"C:\Projects\messagemaker\GMsg_ItemDescription.cpp"
+"C:\Projects\messagemaker\GMsg_ItemDrop.cpp"
+"C:\Projects\messagemaker\GMsg_ItemPickup.cpp"
+"C:\Projects\messagemaker\GMsg_LevelPlayers.cpp"
+"C:\Projects\messagemaker\GMsg_LocateAvatar.cpp"
+"C:\Projects\messagemaker\GMsg_LocateAvatarAck.cpp"
+"C:\Projects\messagemaker\GMsg_LocateMaresAck.cpp"
+"C:\Projects\messagemaker\GMsg_LocateNewliesAck.cpp"
+"C:\Projects\messagemaker\GMsg_Login.cpp"
+"C:\Projects\messagemaker\GMsg_LoginAck.cpp"
+"C:\Projects\messagemaker\GMsg_Logout.cpp"
+"C:\Projects\messagemaker\GMsg_Ping.cpp"
+"C:\Projects\messagemaker\GMsg_PostGoal.cpp"
+"C:\Projects\messagemaker\GMsg_PostReport.cpp"
+"C:\Projects\messagemaker\GMsg_PPointAck.cpp"
+"C:\Projects\messagemaker\GMsg_PreLogin.cpp"
+"C:\Projects\messagemaker\GMsg_PreLoginAck.cpp"
+"C:\Projects\messagemaker\GMsg_PutItem.cpp"
+"C:\Projects\messagemaker\GMsg_RcvGoalbookHdr.cpp"
+"C:\Projects\messagemaker\GMsg_RcvGoalDetails.cpp"
+"C:\Projects\messagemaker\GMsg_RcvGoalHdr.cpp"
+"C:\Projects\messagemaker\GMsg_RcvGoalText.cpp"
+"C:\Projects\messagemaker\GMsg_RcvPlayerName.cpp"
+"C:\Projects\messagemaker\GMsg_RcvReportGoals.cpp"
+"C:\Projects\messagemaker\GMsg_RcvReportHdr.cpp"
+"C:\Projects\messagemaker\GMsg_RcvReportText.cpp"
+"C:\Projects\messagemaker\GMsg_SenseDreamersAck.cpp"
+"C:\Projects\messagemaker\GMsg_ServerDown.cpp"
+"C:\Projects\messagemaker\GMsg_SetAvatarDescription.cpp"
+"C:\Projects\messagemaker\GMsg_ShowItem.cpp"
+"C:\Projects\messagemaker\GMsg_SummonAvatar.cpp"
+"C:\Projects\messagemaker\GMsg_SummonAvatarAck.cpp"
+"C:\Projects\messagemaker\GMsg_TakeItem.cpp"
+"C:\Projects\messagemaker\GMsg_TakeItemAck.cpp"
+"C:\Projects\messagemaker\GMsg_UpdateItem.cpp"
+"C:\Projects\messagemaker\GMsg_UpdateStats.cpp"
+"C:\Projects\messagemaker\GMsg_UsePPoint.cpp"
+"C:\Projects\messagemaker\GMsg_ViewItem.cpp"
+"C:\Projects\messagemaker\LmArts.cpp"
+"C:\Projects\messagemaker\LmAvatar.cpp"
+"C:\Projects\messagemaker\LmBit32.cpp"
+"C:\Projects\messagemaker\LmItem.cpp"
+"C:\Projects\messagemaker\LmItemDefs.cpp"
+"C:\Projects\messagemaker\LmItemHdr.cpp"
+"C:\Projects\messagemaker\LmMesg.cpp"
+"C:\Projects\messagemaker\LmMesgBuf.cpp"
+"C:\Projects\messagemaker\LmMesgHdr.cpp"
+"C:\Projects\messagemaker\lmparty.cpp"
+"C:\Projects\messagemaker\LmPeerUpdate.cpp"
+"C:\Projects\messagemaker\LmPosition.cpp"
+"C:\Projects\messagemaker\LmStats.cpp"
+"C:\Projects\messagemaker\LNMD5.cpp"
+"C:\Projects\messagemaker\LyraMessage.cpp"
+"C:\Projects\messagemaker\md5.cpp"
+"C:\Projects\messagemaker\RenderView.cpp"
+"C:\Projects\messagemaker\RmRemotePlayer.cpp"
+"C:\Projects\messagemaker\RMsg_ChangeAvatar.cpp"
+"C:\Projects\messagemaker\RMsg_CupSummons.cpp"
+"C:\Projects\messagemaker\RMsg_EnterRoom.cpp"
+"C:\Projects\messagemaker\RMsg_Error.cpp"
+"C:\Projects\messagemaker\RMsg_GetAvatarDescription.cpp"
+"C:\Projects\messagemaker\RMsg_GotoRoom.cpp"
+"C:\Projects\messagemaker\RMsg_ItemDrop.cpp"
+"C:\Projects\messagemaker\RMsg_ItemHdrDrop.cpp"
+"C:\Projects\messagemaker\RMsg_ItemPickup.cpp"
+"C:\Projects\messagemaker\RMsg_JoinedParty.cpp"
+"C:\Projects\messagemaker\RMsg_LeaveRoom.cpp"
+"C:\Projects\messagemaker\RMsg_LoginAck.cpp"
+"C:\Projects\messagemaker\RMsg_Logout.cpp"
+"C:\Projects\messagemaker\RMsg_NewlyAwakened.cpp"
+"C:\Projects\messagemaker\RMsg_Party.cpp"
+"C:\Projects\messagemaker\RMsg_PartyInfo.cpp"
+"C:\Projects\messagemaker\RMsg_Ping.cpp"
+"C:\Projects\messagemaker\RMsg_PlayerMsg.cpp"
+"C:\Projects\messagemaker\RMsg_PlayerUpdate.cpp"
+"C:\Projects\messagemaker\RMsg_RcvAvatarDescription.cpp"
+"C:\Projects\messagemaker\RMsg_RoomLoginAck.cpp"
+"C:\Projects\messagemaker\RMsg_Speech.cpp"
+"C:\Projects\messagemaker\RMsg_Update.cpp"
+]
+Creating command line "cl.exe @C:\Users\Brian\AppData\Local\Temp\RSP3F28.tmp" 
+Creating temporary file "C:\Users\Brian\AppData\Local\Temp\RSP3F29.tmp" with contents
+[
+/nologo /out:"Release\MessageMaker.lib" 
+.\Release\AMsg_AgentInfo.obj
+.\Release\AMsg_ControlAgent.obj
+.\Release\AMsg_ControlAgentAck.obj
+.\Release\AMsg_Login.obj
+.\Release\AMsg_Loginack.obj
+.\Release\AMsg_Logout.obj
+.\Release\AMsg_PosessInfo.obj
+.\Release\cDDraw.obj
+.\Release\GMsg_AgentLogin.obj
+.\Release\GMsg_ChangeAvatar.obj
+.\Release\GMsg_ChangeStat.obj
+.\Release\GMsg_CreateItem.obj
+.\Release\GMsg_DestroyItem.obj
+.\Release\GMsg_DestroyRoomItem.obj
+.\Release\GMsg_Error.obj
+.\Release\GMsg_GetGoalHdrs.obj
+.\Release\GMsg_GetItem.obj
+.\Release\GMsg_GetItemDescription.obj
+.\Release\GMsg_GetLevelPlayers.obj
+.\Release\GMsg_GetPlayerName.obj
+.\Release\GMsg_GetReportHdrs.obj
+.\Release\GMsg_GiveItem.obj
+.\Release\GMsg_GiveItemAck.obj
+.\Release\GMsg_Goal.obj
+.\Release\GMsg_GotoLevel.obj
+.\Release\GMsg_GrantPPoint.obj
+.\Release\GMsg_ItemDescription.obj
+.\Release\GMsg_ItemDrop.obj
+.\Release\GMsg_ItemPickup.obj
+.\Release\GMsg_LevelPlayers.obj
+.\Release\GMsg_LocateAvatar.obj
+.\Release\GMsg_LocateAvatarAck.obj
+.\Release\GMsg_LocateMaresAck.obj
+.\Release\GMsg_LocateNewliesAck.obj
+.\Release\GMsg_Login.obj
+.\Release\GMsg_LoginAck.obj
+.\Release\GMsg_Logout.obj
+.\Release\GMsg_Ping.obj
+.\Release\GMsg_PostGoal.obj
+.\Release\GMsg_PostReport.obj
+.\Release\GMsg_PPointAck.obj
+.\Release\GMsg_PreLogin.obj
+.\Release\GMsg_PreLoginAck.obj
+.\Release\GMsg_PutItem.obj
+.\Release\GMsg_RcvGoalbookHdr.obj
+.\Release\GMsg_RcvGoalDetails.obj
+.\Release\GMsg_RcvGoalHdr.obj
+.\Release\GMsg_RcvGoalText.obj
+.\Release\GMsg_RcvPlayerName.obj
+.\Release\GMsg_RcvReportGoals.obj
+.\Release\GMsg_RcvReportHdr.obj
+.\Release\GMsg_RcvReportText.obj
+.\Release\GMsg_SenseDreamersAck.obj
+.\Release\GMsg_ServerDown.obj
+.\Release\GMsg_SetAvatarDescription.obj
+.\Release\GMsg_ShowItem.obj
+.\Release\GMsg_SummonAvatar.obj
+.\Release\GMsg_SummonAvatarAck.obj
+.\Release\GMsg_TakeItem.obj
+.\Release\GMsg_TakeItemAck.obj
+.\Release\GMsg_UpdateItem.obj
+.\Release\GMsg_UpdateStats.obj
+.\Release\GMsg_UsePPoint.obj
+.\Release\GMsg_ViewItem.obj
+.\Release\LmArts.obj
+.\Release\LmAvatar.obj
+.\Release\LmBit32.obj
+.\Release\LmItem.obj
+.\Release\LmItemDefs.obj
+.\Release\LmItemHdr.obj
+.\Release\LmMesg.obj
+.\Release\LmMesgBuf.obj
+.\Release\LmMesgHdr.obj
+.\Release\lmparty.obj
+.\Release\LmPeerUpdate.obj
+.\Release\LmPosition.obj
+.\Release\LmStats.obj
+.\Release\LNMD5.obj
+.\Release\LyraMessage.obj
+.\Release\md5.obj
+.\Release\RenderView.obj
+.\Release\RmRemotePlayer.obj
+.\Release\RMsg_ChangeAvatar.obj
+.\Release\RMsg_CupSummons.obj
+.\Release\RMsg_EnterRoom.obj
+.\Release\RMsg_Error.obj
+.\Release\RMsg_GetAvatarDescription.obj
+.\Release\RMsg_GotoRoom.obj
+.\Release\RMsg_ItemDrop.obj
+.\Release\RMsg_ItemHdrDrop.obj
+.\Release\RMsg_ItemPickup.obj
+.\Release\RMsg_JoinedParty.obj
+.\Release\RMsg_LeaveRoom.obj
+.\Release\RMsg_LoginAck.obj
+.\Release\RMsg_Logout.obj
+.\Release\RMsg_NewlyAwakened.obj
+.\Release\RMsg_Party.obj
+.\Release\RMsg_PartyInfo.obj
+.\Release\RMsg_Ping.obj
+.\Release\RMsg_PlayerMsg.obj
+.\Release\RMsg_PlayerUpdate.obj
+.\Release\RMsg_RcvAvatarDescription.obj
+.\Release\RMsg_RoomLoginAck.obj
+.\Release\RMsg_Speech.obj
+.\Release\RMsg_Update.obj
+]
+Creating command line "link.exe -lib @C:\Users\Brian\AppData\Local\Temp\RSP3F29.tmp"
+<h3>Output Window</h3>
+Compiling...
+AMsg_AgentInfo.cpp
+AMsg_ControlAgent.cpp
+AMsg_ControlAgentAck.cpp
+AMsg_Login.cpp
+AMsg_Loginack.cpp
+AMsg_Logout.cpp
+AMsg_PosessInfo.cpp
+cDDraw.cpp
+C:\Projects\Underlight\cDDraw.cpp(470) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+C:\Projects\Underlight\cDDraw.cpp(475) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+GMsg_AgentLogin.cpp
+GMsg_ChangeAvatar.cpp
+GMsg_ChangeStat.cpp
+GMsg_CreateItem.cpp
+GMsg_DestroyItem.cpp
+GMsg_DestroyRoomItem.cpp
+GMsg_Error.cpp
+GMsg_GetGoalHdrs.cpp
+GMsg_GetItem.cpp
+GMsg_GetItemDescription.cpp
+GMsg_GetLevelPlayers.cpp
+GMsg_GetPlayerName.cpp
+GMsg_GetReportHdrs.cpp
+GMsg_GiveItem.cpp
+GMsg_GiveItemAck.cpp
+GMsg_Goal.cpp
+GMsg_GotoLevel.cpp
+GMsg_GrantPPoint.cpp
+GMsg_ItemDescription.cpp
+GMsg_ItemDrop.cpp
+GMsg_ItemPickup.cpp
+GMsg_LevelPlayers.cpp
+GMsg_LocateAvatar.cpp
+GMsg_LocateAvatarAck.cpp
+GMsg_LocateMaresAck.cpp
+GMsg_LocateNewliesAck.cpp
+GMsg_Login.cpp
+GMsg_LoginAck.cpp
+GMsg_Logout.cpp
+GMsg_Ping.cpp
+GMsg_PostGoal.cpp
+GMsg_PostReport.cpp
+GMsg_PPointAck.cpp
+GMsg_PreLogin.cpp
+GMsg_PreLoginAck.cpp
+GMsg_PutItem.cpp
+GMsg_RcvGoalbookHdr.cpp
+GMsg_RcvGoalDetails.cpp
+GMsg_RcvGoalHdr.cpp
+GMsg_RcvGoalText.cpp
+GMsg_RcvPlayerName.cpp
+GMsg_RcvReportGoals.cpp
+GMsg_RcvReportHdr.cpp
+GMsg_RcvReportText.cpp
+GMsg_SenseDreamersAck.cpp
+GMsg_ServerDown.cpp
+GMsg_SetAvatarDescription.cpp
+GMsg_ShowItem.cpp
+GMsg_SummonAvatar.cpp
+GMsg_SummonAvatarAck.cpp
+GMsg_TakeItem.cpp
+GMsg_TakeItemAck.cpp
+GMsg_UpdateItem.cpp
+GMsg_UpdateStats.cpp
+GMsg_UsePPoint.cpp
+GMsg_ViewItem.cpp
+LmArts.cpp
+LmAvatar.cpp
+LmBit32.cpp
+LmItem.cpp
+LmItemDefs.cpp
+LmItemHdr.cpp
+C:\Projects\messagemaker\LmItemDefs.cpp(615) : warning C4700: local variable 'ward' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(619) : warning C4700: local variable 'missile' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(623) : warning C4700: local variable 'amulet' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(627) : warning C4700: local variable 'area_effect' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(631) : warning C4700: local variable 'essence' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(635) : warning C4700: local variable 'support' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(639) : warning C4700: local variable 'meta_essence' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(643) : warning C4700: local variable 'scroll' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(647) : warning C4700: local variable 'teleporter' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(651) : warning C4700: local variable 'train_support' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(655) : warning C4700: local variable 'gratitude' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(694) : warning C4700: local variable 'ward' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(698) : warning C4700: local variable 'missile' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(702) : warning C4700: local variable 'amulet' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(706) : warning C4700: local variable 'area_effect' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(710) : warning C4700: local variable 'essence' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(714) : warning C4700: local variable 'support' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(718) : warning C4700: local variable 'meta_essence' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(722) : warning C4700: local variable 'scroll' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(726) : warning C4700: local variable 'teleporter' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(730) : warning C4700: local variable 'train_support' used without having been initialized
+C:\Projects\messagemaker\LmItemDefs.cpp(734) : warning C4700: local variable 'gratitude' used without having been initialized
+LmMesg.cpp
+C:\Projects\messagemaker\LmMesg.cpp(68) : warning C4018: '<=' : signed/unsigned mismatch
+LmMesgBuf.cpp
+LmMesgHdr.cpp
+lmparty.cpp
+LmPeerUpdate.cpp
+LmPosition.cpp
+LmStats.cpp
+LNMD5.cpp
+LyraMessage.cpp
+md5.cpp
+RenderView.cpp
+RmRemotePlayer.cpp
+RMsg_ChangeAvatar.cpp
+RMsg_CupSummons.cpp
+RMsg_EnterRoom.cpp
+RMsg_Error.cpp
+RMsg_GetAvatarDescription.cpp
+RMsg_GotoRoom.cpp
+RMsg_ItemDrop.cpp
+RMsg_ItemHdrDrop.cpp
+RMsg_ItemPickup.cpp
+RMsg_JoinedParty.cpp
+RMsg_LeaveRoom.cpp
+RMsg_LoginAck.cpp
+RMsg_Logout.cpp
+RMsg_NewlyAwakened.cpp
+RMsg_Party.cpp
+RMsg_PartyInfo.cpp
+RMsg_Ping.cpp
+RMsg_PlayerMsg.cpp
+RMsg_PlayerUpdate.cpp
+RMsg_RcvAvatarDescription.cpp
+RMsg_RoomLoginAck.cpp
+RMsg_Speech.cpp
+RMsg_Update.cpp
+Creating library...
+<h3>
+--------------------Configuration: Underlight - Win32 Master--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo".\Master/Underlight.res" /d "NDEBUG" "C:\Projects\Underlight\Underlight.rc"" 
+Creating temporary file "C:\Users\Brian\AppData\Local\Temp\RSP809C.tmp" with contents
+[
+/nologo /G5 /Gr /MT /W3 /O1 /I "..\MessageMaker" /I "..\AgentMessages" /I "..\AgentSvr" /I "..\Underlight" /I "..\DXSDK\SDK\inc" /I "..\MPSDK\inc" /I "..\RWSDK\inc" /I "../Underlight" /I "../MessageMaker" /I "../AgentMessages" /D "NDEBUG" /D "UL_MASTER" /D "GAME_CLI" /D "WIN32" /D "_WINDOWS" /D "USE_INLINE" /D "ENGLISH" /Fr".\Master/" /Fp".\Master/Underlight.pch" /YX /Fo".\Master/" /Fd".\Master/" /FD /c 
+"C:\Projects\Underlight\BuildView.cpp"
+"C:\Projects\Underlight\cActor.cpp"
+"C:\Projects\Underlight\cActorList.cpp"
+"C:\Projects\Underlight\cAgentBox.cpp"
+"C:\Projects\Underlight\cAgentServer.cpp"
+"C:\Projects\Underlight\cAI.cpp"
+"C:\Projects\Underlight\cArts.cpp"
+"C:\Projects\Underlight\cBanner.cpp"
+"C:\Projects\Underlight\cBox.cpp"
+"C:\Projects\Underlight\cChat.cpp"
+"C:\Projects\Underlight\cControlPanel.cpp"
+"C:\Projects\Underlight\cDDraw.cpp"
+"C:\Projects\Underlight\cDetailGoal.cpp"
+"C:\Projects\Underlight\cDetailQuest.cpp"
+"C:\Projects\Underlight\cDSound.cpp"
+"C:\Projects\Underlight\cEffects.cpp"
+"C:\Projects\Underlight\cGameServer.cpp"
+"C:\Projects\Underlight\cGif.cpp"
+"C:\Projects\Underlight\cGoalBook.cpp"
+"C:\Projects\Underlight\cGoalPosting.cpp"
+"C:\Projects\Underlight\cGoalQuestProcs.cpp"
+"C:\Projects\Underlight\cItem.cpp"
+"C:\Projects\Underlight\cKeymap.cpp"
+"C:\Projects\Underlight\cLevel.cpp"
+"C:\Projects\Underlight\cList.cpp"
+"C:\Projects\Underlight\cMissile.cpp"
+"C:\Projects\Underlight\cNameTag.cpp"
+"C:\Projects\Underlight\cNeighbor.cpp"
+"C:\Projects\Underlight\cOrnament.cpp"
+"C:\Projects\Underlight\cOutput.cpp"
+"C:\Projects\Underlight\cPalettes.cpp"
+"C:\Projects\Underlight\cParty.cpp"
+"C:\Projects\Underlight\cPlayer.cpp"
+"C:\Projects\Underlight\cPostGoal.cpp"
+"C:\Projects\Underlight\cPostQuest.cpp"
+"C:\Projects\Underlight\cQuestBuilder.cpp"
+"C:\Projects\Underlight\cReadGoal.cpp"
+"C:\Projects\Underlight\cReadQuest.cpp"
+"C:\Projects\Underlight\cReadReport.cpp"
+"C:\Projects\Underlight\CreateFrame.cpp"
+"C:\Projects\Underlight\cReportGoal.cpp"
+"C:\Projects\Underlight\cReviewGoals.cpp"
+"C:\Projects\Underlight\cSending.cpp"
+"C:\Projects\Underlight\Debug.cpp"
+"C:\Projects\Underlight\Dialogs.cpp"
+"C:\Projects\Underlight\Interface.cpp"
+"C:\Projects\Underlight\Keyboard.cpp"
+"C:\Projects\Underlight\LanguageFilter.cpp"
+"C:\Projects\Underlight\LevelRoomNames.cpp"
+"C:\Projects\Underlight\LoginOptions.cpp"
+"C:\Projects\Underlight\Main.cpp"
+"C:\Projects\Underlight\Mouse.cpp"
+"C:\Projects\Underlight\Move.cpp"
+"C:\Projects\Underlight\Options.cpp"
+"C:\Projects\Underlight\RenderActor.cpp"
+"C:\Projects\Underlight\RenderView.cpp"
+"C:\Projects\Underlight\RLE.cpp"
+"C:\Projects\Underlight\Utils.cpp"
+]
+Creating command line "cl.exe @C:\Users\Brian\AppData\Local\Temp\RSP809C.tmp" 
+Creating temporary file "C:\Users\Brian\AppData\Local\Temp\RSP809D.tmp" with contents
+[
+/nologo /G5 /Gd /MT /W3 /O1 /I "..\MessageMaker" /I "..\AgentMessages" /I "..\AgentSvr" /I "..\Underlight" /I "..\DXSDK\SDK\inc" /I "..\MPSDK\inc" /I "..\RWSDK\inc" /I "../Underlight" /I "../MessageMaker" /I "../AgentMessages" /D "NDEBUG" /D "UL_MASTER" /D "GAME_CLI" /D "WIN32" /D "_WINDOWS" /D "USE_INLINE" /D "ENGLISH" /Fr".\Master/" /Fo".\Master/" /Fd".\Master/" /FD /c 
+"C:\Projects\Underlight\cBackgroundMusic.cpp"
+]
+Creating command line "cl.exe @C:\Users\Brian\AppData\Local\Temp\RSP809D.tmp" 
+Creating temporary file "C:\Users\Brian\AppData\Local\Temp\RSP809E.tmp" with contents
+[
+/nologo /G5 /Gd /MT /W3 /O1 /I "..\MessageMaker" /I "..\AgentMessages" /I "..\AgentSvr" /I "..\Underlight" /I "..\DXSDK\SDK\inc" /I "..\MPSDK\inc" /I "..\RWSDK\inc" /I "../Underlight" /I "../MessageMaker" /I "../AgentMessages" /D "NDEBUG" /D "UL_MASTER" /D "GAME_CLI" /D "WIN32" /D "_WINDOWS" /D "USE_INLINE" /D "ENGLISH" /Fr".\Master/" /Fp".\Master/Underlight.pch" /YX /Fo".\Master/" /Fd".\Master/" /FD /c 
+"C:\Projects\Underlight\Realm.cpp"
+"C:\Projects\Underlight\Secure.cpp"
+]
+Creating command line "cl.exe @C:\Users\Brian\AppData\Local\Temp\RSP809E.tmp" 
+Creating temporary file "C:\Users\Brian\AppData\Local\Temp\RSP809F.tmp" with contents
+[
+odbc32.lib odbccp32.lib ../MessageMaker/Release/MessageMaker.lib vorbisfile_static.lib ogg_static.lib vorbis_static.lib oldnames.lib kernel32.lib winspool.lib comdlg32.lib shell32.lib ole32.lib th32.lib oleaut32.lib uuid.lib wininet.lib lz32.lib winmm.lib wsock32.lib ddraw.lib dsound.lib dxguid.lib comctl32.lib user32.lib gdi32.lib advapi32.lib libcmtd.lib /nologo /subsystem:windows /incremental:no /pdb:".\Master/Underlight.pdb" /map:".\Master/Underlight.map" /debug /machine:I386 /nodefaultlib:"LIBCD" /nodefaultlib /out:"\lyra\dev\Underlight.exe" /MAPINFO:LINES 
+.\Master\BuildView.obj
+.\Master\cActor.obj
+.\Master\cActorList.obj
+.\Master\cAgentBox.obj
+.\Master\cAgentServer.obj
+.\Master\cAI.obj
+.\Master\cArts.obj
+.\Master\cBackgroundMusic.obj
+.\Master\cBanner.obj
+.\Master\cBox.obj
+.\Master\cChat.obj
+.\Master\cControlPanel.obj
+.\Master\cDDraw.obj
+.\Master\cDetailGoal.obj
+.\Master\cDetailQuest.obj
+.\Master\cDSound.obj
+.\Master\cEffects.obj
+.\Master\cGameServer.obj
+.\Master\cGif.obj
+.\Master\cGoalBook.obj
+.\Master\cGoalPosting.obj
+.\Master\cGoalQuestProcs.obj
+.\Master\cItem.obj
+.\Master\cKeymap.obj
+.\Master\cLevel.obj
+.\Master\cList.obj
+.\Master\cMissile.obj
+.\Master\cNameTag.obj
+.\Master\cNeighbor.obj
+.\Master\cOrnament.obj
+.\Master\cOutput.obj
+.\Master\cPalettes.obj
+.\Master\cParty.obj
+.\Master\cPlayer.obj
+.\Master\cPostGoal.obj
+.\Master\cPostQuest.obj
+.\Master\cQuestBuilder.obj
+.\Master\cReadGoal.obj
+.\Master\cReadQuest.obj
+.\Master\cReadReport.obj
+.\Master\CreateFrame.obj
+.\Master\cReportGoal.obj
+.\Master\cReviewGoals.obj
+.\Master\cSending.obj
+.\Master\Debug.obj
+.\Master\Dialogs.obj
+.\Master\Interface.obj
+.\Master\Keyboard.obj
+.\Master\LanguageFilter.obj
+.\Master\LevelRoomNames.obj
+.\Master\LoginOptions.obj
+.\Master\Main.obj
+.\Master\Mouse.obj
+.\Master\Move.obj
+.\Master\Options.obj
+.\Master\Realm.obj
+.\Master\RenderActor.obj
+.\Master\RenderView.obj
+.\Master\RLE.obj
+.\Master\Secure.obj
+.\Master\Utils.obj
+.\Master\Underlight.res
+]
+Creating command line "link.exe @C:\Users\Brian\AppData\Local\Temp\RSP809F.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+BuildView.cpp
+cActor.cpp
+cActorList.cpp
+cAgentBox.cpp
+cAgentServer.cpp
+cAI.cpp
+cArts.cpp
+C:\Projects\Underlight\cArts.cpp(972) : warning C4018: '==' : signed/unsigned mismatch
+C:\Projects\Underlight\cArts.cpp(1234) : warning C4018: '==' : signed/unsigned mismatch
+MKET - Game designer choice goes here when ready
+C:\Projects\Underlight\cArts.cpp(4376) : warning C4101: 'sphere' : unreferenced local variable
+C:\Projects\Underlight\cArts.cpp(4388) : warning C4101: 'temp_buffer' : unreferenced local variable
+C:\Projects\Underlight\cArts.cpp(7046) : warning C4018: '!=' : signed/unsigned mismatch
+C:\Projects\Underlight\cArts.cpp(7894) : warning C4018: '>=' : signed/unsigned mismatch
+cBanner.cpp
+cBox.cpp
+cChat.cpp
+cControlPanel.cpp
+cDDraw.cpp
+C:\Projects\Underlight\cDDraw.cpp(470) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+C:\Projects\Underlight\cDDraw.cpp(475) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+cDetailGoal.cpp
+cDetailQuest.cpp
+cDSound.cpp
+C:\Projects\Underlight\cDSound.cpp(341) : warning C4018: '!=' : signed/unsigned mismatch
+cEffects.cpp
+cGameServer.cpp
+C:\Projects\Underlight\cGameServer.cpp(2945) : warning C4244: '=' : conversion from '__int64' to 'unsigned int', possible loss of data
+cGif.cpp
+cGoalBook.cpp
+C:\Projects\Underlight\cGoalBook.cpp(229) : warning C4018: '==' : signed/unsigned mismatch
+cGoalPosting.cpp
+C:\Projects\Underlight\cGoalPosting.cpp(820) : warning C4018: '==' : signed/unsigned mismatch
+C:\Projects\Underlight\cGoalPosting.cpp(849) : warning C4018: '==' : signed/unsigned mismatch
+C:\Projects\Underlight\cGoalPosting.cpp(948) : warning C4018: '==' : signed/unsigned mismatch
+cGoalQuestProcs.cpp
+cItem.cpp
+C:\Projects\Underlight\cItem.cpp(1367) : warning C4018: '>' : signed/unsigned mismatch
+C:\Projects\Underlight\cItem.cpp(1401) : warning C4018: '>' : signed/unsigned mismatch
+cKeymap.cpp
+cLevel.cpp
+Room Decryption Code
+cList.cpp
+cMissile.cpp
+cNameTag.cpp
+cNeighbor.cpp
+C:\Projects\Underlight\cNeighbor.cpp(102) : warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+C:\Projects\Underlight\cNeighbor.cpp(102) : warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+C:\Projects\Underlight\cNeighbor.cpp(107) : warning C4244: '=' : conversion from 'short' to 'unsigned char', possible loss of data
+cOrnament.cpp
+cOutput.cpp
+cPalettes.cpp
+cParty.cpp
+cPlayer.cpp
+C:\Projects\Underlight\cPlayer.cpp(542) : warning C4018: '==' : signed/unsigned mismatch
+C:\Projects\Underlight\cPlayer.cpp(1207) : warning C4018: '!=' : signed/unsigned mismatch
+C:\Projects\Underlight\cPlayer.cpp(1237) : warning C4018: '!=' : signed/unsigned mismatch
+C:\Projects\Underlight\cPlayer.cpp(1461) : warning C4018: '!=' : signed/unsigned mismatch
+C:\Projects\Underlight\cPlayer.cpp(1470) : warning C4018: '!=' : signed/unsigned mismatch
+C:\Projects\Underlight\cPlayer.cpp(1647) : warning C4018: '==' : signed/unsigned mismatch
+C:\Projects\Underlight\cPlayer.cpp(1952) : warning C4244: 'initializing' : conversion from 'double' to 'unsigned int', possible loss of data
+C:\Projects\Underlight\cPlayer.cpp(2406) : warning C4018: '!=' : signed/unsigned mismatch
+cPostGoal.cpp
+cPostQuest.cpp
+cQuestBuilder.cpp
+C:\Projects\Underlight\cQuestBuilder.cpp(703) : warning C4018: '==' : signed/unsigned mismatch
+C:\Projects\Underlight\cQuestBuilder.cpp(727) : warning C4018: '==' : signed/unsigned mismatch
+cReadGoal.cpp
+C:\Projects\Underlight\cReadGoal.cpp(530) : warning C4018: '==' : signed/unsigned mismatch
+cReadQuest.cpp
+cReadReport.cpp
+CreateFrame.cpp
+C:\Projects\Underlight\CreateFrame.cpp(248) : warning C4018: '>' : signed/unsigned mismatch
+C:\Projects\Underlight\CreateFrame.cpp(287) : warning C4018: '>' : signed/unsigned mismatch
+C:\Projects\Underlight\CreateFrame.cpp(313) : warning C4018: '>' : signed/unsigned mismatch
+C:\Projects\Underlight\CreateFrame.cpp(319) : warning C4018: '>' : signed/unsigned mismatch
+C:\Projects\Underlight\CreateFrame.cpp(328) : warning C4018: '>' : signed/unsigned mismatch
+cReportGoal.cpp
+cReviewGoals.cpp
+C:\Projects\Underlight\cReviewGoals.cpp(473) : warning C4018: '==' : signed/unsigned mismatch
+cSending.cpp
+Debug.cpp
+Dialogs.cpp
+C:\Projects\Underlight\Dialogs.cpp(5186) : warning C4101: 'i' : unreferenced local variable
+C:\Projects\Underlight\Dialogs.cpp(5186) : warning C4101: 'j' : unreferenced local variable
+C:\Projects\Underlight\Dialogs.cpp(5186) : warning C4101: 'message_length' : unreferenced local variable
+Interface.cpp
+Keyboard.cpp
+LanguageFilter.cpp
+LevelRoomNames.cpp
+LoginOptions.cpp
+Main.cpp
+Mouse.cpp
+Move.cpp
+Options.cpp
+RenderActor.cpp
+C:\Projects\Underlight\cPalettes.h(8) : warning C4005: 'STRICT' : macro redefinition
+        C:\Program Files (x86)\Microsoft Visual Studio\VC98\INCLUDE\windef.h(15) : see previous definition of 'STRICT'
+RenderView.cpp
+C:\Projects\Underlight\cPalettes.h(8) : warning C4005: 'STRICT' : macro redefinition
+        C:\Program Files (x86)\Microsoft Visual Studio\VC98\INCLUDE\windef.h(15) : see previous definition of 'STRICT'
+C:\Projects\Underlight\RenderView.cpp(322) : warning C4018: '!=' : signed/unsigned mismatch
+RLE.cpp
+Utils.cpp
+Compiling...
+cBackgroundMusic.cpp
+Compiling...
+Realm.cpp
+Secure.cpp
+Linking...
+Creating temporary file "C:\Users\Brian\AppData\Local\Temp\RSPD1BC.tmp" with contents
+[
+/nologo /o".\Underlight.bsc" 
+.\Master\BuildView.sbr
+.\Master\cActor.sbr
+.\Master\cActorList.sbr
+.\Master\cAgentBox.sbr
+.\Master\cAgentServer.sbr
+.\Master\cAI.sbr
+.\Master\cArts.sbr
+.\Master\cBackgroundMusic.sbr
+.\Master\cBanner.sbr
+.\Master\cBox.sbr
+.\Master\cChat.sbr
+.\Master\cControlPanel.sbr
+.\Master\cDDraw.sbr
+.\Master\cDetailGoal.sbr
+.\Master\cDetailQuest.sbr
+.\Master\cDSound.sbr
+.\Master\cEffects.sbr
+.\Master\cGameServer.sbr
+.\Master\cGif.sbr
+.\Master\cGoalBook.sbr
+.\Master\cGoalPosting.sbr
+.\Master\cGoalQuestProcs.sbr
+.\Master\cItem.sbr
+.\Master\cKeymap.sbr
+.\Master\cLevel.sbr
+.\Master\cList.sbr
+.\Master\cMissile.sbr
+.\Master\cNameTag.sbr
+.\Master\cNeighbor.sbr
+.\Master\cOrnament.sbr
+.\Master\cOutput.sbr
+.\Master\cPalettes.sbr
+.\Master\cParty.sbr
+.\Master\cPlayer.sbr
+.\Master\cPostGoal.sbr
+.\Master\cPostQuest.sbr
+.\Master\cQuestBuilder.sbr
+.\Master\cReadGoal.sbr
+.\Master\cReadQuest.sbr
+.\Master\cReadReport.sbr
+.\Master\CreateFrame.sbr
+.\Master\cReportGoal.sbr
+.\Master\cReviewGoals.sbr
+.\Master\cSending.sbr
+.\Master\Debug.sbr
+.\Master\Dialogs.sbr
+.\Master\Interface.sbr
+.\Master\Keyboard.sbr
+.\Master\LanguageFilter.sbr
+.\Master\LevelRoomNames.sbr
+.\Master\LoginOptions.sbr
+.\Master\Main.sbr
+.\Master\Mouse.sbr
+.\Master\Move.sbr
+.\Master\Options.sbr
+.\Master\Realm.sbr
+.\Master\RenderActor.sbr
+.\Master\RenderView.sbr
+.\Master\RLE.sbr
+.\Master\Secure.sbr
+.\Master\Utils.sbr]
+Creating command line "bscmake.exe @C:\Users\Brian\AppData\Local\Temp\RSPD1BC.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+Underlight.exe - 0 error(s), 67 warning(s)
+</pre>
+</body>
+</html>

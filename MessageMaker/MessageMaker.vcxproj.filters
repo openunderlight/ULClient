@@ -1,0 +1,986 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{5a1699fd-5059-4fb4-af78-c2ed1431d3f8}</UniqueIdentifier>
+      <Extensions>h;i</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{5257cd71-9426-46e3-8ceb-4431d0c9fc55}</UniqueIdentifier>
+      <Extensions>cpp</Extensions>
+    </Filter>
+    <Filter Include="Inline">
+      <UniqueIdentifier>{5dd3a938-8a47-448f-b664-074b5a021ae4}</UniqueIdentifier>
+      <Extensions>*.i</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AMsg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AMsg_AgentInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AMsg_All.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AMsg_ControlAgent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AMsg_ControlAgentAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AMsg_Login.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AMsg_Loginack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AMsg_Logout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AMsg_PosessInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_AgentLogin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_All.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_ChangeAvatar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_ChangeStat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_CreateItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_DestroyItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_DestroyRoomItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_Error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_GetGoalHdrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_GetItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_GetItemDescription.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_GetLevelPlayers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_GetPlayerName.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_GetReportHdrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_GiveItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_GiveItemAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_Goal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_GotoLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_GrantPPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_ItemDescription.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_ItemDrop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_ItemPickup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_LevelPlayers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_LocateAvatar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_LocateAvatarAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_LocateMaresAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_LocateNewliesAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_Login.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_LoginAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_Logout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_Ping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_PostGoal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_PostReport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_PPointAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_PreLogin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_PreLoginAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_PutItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_RcvGoalbookHdr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_RcvGoalDetails.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_RcvGoalHdr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_RcvGoalText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_RcvPlayerName.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_RcvReportGoals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_RcvReportHdr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_RcvReportText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_SenseDreamersAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_ServerDown.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_SetAvatarDescription.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_ShowItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_SummonAvatar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_SummonAvatarAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_TakeItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_TakeItemAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_UpdateItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_UpdateStats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_UsePPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMsg_ViewItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmArts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmAvatar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmBit32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmItemDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmItemHdr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmItemNames.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmMesg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmMesgBuf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmMesgHdr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lmparty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmPeerUpdate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmPosition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmStats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LmXPTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LNMD5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LyraDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LyraMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="md5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="md5global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RmRemotePlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_All.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_ChangeAvatar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_CupSummons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_EnterRoom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_Error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_GetAvatarDescription.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_GotoRoom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_ItemDrop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_ItemHdrDrop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_ItemPickup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_JoinedParty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_LeaveRoom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_LoginAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_Logout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_NewlyAwakened.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_Party.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_PartyInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_Ping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_PlayerMsg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_PlayerUpdate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_RcvAvatarDescription.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_RoomLoginAck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_Speech.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_Update.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SMsg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="unix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AMsg_AgentInfo.i">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="AMsg_ControlAgent.i">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="AMsg_ControlAgentAck.i">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="amsg_login.i">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="amsg_loginack.i">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="amsg_logout.i">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="AMsg_PosessInfo.i">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="GMsg_AgentLogin.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_ChangeAvatar.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_ChangeStat.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_CreateItem.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_DestroyItem.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_DestroyRoomItem.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_Error.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_GetGoalHdrs.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_GetItem.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_GetItemDescription.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_GetLevelPlayers.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_GetPlayerName.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_GetReportHdrs.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_GiveItem.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_GiveItemAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_Goal.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_GotoLevel.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_GrantPPoint.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_ItemDescription.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_ItemDrop.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_ItemPickup.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_LevelPlayers.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_LocateAvatar.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_LocateAvatarAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_LocateMaresAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_LocateNewliesAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_Login.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_LoginAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_Logout.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_Ping.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_PostGoal.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_PostReport.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_PPointAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_PreLogin.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_PreLoginAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_PutItem.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_RcvGoalbookHdr.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_RcvGoalDetails.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_RcvGoalHdr.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_RcvGoalText.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_RcvPlayerName.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_RcvReportGoals.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_RcvReportHdr.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_RcvReportText.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_SenseDreamersAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_ServerDown.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_SetAvatarDescription.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_ShowItem.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_SummonAvatar.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_SummonAvatarAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_TakeItem.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_TakeItemAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_UpdateItem.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_UpdateStats.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_UsePPoint.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="GMsg_ViewItem.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmArts.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmAvatar.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmBit32.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmItem.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmItemDefs.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmItemHdr.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmMesg.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmMesgBuf.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmMesgHdr.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="lmparty.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmPeerUpdate.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmPosition.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="LmStats.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RmRemotePlayer.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_ChangeAvatar.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_CupSummons.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_EnterRoom.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_Error.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_GetAvatarDescription.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_GotoRoom.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_ItemDrop.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_ItemHdrDrop.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_ItemPickup.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_JoinedParty.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_LeaveRoom.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_LoginAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_Logout.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_NewlyAwakened.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_Party.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_PartyInfo.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_Ping.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_PlayerMsg.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_PlayerUpdate.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_RcvAvatarDescription.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_RoomLoginAck.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_Speech.i">
+      <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_Update.i">
+      <Filter>Inline</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AMsg_AgentInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AMsg_ControlAgent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AMsg_ControlAgentAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AMsg_Login.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AMsg_Loginack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AMsg_Logout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AMsg_PosessInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_AgentLogin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_ChangeAvatar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_ChangeStat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_CreateItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_DestroyItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_DestroyRoomItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_Error.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_GetGoalHdrs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_GetItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_GetItemDescription.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_GetLevelPlayers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_GetPlayerName.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_GetReportHdrs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_GiveItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_GiveItemAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_Goal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_GotoLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_GrantPPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_ItemDescription.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_ItemDrop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_ItemPickup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_LevelPlayers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_LocateAvatar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_LocateAvatarAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_LocateMaresAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_LocateNewliesAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_Login.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_LoginAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_Logout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_Ping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_PostGoal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_PostReport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_PPointAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_PreLogin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_PreLoginAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_PutItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_RcvGoalbookHdr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_RcvGoalDetails.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_RcvGoalHdr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_RcvGoalText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_RcvPlayerName.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_RcvReportGoals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_RcvReportHdr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_RcvReportText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_SenseDreamersAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_ServerDown.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_SetAvatarDescription.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_ShowItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_SummonAvatar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_SummonAvatarAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_TakeItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_TakeItemAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_UpdateItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_UpdateStats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_UsePPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMsg_ViewItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmArts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmAvatar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmBit32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmItemDefs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmItemHdr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmMesg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmMesgBuf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmMesgHdr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lmparty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmPeerUpdate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmPosition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LmStats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LNMD5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LyraMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="md5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RmRemotePlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_ChangeAvatar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_CupSummons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_EnterRoom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_Error.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_GetAvatarDescription.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_GotoRoom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_ItemDrop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_ItemHdrDrop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_ItemPickup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_JoinedParty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_LeaveRoom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_LoginAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_Logout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_NewlyAwakened.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_Party.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_PartyInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_Ping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_PlayerMsg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_PlayerUpdate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_RcvAvatarDescription.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_RoomLoginAck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_Speech.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_Update.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

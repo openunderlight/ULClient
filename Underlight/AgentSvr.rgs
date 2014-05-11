@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{8D84B223-1A2D-11D2-B944-00A0249BD66E} = s 'AgentSvr'
+		'AgentSvr.EXE'
+		{
+			val AppID = s {8D84B223-1A2D-11D2-B944-00A0249BD66E}
+		}
+	}
+}

@@ -1,0 +1,1774 @@
+8/07/05 MDA: up protocol # for release.
+8/07/05 MDA: remove Chaotic Vortex, Misdirection, Kinesis, Tempest from PP list.
+8/06/05 MDA: add "Any Charges" checkbox to quest talisman creation screen
+             causes "Charges" textbox to be disabled, and causes item's charges
+             field to be set to 1.
+8/06/05 MDA: dont report the name of the room on Locate Mares or Locate Newlies even if
+             they're in the same plane. 
+             Reason:
+              The PlayerDB doesn't update room locations as often as leveld, and thus
+              you can get false reporting if you output the room.
+              This is also why "Locate All" doesn't contain any room information.
+8/06/05 MDA: remove new arts from learnable list
+8/06/05 MDA: add new know strings
+8/06/05 MDA: update art checksums
+8/02/05 MDA: Sense Mares -> Sense Datoken (only locate PMares)
+8/02/05 MDA: update Sense Datoken cksum
+8/02/05 MDA: dont prompt for exit on empty PP pool; go straight to StartExit ()
+8/02/05 MDA: change PP multiplier for Push and flame arts so they show up in 
+             learnable PP list
+8/01/05 MDA: dont reflect misdirection
+8/01/05 MDA: pmare xp 8x -> 4x
+8/01/05 MDA: prompt user if they wish to exit when PP pool > 0 (only in non-PMare, non-GM builds)
+8/01/05 MDA: add new PMare strings
+8/01/05 MDA: add "exceptional cases" in TrainPPCost; flame arts = 41 (to learn), push = 37;
+             plat cost is unchanged.
+8/01/05 MDA: change some more occurences of stat to focus. 
+7/24/05 MDA: fix misdirection; target should always be misdirected as
+             long as they see evoker's front, be it front, front-right or
+             front-left.
+7/23/05 MDA: fix chaotic vortex so that you can't turn right. again.
+7/21/05 MDA: fixes to chaotic vortex.
+7/21/05 MDA: Add callback for ChaoticVortex; fix left turning.
+7/21/05 MDA: Reflect Misdirection and Kinesis
+7/21/05 MDA: Chaotic Vortex
+7/19/05 MDA: Modify cPlayer::Update to disallow strafing when
+             ACTOR_SPIN is set.
+7/19/05 MDA: Modify cPlayer::Update to disallow spinning right on
+             ACTOR_SPIN (by default, ACTOR_SPIN will spin you left)
+7/19/05 MDA: Add ACTOR_SPIN
+7/18/05 MDA: Fix misdirection
+7/18/05 MDA: Misdirection; move RMsg_PlayerMsg::TEMPEST to correct
+             place in enum.
+7/17/05 MDA: Misdirection; move RMsg_PlayerMsg::TEMPEST to correct place in enum.
+7/13/05 MDA: corrected know strings, added know string for L31 R17
+7/13/05 MDA: Poison drain changed to 4s
+7/12/05 MDA: Tempest fix; angle is sent as State2 (), and that is what 
+             should be passed to ApplyTempest ().
+7/12/05 MDA: QB: stat -> focus
+7/12/05 MDA: change poison drain from 1 every 15 sec to 1 every 7.5 sec
+7/12/05 MDA: kinesis
+7/07/05 MDA: tempest
+7/06/05 MDA: fix issue where reflected abjure had no result on the reflectee
+7/06/05 MDA: reflector is now informed of which arts he abjured off reflectee
+7/06/05 MDA: update sense mares checksum; other sense mares fixes.
+7/06/05 MDA: update drain essence checksum
+6/29/05 MDA: PMare sessions can be resumed within 48 hours.
+6/27/05 BMP: add Locate Mares art
+6/26/05 BMP: add 50 pps to newly created characters
+6/26/05 BMP: increase pp grant pool to 4/6
+6/25/05 BMP: increase protocol # for release
+6/25/05 BMP: pmare/darkmare xp increased to 8x
+6/24/05 BMP: fix room descrip for Starfall's Grand Forge in Threshold Pits
+6/24/05 BMP: add message to logout when the pp grant pool is not empty
+6/19/05 BMP: fix room name display on newly awakened
+6/19/05 BMP: change name of "drain nightmare" to "drain essence"
+6/19/05 BMP: fix sound propagation when sound effects disabled
+
+10/17/04 BMP: increase protocol # for release
+10/16/04 BMP: remove party break at logout (done by server)
+10/3/04 MDA: PMares have Shatter as DreamSoul art.
+9/26/04 MDA: Gamemasters can always expire goals.
+9/26/04 MDA: don't overlap hwnd_accept and hwnd_delete ifdef GAMEMASTER
+9/2?/04 MDA: update server dat files for new armory/forward armory in UoC; update know string 
+             (room 30 level 26)
+8/29/04 MDA: double DM XP
+8/29/04 MDA: add more blast protection to PMares and DMs. remove logging to blasts.out.
+8/29/04 MDA: add know string for UoC forward armory (room 21,level 26)
+8/24/04 MDA: client no longer crashes when 2 players are sphered. 
+8/23/04 MDA: server-side changes to accomodate train self changes
+8/23/04 MDA: server-side changes to accomodate PP changes
+8/23/04 MDA: rollback of various server files; fixes so server will compile.
+8/22/04 MDA: remove token restriction from trainself (level of the token's creator is irrelevant)
+8/22/04 MDA: teachers can only self-train to 1 plat level higher than their current train level.
+8/22/04 MDA: disallow 'fake emotes' begining with character M-0155
+7/21/04 MDA: GMs dont send whisper emote
+7/19/04 MDA: Always send an ACK to a Blast message so that the blaster doesn't get false negatives.
+7/19/04 MDA: Removed WHO list delay; replaced with a check in case RMsg::PLAYERMSG
+			 if msg is an art and I haven't received peer updates, ignore the art evoke upon me.
+7/19/04 MDA: Don't allow evokation prior to receiving peer updates.
+7/19/04 MDA: Display IDS_AWAIT_UPDATE_ART only once per room. Play a sound all other times.
+			 The logic isn't PERFECT, but it'll suffice.
+7/18/04 MDA: Remove item-use chatbox spam. Display message only once per session.
+7/18/04 MDA: Disallow the sending of art messages until peer updates are received.
+3/18/04 MDA: Fixed issue where client would crash if room-exit and ApplyAbjure
+	     occured simultaneously, thus creating a null neighbor.
+3/17/04 HJH: Fixxed issue where raw emote was not appearing in GM/Dev/
+			 Debug builds. (Appeared as blank line.)
+3/14/04 MDA: updated checksums for Imprison Nightmare, Drain Nightmare,
+	     Banish Nightmare, Cleanse Nightmare and Tehthu's Oblivion.
+3/10/04 BMP: optimized leveld to do immediate recalcs of local
+			groups when players change rooms, to minimize lag
+			time until udp arrives
+3/9/04 HJH: Modified to allow non-offensive arts and items to
+			be used while paralyzed.
+3/9/04 BMP: modify art evoke timing logic to artifically extend
+			evocation time to not allow arts to be finished and
+			cast until the room login is finished and real time
+			updates have been received (i thought this was a 
+			better solution than just not allowing evokes)
+3/9/04 BMP: modify neighbor logic to only display on control panel
+			once real time updates have been received
+3/8/04 BMP: double duration of paralyze
+3/7/04 BMP: change Abjure to divide skill by 4 instead of 2 when
+			determining chance to get extra effects knocked out
+3/4/04 BMP: fix recall problme with item drops
+3/02/04 BMP: up protocol number
+3/02/04 BMP: allow exit to be cancelled by any key or mouse click
+3/01/04 BMP: eliminate force restore feature
+2/29/04 BMP: add logic to disallow use of talismans within 500 ms 
+			 of another talisman use; current logic displays an 
+			 error message only once per session when this happens
+
+2/03/04 BMP: remove halos, crest/house patches from mare avatars
+2/03/04 BMP: change sacrifice message to include item name
+1/04/03 BMP: add background music guards in case sound is disabled
+12/19/03 BMP: fixes to Cup Summons, Healing Aura
+12/19/03 BMP: add room descrip
+12/17/03 BMP: fix show party bug
+12/16/03 BMP: add, SANCT and NEIGH flags to Heal Aura and change the 
+evoke time from 7 to 9complete with the new checksums so it can be used.
+changed to healing = 8 + (((skill/10)+1) * (rand()%3));
+12/16/03 BMP: increase protocol # for release
+12/16/03 BMP: fix tehthu typo, remove logging
+12/15/03 BMP: fix weird JP bug where the group leader loses a party member
+12/15/03 BMP: change GROUP_HUG to HEALING_AURA, change behavior to
+			  always & only affect the caster & the caster's party
+12/15/03 BMP: added 'Show Party' mappable button
+12/08/03 BMP: grat token = 5% of XP bonus
+12/03/03 BMP: fix manual URL
+12/03/03 BMP: add (another) network fix for party members
+12/02/03 BMP: add network fix for party members 
+12/1/03  BMP: remove mplayer email address
+11/30/03 BMP: removed gratitude token maturity period
+11/29/03 BMP: add more Know room descrips
+11/29/03 BMP: fix invisible blocker problems
+11/29/03 BMP: suppress footsteps for neighbors in other rooms
+11/29/03 BMP: added new level & server files
+11/26/03 BMP: change network protocol # in preparation for release
+11/10/03 BMP: fix problem with mares blowing up on VERIFY_XY macro
+11/02/03 BMP: fix remaining jp issues
+
+10/26/03 BMP: reworked networking again, added additional real time
+			  traffic, and removed all previous blocks to using 
+			  arts, items, or whatever on room entry
+10/16/03 BMP: reworked networking to prevent use of attack arts or 
+			  attack items before real time updates arrive
+10/12/03 BMP: don't actually free palettes in the palette manager, to avoid
+			  some odd crashes (will leak memory over time, but not a lot)
+10/08/03 BMP: fix =! bug in sphering
+10/06/03 BMP: join party fixes
+
+09/26/03 BMP: fixed problem with all quests being talisman quests
+09/22/03 BMP: fixed problem with "dead neighbors" when a party member
+			  leaves the room
+09/21/03 BMP: fixed problem of wrong login password
+09/01/03 BMP: remove potential for crash on null neighbor pointer
+				(for Abjure and a few other places)
+
+08/26/03 BMP: fix give locking up on reject-all by removing extra
+			  unneeded give status 
+08/26/03 BMP: fix pp granting restrictions  
+08/24/03 BMP: move sound triggers into real-time updates
+08/23/03 BMP: blocked ability to use non-sanctuary Arts 
+			  until real time updates are received (to make arts like
+			  using items or flames when entering a room)
+08/23/03 BMP: subtract outstanding pp grants from pool 
+			  when determining if player can initiate a new grant
+08/23/03 BMP: change pp, pp pool to signed short so if it goes negative it'll 
+			  produce an error rather than a ton of pp in the pool
+08/23/03 BMP: fixed server bug causing false inventory full from gives
+08/23/03 BMP: fixed problems with incorrect entry sound, inability to target self
+			  with Arts
+08/23/03 BMP: add restore sound when evoked on self
+
+08/19/03 BMP: upgrade protocol # due to new login, real time 
+08/19/03 BMP: add real-time update ID to save space; add md5 checksum challenge/response login
+05/10/03 BMP: fixed checksums for new level files
+05/10/03 BMP: updated protocol version for release
+04/27/03 BMP: clarified subject, text of character password emails
+04/27/03 BMP: removal of Lifetime Account option from biling
+
+
+04/21/03 BMP: black halos are impossible, so multi halos were added 
+			  instead for NP Symbol
+04/21/03 BMP: fixed pmare Sense Newlies bug where stuff is at the end
+			  of the string
+04/12/03 MDA: temporary fix for forge bug
+04/12/03 MDA: move NP Symbol to show sphere
+04/12/03 MDA: updated string table to reflect change in PP reward pool (2 a day; 3 for teachers)
+04/12/03 MDA: when attempting to evoke an art using PP as a soulsphere, art will not evoke (unless it's soulevoke)
+04/12/03 MDA: set Demote PP multiplier to -1
+02/04/03 MDA: fixed bug where Train would succeed even with FOCUS arts
+01/27/03 MDA: remove Scan, Passlock, Healing Aura from learnable list; update checksums accordingly
+01/22/03 BMP: fixed "You can only use one art at a time\n" bug
+01/21/03 MDA: fixed checksums
+01/15/03 BMP: all requested Art tweaks (slips 1003-1009)
+01/15/03 BMP: Allow PP use/granting only by player & admin accounts
+				(no pmares, no agent mares)
+01/12/03 BMP: fix to focus selection for pp granting
+01/12/03 BMP: Don't allow use of PP before login
+01/12/03 BMP: The arts Passlock, Scan and Healing Aura removed from the evoke
+		      art once selector and the Train selector for PPs (Arts with 
+			  a value of -1 in the PP Multiplier column can't be used for PP's). 
+01/11/03 BMP: new NP symbols added to effects file; will show instead of Guild
+			  symbol for those with the NP_SYMBOL Art  
+01/11/03 BMP: change per-30 days PP grant to per-3 days 
+01/10/03 BMP: added PP multiplier column to Arts table, supporting logic
+01/10/03 BMP: allow PP use for learn/plat Forge only if they have DSM
+01/09/03 BMP: fixed bug in cost for stat increases via PP
+01/08/03 BMP: add support for NP symbol Art
+01/02/03 MDA: cant grant PPs to mares
+01/02/03 BMP: disallow PPs to be used as soulsphere
+01/01/03 BMP: allow PP to be used to evoke Arts as a soulsphere
+01/01/03 BMP: allow PPs to be granted as a soulsphere
+12/31/02 BMP: fix pp evokes so they don't drain stats
+12/31/02 BMP: added another fix for evoker level on PP evokes; should
+			  fix casting time, damange, and other issues
+12/31/02 BMP: added fix for evoker level on PP evokes; should fix lots of issues
+12/31/02 BMP: change Grant PP to "no stat" (->usable as ss now)
+12/31/02 BMP: fix bug when granter of a pp gets a pp (again)
+12/30/02 BMP: added fix to item creation arts can be used via PPs
+12/30/02 BMP: add methods to decrement reward pool on grant
+12/30/02 MDA: forged items with # of charges > limit don't degenerate upon succesful recharge
+12/29/92 MDA: changed dreamstrike emote
+12/29/02 BMP: fix NP Arts bug where wrong panel gets selected
+12/29/02 BMP: fix bug when granter of a pp gets a pp; 
+			  fix bug where reward pool doesn't decrement
+12/20/02 BMP: Art checksums disabled to facilitate NP Art development
+12/20/02 BMP: fix client crash on long quest post
+12/19/02 BMP: add timing calls to try to fix XP timing issues
+12/17/02 BMP: set checksums on new PP Arts
+12/16/02 BNP: disallow use of PPs before entering game
+12/16/02 BMP: change to use performance counter to see if it fixed 
+			  win98 timing problems
+12/16/02 BMP: check add to be sure Art is currently  evokable before allowing 
+			  PP based evoke
+12/16/02 BMP: tweaks to Launch Options screen
+12/13/02 BMP: added 15 new Nether Prophecy Arts!
+12/12/02 BMP: tweak PP dialog layouts, add graphics
+11/21/02-12/11/02 BMP: develop personality points system
+12/08/02 MDA: made PPoint Help dialog a bit more user friendly (see PPointHelpDlgProc in Dialogs.cpp)
+12/03/02 MDA: resized IDD_PPOINT_HELP and associated text labels to make text readable.
+12/03/02 MDA: resized Launch Options screen and text labels to make it readable.
+12/03/02 BMP: added $3.95 free pmare time for new signups
+12/02/02 BMP: launch options screen tweaked
+12/02/02 BMP: typo in IDS_BIND_TEXT fixed
+12/02/02 BMP: changed dreamstrike emote as requested
+12/02/02 BMP: added fix for "not in tune" spam when lagging
+12/01/02 MDA: const int NUM_KNOW_STRINGS = sizeof (know_strings) / sizeof (know_t);
+11/21/02 BMP: PP development
+11/19/02 BMP: Summon Prime fixed to destroy power tokens
+11/19/02 BMP: pmare default breed reimplemented (breed #4)
+11/19/02 BMP: Summon Prime modified to allow use of any power tokens
+
+11/17/02 BMP: allow Reward to be evoked as a soulsphere
+11/17/02 BMP: set CUP_SUMMONS_POWER_TOKENS = 1
+11/17/02 BMP: set SUMMON_PRIME_POWER_TOKENS = 10
+
+11/16/02 BMP: ppoint stuff
+11/15/02 BNP: fix 21+ token bug
+11/15/02 BMP: set SUMMON_PRIME_POWER_TOKENS = 1;
+11/14/02 BMP: added Quest to all dev accounts
+11/14/02 BMP: activated Quest requirement for training
+11/14/02 BMP: recall/doca collapse fix
+11/13/02 BMP: fix bequeath
+11/13/02 BMP: fix summon prime
+11/13/02 BMP: support for quest reports added (logged to security log
+			  just like bug & cheat reports)
+11/12/02 BMP: protocol version increased
+11/12/02 BMP: add db support for ppoint system
+	ALTER TABLE player ADD pps INT UNSIGNED DEFAULT 0 NOT NULL;
+	ALTER TABLE player ADD pp_pool INT UNSIGNED DEFAULT 0 NOT NULL;
+	CREATE TABLE pp_grant(
+	granter_id                     INT UNSIGNED            NOT NULL,
+	receiver_id                    INT UNSIGNED            NOT NULL,
+	grant_date                     DATE                    NOT NULL,
+	reason                         VARCHAR(255)               NULL
+	);
+	CREATE TABLE pp_used(
+	pp_id          INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	player_id                       INT UNSIGNED           NOT NULL,
+	date                            DATE                   NOT NULL,
+	cost                            INT UNSIGNED  DEFAULT 0    NOT NULL,
+	reason                          VARCHAR(255)              NULL
+	);
+	CREATE INDEX lookup_by_players on pp_grant (granter_id, receiver_id);
+	CREATE INDEX lookup_by_id ON pp_used (player_id);
+
+11/11/02 BMP: fix summon prime's duration
+10/24/02 BMP: remove space before "whispers" in whisper emote
+10/21/02 BMP: implemented Summon Prime (whew! that only took 5 days!)
+10/21/02 BMP: fixed bug crashing client with 21+ power tokens
+10/18/02 BMP: add dreamstrike emote upon death
+10/18/02 BMP: power token requirement lowered to 1 for House Arts
+10/17/02 BMP: fixed problem with avatar disappeaing from panel on rotation
+10/14/02 BMP: Creator level requirement removed from Sphere support tokens 
+			 (you can use anyone's support sphere tokens now for any level)
+10/14/02 BMP: allow value to be entered for bequeath (100-10000 XP)
+10/14/02 BMP: 30 day limit removed from GM Quest postings
+10/14/02 BMP: add multiple usernames combo box to login screen, 
+			  plus supporting logic
+10/7/02 BMP: add 95 compat mode message to login screen
+9/24/02 BMP: add support for Skotos royalty calculations
+			 ALTER TABLE accounts ADD last_time_online INT UNSIGNED DEFAULT 0 NOT NULL;
+
+9/24/02 BMP: add client & server fix to set gatekeeper extra damage to zero 
+			 for mares
+9/23/02 BMP: rework MPGP royalty reporting mechanism to fix bugs
+9/22/02 BMP: name change - lmavatar BitmapType to AvatarType
+9/18/02 BMP: add gamesite username support to billing system, login process				
+9/18/02 BMP: modified billing system to shortcut past billing/contact info
+			 for game partner sites
+			 ALTER TABLE accounts ADD game_service_username VARCHAR(20) NULL;
+9/16/02 BMP: pmare character creation modified to default to breed 1
+9/16/02 BMP: whisper emote message changed to  "A whispers something to B"
+9/16/02 BMP: > added before whisper emotes
+
+8/9/02 BMP: "no whispers in thresh" restriction really removed
+8/8/02 BMP: Locate Dreamer fixed to cancel if no target is entered
+8/8/02 BMP: server side fix for auto-recall problem in DOCA
+8/5/02 BMP: fix primes
+
+8/2/02 BMP: enable dev billing system for MP Game Pass integration testing
+8/2/02 BMP: fix know string to level 1, room 3
+7/31/02 BMP: more Room Know descrips added
+7/31/02 BMP: servers restarted with more holes in teleport checks for DOCA
+7/31/02 BMP: Room Know descrips added/updated
+7/31/02 BMP: update room descriptions
+7/31/02 BMP: fix pmare icon in installer
+7/31/02 BMP: updates to billing system
+7/30/02 BMP: auto recall implemented in DOCA
+
+7/29/02 BMP: upon collapsing in Dreamer's Cup Arena, recall to Pit of Shame
+7/29/02 BMP: don't allow use of any Arts in DOCA pit of shame
+7/29/02 BMP: fixed bug where using House Members imps Locate
+7/29/02 BMP: fixed FS/Ill training bug where art didn't stick
+			(though I don't really understand why its fixed, so please retest thoroughly!)
+7/29/02 BMP: 9 new Know descriptions added, plus one for the 
+		     'Know' chamber in training
+7/29/02 BMP: Cup Summons made usable only by Guardians
+7/29/02 BMP: change Threshhold to Threshold
+
+7/28/02 BMP: avatar script fixed to properly strip away the teacher and master 
+			teacher bits and run in dev; please report any problems 
+7/28/02 BMP: fixed Art stripping to stick after logout 
+7/28/02 BMP: FS/Ill Blade Arts made GM trainable only
+
+7/27/02 BMP: Warning message given on collapse if another collapse would lose a sphere
+7/27/02 BMP: Sphere XP bonus set to 5%
+7/27/02 BMP: modified Cup Summons to only work when evoker & target are in sanc
+7/27/02 BMP: change bothsmith mark background color to jade
+
+7/24/02 BMP: add level wide emote for Cup Summons alerts 
+7/24/02 BMP: modify master message files to include Cup Summons alerts
+7/24/02 BMP: add new message files for Cup Summons alerts
+7/24/02 BMP: add new message handlers c & s for Cup Summons alerts
+7/24/02 BMP: Power Token requirement added to Cup Summons
+7/24/02 BMP: Cup Summons made not usable on soulspheres
+7/24/02 BMP: Cup Summons made usable by Guardians only
+7/23/02 BMP: FS/Ill Blades set to 99 charges
+7/23/02 BMP: fix avatar display for dreamstrikers
+7/23/02 BMP: usability of Corrupt Essence fixed
+7/23/02 BMP: fix sphere crest displays (this time maybe for real)
+
+7/22/02 BMP: changed to allow dreamstrike for Orbit 10+
+7/22/02 BMP: removed Illuminate/FreeSoul Blade, House Members from Learnable list
+7/22/02 BMP: fixed typo in Chaos Purge text
+7/22/02 BMP: figured it what day it actually is today (dates below fixed)
+
+7/20/02 BMP: fix sphere colors on untraining of dreamstrike/dreamsmith/wordsmith
+7/20/02 BMP: fixed halo colors
+7/20/02 BMP: checksums updated to match new level files
+7/20/02 BMP: fixed FS/IL Blade Arts to not crash if head isn't present
+7/19/02 BMP: changed FS/IL Blade Arts to require a neighbor
+7/19/02 BMP: new string added for Create ID Token failure lacking prime
+7/19/02 BMP: add support for Multiplayer Game Pass service
+
+7/17/02 BMP: integrate new level, modify Cup Summons to send to the Cup Arena
+7/17/02 BMP: Illuminated Blade and Freesoul Blade implemented
+7/17/02 BMP: avatar fields for dreamstrike, dreamsmith, and wordsmith 
+			 set by server at login time
+7/17/02 BMP: added message when Chaos Purged
+7/16/02 BMP: modified 4 bit Teacher field in avatar to be a 1 bit on/off
+			 for the halo and a 3 bit field for the focus stat
+7/16/02 BMP: Corrupt Essence modified to not be a SM focus art
+7/16/02 BMP: GMs can whisper in Thresh, really!
+7/16/02 BMP: added a message for zero results on House Members. Please
+			 play with Locate Dreamer to see if you can get it to somehow
+			 display this message (they share the same code; I don't think
+			 it can happen but I'm not 100% sure)
+
+7/13/02 BMP: GMs can whisper in Thresh
+7/13/02 BMP: Know descrip for room 23, level 3 switched to room 12, level 3 
+7/13/02 BMP: necessity of Quest item commented out 
+7/13/02 BMP: fixed bug where right clicking on dream weapons returns
+			 "That's a Horron" (really!)
+7/13/02 BMP: added initial support for Freesoul Blade. Note there are no mechanisms
+			 for doing a Focus list or knowing the target's guild. Always
+			 picks a color based on the evoker's Focus. Only gives 254 charges
+			 because players are prohibited from creating infinite charge items.
+7/13/02 BMP: avatar immediately modified to display new colors upon learning
+			 Dreamstrike, WordSmith, or DreamSmith
+7/13/02 BMP: fixed display of Dreamstrike sphere
+7/13/02 BMP: created script to give Quest at level 1 to all Dreamers with Train;
+			 script run in dev universe, please check!
+7/13/02 BMP: fixed Chaos Purge (evokable by admin mares only)
+7/13/02 BMP: Add Corrupt Essence to Demotion strip list 
+7/12/02 BMP: add partial support for Multiplayer Game Pass subscribers
+
+7/9/02 BMP: applied a simple fix where the mare will turn to target 
+			whoever damaged it last. this probably isn't a perfect fix, 
+			so if it's easily defeated we can add in some random behavior
+			where it turns to attack its attacker some % of the time. 
+			or, make it a per-mare parameter.
+7/8/02 BMP: add game site descriptor and game site player ID to loginack and player class
+7/8/02 BMP: add game site descriptor and game site player ID support to server
+7/8/02 BMP: ALTER TABLE accounts ADD game_service CHAR(1) DEFAULT 'L' NOT NULL;
+			ALTER TABLE accounts ADD game_service_id INT UNSIGNED DEFAULT 0 NOT NULL;
+			ALTER TABLE accounts DROP option3;
+
+7/8/02 BMP: decreased amount of music buffering to attempt to smooth 
+			out the lag issue
+7/8/02 BMP: finished new Art House Members
+7/8/02 BMP: fixed a bug with agent respawning that dates back to the 
+			pre-release Underlight code (!!!); should now prevent		
+			more than a predefined number (2?) of agents in a room
+7/8/02 BMP: decreased amount of music buffering to attempt to 
+			smooth out lag issue
+7/7/02 BMP: rewrite music handling to use a separate thread to attempt 
+		   to avoid I/O lag interruptions in game play when music is read in 
+7/7/02 BMP: added names of those who have completed a quest to acceptee
+			list, marked with a *
+7/6/02 BMP: added basic support for new Art House Members
+
+6/20/02 BMP: exit emote removed
+6/20/02 BMP: red border added to sphere symbols of dreamstrikers 
+			(border is normally blue)
+6/10/02 BMP: make Chaos Purge GM only
+6/10/02 BMP: added 10% chance of a whisper causing a whisper emote to appear for 
+			 all nearby players except the whisperer and whisperee
+6/10/02 BMP: enlarged talk box slightly to allowing spacing out of controls a bit 
+6/10/02 BMP: eliminated ability to send whispers in Threshhold
+6/10/02 BMP: add new sphere colors for wordsmith mark & dream/wordsmith mark combo
+6/9/02 BMP: add support for WordSmith Mark to avatar classes
+6/9/02 BMP: implemented Cup Summons; GM usable only, like Summons; currently
+			sends players to the Unknown
+6/9/02 BMP: implemented Chaos Purge; usable by mares only, GM teachable only
+6/9/02 BMP: add basic support for new arts Chaos Purge, Wordsmith Mark, Cup Summons;
+6/9/02 BMP: added requirement for teacher to have an appropriate Quest
+			codex in their pack for the student/art when using Train
+6/9/02 BMP: the chat and macro box sizes have been changed to be identical 
+			(they were one pixel different before)
+6/9/02 BMP: newly awakened bug fixed 
+6/9/02 BMP: added automatic "avatar fading away" emote on game exit 
+6/8/02 BMP: modified settle_bills to deduct UNPAID bills from
+			cash_credit before charging to cc
+6/8/02 BMP: remove extra space from end of pmare password e-mail
+6/7/02 BMP: Tweaked layout of login screen and launch options
+
+5/12/02 BMP: dev billing system retail serial # mechanism modified to only work 
+			 for retail serial numbers
+5/12/02 BMP: ALTER TABLE serial_numbers ADD type ENUM("RETAIL", "SHAREWARE") DEFAULT "RETAIL" NOT NULL;
+
+5/09/02 BMP: fixed stray "debug" on end of Sense text
+5/09/02 BMP: fixed MB/SS issue of displaying evokee's name instead
+			 of evoker's on ack to caster when SS is active
+4/24/02 JF:  Added another new line if Add Scroll is selected to deal with problem in WinXP Home.
+4/24/02 BMP: modified Tehthu's Oblivion modified to use the following ID's:
+		The Dest = 7308307,	The Prot = 7308306, Serp Ven = 7308305, Dreamers blight= 425301 
+4/24/02 BMP: change music file extensions to .rlm; move to main
+			 directory; add 11 new tracks (01-22 now); modified loading
+			 logic so it will play the tracks that are there, even if
+			 some tracks are missing
+4/24/02 BMP: demote message appended with "All House arts that required 
+			 your previous rank have been removed."
+4/20/02 JF:  make category 63 in the missile weapon modifiers table 
+			 GM forge only, 0 damage, min to use=40 
+4/18/02 BMP: increase protocol # for release
+4/18/02 BMP: finish implementation of Tehthu's Oblivion
+4/18/02 BMP: make Tehthu's Oblivion usable only when the appropriate 
+			 elemental blade is in the dreamer's pack (by focus)
+4/18/02 BMP: make Tehthu's Oblivion usable only when Tehthu (acct #711)
+			 is nearby and in soulsphere form
+4/18/02 BMP: make Tehthu's Oblivion GM trainable only
+4/18/02 BMP: fixed bug in demotion that caused art stripping to not work
+4/18/02 BMP: set socket fd to SOCK_INVALID after close
+4/17/02 BMP: basic new Art support added for Tehthu's Oblivion 
+		     casting duration set to 5 seconds (there is no 7 
+			 seconds category; 10 is the next highest option) 
+4/17/02 BMP: PLAYER_REGENERATING default duration changed from category 23
+			 to category 9 (10 min to 30 sec)
+4/17/02 BMP: modified Empathy to grant 500 XP to the target (up from 250)
+4/17/02 BMP: modified Demote to strip house arts based on demotion level; 
+			 after demotion, arts are stripped according to lack of rank in any house:
+			no ruler rank strips knight, support_ascend, support_demote, demote, expel, create id token
+			no guardian rank strips initiate, ascend
+			no initiate rank strips Create Power Token, Bequeath, and all  8 House Arts		
+			(art strips are cumulative, so if you have no rank, you get stripped
+			 of the arts for having no ruler rank AND no guardian rank too)
+
+4/17/02 BMP: modified multiple effect item handling so that effects 
+			 can be used independently (a previous dev short timer
+			 screwed this up, but probably not the one you'd guess)
+4/17/02 BMP: fixed server bug that still granted xp for gratitude tokens
+			 even when the redemption failed
+4/17/02 BMP: offensive arts modified to stack at 1/2 duration (as defensive/misc arts)
+4/15/02 BMP: duration key #40 modified to 30-95 seconds (previously 
+			 keys #39 and #40 both were 30-90 seconds)
+4/15/02 BMP: modified client to destroy items with illegal bitmaps at startup;
+			 should fix some weird problems with items and inventory
+4/15/02 BMP: fixed bugs related to giving items - proper behavior is that
+			 you can not be giving more than one item at a time. this fix
+			 may also impact Combine and Gratitude Tokens, so please retest
+			 those arts as well. don't close this slip until all 3 arts
+			 (Give, Combine, Show Gratitude) are working OK
+4/15/02 BMP: added a 5 second delay on any voluntary exit for player builds; 
+		the delay does not occur for GM builds, debug builds, errors, 
+		disconnects, idle timeouts, or pmare timer timouts
+4/13/02 BMP: Added a 5 second delay between app switching
+		(or a DD error that would throw you out of the game) and actual  
+		disconnection from Underlight. Was able to still fire at and affect 
+		players after the Alt-Tab but before the disconnect. Note that desktop
+		 colors stay in "Ul mode" during the 5  second delay.
+4/12/02 BMP: Found bug in mission boards where if you refresh on the 
+			initial screen (where it says "hit refresh to verify there
+			are no new reports"), you won't be able to view details or 
+			reports for any missions. Attempted fix made - but please
+			test this carefully, under many scenarios, to ensure the fix
+			did not cause new problems!
+4/12/02 BMP: Modified reap time on vaults to 30 days
+
+4/10/02 BMP: Damage strings modified to eliminate "knocked" to avoid 
+			"%s has %s you!" problems (knocked was not present in the
+			converted string list and it's essentially impossible to add it now)
+4/10/02 BMP: Forge modified to allow player created do-nothing functions. 
+			Previously this was on the forbidden list for players - I assume 
+			this has changed and everyone is in agreement?
+4/10/02 BMP: Combine fixed so you can't combine an item with itself
+4/10/02 BMP: Peace Aura fixed to be evokable on anyone (grrrrr - this 
+			behavior has changed several times now!)
+4/10/02 BMP: fixed Newly Awakened so it displays "blah can't be located"
+			for newlies protected by Mind Blank
+4/9/02 BMP: modified "bind to local port" to add options to specify the
+			local TCP and UDP ports to use; added a "Use UDP Proxy" option
+		    to have have leveld real-time UDP updates
+			forwarded back through the game server, so the client will be
+			receiving UDP updates from the same IP addr/port that it is 
+			sending them to (hopefully this will allow it to work with more 
+			firewalls)
+4/8/02 BMP: disabled server closing mechanism; let's see if it's unnecessary
+2/13/02 BMP: add background music to Underlight 
+
+1/2/01 BMP: increase protocol # for release
+12/29/01 BMP: set mission boards and quest boards to auto refresh 
+			  summaries after posting a mission to work around 
+			  problem with show details
+12/29/01 BMP: fixed bug where poster could see house missions in
+			  the quest boards
+12/29/01 BMP: billing system displays an message telling them to mail 
+			  accounts@ when attempting to activate a pmare account
+12/29/01 BMP: fix bug preventing creation of pmare accounts in billing
+			  system
+12/29/01 BMP: fix bug causing "NIGHTMARE" to not be displayed for pmare
+			  accounts in billing system
+12/28/01 BMP: fix bug causing client crash when trying to complete a quest you just did a 'show details' on
+12/28/01 BMP: made unavailable message generic to QB and House boards
+12/28/01 BMP: fixed problem with goal text not appearing in goal book
+12/28/01 BMP: fixed player client requiring 16 bit in exclusive mode
+12/28/01 BMP: fixed client crash error when entering MB with 3+ neighbors
+12/27/01 BMP: fix grammar error in QB help
+12/26/01 BMP: newline added at end of Sense Dreamers message
+
+12/23/01 BMP: allow GM's to enter XP awards of > 4 digits
+12/23/01 BMP: fixed ability of GM's to expire goals
+12/23/01 BMP: newbie QB README codex added
+12/23/01 BMP: Dreamstrike only teachable by Elders
+12/23/01 BMP: Server side Arts table updated to set dreamstrike to 
+			  require orbit 10 (not 60) to teach
+12/23/01 MB: New soul essence graphic in new effects.rlm (12-23)
+12/22/01 BMP: planes 39, 41 added to dreamstrike forbidden list
+12/22/01 BMP: fixed problem with max_acceptees constraint not being enforced
+			  (this time for real)
+12/22/01 BMP: gamemasters bypass XP Pool for Quest builder
+12/22/01 BMP: pmares disallowed from using quest boards
+12/21/01 BMP: fixed problem with max_acceptees constraint not being enforced
+12/21/01 BMP: fixed problem with "Any Function" quests behavior
+12/21/01 BMP: fixed problem with dual error messages on incompleted quests
+12/21/01 BMP: enabled ability for dev builds to remove any
+			  quest (normally this is only enabled for non-dev
+			  GM builds)
+12/21/01 BMP: melee weapons now allowed to have effects 
+			  (free action, paralyze, etc.)
+12/20/01 BMP: increase protocol build #
+12/20/01 BMP: codex quests restricted to 0, 1 sphere dreamers
+				(but you can still see your own codex quests)
+12/20/01 BMP: add ability to create "Any Function" talisman quests
+12/20/01 BMP: require a talisman have SOME specification to be a 
+			  valid quest item
+12/20/01 BMP: fix Judgement grammar
+12/20/01 BMP: bug fixes to quest builder
+12/19/01 BMP: codex quest completion bug fixed
+12/18/01 BMP: move hard coded item names to separate file LmItemNames.h
+12/18/01 BMP: Forge & Quest Builder "none" item now called "Select Function"
+12/18/01 BMP: "Nothing" item added as an option for player forge & quest builder
+12/18/01 BMP: Quest builder & trips added to training area
+12/18/01 BMP: help screen added to Quest builder
+12/18/01 BMP: disconnect problem in Quest builder fixed
+12/18/01 BMP: minimum # of Quest acceptees increased to 5
+12/18/01 BMP: modify Quest builder to not destroy quest items
+12/17/01 BMP: alt-C coords switched to use signed integers
+12/17/01 BMP: House art durations modified as requested (k#722)
+12/17/01 BMP: extra tweaks to anti-lag hack system, so it should work now, and not 
+			  prevent players already in a room from using items when someone 
+			  enters. (the lock only applies for the 2 seconds following 
+			  a room change).
+12/17/01 BMP: anti-lag hack system modified to prevent only use of items or arts
+			  that create missile or melee attacks until real time updates 
+			  are received
+
+12/16/01 BMP: pmares can't attack when under Peace Aura
+12/16/01 BMP: characters prevented from using any items or mare attacks in
+			  the brief period after the first non-party neighbors first appear,
+			  but before any real-time (UDP) updates are received 
+12/16/01 BMP: fixed problem with Quest items being left in inventory
+12/15/01 BMP: added "Any" option for color Quest builder
+12/15/01 BMP: added "Any" option for talisman graphic in Quest builder
+12/15/01 BMP: modify Quest builder to only display codex keywords
+			  to the poster of the quest
+12/14/01 BMP: change to use DNS instead of IP addresses
+12/14/01 BMP: move hardcoded URLs/IPs to string table
+12/8/01 BMP: multiple fixed to Quest builder, including mechanism to
+			prevent a player from accepting the same quest twice
+
+CREATE TABLE finished_quest(
+ goal_id                         INT UNSIGNED               NOT NULL,
+ player_id                       INT UNSIGNED               NOT NULL
+);
+
+12/8/01 BMP: Peace Aura modified so it can be applied to mares
+			 (pmares or agent mares)
+12/8/01 BMP: add support for saving item flags & sorting at level logout 
+			 time, if anything has changed
+12/7/01 BMP: Mind Blink reply provided when the target is Soul Shielded
+12/7/01 BMP: Demotion modified to strip those House crests from avatars
+			 if character is demoted out of the House
+12/7/01 BMP: Quest Builder implemented and ready to test! Use Tab, Alt-F12 
+			 to access until Quest boards are ready
+10/31/01 BMP: fix who list ordering
+10/31/01 BMP: fixed 6x4 mission board alignment 
+10/31/01 BMP: add database support for mission builder
+
+ALTER TABLE player ADD quest_xp_pool INT UNSIGNED DEFAULT 0 NOT NULL;
+
+ALTER TABLE goal ADD graphic INT UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE goal ADD charges TINYINT UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE goal ADD color1 TINYINT UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE goal ADD color2 TINYINT UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE goal ADD item_type TINYINT UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE goal ADD field1 INT UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE goal ADD field2 INT UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE goal ADD field3 INT UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE goal ADD field4 INT UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE goal ADD quest_xp INT UNSIGNED DEFAULT 0 NOT NULL;
+ALTER TABLE goal ADD keywords VARCHAR(63) NOT NULL;
+
+10/26/01 BMP: add support for rest of Guild House targets
+10/23/01 BMP: fix problem with Shammie rendering
+10/23/01 BMP: fix minor bugs with Guild House
+10/22/01 BMP: summary boxes shrunk in hi-res to avoid looking incomplete
+10/22/01 BMP: order Who list alphabetically (untested - I need more computers!)
+10/21/01 BMP: add new art Corrupt Essence 
+10/21/01 BMP: modified billing system to record an entry in the free_trials
+			  table for *all* free trials, not just those on a CC
+10/21/01 BMP: modified billing system to not require a CC# entry for those
+			  who purchased the Underlight retail box
+10/21/01 BMP: modified billing system to send special message to retail box
+			  purchases 3 days before free trial expires
+10/21/01 BMP: bug fixed in billlng system that prevented warnings being sent
+			  to cash accounts with low balances 15 days before expiration
+10/21/01 BMP: billing ID now stored with serials numbers when used
+10/20/01 BMP: ALTER TABLE serial_numbers ADD billing_id INT UNSIGNED DEFAULT 0 NOT NULL;
+10/20/01 BMP: increase protocol # before release
+10/20/01 BMP: fix bug allowing right clicking on screen areas while blind
+10/20/01 BMP: fix bug allowing permanent effects (ex. Mindblank) 
+			  if they expire in mission boards
+10/19/01 BMP: add new graphic for moving between planes
+10/18/01 BMP: fix agent posession problem
+10/18/01 BMP: fix Shadow Step checksum
+10/18/01 BMP: Guildhouse problems fixed 
+			(can now train players, now works within levels)
+10/18/01 BMP: fix problem with display of item colors
+10/18/01 BMP: judgement strings fixed
+10/12/01 JF/BMP: fix ME problem with blades/effects disappearing
+10/12/01 BMP: add logic client-side to prevent skill increases that will 
+			  be rejected by the server
+10/11/01 BMP: add work-around for system timer problem 
+			 causing blade/effect weirdness on ME
+10/10/01 MB/BMP: add new credits screen, reformat button placement
+10/9/01 MB: add support for House belief line trips in Thresh
+10/8/01 BMP: add support to billing system for tracking 
+10/8/01 BMP: add new billing database table for tracking serial numbers
+	CREATE TABLE serial_numbers(
+	serial_number_id               INT8 UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	status						   ENUM("OPEN", "USED") DEFAULT "OPEN" NOT NULL,
+	tracking_code				   CHAR(8) DEFAULT "" NOT NULL,
+	billing_id					
+);
+
+10/8/01 BMP: add "%s has evoked %s on you" messages to new targetted House arts
+10/8/01 BMP: Break Covenant no longer works on UOC members
+10/8/01 MB: level edits
+-Added 'unused' room 28 to level 3, stopping the export from messing up the adj_rooms table.
+-Fixed KoES Essence Room reaping problem
+-Redirected KoES (level 24) exits to Main Entrance in room 14 to the proper 'Main Entrance' (room 30)
+-Redirected GotE (level 23) exit to Main entrance in room 26 to the proper 'Main Entrance' (room 32)
+-Fixed sky texture in room 14, level 15
+-Fixed sky texture in room 5, level 18
+-Removed OoSM's Hotel California feature
+-Fixed solid linedef bug in GotE Maze (room 26)
+-Removed +Dreamsoul sector effect
+-Removed +Will sector effect
+-Removed +Resilience sector effect
+-Removed +Lucidity sector effect
+-Removed +Insight sector effect
+-Removed Sanctuary effect from level 33, room 18; renamed to Precipice
+
+10/7/01 BMP: Peace Aura fixed to prevent making attacks or arts
+10/6/01 BMP/SH: move Art names to string table
+10/6/01 BMP: Guild House art implemented (but targets not ready yet)
+10/6/01 BMP: Power Token changed to work with any House prime
+10/6/01 BMP: fixed extra effects bug
+10/5/01 BMP: House Art Break Covenant implemented
+10/5/01 BMP: House Art Peace Aura implemented
+10/5/01 BMP: House Art Sable Shield implemented
+10/5/01 BMP: House Art Entrancement implemented
+10/5/01 BMP: fixed bug in pmare description loading code 
+10/4/01 BMP: House Art Shadow Step implemented
+10/4/01 BMP: House Art Dazzle implemented
+10/4/01 BMP: actor flags changed to 64 bits; please test to ensure
+			 player effects work properly!
+10/4/01 BMP: Poison Cloud duration changed to 1 minute + 1 minute/plat
+10/4/01 BMP: Radiant Blaze duration modified to 5 + 5/plat
+10/4/01 BMP: Dreamstrike costs 1 perm DS on failure
+10/3/01 BMP: cosmetic fixes to hi-res goal boards
+10/3/01 BMP/SH: many changes to move hardcoded strings out of code and
+			 into string table
+10/3/01 BMP: show details problem fixed in all resolutions
+10/3/01 BMP: larger blade graphics added for high res modes
+10/3/01 BMP: # of chat lines in 10x7 reduce by one to try to fix line cut off problem
+10/3/01 BMP: viewer mode support added back for non-UNICODE builds
+
+9/22/01 BMP: checksums fixed
+9/22/01 BMP: hard coding of name Empathy removed
+9/17/01 BMP: dreamstrike implemented as 75% chance of success, 
+			 with a permanent 5 dreamsoul cost. 
+9/17/01 BMP: dreamstrike level restrictions added
+9/17/01 BMP: talk boxes fixed, new control panel graphics
+9/17/01 BMP: sphere requirement set to 0 for CreateIDToken
+9/12/01 BMP: Radiant Blaze art added
+9/12/01 BMP: Poison Cloud art added
+9/12/01 BMP: Empathy changed to Bequeath
+9/11/01 BMP: auto-reject all accept/reject queries when exiting a room
+9/11/01 BMP: dreamstrike - min orbit 10, 5 sec evoke, not visible on learnable list
+9/11/01 BMP: new graphics added for high-res control panel
+9/11/01 BMP: Forge default changed to elemen
+9/11/01 BMP: Empathy art added
+9/11/01 BMP: Quest art added
+
+9/10/01 BMP: increase size of chat/control panel text in hi-res
+9/09/01 BMP: fix listview buttons to not scale up 
+			 size; position appropriately
+9/08/01 BMP: add overloaded version of ErrAndExit 
+			 to allow passing of a resource ID
+9/07/01 BMP: tweak placement of hi-res stats
+9/07/01 BMP: add larger stat fonts for hi-res
+9/07/01 BMP: height of evoke column fixed in hi-res
+9/07/01 BMP: shield problem fixed; this fix will also eliminate some problems 
+			 with item ordering being lost after logout
+9/07/01 BMP: fixes to sphere token system
+9/07/01 BMP: reset hi res blade positions more to the right
+
+9/06/01 BMP: fixed hi-res map rendering
+9/06/01 BMP: fixed crash bug in hires (yes!)
+
+9/03/01 BMP: fixed many problems with high res graphics
+9/03/01 BMP: provides proper message when using an unknown account
+9/02/01 BMP: added higher resolution options (800x600, 1024x768)
+9/02/01 BMP: add new login screen interface for selecting higher resolutions
+9/02/01 BMP: allows maps to use charges; fix spelling of Theshhold; 
+			 set # of charges in newbie maps to 10
+9/02/01 BMP: forge default set to talis for players, star for GMs
+
+8/25/01 BMP: message added to specify what effects where abjured 
+			 when invoked by another
+8/25/01 BMP: change default forge bitmap from ward to star
+8/25/01 BMP: client modified to always set teleport talisman to current coords;
+			 teleport items actually work now!
+
+8/24/01 BMP: server crash bug fixed (!!!) really! (!!!)
+8/24/01 BMP: ALTER TABLE accounts MODIFY creditcard VARCHAR(64) DEFAULT '' NULL;
+8/23/01 BMP: sphere level logic check disabled (may not be possible to implement)
+8/23/01 BMP: disable effects file checksum due to weird intermittent
+			 problem
+8/23/01 BMP: fix problem with mares attacking each other
+8/14/01 BMP: add checksum to effects file
+8/14/01 BMP: sphere level logic check added back in. So, if you want to ascend 
+			 to sphere X, you need to have your support tokens made by 
+			 someone of at least sphere X -1 (this is similar to the 
+			 self train token logic)
+8/14/01 BMP: no (voluntary) dropping of items while paralyzed
+8/13/01 BMP: fix sphere to not delete support train tokens
+8/13/01 BMP: billing system changed to not generate false positives on 
+			 chargebacks when db errors occur
+8/13/01 BMP: cash & pmare credit display added to billing/contact 
+			 info page, even when $0.00
+8/13/01 BMP: new script lookupcc.pl added for scanning for cc #'s
+			 in accounts, cc_chargeback, and cc_archive tables
+			 (handles all encryption/decryption internally)
+8/13/01 BMP: new script archivecc.pl takes a billing ID, adds the 
+			 credit card number to the cc_archive table (both one-way
+			 and two-way encrypted), and deletes it from the account table
+
+9/01/01 BMP: map spelling error fixed; new maps modified to have 10 charges;
+		map item definition modified to allow charges to change
+8/13/01 BMP: add new table for (encrypted) cc archives
+	CREATE TABLE cc_archive(
+	cc_archive_id                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	billing_id                     INT UNSIGNED DEFAULT 0 NOT NULL,
+	cryptcc_oneway                 VARCHAR(64) DEFAULT '' NULL,
+	cryptcc_twoway				   VARCHAR(128) DEFAULT '' NULL
+);
+8/13/01	BMP: biling system modified to store both one way- (in creditcard)
+		     and two way- (in cryptcc) encrypted cc numbers in the	
+			 accounts table
+8/7/01 BMP: ALTER TABLE player ADD x INT UNSIGNED DEFAULT 0 NOT NULL;
+			ALTER TABLE player ADD y INT UNSIGNED DEFAULT 0 NOT NULL;
+			ALTER TABLE player ADD last_level_id INT UNSIGNED DEFAULT 0 NOT NULL;
+8/7/01 BMP: added login option to restart at last location for Chinese builds only
+8/7/01 BMP: added x, y, level ID fields to login ack message
+8/7/01 BMP: increased protocol version number
+8/6/01 JMB: fixed hang on failed login
+
+8/5/01 BMP: limit pmare skills to level 1; no skill increases for pmares
+8/4/01 BMP: login screen layout modified; add button to link to billing system
+8/4/01 JMB: fixed failed login crash
+
+8/4/01 BMP: update checksums
+8/4/01 BMP: checksums no longer needed for game.lyr builds
+8/4/01 BMP: game.lyr builds bypass portal locks
+8/3/01 BMP: level, room names stored in separate TCHAR arrays, outside level file, 
+			to allow for conversion to multibyte languages (the level editor can only 
+			handle single byte languages)
+8/3/01 BMP: many changes made to allow use of Unicode
+8/3/01 BMP: agreement text updated
+8/3/01 BMP: ornaments are no longer pushable
+8/1/01 BMP:  checksum changes
+7/31/01 BMP: servers modified to leave player sockets open until it is 
+			 running out of open connections
+7/31/01 BMP: additional socket shutdown code added to try to fix connect problem
+7/29/01 BMP: added faq URL to welcome screen
+7/29/01 BMP: GM Invis account lock fixed; note that real_name must
+			 include "INVIS" to work!
+7/29/01 BMP: generated & forged chaks/blades work properly; need to run
+			 item db conversion & test legacy items
+7/29/01 BMP: auto set bitmap type for forged missile items
+7/29/01 BMP: fixed neighbor entry, head dropping problems
+7/29/01 BMP: avatars react to mass damage arts
+
+7/24/01 BMP: updated level file checksums
+7/24/01 BMP: fixed problem with garbage appended to MOTD
+7/24/01 BMP: fixed minor memory problems in client
+
+7/22/01 BMP: added code/messages to distinguish between true game full 
+			 conditions and server unavailability
+7/22/01 BMP: modified combat hit detection and screams to be propagated soley	
+		     through peer updates, and not TCP channels
+7/22/01 BMP: increased protocol version #
+7/22/01 BMP: restructured peer update package to give 5 bits to hit
+7/22/01 BMP: renumbered missile bitmaps in Visual Effects.ASC and 
+			 SharedConstants.h; now in range 40-43; 
+			 **requires new effects.rlm**
+7/22/01 BMP: fixed login server selection problem
+7/22/01 BMP: set checksum correctly for Show Gratitude
+7/22/01 BMP: fix art evoke invulnerability bug
+
+7/22/01 BMP: fix rejoin party bug
+7/22/01 BMP: fix problem with jump position sticking
+7/21/01 JMB: returned artificial flame evoke time increase
+
+7/14/01 JMB: upped create id to cost 10,000 essence
+7/14/01 BMP/JMB: fixed various sound bugs
+7/14/01 JMB: disabled alt+a form transformation
+7/14/01 JMB: added second mare palette
+
+7/13/01 BMP: add 15% pmare blast damage reduction
+7/13/01 BMP: slightly increased rate of peer updates
+7/13/01 BMP: billing system updated to show pmare credit
+7/13/01 BMP: added option to bind local TCP port to 7500, to make it 
+			 easier to put holes in firewalls for Underlight
+7/13/01 BMP: fixed minor control panel bug on art cancellation
+7/13/01 BMP: increased version # in preparatino for release
+
+7/12/01 BMP: pmare item drops "upped" a catagory; shammies drop best items, and horrons drop 2x best items
+7/12/01 BMP: pmare XP made 4x, dark mare XP 5x normal
+7/12/01 BMP: reworked goal posting code
+
+7/11/01 BMP: removed lots of sound propagation code
+7/11/01 JMB: Removed artificial flame evoke increase
+
+
+7/8/01 JMB: Fixed flame/push dud bug
+7/8/01 JMB: Added new icon to player client
+
+6/25/01 BMP: more server fixes; tuning # of servers, threshholds, etc.
+
+6/22/01 BMP: checksums for new level files added
+6/22/01 BMP: need to enter thresh or a level to use GM Invis
+
+6/20/01 BMP: added restriction of requiring "INVIS" in real_name field 
+			 of player table in ul_player db to use GM invis; note - there
+			 is no feedback to the client if their GM invis is rejected!
+			 if GM invis is rejected, it just turns you standard invis
+			 and with mind blank
+6/20/01 BMP: reverted code to using round-robin logic; added additional 
+			checks to redirect and try a
+			gain when trying to connect to a 
+			closing, starting, or down server; also added logic to allow
+			one gamed at a time to close after a login threshhold 
+6/19/01 BMP: added support for pmare-only credit (put in "pmare_only_credit"
+			 field in accounts table in billing db); charges to pmare credit
+			 before reducing cash balance or making a cc charge; bill splitting
+			 performed with pmare credit just as with cash
+6/19/01 BMP: pmare billing modified to split bills when the cash balance is
+			 not enough to cover the charge (ex: you have a $5 cash balance;
+			 you run up $8 in pmare bills; it creates a PAID $5 bill and an	 
+			 UNPAID $3 bill)
+6/19/01 BMP: string of bill id's added to "setting bills to paid" message;  
+			 now "setting bills [xxx, xxx, xxx] to paid"
+6/18/01 BMP: added new column to billing.accounts to support pmare-only credit
+			ALTER TABLE accounts ADD pmare_only_credit FLOAT DEFAULT 0 NOT NULL;
+6/18/01 BMP: logic added to gamed to rewrite pointer file to send to next
+			 server on shutdown if it is still the "active" gamed
+6/18/01 BMP: many new server fixes in attempt to resolve crash problem
+
+6/16/01 BMP: fix problem reporting noon as AM
+6/13/01 BMP: remove unnecessary local IP initialization, and add distinct 
+			 error messages for problems with gamed pointer HTTP download
+6/13/01 BMP: send leave party message before logging out
+6/10/01 BMP: GM invis only works for male/female avatars (0,1)
+6/10/01 BMP: changed invalidrect call in setmode to erase background
+6/10/01 BMP: gm invis disabled in RPGM build
+
+6/7/01 BMP: mass art fix implemented for GM invis
+6/7/01 BMP: fix megadamage charm bug
+6/7/01 BMP: minor GK fix to set max extra to 7, not 8 
+			(-> fit into 3 bits in the avatar field)
+6/7/01 JLF: Made minor change to the damage calculation to add the +1 per die instead of only once.
+
+6/7/01 JLF: Removed Ignore Whisper (Alt-H) and made Raw Emote Alt-H.
+6/7/01 JLF: Moved Alt-U teleport for Dreamer avatar GM's to Unk, Unk.
+6/6/01 BMP: add extra GK damage for missile/melee attacks (1/plateua in GK, max 8)
+6/6/01 BMP: fix mare logic so they don't attack each other
+6/6/01 BMP: increase protocl version #
+
+6/2/01 BMP: eliminate potential for double message for uninitiated dreamers
+6/2/01 BMP: fixed newbie codexes to be generated by ID 0 (instead of LX)
+6/2/01 JLF: Identify Curse made second sphere from sixth sphere.
+6/1/01 BMP: third law text updated
+6/1/01 BMP: DST function reimplemented to use 95/98 friendly API
+			NOTE: gratitude tokens use this to calculate maturity
+6/1/01 BMP: fix off-by-one error in calculating modifiers
+6/1/01 BMP: linking problem with 5/31 dev-player build fixed; now it 
+			 should work properly with gratitude tokens
+5/31/01 BMP: added new field to server database to distinguish player 
+			 gamed's from mare/admin only gamed's; should only cycle 
+			 through player-allowed gamed's 
+			 alter table server ADD allow_players ENUM("YES", "NO") DEFAULT "YES" NULL;
+5/31/01 BMP: Create ID token modified to consume the head used, and display	
+			 a message on success
+5/31/01 BMP: remove gratitude maturity date from identifiable fields
+5/31/01 BMP: Create ID Token fixed (by fixing creation of dreamer heads) - 
+			 please test with "fresh" heads!
+5/30/01 BMP: added new arts to learnable list
+5/29/01 BMP: Gratitude tokens fully implemented
+5/28/01 BMP: Gratitude tokens grant 1% XP bonus, or 5000, whichever is more
+5/28/01 BMP: remove the server side skill check on mind blank to get 
+			 mind blank other to work
+
+
+5/27/01 BMP: Add ability for players to determine what the time is, 
+			 DST (aka Pacific time) 
+5/27/01 BMP: add UNIX login time to GMsg_LoginAck
+5/27/01 BMP: fixed potentially nasty crash bug in FindSector 
+			  (was crashing agents)
+5/27/01 BMP: increased hard-coded limit on max # of players to 160
+5/27/01 BMP: modified non-emphant agent mares/dark mares to drop items 
+			 like pmares
+
+5/25/01 BMP: added new item type, Gratitude; initially implemented as an 
+			  Abyss/Night compendium; stored within are the ID of the 
+			creator (newbie), the # of days to maturity (# of days after 
+			1/1/2000), and a (zero) target ID; when used by the creator, 
+			it will add in the lower two bytes of the target's ID, to try to 
+			ensure the tokens are not traded (there is not enough room to 
+			put the full ID) 
+5/25/01 BMP: fixed potential bug with self-training support tokens
+5/25/01 BMP: essences now carry the ID of the collapsed dreamer/mare instead of
+			 the slayer. Create ID Tokens should now be usable for demote, etc.
+5/25/01 BMP: Changed Power Token to work with any Guild Essence item (prime)
+			 regardless of Guild ID.
+5/25/01 BMP: max charges of a combined item is 100
+
+5/24/01 BMP: Terror fixed to not scare the evoker
+5/24/01 BMP: Expel fixed
+5/24/01 BMP: Power Token modified to display Houses for Guardian and Ruler
+			 ranks too
+5/24/01 BMP: modified masterd to accept SIGUSR1, which tells it to check
+			 the status of all servers; any server that is down is 
+			 restartd. this should serve as a reliable backup mechanism
+			 for the masterd wait-based restart mechanism.
+5/24/01 BMP: when evoked upon by a hidden GM, message displays as 
+			 "%s has been invoked on you"
+
+5/23/01 BMP: Combine implemented - please test extensively!!!
+5/23/01 BMP: Modified so that explicit clicks on the control panel tabs & 
+			use of the mapped keys to set the tab mode always reset the tab 
+			mode and redraw the panel, even if it is already in that mode. 
+			Hopefully, if the tab mode doesn't switch properly for an art 
+			evoke, a manual click or keystroke will be able to fix it in the 
+			future.
+5/23/01 BMP: modified to not allow arts that require 
+			 a neighbor to work with invis GM's 
+5/23/01 BMP: added new actor list method NumNonHiddenNeighbors for GM invis 
+
+5/21/01 BMP: Power Token implemented
+5/21/01 BMP: added drain of prime on successful Create ID Token 
+			  (wasn't draining before)
+5/21/01 BMP: initial implementation of Combine, Power Token (not done)
+5/21/01 BMP: no numbers allowed in Ul names
+5/21/01 BMP: Terror modified to not require evoker to be visible
+5/20/01 BMP: gamed set to "close" after 250 logins
+
+5/13/01 BMP: dev build displays the port # of the gamed the client is going to
+5/13/01 BMP: modified GM invis to not collide with missiles
+
+5/12/01 BMP: modified gamed to ignore login counts and run indefinitely when
+			 the next IP/port combo is the same as its own
+5/12/01 BMP: modified gamed to exit gracefully when it is closed and the last
+			 player exits
+5/12/01 BMP: modified gamed to count logins and close itself to further logins
+			 when a threshhold has been reached			 
+5/12/01 BMP: modified game full message to contain get client to try again using
+			 the IP address and port stored in the login ack message as the 
+		     avatar description and server port, respectively
+5/12/01 BMP: gamed modified to reset number of logins to zero if there are 
+			 errors modifying the gamed pointer file
+5/12/01 BMP: modified gamed to accept the IP address and port # of the "next"
+			 server to send clients to at closing time
+5/12/01 BMP: masterd changed to send IP address and port of "next" game server
+			 to gamed at startup
+5/12/01 BMP: modified gamed, masterd, serverDBC to load/write gamed pointer file
+5/11/01 BMP: server db setup scripts (in /src) modified to write file path to db
+5/11/01 BMP: server db table added to hold file path to gamed pointer file
+			CREATE TABLE login_file(
+				file_name                      VARCHAR(64)             NOT NULL
+			);
+5/11/01 BMP: modify client to download a text file to retrieve the gamed
+			 IP address/port #; note: the old round robin code was left in, 
+			 surrounded by #ifdef ROUND_ROBIN
+
+5/10/01 BMP: don't propagate sound effects for hidden GM's
+5/10/01 BMP: hidden GM's invisible even to Vision
+5/10/01 BMP: hidden GM's treated as Mindblanked (only locatable by admins)
+5/10/01 BMP: No newly awakened alerts or uninitiated alerts for hidden GM's
+
+5/09/01 BMP: several minor fixes to GM invis
+5/09/01 BMP: fixes to try to ensure GM invis should make no sounds
+5/09/01 BMP: allow evocation of arts on self with GM invis
+5/08/01 BMP: undo GM invisibility at logout time
+
+5/07/01 BMP: GM invisibility added, bound to "Alt W", only usable when alone
+			 (this is necessary to avoid crashing other players)
+5/07/01 BMP: GM invis usable only by admin accounts
+5/07/01 BMP: add basic support for GM invisibility
+5/07/01 BMP: add "hidden" field to avatar, to be used for gm invis
+5/07/01 BMP: added new login option for extra scrolling; 
+			 also displays windows version info for dev builds
+5/07/01 BMP: add extra chat scrolling option
+5/07/01 BMP: remove unneeded TCP only option code
+5/07/01 BMP: increase protocol version # 
+5/01/01 JMB: Whisper dialog only opens when a player name is double-clicked
+
+4/29/01 JMB: Agents no longer move when alone
+
+4/28/01 BMP: Seek New Dreamers name changed to Newly Awakened
+4/28/01 BMP: additional server logic to save player info more frequently to the db
+			 to cut down on loss of arts, descrips, etc. from storms
+4/28/01 BMP: tcp option removed from login screens - now NAT works using UDP
+4/28/01 BMP/JMB: modified UDP port handling on client/server 
+				 to allow use of NAT without resorting to all TCP
+4/27/01 BMP: newbie codexes fixed to act like "normal" codexes
+4/27/01 BMP: updated checksums for new level files
+4/27/01 BMP: disallowed creation of a free trial account if the credit card 
+			# is being used for another Lyra account
+4/27/01 BMP: created a script to seed the free trial cc # database with existing cc's
+4/27/01 BMP: new table added to billing db to limit free trials to 1 per cc
+  CREATE TABLE free_trials(
+	free_trial_id                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	creditcard                     VARCHAR(24) DEFAULT '' NOT NULL,
+	date                           DATE    DEFAULT 0  NOT NULL,
+	underlight_id                  INT UNSIGNED DEFAULT 0 NOT NULL
+	);
+4/27/01 BMP: TCP-only option grayed out (disabled) on player builds
+4/27/01 BMP: Vamp Draw fixed to work when target has a 0 stat
+4/27/01 BMP: Locate Newlies modified to be learnable and usable by anyone
+
+4/26/01 JMB: updated reflect stats for release
+
+4/26/01 BMP: new server level files installed in dev
+4/26/01 BMP: checksums modified for new level files
+4/26/01 BMP: added new training trip text for sense dreamers
+4/26/01 BMP: billing system modified so entry page doesn't cache and the
+			 session ID is regenerated each time the welcome page is accessed
+4/26/01 BMP: Vamp Draw changed to allow only a drain of up to the player's 
+			 current stat amount (so you can't drain 50 from someone with only 5)
+4/26/01 BMP: Vamp Draw changed to allow draining of seleted stat (not just DS)
+4/26/01 BMP: Vamp Draw can't target soulspheres
+4/26/01 BMP: minimize/"X" close buttons added to login, launch options screens
+4/26/01 BMP: layout of launch options screen tweaked
+4/26/01 BMP: Seek New Dreamers can't evoke message text fixed
+4/26/01 BMP: account activation/renewal/creation page text modified
+4/26/01 BMP: resize/reformat pmare confirmation dialog to display properly
+4/26/01 BMP: reduced thread stack sizes on server (to 128k for leveld, 
+			 256k for gamed)
+
+4/26/01 MB: -Updated all Threshold flag graphics to complete flags
+	-Added Entrance Hall, Guardian Missions, Essence Storage to HC
+	-Changed HC threshold portal to -2285;-4900;17
+	-Added Entrance hall, Guardian Missions, Essence Storage to DoL
+	-Changed DoL Threshold Portal to -3456;-2845;18
+	-Added Entrance Hall, Guardian Missions, Essence Storate to PoR
+	-Changed PoR Threshold Portal to 760;-12853;21
+	-Added Vault, Entrance Hall, Guardian Missions to UotC
+	-Changed UotC Threshold Portal to -4868;-9908;26
+	-Added Guardian Missions, Essence Room, Courtyard, Entrance Hall, Teaching 
+	Chamber to OoSM
+	-Changed OoSM threshold Portal to -5180;-208;25
+	-Added Entrance Hall, Gathering Hall, Guardian Missions, Guardian Entrance, 
+	Vault, Forward Armory to GotE
+	-Redirected GotE Threshold portal to 3800;-15841;23
+	-Added Gathering Hall, Guardian Missions, Guardian Entrance, Vault, Library 
+	of the Eclipse to AoE
+	-Fixed AotE Main Entrance slope errors
+	-Added Gathering hall, Guardian Missions, Guardian Entrance, Armory to KoES
+	-Redirected KoES Threshold portal to 2600;-14066;24
+	-Renamed PoR's "Radient gateway" to "Radiant Gateway"
+	-Fixed unmoving waterfall and other minor issues on Upper Falls, Evernight 
+	Plateau
+	-Fixed portal exit angle for 3 main entrances in UotC
+	-Fixed OoSM Guardian Portal
+	-Fixed illegal child sector in KoES Exit portal
+
+4/25/01 JMB: fixed blank damate emote when players are collapsed
+4/25/01 JMB: fixed damage emotes from reflected arts. reflect is finished
+4/25/01 JMB: fixed soul shield versus mind blank (server-side fix)
+4/25/01 JMB: fixed client to gracefully exit when failing to load levelfile
+
+4/23/01 BMP: Vampiric Draw modified to new specs (k#471)
+4/23/01 BMP: Seek New Dreamers checksum fixed (k#500)
+4/23/01 BMP: launch options button & help screen displays tweaked
+4/23/01 BMP: pmare goal book disabled properly
+
+4/21/01 BMP: custom thread stack allocation/deallocation added
+4/18/01 BMP: reduced player thread stack size to 64K
+4/18/01 BMP: fixed multiple minor memory leaks in leveld
+4/18/01 BMP: enlarged launch option buttons; removed system menu
+
+4/17/01 JMB: deselect functionality and hotkey added
+4/17/01 JMB: select previous now selects last item when no item is selected
+4/17/01 JMB: pmares modified to evoke arts when arts list is active
+4/17/01 BMP: slowed  down evoke rate of flame arts to match maximum 
+			 rate of attack allowed
+4/17/01 BMP: reduced rate of updates for TCP only clients to 1/2 that of 
+		     UDP clients (to save bandwidth and prevent packet pileups)
+4/17/01 BMP: fixed return
+
+4/16/01 BMP: added an additional help button on the login screen to 
+			 explain the login options
+4/16/01 BMP: implemented TCP-only option - please test thoroughly in combat, etc.!
+
+4/14/01 BMP: added login option and other infrastructure in preparation for 
+			 TCP-only login option  (not implemented yet)
+4/14/01 BMP: Locate Newlies modified to end evoke from non-guardian/teacher
+4/14/01 BMP: allow emotes & shouts in training, so new players can test them there
+4/14/01 BMP: hide all report related buttons during training (currently only hides a few)
+4/14/01 BMP: add button to login screen that opens the game manual in a browser
+4/14/01 BMP: fix message displayed at death on successful dreamstrike
+4/14/01 BMP: bug fixed to prevent agent logins from sending newly alerts
+4/14/01 BMP: modified login logic to set items tab active at login time 
+4/14/01 BMP: sense dreamer codex added to pack of new dreamers
+4/14/01 BMP: fixed typo in talisman max recharged message
+4/14/01 BMP: readme.txt and controls.txt added to all installers
+4/14/01 BMP: modified return to replace drained dreamsoul on 
+			 an unsuccessful teleport
+4/14/01 BMP: reduced size of account disabled message to fit in box
+
+4/13/01 BMP: billing system modified to add a bunch of requested codexes 
+			 to new dreamer's pack
+4/13/01 BMP: Locate Newlies name changed to Seek New Dreamers,
+			and new admin accounts(type 65) also sensed
+4/13/01 BMP: newbie alerts modified so arrival of newbie admin 
+			 accounts(type 65) also send alerts
+
+4/6/01 BMP: add checks to turn rate, volume, # of entries on ignore list on 
+			load from registry; set to default value if out of legal range
+4/6/01 BMP: newly's map modified to be infinite charges, cyan-night, with a description
+4/6/01 BMP: modified Locate Newlies to drain 1 insight
+4/6/01 BMP: fixed dreamstrike to exit game before displaying the fatality message
+4/6/01 BMP: display appropriate error message when pmares try to show 
+			learnable arts or to bring up the goal book
+4/5/01 BMP: when entering the dream with training on, the interface starts 
+			with the Items up
+4/5/01 BMP: added support for alert notifications sent to Guardians or above, 
+			  or Teachers or above, when a newly awakened (<20 hours dreaming)
+			  enters the plane they are on (ANY plane)
+4/5/01 BMP: Locate Newlies modified to be evokable only by Guardians or above, 
+			  or Teachers or above
+4/5/01 BMP: fixed bugs in new pmare billing logic
+4/5/01 BMP: add support for enforcement of $40/max per day of pmare player
+4/5/01 BMP: billing HTML updated to reflect new billing system for pmares
+4/4/01 BMP: added new art Locate Newlies; locates up to 10 newly awakened
+	        (defined as < 20 hours dreaming) and reports their names & locations
+4/4/01 BMP: Thresh map added to the pack of newly awakened dreamers
+
+3/27/01 BMP: modified pmare billing code to correctly support 24 hour billing
+			the total session charge is calculated once per day at 1:00 AM PST by 
+			summing all the minutes of the logins as a certain avatar type by a 
+			certain pmare account in the last 24 hours. minimum billing time per 
+			session is 15 minutes. so, if you played as a shamblix 5 times, for 3, 
+			10, 2, 1, and 5 minutes (20 minutes total), and as a bogrom 1 time for 
+			4 minutes, you'd be charged for 20 minutes of shammy play and 15 minutes 
+			of bogrom play
+
+			a new table pmare_logins records per-login pmare activity as status 
+			'UNAGGREGATED'
+
+			a modification to nightlyupdate.pl sums the minutes per avatar type
+			per pmare for all 'UNAGGREGATED' entries, creates a single bill in 
+			the bills table for these logins, and changes the pmare_logins entries
+			to 'PROCESSED'
+
+			note that because the bills are aggregated with nightlyupdate.pl at 1AM, 
+			the 24 hour XP/mare form persistences will not exactly match the 24 hour
+			session timing. that is, if you started playing at noon PST, your bills 
+			would be aggregated 12 hours later at 1 AM, even though you can keep the 
+			same XP and mare form until 24 hours later at noon the next day
+
+			this requires extensive testing, particularly with CASH accounts, to 
+			ensure that the max # of minutes allowed is set and enforced properly. 
+			there are many permutations to test, since there may be 3 sessions at 
+			once (one per mare type), and sessions < 15 minutes must be charged as 
+			a 15 minute block, and the logic also takes into consideration that you 
+			can always finish out your first 15 minute block per session without 
+			incurring additional charges
+
+3/27/01 BMP: modified pmare logout logic to take into account the # of minutes 
+			 that have already been played in the pmare session, when displaying
+			 the estimated charge
+3/27/01 BMP: added support for displaying messages to the player at login regarding
+			  how many minutes have already been played in the pmare session
+3/27/01 BMP: increased protocol version #
+3/27/01 BMP: add support to gmsg_loginack for telling client how many minutes 
+			 have been spent in current pmare session today
+3/27/01 BMP: added new ul_billing database table, to allow for 24 hour pmare billing
+ CREATE TABLE pmare_logins(
+ pmare_bill_id                  INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+ billing_id                     INT UNSIGNED NOT NULL,
+ underlight_id                  INT UNSIGNED DEFAULT 0 NOT NULL,
+ bill_date                      DATE                   DEFAULT 0 NOT NULL,
+ minutes                        INT UNSIGNED NOT NULL,
+ avatar                         INT UNSIGNED NOT NULL,
+ status                         VARCHAR(24) DEFAULT 'UNAGGREGATED' NOT NULL
+ );
+3/27/01 BMP: added work-around scrolling code to get chat to scroll 
+			  properly on Win2000 (and to try not to break 95/98/NT)
+
+3/24/01 JMB: removed soulshield/mindblank_other bug (client/server mod)
+
+3/22/01 BMP: modified non-network version to allow chat/emote with local echo
+
+3/20/01 JMB: agents gain vision when damaged
+3/20/01 JMB: shamblix and horron agents back to randomly spawning with
+vision
+3/20/01 JMB: return modified to not expire on teleport error
+3/20/01 JMB: sense dreamer printout cleaned up on client
+3/20/01 JMB: modified server to stop returning false positives for dreamer
+locations
+
+3/18/01 BMP: speed hack code reset to log on 100 updates in < 12 seconds;
+			 this should take 15.6 seconds 
+
+3/17/01 BMP: added server side restriction to Cleanse Mare- 50th orbit
+3/17/01 BMP: added sense dreamers to pmare starting arts
+
+3/16/01 BMP: avatar viewing glitch in training area fixed (prevented)
+3/16/01 BMP: modified billing to send welcome email after Lyra account creation
+3/16/01 BMP: modified cheater warning collapse interval to 5 in 5 minutes
+3/16/01 BMP: fixed time online
+
+3/14/01 BMP: Sense Dreamers changed to sense admins and pmares as well
+
+3/13/01 BMP: fixed Expel (it actually sometimes works now!)
+3/13/01 BMP: added speed hack detection to the server; security log entries
+			 of the form Potential speed hack - Player %d sent 100 updates in %d seconds!"
+			 are written if 100 updates arrive in <10 seconds (it should take 12-13);
+3/13/01 BMP: modified client to launch the default Web browser and download
+			 the latest patch file when there is a version mismatch
+
+3/11/01 BMP: fixed checksum on Expel
+3/11/01 BMP: modified Expel to send all expelled to Boggen's Lair (7049;-4831;39)
+3/11/01 BMP: changed Sacrifice so that the strength of the token created by 
+			the art is equal to 1 plus 1 per plateau of the art. 
+
+3/9/01 BMP: Sense Dreamers added to all newly created accounts in dev billing system
+3/9/01 BMP: added support for Expel art; requires Ruler rank, and a House prime; 
+			for a drain of 100 essences, it teleports a soulsphere to the 
+			appropriate House Threshhold
+3/9/01 BMP: game balance modifications made to damage/duration tables according to Val's suggestions
+3/9/01 BMP: on collapse, pmares now drop an item as well as a head; item
+			type is based on a generator type equal to (avatar type - 2);
+			avatar types are bog = 3, ago = 4, sham = 5, horr = 6, so
+			bogs/agos/shams/horrs drop items of gen type 2/3/4/5
+3/9/01 BMP: additional logging added for UDP packets per sec
+
+3/8/01 BMP: code for launching download of patch file on 
+			version mismatch added, but disabled due to bug
+3/8/01 BMP: added additional logging when reports or goals are expired or deleted
+			Look for the following keywords in the logs:"Report deleted", 
+			"Goal expired", "Goal deleted"
+3/8/01 BMP: fixed training messages
+3/8/01 BMP: fixed training chak to be usable to 0 orbit dreamer
+3/8/01 BMP: fixed orbit limiter on arts to be ignored by flame, blade, and
+			focus arts
+3/8/01 BMP: new bitmap type added for Cleansed Mare (currently it is 
+			just copied from banish); effects changed!
+3/8/01 BMP: Cleanse Mare upped to 50th orbit
+3/8/01 BMP: pmares fixed to set dreamsoul properly based on current 
+			mare type when resuming session
+
+3/4/01 BMP: support added to db interface classes for sense dreamer art
+3/4/01 BMP: support added to game and level servers for sense dreamer art
+3/4/01 BMP: support added to client for sense dreamer art
+3/4/01 BMP: new GMsg type added: GMsg_SenseDreamerAck (request is done with RMsg_PlayerMsg)
+3/3/01 BMP: added new table to ul_item; not added to ul_level to avoid creating more db run time db connections
+	CREATE TABLE locations(level_id INT UNSIGNED NOT NULL PRIMARY KEY, num_dreamers INT UNSIGNED DEFAULT 0 NOT NULL);
+
+2/19/01 BMP: removed new Launcher, replaced with old Launcher in project tree;
+			 built new dev builds against its defines
+
+2/10/01 BMP: increased build # in preparation for release
+2/10/01 BMP: finished modifying server code to work with new gcc and its
+		     damn ISO C++ changes
+
+1/28/01 BMP: added auto cheat message each time a non-agent is collapses
+			 more than 5 times in 20 minutes by the same player ID
+1/28/01 BMP: Pmare and Dark Mare XP increase implemented to 3x/4x
+1/28/01 BMP: removed extraneous pmare login message
+
+1/21/01 BMP: pmare orbit always refreshed on XP grants
+1/21/01 BMP: added new welcome message for pmares; removed login status
+1/21/01 BMP: unable to duplicate re-training problem with Sacrifice - details please
+1/21/01 BMP: billing system modified to properly verify credit card on all 
+			 account activations/creations; plus, now it fulfills its 
+			threat to reset the account type to CASH when a CC does not verify
+
+1/1/01 BMP: client updated to not reduce blade/flame skills.
+			if there is ANY doubt that this skill reduction might have ANY CHANCE of causing other problems, please contact me ASAP so I can remove it from the new build.
+1/1/01 BMP: gamed load reduce to 3/2 for players/mares
+1/1/01 BMP: Cleanse Mare made non-House specific again, not stripped on demotion
+
+12/30/00 BMP: removed art/sphere restrictions on all GM builds
+12/30/00 BMP: modified demote to strip players of Cleanse Nightmare when
+		      booted from GOE, and to strip Sacrifice when booted from AOE
+12/30/00 BMP: fixed a few server bugs relating to the new -4 constant	
+			  for Guild::NO_RANK
+12/30/00 BMP: modified Cleanse Nightmare to work for GOE only, min orbit 10
+12/30/00 BMP: could not find a problem with Ward
+12/30/00 BMP: modified arts table so Destroy Talisman works correctly
+12/30/00 BMP: modified player client to allow arts to have rank 1 when orbit=0
+
+12/29/00 BMP: modified to prevent use of any thresh portal if the player is an initiate anywhere, 
+			  and has no guardian or ruler ranks
+
+12/28/00 BMP: partially added new Ruler art "Create ID Token"; DS, cost 20, orbit 50,
+			  not on learnable list; with a House prime and a dreamer essence,
+			  you can create an ID token (usable for demotion); however, because
+			  the player ID is NOT stored in an essence token, this art
+			  is not finished, as it will require selecting a neighbor
+			  to do this properly 
+12/28/00 BMP: modified player client to cap effective skill level at the 
+			  player's orbit, to make sphere loss more painful (NOTE: 
+			  for future ease of testing and development, this does NOT
+			  affect development builds - please test with player build)
+12/28/00 BMP: modified guild_maint.pl script to archive the goals it deletes
+			  to files, named by date and stored in /var/old_missions
+12/28/00 BMP: modified guild_maint.pl to properly expire and delete goals
+12/28/00 BMP: new pmare emotes and speech added
+12/28/00 BMP: reduced the # of gameds running to 10, 5 for players and 5 for agents;
+			  rewrote agents.txt to send agents to only 5 servers; modified 
+			  server database files for 10 gameds
+12/28/00 BMP: changed constant definition of Guild::NO_RANK to non zero (-4)
+12/28/00 BMP: fixed problem with threshold portals; now they correctly
+			  allow only the uninitiated, guardians, and rulers
+
+12/27/00 BMP: fixed problem on servers that caused xp bonuses and penalties to
+			  not be applied properly on login (ex: 10k loss from demotion)
+12/26/00 BMP: updated Sacrifice to minor art, not learnable, token strength = 1
+12/26/00 BMP: updated checksums for new .cli, .lyr
+12/26/00 BMP: fixed DBC server include file so new art trains save properly
+
+12/22/00 BMP: fixed error in DB interface preventing initiaties from using boards
+12/22/00 BMP: modified client checksums and installed new server for 
+			  new map file
+12/22/00 BMP: added new House art Cleanse Nightmare, which acts exactly
+			  like Banish, except that the token created says 
+			  "Cleansed Nightmare"
+12/22/00 BMP: modified Ascend to require on 5 support tokens (same as 
+				Ruler demotion)
+12/22/00 BMP: updated sacrifice to work only for AOE
+12/22/00 BMP: updated sacrifice statistics (orb 10, cost 5); renamed 
+			  created item to "Essence Node"
+
+12/16/00 JMB: updated reflect statistics; cost=40, duration=20 secs
+12/13/00 JMB: added new sounds for reflect and dreamquake
+12/13/00 JMB: added error checking to render engine for improved client stability
+
+12/10/00 BMP: added new art Sacrifice; when evoked, you may sacrifice a 
+			  chakram to get a banished essence token
+12/10/00 BMP: while adding debugging code to the train self server code, 
+			  the train self token problem spontaneously fixed itself 
+12/10/00 BMP: fixed post-posession damage messages to display player's name
+			  properly to others when damaged ("X is weaker", etc., instead
+			  of "Male Avatar is weaker", etc.)
+12/10/00 BMP: fixed soul shield to repel others' mind blank attempts (but 
+			  the failure message is not reflected back to the mind blank	 
+		      caster)
+12/10/00 BMP: destroy talisman added to learnable list (Orbit 35)
+12/10/00 BMP: modified Vampiric Draw, Hypnotic Weave, Dreamquake to be orbit 60
+12/6/00 BMP: modified the time functions so that the resume session is based on 24 hours of absolute time, not system uptime
+12/6/00 BMP: added Terror (alt-X) and Hypnotic Weave (alt-Y) options for GMs
+12/6/00 BMP: verified GMs can't Alt-evoke arts the character does not have;
+			 is this proper?
+12/6/00 BMP: Grant RP XP modified to allow negative values, up to -5000
+12/6/00 BMP: profanity filter modified to remove only whole bad words (no partials)
+
+9/23/00 JMB: pmares no longer see unique item names
+9/23/00 JMB: Give/JP dialog interaction improved
+9/23/00 JMB: "Unlimited" pmare session time fixed
+
+9/21/00 BMP: fixed problem with the strcmp to _tcscmp conversion for wide characters; 
+             it screwed up identyf and some other stuff
+9/21/00 BMP: made minimum logout timer 15 minutes
+9/21/00 BMP: added timer support for pmare cash accounts and for voluntary
+			 timer terminated pmare sessions
+9/20/00 BMP: version increased for release
+9/20/00 BMP: modified pmare billing to return max minutes online for cash
+			 accounts and automatically terminate session
+9/20/00 BMP: modified pmare billing to go minute-by-minute after 15 minutes
+9/20/00 BMP: pmare bill generation fixed
+
+9/16/00 BMP: disallow pmare macros
+9/15/00 BMP: version increased for release
+9/15/00 BMP: new pmare emotes added
+9/15/00 BMP: client modified to present a (ugly) modal dialog box after dreamstrike
+9/15/00 BMP: properly added regeneration to list of player effects
+9/15/00 BMP: pmare evolution fixed; ago=5, sham=15, horr=45
+9/14/00 BMP: pmare info box modified to be current
+9/14/00 BMP: pmare evolution fixed; ago=5, sham=12, horr=44
+9/14/00 BMP: mare type portal locks added to new pmare build; 30 = bog, 31 = ago, etc.;
+			35 = no pmares may pass
+9/14/00 BMP: modified agent build to always set networking on
+9/14/00 BMP: pmare builds modified to use pmare icons
+9/12/00 BMP: fixed agents to set working directory at launch
+9/11/00 BMP: added locale support; all instances of 'char' for text 
+			 changed to 'TCHAR' (see tchar.h for details)
+
+9/05/00 BMP: Lyran forge bitmap selection fixed to remove unknown
+9/05/00 BMP: increased build for release
+9/05/00 BMP: modified server to use hostid to allow multiple servers to run a
+			 single Underlight universe
+
+9/03/00 BMP: shortcuts added to desktop, start menu by Underlight installers
+9/03/00 BMP: fixed pmare party kill logic (again)
+
+9/02/00 JMB: talk dialog box cleaned up
+9/02/00 JMB: drain self returned to resilience focus
+9/02/00 JMB: implemented seneschal crests
+9/02/00 JMB: added keyboard item inspection
+9/02/00 JMB: pmare evolution now occurs at orbits 5,15, and 45
+9/02/00 JMB: flame and blade damage values changed
+
+9/1/00 BMP: increased build for release
+9/1/00 BMP: fix posession to properly restart posessed agent on exorcism
+9/1/00 BMP: pmare bogrom invis modified to 1% chance of 10 seconds of invis
+		    per attack
+9/1/00 BMP: party kill logic modified to print pmare names properly on defeat
+8/31/00 BMP: added extra player state saving to gamed, extra
+				gamed crash recovery logic to minimize loss of player 
+				data on gamed crash
+8/30/00 BMP: added minimum frame rate timer to prevent game from 
+			freezing when the mouse is held down on a listview item
+8/30/00 BMP: added new logic in masterd to run a ghost clean up sript each
+			 time a gamed crashes
+8/29/00 BMP: added IP address and port of game server to player table,
+			modified DB interface to store them at login time; SQL to modify DB:
+			ALTER TABLE player CHANGE unused_int3 gamed_port INT UNSIGNED DEFAULT 0 NULL;
+			ALTER TABLE player ADD gamed_ip VARCHAR(64) NOT NULL;
+
+8/28/00 BMP: Role Play report implemented; talk dialog box changed, 
+			 *requires new graphic before release*; role play reports
+			 go to security logs (like bugs/cheats);
+			 grep for ROLE PLAY REPORT to find
+8/28/00 BMP: pmares given 1 sec delay on collapse teleport so kill messages
+			 display properly
+8/28/00 BMP: actually fixed party kill XP for pmares for real
+8/28/00 BMP: pmares made immune to stagger
+
+8/22/00 BMP: fixed posession; exorcism still needs work as it does not 
+			restart the posessed mare
+8/22/00 BMP: fixed party kill XP for pmares
+8/22/00 BMP: cost of drain essence reduced to zero
+8/22/00 BMP: typo fixed on agreement text
+8/22/00 BMP: fixed forced restore of soulspheres in dreamsoul sectors
+8/20/00 BMP: reworked servers and database scripts to take database
+			hostname, port number, email address, and return email address		
+			from /src/pw.txt file
+
+08/18/00 JMB: pmare bogroms given random invisibility like agents
+08/18/00 JMB: pmare bogroms given general 30% shielding
+
+08/14/00 JMB: adjusted shamblix damage to index 60
+08/14/00 JMB: pmare sham and horron invulnerability changed to % shield
+08/14/00 JMB: pmare talk dialog now accepts control input (speak/emote/cancel) from keyboard
+08/14/00 JMB: give to pmares and agents fixed to properly deny requests
+08/14/00 JMB: pmares no longer see gm descriptions
+
+08/13/00 BMP: fixed servers re: pmare resume login problem
+08/13/00 BMP: modify pmare client to reset session start time to 0 
+			  on unsuccesful login
+
+08/10/00 BMP: changes to LyraDefs.h to support Win32 port of servers
+08/09/00 BMP: Agent Service modified to wait 3 minutes to restart aborted agentsvr
+08/08/00 BMP: servers modified to remove restart command
+08/07/00 BMP: servers modified to use messages instead of signals
+		for dumping state and log rotation
+
+8/06/00 JMB: pmare vs pmare gets 25% XP
+8/06/00 JMB: nightmares can now *only* use monster customization dialog
+8/06/00 JMB: "start with training" option removed for pmares
+
+8/06/00 BMP: modified servers to not generate items, nor essences or soul tokens, 
+		in rooms full of items
+8/06/00 BMP: remapped drop all from alt-n to alt-f
+
+8/02/00 JMB: implemented keyboard scrolling of chat window
+8/02/00 JMB: fixed pmares versus admins to function like pmares versus dreamers
+8/02/00 JMB: updated pmare canned-talk data
+8/02/00 JMB: updated pmare descriptions
+
+7/25/00 BMP: added level & room stamp to cheat reports
+
+7/21/00 JMB: nightmares should finally render everything with the appropriate palette
+7/21/00 JMB: removed nightmare effects while in sanctuary
+7/21/00 JMB: telepathy removed from learnable list
+7/21/00 JMB: fixed many errors in the pmare client to anonymize dreamers
+
+7/18/00 BMP: fixed option to ignore whispers to work properly
+7/18/00 BMP: increased network protocol version in preparation for release
+7/18/00 BMP: modified client to not ignore GM speech
+
+7/16/00 BMP: investigated multiple logins on single account, found no problems
+			  (dev servers properly lock out multiple logins)
+7/16/00 BMP: modified avatar field to widen guild id to 4 bits
+7/16/00 BMP: fixed chain blasting problem
+
+7/11/00 BMP: ago/bog pmares regenerate as true mares; sham/horron pmares regen 
+			as dreamers
+7/11/00 BMP: dreamer name display on attacking pmares changed to male/female avatar
+7/11/00 BMP: multiple minor issues with pmare Drain Essence fixed
+7/11/00 BMP: account type added to avatar structure so clients can distinguish 
+			amongst dreamers, pmares, dark mares, lyrans, and true mares
+
+
+7/10/00 BMP: soulsphere logout penalty reduced to 1%
+7/10/00 BMP: modified ignore list to send message only to ignoree
+7/10/00 BMP: modified training text
+7/10/00 BMP: pmares only get 25% XP for true nightmare kills
+
+
+7/09/00 BMP: added support for effects applied every 2 seconds based on sector tags
+7/09/00 BMP: modified # demote tokens to 5/3/1
+
+7/05/00 BMP: fixed rounding error on price for resuming pmare bogrom sessions
+7/05/00 BMP: modified all builds to generate MAP files and use /GZ to initialize 
+			locals and check the stack after function calls
+
+7/02/00 BMP: fixed server bug allowing dual logins for same billing account
+7/02/00 BMP: fixed Nziri errors causing chak velocity weirdness
+7/02/00 BMP: reverted back to Direct X 6 - sound does not work with DX 7
+
+6/25/00 JMB: players without vision no longer see emotes from invisible players
+6/25/00 JMB: added permanent vision to pmares
+6/25/00 JMB: fixed pmare right clicking on players in main window
+
+6/25/00 BMP: fixed inability to gm forge do nothing items
+6/25/00 BMP: added ability for pmares to pickup and drop (but not use) items, and
+			to use arts
+6/25/00 BMP: modified pmare creation to give them Drain Essence (#32)
+6/25/00 BMP: modified Drain Essence to work as before for dreamers, but to also
+			drain dreamer essences for 10 points of dreamsoul for pmares
+
+6/25/00 JMB: pmares now restore to full health upon reformation
+6/25/00 JMB: pmare threshold now acts like sanctuary to pmares
+6/25/00 JMB: pmares now teleport to pmare thresh upon collapse
+6/25/00 JMB: removed pmare babble filter to accomodate new canned speach/emote functionality
+6/25/00 JMB: pmares now see anonymous, babbled chat/emotes from dreamers (but not other mares)
+6/25/00 JMB: pmares no longer see dreamer descriptions (other mare descriptions still work)
+
+6/24/00 BMP: added profanity filter graphic option, pmare emote button, 
+			 fixed up options screen
+6/24/00 BMP: added time online option
+6/23/00 BMP: added pmare canned emotes
+6/23/00 BMP: added pmare canned speech
+6/21/00 BMP: fixed problem of connection hanging and "ghosting" dreamers
+6/20/00 BMP: added adult language filter option for speech/emotes/avatar descriptions
+6/20/00 BMP: fixed soulshield training
+6/20/00 BMP: fixed erroneous cheat report on invalid dreamsoul when orbit increases
+
+** RELEASE 6/18/00 **
+
+6/16/00 BMP: version increased in preparation for new build
+6/16/00 BMP: double login problem fixed
+6/16/00 BMP: horron, shammie damage increased
+6/15/00 BMP: XP gains allowed for defeat of any dreamer of at least Orbit 30
+6/15/00 BMP: SoulShield (and all other dreamsoul arts) now treated as focus arts 
+				instead of non-focus arts for training/platting 
+6/13/00 BMP: modified pmare builds to allow resumption of a previous session, for up
+			to a total of 24 hours per session 
+6/12/00 BMP&REG: modified Initiate, Knight, and Ascend to require a House Prime with
+	at least 100/500/1000 charges, and drains that amount when used
+6/10/00 REG: Modified fall damage.  Now plays landing noise instead of message noise.
+
+6/7/00 JMB: New art "Reflect" added
+
+6/5/00 JMB: pmares display "Male Dreamer" or "Female Dreamer" as appropriate in Who window (mares appear as usual)
+6/5/00 JMB: pmares no longer see nametags
+6/5/00 JMB: references to name tags removed from option and keyboard menus for pmares
+
+6/4/00 JMB: fixed "you" window display of nightmares to use the agent palette
+6/4/00 JMB: fixed pmare "breeds" to index colors in the agent palette
+6/4/00 JMB: added describe button to nightmare customization dialog for customizable descriptions (hidden from pmares)
+6/4/00 JMB: fixed problem of dark mare descriptions being set by pmare code
+
+6/4/00 BMP: fixed backwards ID of essences (server fix)
+6/4/00 BMP: modified pmare builds to auto login to level on startup
+
+5/31/00 REG: removed WARD_NOT_PLACED error message.
+5/31/00 REG: Added strings to string table and changed affected DisplayMessages to accomodate. (cleaned code)
+
+5/28/00 BMP: added login_alert field to player db, auto emails rpgb on login if set
+5/24/00 BMP: added 25% natural shield to dark mares
+
+4/27/00 BMP: avatar code fixed to not allow bitmap type outside legal range
+4/26/00 BMP: horron pmare flame, bouncing weapons fixed
+
+4/23/00 BMP: *RELEASE
+
+4/14/00 BMP: goal accept login on server modified to prevent multiple 
+				entries for a single (player_id, goal_id) pair
+4/14/00 BMP: defeat messages for pmares and dmares fixed
+4/14/00 BMP: train self bug fixed in server
+4/14/00 BMP: token using arts (ascension, demotion, train self) rewritten to
+				streamline, reduce code - needs regression test on all these arts
+4/14/00 BMP: modified pmares and dark mares to drop immutable essences with mare graphics
+4/14/00 BMP: modified clients with new checksums for pmare builds
+
+4/7/00 BMP: launcher rewritten to use multithreading (launcher is now impossibly complicated)
+4/7/00 BMP: launcher rewritten as a full-fledged message processing Windows application
+4/7/00 BMP: servers modified to not use mutex locking in library methods (due to
+				use of non-preempting threading package)
+4/7/00 BMP: version increased on client & server
+
+4/2/00 *RELEASE
+3/31/00 JMB: Give and Join Party dialogs fixed to remove spamming exploit
+
+3/29/00 BMP: version increased on client & server
+3/29/00 BMP: real-time update mechanism slowed to 4 updates/sec and optimized to 
+	eliminate redundant updates when players are stationary and inactive
+3/29/00 BMP: additional support for account type 88 for expired players
+3/29/00 BMP: ignore whisper reply message fixed 
+3/29/00 BMP: launcher updated to include patch size
+
+3/26/00 BMP: pmare-dev configuration added to Underlight project
+3/26/00 BMP: launcher fixed
+3/26/00 BMP: launcher added to main Underlight project
+3/26/00 BMP: pmare chat implemented according to email spec
+3/26/00 BMP: use of ~ to toggle babble removed
+
+3/24/00 BMP: babble modified allow babblers to undertand each other,
+			 and to disable babble in the Unknown (RMsg_Speech modified)
+3/24/00 BMP: orbit/collapse messages remove/changed for pmares
+3/24/00 BMP: version increased on client & server
+
+3/24/00 JMB: Text limit added to avatar description dialog boxes.
+
+3/20/00 BMP: pmares ignore sphere locks on portals
+3/20/00 BMP: pmares given permanent vision and free action
+3/20/00 BMP: pmares reform at full health after 90 seconds
+3/20/00 BMP: babble filter added for pmares
+3/20/00 BMP: support for acct_type 'E' (69) for expired admin
+3/20/00 JMB: Locate dreamer "add" procedure changed
+3/20/00 JMB: Locate dreamer now defaults to last name located
+
+3/20/00 JMB: Locate dreamer "add" procedure changed
+3/20/00 JMB: Locate dreamer now defaults to last name located
+
+
+3/19/00 BMP: additional pmare support added
+
+3/18/00 BMP: additional pmare support added
+3/18/00 BMP: problems with 2nd page of goals for initiates & lack of accepted list fixed
+
+3/17/00 BMP: additional pmare support added
+3/17/00 BMP: version increased client & server 
+3/17/00 BMP: informational dialog added to target of Suspend
+3/17/00 BMP: informational dialog added to target of Terminate
+3/17/00 BMP: login dialog box repositioned
+
+3/15/00 JMB: whisper "out of range" notification changed
+3/15/00 JMB: locate dreamer "add" functionality made more intuitive (adds name typed in main text window)
+3/15/00 JMB: evoke column removed from grant rp xp (art supposed to be anonymous)
+
+3/13/00 BMP: added art SUSPEND
+3/13/00 BMP: added extra login ack codes
+3/13/00 BMP: added debug check box
+
+3/4/00 BMP: raw emote given SHOUT range
+3/4/00 BMP: summon coords changed again
+3/4/00 BMP: summon restricted to gm-only
+
+3/3/00 BMP: version increased on client/server
+3/3/00 BMP: server modified to allow all players to goto Unknown (for Summon)
+3/3/00 BMP: forge tables, modifier/duration tables rebalanced
+
+3/2/00 BMP: added range to whisper
+3/2/00 BMP: added basic support for new arts SOUL_SHIELD and SUMMON
+3/2/00 BMP: added new player effect and actor flag for SOUL_SHIELD
+3/2/00 BMP: ALTER TABLE accounts ADD cryptcc VARCHAR(128) DEFAULT '' NULL;
+			ALTER TABLE cc_chargeback ADD cryptcc VARCHAR(128) DEFAULT '' NULL;
+			ALTER TABLE free_trials ADD cryptcc VARCHAR(128) DEFAULT '' NULL;
+			add encryption to credit card numbers in billing system
+
+3/1/00 BMP: fixed problem with mission boards where nobody could look at reports or details from the main screen
+

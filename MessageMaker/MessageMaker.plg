@@ -1,0 +1,27 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: MessageMaker - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\Brian\AppData\Local\Temp\RSP3E96.tmp" with contents
+[
+/nologo /G5 /Gr /ML /W3 /Zi /I "..\MPSDK\inc" /I "../Underlight" /I "../MessageMaker" /I "../AgentMessages" /I "..\AgentMessages" /I "..\AgentSvr" /I "..\Underlight" /I "..\DXSDK\SDK\inc" /I "..\RWSDK\inc" /D "WIN32" /D "_WINDOWS" /D "USE_INLINE" /Fp"Release/MessageMaker.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\Projects\Underlight\cDDraw.cpp"
+]
+Creating command line "cl.exe @C:\Users\Brian\AppData\Local\Temp\RSP3E96.tmp" 
+<h3>Output Window</h3>
+Compiling...
+cDDraw.cpp
+C:\Projects\Underlight\cDDraw.cpp(470) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+C:\Projects\Underlight\cDDraw.cpp(475) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+
+
+
+<h3>Results</h3>
+cDDraw.obj - 0 error(s), 2 warning(s)
+</pre>
+</body>
+</html>
