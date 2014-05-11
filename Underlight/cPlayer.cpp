@@ -34,7 +34,8 @@
 #include "keyboard.h"
 #include "cAgentBox.h"
 #include "LmStats.h"
-extern struct { int orbit; int xp_base; int xp_gain; } lyra_xp_table[];
+#include "LmXPTable.h"
+extern xp_entry lyra_xp_table[];
 
 
 #ifdef AGENT

@@ -26,6 +26,8 @@
 // constructor
 ////
 
+extern xp_entry lyra_xp_table[];
+
 LmStats::LmStats()
 {
   Init();

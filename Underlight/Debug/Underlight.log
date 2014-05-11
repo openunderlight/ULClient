@@ -1,5 +1,220 @@
-﻿Build started 5/11/2014 9:44:22 AM.
+﻿Build started 5/11/2014 11:06:46 AM.
+     1>Project "C:\Users\Michael Acobas\ULClient\ULClient\Underlight\Underlight.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching ".\Debug\Underlight.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /ZI /nologo /W3 /WX- /Od /Oy- /D _DEBUG /D UL_DEBUG /D GAMEMASTER_FULL /D GAMEMASTER /D UL_DEBUG_MASTER /D UL_DEV /D GAME_LYR /D WIN32 /D _WINDOWS /D USE_INLINE /D ENGLISH /D VORBIS /D _VC80_UPGRADE=0x0600 /Gm /EHsc /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gr /TP /analyze- /errorReport:prompt Keyboard.cpp cPlayer.cpp
+         Keyboard.cpp
+     1>c:\users\michael acobas\ulclient\ulclient\messagemaker\amsg_posessinfo.i(36): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\michael acobas\ulclient\ulclient\messagemaker\amsg_posessinfo.i(41): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(169): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(171): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(177): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(189): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(194): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(199): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(236): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(300): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(301): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(188) : see declaration of 'strncpy'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(594): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(603): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(715): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(860): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(933): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(939): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1024): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1207): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1236): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1260): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1269): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1278): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1293): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1429): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1430): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1435): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1452): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1557): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1558): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1572): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1588): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1605): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\keyboard.cpp(1688): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+         Generating Code...
+         Compiling...
+         cPlayer.cpp
+     1>c:\users\michael acobas\ulclient\ulclient\messagemaker\amsg_posessinfo.i(36): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\michael acobas\ulclient\ulclient\messagemaker\amsg_posessinfo.i(41): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(182): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(183): warning C4996: '_strupr': This function or variable may be unsafe. Consider using _strupr_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(203) : see declaration of '_strupr'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(706): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(713): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(802): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(848): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1183): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1211): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1342): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1678): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1697): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1718): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1758): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1785): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1791): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1821): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1916): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1931): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(1953): warning C4244: 'initializing' : conversion from 'double' to 'unsigned int', possible loss of data
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(2200): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(2201): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(2202): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(2214): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(2215): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(2352): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\michael acobas\ulclient\ulclient\underlight\cplayer.cpp(2383): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+         Generating Code...
+         All outputs are up-to-date.
+       ResourceCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Users\Michael Acobas\ULClient\ULClient\Underlight\.\Debug\Underlight.exe) does not match the Linker's OutputFile property value (C:\lyra\dev\underlight-debug.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(992,5): warning MSB8012: TargetName(Underlight) does not match the Linker's OutputFile property value (underlight-debug). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\lyra\dev\underlight-debug.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:../libs/ ../MessageMaker/Debug/MessageMaker.lib dxguid.lib oldnames.lib th32.lib wininet.lib lz32.lib winmm.lib wsock32.lib ddraw.lib dsound.lib comctl32.lib libcmt.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB /NODEFAULTLIB:LIBCMTD /MANIFEST /ManifestFile:".\Debug\Underlight.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Debug/underlight-debug.pdb" /MAP:".\Debug/underlight-debug.map" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /IMPLIB:".\Debug\Underlight.lib" /MACHINE:X86 .\Debug\Underlight.res
+         .\Debug/BuildView.obj
+         .\Debug/cActor.obj
+         .\Debug/cActorList.obj
+         .\Debug/cAgentBox.obj
+         .\Debug/cAgentServer.obj
+         .\Debug/cAI.obj
+         .\Debug/cArts.obj
+         .\Debug/cBanner.obj
+         .\Debug/cBox.obj
+         .\Debug/cChat.obj
+         .\Debug/cControlPanel.obj
+         .\Debug/cDDraw.obj
+         .\Debug/cDetailGoal.obj
+         .\Debug/cDetailQuest.obj
+         .\Debug/cDSound.obj
+         .\Debug/cEffects.obj
+         .\Debug/cGameServer.obj
+         .\Debug/cGif.obj
+         .\Debug/cGoalBook.obj
+         .\Debug/cGoalPosting.obj
+         .\Debug/cGoalQuestProcs.obj
+         .\Debug/cItem.obj
+         .\Debug/cKeymap.obj
+         .\Debug/cLevel.obj
+         .\Debug/cList.obj
+         .\Debug/cMissile.obj
+         .\Debug/cNameTag.obj
+         .\Debug/cNeighbor.obj
+         .\Debug/cOrnament.obj
+         .\Debug/cOutput.obj
+         .\Debug/cPalettes.obj
+         .\Debug/cParty.obj
+         .\Debug/cPlayer.obj
+         .\Debug/cPostGoal.obj
+         .\Debug/cPostQuest.obj
+         .\Debug/cQuestBuilder.obj
+         .\Debug/cReadGoal.obj
+         .\Debug/cReadQuest.obj
+         .\Debug/cReadReport.obj
+         .\Debug/CreateFrame.obj
+         .\Debug/cReportGoal.obj
+         .\Debug/cReviewGoals.obj
+         .\Debug/cSending.obj
+         .\Debug/Debug.obj
+         .\Debug/Dialogs.obj
+         .\Debug/Interface.obj
+         .\Debug/Keyboard.obj
+         .\Debug/LanguageFilter.obj
+         .\Debug/LevelRoomNames.obj
+         .\Debug/LoginOptions.obj
+         .\Debug/Main.obj
+         .\Debug/Mouse.obj
+         .\Debug/Move.obj
+         .\Debug/Options.obj
+         .\Debug/Realm.obj
+         .\Debug/RenderActor.obj
+         .\Debug/RenderView.obj
+         .\Debug/RLE.obj
+         .\Debug/Secure.obj
+         .\Debug/Utils.obj
+         ..\libs\DDRAW.LIB
+         ..\libs\dsound.lib
+         ..\libs\dxguid.lib
+         ..\libs\TH32.Lib
+         "C:\Users\Michael Acobas\ULClient\ULClient\messagemaker\Debug\MessageMaker.lib"
+     1>BuildView.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
+         Underlight.vcxproj -> C:\Users\Michael Acobas\ULClient\ULClient\Underlight\.\Debug\Underlight.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"\lyra\dev\underlight-debug.exe;#1" /manifest .\Debug\Underlight.exe.intermediate.manifest
+       BscMake:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\Debug/Underlight.bsc" .\Debug\BuildView.sbr .\Debug\cActor.sbr .\Debug\cActorList.sbr .\Debug\cAgentBox.sbr .\Debug\cAgentServer.sbr .\Debug\cAI.sbr .\Debug\cArts.sbr .\Debug\cBanner.sbr .\Debug\cBox.sbr .\Debug\cChat.sbr .\Debug\cControlPanel.sbr .\Debug\cDDraw.sbr .\Debug\cDetailGoal.sbr .\Debug\cDetailQuest.sbr .\Debug\cDSound.sbr .\Debug\cEffects.sbr .\Debug\cGameServer.sbr .\Debug\cGif.sbr .\Debug\cGoalBook.sbr .\Debug\cGoalPosting.sbr .\Debug\cGoalQuestProcs.sbr .\Debug\cItem.sbr .\Debug\cKeymap.sbr .\Debug\cLevel.sbr .\Debug\cList.sbr .\Debug\cMissile.sbr .\Debug\cNameTag.sbr .\Debug\cNeighbor.sbr .\Debug\cOrnament.sbr .\Debug\cOutput.sbr .\Debug\cPalettes.sbr .\Debug\cParty.sbr .\Debug\cPlayer.sbr .\Debug\cPostGoal.sbr .\Debug\cPostQuest.sbr .\Debug\cQuestBuilder.sbr .\Debug\cReadGoal.sbr .\Debug\cReadQuest.sbr .\Debug\cReadReport.sbr .\Debug\CreateFrame.sbr .\Debug\cReportGoal.sbr .\Debug\cReviewGoals.sbr .\Debug\cSending.sbr .\Debug\Debug.sbr .\Debug\Dialogs.sbr .\Debug\Interface.sbr .\Debug\Keyboard.sbr .\Debug\LanguageFilter.sbr .\Debug\LevelRoomNames.sbr .\Debug\LoginOptions.sbr .\Debug\Main.sbr .\Debug\Mouse.sbr .\Debug\Move.sbr .\Debug\Options.sbr .\Debug\Realm.sbr .\Debug\RenderActor.sbr .\Debug\RenderView.sbr .\Debug\RLE.sbr .\Debug\Secure.sbr .\Debug\Utils.sbr
+       FinalizeBuildStatus:
+         Deleting file ".\Debug\Underlight.unsuccessfulbuild".
+         Touching ".\Debug\Underlight.lastbuildstate".
+     1>Done Building Project "C:\Users\Michael Acobas\ULClient\ULClient\Underlight\Underlight.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:06.68

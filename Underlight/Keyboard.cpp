@@ -36,6 +36,7 @@
 #include "SharedConstants.h"
 //#include "RogerWilco.h"
 #include "utils.h"
+#include "LmXPTable.h"
 
 //////////////////////////////////////////////////////////////////
 // External Global Variables
@@ -86,7 +87,7 @@ extern int num_find_sector_calls[15];
 extern bool showing_map;
 
 static bool numlock_on_at_startup = false;
-
+extern xp_entry lyra_xp_table[];
 //////////////////// Constants ////////////////////////
 //#ifdef UL_DEBUG
 	//const int MAX_GM_EFFECTS=99;	// max effects at once time
@@ -205,9 +206,8 @@ bool HandleLyraDebugKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		MemoryCheck(_T("user request"));
 		display->DisplayMessage (message, false);
 		return true;
-/*	case 'X':
+	case 'X':
 		{
-			extern struct { int orbit; int xp_base; int xp_gain; } lyra_xp_table[];
 			static int sphere = 0;
 			static int originalXP = player->XP();
 			int base = lyra_xp_table[sphere*10].xp_base;
@@ -223,7 +223,7 @@ bool HandleLyraDebugKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		}
 		gs->UpdateServer();
 		return true;
-		*/
+		
 	case 'Y':
 		framerate = !framerate;
 		return true;
