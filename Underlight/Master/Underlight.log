@@ -1,9 +1,114 @@
-﻿Build started 5/11/2014 2:14:21 AM.
-     1>Project "C:\Users\Michael Acobas\Downloads\UnderlightVC6\Underlight\Underlight.vcxproj" on node 2 (clean target(s)).
-     1>_PrepareForClean:
-         Deleting file ".\Master\Underlight.lastbuildstate".
-     1>Done Building Project "C:\Users\Michael Acobas\Downloads\UnderlightVC6\Underlight\Underlight.vcxproj" (clean target(s)).
+﻿Build started 5/13/2014 12:30:08 AM.
+     1>Project "C:\Users\Michael Acobas\ULClient\ULClient\Underlight\Underlight.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating ".\Master\Underlight.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\MPSDK\inc /I..\RWSDK\inc /I../Underlight /I../MessageMaker /I../AgentMessages /Zi /nologo /W3 /WX- /O1 /Ob1 /Oy- /D NDEBUG /D UL_MASTER /D GAME_CLI /D WIN32 /D _WINDOWS /D USE_INLINE /D ENGLISH /D _VC80_UPGRADE=0x0600 /GF /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Master/" /Fd".\Master/vc100.pdb" /FR".\Master/" /Gr /TP /analyze- /errorReport:prompt cControlPanel.cpp
+         cControlPanel.cpp
+     1>cControlPanel.cpp(475): warning C4101: 'str' : unreferenced local variable
+     1>cControlPanel.cpp(679): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>cControlPanel.cpp(1476): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>cControlPanel.cpp(1517): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>cControlPanel.cpp(1557): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>cControlPanel.cpp(1684): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>cControlPanel.cpp(1729): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>cControlPanel.cpp(1742): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>cControlPanel.cpp(2751): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : see declaration of 'strcpy'
+     1>cControlPanel.cpp(2753): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : see declaration of 'strcpy'
+     1>cControlPanel.cpp(2762): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : see declaration of 'strcpy'
+     1>cControlPanel.cpp(2764): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : see declaration of 'strcpy'
+         All outputs are up-to-date.
+       ResourceCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Users\Michael Acobas\ULClient\ULClient\Underlight\.\Master\Underlight.exe) does not match the Linker's OutputFile property value (C:\lyra\dev\Underlight.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\lyra\dev\Underlight.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:../libs/ odbc32.lib odbccp32.lib ../MessageMaker/Release/MessageMaker.lib oldnames.lib th32.lib wininet.lib lz32.lib winmm.lib wsock32.lib ddraw.lib dsound.lib dxguid.lib comctl32.lib libcmtd.lib msimg32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB /NODEFAULTLIB:LIBCD /MANIFEST /ManifestFile:".\Master\Underlight.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Master/Underlight.pdb" /MAP:".\Master/Underlight.map" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /IMPLIB:".\Master\Underlight.lib" /MACHINE:X86 .\Master\Underlight.res
+         .\Master/BuildView.obj
+         .\Master/cActor.obj
+         .\Master/cActorList.obj
+         .\Master/cAgentBox.obj
+         .\Master/cAgentServer.obj
+         .\Master/cAI.obj
+         .\Master/cArts.obj
+         .\Master/cBanner.obj
+         .\Master/cBox.obj
+         .\Master/cChat.obj
+         .\Master/cControlPanel.obj
+         .\Master/cDDraw.obj
+         .\Master/cDetailGoal.obj
+         .\Master/cDetailQuest.obj
+         .\Master/cDSound.obj
+         .\Master/cEffects.obj
+         .\Master/cGameServer.obj
+         .\Master/cGif.obj
+         .\Master/cGoalBook.obj
+         .\Master/cGoalPosting.obj
+         .\Master/cGoalQuestProcs.obj
+         .\Master/cItem.obj
+         .\Master/cKeymap.obj
+         .\Master/cLevel.obj
+         .\Master/cList.obj
+         .\Master/cMissile.obj
+         .\Master/cNameTag.obj
+         .\Master/cNeighbor.obj
+         .\Master/cOrnament.obj
+         .\Master/cOutput.obj
+         .\Master/cPalettes.obj
+         .\Master/cParty.obj
+         .\Master/cPlayer.obj
+         .\Master/cPostGoal.obj
+         .\Master/cPostQuest.obj
+         .\Master/cQuestBuilder.obj
+         .\Master/cReadGoal.obj
+         .\Master/cReadQuest.obj
+         .\Master/cReadReport.obj
+         .\Master/CreateFrame.obj
+         .\Master/cReportGoal.obj
+         .\Master/cReviewGoals.obj
+         .\Master/cSending.obj
+         .\Master/Debug.obj
+         .\Master/Dialogs.obj
+         .\Master/Interface.obj
+         .\Master/Keyboard.obj
+         .\Master/LanguageFilter.obj
+         .\Master/LevelRoomNames.obj
+         .\Master/LoginOptions.obj
+         .\Master/Main.obj
+         .\Master/Mouse.obj
+         .\Master/Move.obj
+         .\Master/Options.obj
+         .\Master/Realm.obj
+         .\Master/RenderActor.obj
+         .\Master/RenderView.obj
+         .\Master/RLE.obj
+         .\Master/Secure.obj
+         .\Master/Utils.obj
+         ..\libs\DDRAW.LIB
+         ..\libs\dsound.lib
+         ..\libs\dxguid.lib
+         ..\libs\TH32.Lib
+         "C:\Users\Michael Acobas\ULClient\ULClient\messagemaker\Release\MessageMaker.lib"
+         Underlight.vcxproj -> C:\Users\Michael Acobas\ULClient\ULClient\Underlight\.\Master\Underlight.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"\lyra\dev\Underlight.exe;#1" /manifest .\Master\Underlight.exe.intermediate.manifest
+       BscMake:
+         All outputs are up-to-date.
+       FinalizeBuildStatus:
+         Deleting file ".\Master\Underlight.unsuccessfulbuild".
+         Touching ".\Master\Underlight.lastbuildstate".
+     1>Done Building Project "C:\Users\Michael Acobas\ULClient\ULClient\Underlight\Underlight.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.06
+Time Elapsed 00:00:02.78

@@ -4,7 +4,6 @@
 // Class for handling all visual and sound effects file
 
 // Copyright Lyra LLC, 1996. All rights reserved. 
-
 #include <stdio.h>
 #include "4dx.h"
 #include "Central.h"
@@ -37,7 +36,9 @@ protected:
 	FILE *fh;
 
 private:
+
 	BITMAPINFO_4DX bitmap_info[MAX_BITMAPS]; // effects bitmap data
+		
 
 	palette_header       *palette_headers;
 	visual_effect_header *visual_effect_headers;
@@ -68,6 +69,9 @@ public:
 	int EffectHeight(realmid_t effect_id);
 	int EffectWidth(realmid_t effect_id); 
 	int EffectPalette(realmid_t effect_id); 
+	HBITMAP Create8bppBitmapFromBits(unsigned char *bits, int w, int h, int paletteid);
+	HBITMAP Create16bppBitmapFromBits(unsigned char *bits, int w, int h);
+	HBITMAP CreateBitmap(int id);
 
 	int VEBytes(void) { return visual_effect_bytes; };
 	int SEBytes(void) { return sound_effect_bytes; };

@@ -9,7 +9,7 @@
 #include "cDSound.h"
 #include "resource.h"
 #include "cEffects.h"
-
+#include <map>
 
 //////////////////////////////////////////////////////////////////
 // External Global Variables
@@ -441,6 +441,108 @@ int cEffects::LoadEffectBitmaps(realmid_t effect_id, int caller)
 	return NO_BITMAP;
  }
 
+typedef struct tagBITMAPINFO2
+{
+	BITMAPINFOHEADER bmh;
+	DWORD arrBitMasks[3];
+} BITMAPINFO16;
+
+typedef struct tagSIBITMAPINFO
+{
+	BITMAPINFOHEADER bmh;
+	RGBQUAD bmiColor[256];
+} BITMAPINFO8;
+
+HBITMAP cEffects::Create8bppBitmapFromBits(unsigned char *bits, int w, int h, int paletteid)
+{
+	// todo check loadedbitmaps for cached bitmap
+	HDC dc = GetDC(NULL);
+	HDC bmpdc = CreateCompatibleDC(dc);
+	HBITMAP bmp = CreateCompatibleBitmap(dc, w, h);
+	ReleaseDC(NULL, dc);
+
+	SelectObject(bmpdc, bmp);
+
+	PIXEL *pal = shader->GetUnshadedPalette(paletteid);
+	
+	for (int y = 0; y < h; y++)
+	{
+		for (int x = 0; x < w; x++)
+		{
+			COLORREF color = bits[(y * h) + x];
+			SetPixelV(bmpdc, x, y, pal[color]);
+		}
+	}
+
+	DeleteDC(bmpdc);
+
+	return bmp;
+
+}
+
+HBITMAP cEffects::Create16bppBitmapFromBits(unsigned char *bits, int w, int h)
+{
+	
+	// TODO: Check loadedbitmaps for cached bitmap
+
+	HBITMAP hBitmap;
+	
+	LONG lBmpSize = w * h * 2;
+	BITMAPINFO16 bmpInfo = { 0 };
+	
+	bmpInfo.bmh.biBitCount = 16;
+	bmpInfo.bmh.biHeight = h;
+	bmpInfo.bmh.biWidth = w;
+	bmpInfo.bmh.biPlanes = 1;
+	
+	bmpInfo.bmh.biSize = sizeof(BITMAPINFOHEADER);
+
+	bmpInfo.bmh.biCompression = BI_BITFIELDS;
+	bmpInfo.arrBitMasks[0] = 0xf800;
+	bmpInfo.arrBitMasks[1] = 0x07e0;
+	bmpInfo.arrBitMasks[2] = 0x001f;
+
+	UINT *pPixels = 0;
+	HDC screen = GetDC(NULL);
+	hBitmap = CreateDIBSection(screen, (BITMAPINFO *)&bmpInfo, DIB_RGB_COLORS, (void **)&pPixels, NULL, 0);
+	ReleaseDC(NULL, screen);
+	
+	if (!hBitmap)
+		return NULL; // return if invalid bitmaps	
+	
+	SetBitmapBits(hBitmap, lBmpSize, bits);
+	
+	return hBitmap;
+
+}
+
+HBITMAP cEffects::CreateBitmap(int id)
+{
+	LoadEffectBitmaps(id, 2);
+
+	if (EffectWidth(id) == 0)
+		return NULL;
+
+	int bpp = visual_effect_headers[FindBitmapIndex(id)].bpp;
+	
+	int w, h;
+	w = EffectWidth(id);
+	h = EffectHeight(id);
+	
+	unsigned char *addr = EffectBitmap(id)->address;
+		
+	HBITMAP bmp = NULL;
+	
+	if (bpp == 1)
+		bmp = Create8bppBitmapFromBits(addr, w, h, visual_effect_headers[FindBitmapIndex(id)].palette);
+	else if (bpp == 2)
+		bmp = Create16bppBitmapFromBits(addr, w, h);
+	
+	//if (bmp != NULL)
+	//	bitmaps[id] = bmp;
+
+	return bmp;
+}
 
 void cEffects::FreeEffectBitmaps(realmid_t effect_id)
 {

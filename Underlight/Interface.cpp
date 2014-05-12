@@ -74,7 +74,6 @@ static HBITMAP hListBoxArrow	= NULL;
 // Lyra Dialog Manager
 
 // Blits bitmap to dc at the co-ord in region
-//void BlitBitmap(HDC dc, HBITMAP bitmap, RECT *region, const window_pos_t& srcregion, int mask)
 void BlitBitmap(HDC dc, HBITMAP bitmap, RECT *region, int stretch, int mask)
 {
 	HGDIOBJ old_object;
@@ -82,71 +81,38 @@ void BlitBitmap(HDC dc, HBITMAP bitmap, RECT *region, int stretch, int mask)
 
 	bitmap_dc = CreateCompatibleDC(dc);
 	old_object = SelectObject(bitmap_dc, bitmap);
-	//RECT src;
 
-	//PrepareSrcRect(&src, region, stretch);
+	int w = region->right - region->left;
+	int h = region->bottom - region->top;
 
-
-	BitBlt(dc, region->left, region->top, (region->right - region->left),
-			(region->bottom - region->top), bitmap_dc, 0, 0, mask);
-	//StretchBlt(dc, region->left, region->top, (region->right - region->left),
-	//(region->bottom - region->top), bitmap_dc, 
-	//src.left, src.top, (src.right - src.left), (src.bottom - src.top), mask);
-	//0, 0, (src.right - src.left), (src.bottom - src.top), mask);
+	TransparentBlt(dc, region->left, region->top, w, h, bitmap_dc, 0, 0, w, h, mask);
 
 	SelectObject(bitmap_dc, old_object);
 	DeleteDC(bitmap_dc);
 	return;
 }
 
-
 void TransparentBlitBitmap(HDC dc, int bitmap_id, RECT *region, int stretch, int mask)
 {
 	HBITMAP hBitmap;
-	int width = effects->EffectWidth(bitmap_id ) ;
-	int height = effects->EffectHeight(bitmap_id);
-
-	if (width == 0 )
+	
+	if (effects->EffectWidth(bitmap_id) == 0)
 		return ;
 
 	effects->LoadEffectBitmaps(bitmap_id, 1);
 
-	PIXEL *bits = new PIXEL [height*width];
-	PIXEL *src = (PIXEL *)effects->EffectBitmap(bitmap_id)->address;
-
-	COLORREF color32	= GetBkColor(dc);
-	PIXEL	red		= (PIXEL)((color32 & 0xFF) >> 3);
-	PIXEL	green		= (PIXEL)(((color32 & 0xFF00)  >> 8) >> 2);
-	PIXEL	blue		= (PIXEL)(((color32  & 0xFF0000) >> 16) >> 3);
-	PIXEL	bk_color	= (PIXEL)((red << 11) | (green << 5) | blue);
-
-	for (int i = 0; i < height*width; i++)
-		bits[i] = (src[i]) ? src[i] : bk_color ;
-
-	hBitmap = CreateBitmap(width, height, 1, BITS_PER_PIXEL, bits );
+	hBitmap = effects->CreateBitmap(bitmap_id);
+	
 	BlitBitmap(dc, hBitmap, region, stretch, mask);
-
-	DeleteObject(hBitmap);
-	delete [] bits;
+	
 	effects->FreeEffectBitmaps(bitmap_id);
 
 }
 
-// Creates a windows bitmap from an effects bitmap with given bitmap ID
-HBITMAP CreateWindowsBitmap(int bitmap_id)
+
+HBITMAP CreateWindowsBitmap(int id)
 {
-	HBITMAP hBitmap;
-
-	if (effects->EffectWidth(bitmap_id ) == 0 )
-		return NULL;
-
-	effects->LoadEffectBitmaps(bitmap_id, 2);
-
-	hBitmap = CreateBitmap(effects->EffectWidth(bitmap_id), effects->EffectHeight(bitmap_id), 1,
-												 BITS_PER_PIXEL, effects->EffectBitmap(bitmap_id)->address);
-
-	effects->FreeEffectBitmaps(bitmap_id);
-	return hBitmap;
+	return effects->CreateBitmap(id);
 }
 
 // Creates a windows bitmap, and a grayed version of that,from a game bitmap with given bitmap ID

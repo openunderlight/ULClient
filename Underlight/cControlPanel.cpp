@@ -464,12 +464,17 @@ void cControlPanel::AddAvatar(void)
 
 	RenderActor(player,(PIXEL *)avatar_bits, AVATAR_DISPLAY_WIDTH[cDD->Res()],AVATAR_DISPLAY_HEIGHT[cDD->Res()]);
 
-    cp_avatar_bitmap = CreateBitmap(AVATAR_DISPLAY_WIDTH[cDD->Res()], AVATAR_DISPLAY_HEIGHT[cDD->Res()], 
-							1, BITS_PER_PIXEL, avatar_bits);
+    cp_avatar_bitmap = effects->Create16bppBitmapFromBits(avatar_bits, AVATAR_DISPLAY_WIDTH[cDD->Res()], AVATAR_DISPLAY_HEIGHT[cDD->Res()]);
+		//CreateBitmap(AVATAR_DISPLAY_WIDTH[cDD->Res()], AVATAR_DISPLAY_HEIGHT[cDD->Res()], 
+						//	1, BITS_PER_PIXEL, avatar_bits);
 
 	InvalidateRect(hwnd_avatar, NULL, FALSE);
 
-	delete [] avatar_bits;
+	try
+	{ delete [] avatar_bits; }
+	catch (char *str)
+	{ }
+
 
     return;
 }
@@ -2054,7 +2059,7 @@ int cControlPanel::AddIcon(unsigned char* icon_bits)
 	if (num_unused_icons == (MAX_UNUSED_ICONS - 1))
 		this->CompactImageList();
 
-	bitmap = CreateBitmap(ICON_WIDTH, ICON_HEIGHT, 1, BITS_PER_PIXEL, icon_bits);
+	bitmap = effects->Create16bppBitmapFromBits(icon_bits, ICON_WIDTH, ICON_HEIGHT);
 	image_index = ImageList_AddMasked(image_list, bitmap, RGB(0,0,0));
 
 	if (image_index == -1)

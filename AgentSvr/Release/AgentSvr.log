@@ -1,5 +1,22 @@
-﻿Build started 5/11/2014 2:14:21 AM.
+﻿Build started 5/13/2014 12:30:09 AM.
+     1>Project "C:\Users\Michael Acobas\ULClient\ULClient\AgentSvr\AgentSvr.vcxproj" on node 3 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating ".\Release\AgentSvr.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+       ResourceCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Users\Michael Acobas\ULClient\ULClient\AgentSvr\.\Release\AgentSvr.exe) does not match the Linker's OutputFile property value (C:\lyra\dev\AgentSvr.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         All outputs are up-to-date.
+         AgentSvr.vcxproj -> C:\Users\Michael Acobas\ULClient\ULClient\AgentSvr\.\Release\AgentSvr.exe
+       BscMake:
+         All outputs are up-to-date.
+       FinalizeBuildStatus:
+         Deleting file ".\Release\AgentSvr.unsuccessfulbuild".
+         Touching ".\Release\AgentSvr.lastbuildstate".
+     1>Done Building Project "C:\Users\Michael Acobas\ULClient\ULClient\AgentSvr\AgentSvr.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.01
+Time Elapsed 00:00:00.41
