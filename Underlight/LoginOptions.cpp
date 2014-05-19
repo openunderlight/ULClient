@@ -43,6 +43,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 {
 	HKEY reg_key;
 	DWORD result;
+	BOOL tcp_checked = FALSE;
 
 	switch(Message)
 	{
@@ -68,9 +69,13 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 
 			Button_SetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL),  options.extra_scroll);
 //			Button_SetCheck(GetDlgItem(hDlg, IDC_BIND_LOCAL),  options.bind_local);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_UDP_PROXY),  options.udp_proxy);
+			Button_SetCheck(GetDlgItem(hDlg, IDC_TCP_ONLY),  options.tcp_only);
 			_stprintf(message, _T("%d"), options.bind_local_tcp);
 			Edit_SetText(GetDlgItem(hDlg, IDC_BIND_TCP), message);
+			if( options.tcp_only )
+			{
+				EnableWindow( GetDlgItem( hDlg, IDC_BIND_UDP ), FALSE );
+			}
 			_stprintf(message, _T("%d"), options.bind_local_udp);
 			Edit_SetText(GetDlgItem(hDlg, IDC_BIND_UDP), message);
 
@@ -210,6 +215,11 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 				LoadString (hInstance, IDS_GAME_MANUAL_URL, message, sizeof(message));
 				ShellExecute(NULL, _T("open"), message, NULL, NULL, SW_SHOWNORMAL);
 				return TRUE;
+			
+			case IDC_TCP_ONLY:
+				tcp_checked = Button_GetCheck( GetDlgItem( hDlg, IDC_TCP_ONLY ) );
+				EnableWindow( GetDlgItem( hDlg, IDC_BIND_UDP ), !tcp_checked );
+				return TRUE;
 
 			case IDC_BILLING:
 				LoadString (hInstance, IDS_BILLING_URL, message, sizeof(message));
@@ -234,11 +244,14 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 				options.exclusive		= Button_GetCheck(GetDlgItem(hDlg, IDC_EXCLUSIVE)); 
 				options.welcome_ai		= Button_GetCheck(GetDlgItem(hDlg, IDC_TRAINING)); 
 				options.extra_scroll	= Button_GetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL)); 
-				options.udp_proxy		= Button_GetCheck(GetDlgItem(hDlg, IDC_UDP_PROXY)); 
+				options.tcp_only		= Button_GetCheck(GetDlgItem(hDlg, IDC_TCP_ONLY)); 
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_TCP), message, sizeof(message)); 								
 				options.bind_local_tcp	= _ttol(message);
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_UDP), message, sizeof(message)); 								
-				options.bind_local_udp	= _ttol(message);
+				if(!options.tcp_only)
+					options.bind_local_udp	= _ttol(message);
+				else
+					options.bind_local_udp = DEFAULT_UDP_PORT;
 
 #ifdef CHINESE
 				options.restart_last_location = Button_GetCheck(GetDlgItem(hDlg, IDC_RESTART_LOCATION));
@@ -445,8 +458,8 @@ void __cdecl SaveOutOfGameRegistryOptionValues(HKEY reg_key)
 		(unsigned char *)&(options.sound), sizeof(options.sound));
 	RegSetValueEx(reg_key, _T("extra_scroll"), 0, REG_DWORD,  
 		(unsigned char *)&(options.extra_scroll), sizeof(options.extra_scroll));
-	RegSetValueEx(reg_key, _T("udp_proxy"), 0, REG_DWORD,  
-		(unsigned char *)&(options.udp_proxy), sizeof(options.udp_proxy));
+	RegSetValueEx(reg_key, _T("tcp_only"), 0, REG_DWORD,  
+		(unsigned char *)&(options.tcp_only), sizeof(options.tcp_only));
 	RegSetValueEx(reg_key, _T("bind_local_tcp"), 0, REG_DWORD,  
 		(unsigned char *)&(options.bind_local_tcp), sizeof(options.bind_local_tcp));
 	RegSetValueEx(reg_key, _T("bind_local_udp"), 0, REG_DWORD,  
@@ -543,11 +556,11 @@ void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 	keyresult = RegQueryValueEx(reg_key, _T("extra_scroll"), NULL, &reg_type,
 		(unsigned char *)&(options.extra_scroll), &size);
 
-	size = sizeof(options.udp_proxy);
-	keyresult = RegQueryValueEx(reg_key, _T("udp_proxy"), NULL, &reg_type,
-		(unsigned char *)&(options.udp_proxy), &size);
+	size = sizeof(options.tcp_only);
+	keyresult = RegQueryValueEx(reg_key, _T("tcp_only"), NULL, &reg_type,
+		(unsigned char *)&(options.tcp_only), &size);
 	if ((keyresult != ERROR_SUCCESS) || force) 
-		options.udp_proxy = FALSE;
+		options.tcp_only = FALSE;
 
 
 	size = sizeof(options.bind_local_tcp);

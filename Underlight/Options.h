@@ -102,11 +102,11 @@ struct options_t {
 	BOOL rw; // using roger wilco real time voice
 	BOOL adult_filter; // filter out adult language
 	BOOL extra_scroll; // add additional line of scrolling for 2000/ME
-	BOOL udp_proxy; // use UDP proxy on the server side
+	//BOOL udp_proxy; // use UDP proxy on the server side
 	int bind_local_tcp;
 	int bind_local_udp;
 	BOOL restart_last_location; // for Chinese Ul; log in at last location
-	//BOOL tcp_only; // use TCP only - for firewall/NAT/ICS/etc.
+	BOOL tcp_only; // use TCP only - for firewall/NAT/ICS/etc.
 
 	int resolution; // 640 = 640x480, 800 = 800x600, 1024 = 1024x768
 

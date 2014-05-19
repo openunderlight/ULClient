@@ -35,7 +35,7 @@ GMsg_AgentLogin::GMsg_AgentLogin()
   : LmMesg(GMsg::AGENTLOGIN, sizeof(data_t), sizeof(data_t), &data_)
 {
   // initialize default message data values
-  Init(DEFAULT_VERSION, _T("name"), Lyra::PORT_UNKNOWN, 0);
+  Init(DEFAULT_VERSION, _T("name"), Lyra::PORT_UNKNOWN, 0, 0);
 }
 
 ////
@@ -51,12 +51,13 @@ GMsg_AgentLogin::~GMsg_AgentLogin()
 // Init
 ////
 
-void GMsg_AgentLogin::Init(int version, const TCHAR* playername, int serv_port, lyra_id_t billing_id)
+void GMsg_AgentLogin::Init(int version, const TCHAR* playername, int serv_port, lyra_id_t billing_id, short tcp_only)
 {
   SetVersion(version);
   SetPlayerName(playername);
   SetServerPort(serv_port);
   SetBillingID(billing_id);
+  SetTCPOnly(tcp_only);
 }
 
 ////
@@ -68,6 +69,7 @@ void GMsg_AgentLogin::hton()
   HTONL(data_.version);
   HTONL(data_.serv_port);
   HTONL(data_.billing_id);
+  HTONS(data_.tcp_only);
   // no conversion: playername, hash
 }
 
@@ -80,6 +82,7 @@ void GMsg_AgentLogin::ntoh()
   NTOHL(data_.version);
   NTOHL(data_.serv_port);
   NTOHL(data_.billing_id);
+  NTOHS(data_.tcp_only);
   // no conversion: playername, hash
 }
 
@@ -93,8 +96,8 @@ void GMsg_AgentLogin::Dump(FILE* f, int indent) const
   INDENT(indent, f);
  _ftprintf(f, _T("<GMsg_AgentLogin[%p,%d]: "), this, sizeof(GMsg_AgentLogin));
   if (ByteOrder() == ByteOrder::HOST) {
-   _ftprintf(f, _T("billing_id=%u version=%d name='%s' hash=<NOT PRINTED> servport=%d>\n"),
-	    BillingID(), Version(), PlayerName(), ServerPort());
+   _ftprintf(f, _T("billing_id=%u version=%d name='%s' hash=<NOT PRINTED> servport=%d> tcp_only=%d\n"),
+	    BillingID(), Version(), PlayerName(), ServerPort(), TCPOnly());
   }
   else {
    _ftprintf(f, _T("(network order)>\n"));

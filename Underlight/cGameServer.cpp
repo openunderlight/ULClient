@@ -152,7 +152,7 @@ extern char agent_gs_ip_address[16];
 int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x001ABA9C << 2);  // for pmare game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1D22B3B2 << 2);
 #else
-int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031FE41 << 2);  // for game.cli
+int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031F56D << 2);  // for game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1DCF4AD3 << 2);
 #endif // #ifdef PMARE
 #else
@@ -286,6 +286,12 @@ cGameServer::cGameServer(unsigned short udp_port_num, unsigned short gs_port_num
 // position updates.
 void cGameServer::InitUDPSocket()
 {
+#ifndef AGENT
+	if( options.tcp_only )
+		return;
+#else
+	output->Write("Initializing UDP Socket");
+#endif
 	struct sockaddr_in saddr;
 	int iRc;
 
@@ -507,7 +513,9 @@ void cGameServer::HandleMessage(void)
 				// NOTE: no subbuild for this message
 				GMsg_AgentLogin alogin_msg;
 				// reset agent login information
-				alogin_msg.Init(build, player->Name(), udp_port, player->ID());
+				
+				// FOR NOW AGENTS ARE NEVER TCPONLY!
+				alogin_msg.Init(build, player->Name(), udp_port, player->ID(), 0);
 				//alogin_msg.SetPassword(player->Password());
 				alogin_msg.SetHash(hash);
 				sendbuf.ReadMessage(alogin_msg);
@@ -517,7 +525,7 @@ void cGameServer::HandleMessage(void)
 			{
 				GMsg_Login login_msg;
 				int subbuild = SUBBUILD - SB_OFFSET;
-				login_msg.Init(build, player->Name(), udp_port, options.pmare_type, subbuild, options.udp_proxy); //, options.tcp_only, avatar_descrip);
+				login_msg.Init(build, player->Name(), udp_port, options.pmare_type, subbuild, options.tcp_only); 
 				login_msg.SetHash(hash);
 				//login_msg.Init(build, player->Name(), player->Password(), udp_port, options.pmare_type, subbuild, options.udp_proxy); //, options.tcp_only, avatar_descrip);
 				sendbuf.ReadMessage(login_msg);
@@ -2123,7 +2131,7 @@ void cGameServer::HandleMessage(void)
 
 		case RMsg::PLAYERUPDATE: // we got a real-time update over TCP
 		{
-
+			num_packets_received++;
 			RMsg_PlayerUpdate position_msg;
 			if (position_msg.Read(msgbuf) < 0) { GAME_ERROR(IDS_ERR_READ_TCP_POS_UPD_MSG); return; }
 			this->HandlePositionUpdate(position_msg);
@@ -2914,10 +2922,10 @@ void cGameServer::OnPositionUpdate(HWND hWindow, WPARAM wParam, LPARAM lParam)
 			//_tprintf("index %d, id %d, local %d\n",i,position_msg.Update(i).playerid,position_msg.Update(i).local);
 		if (!logged_into_level)
 			return;
-    if (!got_peer_updates)
-    {
-		  got_peer_updates = true;
-    }
+		if (!got_peer_updates)
+		{
+			  got_peer_updates = true;
+		}
 
 		this->HandlePositionUpdate(position_msg);
 	}
@@ -2929,6 +2937,13 @@ void cGameServer::OnPositionUpdate(HWND hWindow, WPARAM wParam, LPARAM lParam)
 
 void cGameServer::HandlePositionUpdate(RMsg_PlayerUpdate& position_msg)
 {
+	if (!logged_into_level)
+			return;
+    if (!got_peer_updates)
+    {
+		  got_peer_updates = true;
+    }
+
 	cNeighbor			*n;
 	int					i;
 	float 				oldxheight;
@@ -4405,33 +4420,27 @@ void cGameServer::SendPositionUpdate (int trigger)
 ///_tprintf("attack after: %d\n",attack);
 
 	position_msg.Init(player->ID(), update);
-
-//	if (options.tcp_only) 
-//	{
-//		sendbuf.ReadMessage(position_msg);
-//		send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
-//	} 
-//	else // send UDP position update message
-//	{
-	num_packets_out++;
-	
-	saddr.sin_family = PF_INET;
-	saddr.sin_port=htons( portNumber );
-	saddr.sin_addr.s_addr = game_server_addr.sin_addr.s_addr;
-	
 	sendbuf.ReadMessage(position_msg);
-	
-	iRc = sendto( sd_udp, (char *)sendbuf.BufferAddress(), sendbuf.BufferSize(), 0,
-		(struct sockaddr *)&(saddr), sizeof(saddr));
-	
-	if (iRc == SOCKET_ERROR)
-	{
-		if ((iRc=WSAGetLastError()) != WSAEWOULDBLOCK)
-			SOCKETS_ERROR(iRc);
-		return;
-	}
-//	}
 
+	if (options.tcp_only) 
+		send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
+	else // send UDP position update message
+	{	
+		saddr.sin_family = PF_INET;
+		saddr.sin_port=htons( portNumber );
+		saddr.sin_addr.s_addr = game_server_addr.sin_addr.s_addr;
+		iRc = sendto( sd_udp, (char *)sendbuf.BufferAddress(), sendbuf.BufferSize(), 0,
+			(struct sockaddr *)&(saddr), sizeof(saddr));
+	
+		if (iRc == SOCKET_ERROR)
+		{
+			if ((iRc=WSAGetLastError()) != WSAEWOULDBLOCK)
+				SOCKETS_ERROR(iRc);
+			return;
+		}
+	}
+
+	num_packets_out++;
 	last_peer_update = LyraTime();
 	jumped = FALSE;
 

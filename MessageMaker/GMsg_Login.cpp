@@ -52,15 +52,15 @@ GMsg_Login::~GMsg_Login()
 ////
 
 void GMsg_Login::Init(int version, const TCHAR* playername, int serv_port, short pmare_type, int subversion,
-					  int firewall) //, short tcp_only)
+					   short tcp_only)
 {
   SetVersion(version);
   SetSubVersion(subversion);
   SetPlayerName(playername);
   SetServerPort(serv_port);
   SetPMareType(pmare_type);
-  SetFirewall(firewall);
-  //SetTCPOnly(tcp_only);
+  //SetFirewall(firewall);
+  SetTCPOnly(tcp_only);
 }
 
 ////
@@ -72,9 +72,9 @@ void GMsg_Login::hton()
   HTONL(data_.version);
   HTONL(data_.subversion);
   HTONL(data_.serv_port);
-  HTONL(data_.firewall);
+//  HTONL(data_.firewall);
   HTONS(data_.pmare_type);
-//  HTONS(data_.tcp_only);
+  HTONS(data_.tcp_only);
   // no conversion: playername, password
 }
 
@@ -87,9 +87,9 @@ void GMsg_Login::ntoh()
   NTOHL(data_.version);
   NTOHL(data_.subversion);
   NTOHL(data_.serv_port);
-  NTOHL(data_.firewall);
+  //NTOHL(data_.firewall);
   NTOHS(data_.pmare_type);
-//  NTOHS(data_.tcp_only);
+  NTOHS(data_.tcp_only);
   // no conversion: playername, password, description
   calc_size();
 }
@@ -104,8 +104,8 @@ void GMsg_Login::Dump(FILE* f, int indent) const
   INDENT(indent, f);
  _ftprintf(f, _T("<GMsg_Login[%p,%d]: "), this, sizeof(GMsg_Login));
   if (ByteOrder() == ByteOrder::HOST) {
-   _ftprintf(f, _T("pmare_type=%u version=%d/%d name='%s' hash=<NOT PRINTED> servport=%d firewall=%d>\n"),
-	    PMareType(), Version(), SubVersion(), PlayerName(), ServerPort(), Firewall());
+   _ftprintf(f, _T("pmare_type=%u version=%d/%d name='%s' hash=<NOT PRINTED> servport=%d tcp_only=%d>\n"),
+	    PMareType(), Version(), SubVersion(), PlayerName(), ServerPort(), TCPOnly());
   }
   else {
    _ftprintf(f, _T("(network order)>\n"));

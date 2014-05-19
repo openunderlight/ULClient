@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C++ Express 2010
+# Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AgentSvc", "..\AgentSvc\AgentSvc.vcxproj", "{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AgentSvr", "..\AgentSvr\AgentSvr.vcxproj", "{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}"
@@ -48,8 +48,7 @@ Global
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Dev Pmare|Win32.Build.0 = Debug|Win32
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Development|Win32.ActiveCfg = Debug|Win32
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Development|Win32.Build.0 = Debug|Win32
-		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Gamemaster|Win32.ActiveCfg = Unicode|Win32
-		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Gamemaster|Win32.Build.0 = Unicode|Win32
+		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Gamemaster|Win32.ActiveCfg = Release|Win32
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Master|Win32.ActiveCfg = Release|Win32
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Master|Win32.Build.0 = Release|Win32
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Pmare|Win32.ActiveCfg = Unicode|Win32

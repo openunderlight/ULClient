@@ -40,10 +40,10 @@ INLINE int GMsg_Login::ServerPort() const
   return data_.serv_port;
 }
 
-INLINE int GMsg_Login::Firewall() const
-{
-  return data_.firewall;
-}
+//INLINE int GMsg_Login::Firewall() const
+//{
+//  return data_.firewall;
+//}
 
 
 INLINE short GMsg_Login::PMareType() const
@@ -52,8 +52,8 @@ INLINE short GMsg_Login::PMareType() const
 }
 
 
-//INLINE short GMsg_Login::TCPOnly() const
-//{  return data_.tcp_only; }
+INLINE short GMsg_Login::TCPOnly() const
+{  return data_.tcp_only; }
 
 INLINE void GMsg_Login::SetVersion(int version)
 {
@@ -70,10 +70,10 @@ INLINE void GMsg_Login::SetServerPort(int serv_port)
   data_.serv_port = serv_port;
 }
 
-INLINE void GMsg_Login::SetFirewall(int firewall)
-{
-  data_.firewall = firewall;
-}
+//INLINE void GMsg_Login::SetFirewall(int firewall)
+//{
+//  data_.firewall = firewall;
+//}
 
 
 INLINE void GMsg_Login::SetPMareType(short pmare_type)
@@ -81,5 +81,5 @@ INLINE void GMsg_Login::SetPMareType(short pmare_type)
   data_.pmare_type = pmare_type;
 }
 
-//INLINE void GMsg_Login::SetTCPOnly(short tcp_only)
-// {  data_.tcp_only = tcp_only;  }
+INLINE void GMsg_Login::SetTCPOnly(short tcp_only)
+ {  data_.tcp_only = tcp_only;  }

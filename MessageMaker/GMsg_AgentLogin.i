@@ -16,6 +16,11 @@ INLINE int GMsg_AgentLogin::Version() const
   return data_.version;
 }
 
+INLINE short GMsg_AgentLogin::TCPOnly() const 
+{
+	return data_.tcp_only;
+}
+
 INLINE const TCHAR* GMsg_AgentLogin::PlayerName() const
 {
   return data_.playername;
@@ -54,4 +59,8 @@ INLINE void GMsg_AgentLogin::SetServerPort(int serv_port)
 INLINE void GMsg_AgentLogin::SetBillingID(lyra_id_t billing_id)
 {
   data_.billing_id = billing_id;
+}
+INLINE void GMsg_AgentLogin::SetTCPOnly(short tcp_only)
+{
+  data_.tcp_only = tcp_only;
 }

@@ -1,8 +1,7 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
+// Microsoft Visual C++ generated include file.
 // Used by Underlight.rc
 //
-#define IDC_STATIC						-1
 #define RESID_TOOLBOX_BITMAP            1
 #define IDS_LP                          1
 #define IDS_MP                          2
@@ -375,6 +374,7 @@
 #define IDC_BPP_32                      1435
 #define IDC_BPP_GP                      1437
 #define IDC_SERVER_GP                   1438
+#define IDC_TCP_ONLY                    1441
 #define IDC_OK                          1800
 #define IDC_CANCEL                      1801
 #define IDC_FIREWALL_FAQ                1801
@@ -2801,6 +2801,7 @@
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
+#define IDC_STATIC                      -1
 
 // Next default values for new objects
 // 
@@ -2809,7 +2810,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        198
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1441
+#define _APS_NEXT_CONTROL_VALUE         1442
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

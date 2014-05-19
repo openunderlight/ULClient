@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -7,19 +7,17 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "windows.h"
+#include "afxres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -27,123 +25,85 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 //
 
 IDD_LOGIN DIALOGEX 0, 0, 415, 246
-STYLE DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CLIENTEDGE
 CAPTION 
 "                                                           Welcome to Underlight"
-
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    EDITTEXT        IDC_AGREEMENT_TEXT,7,104,399,107,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
-    COMBOBOX        IDC_USERNAME,62,215,75,53,CBS_DROPDOWN | WS_VSCROLL | 
-                    WS_TABSTOP
-    EDITTEXT        IDC_PASSWORD,184,215,41,12,ES_PASSWORD | NOT WS_VISIBLE,
-                    WS_EX_STATICEDGE
-    COMBOBOX        IDC_PMARE_LIST,272,215,141,42,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_AGREEMENT_TEXT,7,104,399,107,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
+    COMBOBOX        IDC_USERNAME,62,215,75,53,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PASSWORD,184,215,41,12,ES_PASSWORD | NOT WS_VISIBLE,WS_EX_STATICEDGE
+    COMBOBOX        IDC_PMARE_LIST,272,215,141,42,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "I Agree, Let Me In! ",IDC_OK,16,232,69,14
     PUSHBUTTON      "Underlight Wiki",IDC_MANUAL,118,232,69,14
     PUSHBUTTON      "Donate",IDC_BILLING,220,232,69,14
     PUSHBUTTON      "Quit",IDC_CANCEL,322,232,69,14
-    CONTROL         "640x480 (fastest)",IDC_GRAPHIC_RES640,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,81,76,65,9
-    CONTROL         "800x600",IDC_GRAPHIC_RES800,"Button",BS_AUTORADIOBUTTON | 
-                    WS_TABSTOP,149,76,40,9
-    CONTROL         "1024x768 (best quality)",IDC_GRAPHIC_RES1024,"Button",
-                    BS_AUTORADIOBUTTON | WS_TABSTOP,191,76,110,9
-    EDITTEXT        IDC_IP_ADDRESS,63,88,48,12,ES_AUTOHSCROLL | NOT 
-                    WS_VISIBLE
-    CONTROL         "Live",IDC_LIVE_SERVER,"Button",BS_AUTORADIOBUTTON | NOT 
-                    WS_VISIBLE | WS_TABSTOP,158,90,30,10
-    CONTROL         "Debug Server:",IDC_DEBUG,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,188,90,56,10
-    CONTROL         "Networking:",IDC_NETWORK,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,257,90,46,10
-    CONTROL         "Exclusive Mode:",IDC_EXCLUSIVE,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,321,10,75,10
-    CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,321,20,75,10
-    CONTROL         "Start with Training:",IDC_TRAINING,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,30,75,10
-    CONTROL         "Add Extra Scroll:",IDC_EXTRA_SCROLL,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,40,75,10
-    CONTROL         "Use UDP Proxy:",IDC_UDP_PROXY,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,321,50,75,8
+    CONTROL         "640x480 (fastest)",IDC_GRAPHIC_RES640,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,81,76,65,9
+    CONTROL         "800x600",IDC_GRAPHIC_RES800,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,149,76,40,9
+    CONTROL         "1024x768 (best quality)",IDC_GRAPHIC_RES1024,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,191,76,110,9
+    EDITTEXT        IDC_IP_ADDRESS,63,88,48,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    CONTROL         "Live",IDC_LIVE_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,158,90,30,10
+    CONTROL         "Debug Server:",IDC_DEBUG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,188,90,56,10
+    CONTROL         "Networking:",IDC_NETWORK,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,257,90,46,10
+    CONTROL         "Exclusive Mode:",IDC_EXCLUSIVE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,10,75,10
+    CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,20,75,10
+    CONTROL         "Start with Training:",IDC_TRAINING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,30,75,10
+    CONTROL         "Add Extra Scroll:",IDC_EXTRA_SCROLL,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,40,75,10
+    CONTROL         "TCP Only",IDC_TCP_ONLY,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,50,75,8
     EDITTEXT        IDC_BIND_TCP,374,60,24,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_BIND_UDP,374,72,24,12,ES_AUTOHSCROLL
     PUSHBUTTON      "Explain Launch Options",IDC_LAUNCH_OPTIONS,320,86,81,11
     GROUPBOX        "Launch Options",IDC_STATIC,315,0,91,99
-    LTEXT           "First time players : Make sure you have gone to http://billing.lyrastudios.com to register for a Lyra account AND an Underlight account. Then, enter your Underlight account name and password (in the email sent to you), read the agreement below, and play!",
-                    IDC_STATIC,6,4,291,25
-    LTEXT           "Returning players: Please go to http://billing.lyrastudios.com if you wish to create new Underlight accounts, activate or deactivate Underlight accounts or Underlight game options, or change your billing options.",
-                    IDC_STATIC,6,33,291,26
+    LTEXT           "First time players : Make sure you have gone to http://billing.lyrastudios.com to register for a Lyra account AND an Underlight account. Then, enter your Underlight account name and password (in the email sent to you), read the agreement below, and play!",IDC_STATIC,6,4,291,25
+    LTEXT           "Returning players: Please go to http://billing.lyrastudios.com if you wish to create new Underlight accounts, activate or deactivate Underlight accounts or Underlight game options, or change your billing options.",IDC_STATIC,6,33,291,26
     LTEXT           "Character Name:",IDC_USERNAME_STATIC,8,217,55,8
     LTEXT           "Password:",IDC_STATIC,143,217,35,8
-    CONTROL         "Dev",IDC_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT 
-                    WS_VISIBLE | WS_TABSTOP,126,90,30,10
+    CONTROL         "Dev",IDC_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,126,90,30,10
     PUSHBUTTON      "Configure Voice Setup",IDC_ROGERWILCO,17,108,69,14
     CONTROL         "Enable Real-Time Voice (Roger Wilco)",IDC_ENABLE_RW,
-                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_MULTILINE | 
-                    WS_TABSTOP,126,102,75,17
-    CONTROL         "Specify IP: ",IDC_SPECIFY_SERVER,"Button",
-                    BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,20,89,
-                    46,10
+                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_MULTILINE | WS_TABSTOP,126,102,75,17
+    CONTROL         "Specify IP: ",IDC_SPECIFY_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,20,89,46,10
     LTEXT           "Mare Type:",IDC_STATIC_PMARE,233,217,37,8
-    LTEXT           "The City of Dreams awaits you...",IDC_URL,276,216,104,
-                    14
-    CONTROL         "Restart at Last Location",IDC_LAST_LOCATION,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,6,89,86,10
+    LTEXT           "The City of Dreams awaits you...",IDC_URL,276,216,104,14
+    CONTROL         "Restart at Last Location",IDC_LAST_LOCATION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,89,86,10
     LTEXT           "Graphics Resolution:",IDC_STATIC,6,76,67,9
     LTEXT           "Bind TCP Port:",IDC_STATIC,322,61,48,9
     LTEXT           "Bind UDP Port:",IDC_STATIC,322,74,48,8
-    LTEXT           "Windows XP users: do not run Underlight in Windows 95 compatibility mode",
-                    IDC_STATIC,6,63,291,11
+    LTEXT           "Windows XP users: do not run Underlight in Windows 95 compatibility mode",IDC_STATIC,6,63,291,11
 END
 
 IDD_ACCEPTREJECT DIALOGEX 0, 0, 169, 54
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    PUSHBUTTON      "A)ccept",IDC_ACCEPT,25,36,50,14,NOT WS_TABSTOP,
-                    WS_EX_STATICEDGE
-    PUSHBUTTON      "R)eject",IDC_REJECT,89,36,50,14,NOT WS_TABSTOP,
-                    WS_EX_STATICEDGE
+    PUSHBUTTON      "A)ccept",IDC_ACCEPT,25,36,50,14,NOT WS_TABSTOP,WS_EX_STATICEDGE
+    PUSHBUTTON      "R)eject",IDC_REJECT,89,36,50,14,NOT WS_TABSTOP,WS_EX_STATICEDGE
     LTEXT           "",IDC_ACCEPTREJECT_TEXT,9,3,151,30
 END
 
 IDD_TALK DIALOGEX 0, 0, 306, 60
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
-FONT 8, "Arial"
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+FONT 8, "Arial", 0, 0, 0x1
 BEGIN
-    EDITTEXT        IDC_SPEECH,0,0,243,34,ES_MULTILINE | ES_WANTRETURN,
-                    WS_EX_DLGMODALFRAME | WS_EX_STATICEDGE
-    CONTROL         "Talk",IDC_TALK,"Button",BS_AUTORADIOBUTTON | WS_GROUP | 
-                    WS_TABSTOP,0,35,30,9
-    CONTROL         "Shout",IDC_SHOUT,"Button",BS_AUTORADIOBUTTON | 
-                    WS_TABSTOP,32,35,35,9,WS_EX_NOPARENTNOTIFY
-    CONTROL         "Emote",IDC_EMOTE,"Button",BS_AUTORADIOBUTTON | 
-                    BS_NOTIFY | WS_TABSTOP,71,35,40,9
-    CONTROL         "Whisper  to",IDC_WHISPER,"Button",BS_AUTORADIOBUTTON | 
-                    WS_TABSTOP,114,35,58,9
+    EDITTEXT        IDC_SPEECH,0,0,243,34,ES_MULTILINE | ES_WANTRETURN,WS_EX_DLGMODALFRAME | WS_EX_STATICEDGE
+    CONTROL         "Talk",IDC_TALK,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,0,35,30,9
+    CONTROL         "Shout",IDC_SHOUT,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,32,35,35,9,WS_EX_NOPARENTNOTIFY
+    CONTROL         "Emote",IDC_EMOTE,"Button",BS_AUTORADIOBUTTON | BS_NOTIFY | WS_TABSTOP,71,35,40,9
+    CONTROL         "Whisper  to",IDC_WHISPER,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,114,35,58,9
     PUSHBUTTON      "Speak",IDC_SPEAK,246,4,45,13
     PUSHBUTTON      "Cancel",IDC_CANCEL,246,22,45,13
-    LISTBOX         IDC_NEIGHBORS,171,34,70,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
+    LISTBOX         IDC_NEIGHBORS,171,34,70,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     PUSHBUTTON      "Macros",IDC_MACROS,246,40,45,13
-    CONTROL         "Raw Emote",IDC_RAW_EMOTE,"Button",BS_AUTORADIOBUTTON | 
-                    BS_NOTIFY | NOT WS_VISIBLE | WS_TABSTOP,164,49,56,9
-    CONTROL         "Send",IDC_SPECIAL_TALK,"Button",BS_AUTORADIOBUTTON,0,46,
-                    37,9
-    LISTBOX         IDC_SPECIAL_TALKLIST,37,45,57,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
+    CONTROL         "Raw Emote",IDC_RAW_EMOTE,"Button",BS_AUTORADIOBUTTON | BS_NOTIFY | NOT WS_VISIBLE | WS_TABSTOP,164,49,56,9
+    CONTROL         "Send",IDC_SPECIAL_TALK,"Button",BS_AUTORADIOBUTTON,0,46,37,9
+    LISTBOX         IDC_SPECIAL_TALKLIST,37,45,57,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     LTEXT           "Report",IDC_REPORT,97,46,34,9
 END
 
 IDD_HELP DIALOGEX 0, 0, 293, 65
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
@@ -152,40 +112,25 @@ BEGIN
 END
 
 IDD_OPTIONS DIALOGEX 0, 0, 351, 100
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    CONTROL         "Reverse Stereo",IDC_REVERSESTEREO,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,7,20,63,10
-    CONTROL         "Reject All Parties",IDC_AUTOREJECT,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,9,33,61,10
-    CONTROL         "Rejoin Parties",IDC_AUTOREJOIN,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,8,46,62,10
-    CONTROL         "Log Chat",IDC_CHATLOG,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,25,59,45,10
-    CONTROL         "Multi-Line Chat: ",IDC_MULTILINE,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,3,72,67,10
-    CONTROL         "Invert Mouse:",IDC_INVERTMOUSE,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,11,85,59,10
-    CONTROL         "Name Tags:",IDC_NAMETAGS,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,111,5,55,10
-    CONTROL         "FootSteps: ",IDC_FOOTSTEPS,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,113,17,53,10
-    CONTROL         "Profanity Filter:",IDC_PROFANITY_FILTER,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,98,40,68,10
-    CONTROL         "Sound Effects:",IDC_SOUND_ACTIVE,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,103,66,63,10
-    LISTBOX         IDC_SPEECHCOLOR,270,0,67,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_MESSAGECOLOR,270,14,67,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_BGCOLOR,270,28,67,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    CONTROL         "Slider1",IDC_EFFECTS_VOLUME,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,276,43,31,10
-    CONTROL         "Slider1",IDC_TURNSPEED,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,276,65,31,10
+    CONTROL         "Reverse Stereo",IDC_REVERSESTEREO,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,7,20,63,10
+    CONTROL         "Reject All Parties",IDC_AUTOREJECT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,9,33,61,10
+    CONTROL         "Rejoin Parties",IDC_AUTOREJOIN,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,8,46,62,10
+    CONTROL         "Log Chat",IDC_CHATLOG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,25,59,45,10
+    CONTROL         "Multi-Line Chat: ",IDC_MULTILINE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,3,72,67,10
+    CONTROL         "Invert Mouse:",IDC_INVERTMOUSE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,11,85,59,10
+    CONTROL         "Name Tags:",IDC_NAMETAGS,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,111,5,55,10
+    CONTROL         "FootSteps: ",IDC_FOOTSTEPS,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,113,17,53,10
+    CONTROL         "Profanity Filter:",IDC_PROFANITY_FILTER,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,98,40,68,10
+    CONTROL         "Sound Effects:",IDC_SOUND_ACTIVE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,103,66,63,10
+    LISTBOX         IDC_SPEECHCOLOR,270,0,67,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_MESSAGECOLOR,270,14,67,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_BGCOLOR,270,28,67,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    CONTROL         "Slider1",IDC_EFFECTS_VOLUME,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,276,43,31,10
+    CONTROL         "Slider1",IDC_TURNSPEED,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,276,65,31,10
     PUSHBUTTON      "OK",IDC_OK,84,81,45,14,NOT WS_TABSTOP
     PUSHBUTTON      "Cancel",IDC_CANCEL,153,81,45,14,NOT WS_TABSTOP
     PUSHBUTTON      "Configure Keyboard",IDC_KEYBOARD,222,81,90,14
@@ -199,64 +144,50 @@ BEGIN
     LTEXT           "Effects Volume:",IDC_EFFECTS_VOL,202,42,49,10
     LTEXT           "Low",IDC_LOW,260,47,16,10
     LTEXT           "High",IDC_HIGH,310,47,16,10
-    CONTROL         "Background Music:",IDC_BGMUSIC_ACTIVE,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,88,53,78,10
+    CONTROL         "Background Music:",IDC_BGMUSIC_ACTIVE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,88,53,78,10
     LTEXT           "Music Volume:",IDC_MUSIC_VOL,202,53,47,10
-    CONTROL         "Slider1",IDC_MUSIC_VOLUME,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,276,54,31,10
+    CONTROL         "Slider1",IDC_MUSIC_VOLUME,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,276,54,31,10
 END
 
 IDD_AGENT_LOGIN DIALOGEX 0, 0, 224, 86
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "Username:",IDC_USERNAME_STATIC,18,28,41,8
     EDITTEXT        IDC_AGENT_USERNAME,65,25,91,14,0,WS_EX_STATICEDGE
     LTEXT           "Password:",IDC_STATIC,16,46,43,8
-    EDITTEXT        IDC_AGENT_PASSWORD,65,44,91,14,ES_PASSWORD,
-                    WS_EX_STATICEDGE
+    EDITTEXT        IDC_AGENT_PASSWORD,65,44,91,14,ES_PASSWORD,WS_EX_STATICEDGE
     LTEXT           "Server IP:",IDC_STATIC,18,66,41,8
-    EDITTEXT        IDC_AGENT_SERVER,65,63,91,14,ES_AUTOHSCROLL,
-                    WS_EX_STATICEDGE
+    EDITTEXT        IDC_AGENT_SERVER,65,63,91,14,ES_AUTOHSCROLL,WS_EX_STATICEDGE
     LTEXT           "Agent Controller Login Screen",IDC_STATIC,43,6,113,11
     DEFPUSHBUTTON   "Start",IDC_OK,167,28,30,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,167,53,30,14
 END
 
 IDD_META DIALOGEX 0, 0, 125, 89
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    PUSHBUTTON      "Return to the Underlight",IDC_RETURN,18,7,89,11,NOT 
-                    WS_TABSTOP
-    PUSHBUTTON      "Underlight Help",IDC_GOTOHELP,18,22,89,11,NOT 
-                    WS_TABSTOP
-    PUSHBUTTON      "Underlight Options",IDC_GOTOOPTIONS,18,37,89,11,NOT 
-                    WS_TABSTOP
-    PUSHBUTTON      "Underlight Credits",IDC_GOTOCREDITS,18,52,89,11,NOT 
-                    WS_TABSTOP
-    DEFPUSHBUTTON   "Exit the Underlight",IDC_EXIT,18,67,89,11,NOT 
-                    WS_TABSTOP
+    PUSHBUTTON      "Return to the Underlight",IDC_RETURN,18,7,89,11,NOT WS_TABSTOP
+    PUSHBUTTON      "Underlight Help",IDC_GOTOHELP,18,22,89,11,NOT WS_TABSTOP
+    PUSHBUTTON      "Underlight Options",IDC_GOTOOPTIONS,18,37,89,11,NOT WS_TABSTOP
+    PUSHBUTTON      "Underlight Credits",IDC_GOTOCREDITS,18,52,89,11,NOT WS_TABSTOP
+    DEFPUSHBUTTON   "Exit the Underlight",IDC_EXIT,18,67,89,11,NOT WS_TABSTOP
 END
 
 IDD_CREATE_ITEM DIALOGEX 0, 0, 365, 100
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_ITEM_NAME,36,14,119,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_CHARGES,36,28,28,12,ES_AUTOHSCROLL
-    CONTROL         " Artifact",IDC_ITEM_ARTIFACT,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,313,13,44,10
+    CONTROL         " Artifact",IDC_ITEM_ARTIFACT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,313,13,44,10
     PUSHBUTTON      "Help",IDC_ITEMHELP,307,73,45,14
-    CONTROL         "Always send state",IDC_ITEM_FLAG1,"Button",
-                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,78,70,73,
-                    10
-    CONTROL         "Immutable",IDC_ITEM_FLAG2,"Button",BS_AUTOCHECKBOX | 
-                    NOT WS_VISIBLE,85,70,59,10
-    CONTROL         "Change charges",IDC_ITEM_FLAG3,"Button",BS_AUTOCHECKBOX | 
-                    NOT WS_VISIBLE,77,71,65,8
+    CONTROL         "Always send state",IDC_ITEM_FLAG1,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,78,70,73,10
+    CONTROL         "Immutable",IDC_ITEM_FLAG2,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE,85,70,59,10
+    CONTROL         "Change charges",IDC_ITEM_FLAG3,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE,77,71,65,8
     DEFPUSHBUTTON   "OK",IDC_OK,307,35,45,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,307,54,45,14
     LTEXT           "Graphic",IDC_GRAPHIC_HEADER,65,30,36,11
@@ -264,280 +195,153 @@ BEGIN
     LTEXT           "Name",IDC_NAME_HEADER,0,16,23,8
     LTEXT           "Charges",IDC_CHARGES_HEADER,0,30,32,11
     RTEXT           "Function Type",IDC_FUNCTION_STATIC,161,17,50,11
-    RTEXT           "Velocity",IDC_PROPERTY1_HEADER,161,32,50,11,NOT 
-                    WS_VISIBLE
-    RTEXT           "Effect",IDC_PROPERTY2_HEADER,161,46,50,11,NOT 
-                    WS_VISIBLE
-    RTEXT           "Damage",IDC_PROPERTY3_HEADER,161,60,50,11,NOT 
-                    WS_VISIBLE
-    RTEXT           "Bitmap ID",IDC_PROPERTY4_HEADER,161,74,50,11,NOT 
-                    WS_VISIBLE
-    RTEXT           "Reserved",IDC_PROPERTY5_HEADER,161,88,50,11,NOT 
-                    WS_VISIBLE
+    RTEXT           "Velocity",IDC_PROPERTY1_HEADER,161,32,50,11,NOT WS_VISIBLE
+    RTEXT           "Effect",IDC_PROPERTY2_HEADER,161,46,50,11,NOT WS_VISIBLE
+    RTEXT           "Damage",IDC_PROPERTY3_HEADER,161,60,50,11,NOT WS_VISIBLE
+    RTEXT           "Bitmap ID",IDC_PROPERTY4_HEADER,161,74,50,11,NOT WS_VISIBLE
+    RTEXT           "Reserved",IDC_PROPERTY5_HEADER,161,88,50,11,NOT WS_VISIBLE
     LTEXT           "Forge Talisman",IDC_FORGE_STATIC,0,0,93,10
-    LTEXT           "Strength",IDC_STRENGTH_HEADER,161,31,50,8,NOT 
-                    WS_VISIBLE
+    LTEXT           "Strength",IDC_STRENGTH_HEADER,161,31,50,8,NOT WS_VISIBLE
     LTEXT           "From",IDC_FROM_HEADER,161,45,50,8,NOT WS_VISIBLE
     LTEXT           "To",IDC_TO_HEADER,161,59,50,8,NOT WS_VISIBLE
     LTEXT           "Guilds",IDC_GUILDS_HEADER,161,73,33,8,NOT WS_VISIBLE
     LTEXT           "Stat",IDC_STAT_HEADER,161,31,50,8,NOT WS_VISIBLE
-    LTEXT           "Modifier",IDC_MODIFIER_HEADER,161,45,50,8,NOT 
-                    WS_VISIBLE
+    LTEXT           "Modifier",IDC_MODIFIER_HEADER,161,45,50,8,NOT WS_VISIBLE
     LTEXT           "Effect",IDC_EFFECT2_HEADER,161,31,50,8,NOT WS_VISIBLE
-    LTEXT           "Duration",IDC_DURATION_HEADER,161,45,50,8,NOT 
-                    WS_VISIBLE
+    LTEXT           "Duration",IDC_DURATION_HEADER,161,45,50,8,NOT WS_VISIBLE
     LTEXT           "",IDC_FORGE_TEXT,1,58,135,41
-    LISTBOX         IDC_GRAPHIC_COMBO,104,28,51,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_COLOR_COMBO1,36,43,55,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_TYPE_COMBO,218,16,84,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_COLOR_COMBO2,100,43,55,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_PROPERTY1,218,30,84,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_PROPERTY2,218,44,84,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_PROPERTY3,218,58,84,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_PROPERTY4,218,72,84,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_PROPERTY5,218,85,84,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    CONTROL         "Tab1",IDC_FUNCTION_TAB,"SysTabControl32",0x0,157,0,148,
-                    97
-    CONTROL         "Describe",IDC_ITEM_DESCRIP,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,308,3,49,10
+    LISTBOX         IDC_GRAPHIC_COMBO,104,28,51,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_COLOR_COMBO1,36,43,55,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_TYPE_COMBO,218,16,84,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_COLOR_COMBO2,100,43,55,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_PROPERTY1,218,30,84,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_PROPERTY2,218,44,84,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_PROPERTY3,218,58,84,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_PROPERTY4,218,72,84,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_PROPERTY5,218,85,84,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    CONTROL         "Tab1",IDC_FUNCTION_TAB,"SysTabControl32",0x0,157,0,148,97
+    CONTROL         "Describe",IDC_ITEM_DESCRIP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,308,3,49,10
     LTEXT           "Quest Item Definition",IDC_QUEST_STATIC,0,0,87,10
-    CONTROL         "Any Charges",IDC_ANY_CHARGES,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,2,12,62,17
+    CONTROL         "Any Charges",IDC_ANY_CHARGES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,2,12,62,17
 END
 
 IDD_KEYBOARD_CONFIG DIALOGEX 0, 0, 409, 100
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LISTBOX         IDC_KEY_EFFECT_COMBO,242,16,162,60,LBS_NOINTEGRALHEIGHT | 
-                    LBS_MULTICOLUMN | WS_TABSTOP
+    LISTBOX         IDC_KEY_EFFECT_COMBO,242,16,162,60,LBS_NOINTEGRALHEIGHT | LBS_MULTICOLUMN | WS_TABSTOP
     PUSHBUTTON      "Show Used Keys",IDC_SHOWALL,173,81,59,14
     PUSHBUTTON      "More Keys",IDC_SHOWNUMPAD,267,81,43,14
     PUSHBUTTON      "OK",IDC_OK,355,81,45,14,NOT WS_TABSTOP
-    CONTROL         "Esc",IDC_ESC,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE | WS_DISABLED,3,3,15,14
-    CONTROL         "`",IDC_BACKQUOTE,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,
-                    3,20,15,14
-    CONTROL         "Tab",IDC_TAB,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    WS_DISABLED,3,35,21,14
-    CONTROL         "1",IDC_1,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,19,20,
-                    15,14
-    CONTROL         "2",IDC_2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,35,20,
-                    15,14
-    CONTROL         "3",IDC_3,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,51,20,
-                    15,14
-    CONTROL         "4",IDC_4,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,67,20,
-                    15,14
-    CONTROL         "5",IDC_5,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,83,20,
-                    15,14
-    CONTROL         "6",IDC_6,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,99,20,
-                    15,14
-    CONTROL         "7",IDC_7,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,115,20,
-                    15,14
-    CONTROL         "8",IDC_8,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,131,20,
-                    15,14
-    CONTROL         "9",IDC_9,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,147,20,
-                    15,14
-    CONTROL         "0",IDC_0,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,163,20,
-                    15,14
-    CONTROL         "-",IDC_MINUS,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,179,
-                    20,15,14
-    CONTROL         "=",IDC_EQUAL,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,195,
-                    20,15,14
-    CONTROL         "Bksp",IDC_BACKSPACE,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE,211,20,24,14
-    CONTROL         "Ins",IDC_INSERT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,19,80,32,14
-    CONTROL         "Hm",IDC_HOME,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,19,35,15,14
-    CONTROL         "F1",IDC_F1,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT 
-                    WS_VISIBLE | WS_DISABLED,21,3,15,14
-    CONTROL         "F2",IDC_F2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT 
-                    WS_VISIBLE | WS_DISABLED,42,3,15,14
-    CONTROL         "F3",IDC_F3,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT 
-                    WS_VISIBLE | WS_DISABLED,58,3,15,14
-    CONTROL         "F4",IDC_F4,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT 
-                    WS_VISIBLE | WS_DISABLED,74,3,15,14
-    CONTROL         "F5",IDC_F5,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT 
-                    WS_VISIBLE | WS_DISABLED,90,3,15,14
-    CONTROL         "F6",IDC_F6,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT 
-                    WS_VISIBLE | WS_DISABLED,106,3,15,14
-    CONTROL         "F7",IDC_F7,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT 
-                    WS_VISIBLE | WS_DISABLED,124,3,15,14
-    CONTROL         "F8",IDC_F8,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT 
-                    WS_VISIBLE | WS_DISABLED,140,3,15,14
-    CONTROL         "F9",IDC_F9,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT 
-                    WS_VISIBLE | WS_DISABLED,162,3,15,14
-    CONTROL         "F10",IDC_F10,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE | WS_DISABLED,178,3,15,14
-    CONTROL         "F11",IDC_F11,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE | WS_DISABLED,194,3,15,14
-    CONTROL         "F12",IDC_F12,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE | WS_DISABLED,210,3,15,14
-    CONTROL         "PgU",IDC_PAGEUP,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,51,35,15,14
-    CONTROL         "Q",IDC_Q,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,25,35,
-                    15,14
-    CONTROL         "W",IDC_W,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,41,35,
-                    15,14
-    CONTROL         "E",IDC_E,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,57,35,
-                    15,14
-    CONTROL         "R",IDC_R,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,73,35,
-                    15,14
-    CONTROL         "T",IDC_T,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,89,35,
-                    15,14
-    CONTROL         "Y",IDC_Y,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,105,35,
-                    15,14
-    CONTROL         "U",IDC_U,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,121,35,
-                    15,14
-    CONTROL         "I",IDC_I,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,137,35,
-                    15,14
-    CONTROL         "O",IDC_O,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,153,35,
-                    15,14
-    CONTROL         "P",IDC_P,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,169,35,
-                    15,14
-    CONTROL         "[",IDC_LTBRACKET,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,
-                    185,35,15,14
-    CONTROL         "]",IDC_RTBRACKET,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,
-                    201,35,15,14
-    CONTROL         "\\",IDC_BACKSLASH,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE,217,35,15,14
-    CONTROL         "Del",IDC_DELETE,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,51,80,15,14
-    CONTROL         "End",IDC_END,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,19,65,15,14
-    CONTROL         "PgD",IDC_PAGEDOWN,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE | NOT WS_VISIBLE,51,65,15,14
-    CONTROL         "Caps",IDC_CAPLOCK,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE | WS_DISABLED,3,50,26,14
-    CONTROL         "A",IDC_A,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,30,50,
-                    15,14
-    CONTROL         "S",IDC_S,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,46,50,
-                    15,14
-    CONTROL         "D",IDC_D,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,62,50,
-                    15,14
-    CONTROL         "F",IDC_F,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,78,50,
-                    15,14
-    CONTROL         "G",IDC_G,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,94,50,
-                    15,14
-    CONTROL         "H",IDC_H,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,110,50,
-                    15,14
-    CONTROL         "J",IDC_J,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,126,50,
-                    15,14
-    CONTROL         "K",IDC_K,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,142,50,
-                    15,14
-    CONTROL         "L",IDC_L,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,158,50,
-                    15,14
-    CONTROL         ";",IDC_COLON,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,174,
-                    50,15,14
-    CONTROL         "'",IDC_QUOTE,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,190,
-                    50,15,14
-    CONTROL         "Enter",IDC_KEYRETURN,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE | WS_DISABLED,206,50,25,14
-    CONTROL         "Shift",IDC_SHIFT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,
-                    3,65,30,14
-    CONTROL         "Z",IDC_Z,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,34,65,
-                    15,14
-    CONTROL         "X",IDC_X,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,50,65,
-                    15,14
-    CONTROL         "C",IDC_C,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,66,65,
-                    15,14
-    CONTROL         "V",IDC_V,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,82,65,
-                    15,14
-    CONTROL         "B",IDC_B,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,98,65,
-                    15,14
-    CONTROL         "N",IDC_N,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,114,65,
-                    15,14
-    CONTROL         "M",IDC_M,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,130,65,
-                    15,14
-    CONTROL         ",",IDC_COMMA,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,146,
-                    65,15,14
-    CONTROL         ".",IDC_PERIOD,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,
-                    162,65,15,14
-    CONTROL         "/",IDC_SLASH,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    BS_NOTIFY,178,65,15,14
-    CONTROL         "Ctrl",IDC_LTCTRL,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,
-                    3,80,29,14
-    CONTROL         "Alt",IDC_ALT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,33,
-                    80,29,14
-    CONTROL         "Spacebar",IDC_SPACE,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE,63,80,86,14
-    CONTROL         "Up",IDC_UP,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT 
-                    WS_VISIBLE,35,35,15,14
-    CONTROL         "Lt",IDC_LEFT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,19,50,15,14
-    CONTROL         "Dn",IDC_DOWN,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,35,65,15,14
-    CONTROL         "Rt",IDC_RIGHT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,51,50,15,14
+    CONTROL         "Esc",IDC_ESC,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,3,3,15,14
+    CONTROL         "`",IDC_BACKQUOTE,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,3,20,15,14
+    CONTROL         "Tab",IDC_TAB,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_DISABLED,3,35,21,14
+    CONTROL         "1",IDC_1,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,19,20,15,14
+    CONTROL         "2",IDC_2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,35,20,15,14
+    CONTROL         "3",IDC_3,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,51,20,15,14
+    CONTROL         "4",IDC_4,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,67,20,15,14
+    CONTROL         "5",IDC_5,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,83,20,15,14
+    CONTROL         "6",IDC_6,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,99,20,15,14
+    CONTROL         "7",IDC_7,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,115,20,15,14
+    CONTROL         "8",IDC_8,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,131,20,15,14
+    CONTROL         "9",IDC_9,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,147,20,15,14
+    CONTROL         "0",IDC_0,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,163,20,15,14
+    CONTROL         "-",IDC_MINUS,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,179,20,15,14
+    CONTROL         "=",IDC_EQUAL,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,195,20,15,14
+    CONTROL         "Bksp",IDC_BACKSPACE,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,211,20,24,14
+    CONTROL         "Ins",IDC_INSERT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,19,80,32,14
+    CONTROL         "Hm",IDC_HOME,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,19,35,15,14
+    CONTROL         "F1",IDC_F1,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,21,3,15,14
+    CONTROL         "F2",IDC_F2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,42,3,15,14
+    CONTROL         "F3",IDC_F3,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,58,3,15,14
+    CONTROL         "F4",IDC_F4,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,74,3,15,14
+    CONTROL         "F5",IDC_F5,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,90,3,15,14
+    CONTROL         "F6",IDC_F6,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,106,3,15,14
+    CONTROL         "F7",IDC_F7,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,124,3,15,14
+    CONTROL         "F8",IDC_F8,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,140,3,15,14
+    CONTROL         "F9",IDC_F9,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,162,3,15,14
+    CONTROL         "F10",IDC_F10,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,178,3,15,14
+    CONTROL         "F11",IDC_F11,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,194,3,15,14
+    CONTROL         "F12",IDC_F12,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,210,3,15,14
+    CONTROL         "PgU",IDC_PAGEUP,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,51,35,15,14
+    CONTROL         "Q",IDC_Q,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,25,35,15,14
+    CONTROL         "W",IDC_W,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,41,35,15,14
+    CONTROL         "E",IDC_E,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,57,35,15,14
+    CONTROL         "R",IDC_R,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,73,35,15,14
+    CONTROL         "T",IDC_T,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,89,35,15,14
+    CONTROL         "Y",IDC_Y,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,105,35,15,14
+    CONTROL         "U",IDC_U,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,121,35,15,14
+    CONTROL         "I",IDC_I,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,137,35,15,14
+    CONTROL         "O",IDC_O,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,153,35,15,14
+    CONTROL         "P",IDC_P,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,169,35,15,14
+    CONTROL         "[",IDC_LTBRACKET,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,185,35,15,14
+    CONTROL         "]",IDC_RTBRACKET,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,201,35,15,14
+    CONTROL         "\\",IDC_BACKSLASH,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,217,35,15,14
+    CONTROL         "Del",IDC_DELETE,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,51,80,15,14
+    CONTROL         "End",IDC_END,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,19,65,15,14
+    CONTROL         "PgD",IDC_PAGEDOWN,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,51,65,15,14
+    CONTROL         "Caps",IDC_CAPLOCK,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_DISABLED,3,50,26,14
+    CONTROL         "A",IDC_A,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,30,50,15,14
+    CONTROL         "S",IDC_S,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,46,50,15,14
+    CONTROL         "D",IDC_D,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,62,50,15,14
+    CONTROL         "F",IDC_F,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,78,50,15,14
+    CONTROL         "G",IDC_G,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,94,50,15,14
+    CONTROL         "H",IDC_H,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,110,50,15,14
+    CONTROL         "J",IDC_J,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,126,50,15,14
+    CONTROL         "K",IDC_K,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,142,50,15,14
+    CONTROL         "L",IDC_L,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,158,50,15,14
+    CONTROL         ";",IDC_COLON,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,174,50,15,14
+    CONTROL         "'",IDC_QUOTE,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,190,50,15,14
+    CONTROL         "Enter",IDC_KEYRETURN,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_DISABLED,206,50,25,14
+    CONTROL         "Shift",IDC_SHIFT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,3,65,30,14
+    CONTROL         "Z",IDC_Z,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,34,65,15,14
+    CONTROL         "X",IDC_X,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,50,65,15,14
+    CONTROL         "C",IDC_C,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,66,65,15,14
+    CONTROL         "V",IDC_V,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,82,65,15,14
+    CONTROL         "B",IDC_B,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,98,65,15,14
+    CONTROL         "N",IDC_N,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,114,65,15,14
+    CONTROL         "M",IDC_M,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,130,65,15,14
+    CONTROL         ",",IDC_COMMA,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,146,65,15,14
+    CONTROL         ".",IDC_PERIOD,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,162,65,15,14
+    CONTROL         "/",IDC_SLASH,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | BS_NOTIFY,178,65,15,14
+    CONTROL         "Ctrl",IDC_LTCTRL,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,3,80,29,14
+    CONTROL         "Alt",IDC_ALT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,33,80,29,14
+    CONTROL         "Spacebar",IDC_SPACE,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE,63,80,86,14
+    CONTROL         "Up",IDC_UP,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,35,35,15,14
+    CONTROL         "Lt",IDC_LEFT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,19,50,15,14
+    CONTROL         "Dn",IDC_DOWN,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,35,65,15,14
+    CONTROL         "Rt",IDC_RIGHT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,51,50,15,14
     LTEXT           "Underlight Functions",IDC_ULT_FUNCTIONS,246,4,107,9
-    CONTROL         "Clr",IDC_CLEAR,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,35,50,15,14
-    CONTROL         "Nm",IDC_NUMLOCK,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE | WS_DISABLED,19,20,15,14
-    CONTROL         "*",IDC_NUMMULT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,51,20,15,14
-    CONTROL         "/",IDC_NUMDIV,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,35,20,15,14
-    CONTROL         "-",IDC_NUMSUB,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,67,20,15,14
-    CONTROL         "+",IDC_NUMADD,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,67,35,15,29
-    CONTROL         "Ent",IDC_NUMRETURN,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,67,65,15,29
-    CONTROL         "0",IDC_NUM0,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,97,80,32,14
-    CONTROL         "7",IDC_NUM7,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,97,35,15,14
-    CONTROL         "9",IDC_NUM9,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,129,35,15,14
-    CONTROL         ".",IDC_DECIMAL,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,129,80,15,14
-    CONTROL         "1",IDC_NUM1,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,97,65,15,14
-    CONTROL         "3",IDC_NUM3,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,129,65,15,14
-    CONTROL         "8",IDC_NUM8,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,113,35,15,14
-    CONTROL         "4",IDC_NUM4,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,97,50,15,14
-    CONTROL         "2",IDC_NUM2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,113,65,15,14
-    CONTROL         "6",IDC_NUM6,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,129,50,15,14
-    CONTROL         "5",IDC_NUM5,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,113,50,15,14
-    CONTROL         "Nm",IDC_NUMLOCK2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE | WS_DISABLED,97,20,15,14
-    CONTROL         "*",IDC_NUMMULT2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE | WS_DISABLED,129,20,15,14
-    CONTROL         "/",IDC_NUMDIV2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE | WS_DISABLED,113,20,15,14
-    CONTROL         "-",IDC_NUMSUB2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE | WS_DISABLED,145,20,15,14
-    CONTROL         "+",IDC_NUMADD2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE | WS_DISABLED,145,35,15,29
-    CONTROL         "Ent",IDC_NUMRETURN2,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,145,65,15,29
+    CONTROL         "Clr",IDC_CLEAR,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,35,50,15,14
+    CONTROL         "Nm",IDC_NUMLOCK,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,19,20,15,14
+    CONTROL         "*",IDC_NUMMULT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,51,20,15,14
+    CONTROL         "/",IDC_NUMDIV,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,35,20,15,14
+    CONTROL         "-",IDC_NUMSUB,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,67,20,15,14
+    CONTROL         "+",IDC_NUMADD,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,67,35,15,29
+    CONTROL         "Ent",IDC_NUMRETURN,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,67,65,15,29
+    CONTROL         "0",IDC_NUM0,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,97,80,32,14
+    CONTROL         "7",IDC_NUM7,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,97,35,15,14
+    CONTROL         "9",IDC_NUM9,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,129,35,15,14
+    CONTROL         ".",IDC_DECIMAL,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,129,80,15,14
+    CONTROL         "1",IDC_NUM1,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,97,65,15,14
+    CONTROL         "3",IDC_NUM3,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,129,65,15,14
+    CONTROL         "8",IDC_NUM8,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,113,35,15,14
+    CONTROL         "4",IDC_NUM4,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,97,50,15,14
+    CONTROL         "2",IDC_NUM2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,113,65,15,14
+    CONTROL         "6",IDC_NUM6,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,129,50,15,14
+    CONTROL         "5",IDC_NUM5,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,113,50,15,14
+    CONTROL         "Nm",IDC_NUMLOCK2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,97,20,15,14
+    CONTROL         "*",IDC_NUMMULT2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,129,20,15,14
+    CONTROL         "/",IDC_NUMDIV2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,113,20,15,14
+    CONTROL         "-",IDC_NUMSUB2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,145,20,15,14
+    CONTROL         "+",IDC_NUMADD2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,145,35,15,29
+    CONTROL         "Ent",IDC_NUMRETURN2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE | WS_DISABLED,145,65,15,29
     PUSHBUTTON      "More Keys",IDC_SHOWMAINKEYS,267,82,43,14
-    CONTROL         "L",IDC_MOUSELEFT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | 
-                    NOT WS_VISIBLE,179,46,15,14
-    CONTROL         "M",IDC_MOUSEMIDDLE,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE | NOT WS_VISIBLE,195,46,15,14
-    CONTROL         "R",IDC_MOUSERIGHT,"Button",BS_AUTOCHECKBOX | 
-                    BS_PUSHLIKE | NOT WS_VISIBLE,211,46,15,14
-    LTEXT           "Mouse-Look maps",IDC_MOUSETEXT,171,31,59,8,NOT 
-                    WS_VISIBLE
+    CONTROL         "L",IDC_MOUSELEFT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,179,46,15,14
+    CONTROL         "M",IDC_MOUSEMIDDLE,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,195,46,15,14
+    CONTROL         "R",IDC_MOUSERIGHT,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | NOT WS_VISIBLE,211,46,15,14
+    LTEXT           "Mouse-Look maps",IDC_MOUSETEXT,171,31,59,8,NOT WS_VISIBLE
     PUSHBUTTON      "<",IDC_SCROLL_LEFT,379,5,11,11
     PUSHBUTTON      ">",IDC_SCROLL_RIGHT,391,5,11,11
     PUSHBUTTON      "Doom Layout",IDC_DOOMLAYOUT,40,2,66,13
@@ -545,104 +349,76 @@ BEGIN
 END
 
 IDD_CHOOSE_GUILD DIALOGEX 0, 0, 190, 91
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "OK",IDC_OK,135,33,33,14,NOT WS_TABSTOP
     PUSHBUTTON      "Cancel",IDC_CANCEL,135,63,34,14,NOT WS_TABSTOP
-    LISTBOX         IDC_GUILDS,14,25,108,61,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Please select a guild",IDC_STATIC_CHOOSE_GUILD,11,3,115,
-                    10
+    LISTBOX         IDC_GUILDS,14,25,108,61,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Please select a guild",IDC_STATIC_CHOOSE_GUILD,11,3,115,10
 END
 
 IDD_GM_ITEM_HELP DIALOGEX 0, 0, 323, 100
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDC_OK,111,81,48,13
-    LTEXT           "NOTE: Names will often be preceded by ""the"" in game text, so name your items so that they will work within this syntax.",
-                    IDC_STATIC,4,3,151,30
-    LTEXT           "Charges can be any number from 1 to 255;  255 = infinite charges",
-                    IDC_STATIC,3,37,152,20
-    LTEXT           "The ""artifact"" flag will prevent an item from being removed from the game when it is abandoned.",
-                    IDC_STATIC,3,61,141,39
-    LTEXT           "The tabs labeled ""Function #"" are used to specify item functions.  Up to three functions can be specified for each item (using up to 11 storage units total).",
-                    IDC_STATIC,167,3,149,40
-    LTEXT           "Change Stat (3 units) - Boost a stat.",IDC_STATIC,168,
-                    45,154,9
-    LTEXT           "Missile (6 units) - A missile weapon.",IDC_STATIC,168,
-                    57,155,9
-    LTEXT           "Player Effect (3 units) - Alters player.",IDC_STATIC,
-                    168,70,144,9
-    LTEXT           "Armor (4 units) - Protects  from damage. ",IDC_STATIC,
-                    168,83,153,9
+    LTEXT           "NOTE: Names will often be preceded by ""the"" in game text, so name your items so that they will work within this syntax.",IDC_STATIC,4,3,151,30
+    LTEXT           "Charges can be any number from 1 to 255;  255 = infinite charges",IDC_STATIC,3,37,152,20
+    LTEXT           "The ""artifact"" flag will prevent an item from being removed from the game when it is abandoned.",IDC_STATIC,3,61,141,39
+    LTEXT           "The tabs labeled ""Function #"" are used to specify item functions.  Up to three functions can be specified for each item (using up to 11 storage units total).",IDC_STATIC,167,3,149,40
+    LTEXT           "Change Stat (3 units) - Boost a stat.",IDC_STATIC,168,45,154,9
+    LTEXT           "Missile (6 units) - A missile weapon.",IDC_STATIC,168,57,155,9
+    LTEXT           "Player Effect (3 units) - Alters player.",IDC_STATIC,168,70,144,9
+    LTEXT           "Armor (4 units) - Protects  from damage. ",IDC_STATIC,168,83,153,9
 END
 
 IDD_PLAYER_ITEM_HELP DIALOGEX 0, 0, 347, 94
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "OK",IDC_OK,290,71,33,14,NOT WS_TABSTOP
-    LTEXT           "NOTE: Names will often be preceded by ""the"" in game text, so name your items so that they will work within this syntax.",
-                    IDC_STATIC,3,1,151,34
-    LTEXT           "The ""Function"" specifies the effect that the item has when used. Items forged via Forge Talisman may only have a single usable effect.",
-                    IDC_STATIC,3,42,151,45
+    LTEXT           "NOTE: Names will often be preceded by ""the"" in game text, so name your items so that they will work within this syntax.",IDC_STATIC,3,1,151,34
+    LTEXT           "The ""Function"" specifies the effect that the item has when used. Items forged via Forge Talisman may only have a single usable effect.",IDC_STATIC,3,42,151,45
     LTEXT           "Change Stat - Boost a stat.",IDC_STATIC,173,13,167,9
     LTEXT           "Missile - A missile weapon.",IDC_STATIC,173,23,156,9
-    LTEXT           "Player Effect - Temporarily alters player.",IDC_STATIC,
-                    173,33,171,10
-    LTEXT           "Armor - Protect player from damage. ",IDC_STATIC,173,43,
-                    171,9
-    LTEXT           "Each item has a graphic with 2 different colors applied to it.",
-                    IDC_STATIC,173,60,125,27
+    LTEXT           "Player Effect - Temporarily alters player.",IDC_STATIC,173,33,171,10
+    LTEXT           "Armor - Protect player from damage. ",IDC_STATIC,173,43,171,9
+    LTEXT           "Each item has a graphic with 2 different colors applied to it.",IDC_STATIC,173,60,125,27
     LTEXT           "Selectable functions:",IDC_STATIC,173,1,167,9
 END
 
 IDD_ENTER_VALUE DIALOGEX 0, 0, 187, 69
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "OK",IDC_OK,43,48,38,14,NOT WS_TABSTOP
     PUSHBUTTON      "Cancel",IDC_CANCEL,105,48,40,14,NOT WS_TABSTOP
     LTEXT           "",IDC_VALUE_PROMPT,17,14,153,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_VALUE,51,30,85,14,ES_MULTILINE | ES_AUTOHSCROLL,
-                    WS_EX_STATICEDGE
+    EDITTEXT        IDC_VALUE,51,30,85,14,ES_MULTILINE | ES_AUTOHSCROLL,WS_EX_STATICEDGE
 END
 
 IDD_AVATAR DIALOGEX 0, 0, 341, 92
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LISTBOX         IDC_REGION0,42,20,51,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_REGION1,42,33,51,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_REGION2,42,46,51,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_REGION3,42,59,51,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_REGION4,42,72,51,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    CONTROL         "Show Shield:",IDC_SHIELD,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,124,17,63,10
-    CONTROL         "Show House",IDC_FRONT_HOUSE,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP,155,36,61,11
-    CONTROL         "Show Sphere",IDC_FRONT_SPHERE,"Button",
-                    BS_AUTORADIOBUTTON,155,47,61,11
-    CONTROL         "Show Nothing",IDC_FRONT_NOTHING,"Button",
-                    BS_AUTORADIOBUTTON,155,58,67,11
-    CONTROL         "Show House",IDC_BACK_HOUSE,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP,261,36,64,11
-    CONTROL         "Show Sphere",IDC_BACK_SPHERE,"Button",
-                    BS_AUTORADIOBUTTON,261,47,64,11
-    CONTROL         "Show Nothing",IDC_BACK_NOTHING,"Button",
-                    BS_AUTORADIOBUTTON,261,58,64,11
+    LISTBOX         IDC_REGION0,42,20,51,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_REGION1,42,33,51,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_REGION2,42,46,51,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_REGION3,42,59,51,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_REGION4,42,72,51,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    CONTROL         "Show Shield:",IDC_SHIELD,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,124,17,63,10
+    CONTROL         "Show House",IDC_FRONT_HOUSE,"Button",BS_AUTORADIOBUTTON | WS_GROUP,155,36,61,11
+    CONTROL         "Show Sphere",IDC_FRONT_SPHERE,"Button",BS_AUTORADIOBUTTON,155,47,61,11
+    CONTROL         "Show Nothing",IDC_FRONT_NOTHING,"Button",BS_AUTORADIOBUTTON,155,58,67,11
+    CONTROL         "Show House",IDC_BACK_HOUSE,"Button",BS_AUTORADIOBUTTON | WS_GROUP,261,36,64,11
+    CONTROL         "Show Sphere",IDC_BACK_SPHERE,"Button",BS_AUTORADIOBUTTON,261,47,64,11
+    CONTROL         "Show Nothing",IDC_BACK_NOTHING,"Button",BS_AUTORADIOBUTTON,261,58,64,11
     PUSHBUTTON      "Reset",IDC_RESET,226,74,34,12,NOT WS_TABSTOP
     PUSHBUTTON      "OK",IDC_OK,102,73,34,12,NOT WS_TABSTOP
     PUSHBUTTON      "Cancel",IDC_CANCEL,288,74,34,12,NOT WS_TABSTOP
@@ -655,13 +431,12 @@ BEGIN
     LTEXT           "Front:",IDC_STATIC_FRONT,123,34,20,10
     LTEXT           "Back:",IDC_STATIC_BACK,232,36,20,10
     LTEXT           "House:",IDC_STATIC_HOUSE_ID,198,17,24,8
-    LISTBOX         IDC_HOUSE_ID,238,15,99,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
+    LISTBOX         IDC_HOUSE_ID,238,15,99,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     PUSHBUTTON      "Describe",IDC_DESCRIBE,164,74,34,12,NOT WS_TABSTOP
 END
 
 IDD_FATAL_ERROR DIALOGEX 0, 0, 201, 125
-STYLE DS_SYSMODAL | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SYSMODAL | DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
@@ -670,7 +445,7 @@ BEGIN
 END
 
 IDD_NONFATAL_ERROR DIALOGEX 0, 0, 173, 82
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
@@ -679,7 +454,7 @@ BEGIN
 END
 
 IDD_WARNING_YESNO DIALOGEX 0, 0, 173, 82
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
@@ -689,14 +464,12 @@ BEGIN
 END
 
 IDD_CREATEPLAYER DIALOGEX 0, 0, 281, 103
-STYLE DS_SYSMODAL | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SYSMODAL | DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LISTBOX         IDC_AVATAR_COMBO,14,47,99,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_FOCUS_COMBO,125,48,81,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
+    LISTBOX         IDC_AVATAR_COMBO,14,47,99,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_FOCUS_COMBO,125,48,81,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     EDITTEXT        IDC_EMAIL,13,77,101,13,ES_AUTOHSCROLL
     PUSHBUTTON      "OK",IDC_OK,223,54,50,14,NOT WS_TABSTOP
     EDITTEXT        IDC_USERNAME,125,77,81,13
@@ -704,13 +477,12 @@ BEGIN
     LTEXT           "E-mail Address:",-1,13,67,79,8
     LTEXT           "Character Name:",-1,125,67,81,8
     LTEXT           "Focus:",-1,125,38,26,8
-    LTEXT           "To begin your journies in the dream state, select your avatar and focus. Then enter your e-mail address and click on OK to customize your avatar!",
-                    -1,13,4,251,29
+    LTEXT           "To begin your journies in the dream state, select your avatar and focus. Then enter your e-mail address and click on OK to customize your avatar!",-1,13,4,251,29
     LTEXT           "Avatar:",-1,14,38,24,8
 END
 
-IDD_DUMMY DIALOG DISCARDABLE  0, 0, 129, 108
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_DUMMY DIALOG 0, 0, 129, 108
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
 FONT 8, "MS Sans Serif"
 BEGIN
@@ -719,7 +491,7 @@ BEGIN
 END
 
 IDD_USERNAME DIALOGEX 0, 0, 186, 89
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDC_OK,31,66,50,14
@@ -730,8 +502,8 @@ BEGIN
     EDITTEXT        IDC_PASSWORD,56,38,80,12,ES_PASSWORD,WS_EX_STATICEDGE
 END
 
-IDD_GM_TELEPORT DIALOG DISCARDABLE  0, 0, 168, 66
-STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE
+IDD_GM_TELEPORT DIALOG 0, 0, 168, 66
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif"
 BEGIN
     EDITTEXT        IDC_GM_TELEPORT,69,23,75,12,ES_AUTOHSCROLL
@@ -741,15 +513,15 @@ BEGIN
     LTEXT           "Set Teleport Co-ords",IDC_STATIC,51,8,104,8
 END
 
-IDD_CREDITS DIALOG DISCARDABLE  0, 0, 426, 115
-STYLE DS_3DLOOK | WS_POPUP | WS_VISIBLE
+IDD_CREDITS DIALOG 0, 0, 426, 115
+STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "OK",IDC_OK,367,91,50,14
 END
 
 IDD_LOCATE_AVATAR DIALOGEX 0, 0, 217, 102
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
@@ -762,77 +534,68 @@ BEGIN
     PUSHBUTTON      "Locate All",IDC_LOCATE_ALL,158,47,48,16
     PUSHBUTTON      "Add",IDC_ADD,5,54,48,16
     PUSHBUTTON      "Remove",IDC_REMOVE,5,77,48,16
-    LISTBOX         IDC_WATCH_LIST,69,39,81,61,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
+    LISTBOX         IDC_WATCH_LIST,69,39,81,61,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     LTEXT           "Static",IDC_WATCH_LIST_ARROWS,58,39,8,11
 END
 
-IDD_IGNORE_LIST DIALOG DISCARDABLE  0, 0, 159, 94
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+IDD_IGNORE_LIST DIALOG 0, 0, 159, 94
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "OK",IDC_OK,5,30,53,14
     LTEXT           "Ignore List",IDC_IGNORE_LIST_STATIC,1,2,67,11
     PUSHBUTTON      "Add",IDC_ADD,3,52,52,15
     PUSHBUTTON      "Remove",IDC_REMOVE,4,74,52,15
-    LISTBOX         IDC_IGNORE_LIST,75,28,75,61,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
+    LISTBOX         IDC_IGNORE_LIST,75,28,75,61,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     LTEXT           "",IDC_WATCH_LIST_ARROWS,64,29,8,11
 END
 
 IDD_WRITE_SCROLL DIALOGEX 0, 0, 268, 102
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDC_OK,42,84,50,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,174,85,50,14
     LTEXT           "Inscribe Message",IDC_WRITE_SCROLL_STATIC,5,3,51,9
     EDITTEXT        IDC_SCROLL,5,33,255,49,ES_MULTILINE,WS_EX_STATICEDGE
-    LISTBOX         IDC_NUM_SCROLL_CHARGES,48,18,46,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
+    LISTBOX         IDC_NUM_SCROLL_CHARGES,48,18,46,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     LTEXT           "Colors",IDC_COLORS_STATIC,110,19,26,8
-    LISTBOX         IDC_COLOR_COMBO1,145,18,53,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_COLOR_COMBO2,207,18,53,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
+    LISTBOX         IDC_COLOR_COMBO1,145,18,53,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_COLOR_COMBO2,207,18,53,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     LTEXT           "Charges",IDC_CHARGES_HEADER,3,19,32,11
     LTEXT           "Name",IDC_NAME_HEADER,110,3,23,8
     EDITTEXT        IDC_ITEM_NAME,145,2,115,12,ES_AUTOHSCROLL
-    CONTROL         " Artifact",IDC_ITEM_ARTIFACT,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,109,87,44,10
+    CONTROL         " Artifact",IDC_ITEM_ARTIFACT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,109,87,44,10
     LTEXT           "Inscribe Message",IDC_WRITE_QUEST_STATIC,5,3,51,9
     LTEXT           "keywords static text",IDC_KEYWORDS_STATIC,119,3,137,30
     LTEXT           "Inscribe Message",IDC_WRITE_KEYWORDS_STATIC,5,3,51,9
 END
 
 IDD_CHAT_MACROS DIALOGEX 0, 0, 291, 67
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "Arial", 0, 0, 0x1
 BEGIN
-    EDITTEXT        IDC_SPEECH,52,14,233,34,ES_MULTILINE | ES_WANTRETURN | 
-                    NOT WS_BORDER,WS_EX_DLGMODALFRAME | WS_EX_STATICEDGE
+    EDITTEXT        IDC_SPEECH,52,14,233,34,ES_MULTILINE | ES_WANTRETURN | NOT WS_BORDER,WS_EX_DLGMODALFRAME | WS_EX_STATICEDGE
     PUSHBUTTON      "OK",IDC_OK,69,51,45,13
     PUSHBUTTON      "Cancel",IDC_CANCEL,177,51,45,13
-    LISTBOX         IDC_MACRO_NUMBERS,10,27,34,12,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
+    LISTBOX         IDC_MACRO_NUMBERS,10,27,34,12,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     LTEXT           "Macro: ",IDC_STATIC,10,17,36,8
     CTEXT           "Edit/Add Chat Macros",IDC_STATIC,103,3,85,8
 END
 
 IDD_ENTER_TEXT DIALOGEX 0, 0, 187, 84
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "OK",IDC_OK,34,64,38,14,NOT WS_TABSTOP
     PUSHBUTTON      "Cancel",IDC_CANCEL,103,64,38,14,NOT WS_TABSTOP
     LTEXT           "",IDC_TEXT_PROMPT,9,3,153,10
-    EDITTEXT        IDC_TEXT,7,19,166,40,ES_MULTILINE | ES_AUTOVSCROLL,
-                    WS_EX_STATICEDGE
+    EDITTEXT        IDC_TEXT,7,19,166,40,ES_MULTILINE | ES_AUTOVSCROLL,WS_EX_STATICEDGE
 END
 
 IDD_PMARE_CONFIRM DIALOGEX 0, 0, 348, 239
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_VISIBLE | WS_CAPTION
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_VISIBLE | WS_CAPTION
 EXSTYLE WS_EX_CLIENTEDGE
 CAPTION "Important Underlight Player Nightmare Information - Please Read!"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
@@ -841,75 +604,60 @@ BEGIN
     PUSHBUTTON      "Quit",IDC_CANCEL,200,226,50,13,NOT WS_TABSTOP
     EDITTEXT        IDC_MAX_PMARE_MINUTES,291,211,22,12,ES_AUTOHSCROLL
     LTEXT           "",IDC_PMARE_TEXT,7,5,334,204
-    LTEXT           "To be automatically logged off, please enter your maximum number of minutes online here:",
-                    IDC_STATIC,7,213,282,11
+    LTEXT           "To be automatically logged off, please enter your maximum number of minutes online here:",IDC_STATIC,7,213,282,11
 END
 
 IDD_MONSTER_AVATAR DIALOGEX 0, 0, 205, 92
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDC_OK,133,43,50,14
     DEFPUSHBUTTON   "Cancel",IDC_CANCEL,134,62,50,14
-    LISTBOX         IDC_MONSTER_BREED,50,14,51,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
+    LISTBOX         IDC_MONSTER_BREED,50,14,51,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     LTEXT           "Mare type:",IDC_PMARE_TYPE,13,17,61,10
     DEFPUSHBUTTON   "Describe",IDC_DESCRIBE,129,14,56,15
-    LISTBOX         IDC_MONSTER_REGION0,49,30,52,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_MONSTER_REGION1,49,46,52,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_MONSTER_REGION2,49,63,53,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
+    LISTBOX         IDC_MONSTER_REGION0,49,30,52,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_MONSTER_REGION1,49,46,52,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_MONSTER_REGION2,49,63,53,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     LTEXT           "Region 1:",IDC_MONSTER_COLOR_1,14,33,57,10
     LTEXT           "Region 2:",IDC_MONSTER_COLOR_2,14,49,50,10
     LTEXT           "Eyes:",IDC_MONSTER_EYES,14,66,54,10
 END
 
-IDD_PMARE_TALK DIALOG DISCARDABLE  0, 0, 314, 58
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+IDD_PMARE_TALK DIALOG 0, 0, 314, 58
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "Speak",IDC_SPEAK,262,6,36,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,262,39,36,14
     COMBOBOX        28,7,189,16,3
     DEFPUSHBUTTON   "Emote",IDC_PMARE_EMOTE,262,22,36,14
-    LTEXT           "Please choose from the above predefined speech and actions",
-                    IDC_STATIC3,22,43,230,12
+    LTEXT           "Please choose from the above predefined speech and actions",IDC_STATIC3,22,43,230,12
     LTEXT           "Speech:",IDC_STATIC1,2,11,30,8
     LTEXT           "Actions:",IDC_STATIC2,3,28,31,8
-    LISTBOX         IDC_PMARE_EMOTES,35,27,219,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_PMARE_SPEECH,35,9,219,13,LBS_NOINTEGRALHEIGHT | 
-                    WS_TABSTOP
-    LISTBOX         IDC_PMARE_SPEECH_MAREN,302,48,10,9,LBS_NOINTEGRALHEIGHT | 
-                    NOT WS_VISIBLE | WS_TABSTOP
+    LISTBOX         IDC_PMARE_EMOTES,35,27,219,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_PMARE_SPEECH,35,9,219,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_PMARE_SPEECH_MAREN,302,48,10,9,LBS_NOINTEGRALHEIGHT | NOT WS_VISIBLE | WS_TABSTOP
 END
 
-IDD_LAUNCH_OPTIONS DIALOG DISCARDABLE  0, 0, 426, 240
-STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_LAUNCH_OPTIONS DIALOG 0, 0, 426, 240
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Explanation of Underlight Launch Options "
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "Return to Login Screen",IDC_OK,100,221,92,16
     PUSHBUTTON      "Read Firewall FAQ",IDC_FIREWALL_FAQ,211,221,92,16
-    LTEXT           "Exclusive mode help goes here",IDC_EXCLUSIVE_MODE,2,3,
-                    421,49
-    LTEXT           "Sound Enabled Help goes here",IDC_SOUND_ENABLED,2,58,
-                    421,36
-    LTEXT           "Start with training help goes here",IDC_START_TRAINING,
-                    2,100,421,14
-    LTEXT           "Extra scroll help goes here",IDC_EXTRA_SCROLL_TEXT,2,
-                    120,421,20
-    LTEXT           "Local binding option text goes here",IDC_BIND_TEXT,2,
-                    173,421,42
-    LTEXT           "UDP Proxy text goes here",IDC_UDP_PROXY_TEXT,2,146,421,
-                    21
+    LTEXT           "Exclusive mode help goes here",IDC_EXCLUSIVE_MODE,2,3,421,49
+    LTEXT           "Sound Enabled Help goes here",IDC_SOUND_ENABLED,2,58,421,36
+    LTEXT           "Start with training help goes here",IDC_START_TRAINING,2,100,421,14
+    LTEXT           "Extra scroll help goes here",IDC_EXTRA_SCROLL_TEXT,2,120,421,20
+    LTEXT           "Local binding option text goes here",IDC_BIND_TEXT,2,173,421,42
+    LTEXT           "UDP Proxy text goes here",IDC_UDP_PROXY_TEXT,2,146,421,21
 END
 
 IDD_QUEST_HELP DIALOGEX 0, 0, 328, 289
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
@@ -919,83 +667,65 @@ BEGIN
 END
 
 IDD_QUEST_ITEM_HELP DIALOGEX 0, 0, 347, 98
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "OK",IDC_OK,295,76,33,14,NOT WS_TABSTOP
-    LTEXT           "Quests are completed by retrieving items that have the proper characteristics (charges, colors, graphic, and function). (The item name is ignored).",
-                    IDC_STATIC,3,1,151,28
-    LTEXT           "The ""Function"" specifies the effect that the item has when used. Each item also has a graphic, and 2 different colors associated with it. ",
-                    IDC_STATIC,3,30,151,28
+    LTEXT           "Quests are completed by retrieving items that have the proper characteristics (charges, colors, graphic, and function). (The item name is ignored).",IDC_STATIC,3,1,151,28
+    LTEXT           "The ""Function"" specifies the effect that the item has when used. Each item also has a graphic, and 2 different colors associated with it. ",IDC_STATIC,3,30,151,28
     LTEXT           "Change Stat - Boost a stat.",IDC_STATIC,173,13,167,9
     LTEXT           "Missile - A missile weapon.",IDC_STATIC,173,23,88,9
-    LTEXT           "Player Effect - Temporarily alters player.",IDC_STATIC,
-                    173,33,171,10
-    LTEXT           "Armor - Protect player from damage. ",IDC_STATIC,173,44,
-                    171,9
+    LTEXT           "Player Effect - Temporarily alters player.",IDC_STATIC,173,33,171,10
+    LTEXT           "Armor - Protect player from damage. ",IDC_STATIC,173,44,171,9
     LTEXT           "Selectable functions:",IDC_STATIC,173,1,167,9
-    LTEXT           "Map - A map of an area of the Dream.",IDC_STATIC,173,54,
-                    171,9
-    LTEXT           "Teleporter - An item to move you elsewhere instantly.",
-                    IDC_STATIC,173,64,171,9
+    LTEXT           "Map - A map of an area of the Dream.",IDC_STATIC,173,54,171,9
+    LTEXT           "Teleporter - An item to move you elsewhere instantly.",IDC_STATIC,173,64,171,9
     LTEXT           "Guild Essence - House Prime",IDC_STATIC,173,74,108,9
-    LTEXT           "Note that you can not require an item with a description or an artifact, but you can require an item that can only be forged by an Elder.",
-                    IDC_STATIC,3,60,156,35
+    LTEXT           "Note that you can not require an item with a description or an artifact, but you can require an item that can only be forged by an Elder.",IDC_STATIC,3,60,156,35
     LTEXT           "Nothing - No function",IDC_STATIC,173,84,93,10
 END
 
-IDD_LAUNCH_OPTIONS3D DIALOG DISCARDABLE  0, 0, 403, 242
-STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_LAUNCH_OPTIONS3D DIALOG 0, 0, 403, 242
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Explanation of Underlight Launch Options "
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "Return to Login Screen",IDC_OK,100,219,92,21
     PUSHBUTTON      "Read Firewall FAQ",IDC_FIREWALL_FAQ,211,219,92,21
-    LTEXT           "Sound Enabled Help goes here",IDC_SOUND_ENABLED,7,11,
-                    389,41
-    LTEXT           "Start with training help goes here",IDC_START_TRAINING,
-                    7,62,389,17
-    LTEXT           "Extra scroll help goes here",IDC_EXTRA_SCROLL_TEXT,7,92,
-                    389,24
-    LTEXT           "Local binding option text goes here",IDC_BIND_TEXT,8,
-                    164,389,50
-    LTEXT           "UDP Proxy text goes here",IDC_UDP_PROXY_TEXT,7,129,389,
-                    27
+    LTEXT           "Sound Enabled Help goes here",IDC_SOUND_ENABLED,7,11,389,41
+    LTEXT           "Start with training help goes here",IDC_START_TRAINING,7,62,389,17
+    LTEXT           "Extra scroll help goes here",IDC_EXTRA_SCROLL_TEXT,7,92,389,24
+    LTEXT           "Local binding option text goes here",IDC_BIND_TEXT,8,164,389,50
+    LTEXT           "UDP Proxy text goes here",IDC_UDP_PROXY_TEXT,7,129,389,27
 END
 
 IDD_META3D DIALOGEX 0, 0, 222, 86
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    PUSHBUTTON      "Return to Underlight",IDC_RETURN,67,66,89,13,NOT 
-                    WS_TABSTOP
-    PUSHBUTTON      "Underlight Help",IDC_GOTOHELP,123,6,89,13,NOT 
-                    WS_TABSTOP
+    PUSHBUTTON      "Return to Underlight",IDC_RETURN,67,66,89,13,NOT WS_TABSTOP
+    PUSHBUTTON      "Underlight Help",IDC_GOTOHELP,123,6,89,13,NOT WS_TABSTOP
     PUSHBUTTON      "Game Options",IDC_GOTOOPTIONS,11,6,89,13,NOT WS_TABSTOP
-    PUSHBUTTON      "Underlight Credits",IDC_GOTOCREDITS,123,24,89,13,NOT 
-                    WS_TABSTOP
+    PUSHBUTTON      "Underlight Credits",IDC_GOTOCREDITS,123,24,89,13,NOT WS_TABSTOP
     DEFPUSHBUTTON   "Exit Underlight",IDC_EXIT,123,43,89,13,NOT WS_TABSTOP
-    PUSHBUTTON      "Video Options",IDC_GOTOVIDEOOPTIONS,11,25,89,13,NOT 
-                    WS_TABSTOP
-    PUSHBUTTON      "Sounds and Music Options",IDC_GOTOSOUNDOPTIONS,11,44,89,
-                    13,NOT WS_TABSTOP
+    PUSHBUTTON      "Video Options",IDC_GOTOVIDEOOPTIONS,11,25,89,13,NOT WS_TABSTOP
+    PUSHBUTTON      "Sounds and Music Options",IDC_GOTOSOUNDOPTIONS,11,44,89,13,NOT WS_TABSTOP
 END
 
 IDD_SOUNDOPTIONS DIALOGEX 0, 0, 187, 95
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDC_OK,36,81,50,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,113,81,50,14
-    LTEXT           "Sound and Music Options",IDC_SOUNDOPTIONSTITLE,0,0,68,
-                    10
+    LTEXT           "Sound and Music Options",IDC_SOUNDOPTIONSTITLE,0,0,68,10
 END
 
 IDD_VIDEO_OPTIONS DIALOGEX 0, 0, 299, 128
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
@@ -1006,145 +736,97 @@ BEGIN
     LTEXT           "HARDWARE_NAME",IDC_HARDWARE,140,21,144,10
     LTEXT           "VENDOR_NAME",IDC_VENDOR,140,31,144,10
     LTEXT           "OPENGL_REVISION",IDC_OPENGL,140,58,144,10
-    PUSHBUTTON      "Supported OpenGL Extensions *",IDC_EXTENSIONS,140,41,
-                    146,14
-    CONTROL         "Slider1",IDC_TEXTUREFILTER,"msctls_trackbar32",
-                    TBS_AUTOTICKS | WS_TABSTOP,209,85,83,10
+    PUSHBUTTON      "Supported OpenGL Extensions *",IDC_EXTENSIONS,140,41,146,14
+    CONTROL         "Slider1",IDC_TEXTUREFILTER,"msctls_trackbar32",TBS_AUTOTICKS | WS_TABSTOP,209,85,83,10
     CTEXT           "FILTER_TYPE",IDC_FILTERTYPE,209,96,83,10,NOT WS_GROUP
-    CONTROL         "Anisotropic Filtering",IDC_ANISOTROPIC,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_CENTER | BS_NOTIFY | 
-                    WS_TABSTOP,209,73,83,10
-    COMBOBOX        IDC_RESOLUTION,53,18,71,149,CBS_DROPDOWNLIST | 
-                    WS_TABSTOP
+    CONTROL         "Anisotropic Filtering",IDC_ANISOTROPIC,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_CENTER | BS_NOTIFY | WS_TABSTOP,209,73,83,10
+    COMBOBOX        IDC_RESOLUTION,53,18,71,149,CBS_DROPDOWNLIST | WS_TABSTOP
     LTEXT           "Resolution:",IDC_RESOLUTION_TITLE,6,20,43,8
-    CONTROL         "Texture Compression",IDC_TEXTURE_COMPRESSION,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_LEFT | WS_TABSTOP,6,
-                    74,118,10
-    CONTROL         "Mipmapping",IDC_MIPMAP,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | BS_LEFT | WS_TABSTOP,6,62,118,10
-    CONTROL         "Slider1",IDC_PARTICLE_DENSITY,"msctls_trackbar32",
-                    WS_TABSTOP,131,85,79,10
-    CTEXT           "PARTICLE_DENSITY",IDC_PARTICLE_DENSITY_TEXT,131,96,83,
-                    10,NOT WS_GROUP
-    CTEXT           "* OpenGL Hardware Environment *",IDC_HARDWARE2,140,8,
-                    144,8,SS_CENTERIMAGE
-    CONTROL         "Fullscreen",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | BS_LEFT | WS_TABSTOP,6,50,118,10
+    CONTROL         "Texture Compression",IDC_TEXTURE_COMPRESSION,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_LEFT | WS_TABSTOP,6,74,118,10
+    CONTROL         "Mipmapping",IDC_MIPMAP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_LEFT | WS_TABSTOP,6,62,118,10
+    CONTROL         "Slider1",IDC_PARTICLE_DENSITY,"msctls_trackbar32",WS_TABSTOP,131,85,79,10
+    CTEXT           "PARTICLE_DENSITY",IDC_PARTICLE_DENSITY_TEXT,131,96,83,10,NOT WS_GROUP
+    CTEXT           "* OpenGL Hardware Environment *",IDC_HARDWARE2,140,8,144,8,SS_CENTERIMAGE
+    CONTROL         "Fullscreen",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_LEFT | WS_TABSTOP,6,50,118,10
     COMBOBOX        IDC_REFRESH,53,32,31,154,CBS_DROPDOWNLIST | WS_TABSTOP
     LTEXT           "Refresh:",IDC_REFRESH_TITLE,6,34,43,8
-    CONTROL         "VSYNC",IDC_VSYNC,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | 
-                    BS_VCENTER | WS_TABSTOP,87,35,37,8
+    CONTROL         "VSYNC",IDC_VSYNC,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_VCENTER | WS_TABSTOP,87,35,37,8
     PUSHBUTTON      "Apply",IDC_APPLY,63,108,45,14,NOT WS_TABSTOP
-    CTEXT           "Please read the user's manual for\nmore detailed option descriptions.",
-                    IDC_SEE_MANUAL_LABEL,113,105,127,21
-    CONTROL         "32-bit",IDC_Z_32,"Button",BS_AUTORADIOBUTTON,86,96,32,
-                    10
+    CTEXT           "Please read the user's manual for\nmore detailed option descriptions.",IDC_SEE_MANUAL_LABEL,113,105,127,21
+    CONTROL         "32-bit",IDC_Z_32,"Button",BS_AUTORADIOBUTTON,86,96,32,10
     CONTROL         "16-bit",IDC_Z_16,"Button",BS_AUTORADIOBUTTON,8,96,32,10
-    CONTROL         "24-bit",IDC_Z_24,"Button",BS_AUTORADIOBUTTON,47,96,32,
-                    10
+    CONTROL         "24-bit",IDC_Z_24,"Button",BS_AUTORADIOBUTTON,47,96,32,10
     LTEXT           "Z-Buffer Depth:",IDC_ZBUFFER_LABEL,9,87,50,8
 END
 
 IDD_LOGIN3D DIALOGEX 0, 0, 415, 246
-STYLE DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CLIENTEDGE
 CAPTION 
 "                                                              Welcome to Underlight3D!"
-
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    EDITTEXT        IDC_AGREEMENT_TEXT,7,104,399,107,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
-    COMBOBOX        IDC_USERNAME,62,215,75,53,CBS_DROPDOWN | WS_VSCROLL | 
-                    WS_TABSTOP
-    EDITTEXT        IDC_PASSWORD,184,215,41,12,ES_PASSWORD | NOT WS_VISIBLE,
-                    WS_EX_STATICEDGE
-    COMBOBOX        IDC_PMARE_LIST,272,215,141,42,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_AGREEMENT_TEXT,7,104,399,107,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
+    COMBOBOX        IDC_USERNAME,62,215,75,53,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_PASSWORD,184,215,41,12,ES_PASSWORD | NOT WS_VISIBLE,WS_EX_STATICEDGE
+    COMBOBOX        IDC_PMARE_LIST,272,215,141,42,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "I Agree, Let Me In! ",IDC_OK,16,232,69,14
     PUSHBUTTON      "Read Manual",IDC_MANUAL,118,232,69,14
     PUSHBUTTON      "Go To Billing System",IDC_BILLING,220,232,69,14
     PUSHBUTTON      "Quit",IDC_CANCEL,322,232,69,14
-    EDITTEXT        IDC_IP_ADDRESS,63,88,48,12,ES_AUTOHSCROLL | NOT 
-                    WS_VISIBLE
-    CONTROL         "Dev",IDC_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT 
-                    WS_VISIBLE | WS_TABSTOP,126,90,30,10
-    CONTROL         "Live",IDC_LIVE_SERVER,"Button",BS_AUTORADIOBUTTON | NOT 
-                    WS_VISIBLE | WS_TABSTOP,158,90,30,10
-    CONTROL         "Debug Server:",IDC_DEBUG,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,188,90,56,10
-    CONTROL         "Networking:",IDC_NETWORK,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,257,90,46,10
-    CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,321,10,75,10
-    CONTROL         "Start with Training:",IDC_TRAINING,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,21,75,10
-    CONTROL         "Fullscreen:",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,321,34,75,10
-    CONTROL         "Use UDP Proxy:",IDC_UDP_PROXY,"Button",BS_AUTOCHECKBOX | 
-                    BS_LEFTTEXT | WS_TABSTOP,321,47,75,8
+    EDITTEXT        IDC_IP_ADDRESS,63,88,48,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    CONTROL         "Dev",IDC_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,126,90,30,10
+    CONTROL         "Live",IDC_LIVE_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,158,90,30,10
+    CONTROL         "Debug Server:",IDC_DEBUG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,188,90,56,10
+    CONTROL         "Networking:",IDC_NETWORK,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,257,90,46,10
+    CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,10,75,10
+    CONTROL         "Start with Training:",IDC_TRAINING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,21,75,10
+    CONTROL         "Fullscreen:",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,34,75,10
+    CONTROL         "Use UDP Proxy:",IDC_UDP_PROXY,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,47,75,8
     EDITTEXT        IDC_BIND_TCP,374,60,24,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_BIND_UDP,374,72,24,12,ES_AUTOHSCROLL
     PUSHBUTTON      "Explain Launch Options",IDC_LAUNCH_OPTIONS,320,86,81,11
-    LTEXT           "Returning players: Please go to http://billing.lyrastudios.com if you wish to create new Underlight3D accounts, activate or deactivate Underlight3D accounts or Underlight3D game options, or change your billing options.",
-                    -1,6,34,291,23
+    LTEXT           "Returning players: Please go to http://billing.lyrastudios.com if you wish to create new Underlight3D accounts, activate or deactivate Underlight3D accounts or Underlight3D game options, or change your billing options.",-1,6,34,291,23
     GROUPBOX        "Launch Options",-1,315,0,91,99
-    LTEXT           "First time players : Make sure you have gone to http://billing.lyrastudios.com to register for a Lyra account & a Underlight3D character. Then, enter your character name and password (sent to you in email), read the agreement below, and play!",
-                    -1,6,4,291,25
+    LTEXT           "First time players : Make sure you have gone to http://billing.lyrastudios.com to register for a Lyra account & a Underlight3D character. Then, enter your character name and password (sent to you in email), read the agreement below, and play!",-1,6,4,291,25
     LTEXT           "Character Name:",IDC_USERNAME_STATIC,8,217,55,8
     LTEXT           "Password:",-1,143,217,35,8
     PUSHBUTTON      "Configure Voice Setup",IDC_ROGERWILCO,17,108,69,14
     CONTROL         "Enable Real-Time Voice (Roger Wilco)",IDC_ENABLE_RW,
-                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_MULTILINE | 
-                    WS_TABSTOP,126,102,75,17
-    CONTROL         "Specify IP: ",IDC_SPECIFY_SERVER,"Button",
-                    BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | 
-                    WS_TABSTOP,20,89,46,10
+                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_MULTILINE | WS_TABSTOP,126,102,75,17
+    CONTROL         "Specify IP: ",IDC_SPECIFY_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,20,89,46,10
     LTEXT           "Mare Type:",IDC_STATIC_PMARE,233,217,37,8
-    LTEXT           "The City of Dreams awaits you...",IDC_URL,276,216,104,
-                    14
-    CONTROL         "Restart at Last Location",IDC_LAST_LOCATION,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,6,89,86,10
+    LTEXT           "The City of Dreams awaits you...",IDC_URL,276,216,104,14
+    CONTROL         "Restart at Last Location",IDC_LAST_LOCATION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,89,86,10
     LTEXT           "Bind TCP Port:",-1,322,61,48,9
     LTEXT           "Bind UDP Port:",-1,322,74,48,8
-    CONTROL         "640x480",IDC_GRAPHIC_RES3D_640,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,13,62,43,10
-    CONTROL         "800x600",IDC_GRAPHIC_RES3D_800,"Button",
-                    BS_AUTORADIOBUTTON | WS_TABSTOP,62,62,43,10
-    CONTROL         "1024x768",IDC_GRAPHIC_RES3D_1024,"Button",
-                    BS_AUTORADIOBUTTON | WS_TABSTOP,112,62,47,10
-    CONTROL         "Custom",IDC_GRAPHIC_RES3D_CUSTOM,"Button",
-                    BS_AUTORADIOBUTTON | WS_TABSTOP,168,62,72,10
-    CONTROL         "16 bit",IDC_BPP_16,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP | WS_TABSTOP,249,66,33,10
-    CONTROL         "32 bit",IDC_BPP_32,"Button",BS_AUTORADIOBUTTON | 
-                    WS_TABSTOP,249,75,33,10
+    CONTROL         "640x480",IDC_GRAPHIC_RES3D_640,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,13,62,43,10
+    CONTROL         "800x600",IDC_GRAPHIC_RES3D_800,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,62,62,43,10
+    CONTROL         "1024x768",IDC_GRAPHIC_RES3D_1024,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,112,62,47,10
+    CONTROL         "Custom",IDC_GRAPHIC_RES3D_CUSTOM,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,168,62,72,10
+    CONTROL         "16 bit",IDC_BPP_16,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,249,66,33,10
+    CONTROL         "32 bit",IDC_BPP_32,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,249,75,33,10
     GROUPBOX        "Color depth",IDC_BPP_GP,246,59,46,29,WS_GROUP
 END
 
 IDD_LEVEL_SELECT DIALOGEX 0, 0, 180, 196
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDC_OK,7,175,50,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,70,175,50,14
-    LISTBOX         IDC_LEVEL_LIST,7,21,163,150,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Level Selection:",IDC_LEVELSELECTTITLE,7,7,163,12,
-                    SS_CENTERIMAGE
+    LISTBOX         IDC_LEVEL_LIST,7,21,163,150,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Level Selection:",IDC_LEVELSELECTTITLE,7,7,163,12,SS_CENTERIMAGE
 END
 
 IDD_PARTICLES DIALOGEX 0, 0, 255, 158
-STYLE DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LISTBOX         IDC_PARTICLE_EFFECT,57,5,69,12,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
-    LISTBOX         IDC_PARTICLE_TEXTURE,162,5,75,12,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_PARTICLE_EFFECT,57,5,69,12,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_PARTICLE_TEXTURE,162,5,75,12,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_P1,24,35,26,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_P2,67,35,26,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_P3,109,35,26,12,ES_AUTOHSCROLL
@@ -1161,8 +843,7 @@ BEGIN
     PUSHBUTTON      "Reload",IDC_PARTICLE_RELOAD,22,137,39,14
     PUSHBUTTON      "Nuke Particles",IDC_NUKE_PARTICLES,137,137,50,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,194,137,50,14
-    LTEXT           "Parameters (For passing to scripts)",IDC_STATIC,5,22,
-                    135,12,NOT WS_GROUP
+    LTEXT           "Parameters (For passing to scripts)",IDC_STATIC,5,22,135,12,NOT WS_GROUP
     LTEXT           "Texture:",IDC_STATIC,131,7,29,8
     LTEXT           "Particle Effect:",IDC_STATIC,3,6,54,11
     LTEXT           "1",IDC_STATIC,10,37,8,8
@@ -1184,47 +865,40 @@ BEGIN
     PUSHBUTTON      "Attach",IDC_PARTICLE_ATTACH,193,114,50,14
 END
 
-IDD_GRANT_PPOINT DIALOG DISCARDABLE  0, 0, 304, 95
-STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE
+IDD_GRANT_PPOINT DIALOG 0, 0, 304, 95
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif"
 BEGIN
     DEFPUSHBUTTON   "Grant PP",IDC_OK,49,81,54,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,205,81,50,14
-    EDITTEXT        IDC_WHY_PPOINT,28,55,247,17,ES_MULTILINE | 
-                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_WHY_PPOINT,28,55,247,17,ES_MULTILINE | ES_AUTOHSCROLL
     LTEXT           "text goes here",IDC_GRANT_PPOINT,6,20,290,29
     DEFPUSHBUTTON   "Help",IDC_ITEMHELP,127,81,54,14
     LTEXT           "Static",IDC_GRANT_PP_TITLE,1,0,177,14
 END
 
 IDD_USE_PPOINT DIALOGEX 0, 0, 276, 103
-STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Use PPoints",IDC_OK,47,84,50,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,179,84,50,14
     PUSHBUTTON      "hELP",IDC_ITEMHELP,113,84,50,14
-    LTEXT           "What would you like to do?",IDC_STATIC,4,24,131,13,0,
-                    WS_EX_RIGHT
-    COMBOBOX        IDC_HOW_USE_PP,142,23,129,70,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    LTEXT           "<label text goes here>",IDC_PP_STATIC,2,46,99,11,0,
-                    WS_EX_RIGHT
-    COMBOBOX        IDC_PP_SUBSEL,110,45,88,68,CBS_DROPDOWNLIST | WS_VSCROLL | 
-                    WS_TABSTOP
+    LTEXT           "What would you like to do?",IDC_STATIC,4,24,131,13,0,WS_EX_RIGHT
+    COMBOBOX        IDC_HOW_USE_PP,142,23,129,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "<label text goes here>",IDC_PP_STATIC,2,46,99,11,0,WS_EX_RIGHT
+    COMBOBOX        IDC_PP_SUBSEL,110,45,88,68,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Cost in PPoints:",IDC_STATIC,145,65,68,12,0,WS_EX_RIGHT
     EDITTEXT        IDC_PP_COST,227,65,28,12,ES_CENTER | ES_READONLY
     LTEXT           "PPoints to Spend:",IDC_STATIC,4,65,87,12,0,WS_EX_RIGHT
     EDITTEXT        IDC_PP_CURRENT,105,65,28,12,ES_CENTER | ES_READONLY
-    LTEXT           "Plateau:",IDC_SKILL_PP,206,46,34,10,WS_TABSTOP,
-                    WS_EX_RIGHT
-    COMBOBOX        IDC_SKILL,245,45,31,67,CBS_DROPDOWNLIST | WS_VSCROLL | 
-                    WS_TABSTOP
+    LTEXT           "Plateau:",IDC_SKILL_PP,206,46,34,10,WS_TABSTOP,WS_EX_RIGHT
+    COMBOBOX        IDC_SKILL,245,45,31,67,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Static",IDC_USE_PPOINT_TITLE,1,0,166,13
 END
 
 IDD_PPOINT_HELP DIALOGEX 0, 0, 403, 99
-STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
@@ -1241,7 +915,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_LOGIN, DIALOG
     BEGIN
@@ -1518,18 +1192,18 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "\r\n"
     "\0"
@@ -1545,9 +1219,8 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_LYRA                ICON    DISCARDABLE     "Lyra.ico"
+IDI_LYRA                ICON                    "Lyra.ico"
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -1570,18 +1243,15 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "Comments", "Lyra, LLC Prototype\0"
-            VALUE "CompanyName", "Lyra, LLC\0"
-            VALUE "FileDescription", "P-Lyra\0"
-            VALUE "FileVersion", "2, 0, 0, 31\0"
-            VALUE "InternalName", "P-Lyra\0"
-            VALUE "LegalCopyright", "Copyright (c) 1996\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "P-Lyra.exe\0"
-            VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "P-Lyra\0"
-            VALUE "ProductVersion", "2, 0, 0, 31\0"
-            VALUE "SpecialBuild", "\0"
+            VALUE "Comments", "Lyra, LLC Prototype"
+            VALUE "CompanyName", "Lyra, LLC"
+            VALUE "FileDescription", "P-Lyra"
+            VALUE "FileVersion", "2, 0, 0, 31"
+            VALUE "InternalName", "P-Lyra"
+            VALUE "LegalCopyright", "Copyright (c) 1996"
+            VALUE "OriginalFilename", "P-Lyra.exe"
+            VALUE "ProductName", "P-Lyra"
+            VALUE "ProductVersion", "2, 0, 0, 31"
         END
     END
     BLOCK "VarFileInfo"
@@ -1590,22 +1260,20 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
 //
 
-IDB_TARGET              BITMAP  DISCARDABLE     "Target.bmp"
+IDB_TARGET              BITMAP                  "Target.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // TEXT
 //
 
-IDR_AGREEMENT_TEXT TEXT DISCARDABLE 
+IDR_AGREEMENT_TEXT TEXT 
 BEGIN
     0x4649, 0x5920, 0x554f, 0x4220, 0x4552, 0x4b41, 0x4120, 0x594e, 0x4f20, 
     0x2046, 0x4854, 0x5345, 0x2045, 0x5552, 0x454c, 0x2c53, 0x5920, 0x554f, 
@@ -1716,14 +1384,14 @@ END
 // REGISTRY
 //
 
-IDR_AgentSvr            REGISTRY MOVEABLE PURE  "AgentSvr.rgs"
+IDR_AgentSvr            REGISTRY                "AgentSvr.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ITEM_DESELECT       "You need to select an item before you can deselect it!\n"
     IDS_ART_DESELECT        "You need to select an art before you can deselect it!\n"
@@ -1742,7 +1410,7 @@ BEGIN
     IDS_ITEM_DESCRIBE       "That's a %s"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ITEM_DROPPED        "You dropped the %s!\n"
     IDS_ITEM_TAKEN          "You take the %s!\n"
@@ -1761,7 +1429,7 @@ BEGIN
     IDS_PLAYER_BLIND_DEFLECT "Your sharp senses overcome the blindness\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_EXAMINE_DEFAULT     "You try to take the ornament but it is a permanent part of the Dreamstate and cannot be moved.\n"
     IDS_PARTY_PLAYERJOINED  "%s has joined your party!\n"
@@ -1778,7 +1446,7 @@ BEGIN
     IDS_PARTY_REJ_TOOMANY   "Join party rejected - %s is overwhelmed by join party requests.  Try again.\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PARTY_NOTMEMBER     "You are not currently in a party.\n"
     IDS_PARTY_YOULEAD       "You are the new party leader\n"
@@ -1798,7 +1466,7 @@ BEGIN
     IDS_KNOW42              "Soft lit sand stone walls are hung with tapestries depicting Initiates, Guardians and Rulers of the Union in amicable discussion. A slender, long haired woman balancing an amphora on her shoulder watches from the background."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PLAYER_GAINORBIT    "You have achieved a higher orbit!\n"
     IDS_PLAYER_LOSEORBIT    "You have fallen to a lower orbit!\n"
@@ -1815,7 +1483,7 @@ BEGIN
     IDS_SPEAK_WHISPERED     "%s whispers: "
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PARTY_REJ_UNKNOWN   "Join party rejected - reason unknown.\n"
     IDS_NAMES_OFF           "Name tags off\n"
@@ -1834,7 +1502,7 @@ BEGIN
     IDS_LOGIN_GAMEFULL      "We're sorry, but the game is currently full - please try again later!"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_LOGIN_UNKNOWN       "Unknown login error - please try again!"
     IDS_ITEM_DROP_FAIL      "Item drop failed!\n"
@@ -1848,7 +1516,7 @@ BEGIN
     IDS_LOGIN_PLAYERNOTFOUND "Username %s unknown - please try again!"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_LOGIN_LEVELNOTFOUND "Level %u not found"
     IDS_LOGIN_RUNKNOWN      "Unknown Level Login Error"
@@ -1866,7 +1534,7 @@ BEGIN
     IDS_PLAYER_BLIND_OFF    "Your vision returns...\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PLAYER_DEAF_ON      "Argh! You are stricken deaf!\n"
     IDS_PLAYER_DEAF_MORE    "You are stricken even deafer!\n"
@@ -1884,7 +1552,7 @@ BEGIN
     IDS_PLAYER_POISON_OFF   "Your strength returns!\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PLAYER_DINVIS_ON    "Your senses seem sharpened...\n"
     IDS_PLAYER_DINVIS_OFF   "Your senses return to normal.\n"
@@ -1898,7 +1566,7 @@ BEGIN
     IDS_PLAYER_MEDITATE_OFF "You emerge from the trance.\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PLAYER_TRAIL_ON     "Your trail is being marked.\n"
     IDS_PLAYER_TRAIL_OFF    "Your trail disappears.\n"
@@ -1915,7 +1583,7 @@ BEGIN
     IDS_PLAYER_SOULEVOKE_OFF "You may no longer evoke arts as a soulsphere.\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PLAYER_BLENDED_ON   "You may now blend through the portals\n"
     IDS_PLAYER_BLENDED_OFF  "You may no longer blend through the portals.\n"
@@ -1937,7 +1605,7 @@ BEGIN
     IDS_RANDOM_SELF         "Chaos calls out to you %d\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_RANDOM_OTHER        "%s pulls %d from the Chaos\n"
     IDS_NO_TELEPORTAL       "There is no wardable portal nearby.  You must be close to and facing a portal to ward.\n"
@@ -1955,7 +1623,7 @@ BEGIN
     IDS_ART_BAILED          "%s cancelled - you no longer have access to that art\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_CHOOSE_ITEM         "Please left click the item you wish to target...\n"
     IDS_CHOOSE_ART          "Please left click the art you wish to select...\n"
@@ -1975,7 +1643,7 @@ BEGIN
     IDS_NO_WARDING          "Sorry, but you can not ward that portal\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ALREADY_WARDED      "That portal has already been warded!\n"
     IDS_NEIGHBOR_NONE       "No neighbors are present\n"
@@ -1996,7 +1664,7 @@ BEGIN
                             "%s has acquired a skill of %d in %s due to your training!\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TRAIN_FAILED        "%s attempts to train you in %s, but you learn nothing\n"
     IDS_TRAIN_SUCCEEDED     "%s has increased your %s ability to %d!\n"
@@ -2019,7 +1687,7 @@ BEGIN
     IDS_INITIATE_REJECTED   "You reject %s's attempt to initiate you into %s\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_SUPPORT_TOKEN_CREATED 
                             "You have created a token to support %s's ascension into the Circle of Rulers for %s!\n"
@@ -2044,7 +1712,7 @@ BEGIN
     IDS_ABJURED_EFFECT      "You have abjured %s from %s!\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TALISMAN_RECHARGED  "You have recharged the %s\n"
     IDS_RECHARGE_FAILED     "You failed to recharge the %s\n"
@@ -2065,7 +1733,7 @@ BEGIN
     IDS_POSTGOAL_ERROR      "Invalid Value Entered"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_GOAL_ACCEPTS_OOR    "The maximum number of acceptees must be between %i and %i, inclusive.\n"
     IDS_GOAL_EXPIRE_OOR     "The number of days to expiration must be between %i and %i, inclusive.\n"
@@ -2088,7 +1756,7 @@ BEGIN
     IDS_REPORT_ERROR        "Sorry, your report was not posted -- there must be some problem within the house.\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_GOALBOOK_WRONGBOARD "You cannot report on or review reports for this %s here.  You must go to the posting area for the %s %ss."
     IDS_EMPATHY_SUCCEEDED   "%s has evoked %s upon you!\n"
@@ -2110,7 +1778,7 @@ BEGIN
     IDS_DAEMON_DISCONNECT   "You have been disconnected from the agent daemon"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_AGENT_VERSION_EXPIRED 
                             "This version of the agent controller has expired. Please contact Lyra and obtain a new version"
@@ -2133,7 +1801,7 @@ BEGIN
                             "You have created a token to support %s's demotion in %s.\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_AVATAR_NAME         "Please enter the dreamer 's name:"
     IDS_DEMOTE_FAILED       "You fail to demote %s within %s. You need %d unique tokens to accomplish the demotion.\n"
@@ -2155,7 +1823,7 @@ BEGIN
     IDS_DELETEQUEST_WARN    "Deleting this quest will prevent all Dreamers from further accessing it or completing it.  Are you sure you wish to delete this quest?"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DELETEQUEST_ABORTED "Your quest deletion has been cancelled."
     IDS_SOULSPHERE_NO_EMOTE "You can not perform actions as a soulsphere.  Seek a Sanctuary to restore coherence.\n"
@@ -2179,7 +1847,7 @@ BEGIN
     IDS_GOT_THWACKED        "%s has just %s\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NAME_ALREADY_USED   "Sorry, the name you requested is already in use.  Please choose another.  (If you already created a character, try unchecking Create Character in options)"
     IDS_EXPIREQUEST_ACK     "The quest has been expired.\n"
@@ -2200,7 +1868,7 @@ BEGIN
     IDS_PLAYER_CHAMELE_OFF  "You emerge into full view\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_QUERY_GIVE          "%s wants to give you a %s - do you accept?"
     IDS_GIVE_REBUFFED       "You try to give away the %s and are refused!\n"
@@ -2220,7 +1888,7 @@ BEGIN
     IDS_TRAIN_CHAT_FINISH   "\nThe fastest path to power is through respect, Dreamer.\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TRAIN_SKILLS_SECOND "\nTo use your Arts, you must first select the art.  Click on the tab marked 'Arts' on the middle right of the screen.  Click on any Art to select it, and press Ctrl to evoke the art.  You must stand still while evoking, or the art is cancelled.\n"
     IDS_TRAIN_SKILLS_THIRD  "\nAs you become more powerful in the dream, you will be able to evoke faster.  Your arts will have longer duration and more powerful effects.  Every time you use an art, you have the chance to improve until you reach a Plateau.  Once you reach a Pleateau you must seek out a teacher and persuade them to raise you to a new Plateau.  For this reason it is wise to be respectful towards teachers.\n"
@@ -2241,7 +1909,7 @@ BEGIN
     IDS_INITIATE_ATTEMPT    "%s wishes to initiate you into %s.  This is an important, difficult to reverse decision."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_XP_JOURNAL          "You have gained %i and lost %i experience as a result of House activities and anonymous grants for excellent dreaming since you last entered the Dream.\n"
     IDS_SHOW_FOCUS          "Your focus element is %s.\n"
@@ -2262,7 +1930,7 @@ BEGIN
     IDS_NO_INITIATES        "Only Guardians, Rulers, and uninitiated dreamers may use that portal\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DUR_VERY_SHORT      "Very Short"
     IDS_DUR_SHORT           "Short"
@@ -2282,7 +1950,7 @@ BEGIN
     IDS_CAN_LEARN_ART       "You are now able to learn the art of %s.  Seek a teacher, and be prepared to undertake a task before receiving an art.\n"""
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_SHOW_SHIELD         "The %s is your active shield.\n"
     IDS_SHOW_SHIELD_NONE    "You have no active shield.\n"
@@ -2302,7 +1970,7 @@ BEGIN
     IDS_SCROLL_DESCRIP      "The codex was inscribed by %s; it reads: %s\n\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_READ_SCROLL         "This codex may be read %s times more. Summoning inscription...\n"
     IDS_DESTROY_FAILED      "You can not destroy the %s\n"
@@ -2326,7 +1994,7 @@ BEGIN
     IDS_TRAIN_SKILLS_POWER  "\nThe greater your level in an art, the faster you can evoke, and the longer or more powerful your evocations.  You'll need to fulfill a quest for a teacher to progress at every tenth level, and levels come only through use of an art, not through XP.\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TRAIN_SKILLS_ORBIT  "\nAs you gain XP, your Orbit will increase.  As you attain new Orbits, you'll be able to learn new Arts.  However, to attain every tenth Orbit (10, 20, 30, etc.), you'll need to find a teacher more powerful than yourself and fulfill a quest for them to raise your Orbit. So, if you are Orbit 9, you need to find a teacher of at least Orbit 10 to raise you to Orbit 10.\n"
     IDS_TRAIN_INVENTORY_EXIT 
@@ -2358,7 +2026,7 @@ BEGIN
     IDS_TRAIN_HOUSES_LIGHT  "Enter the City of Dreams in the chambers of the Dreamers of Light.\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ALREADY_IDENTIFIED  "You have already identified that item - right click on it instead\n"
     IDS_NO_TRAIN_MONSTER    "You can't train nightmares - they are terrible students!\n"
@@ -2378,7 +2046,7 @@ BEGIN
     IDS_ERROR_SKILL_CHECKSUM "Error - art %s - expected %u, is %u\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ERROR_STAT_CHECKSUM "Error - stat %s - expected %u, is %u\n"
     IDS_CORRUPT_DATA        "Corrupt data has been found. Please wait a few minutes and try again.\n"
@@ -2399,7 +2067,7 @@ BEGIN
                             "This map is not of your current plane in Underlight. Maps only work in their plane of origin. "
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NO_MPLAYER          "you must launch Underlight through MPlayer; please see the Underlight documentation for details"
     IDS_RUN_TOGGLE_ON       "Autorun On\n"
@@ -2419,7 +2087,7 @@ BEGIN
     IDS_VP_DRAW_FAILED      "Your attempt to use Vampiric draw has failed! (Either your target left the area, or had no elementral force left to drain.)\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_EARTHQUAKE_PROTECTED 
                             "%s has summoned a dreamquake but you are protected!\n"
@@ -2442,14 +2110,14 @@ BEGIN
     IDS_HACKED_LEVELFILE    "Caution: client is logging on to production server with an altered level file. Expected %u, got %u. User suppplied information: Player Name: ""%s"", MPath ID: %u, Player Password: ""%s"", Port: %u, Version: %u Build: %u. Sub-Build %u""\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_SERVICENAME         "AgentSvr"
     IDS_SURFACE_COLOR_DEPTH_TOO_HIGH 
                             "You must set you color depth to 16 bit to run this build - use Control Panel->Display>Settings->Color"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_BAD_LEVELFILE       "Error - incorrect or corrupted levelfile. Please ensure you have applied the latest patches, and, if necessary, download and install Underlight again. Or, contact support@lyrastudios.com for help."
     IDS_REFLECTS_BACK       "Your attempt to drainself reflects off the chaos of %s's soulphere!"
@@ -2470,7 +2138,7 @@ BEGIN
                             "There has been a problem with your billing which must be resolved before you may play Underlight. Please go to www.underlight.com and contact a Lyra representative for assistance."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DREAMSMITH_MARK     "This art is not meant to be invoked directly - it is used only when you attempt to train others in the art of Forge Talisman\n"
     IDS_NO_SELF_TRAIN       "It is not possible to self train in that art\n"
@@ -2494,7 +2162,7 @@ BEGIN
     IDS_GUILD_GOALCOMPLETED "<completed>: %s"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_GUILD_GOALMAXACCEPTED "<maxed>: %s"
     IDS_GUILD_GOALTIMEEXPIRED "<expired>: %s"
@@ -2514,7 +2182,7 @@ BEGIN
     IDS_MISMATCH            "We're sorry, but that Underlight account can not be used with this version of Underlight. Please contact accounts@lyrastudios.com for more information."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PMARE_MINUTES2      "You have already played %u minutes in this session today. As requested, you may stay online for up to %d minutes more, when you will automatically be logged off."
     IDS_PMARE_MINUTES3      "You have already played %u minutes in this session. You'll be logged out after %u minutes, to ensure you are billed for only a minimum 15 minute block for the entire session."
@@ -2534,7 +2202,7 @@ BEGIN
     IDS_EXPEL               "In order to use Expel, you must be a Ruler in a House, and have that House's prime in your inventory with at least %d essences in it\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_KILLED              "We're sorry, but that character is dead and can no longer be played.  Contact accounts@lyrastudios.com for more information"
     IDS_PLAYER_SUSPENDED    "You have been temporarily suspended from Underlight for %d days. Please contact accounts@lyrastudios.com for more information."
@@ -2554,7 +2222,7 @@ BEGIN
     IDS_PMARE_BOGROM        "Bogrom (Weakest): $0.95 per 15 minutes"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PMARE_AGOKNIGHT     "Agoknight (Medium): $1.95 per 15 minutes"
     IDS_PMARE_SHAMBLIX      "Shamblix (Most Powerful): $3.95 per 15 minutes"
@@ -2577,7 +2245,7 @@ BEGIN
     IDS_FORM_CHANGE         "You must be a soulsphere to alter form...\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NO_AVATAR           "You will need to leave the training area and enter Underlight before you can view your avatar\n"
     IDS_SENSE_DREAMERS1     "You sense the most dreamers in %s"
@@ -2597,7 +2265,7 @@ BEGIN
     IDS_SOUND_ENABLED       "Sound Enabled: this option tells Underlight whether or not to to use sound in the game. In general, you should enable this option. However, if you have no sound system on your computer, you can disable this option so that no sounds or sound drivers will be loaded. Note that, if you do have a sound system,  you can always turn off the sound, or change the sound volume, from inside the game. If this option is disabled when you enter the game, you will need to exit and reenter with the option enabled to hear sounds."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_FORM_UPDATE         "You are currently a %s, after restore you will become a %s\n"
     IDS_NAME_LOCAL          "%s is local\n"
@@ -2618,7 +2286,7 @@ BEGIN
     IDS_NO_PROTECTION       "You must disable all of your special protection to use this!\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_HYPNOTIC            "Your hypnotic gaze paralyzes everyone!\n"
     IDS_RUN_TERROR          "All present run in flee in terror!\n"
@@ -2638,7 +2306,7 @@ BEGIN
     IDS_NO_ITEM_PARALYZED   "You may not use that item while paralyzed."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_WARD_NOT_PLACED     "WARNING: ward can not be placed!\n"
     IDS_WHO_IS_THAT         "That's %s\n"
@@ -2660,7 +2328,7 @@ BEGIN
     IDS_PMARE_EMOTES1       "glares around the room, resting his eyes on you!*grins evilly*breathes heavily*looks around, eyes flashing with chaos*roars menacingly at you!*flashes you an evil, sickening smile*shakes its head at your words*burns your dreamsoul with its chaotic gaze*makes a horrific noise that sounds like... laughter?*roars with rage!*licks its lips, seeming rather hungry*scritches a rib idly*shakes its head violently*munches on a dreamer essence*nods its head slowly*stares around the room, roaring and shaking out of control*sighs and shakes its head at the floating dreamer*extends its bone-like appendages towards the sky in triumph*continues without paying you any attention*"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PMARE_SPEECH_ENGLISH 
                             "I do not understand, foolish dreamer.*I will reward my friends.*Hello.*Goodbye.*Follow me...*Do not leave! I am friend!*Foolish dreamers! You will perish!*Help me dreamers! Restore me! Restore me!*Feel the power of chaos!*Stop! Do not attack! *Now, see my power!*I am mighty! The scared dreamers run!*Where are you dreamers? You can not hide.*Stop! I am hurt!*Don't run, I am your friend!*I don't understand evil dreamerspeak!*I come for powerful kill!*Your essence will be mine!*Run, puny dreamers! Death is coming!*I am a child of Chaos!*The nightmares are everywhere!*You are too close!*I will chase you for all time!*All dreamers are enemies of Chaos! Die!*Give me essence!*GRAAH!*Dreamer is a coward!*Why are you afraid? I will not harm you.*Begone Dreamer, you are no match for me!*I'll be back again soon.*Face your fate, the end is near!*"
@@ -2681,7 +2349,7 @@ BEGIN
     IDS_PMARE_MINUTES1      "You have already played %u minutes in this session today. With your current account balance, you may stay online for up to %d minutes, when you will automatically be logged off. "
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_START_TRAINING      "Start with Training: If you are new to Underlight, or just need a refresher, enable this option to go through a brief tutorial before entering the game. "
     IDS_SS_MB_OTHER_ACK     "Your attempt to activate Mind Blank on %s has failed because of interference from their Soul Shield\n"
@@ -2701,7 +2369,7 @@ BEGIN
     IDS_ART_APPLIED_TO_SELF_BY_HIDDEN_GM "%s has been invoked upon you!"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_GRATITUDE_NOTYOURS2 "This gratitude token has already been assigned to another dreamer, so you may not use it. You should return it to its original owner (check the item description).\n"
     IDS_GRATITUDE_NOTYOURS1 "This gratitude token belongs to the newly awakened dreamer named in this item's description, and should be immediately returned to him/her. This item is currently of no use to you, as the original owner must assign it to another dreamer before it can be redeemed for XP\n"
@@ -2721,7 +2389,7 @@ BEGIN
     IDS_NO_HTTP2            "Underlight is unable to start the download of the server initialization file via HTTP; please check that you are connected to your ISP and try again\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NO_HTTP3            "Underlight is unable to download the server initialization file via HTTP; please check that you are connected to your ISP and try again\n"
     IDS_TRYING_PORT         "Trying port %u....\n"
@@ -2743,7 +2411,7 @@ BEGIN
                             "You have succesfully raised %s's skill in %s!"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_READ_QUEST          "This quest codex for the art of %s may be read %s times more. Summoning inscription...\n"
     IDS_QUEST_DESCRIP       "The quest codex was inscribed by %s, for %s. It reads: %s\n\n"
@@ -2762,7 +2430,7 @@ BEGIN
     IDS_ERROR_READ_AGENT_INFO_MSG "Error reading agent information message"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ERROR_READ_AGENT_POSSES_MSG "Error reading agent posession message"
     IDS_ABJURE_FAIL         "Abjure failed!\n"
@@ -2783,7 +2451,7 @@ BEGIN
     IDS_NO_SEEK_TO_FIND_VISUAL_FFX "Could Not Seek to Find visual effect."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NO_READ_VISUAL_FFX_BITS "Could Not Read visual effect Bits."
     IDS_NO_SEEK_TO_FIND_SOUND_FFX "Could Not Seek to Find Sound Effect."
@@ -2803,7 +2471,7 @@ BEGIN
     IDS_ERR_READ_RCVGOALDETAILS_MSG "Error reading RcvGoalDetails message"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ERR_READ_RCVREPORTHDR_MSG "Error reading RcvReportHdr message"
     IDS_ERR_READ_RCVREPORTGOALS_MSG "Error reading RcvReportGoals message"
@@ -2824,7 +2492,7 @@ BEGIN
     IDS_ERR_READ_ENTER_RM_MSG "Error reading enter room message"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ERR_READ_LEAVE_RM_MSG "Error reading leave room message"
     IDS_ERR_READ_SPEECH_MSG "Error reading speech message"
@@ -2844,7 +2512,7 @@ BEGIN
     IDS_ERR_LOAD_LEVEL      "Error Loading Level"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NO_OPEN_LVL_FILE    "Cannot open level file"
     IDS_ERR_LOAD_LVL_FILE_HDR "Error Loading Level File Header"
@@ -2863,7 +2531,7 @@ BEGIN
     IDS_ERR_READ_TEACHERPLAT_MSG "Error reading teacher plat message"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NO_ACCESS_REGISTRY  "Cannot access registry"
     IDS_0                   "0"
@@ -2880,7 +2548,7 @@ BEGIN
     IDS_40                  "40"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_45                  "45"
     IDS_50                  "50"
@@ -2900,7 +2568,7 @@ BEGIN
     IDS_7_TO_18             "7 to 18"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_1_TO_20             "1 to 20"
     IDS_1_TO_30             "1 to 30"
@@ -2920,7 +2588,7 @@ BEGIN
     IDS_5_TO_14             "5 to 14"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_3_TO_18             "3 to 18"
     IDS_7_TO_22             "7 to 22"
@@ -2940,7 +2608,7 @@ BEGIN
     IDS_8_TO_16             "8 to 16"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_9_TO_18             "9 to 18"
     IDS_10_TO_20            "10 to 20"
@@ -2960,7 +2628,7 @@ BEGIN
     IDS_1_TO_2_MIN          "1 to 2 minutes"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_1_TO_3_MIN          "1 to 3 minutes"
     IDS_1_TO_4_MIN          "1 to 4 minutes"
@@ -2980,7 +2648,7 @@ BEGIN
     IDS_30_TO_60_MIN        "30 to 60 minutes"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_30_TO_90_MIN        "30 to 90 minutes"
     IDS_1_TO_2_HR           "1 to 2 hours"
@@ -3000,7 +2668,7 @@ BEGIN
     IDS_45_SEC              "45 seconds"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_50_SEC              "50 seconds"
     IDS_1_MIN               "1 minute"
@@ -3020,7 +2688,7 @@ BEGIN
     IDS_15_TO_30_SEC        "15 to 30 seconds"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_20_TO_40_SEC        "20 to 40 seconds"
     IDS_30_TO_60_SEC        "30 to 60 seconds"
@@ -3040,7 +2708,7 @@ BEGIN
     IDS_POR                 "Protectors of the Radiance"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_HC                  "House Calenture"
     IDS_GOE                 "Gathering of the Entranced"
@@ -3059,7 +2727,7 @@ BEGIN
     IDS_JADE                "Jade"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TEAL                "Teal"
     IDS_CYAN                "Cyan"
@@ -3079,7 +2747,7 @@ BEGIN
     IDS_SNOW                "Snow"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_LIGHT_RED           "Light Red"
     IDS_CHARCOAL            "Charcoal"
@@ -3097,7 +2765,7 @@ BEGIN
     IDS_MALE_AVATAR         "Male Avatar"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_FEMALE_AVATAR       "Female Avatar"
     IDS_EMPHANT             "Emphant"
@@ -3117,7 +2785,7 @@ BEGIN
     IDS_EMPH_ESS_TALISMAN   "Emphant Essence Talisman"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_BOG_ESS_TALISMAN    "Bogrom Essence Talisman"
     IDS_AGO_ESS_TALISMAN    "Agoknight Essence Talisman"
@@ -3137,7 +2805,7 @@ BEGIN
     IDS_CLEANSED_NIGHTMARE_TOKEN "Cleansed Nightmare Token"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_BANISHED_NIGHTMARE_TOKEN "Banished Nightmare Token"
     IDS_IMPRISONED_NIGHTMARE_TOKEN "Imprisoned Nightmare Token"
@@ -3157,7 +2825,7 @@ BEGIN
     IDS_FLAG_AOE            "Flag AoE"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_FLAG_DOL2           "Flag DoL2"
     IDS_FLAG_GOE            "Flag GoE"
@@ -3177,7 +2845,7 @@ BEGIN
     IDS_BANISHMENT          "Banishment"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DIAMOND             "Diamond"
     IDS_INVIS               "Invis"
@@ -3197,7 +2865,7 @@ BEGIN
     IDS_FOUR                "Four"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_BREED_DESC_ONE      "An azure residue drips from the jaws of this seemingly large mare. Its skin gives the apperance of a shadow, as it moves fluently through the dream."
     IDS_BREED_DESC_TWO      "Other than its blazing gold eyes, the mare otherwise looks almost transparent. It breathes deeply, its gold eyes closely following all nearby movement."
@@ -3217,7 +2885,7 @@ BEGIN
     IDS_FA                  "Free Action"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_AMULET              "Amulet"
     IDS_SHATTER             "Shatter"
@@ -3237,7 +2905,7 @@ BEGIN
     IDS_PURIFY              "Purify"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DRAIN_SELF          "Drain Self"
     IDS_ABJURE              "Abjure"
@@ -3256,7 +2924,7 @@ BEGIN
     IDS_PEACE_AURA_OFF      "Your peaceful aura fades; once again you are vulnerable but you may now use arts again\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NO_PARTY_ON         "A haze surrounds you, suppressing your ability to join party to others!\n"
     IDS_NO_PARTY_OFF        "The haze fades and you may once again join party\n"
@@ -3276,7 +2944,7 @@ BEGIN
     IDS_DREAM_STRIKE        "Dream Strike"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NMF                 "Nightmare Form"
     IDS_LOCATE              "Locate Dreamer"
@@ -3293,7 +2961,7 @@ BEGIN
     IDS_GIVE                "Give"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_FLAMESHAFT          "FlameShaft"
     IDS_TRANCEFLAME         "TranceFlame"
@@ -3312,7 +2980,7 @@ BEGIN
     IDS_TERROR_ART_NAME     "Terror"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_HEAL_AURA           "Healing Aura"
     IDS_TELEPATHY           "Telepathy"
@@ -3332,7 +3000,7 @@ BEGIN
     IDS_NEWLY_AWAKENED      "Newly Awakened"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_COMBINE             "Combine"
     IDS_SHOW_GRATITUDE      "Show Gratitude"
@@ -3351,7 +3019,7 @@ BEGIN
     IDS_NO_JP               "The haze surrounding you prevents you from joining with others!\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PA_NO_ARTS          "You can not evoke arts or attack while shielded by your Peace Aura\n"
     IDS_USE_GUILD_HOUSE     "You concentrate for a moment and move to your Focus Guild Room "
@@ -3376,7 +3044,7 @@ BEGIN
     IDS_MAX_ACCEPTED        "Max Accepted"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TIME_EXPIRED        "Time Expired"
     IDS_VOTE_PENDING        "Vote Pending"
@@ -3395,7 +3063,7 @@ BEGIN
     IDS_HIT                 "hit you!"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_KNOCKED             "knocked you!"
     IDS_THWACKED            "thwacked you!"
@@ -3415,7 +3083,7 @@ BEGIN
     IDS_DESTRUCTION         "wreaked destruction on you!"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_THWACKINGS          "thwackings[thwack_index]"
     IDS_ACTOR_NO_ADD        "Actor could not be added to list!"
@@ -3435,7 +3103,7 @@ BEGIN
     IDS_X                   "X"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_Y                   "Y"
     IDS_LEVELID             "LevelID"
@@ -3455,7 +3123,7 @@ BEGIN
     IDS_NO_GET_LOCAL_HOST_NAME "Couldn't get local host name!\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NO_CREATE_SOCKET    "Couldn't create socket!\n"
     IDS_NO_BIND_TO_SOCKET   "Couldn't bind to socket!\n"
@@ -3482,7 +3150,7 @@ BEGIN
                             "Error %u on receipt of close message on client %s\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DISCONN_CLIENT_AT   "disconnected client at %s\n"
     IDS_UNK_MONSTER_TYPE    "Unknown monster type %u for %s!\n"
@@ -3502,7 +3170,7 @@ BEGIN
     IDS_SPAWNING_AT         "\n*** Spawning: %s(%u) at the %u of %u open generator. In sector %u, room %u,  X:%u, Y:%u\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_WARN_MSG_TOO_LONG   "WARNING: message %s too long!\n"
     IDS_INVALID_ART         "Invalid art %u"
@@ -3521,7 +3189,7 @@ BEGIN
     IDS_DAMAGED_BUT_STRONG  "damaged but strong"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_MOST_EXCELLENT      "in most excellent form"
     IDS_PERFECT             "in perfect form"
@@ -3541,7 +3209,7 @@ BEGIN
     IDS_THE_TARGET          "the target"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NUM_BUDDIES         "num_buddies"
     IDS_WATCH_LIST          "watch_list"
@@ -3561,7 +3229,7 @@ BEGIN
     IDS_LIGHT_BLUE          "light blue"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_LIGHT_ORANGE        "light orange"
     IDS_ORANGE              "orange"
@@ -3580,7 +3248,7 @@ BEGIN
     IDS_DD_OK               "DD_OK"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DDERR_ALREADYINITIALIZED "DDERR_ALREADYINITIALIZED"
     IDS_DDERR_BLTFASTCANTCLIP "DDERR_BLTFASTCANTCLIP"
@@ -3600,7 +3268,7 @@ BEGIN
     IDS_DDERR_EXCLUSIVEMODEALREADYSET "DDERR_EXCLUSIVEMODEALREADYSET"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DDERR_GENERIC       "DDERR_GENERIC"
     IDS_DDERR_HEIGHTALIGN   "DDERR_HEIGHTALIGN"
@@ -3620,7 +3288,7 @@ BEGIN
     IDS_DDERR_INVALIDSURFACETYPE "DDERR_INVALIDSURFACETYPE"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DDERR_LOCKEDSURFACES "DDERR_LOCKEDSURFACES"
     IDS_DDERR_MOREDATA      "DDERR_MOREDATA"
@@ -3640,7 +3308,7 @@ BEGIN
     IDS_DDERR_NOEMULATION   "DDERR_NOEMULATION"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DDERR_NOEXCLUSIVEMODE "DDERR_NOEXCLUSIVEMODE"
     IDS_DDERR_NOFLIPHW      "DDERR_NOFLIPHW"
@@ -3660,7 +3328,7 @@ BEGIN
     IDS_FUNCTION1           "Function 1"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_FUNCTION2           "Function 2"
     IDS_FUNCTION3           "Function 2"
@@ -3680,7 +3348,7 @@ BEGIN
     IDS_QUEST_CODEX         "Quest Codex"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_LIFT                "Lift all items into inventory. Are you sure?"
     IDS_DROP                "Drop all items from inventory?"
@@ -3700,7 +3368,7 @@ BEGIN
     IDS_WILLPOWER           "Willpower"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DREAMSOUL           "Dreamsoul"
     IDS_GOALBOOK_ACCEPT_QUEST_ACK 
@@ -3723,7 +3391,7 @@ BEGIN
     IDS_ON                  "On"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_OFF                 "Off"
     IDS_ITEM                "Item"
@@ -3744,7 +3412,7 @@ BEGIN
     IDS_RESET_EYE_LEVEL     "Reset Eye-level"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TOGGLE_SOUND        "Toggle Sound"
     IDS_TALK                "Talk"
@@ -3764,7 +3432,7 @@ BEGIN
     IDS_STRAFE              "Strafe"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_SIDESTEP_LEFT       "Sidestep Left"
     IDS_SIDESTEP_RIGHT      "Sidestep Right"
@@ -3784,7 +3452,7 @@ BEGIN
     IDS_WAVE                "Wave"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_SHOW_SHIELD_KEY     "Show Shield"
     IDS_IGNORE_LIST         "Ignore List"
@@ -3804,7 +3472,7 @@ BEGIN
     IDS_NULL_PT_IN_SECTOR   "Caller passed NULL sector to PointInSector()"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TRAIN_TALIS         "Training Talisman"
     IDS_ACTORLIST_INVARIANT1 
@@ -3828,7 +3496,7 @@ BEGIN
     IDS_PARTY_MSG_ERR       "Unknown party message received"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_LP                  "Least Powerful"
     IDS_MP                  "Most Powerful"
@@ -3843,7 +3511,7 @@ BEGIN
     IDS_GOALBOOK_ERR        "Invariant broken - goal id at index %u should be NULL --- line %u"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_ANY_NUM             "any number of"
     IDS_LOADING             "Loading summaries..."
@@ -3863,7 +3531,7 @@ BEGIN
     IDS_FLATID              "Flat %d needed but not available!"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_MAX_LIST            "Cannot insert actor. Maxed out on list!"
     IDS_NUM_ELEM            "Number of elements: %d"
@@ -3883,7 +3551,7 @@ BEGIN
     IDS_PIXEL_ERR2          "Palette with ID %d not found"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_JP1                 "%s wishes to join your party!"
     IDS_JP2                 "Rejecting request %d"
@@ -3903,7 +3571,7 @@ BEGIN
     IDS_JP14                "Party Invariant Broken: we're in members in slot %d! --- %d\n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_JP15                "Party Invariant Broken: invalid # of accepted requests %d with %d party members! --- %d"
     IDS_CANT_MATCH_ID       "Could Not Match Level ID to Level"
@@ -3923,7 +3591,7 @@ BEGIN
     IDS_GOAL_ERR3           "Got goal details for unknown goal!"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_GOAL_ERR4           "Tried to read unknown goal!"
     IDS_GOAL_ERR5           "Tried to read unknown goal!"
@@ -3941,7 +3609,7 @@ BEGIN
     IDS_DDERR_NORASTEROPHW  "DDERR_NORASTEROPHW"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DDERR_NOROTATIONHW  "DDERR_NOROTATIONHW"
     IDS_DDERR_NOSTRETCHHW   "DDERR_NOSTRETCHHW"
@@ -3961,7 +3629,7 @@ BEGIN
     IDS_DDERR_NOZOVERLAYHW  "DDERR_NOZOVERLAYHW"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DDERR_OUTOFCAPS     "DDERR_OUTOFCAPS"
     IDS_DDERR_OUTOFMEMORY   "DDERR_OUTOFMEMORY"
@@ -3982,7 +3650,7 @@ BEGIN
     IDS_DDERR_TOOBIGHEIGHT  "DDERR_TOOBIGHEIGHT"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DDERR_TOOBIGSIZE    "DDERR_TOOBIGSIZE"
     IDS_DDERR_TOOBIGWIDTH   "DDERR_TOOBIGWIDTH"
@@ -4002,7 +3670,7 @@ BEGIN
     IDS_DSERR_INVALIDCALL   "DSERR_INVALIDCALL"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DSERR_GENERIC       "DSERR_GENERIC"
     IDS_DSERR_PRIOLEVELNEEDED "DSERR_PRIOLEVELNEEDED"
@@ -4022,7 +3690,7 @@ BEGIN
     IDS_FIREWALL_FAQ_URL    "http://www.clashofdreams.com/"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DEV_PATCH_FILE_URL  "https://drive.google.com/folderview?id=0B5kUQrCuMBg2aTBLR2pfYlotOW8&usp=sharing"
     IDS_LIVE_MANACCOM_PATCH_FILE_URL 
@@ -4043,7 +3711,7 @@ BEGIN
     IDS_LAME_QUEST          "Your quest posting has been rejected because any talisman in the Dream would meet the criteria you specified! Please choose at least a color, a bitmap, or a function for the item. "
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_BACKGROUND_MUSIC_OFF "Background music off\n"
     IDS_BACKGROUND_MUSIC_ON "Background music on. Please see the README file for more information about this music."
@@ -4063,7 +3731,7 @@ BEGIN
     IDS_NEED_QUEST_ITEM     "In order to use Train to teach an Art to a Dreamer, you must have in your pack a Quest item (created by the Quest Art) made specifically for that Dreamer to be trained in that Art."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_CHAOS_PURGE_ART_NAME "Chaos Purge"
     IDS_CUP_SUMMONS_ART_NAME "Cup Summons"
@@ -4083,7 +3751,7 @@ BEGIN
     IDS_KNOW9               "A sense of strength permeates throughout the room. The large regular tiles that mark the floor demonstrate an even hand and careful eye. Striated rock forms walls reminiscent of a hall of judgement. "
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_KNOW10              "The musty scent of old books lends this room the feel of an ancient library. The floor is clean and spacious, seeming almost ready for apparatus of experimentation to be placed. The myriad designs on the walls evoke the possibilities of understanding the unknown."
     IDS_HOUSE_MEMBERS       "House Members"
@@ -4104,7 +3772,7 @@ BEGIN
     IDS_NEEDS_HEAD          "You need to have the head of the target in your inventory in order to use %s."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_MULTIPLAYER_URL     "http://www.multiplayergamepass.com/mpSessionIDInHttpBody.asp?playerID=%d&gameID=1025439629"
     IDS_MULTIPLAYER_URL_CHECKIN 
@@ -4125,7 +3793,7 @@ BEGIN
     IDS_KNOW17              "Columns of rock rise up from the grassy plains. The sounds of myriad insects makes a perpetual hum. A rough dirt track wends its way past open fields, dank caves, and swift flowing rivers to make its way to the House of Order of the Sable Moon. \n"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_KNOW18              "The turf here is lush and springy, suggestive of marshy conditions. A cool breeze carries the scent of exotic flowers and the cries of birds. A crystalline stream forms a path leading to the House of Alliance of the Eclipse. "
     IDS_KNOW19              "A wasteland of stone and sand stretches before you. The air is dry and hot. Ancient mounds, worn by time, dot the landscape. A carefully fitted stone path meanders among the natural splendors on its way to the House of Union of the Covenant. "
@@ -4145,7 +3813,7 @@ BEGIN
     IDS_KNOW31              "Matted reeds crack beneath your footfall as you follow a well-used trail. The noisome vegetation grows in thick clumps, and the ground underfoot is alternately spongy and humped. The buzz of midges and the chirp of frogs remind you that this place teems with dreams not your own. "
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_KNOW32              "Faceted natural gemstones inlay the very walls of this sandy-bottomed chamber. The radiance of the crystals creates a cascading shimmer at your peripheral vision. The would-be silence of the cavern is corrupted by the nearby thrum of a flow of water. "
     IDS_KNOW33              "The reverberating echo of the cascade of water makes speaking in a normal tone difficult. A sense of ancient secrets and grounded power immerse you like the torrent falling from above, and dry dust at the wall's edge confirms this to be an old place. "
@@ -4165,7 +3833,7 @@ BEGIN
     IDS_UNKNOWN_BITMAP      "unknown bitmap ID %d requested"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NO_READ_META_BITMAPS 
                             "could not open bitmaps metafile ul3d_bitmaps.txt"
@@ -4187,7 +3855,7 @@ BEGIN
                             "Error - can not load textures.zip media assets file"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TEXTURE_NOT_IN_PAC  "The texture file %s can not be found in the zip file textures.zip"
     IDS_NO_MODEL            "Actor with NULL model (id = 0) created"
@@ -4211,7 +3879,7 @@ BEGIN
     IDS_SUMMON_PRIME        "Summon Prime"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_KNOW43              "Bright beams of light, sombre shadows and dancing motes of dust amplify the vaulted spaces of this cavernous, silent room."
     IDS_KNOW44              "Splashing water sounds and brilliantly sky-lit central spaces lead to shadowed portals. Murals overhead depict a tall lady in long flowing robes surveying the expanses below."
@@ -4231,13 +3899,13 @@ BEGIN
     IDS_PP_SPHERE           "Advance to Next Sphere"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDC_PPOINT_NEXT         "D"
     IDS_PPOINT_NEXT         "Please press 'OK' to go to the next Personality Points Help screen."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PP_ART              "Evoke an Art once"
     IDS_TOO_MUCH_PP         "You do not have enough Personality Points to do that right now"
@@ -4257,7 +3925,7 @@ BEGIN
     IDS_SPHERE_MAX          "You are already at maximum Sphere"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_SPHERE_INCREASE_PP  "Congratulations! Y ou have advanced to the next Sphere with Personality Points!"
     IDS_PP_LEARN_ART        "%s (to level %d)"
@@ -4277,7 +3945,7 @@ BEGIN
     IDS_LOCK                "Lock"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_KEY                 "Key"
     IDS_BREAK_LOCK          "Break Lock"
@@ -4297,7 +3965,7 @@ BEGIN
     IDS_NP_SYMBOL_ART_NAME  "NP Symbol"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NP_SYMBOL           "That Art is not meant to be invoked directly, but instead changes your appearance automatically."
     IDS_NO_PP_USE           "Only Dreamer characters may grant and use Personality Points"
@@ -4318,7 +3986,7 @@ BEGIN
     IDS_SHOW_PARTY          "Show Party"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NO_READ_META_SHADERS "could not open shaders metafile ul3d_script.txt"
     IDS_DUPLICATE_SHADER_ID "Error: duplicate shader id %d in metafile %s"
@@ -4335,7 +4003,7 @@ BEGIN
     IDS_FOUNDGUILD_REJECTED "You have successfully rejected the charter for the %s guild."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_SHOW_IN_PARTY       "%s is in your party"
     IDS_HEALING_AURA_SELF   "You restore yourself and your party with your Healing Aura\n"
@@ -4356,7 +4024,7 @@ BEGIN
     IDS_DECOMPRESSION_ERR   "Error: decompression failure or file not found %s"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_PARSE_ERROR         "Error: while parsing %s"
     IDS_INI_BAD_KEY         "Error: bad key %s in file %s"
@@ -4376,7 +4044,7 @@ BEGIN
     IDS_GUILD_PROPOSITION   "Guild Proposition"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_DUPLICATE_GUILD_MEMBERS 
                             "You cannot have the same guild member appear more than once!"
@@ -4398,7 +4066,7 @@ BEGIN
     IDS_HR_UNKNOWN          "An unknown error has occurred trying to access the help ticket system"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_HR_REOPENED         "The help ticket has been reset to OPEN"
     IDS_HR_OPEN_ERROR       "An error has occurred trying to reset the help ticket to OPEN"
@@ -4418,7 +4086,7 @@ BEGIN
     IDS_TEXTURE_NOT_FOUND   "Texture %s not found."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_APPRENTICE          "Apprentice"
     IDS_JOURNEYMAN          "Journeyman"
@@ -4438,7 +4106,7 @@ BEGIN
     IDS_PROTO_CHOOSE_INITIATE "Select an initiate."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_NO_PROTO_MARE       "Nightmares make for terrible initiates!"
     IDS_PROTO_IN_ROOM       "All members must be present in this room while the guild is being founded."
@@ -4465,7 +4133,7 @@ BEGIN
     IDS_TAINT_IN_ROOM       "All members must be present with the prime while the Taint Prime ring is being formed."
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TAINT_WRONG_GUILD   "You can not be a member of the Taint Prime ring because you are not in the guild that is currently tainting the prime."
     IDS_TAINT_PRIME         "Taint Prime"
@@ -4487,7 +4155,7 @@ BEGIN
     IDS_MARES               "You sense the following datoke: "
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE
 BEGIN
     IDS_TEMPEST             "Tempest"
     IDS_TEMPEST_APPLIED     "The impact of Tempest forces you aside"
@@ -4506,7 +4174,7 @@ BEGIN
     IDS_KNOW51              "The night air from the open roof drifts down around you. The walls are splashed with bright colors. There are shelves on all four walls filled with burnt candles, half full vials, herbs, driftwood, and shiny metals. A large table stands in the far corner covered with parchments. The room has a distinct feeling of distraction."
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

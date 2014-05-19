@@ -36,7 +36,7 @@ public:
   GMsg_AgentLogin();
   ~GMsg_AgentLogin();
 
-  void Init(int version, const TCHAR* playername, int server_port, lyra_id_t billing_id);
+  void Init(int version, const TCHAR* playername, int server_port, lyra_id_t billing_id, short tcp_only);
 
   // standard public methods
   void Dump(FILE* f, int indent = 0) const;
@@ -47,6 +47,7 @@ public:
   //const TCHAR* Password() const;
   const MD5Hash_t* HashPtr() const;
   int ServerPort() const;
+  short TCPOnly() const;
   lyra_id_t BillingID() const;
 
   // mutators
@@ -56,6 +57,7 @@ public:
   void SetHash(const MD5Hash_t hash);
   void SetServerPort(int server_port);
   void SetBillingID(lyra_id_t billing_id);
+  void SetTCPOnly(short tcp_only);
 
 private:
 
@@ -71,6 +73,8 @@ private:
 	MD5Hash_t hash;							// md5 hash
     int serv_port;                          // UDP port number for S->C local group updates
     lyra_id_t billing_id;                     // user's billing id
+	short tcp_only;
+	short unusued_;
   } data_;
 
 };

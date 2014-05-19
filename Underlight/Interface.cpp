@@ -798,7 +798,7 @@ BOOL CALLBACK LyraDialogProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 			SetWindowLong(hDlg, GWL_USERDATA, lParam);
 			SendMessage(hDlg, WM_SETFONT, WPARAM(display_font[0]), 0);
 			ResizeDlg(hDlg);
-			EnumChildWindows(hDlg, EnumChildProcSetup, NULL);
+			//EnumChildWindows(hDlg, EnumChildProcSetup, NULL);
 			break;
 	}
 

@@ -97,7 +97,7 @@ struct Lyra {
     MAX_AVATARDESC = 512,   // max length of avatar description
 
 	MAX_LEVELS = 64,        // max # of levels
-    MAX_LEVELROOMS = 32,   // maximum number of rooms in a level
+    MAX_LEVELROOMS = 64,   // maximum number of rooms in a level
     ROOMPEOPLE_MAX = 100,   // maximum number of people in a room
     MAX_ROOMITEMS = 64,     // maximum number of items in a room
     MAX_LEVELPEOPLE = 1000, // abs max number of people in a level
