@@ -5129,14 +5129,12 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 			pp.cost = 0;
 
 			// 0 = permanent stat increase
-			// 1 = bypass train requirement
-			// 2 = bypass sphere requirement
-			// 3 = evoke an art once
+			// 1 = PMare time
+			// 2 = Use Art
+			// 3 = XP
 			LoadString (hInstance, IDS_PP_STAT, message, sizeof(message));
 			ComboBox_AddString(GetDlgItem(hDlg, IDC_HOW_USE_PP), message);
-			LoadString (hInstance, IDS_PP_TRAIN, message, sizeof(message));
-			ComboBox_AddString(GetDlgItem(hDlg, IDC_HOW_USE_PP), message);
-			LoadString (hInstance, IDS_PP_SPHERE, message, sizeof(message));
+			LoadString (hInstance, IDS_PP_PMARE_TIME, message, sizeof(message));
 			ComboBox_AddString(GetDlgItem(hDlg, IDC_HOW_USE_PP), message);
 			LoadString (hInstance, IDS_PP_ART, message, sizeof(message));
 			ComboBox_AddString(GetDlgItem(hDlg, IDC_HOW_USE_PP), message);
@@ -5219,6 +5217,7 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 
 					switch (pp.cursel) 
 					{
+#if 0 // PP Train - disabled for now!
 					case GMsg_UsePPoint::BYPASS_TRAIN: // train
 					{
 						LoadString (hInstance, IDS_BYPASS_TRAIN_SEL, message, sizeof(message));
@@ -5256,6 +5255,22 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 						}
 						break;
 					}
+#endif // PP Train
+					case GMsg_UsePPoint::BUY_PMARE_TIME:
+					{
+						int curPP = player->PPoints();
+						LoadString (hInstance, IDS_PP_PMARE_TIME_SEL, message, sizeof(message));
+						Edit_SetText(GetDlgItem(hDlg, IDC_PP_STATIC), message);
+						ShowWindow(GetDlgItem(hDlg, IDC_PP_STATIC), SW_SHOWNORMAL);
+						ShowWindow(GetDlgItem(hDlg, IDC_PP_SUBSEL), SW_SHOWNORMAL);
+						int numCreds = curPP / PPOINTS_PER_PMARE_CREDIT;
+						for(int i = 1; i < numCreds; i++)
+						{
+							_stprintf(disp_message, "%d", i);
+							ComboBox_AddString(GetDlgItem(hDlg, IDC_PP_SUBSEL), disp_message);
+						}
+						break;
+					}
 					case GMsg_UsePPoint::GAIN_XP: // sphere
 					{
 
@@ -5285,6 +5300,7 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 						ShowWindow(GetDlgItem(hDlg, IDC_PP_COST), SW_SHOWNORMAL);
 						break;
 					}
+#if 0 // PP Sphere - disabled for now
 					case GMsg_UsePPoint::BYPASS_SPHERE: // sphere
 					{
 						LmStats stats;
@@ -5312,6 +5328,7 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 						ShowWindow(GetDlgItem(hDlg, IDC_PP_COST), SW_SHOWNORMAL);
 						break;
 					}
+#endif 
 					case GMsg_UsePPoint::USE_ART: // art
 					{
 						LoadString (hInstance, IDS_USEART_LABEL, message, sizeof(message));
@@ -5338,8 +5355,8 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 					case GMsg_UsePPoint::STAT_INCREASE: // stat
 					default: 
 					{
-						LoadString (hInstance, IDS_DREAMSOUL, message, sizeof(message));
-						ComboBox_AddString(GetDlgItem(hDlg, IDC_PP_SUBSEL), message);
+						// LoadString (hInstance, IDS_DREAMSOUL, message, sizeof(message));
+						// ComboBox_AddString(GetDlgItem(hDlg, IDC_PP_SUBSEL), message);
 						LoadString (hInstance, IDS_WILLPOWER, message, sizeof(message));
 						ComboBox_AddString(GetDlgItem(hDlg, IDC_PP_SUBSEL), message);
 						LoadString (hInstance, IDS_INSIGHT, message, sizeof(message));
@@ -5379,6 +5396,7 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 				{
 					switch (pp.cursel) 
 					{
+#if 0
 						case GMsg_UsePPoint::BYPASS_TRAIN: // train
 						{
 							int oldsel = pp.sub_cursel;
@@ -5399,10 +5417,29 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 							ShowWindow(GetDlgItem(hDlg, IDC_PP_COST), SW_SHOWNORMAL);
 							break;
 						}
+#endif
 						case GMsg_UsePPoint::GAIN_XP: 
 							break;
+#if 0
 						case GMsg_UsePPoint::BYPASS_SPHERE: // sphere
 							break;
+#endif
+						case GMsg_UsePPoint::BUY_PMARE_TIME:
+						{
+							int oldsel = pp.sub_cursel;
+							pp.sub_cursel = ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PP_SUBSEL));
+							if(pp.sub_cursel == -1)
+								break;							
+							if(oldsel == pp.sub_cursel)
+								break;
+							pp.cost = PPOINTS_PER_PMARE_CREDIT * (pp.sub_cursel + 1);
+							_stprintf(message, "%d", pp.cost);
+							ShowWindow(GetDlgItem(hDlg, IDC_PP_COST), SW_HIDE);
+							Edit_SetText(GetDlgItem(hDlg, IDC_PP_COST), message);
+							ShowWindow(GetDlgItem(hDlg, IDC_PP_COST), SW_SHOWNORMAL);
+							break;
+						}
+
 						case GMsg_UsePPoint::USE_ART: // art
 						{
 							int oldsel = pp.sub_cursel;
@@ -5431,7 +5468,7 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 							if (oldsel == pp.sub_cursel) // do nothing
 								break;
 							// calculate cost of stat increase
-							pp.cost = LmStats::StatIncreaseCost(player->FocusStat(), pp.sub_cursel, player->Orbit(), player->MaxStat(pp.sub_cursel));
+							pp.cost = LmStats::StatIncreaseCost(player->FocusStat(), pp.sub_cursel + 1, player->Orbit(), player->MaxStat(pp.sub_cursel + 1));
 							_stprintf(message, "%d", pp.cost);
 							ShowWindow(GetDlgItem(hDlg, IDC_PP_COST), SW_HIDE);
 							Edit_SetText(GetDlgItem(hDlg, IDC_PP_COST), message);
@@ -5459,6 +5496,7 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 						// sanity check use
 						if (pp.cursel == GMsg_UsePPoint::STAT_INCREASE) 
 						{
+							pp.sub_cursel++;
 							if (player->MaxStat(pp.sub_cursel) == (Stats::STAT_MAX)) 
 							{
 								LoadString (hInstance, IDS_USE_STAT_MAX, message, sizeof(message));
@@ -5467,12 +5505,16 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 								break;
 							}
 						} 
+						else if(pp.cursel == GMsg_UsePPoint::BUY_PMARE_TIME)
+							pp.sub_cursel++;
+#if 0
 						else if (pp.cursel == GMsg_UsePPoint::BYPASS_TRAIN) 
 						{
 						} 
 						else if (pp.cursel == GMsg_UsePPoint::BYPASS_SPHERE) 
 						{	// do nothing; checks already made above
 						} 
+#endif
 						else if (pp.cursel == GMsg_UsePPoint::USE_ART) 
 						{
 							int possible = arts->CanUseArt(pp.art_id, true);

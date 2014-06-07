@@ -29,6 +29,8 @@ const int NUM_ACTOR_COLORS = 16;
 const int NUM_MONSTER_COLORS = 16;
 const int ANY_COLOR = NUM_ACTOR_COLORS;
 
+const int PPOINTS_PER_PMARE_CREDIT = 15;
+
 // these are indexes into the modifier table
 const int EMPHANT_DAMAGE = 15;
 const int BOGROM_DAMAGE = 16;

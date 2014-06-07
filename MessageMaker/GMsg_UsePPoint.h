@@ -27,11 +27,10 @@ public:
 
   enum {
 	STAT_INCREASE = 0,
-	BYPASS_TRAIN = 1,
-	BYPASS_SPHERE = 2,
-	USE_ART = 3,
-	GAIN_XP = 4,
-  BUY_FOCUS = 5
+	BUY_PMARE_TIME = 1,
+	USE_ART = 2,
+	GAIN_XP = 3,
+
   };
 
 public:

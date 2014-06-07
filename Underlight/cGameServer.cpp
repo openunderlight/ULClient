@@ -1959,6 +1959,7 @@ void cGameServer::HandleMessage(void)
 						int old_pp = player->PPoints();
 						player->SetPPoints(old_pp - pp.cost);
 						switch (pp.cursel) {
+#if 0
 						case GMsg_UsePPoint::BYPASS_TRAIN: // train
 								LoadString (hInstance, IDS_TRAIN_PP, message, sizeof(message));
 								_stprintf(disp_message, message, arts->Descrip(pp.art_id));
@@ -1967,6 +1968,7 @@ void cGameServer::HandleMessage(void)
 						case GMsg_UsePPoint::BYPASS_SPHERE: // sphere
 								LoadString (hInstance, IDS_SPHERE_INCREASE_PP, disp_message, sizeof(disp_message));
 								break;
+#endif
 						case GMsg_UsePPoint::USE_ART: // art
 								end_using_pp = false; // end pp use when art finishes
 								arts->BeginArt(pp.art_id, true);
@@ -1976,7 +1978,9 @@ void cGameServer::HandleMessage(void)
 						case GMsg_UsePPoint::GAIN_XP: // art															
 								LoadString (hInstance, IDS_PP_GAIN_XP, disp_message, sizeof(disp_message));
 								break;
-
+						case GMsg_UsePPoint::BUY_PMARE_TIME:
+								LoadString(hInstance, IDS_PP_BOUGHT_PMARE_TIME, disp_message, sizeof(disp_message));
+								break;
 						case GMsg_UsePPoint::STAT_INCREASE: // stat
 							LoadString (hInstance, IDS_STAT_INCREASE_PP, message, sizeof(message));
 							_stprintf(disp_message, message, player->StatName(pp.sub_cursel));

@@ -1497,7 +1497,7 @@ BEGIN
     IDS_NEEDED_SKILL        "; you need a skill of at least  %d  in %s to use it"
     IDS_LOGIN_BADPASSWORD   "Incorrect password - please try again!"
     IDS_MAP_AREA            "That area is known as %s"
-    IDS_LOGIN_ALREADYIN     "That character, or another character linked to the same billing account, is already logged in - please try again in 5 minutes. If you still can't log in after 15 minutes, please email accounts@lyrastudios.com."
+    IDS_LOGIN_ALREADYIN     "That character, or another character linked to the same billing account, is already logged in - please try again in 5 minutes. If you still can't log in after 15 minutes, please email accounts@koiware.org."
     IDS_SOUND_FAILED_INIT   "Failed to initialize Sound, trying again...\n"
     IDS_LOGIN_GAMEFULL      "We're sorry, but the game is currently full - please try again later!"
 END
@@ -1781,7 +1781,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_AGENT_VERSION_EXPIRED 
-                            "This version of the agent controller has expired. Please contact Lyra and obtain a new version"
+                            "This version of the agent controller has expired. Please contact KoiWare and obtain a new version"
     IDS_GOALBOOK_ACCEPT_ERROR 
                             "Sorry, the %s could not be accepted.  The %s may already have the maximum number of acceptees.\n"
     IDS_LEVEL_SERVER_DOWN   "The location server for this portion of Underlight is currently down. Please try again later. Thank you for your cooperation."
@@ -1959,7 +1959,7 @@ BEGIN
     IDS_REMOVE_XP           "%s has taken away experience points from you!\n"
     IDS_NO_SHIFTRUN         "The numeric keypad will function improperly if the shift key is mapped to a movement function.  The shift key has been unmapped."
     IDS_TEL_SPHERE_TOO_LOW  "Your sphere is too low to use that portal\n"
-    IDS_CRAP_NETWORKING     "There is a problem with your Internet Provider or the Internet itself that prevents you from playing Underlight.  If the problem persists, contact your Internet Provider or support@lyrastudios.com\n"
+    IDS_CRAP_NETWORKING     "There is a problem with your Internet Provider or the Internet itself that prevents you from playing Underlight.  If the problem persists, contact your Internet Provider or support@koiware.org\n"
     IDS_ADD_BUDDY           "Enter the name of the dreamer to add:"
     IDS_BUDDY_LIST_FULL     "Your list is currently full - you must delete names before adding new ones\n"
     IDS_ALREADY_ON_LIST     "That dreamer is already on your list\n"
@@ -2062,14 +2062,14 @@ BEGIN
     IDS_GUILD_GOALVOTED     "(Voting) %s"
     IDS_GUILD_GOALPENDINGVOTE "<Vote> %s"
     IDS_PLAYER_STAGGER_DEFLECT "You cannot be staggered!\n"
-    IDS_LIBRARY_ENTRANCE    "These stairs lead to the Library of Souls, where you can find more information about the Dreaming."
+    IDS_LIBRARY_ENTRANCE    "These stairs lead to the Library of Dreams, where you can find more information about the Dreaming."
     IDS_CANNOT_TELL_MAP_AREA 
                             "This map is not of your current plane in Underlight. Maps only work in their plane of origin. "
 END
 
 STRINGTABLE
 BEGIN
-    IDS_NO_MPLAYER          "you must launch Underlight through MPlayer; please see the Underlight documentation for details"
+    IDS_NO_MPLAYER          "You should probably never see this string. If you do contact support@koiware.org"
     IDS_RUN_TOGGLE_ON       "Autorun On\n"
     IDS_LOGIN_MPLAYERID     "you can only use an Underlight account from the MPlayer account that was used to create it. Please restart MPlayer with the proper MPlayer account and try again. "
     IDS_UNTRAIN_OTHER       "You have removed the ability of %s to perform %s\n"
@@ -2119,7 +2119,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_BAD_LEVELFILE       "Error - incorrect or corrupted levelfile. Please ensure you have applied the latest patches, and, if necessary, download and install Underlight again. Or, contact support@lyrastudios.com for help."
+    IDS_BAD_LEVELFILE       "Error - incorrect or corrupted levelfile. Please ensure you have applied the latest patches, and, if necessary, download and install Underlight again. Or, contact support@koiware.org for help."
     IDS_REFLECTS_BACK       "Your attempt to drainself reflects off the chaos of %s's soulphere!"
     IDS_SUMMON              "Your head swims in a shower of color as your avatar changes into pure energy and then is restored. When your eyes focus you find yourself at the feet of %s."
     IDS_DETECTED_CHEATER    "\n**\n**  C H E A T E R ! ! !\n**  Know that this infraction has been logged!\n**  If similar activity continues, this account will be TERMINATED\n**  and the appropriate legal actions taken.\n**\n"
@@ -2133,9 +2133,9 @@ BEGIN
     IDS_RWJOIN              "You feel that your mind has become linked to another..."
     IDS_RWLEAVE             "You feel that another has just unlinked from your mind..."
     IDS_NOVOICE             "Because you have chosen to disable telepathy before entering the dream, you must exit, enable it, and reenter before you can use it"
-    IDS_LOGIN_EXPIRED       "We're sorry, but that account has expired. To reactivate, please send email to accounts@lyrastudios.com, and include the e-mail address for this character, plus any information that shows ownership."
+    IDS_LOGIN_EXPIRED       "We're sorry, but that account has expired. To reactivate, please send email to accounts@koiware.org, and include the e-mail address for this character, plus any information that shows ownership."
     IDS_LOGIN_BILLING_LOCKOUT 
-                            "There has been a problem with your billing which must be resolved before you may play Underlight. Please go to www.underlight.com and contact a Lyra representative for assistance."
+                            "There has been a problem with your billing which must be resolved before you may play Underlight. Please go to www.clashofdreams.com and contact a KoiWare representative for assistance."
 END
 
 STRINGTABLE
@@ -2176,10 +2176,10 @@ BEGIN
     IDS_SOUL_SHIELD_OFF     "You are no longer shielded from the Chaos swirling around you!\n"
     IDS_SS_MB               "Your attempt to activate Mind Blank has failed because of interference from your Soul Shield\n"
     IDS_HOW_MANY_DAYS       "How many days of suspension? "
-    IDS_DISABLED            "We're sorry, but your Underlight account has been disabled (maybe your free trial expired?). You may reactivate it at http://billing.lyrastudios.com, or email accounts@lyrastudios.com"
-    IDS_TERMINATED          "We're sorry, but that Underlight account has been terminated and may no longer be used. Please contact accounts@lyrastudios.com for more information."
-    IDS_SUSPENDED           "We're sorry, but that Underlight account has been temporarily suspended,  and can not be used for %d more days. Please contact accounts@lyrastudios.com for more information."
-    IDS_MISMATCH            "We're sorry, but that Underlight account can not be used with this version of Underlight. Please contact accounts@lyrastudios.com for more information."
+    IDS_DISABLED            "We're sorry, but your Underlight account has been disabled. You may reactivate it at http://account.clashofdreams.com, or email accounts@koiware.org"
+    IDS_TERMINATED          "We're sorry, but that Underlight account has been terminated and may no longer be used. Please contact accounts@koiware.org for more information."
+    IDS_SUSPENDED           "We're sorry, but that Underlight account has been temporarily suspended,  and can not be used for %d more days. Please contact accounts@koiwaire.org for more information."
+    IDS_MISMATCH            "We're sorry, but that Underlight account can not be used with this version of Underlight. Please contact accounts@koiware.org for more information."
 END
 
 STRINGTABLE
@@ -2204,30 +2204,30 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_KILLED              "We're sorry, but that character is dead and can no longer be played.  Contact accounts@lyrastudios.com for more information"
-    IDS_PLAYER_SUSPENDED    "You have been temporarily suspended from Underlight for %d days. Please contact accounts@lyrastudios.com for more information."
-    IDS_PLAYER_TERMINATED   "We're sorry, but your account has been terminated (permanently disabled) by the Lyra Staff. Please contact accounts@lyrastudios.com for further information."
+    IDS_KILLED              "We're sorry, but that character is dead and can no longer be played.  Contact accounts@koiware.org for more information"
+    IDS_PLAYER_SUSPENDED    "You have been temporarily suspended from Underlight: Clash of Dreams for %d days. Please contact accounts@koiware.org for more information."
+    IDS_PLAYER_TERMINATED   "We're sorry, but your account has been terminated (permanently disabled) by the KoiWare team. Please contact accounts@koiware.org for further information."
     IDS_NO_PMARE            "We're sorry, but to use a player nightmare character, you must enter a valid credit card for your Lyra account in the Lyra billing system, or have enough cash for at least 15 minutes of play"
     IDS_PMARE_EVOLVE        "Due to your XP gain, you have evolved into a more powerful nightmare!!!\n"
     IDS_PMARE_DEVOLVE       "Due to your XP loss, you have regressed into a less powerful nightmare!!!\n"
     IDS_PMARE_NO_ITEMS      "You can not manipulate items as a player nightmare\n"
     IDS_NO_CHARGE_PMARE     "Because of the short duration of your session, there will be no charge\n"
-    IDS_CHARGE_PMARE        "You just played for %u minutes, and you previously played %u minutes during this session for a total of %u minutes. Starting as a %s at $%2.2f per 15 minutes, the estimated session charge is $%2.2f.\n"
-    IDS_AGREEMENT_TEXT1     "By entering the game, you are agreeing to the 3 Rules of Underlight, Lyra account policy, and game policy as described below\r\n\r\n The First Rule -- ""Be Honest with the Software"" \r\n Cheating or hacking of any kind is prohibited. Client software or other programs that alter data transferred between our server and the client that causes damage or unauthorized access to our servers could be considered an attempt to hack our servers. This is a federal offense, and we will prosecute you to the fullest extent of the law."
+    IDS_CHARGE_PMARE        "You just played for %u minutes, and you previously played %u minutes during this session for a total of %u minutes. Starting as a %s at %2.2f Credits per 15 minutes, the estimated session charge is %2.2f Credits.\n"
+    IDS_AGREEMENT_TEXT1     "By entering the game, you are agreeing to the 3 Rules of Underlight, KoiWare account policy, and game policy as described below\r\n\r\n The First Rule -- ""Be Honest with the Software"" \r\n Cheating or hacking of any kind is prohibited. Client software or other programs that alter data transferred between our server and the client that causes damage or unauthorized access to our servers could be considered an attempt to hack our servers. This is a federal offense, and we will prosecute you to the fullest extent of the law."
     IDS_AGREEMENT_TEXT2     "The Second Rule -- ""Respect Others""\r\n Keep your behavior appropriate at all times. If your language or behavior repeatedly annoys or offends others, you will be banned from playing. We place no limits on the use of language. Consenting adults are free to engage in any language or behavior they mutually agree to. Inappropriate behavior includes attacking other players without a valid 'in game reason', using unnecessarily offensive language, annoying others with out of character chat, excessive begging, etc."
     IDS_AGREEMENT_TEXT3     "The Third Rule -- ""Stay in Character""\r\nUnderlight is a true Role Playing game.  Upon entering the City of Dreams, you have to always remember you are pretending to be your character and leave the outside life of the real world behind. Your character would have no way of knowing sports scores or the latest in music or fashion.  So, to protect the environment that all role players are striving for, please leave the real world chat outside.  If you must communicate of real world things, please do so in whispers as to not offend anyone and protect the active role playing that is going on around your character.\n"
-    IDS_AGREEMENT_TEXT4     "Lyra Underlight Account Policy\r\n\r\nAll Underlight accounts are the property of Lyra, LLC, and reside on  the Lyra servers. Lyra reserves the right to change, modify, or disable any  account at any time, for any reason, with or without notice. By clicking 'I Agree', you are verifying that either:\r\n1) You are 18 years of age or older, and are the controller of the Lyra billing account for this Underlight character,\r\n or \r\n2) You are under 18 and have permission from the adult controller of the Lyra billing account for this Underlight character to be the exclusive user for this character.\r\n\r\nIf you do not agree, please click 'Quit' and send email to accounts@lyrastudios.com so that your Lyra and Underlight accounts can be deactivated. For more info, go to \nhttp://underlight.com/billingfaq.0.html"
+    IDS_AGREEMENT_TEXT4     "KoiWare Underlight: Clash of Dreams Account Policy\r\n\r\nAll Underlight accounts are the property of KoiWare and reside on  the KoiWare servers. KoiWare reserves the right to change, modify, or disable any account at any time, for any reason, with or without notice. By clicking 'I Agree', you are verifying that either:\r\n1) You are 18 years of age or older, and are the controller of the KoiWare account for this Underlight: Clash of Dreams character,\r\n or \r\n2) You are under 18 and have permission from the adult controller of the KoiWare account for this Underlight: Clash of Dreams character to be the exclusive user for this character.\r\n\r\nIf you do not agree, please click 'Quit' and send email to accounts@koiware.org so that your KoiWare and Underlight accounts can be deactivated. For more info, go to \nhttp://www.clashofdreams.com"
     IDS_AGREEMENT_TEXT5     "As a player nightmare, you gain and lose XP just like a dreamer. However,there are no sphere restrictions, and your nightmare form changes as you gain and lose orbits. Orbits 0-4 are Bogrom;  Orbits 5-14 are Agoknight;Orbits 15-44 are Shamblix; Orbits 45 and above are Horron.\r\n\r\nAs a player nightmare, you may use only predefined actions and speech, and will hear babble from dreamers. You can not use items, and your only arts are Show Talisman, Sense Dreamers, and Drain Essence,  which drains dreamer essences to replenishish your focal energy. You will take damage within sanctuaries. If you are collapsed, you will automatically reform immediately in the player nightmare threshold. Finally, you can never be blinded, paralyzed or staggered.\r\n\r\n"
     IDS_PMARE_NO_ARTS       "You may not use arts as a nightmare\n"
-    IDS_PMARE_BOGROM        "Bogrom (Weakest): $0.95 per 15 minutes"
+    IDS_PMARE_BOGROM        "Bogrom (Weakest): 1 PMare credit per 15 minutes"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_PMARE_AGOKNIGHT     "Agoknight (Medium): $1.95 per 15 minutes"
-    IDS_PMARE_SHAMBLIX      "Shamblix (Most Powerful): $3.95 per 15 minutes"
-    IDS_AGREEMENT_TEXT6     "Please note that any advance in XP and  power you achieve is kept for at most 48 hours.  If you log out and then log in again within 48 hours, you have the option of resuming your previous session, with the same avatar, price, and XP total. However, regardless of when you start your session, your minutes are accumulated and billed nightly at 1:00 AM PST. \n\nNote that Lyra can not provide refunds or reimbursements of any sort for player nightmare sessions. By clicking 'I Accept' and entering the game you are agreeing to the above payment terms.\r\n\r\n"
-    IDS_AGREEMENT_TEXT7     "You will be charged $%1.2f to your Lyra account for every 15 minutes of play during your session.  The number of minutes for all your logins for each starting nightmare type are summed to determine the total charge, with a 15 minute session minimum per starting nightmare type. This ensures that you will not be charged extra due to inadvertant logouts (storms). For example, you could log in as a Bogrom and play for 10 minutes and evolve into an Agoknight, then later that day ""resume session"" and play for 5 more minutes, and you would be charged only for one 15 minute Bogrom session.  Session minutes are summed and charged nightly at 1:00AM PST. By clicking 'Accept', you are agreeing to this charge.\r\n\r\n"
+    IDS_PMARE_AGOKNIGHT     "Agoknight (Medium): 2 PMare credits per 15 minutes"
+    IDS_PMARE_SHAMBLIX      "Shamblix (Most Powerful): 3 PMare credits per 15 minutes"
+    IDS_AGREEMENT_TEXT6     "Please note that any advance in XP and  power you achieve is kept for at most 48 hours.  If you log out and then log in again within 48 hours, you have the option of resuming your previous session, with the same avatar, credit rate, and XP total. You will only be able to play for the time available in PMare credits on your account. \n\nNote that KoiWare can not provide refunds or reimbursements of any sort for player nightmare sessions. By clicking 'I Accept' and entering the game you are agreeing to the above terms.\r\n\r\n"
+    IDS_AGREEMENT_TEXT7     "You will deduct %1.2f PMare Credits from your KoiWare account for every 15 minutes of play during your session.  The number of minutes for all your logins for each starting nightmare type are summed to determine the total deduction, with a 15 minute session minimum per starting nightmare type. This ensures that you will not be deducted extra due to inadvertant logouts (storms). For example, you could log in as a Bogrom and play for 10 minutes and evolve into an Agoknight, then later that day ""resume session"" and play for 5 more minutes, and you would be charged only for one 15 minute Bogrom session.  Session minutes are summed nightly at 1:00AM PST. By clicking 'Accept', you are agreeing to this deduction.\r\n\r\n"
     IDS_PMARE_DISSOLVED_BY_SELF 
                             "You have collapsed into a soulsphere! You will automatically reform momentarily.\n"
     IDS_PMARE_DISSOLVED_BY_OTHER 
@@ -2255,7 +2255,7 @@ BEGIN
     IDS_NEWLIES             "You sense the following newly awakened dreamers: \n"
     IDS_NEWLY               "%s, currently in %s\n"
     IDS_NEWLY_SAMEPLANE     "%s, currently in %s in this plane\n"
-    IDS_MAX_PMARE           "We're sorry, but you have exceeded the $40 per day limit for player nightmares. You will need to wait until after 1:00 AM PST to continue your player nightmare session. "
+    IDS_MAX_PMARE           "We're sorry, but you have exceeded the 40 PMare Credits per day limit for player nightmares. You will need to wait until after 1:00 AM PST to continue your player nightmare session. "
     IDS_NEWLY_ALERT         "A newly awakened dreamer, %s, has entered this plane in %s\n"
     IDS_TEACHER_OR_KNIGHT   "You must be a teacher, or a Guardian or Ruler in any House, to use Seek New Dreamers\n"
     IDS_PMARE_LEARNABLE     "You can only use those arts that you currently know\n"
@@ -2320,7 +2320,7 @@ BEGIN
     IDS_COORDS3D            "You're at (x,y,z,room,level) = (%d,%d,%d,%d,%d).\n"
     IDS_NEED_PRIME          "%s failed - in order to %s a dreamer into %s, you must be carrying a House Prime Artifact for %s with at least %d charges in it."
     IDS_PMARE_EXPIRED       "We're sorry, but your nightmare session has expired and can no longer be resumed. Please try again  and select a nightmare type to start a new session."
-    IDS_PMARE_RESUME        "Resume Last Session: $%1.2f per 15 minutes"
+    IDS_PMARE_RESUME        "Resume Last Session: %1.2f PMare Credits per 15 minutes"
     IDS_ADULT_FILTER_TOGGLE_ON 
                             "The adult language filter is now on, so that adult language is automatically removed from all speech, actions, and avatar descriptions."
     IDS_ADULT_FILTER_TOGGLE_OFF 
@@ -3684,7 +3684,7 @@ BEGIN
     IDS_DSERR_OTHERAPPHASPRIO "DSERR_OTHERAPPHASPRIO"
     IDS_DSERR_UNINITIALIZED "DSERR_UNINITIALIZED"
     IDS_LIVE_GAME_SERVER_IP "38.123.90.73"
-    IDS_DEV_GAME_SERVER_IP  "38.123.90.73"
+    IDS_DEV_GAME_SERVER_IP  "38.123.90.75"
     IDS_GAME_MANUAL_URL     "http://www.underlightwiki.com"
     IDS_BILLING_URL         "http://forums.clashofdreams.com/viewtopic.php?f=2&t=78"
     IDS_FIREWALL_FAQ_URL    "http://www.clashofdreams.com/"
@@ -3701,7 +3701,7 @@ BEGIN
     IDS_AWAIT_UPDATE        "You are not yet well enough in tune with this area to use items; please try again in a moment\n"
     IDS_AWAIT_UPDATE_MARE   "You are not yet well enough in tune with this area to use attacks; please try again in a moment\n"
     IDS_PEACE_AURA_MARE     "The powerful aura of peace arounds you prevents you from making any attacks\n"
-    IDS_QUEST_BUILDER1      "The oddly shaped, dark blue portal you see to your left is a Quest Mission Posting board. You can use it to review and accept quests created by other Dreamers. The quests generally involve retrieving some sort of item for bonus experience points (XP). You can find one Quest Boards in the Library of Souls in Threshhold, as well as one in Threshold Pits. To activate it, stand close to it and press the spacebar."
+    IDS_QUEST_BUILDER1      "The oddly shaped, dark blue portal you see to your left is a Quest Mission Posting board. You can use it to review and accept quests created by other Dreamers. The quests generally involve retrieving some sort of item for bonus experience points (XP). You can find one Quest Boards in the Library of Dreams in Threshhold, as well as one in Threshold Pits. To activate it, stand close to it and press the spacebar."
     IDS_QUEST_BUILDER2      "Good job, Dreamer! If you were actually in the Dream now, you would have activated the Quest Mission Posting system. Now go and seek out the real Quest Mission Posting system in the Library of Souls and Threshold Pits to start yourself off in Underlight!"
     IDS_QUEST_HELP          "Welcome to the Underlight Quest Mission Posting system, where veteran Dreamers can create and post quests for new Dreamers to complete. All Dreamers can view and accept quests that are appropriate for their focus stat and sphere, while all Teachers, Guardians, and Rulers can post new quests.\n\nMost quests revolve around obtaining a certain type of item, and bringing it back to receive an award of experience points.\n\nThe summaries of the available quests are displayed on this screen. To learn more about a given quest, click 'Show Details'. To accept a quest, click 'Accept'; it will then be added to your goal book. There are two basic types of quests: talisman quests and codex quests. \n\nFor talisman quests, you need to find an item (talisman) of the appropriate type. The exact type of item is described on the details screen. Note that the number of charges specified is a minimum - it's always OK to retrieve an item with more charges!\n\n"
     IDS_QUEST_HELP2         "\nFor codex quests, you need to retrieve a codex on the appropriate subject. It must contain certain keywords, specified by the quest author, in order to satisfy the quest. Codex quests are available only to new Dreamers (Sphere 0 and 1)\n\nOnce you have accepted a quest and retrieved the appropriate item, return to this screen, highlight the quest, and click 'Completed'. If you have the right talisman or codex in your inventory, the quest is successfully completed, and you gain an XP award! If not, you'll see an error message.\n\nAlso note that you can only complete any given quest once!\n\n"
@@ -3715,7 +3715,7 @@ STRINGTABLE
 BEGIN
     IDS_BACKGROUND_MUSIC_OFF "Background music off\n"
     IDS_BACKGROUND_MUSIC_ON "Background music on. Please see the README file for more information about this music."
-    IDS_NO_BACKGROUND_MUSIC "There was a problem trying to start the background music. Note that the background music is installed as an add-on and is not part of the regular Underlight distribution. Please check that the music files are installed in your Underlight folder; if not, go to http://www.underlight.com/download to download the background music add-on."
+    IDS_NO_BACKGROUND_MUSIC "There was a problem trying to start the background music. Note that the background music is installed as an add-on and is not part of the regular Underlight distribution. Please check that the music files are installed in your Underlight folder; if not, go to http://www.clashofdreams.com/download to download the background music add-on."
     IDS_BACKGROUNDMUSIC     "Background Music"
     IDS_UDP_PROXY_TEXT      "Use UDP Proxy: This option causes Underlight to use a server side UDP proxy so that the client is sending and receiving UDP packets to and from exactly the same IP address/port. Some firewalls require you to use this option for Underlight to work."
     IDS_NEWLY_PROTECTED     "%s, currently protected from being located\n"
@@ -3755,11 +3755,11 @@ STRINGTABLE
 BEGIN
     IDS_KNOW10              "The musty scent of old books lends this room the feel of an ancient library. The floor is clean and spacious, seeming almost ready for apparatus of experimentation to be placed. The myriad designs on the walls evoke the possibilities of understanding the unknown."
     IDS_HOUSE_MEMBERS       "House Members"
-    IDS_NO_MP_LIBRARY       "We're sorry, but your account is linked to the Multiplayer Gamepass Site, and Underlight can not connect to the Multiplayer Gamepass site to verify your account. Please try again in a few minutes."
-    IDS_NO_MP_PROC1         "We're sorry, but your account is linked to the Multiplayer Gamepass Site, and Underlight can not initialize Multiplayer Gamepassr DLL (mpClient.DLL) to log you in. Please check with Multiplayer support to ensure your system is configured properly."
-    IDS_NO_MP_CONN          "We're sorry, but your account is linked to the Multiplayer Gamepass Site, and Underlight can not connect to the Multiplayer Site to log you in. Please try again in a few minutes, and contact Multiplayer support if the problem is ongoing."
-    IDS_NO_MP_LOGIN         "We're sorry, but your account is linked to the Multiplayer Gamepass Site, and Underlight can not validate your Multiplayer account to log you in. Please contact Multiplayer support to verify your account status."
-    IDS_NO_MP_GAME          "We're sorry, but your account is linked to the Multiplayer Gamepass Site, and Underlight can not validate Underlight's game ID. Please contact Lyra support (support@lyrastudios.com) for assistance."
+    IDS_NO_MP_LIBRARY       "You should probably never see this string. If you do contact support@koiware.org"
+    IDS_NO_MP_PROC1         "You should probably never see this string. If you do contact support@koiware.org"
+    IDS_NO_MP_CONN          "You should probably never see this string. If you do contact support@koiware.org"
+    IDS_NO_MP_LOGIN         "You should probably never see this string. If you do contact support@koiware.org"
+    IDS_NO_MP_GAME          "You should probably never see this string. If you do contact support@koiware.org"
     IDS_FREESOUL_BLADE      "Freesoul Blade"
     IDS_BLADE_CREATED       "You have created a Freesoul Knight Blade!"
     IDS_FREESOUL_KNIGHT_DESCRIP 
@@ -3895,8 +3895,6 @@ BEGIN
     IDS_PPOINT_HELP4        "When should I grant a Personality Point via Reward? Whenever a character does anything that is especially cool or that otherwise makes the game more fun! Good examples include: excellent roleplay; organizing an event; being helpful; being creative, enthusiastic, passionate, and/or original; and doing something purely because it fits the character's personality and beliefs, especially when doing so is disadvantageous for the character! In short, use Reward anytime another player should be thanked for making the game more fun for you. Lastly, because PP grants are, like XP, out of character, players are encouraged to grant PPs to friends and foes alike...after all, a great hero can not exist without a great villain to oppose him!"
     IDS_PPOINT_HELP5        "\n"
     IDS_PP_STAT             "Permanent Stat Increase"
-    IDS_PP_TRAIN            "Learn/Advance an Art"
-    IDS_PP_SPHERE           "Advance to Next Sphere"
 END
 
 STRINGTABLE
@@ -4141,7 +4139,7 @@ BEGIN
     IDS_TAINT_PRIME_SUCCESS "You have succesfully evoked Taint Prime! The prime is now tainted!"
     IDS_NO_HOSTNAME         "Could not resolve hostname. Please make sure you are connected to the internet and try again."
     IDS_PROTO_REJECT_UNKNOWN 
-                            "The server could not accept your Found Guild request. Please contact support@lyrastudios.com if this problem persists."
+                            "The server could not accept your Found Guild request. Please contact support@koiware.org if this problem persists."
     IDS_PROTO_REJECT_BAD_NEIGHBOR 
                             "The server could not accept your Found Guild request because: you selected a neighbor that is already in another guild."
     IDS_MOVEMENT            "Movement"
@@ -4172,6 +4170,14 @@ BEGIN
                             "In order to evoke Chaotic Vortex you must be holding at least one dreamer essence"
     IDS_KNOW50              "Upon entrance, an aura of unreality and mystery overwhelms you but slowly fades as a wave of lucidity opens your eyes and clears your mind."
     IDS_KNOW51              "The night air from the open roof drifts down around you. The walls are splashed with bright colors. There are shelves on all four walls filled with burnt candles, half full vials, herbs, driftwood, and shiny metals. A large table stands in the far corner covered with parchments. The room has a distinct feeling of distraction."
+    IDS_PP_PMARE_TIME       "Buy PMare Time"
+    IDS_PP_BOUGHT_PMARE_TIME 
+                            "You have successfully purchased PMare credits with Personality Points!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PP_PMARE_TIME_SEL   "# PMare credits:"
 END
 
 #endif    // English (United States) resources

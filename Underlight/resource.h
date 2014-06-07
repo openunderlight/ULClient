@@ -2798,6 +2798,9 @@
 #define IDS_CHAOTIC_VORTEX_NEED_DREAMER_ESSENCE 4267
 #define IDS_KNOW50                      4268
 #define IDS_KNOW51                      4269
+#define IDS_PP_PMARE_TIME               4270
+#define IDS_PP_BOUGHT_PMARE_TIME        4271
+#define IDS_PP_PMARE_TIME_SEL           4272
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

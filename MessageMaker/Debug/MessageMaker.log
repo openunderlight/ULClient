@@ -1,116 +1,63 @@
-﻿Build started 5/20/2014 12:47:41 AM.
+﻿Build started 6/6/2014 12:25:27 AM.
      1>Project "C:\Users\Michael Acobas\ULClient_2014K18\ULClient\messagemaker\MessageMaker.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Debug\MessageMaker.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /Od /Oy- /D _DEBUG /D WIN32 /D _WINDOWS /D USE_INLINE /D _VC80_UPGRADE=0x0600 /Gm /EHsc /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gr /TP /analyze- /errorReport:prompt AMsg_AgentInfo.cpp AMsg_ControlAgent.cpp AMsg_ControlAgentAck.cpp AMsg_Login.cpp AMsg_Loginack.cpp AMsg_Logout.cpp AMsg_PosessInfo.cpp GMsg_AgentLogin.cpp GMsg_ChangeAvatar.cpp GMsg_ChangeStat.cpp GMsg_CreateItem.cpp GMsg_DestroyItem.cpp GMsg_DestroyRoomItem.cpp GMsg_Error.cpp GMsg_GetGoalHdrs.cpp GMsg_GetItem.cpp GMsg_GetItemDescription.cpp GMsg_GetLevelPlayers.cpp GMsg_GetPlayerName.cpp GMsg_GetReportHdrs.cpp GMsg_GiveItem.cpp GMsg_GiveItemAck.cpp GMsg_Goal.cpp GMsg_GotoLevel.cpp GMsg_GrantPPoint.cpp GMsg_ItemDescription.cpp GMsg_ItemDrop.cpp GMsg_ItemPickup.cpp GMsg_LevelPlayers.cpp GMsg_LocateAvatar.cpp GMsg_LocateAvatarAck.cpp GMsg_LocateMaresAck.cpp GMsg_LocateNewliesAck.cpp GMsg_Login.cpp GMsg_LoginAck.cpp GMsg_Logout.cpp GMsg_PPointAck.cpp GMsg_Ping.cpp GMsg_PostGoal.cpp GMsg_PostReport.cpp GMsg_PreLogin.cpp GMsg_PreLoginAck.cpp GMsg_PutItem.cpp GMsg_RcvGoalDetails.cpp GMsg_RcvGoalHdr.cpp GMsg_RcvGoalText.cpp GMsg_RcvGoalbookHdr.cpp GMsg_RcvPlayerName.cpp GMsg_RcvReportGoals.cpp GMsg_RcvReportHdr.cpp GMsg_RcvReportText.cpp GMsg_SenseDreamersAck.cpp GMsg_ServerDown.cpp GMsg_SetAvatarDescription.cpp GMsg_ShowItem.cpp GMsg_SummonAvatar.cpp GMsg_SummonAvatarAck.cpp GMsg_TakeItem.cpp GMsg_TakeItemAck.cpp GMsg_UpdateItem.cpp GMsg_UpdateStats.cpp GMsg_UsePPoint.cpp GMsg_ViewItem.cpp LNMD5.cpp LmArts.cpp LmAvatar.cpp LmBit32.cpp LmItem.cpp LmItemDefs.cpp LmItemHdr.cpp LmMesg.cpp LmMesgBuf.cpp LmMesgHdr.cpp LmPeerUpdate.cpp LmPosition.cpp LmStats.cpp LyraMessage.cpp RMsg_ChangeAvatar.cpp RMsg_CupSummons.cpp RMsg_EnterRoom.cpp RMsg_Error.cpp RMsg_GetAvatarDescription.cpp RMsg_GotoRoom.cpp RMsg_ItemDrop.cpp RMsg_ItemHdrDrop.cpp RMsg_ItemPickup.cpp RMsg_JoinedParty.cpp RMsg_LeaveRoom.cpp RMsg_LoginAck.cpp RMsg_Logout.cpp RMsg_NewlyAwakened.cpp RMsg_Party.cpp RMsg_PartyInfo.cpp RMsg_Ping.cpp RMsg_PlayerMsg.cpp RMsg_PlayerUpdate.cpp RMsg_RcvAvatarDescription.cpp RMsg_RoomLoginAck.cpp RMsg_Speech.cpp RMsg_Update.cpp RenderView.cpp RmRemotePlayer.cpp lmparty.cpp
-         RenderView.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /Od /Oy- /D _DEBUG /D WIN32 /D _WINDOWS /D USE_INLINE /D _VC80_UPGRADE=0x0600 /Gm /EHsc /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gr /TP /analyze- /errorReport:prompt GMsg_ChangeAvatar.cpp GMsg_GotoLevel.cpp GMsg_LoginAck.cpp GMsg_UpdateStats.cpp GMsg_UsePPoint.cpp LmArts.cpp LmAvatar.cpp LmItemDefs.cpp LmPeerUpdate.cpp LmStats.cpp RMsg_ChangeAvatar.cpp RMsg_EnterRoom.cpp RMsg_GotoRoom.cpp RMsg_JoinedParty.cpp RMsg_PartyInfo.cpp RMsg_PlayerMsg.cpp RMsg_PlayerUpdate.cpp RMsg_Update.cpp RmRemotePlayer.cpp
+         GMsg_ChangeAvatar.cpp
          Generating Code...
          Compiling...
-         GMsg_LevelPlayers.cpp
-         GMsg_Goal.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         lmparty.cpp
          RmRemotePlayer.cpp
+     1>RmRemotePlayer.cpp(62): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
          RMsg_Update.cpp
-         RMsg_Speech.cpp
-         RMsg_RoomLoginAck.cpp
-         RMsg_RcvAvatarDescription.cpp
          RMsg_PlayerUpdate.cpp
          RMsg_PlayerMsg.cpp
-         RMsg_Ping.cpp
          RMsg_PartyInfo.cpp
-         RMsg_Party.cpp
-         RMsg_NewlyAwakened.cpp
-         RMsg_Logout.cpp
-         RMsg_LoginAck.cpp
-         RMsg_LeaveRoom.cpp
          RMsg_JoinedParty.cpp
-         RMsg_ItemPickup.cpp
-         RMsg_ItemHdrDrop.cpp
-         RMsg_ItemDrop.cpp
          RMsg_GotoRoom.cpp
-         RMsg_GetAvatarDescription.cpp
-         RMsg_Error.cpp
          RMsg_EnterRoom.cpp
-         RMsg_CupSummons.cpp
          RMsg_ChangeAvatar.cpp
-         LyraMessage.cpp
          LmStats.cpp
-         LmPosition.cpp
          LmPeerUpdate.cpp
-         LmMesgHdr.cpp
-         LmMesgBuf.cpp
-         LmMesg.cpp
-         LmItemHdr.cpp
          LmItemDefs.cpp
-         LmItem.cpp
-         LmBit32.cpp
          LmAvatar.cpp
+     1>LmAvatar.cpp(117): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
+     1>LmAvatar.cpp(131): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
          LmArts.cpp
-         LNMD5.cpp
-         GMsg_ViewItem.cpp
-         GMsg_UsePPoint.cpp
          GMsg_UpdateStats.cpp
-         GMsg_UpdateItem.cpp
-         GMsg_TakeItemAck.cpp
-         GMsg_TakeItem.cpp
-         GMsg_SummonAvatarAck.cpp
-         GMsg_SummonAvatar.cpp
-         GMsg_ShowItem.cpp
-         GMsg_SetAvatarDescription.cpp
-         GMsg_ServerDown.cpp
-         GMsg_SenseDreamersAck.cpp
-         GMsg_RcvReportText.cpp
-         GMsg_RcvReportHdr.cpp
-         GMsg_RcvReportGoals.cpp
-         GMsg_RcvPlayerName.cpp
-         GMsg_RcvGoalbookHdr.cpp
-         GMsg_RcvGoalText.cpp
-         GMsg_RcvGoalHdr.cpp
-         GMsg_RcvGoalDetails.cpp
-         GMsg_PutItem.cpp
-         GMsg_PreLoginAck.cpp
-         GMsg_PreLogin.cpp
-         GMsg_PostReport.cpp
-         GMsg_PostGoal.cpp
-         GMsg_Ping.cpp
-         GMsg_PPointAck.cpp
-         GMsg_Logout.cpp
          GMsg_LoginAck.cpp
-         GMsg_Login.cpp
-         GMsg_LocateNewliesAck.cpp
-         GMsg_LocateMaresAck.cpp
-         GMsg_LocateAvatarAck.cpp
-         GMsg_LocateAvatar.cpp
-         GMsg_ItemPickup.cpp
-         GMsg_ItemDrop.cpp
-         GMsg_ItemDescription.cpp
-         GMsg_GrantPPoint.cpp
+     1>GMsg_LoginAck.cpp(199): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
          GMsg_GotoLevel.cpp
-         GMsg_GiveItemAck.cpp
-         GMsg_GiveItem.cpp
-         GMsg_GetReportHdrs.cpp
-         GMsg_GetPlayerName.cpp
-         GMsg_GetLevelPlayers.cpp
-         GMsg_GetItemDescription.cpp
-         GMsg_GetItem.cpp
-         GMsg_GetGoalHdrs.cpp
-         GMsg_Error.cpp
-         GMsg_DestroyRoomItem.cpp
-         GMsg_DestroyItem.cpp
-         GMsg_CreateItem.cpp
-         GMsg_ChangeStat.cpp
-         GMsg_ChangeAvatar.cpp
-         GMsg_AgentLogin.cpp
-         AMsg_PosessInfo.cpp
-         AMsg_Logout.cpp
-         AMsg_Loginack.cpp
-         AMsg_Login.cpp
-         AMsg_ControlAgentAck.cpp
-         AMsg_ControlAgent.cpp
-         AMsg_AgentInfo.cpp
+         Generating Code...
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(615): warning C4700: uninitialized local variable 'ward' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(619): warning C4700: uninitialized local variable 'missile' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(623): warning C4700: uninitialized local variable 'amulet' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(627): warning C4700: uninitialized local variable 'area_effect' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(631): warning C4700: uninitialized local variable 'essence' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(635): warning C4700: uninitialized local variable 'support' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(639): warning C4700: uninitialized local variable 'meta_essence' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(643): warning C4700: uninitialized local variable 'scroll' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(647): warning C4700: uninitialized local variable 'teleporter' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(651): warning C4700: uninitialized local variable 'train_support' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(655): warning C4700: uninitialized local variable 'gratitude' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(694): warning C4700: uninitialized local variable 'ward' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(698): warning C4700: uninitialized local variable 'missile' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(702): warning C4700: uninitialized local variable 'amulet' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(706): warning C4700: uninitialized local variable 'area_effect' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(710): warning C4700: uninitialized local variable 'essence' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(714): warning C4700: uninitialized local variable 'support' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(718): warning C4700: uninitialized local variable 'meta_essence' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(722): warning C4700: uninitialized local variable 'scroll' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(726): warning C4700: uninitialized local variable 'teleporter' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(730): warning C4700: uninitialized local variable 'train_support' used
+     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(734): warning C4700: uninitialized local variable 'gratitude' used
+         Compiling...
+         GMsg_UsePPoint.cpp
+         Generating Code...
        Lib:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:".\Debug\MessageMaker.lib" /NOLOGO .\Debug/AMsg_AgentInfo.obj
          .\Debug/AMsg_ControlAgent.obj
@@ -219,7 +166,7 @@
          .\Debug/RMsg_Update.obj
          MessageMaker.vcxproj -> C:\Users\Michael Acobas\ULClient_2014K18\ULClient\messagemaker\.\Debug\MessageMaker.lib
        BscMake:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\Debug/MessageMaker.bsc" .\Debug\AMsg_AgentInfo.sbr .\Debug\AMsg_ControlAgent.sbr .\Debug\AMsg_ControlAgentAck.sbr .\Debug\AMsg_Login.sbr .\Debug\AMsg_Loginack.sbr .\Debug\AMsg_Logout.sbr .\Debug\AMsg_PosessInfo.sbr .\Debug\GMsg_AgentLogin.sbr .\Debug\GMsg_ChangeAvatar.sbr .\Debug\GMsg_ChangeStat.sbr .\Debug\GMsg_CreateItem.sbr .\Debug\GMsg_DestroyItem.sbr .\Debug\GMsg_DestroyRoomItem.sbr .\Debug\GMsg_Error.sbr .\Debug\GMsg_GetGoalHdrs.sbr .\Debug\GMsg_GetItem.sbr .\Debug\GMsg_GetItemDescription.sbr .\Debug\GMsg_GetLevelPlayers.sbr .\Debug\GMsg_GetPlayerName.sbr .\Debug\GMsg_GetReportHdrs.sbr .\Debug\GMsg_GiveItem.sbr .\Debug\GMsg_GiveItemAck.sbr .\Debug\GMsg_Goal.sbr .\Debug\GMsg_GotoLevel.sbr .\Debug\GMsg_GrantPPoint.sbr .\Debug\GMsg_ItemDescription.sbr .\Debug\GMsg_ItemDrop.sbr .\Debug\GMsg_ItemPickup.sbr .\Debug\GMsg_LevelPlayers.sbr .\Debug\GMsg_LocateAvatar.sbr .\Debug\GMsg_LocateAvatarAck.sbr .\Debug\GMsg_LocateMaresAck.sbr .\Debug\GMsg_LocateNewliesAck.sbr .\Debug\GMsg_Login.sbr .\Debug\GMsg_LoginAck.sbr .\Debug\GMsg_Logout.sbr .\Debug\GMsg_Ping.sbr .\Debug\GMsg_PostGoal.sbr .\Debug\GMsg_PostReport.sbr .\Debug\GMsg_PPointAck.sbr .\Debug\GMsg_PreLogin.sbr .\Debug\GMsg_PreLoginAck.sbr .\Debug\GMsg_PutItem.sbr .\Debug\GMsg_RcvGoalbookHdr.sbr .\Debug\GMsg_RcvGoalDetails.sbr .\Debug\GMsg_RcvGoalHdr.sbr .\Debug\GMsg_RcvGoalText.sbr .\Debug\GMsg_RcvPlayerName.sbr .\Debug\GMsg_RcvReportGoals.sbr .\Debug\GMsg_RcvReportHdr.sbr .\Debug\GMsg_RcvReportText.sbr .\Debug\GMsg_SenseDreamersAck.sbr .\Debug\GMsg_ServerDown.sbr .\Debug\GMsg_SetAvatarDescription.sbr .\Debug\GMsg_ShowItem.sbr .\Debug\GMsg_SummonAvatar.sbr .\Debug\GMsg_SummonAvatarAck.sbr .\Debug\GMsg_TakeItem.sbr .\Debug\GMsg_TakeItemAck.sbr .\Debug\GMsg_UpdateItem.sbr .\Debug\GMsg_UpdateStats.sbr .\Debug\GMsg_UsePPoint.sbr .\Debug\GMsg_ViewItem.sbr .\Debug\LmArts.sbr .\Debug\LmAvatar.sbr .\Debug\LmBit32.sbr .\Debug\LmItem.sbr .\Debug\LmItemDefs.sbr .\Debug\LmItemHdr.sbr .\Debug\LmMesg.sbr .\Debug\LmMesgBuf.sbr .\Debug\LmMesgHdr.sbr .\Debug\lmparty.sbr .\Debug\LmPeerUpdate.sbr .\Debug\LmPosition.sbr .\Debug\LmStats.sbr .\Debug\LmXPTable.sbr .\Debug\LNMD5.sbr .\Debug\LyraMessage.sbr .\Debug\md5.sbr .\Debug\RenderView.sbr .\Debug\RmRemotePlayer.sbr .\Debug\RMsg_ChangeAvatar.sbr .\Debug\RMsg_CupSummons.sbr .\Debug\RMsg_EnterRoom.sbr .\Debug\RMsg_Error.sbr .\Debug\RMsg_GetAvatarDescription.sbr .\Debug\RMsg_GotoRoom.sbr .\Debug\RMsg_ItemDrop.sbr .\Debug\RMsg_ItemHdrDrop.sbr .\Debug\RMsg_ItemPickup.sbr .\Debug\RMsg_JoinedParty.sbr .\Debug\RMsg_LeaveRoom.sbr .\Debug\RMsg_LoginAck.sbr .\Debug\RMsg_Logout.sbr .\Debug\RMsg_NewlyAwakened.sbr .\Debug\RMsg_Party.sbr .\Debug\RMsg_PartyInfo.sbr .\Debug\RMsg_Ping.sbr .\Debug\RMsg_PlayerMsg.sbr .\Debug\RMsg_PlayerUpdate.sbr .\Debug\RMsg_RcvAvatarDescription.sbr .\Debug\RMsg_RoomLoginAck.sbr .\Debug\RMsg_Speech.sbr .\Debug\RMsg_Update.sbr
+         All outputs are up-to-date.
        FinalizeBuildStatus:
          Deleting file ".\Debug\MessageMaker.unsuccessfulbuild".
          Touching ".\Debug\MessageMaker.lastbuildstate".
@@ -227,4 +174,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:16.05
+Time Elapsed 00:00:20.37
