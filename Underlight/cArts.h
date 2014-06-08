@@ -93,7 +93,8 @@ public:
 	inline void SetGratitudeItem(cItem *value) { gratitude_item = value;};
 	inline bool DoingLocate(void) {return fDoingLocate; };
   inline bool DisplayedAwaitUpdateArt (void) { return displayed_await_update_art; };
-
+	
+	int EffectiveForgeSkill(int player_skill);
 	int Duration(int art_id, int skill); // calculates duration for art
 	bool UseInSanctuary(int art_id); // usable in sanctuary?
 	bool Restricted(int art_id); // focus restricted?

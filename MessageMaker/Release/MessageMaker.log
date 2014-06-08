@@ -1,198 +1,39 @@
-﻿Build started 5/20/2014 12:44:50 AM.
+﻿Build started 6/8/2014 4:01:27 PM.
      1>Project "C:\Users\Michael Acobas\ULClient_2014K18\ULClient\messagemaker\MessageMaker.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Release\MessageMaker.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MPSDK\inc /I../Underlight /I../MessageMaker /I../AgentMessages /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D _WINDOWS /D USE_INLINE /D _VC80_UPGRADE=0x0600 /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release/" /Fd".\Release/vc100.pdb" /Gr /TP /analyze- /errorReport:prompt AMsg_AgentInfo.cpp AMsg_ControlAgent.cpp AMsg_ControlAgentAck.cpp AMsg_Login.cpp AMsg_Loginack.cpp AMsg_Logout.cpp AMsg_PosessInfo.cpp GMsg_AgentLogin.cpp GMsg_ChangeAvatar.cpp GMsg_ChangeStat.cpp GMsg_CreateItem.cpp GMsg_DestroyItem.cpp GMsg_DestroyRoomItem.cpp GMsg_Error.cpp GMsg_GetGoalHdrs.cpp GMsg_GetItem.cpp GMsg_GetItemDescription.cpp GMsg_GetLevelPlayers.cpp GMsg_GetPlayerName.cpp GMsg_GetReportHdrs.cpp GMsg_GiveItem.cpp GMsg_GiveItemAck.cpp GMsg_Goal.cpp GMsg_GotoLevel.cpp GMsg_GrantPPoint.cpp GMsg_ItemDescription.cpp GMsg_ItemDrop.cpp GMsg_ItemPickup.cpp GMsg_LevelPlayers.cpp GMsg_LocateAvatar.cpp GMsg_LocateAvatarAck.cpp GMsg_LocateMaresAck.cpp GMsg_LocateNewliesAck.cpp GMsg_Login.cpp GMsg_LoginAck.cpp GMsg_Logout.cpp GMsg_PPointAck.cpp GMsg_Ping.cpp GMsg_PostGoal.cpp GMsg_PostReport.cpp GMsg_PreLogin.cpp GMsg_PreLoginAck.cpp GMsg_PutItem.cpp GMsg_RcvGoalDetails.cpp GMsg_RcvGoalHdr.cpp GMsg_RcvGoalText.cpp GMsg_RcvGoalbookHdr.cpp GMsg_RcvPlayerName.cpp GMsg_RcvReportGoals.cpp GMsg_RcvReportHdr.cpp GMsg_RcvReportText.cpp GMsg_SenseDreamersAck.cpp GMsg_ServerDown.cpp GMsg_SetAvatarDescription.cpp GMsg_ShowItem.cpp GMsg_SummonAvatar.cpp GMsg_SummonAvatarAck.cpp GMsg_TakeItem.cpp GMsg_TakeItemAck.cpp GMsg_UpdateItem.cpp GMsg_UpdateStats.cpp GMsg_UsePPoint.cpp GMsg_ViewItem.cpp LNMD5.cpp LmArts.cpp LmAvatar.cpp LmBit32.cpp LmItem.cpp LmItemDefs.cpp LmItemHdr.cpp LmMesg.cpp LmMesgBuf.cpp LmMesgHdr.cpp LmPeerUpdate.cpp LmPosition.cpp LmStats.cpp LyraMessage.cpp RMsg_ChangeAvatar.cpp RMsg_CupSummons.cpp RMsg_EnterRoom.cpp RMsg_Error.cpp RMsg_GetAvatarDescription.cpp RMsg_GotoRoom.cpp RMsg_ItemDrop.cpp RMsg_ItemHdrDrop.cpp RMsg_ItemPickup.cpp RMsg_JoinedParty.cpp RMsg_LeaveRoom.cpp RMsg_LoginAck.cpp RMsg_Logout.cpp RMsg_NewlyAwakened.cpp RMsg_Party.cpp RMsg_PartyInfo.cpp RMsg_Ping.cpp RMsg_PlayerMsg.cpp RMsg_PlayerUpdate.cpp RMsg_RcvAvatarDescription.cpp RMsg_RoomLoginAck.cpp RMsg_Speech.cpp RMsg_Update.cpp RenderView.cpp RmRemotePlayer.cpp lmparty.cpp
-         AMsg_AgentInfo.cpp
-         AMsg_ControlAgent.cpp
-         AMsg_ControlAgentAck.cpp
-         AMsg_Login.cpp
-     1>AMsg_Login.cpp(107): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>AMsg_Login.cpp(117): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         AMsg_Loginack.cpp
-         AMsg_Logout.cpp
-         AMsg_PosessInfo.cpp
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\AMsg_PosessInfo.i(36): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : see declaration of 'strcpy'
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\AMsg_PosessInfo.i(41): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : see declaration of 'strcpy'
-         GMsg_AgentLogin.cpp
-     1>GMsg_AgentLogin.cpp(116): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MPSDK\inc /I../Underlight /I../MessageMaker /I../AgentMessages /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D _WINDOWS /D USE_INLINE /D _VC80_UPGRADE=0x0600 /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release/" /Fd".\Release/vc100.pdb" /Gr /TP /analyze- /errorReport:prompt GMsg_ChangeAvatar.cpp GMsg_GotoLevel.cpp GMsg_LoginAck.cpp GMsg_UpdateStats.cpp GMsg_UsePPoint.cpp LmArts.cpp LmAvatar.cpp LmItemDefs.cpp LmPeerUpdate.cpp LmStats.cpp RMsg_ChangeAvatar.cpp RMsg_EnterRoom.cpp RMsg_GotoRoom.cpp RMsg_JoinedParty.cpp RMsg_PartyInfo.cpp RMsg_PlayerMsg.cpp RMsg_PlayerUpdate.cpp RMsg_Speech.cpp RMsg_Update.cpp RmRemotePlayer.cpp
          GMsg_ChangeAvatar.cpp
-         GMsg_ChangeStat.cpp
-         GMsg_CreateItem.cpp
-     1>GMsg_CreateItem.cpp(108): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_DestroyItem.cpp
-         GMsg_DestroyRoomItem.cpp
-         GMsg_Error.cpp
-     1>GMsg_Error.cpp(109): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_GetGoalHdrs.cpp
-         GMsg_GetItem.cpp
-         GMsg_GetItemDescription.cpp
-         GMsg_GetLevelPlayers.cpp
-         GMsg_GetPlayerName.cpp
-         GMsg_GetReportHdrs.cpp
-         Generating Code...
-         Compiling...
-         GMsg_GiveItem.cpp
-         GMsg_GiveItemAck.cpp
-         GMsg_Goal.cpp
          GMsg_GotoLevel.cpp
-         GMsg_GrantPPoint.cpp
-     1>GMsg_GrantPPoint.cpp(107): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_ItemDescription.cpp
-     1>GMsg_ItemDescription.cpp(112): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>GMsg_ItemDescription.cpp(122): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>GMsg_ItemDescription.cpp(133): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_ItemDrop.cpp
-         GMsg_ItemPickup.cpp
-         GMsg_LevelPlayers.cpp
-         GMsg_LocateAvatar.cpp
-     1>GMsg_LocateAvatar.cpp(132): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_LocateAvatarAck.cpp
-     1>GMsg_LocateAvatarAck.cpp(134): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_LocateMaresAck.cpp
-     1>GMsg_LocateMaresAck.cpp(132): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_LocateNewliesAck.cpp
-     1>GMsg_LocateNewliesAck.cpp(132): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_Login.cpp
-     1>GMsg_Login.cpp(124): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
          GMsg_LoginAck.cpp
      1>GMsg_LoginAck.cpp(199): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_Logout.cpp
-         GMsg_PPointAck.cpp
-         GMsg_Ping.cpp
-         GMsg_PostGoal.cpp
-     1>GMsg_PostGoal.cpp(179): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>GMsg_PostGoal.cpp(189): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>GMsg_PostGoal.cpp(200): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_PostReport.cpp
-     1>GMsg_PostReport.cpp(117): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>GMsg_PostReport.cpp(127): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>GMsg_PostReport.cpp(137): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         Generating Code...
-         Compiling...
-         GMsg_PreLogin.cpp
-         GMsg_PreLoginAck.cpp
-     1>GMsg_PreLoginAck.cpp(107): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_PutItem.cpp
-         GMsg_RcvGoalDetails.cpp
-     1>GMsg_RcvGoalDetails.cpp(227): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>GMsg_RcvGoalDetails.cpp(253): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_RcvGoalHdr.cpp
-     1>GMsg_RcvGoalHdr.cpp(116): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_RcvGoalText.cpp
-     1>GMsg_RcvGoalText.cpp(119): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>GMsg_RcvGoalText.cpp(129): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_RcvGoalbookHdr.cpp
-     1>GMsg_RcvGoalbookHdr.cpp(113): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_RcvPlayerName.cpp
-     1>GMsg_RcvPlayerName.cpp(89): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_RcvReportGoals.cpp
-         GMsg_RcvReportHdr.cpp
-     1>GMsg_RcvReportHdr.cpp(116): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_RcvReportText.cpp
-     1>GMsg_RcvReportText.cpp(126): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>GMsg_RcvReportText.cpp(136): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>GMsg_RcvReportText.cpp(146): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_SenseDreamersAck.cpp
-         GMsg_ServerDown.cpp
-         GMsg_SetAvatarDescription.cpp
-     1>GMsg_SetAvatarDescription.cpp(104): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_ShowItem.cpp
-         GMsg_SummonAvatar.cpp
-     1>GMsg_SummonAvatar.cpp(132): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_SummonAvatarAck.cpp
-     1>GMsg_SummonAvatarAck.cpp(139): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         GMsg_TakeItem.cpp
-         GMsg_TakeItemAck.cpp
-         GMsg_UpdateItem.cpp
-         Generating Code...
-         Compiling...
          GMsg_UpdateStats.cpp
          GMsg_UsePPoint.cpp
-         GMsg_ViewItem.cpp
-     1>GMsg_ViewItem.cpp(110): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         LNMD5.cpp
-     1>LNMD5.cpp(44): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
          LmArts.cpp
          LmAvatar.cpp
      1>LmAvatar.cpp(117): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
      1>LmAvatar.cpp(131): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-         LmBit32.cpp
-         LmItem.cpp
-     1>LmItem.cpp(158): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
-     1>LmItem.cpp(180): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-     1>LmItem.cpp(333): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-     1>LmItem.cpp(350): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
          LmItemDefs.cpp
-         LmItemHdr.cpp
-     1>LmItemHdr.cpp(81): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
-     1>LmItemHdr.cpp(94): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
-         LmMesg.cpp
-     1>LmMesg.cpp(68): warning C4018: '<=' : signed/unsigned mismatch
-         LmMesgBuf.cpp
-         LmMesgHdr.cpp
          LmPeerUpdate.cpp
-         LmPosition.cpp
-     1>LmPosition.cpp(85): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
-     1>LmPosition.cpp(99): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
          LmStats.cpp
-         LyraMessage.cpp
          RMsg_ChangeAvatar.cpp
-         RMsg_CupSummons.cpp
-     1>RMsg_CupSummons.cpp(103): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
          RMsg_EnterRoom.cpp
+         RMsg_GotoRoom.cpp
+         RMsg_JoinedParty.cpp
+         RMsg_PartyInfo.cpp
+         RMsg_PlayerMsg.cpp
+         RMsg_PlayerUpdate.cpp
+         RMsg_Speech.cpp
+     1>RMsg_Speech.cpp(112): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
+         RMsg_Update.cpp
+         RmRemotePlayer.cpp
+     1>RmRemotePlayer.cpp(62): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
          Generating Code...
      1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(615): warning C4700: uninitialized local variable 'ward' used
      1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(619): warning C4700: uninitialized local variable 'missile' used
@@ -216,43 +57,6 @@
      1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(726): warning C4700: uninitialized local variable 'teleporter' used
      1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(730): warning C4700: uninitialized local variable 'train_support' used
      1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(734): warning C4700: uninitialized local variable 'gratitude' used
-         Compiling...
-         RMsg_Error.cpp
-     1>RMsg_Error.cpp(109): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         RMsg_GetAvatarDescription.cpp
-         RMsg_GotoRoom.cpp
-         RMsg_ItemDrop.cpp
-         RMsg_ItemHdrDrop.cpp
-         RMsg_ItemPickup.cpp
-         RMsg_JoinedParty.cpp
-         RMsg_LeaveRoom.cpp
-         RMsg_LoginAck.cpp
-         RMsg_Logout.cpp
-         RMsg_NewlyAwakened.cpp
-     1>RMsg_NewlyAwakened.cpp(105): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         RMsg_Party.cpp
-         RMsg_PartyInfo.cpp
-         RMsg_Ping.cpp
-         RMsg_PlayerMsg.cpp
-         RMsg_PlayerUpdate.cpp
-         RMsg_RcvAvatarDescription.cpp
-     1>RMsg_RcvAvatarDescription.cpp(107): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         RMsg_RoomLoginAck.cpp
-         RMsg_Speech.cpp
-     1>RMsg_Speech.cpp(112): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         RMsg_Update.cpp
-         Generating Code...
-         Compiling...
-         RenderView.cpp
-         RmRemotePlayer.cpp
-     1>RmRemotePlayer.cpp(62): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         lmparty.cpp
-         Generating Code...
        Lib:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:".\Release\MessageMaker.lib" /NOLOGO .\Release/AMsg_AgentInfo.obj
          .\Release/AMsg_ControlAgent.obj
@@ -367,4 +171,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:34.76
+Time Elapsed 00:00:11.34

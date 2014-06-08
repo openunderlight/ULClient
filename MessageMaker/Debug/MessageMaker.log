@@ -1,4 +1,4 @@
-﻿Build started 6/6/2014 12:25:27 AM.
+﻿Build started 6/8/2014 2:45:30 PM.
      1>Project "C:\Users\Michael Acobas\ULClient_2014K18\ULClient\messagemaker\MessageMaker.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Debug\MessageMaker.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -7,9 +7,10 @@
          GMsg_ChangeAvatar.cpp
          Generating Code...
          Compiling...
+         GMsg_UsePPoint.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
          RmRemotePlayer.cpp
-     1>RmRemotePlayer.cpp(62): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
          RMsg_Update.cpp
          RMsg_PlayerUpdate.cpp
          RMsg_PlayerMsg.cpp
@@ -22,42 +23,10 @@
          LmPeerUpdate.cpp
          LmItemDefs.cpp
          LmAvatar.cpp
-     1>LmAvatar.cpp(117): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
-     1>LmAvatar.cpp(131): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
          LmArts.cpp
          GMsg_UpdateStats.cpp
          GMsg_LoginAck.cpp
-     1>GMsg_LoginAck.cpp(199): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
          GMsg_GotoLevel.cpp
-         Generating Code...
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(615): warning C4700: uninitialized local variable 'ward' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(619): warning C4700: uninitialized local variable 'missile' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(623): warning C4700: uninitialized local variable 'amulet' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(627): warning C4700: uninitialized local variable 'area_effect' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(631): warning C4700: uninitialized local variable 'essence' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(635): warning C4700: uninitialized local variable 'support' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(639): warning C4700: uninitialized local variable 'meta_essence' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(643): warning C4700: uninitialized local variable 'scroll' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(647): warning C4700: uninitialized local variable 'teleporter' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(651): warning C4700: uninitialized local variable 'train_support' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(655): warning C4700: uninitialized local variable 'gratitude' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(694): warning C4700: uninitialized local variable 'ward' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(698): warning C4700: uninitialized local variable 'missile' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(702): warning C4700: uninitialized local variable 'amulet' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(706): warning C4700: uninitialized local variable 'area_effect' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(710): warning C4700: uninitialized local variable 'essence' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(714): warning C4700: uninitialized local variable 'support' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(718): warning C4700: uninitialized local variable 'meta_essence' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(722): warning C4700: uninitialized local variable 'scroll' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(726): warning C4700: uninitialized local variable 'teleporter' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(730): warning C4700: uninitialized local variable 'train_support' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(734): warning C4700: uninitialized local variable 'gratitude' used
-         Compiling...
-         GMsg_UsePPoint.cpp
-         Generating Code...
        Lib:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:".\Debug\MessageMaker.lib" /NOLOGO .\Debug/AMsg_AgentInfo.obj
          .\Debug/AMsg_ControlAgent.obj
@@ -174,4 +143,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:20.37
+Time Elapsed 00:00:07.93

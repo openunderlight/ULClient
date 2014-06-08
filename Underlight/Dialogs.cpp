@@ -1852,7 +1852,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							ListBox_SetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), (ListBox_GetCount(GetDlgItem(hDlg, IDC_TYPE_COMBO))-1), i);
 						}
 
-					_stprintf(message, _T("%d"), player->Skill(Arts::FORGE_TALISMAN));
+					_stprintf(message, _T("%d"), arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN)));
 					//SendMessage(GetDlgItem(hDlg, IDC_CHARGES), EM_SETREADONLY, 1, 0);
 					
 					ShowWindow (GetDlgItem(hDlg, IDC_ITEM_DESCRIP), SW_SHOWNORMAL);
@@ -2125,7 +2125,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						int charges = _ttoi(message);
 
 						if ((CreateItem::FORGE_ITEM == called_by) &&
-							(charges > player->Skill(Arts::FORGE_TALISMAN)))
+							(charges > arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN))))
 						{
 							LoadString (hInstance, IDS_BAD_CHARGES, message, sizeof(message));
 							CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,

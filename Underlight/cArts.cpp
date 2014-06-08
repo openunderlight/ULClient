@@ -3037,6 +3037,10 @@ void cArts::EndForgeTalisman(void *value)
 	if (success)
 	{
 		cDS->PlaySound(LyraSound::FORGE, player->x, player->y, true);
+		cItem* power_tokens[Lyra::INVENTORY_MAX];
+		int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
+		if(num_tokens)
+			power_tokens[0]->Destroy();
 		this->ArtFinished(true);
 	}
 	else
@@ -5384,6 +5388,15 @@ int cArts::CountPowerTokens(cItem** tokens, lyra_id_t guild_id)
 	return num_tokens;
 }
 
+// return the effective skill if we take power tokens into account
+int cArts::EffectiveForgeSkill(int player_skill)
+{
+	cItem* power_tokens[Lyra::INVENTORY_MAX];
+	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
+	if(!num_tokens)
+		return MAX(1,player_skill / 4);
+	return player_skill;
+}
 
 void cArts::StartEmpathy(void)
 {

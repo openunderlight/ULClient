@@ -524,15 +524,16 @@ void TranslateValue(int type, int value)
 // items that cause timed effects
 bool CanPlayerForgeValue(int type, int value)
 {
+	int forge_skill = arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN));
 	switch (type)
 	{
 		case LyraItem::TRANSLATION_MODIFIER:
 			if (value >= 0)
-				return (player->Skill(Arts::FORGE_TALISMAN) >= modifier_types[value].min_skill_to_create);
+				return (forge_skill >= modifier_types[value].min_skill_to_create);
 			else
-				return (player->Skill(Arts::FORGE_TALISMAN) >= modifier_types[-value].min_skill_to_create);
+				return (forge_skill >= modifier_types[-value].min_skill_to_create);
 		case LyraItem::TRANSLATION_DURATION:
-			return (player->Skill(Arts::FORGE_TALISMAN) >= duration_types[value].min_skill_to_create);
+			return (forge_skill >= duration_types[value].min_skill_to_create);
 		case LyraItem::TRANSLATION_EFFECT:
 			if (value > LyraEffect::MAX_ITEM_EFFECT)
 				return false;
@@ -556,15 +557,15 @@ bool CanPlayerForgeValue(int type, int value)
 			return true; // no check
 		case LyraItem::TRANSLATION_VELOCITY:
 			if (value >= 0)
-				return (player->Skill(Arts::FORGE_TALISMAN) >= velocity_types[value].min_skill_to_create);
+				return (forge_skill >= velocity_types[value].min_skill_to_create);
 			else
-				return (player->Skill(Arts::FORGE_TALISMAN) >= velocity_types[-value].min_skill_to_create);
+				return (forge_skill >= velocity_types[-value].min_skill_to_create);
 		case LyraItem::TRANSLATION_POS_MODIFIER:
-			return (player->Skill(Arts::FORGE_TALISMAN) >= modifier_types[value].min_skill_to_create);
+			return (forge_skill >= modifier_types[value].min_skill_to_create);
 		case LyraItem::TRANSLATION_ABSORPTION: 
-			return (player->Skill(Arts::FORGE_TALISMAN) >= value);
+			return (forge_skill >= value);
 		case LyraItem::TRANSLATION_DURABILITY: 
-			return (player->Skill(Arts::FORGE_TALISMAN) >= value);
+			return (forge_skill >= value);
 		case LyraItem::TRANSLATION_NIGHTMARE:
 			return true;
 		case LyraItem::TRANSLATION_NONE:
