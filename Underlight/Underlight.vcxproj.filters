@@ -423,6 +423,9 @@
     <None Include="..\..\Lyra\Effects\sound effects.asc" />
     <None Include="Updates.txt" />
     <None Include="..\..\Lyra\Effects\visual effects.asc" />
+    <None Include="pmare.ico">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Underlight.rc">

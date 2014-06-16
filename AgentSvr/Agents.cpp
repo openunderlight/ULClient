@@ -282,7 +282,7 @@ void __cdecl RunAgent( void *param )
 	agent_info[index].player_ptr->InitPlayer();
 
 	agent_info[index].cDD_ptr = new cDDraw(NAME, agent_info[index].name, hInstance, AgentWindowProc,
-					MAKEINTRESOURCE(IDI_LYRA), IDC_ARROW, 0);
+					MAKEINTRESOURCE(IDI_PMARE), IDC_ARROW, 0);
 	TlsSetValue(tlsDD, agent_info[index].cDD_ptr);
 
 	agent_info[index].level_ptr->Load(agent_info[index].level_id);

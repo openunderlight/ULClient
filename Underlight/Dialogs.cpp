@@ -5264,7 +5264,7 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 						ShowWindow(GetDlgItem(hDlg, IDC_PP_STATIC), SW_SHOWNORMAL);
 						ShowWindow(GetDlgItem(hDlg, IDC_PP_SUBSEL), SW_SHOWNORMAL);
 						int numCreds = curPP / PPOINTS_PER_PMARE_CREDIT;
-						for(int i = 1; i < numCreds; i++)
+						for(int i = 1; i < numCreds+1; i++)
 						{
 							_stprintf(disp_message, "%d", i);
 							ComboBox_AddString(GetDlgItem(hDlg, IDC_PP_SUBSEL), disp_message);

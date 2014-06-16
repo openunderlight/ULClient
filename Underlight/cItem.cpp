@@ -1266,7 +1266,7 @@ bool cItem::Recharge(int plateaua)
 		return true;
 	}
 
-	int new_charges = lmitem.Charges() + 1;
+	int new_charges = lmitem.Charges() + rand()%plateaua + 1;
 	int limit = RECHARGE_LIMIT;
 
 	// find and use lowest" recharge
@@ -1299,9 +1299,17 @@ bool cItem::Recharge(int plateaua)
 
 	if (new_charges >= limit)
 	{
+		new_charges=lmitem.Charges()+1;
+		if (new_charges >= limit)
+		{
 		//new_charges = limit - 1; -- changed so that forged items dont degenerate upon recharge
 		new_charges=lmitem.Charges();
 		LoadString (hInstance, IDS_TALISMAN_MAXCHARGE, disp_message, sizeof(disp_message));
+		}
+		else
+		{
+			LoadString (hInstance, IDS_TALISMAN_RECHARGED, disp_message, sizeof(disp_message));
+		}
 	}
 	else
 	{

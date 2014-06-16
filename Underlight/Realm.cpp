@@ -578,7 +578,7 @@ bool __cdecl Init_Game(void)
     // initialize main window
 #ifdef AGENT
 	cDD = new cDDraw(NAME, _T("Agent Daemon"), hInstance, AgentWindowProc, 
-						  MAKEINTRESOURCE(IDI_LYRA), IDC_ARROW, 0);
+						  MAKEINTRESOURCE(IDI_PMARE), IDC_ARROW, 0);
 	TlsSetValue(tlsDD, cDD);
 
 #else

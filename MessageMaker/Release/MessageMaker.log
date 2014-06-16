@@ -1,62 +1,148 @@
-﻿Build started 6/8/2014 4:01:27 PM.
-     1>Project "C:\Users\Michael Acobas\ULClient_2014K18\ULClient\messagemaker\MessageMaker.vcxproj" on node 2 (build target(s)).
+﻿Build started 6/15/2014 4:14:25 PM.
+     1>Project "C:\Users\Administrator\UnderlightSource\ULClient\messagemaker\MessageMaker.vcxproj" on node 2 (rebuild target(s)).
      1>InitializeBuildStatus:
          Creating ".\Release\MessageMaker.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MPSDK\inc /I../Underlight /I../MessageMaker /I../AgentMessages /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D _WINDOWS /D USE_INLINE /D _VC80_UPGRADE=0x0600 /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release/" /Fd".\Release/vc100.pdb" /Gr /TP /analyze- /errorReport:prompt GMsg_ChangeAvatar.cpp GMsg_GotoLevel.cpp GMsg_LoginAck.cpp GMsg_UpdateStats.cpp GMsg_UsePPoint.cpp LmArts.cpp LmAvatar.cpp LmItemDefs.cpp LmPeerUpdate.cpp LmStats.cpp RMsg_ChangeAvatar.cpp RMsg_EnterRoom.cpp RMsg_GotoRoom.cpp RMsg_JoinedParty.cpp RMsg_PartyInfo.cpp RMsg_PlayerMsg.cpp RMsg_PlayerUpdate.cpp RMsg_Speech.cpp RMsg_Update.cpp RmRemotePlayer.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MPSDK\inc /I../Underlight /I../MessageMaker /I../AgentMessages /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D _WINDOWS /D USE_INLINE /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release/" /Fd".\Release/vc100.pdb" /Gr /TP /analyze- /errorReport:prompt AMsg_AgentInfo.cpp AMsg_ControlAgent.cpp AMsg_ControlAgentAck.cpp AMsg_Login.cpp AMsg_Loginack.cpp AMsg_Logout.cpp AMsg_PosessInfo.cpp GMsg_AgentLogin.cpp GMsg_ChangeAvatar.cpp GMsg_ChangeStat.cpp GMsg_CreateItem.cpp GMsg_DestroyItem.cpp GMsg_DestroyRoomItem.cpp GMsg_Error.cpp GMsg_GetGoalHdrs.cpp GMsg_GetItem.cpp GMsg_GetItemDescription.cpp GMsg_GetLevelPlayers.cpp GMsg_GetPlayerName.cpp GMsg_GetReportHdrs.cpp GMsg_GiveItem.cpp GMsg_GiveItemAck.cpp GMsg_Goal.cpp GMsg_GotoLevel.cpp GMsg_GrantPPoint.cpp GMsg_ItemDescription.cpp GMsg_ItemDrop.cpp GMsg_ItemPickup.cpp GMsg_LevelPlayers.cpp GMsg_LocateAvatar.cpp GMsg_LocateAvatarAck.cpp GMsg_LocateMaresAck.cpp GMsg_LocateNewliesAck.cpp GMsg_Login.cpp GMsg_LoginAck.cpp GMsg_Logout.cpp GMsg_Ping.cpp GMsg_PostGoal.cpp GMsg_PostReport.cpp GMsg_PPointAck.cpp GMsg_PreLogin.cpp GMsg_PreLoginAck.cpp GMsg_PutItem.cpp GMsg_RcvGoalbookHdr.cpp GMsg_RcvGoalDetails.cpp GMsg_RcvGoalHdr.cpp GMsg_RcvGoalText.cpp GMsg_RcvPlayerName.cpp GMsg_RcvReportGoals.cpp GMsg_RcvReportHdr.cpp GMsg_RcvReportText.cpp GMsg_SenseDreamersAck.cpp GMsg_ServerDown.cpp GMsg_SetAvatarDescription.cpp GMsg_ShowItem.cpp GMsg_SummonAvatar.cpp GMsg_SummonAvatarAck.cpp GMsg_TakeItem.cpp GMsg_TakeItemAck.cpp GMsg_UpdateItem.cpp GMsg_UpdateStats.cpp GMsg_UsePPoint.cpp GMsg_ViewItem.cpp LmArts.cpp LmAvatar.cpp LmBit32.cpp LmItem.cpp LmItemDefs.cpp LmItemHdr.cpp LmMesg.cpp LmMesgBuf.cpp LmMesgHdr.cpp lmparty.cpp LmPeerUpdate.cpp LmPosition.cpp LmStats.cpp LmXPTable.cpp LNMD5.cpp LyraMessage.cpp md5.cpp RenderView.cpp RmRemotePlayer.cpp RMsg_ChangeAvatar.cpp RMsg_CupSummons.cpp RMsg_EnterRoom.cpp RMsg_Error.cpp RMsg_GetAvatarDescription.cpp RMsg_GotoRoom.cpp RMsg_ItemDrop.cpp RMsg_ItemHdrDrop.cpp RMsg_ItemPickup.cpp RMsg_JoinedParty.cpp RMsg_LeaveRoom.cpp RMsg_LoginAck.cpp RMsg_Logout.cpp RMsg_NewlyAwakened.cpp RMsg_Party.cpp RMsg_PartyInfo.cpp RMsg_Ping.cpp RMsg_PlayerMsg.cpp RMsg_PlayerUpdate.cpp RMsg_RcvAvatarDescription.cpp RMsg_RoomLoginAck.cpp RMsg_Speech.cpp RMsg_Update.cpp
+         AMsg_AgentInfo.cpp
+         AMsg_ControlAgent.cpp
+         AMsg_ControlAgentAck.cpp
+         AMsg_Login.cpp
+         AMsg_Loginack.cpp
+         AMsg_Logout.cpp
+         AMsg_PosessInfo.cpp
+         GMsg_AgentLogin.cpp
          GMsg_ChangeAvatar.cpp
+         GMsg_ChangeStat.cpp
+         GMsg_CreateItem.cpp
+         GMsg_DestroyItem.cpp
+         GMsg_DestroyRoomItem.cpp
+         GMsg_Error.cpp
+         GMsg_GetGoalHdrs.cpp
+         GMsg_GetItem.cpp
+         GMsg_GetItemDescription.cpp
+         GMsg_GetLevelPlayers.cpp
+         GMsg_GetPlayerName.cpp
+         GMsg_GetReportHdrs.cpp
+         Generating Code...
+         Compiling...
+         GMsg_GiveItem.cpp
+         GMsg_GiveItemAck.cpp
+         GMsg_Goal.cpp
          GMsg_GotoLevel.cpp
+         GMsg_GrantPPoint.cpp
+         GMsg_ItemDescription.cpp
+         GMsg_ItemDrop.cpp
+         GMsg_ItemPickup.cpp
+         GMsg_LevelPlayers.cpp
+         GMsg_LocateAvatar.cpp
+         GMsg_LocateAvatarAck.cpp
+         GMsg_LocateMaresAck.cpp
+         GMsg_LocateNewliesAck.cpp
+         GMsg_Login.cpp
          GMsg_LoginAck.cpp
-     1>GMsg_LoginAck.cpp(199): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
+         GMsg_Logout.cpp
+         GMsg_Ping.cpp
+         GMsg_PostGoal.cpp
+         GMsg_PostReport.cpp
+         GMsg_PPointAck.cpp
+         Generating Code...
+         Compiling...
+         GMsg_PreLogin.cpp
+         GMsg_PreLoginAck.cpp
+         GMsg_PutItem.cpp
+         GMsg_RcvGoalbookHdr.cpp
+         GMsg_RcvGoalDetails.cpp
+         GMsg_RcvGoalHdr.cpp
+         GMsg_RcvGoalText.cpp
+         GMsg_RcvPlayerName.cpp
+         GMsg_RcvReportGoals.cpp
+         GMsg_RcvReportHdr.cpp
+         GMsg_RcvReportText.cpp
+         GMsg_SenseDreamersAck.cpp
+         GMsg_ServerDown.cpp
+         GMsg_SetAvatarDescription.cpp
+         GMsg_ShowItem.cpp
+         GMsg_SummonAvatar.cpp
+         GMsg_SummonAvatarAck.cpp
+         GMsg_TakeItem.cpp
+         GMsg_TakeItemAck.cpp
+         GMsg_UpdateItem.cpp
+         Generating Code...
+         Compiling...
          GMsg_UpdateStats.cpp
          GMsg_UsePPoint.cpp
+         GMsg_ViewItem.cpp
          LmArts.cpp
          LmAvatar.cpp
-     1>LmAvatar.cpp(117): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
-     1>LmAvatar.cpp(131): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+         LmBit32.cpp
+         LmItem.cpp
          LmItemDefs.cpp
+         LmItemHdr.cpp
+         LmMesg.cpp
+     1>LmMesg.cpp(68): warning C4018: '<=' : signed/unsigned mismatch
+         LmMesgBuf.cpp
+         LmMesgHdr.cpp
+         lmparty.cpp
          LmPeerUpdate.cpp
+         LmPosition.cpp
          LmStats.cpp
-         RMsg_ChangeAvatar.cpp
-         RMsg_EnterRoom.cpp
-         RMsg_GotoRoom.cpp
-         RMsg_JoinedParty.cpp
-         RMsg_PartyInfo.cpp
-         RMsg_PlayerMsg.cpp
-         RMsg_PlayerUpdate.cpp
-         RMsg_Speech.cpp
-     1>RMsg_Speech.cpp(112): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
-         RMsg_Update.cpp
-         RmRemotePlayer.cpp
-     1>RmRemotePlayer.cpp(62): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(188) : see declaration of 'strncpy'
+         LmXPTable.cpp
+         LNMD5.cpp
+         LyraMessage.cpp
+         md5.cpp
          Generating Code...
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(615): warning C4700: uninitialized local variable 'ward' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(619): warning C4700: uninitialized local variable 'missile' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(623): warning C4700: uninitialized local variable 'amulet' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(627): warning C4700: uninitialized local variable 'area_effect' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(631): warning C4700: uninitialized local variable 'essence' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(635): warning C4700: uninitialized local variable 'support' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(639): warning C4700: uninitialized local variable 'meta_essence' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(643): warning C4700: uninitialized local variable 'scroll' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(647): warning C4700: uninitialized local variable 'teleporter' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(651): warning C4700: uninitialized local variable 'train_support' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(655): warning C4700: uninitialized local variable 'gratitude' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(694): warning C4700: uninitialized local variable 'ward' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(698): warning C4700: uninitialized local variable 'missile' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(702): warning C4700: uninitialized local variable 'amulet' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(706): warning C4700: uninitialized local variable 'area_effect' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(710): warning C4700: uninitialized local variable 'essence' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(714): warning C4700: uninitialized local variable 'support' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(718): warning C4700: uninitialized local variable 'meta_essence' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(722): warning C4700: uninitialized local variable 'scroll' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(726): warning C4700: uninitialized local variable 'teleporter' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(730): warning C4700: uninitialized local variable 'train_support' used
-     1>c:\users\michael acobas\ulclient_2014k18\ulclient\messagemaker\lmitemdefs.cpp(734): warning C4700: uninitialized local variable 'gratitude' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(615): warning C4700: uninitialized local variable 'ward' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(619): warning C4700: uninitialized local variable 'missile' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(623): warning C4700: uninitialized local variable 'amulet' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(627): warning C4700: uninitialized local variable 'area_effect' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(631): warning C4700: uninitialized local variable 'essence' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(635): warning C4700: uninitialized local variable 'support' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(639): warning C4700: uninitialized local variable 'meta_essence' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(643): warning C4700: uninitialized local variable 'scroll' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(647): warning C4700: uninitialized local variable 'teleporter' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(651): warning C4700: uninitialized local variable 'train_support' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(655): warning C4700: uninitialized local variable 'gratitude' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(694): warning C4700: uninitialized local variable 'ward' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(698): warning C4700: uninitialized local variable 'missile' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(702): warning C4700: uninitialized local variable 'amulet' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(706): warning C4700: uninitialized local variable 'area_effect' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(710): warning C4700: uninitialized local variable 'essence' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(714): warning C4700: uninitialized local variable 'support' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(718): warning C4700: uninitialized local variable 'meta_essence' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(722): warning C4700: uninitialized local variable 'scroll' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(726): warning C4700: uninitialized local variable 'teleporter' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(730): warning C4700: uninitialized local variable 'train_support' used
+     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(734): warning C4700: uninitialized local variable 'gratitude' used
+         Compiling...
+         RenderView.cpp
+         RmRemotePlayer.cpp
+         RMsg_ChangeAvatar.cpp
+         RMsg_CupSummons.cpp
+         RMsg_EnterRoom.cpp
+         RMsg_Error.cpp
+         RMsg_GetAvatarDescription.cpp
+         RMsg_GotoRoom.cpp
+         RMsg_ItemDrop.cpp
+         RMsg_ItemHdrDrop.cpp
+         RMsg_ItemPickup.cpp
+         RMsg_JoinedParty.cpp
+         RMsg_LeaveRoom.cpp
+         RMsg_LoginAck.cpp
+         RMsg_Logout.cpp
+         RMsg_NewlyAwakened.cpp
+         RMsg_Party.cpp
+         RMsg_PartyInfo.cpp
+         RMsg_Ping.cpp
+         RMsg_PlayerMsg.cpp
+         Generating Code...
+         Compiling...
+         RMsg_PlayerUpdate.cpp
+         RMsg_RcvAvatarDescription.cpp
+         RMsg_RoomLoginAck.cpp
+         RMsg_Speech.cpp
+         RMsg_Update.cpp
+         Generating Code...
        Lib:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:".\Release\MessageMaker.lib" /NOLOGO .\Release/AMsg_AgentInfo.obj
          .\Release/AMsg_ControlAgent.obj
@@ -163,12 +249,12 @@
          .\Release/RMsg_RoomLoginAck.obj
          .\Release/RMsg_Speech.obj
          .\Release/RMsg_Update.obj
-         MessageMaker.vcxproj -> C:\Users\Michael Acobas\ULClient_2014K18\ULClient\messagemaker\.\Release\MessageMaker.lib
+         MessageMaker.vcxproj -> C:\Users\Administrator\UnderlightSource\ULClient\messagemaker\.\Release\MessageMaker.lib
        FinalizeBuildStatus:
          Deleting file ".\Release\MessageMaker.unsuccessfulbuild".
          Touching ".\Release\MessageMaker.lastbuildstate".
-     1>Done Building Project "C:\Users\Michael Acobas\ULClient_2014K18\ULClient\messagemaker\MessageMaker.vcxproj" (build target(s)).
+     1>Done Building Project "C:\Users\Administrator\UnderlightSource\ULClient\messagemaker\MessageMaker.vcxproj" (rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:11.34
+Time Elapsed 00:00:48.82

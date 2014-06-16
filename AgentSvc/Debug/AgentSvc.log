@@ -1,15 +1,9 @@
-﻿Build started 5/10/2014 11:28:15 PM.
-     1>Project "C:\Users\Michael Acobas\Downloads\UnderlightVC6\AgentSvc\AgentSvc.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
-         Touching ".\Debug\AgentSvc.unsuccessfulbuild".
-       Midl:
-         All outputs are up-to-date.
-       ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp".\Debug/AgentSvc.pch" /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gr /TP /analyze- /errorReport:prompt StdAfx.cpp
-         StdAfx.cpp
-     1>c:\users\michael acobas\downloads\underlightvc6\agentsvc\stdafx.h(18): fatal error C1083: Cannot open include file: 'atlbase.h': No such file or directory
-     1>Done Building Project "C:\Users\Michael Acobas\Downloads\UnderlightVC6\AgentSvc\AgentSvc.vcxproj" (build target(s)) -- FAILED.
+﻿Build started 6/11/2014 5:36:03 PM.
+     1>Project "C:\Users\Administrator\UnderlightSource\ULClient\AgentSvc\AgentSvc.vcxproj" on node 2 (clean target(s)).
+     1>_PrepareForClean:
+         Deleting file ".\Debug\AgentSvc.lastbuildstate".
+     1>Done Building Project "C:\Users\Administrator\UnderlightSource\ULClient\AgentSvc\AgentSvc.vcxproj" (clean target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:00.18
+Time Elapsed 00:00:00.06

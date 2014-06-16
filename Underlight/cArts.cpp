@@ -7999,6 +7999,10 @@ void cArts::GotInitiated(void *value)
 
 		player->SetGuildRank(initiate_gid, Guild::INITIATE);
 		player->SetGuildXPPool(initiate_gid, 0);
+
+		// AUTO TRAIN INITIATE ARTS - 6/14/14 AMR
+		if (player->Skill(Arts::HOUSE_MEMBERS)<1)
+			this->ApplyTrain(Arts::HOUSE_MEMBERS, 1, initiator_id);
 	}
 	else
 	{
@@ -8157,6 +8161,23 @@ _stprintf(message, disp_message, player->Name());
 	if (success)
 	{
 		player->SetGuildRank(guild_id, Guild::KNIGHT);
+
+		// AUTO-TRAIN GUARDIAN ARTS - 6/14/14 AMR
+		if (player->Skill(Arts::INITIATE)<1)
+			this->ApplyTrain(Arts::INITIATE, 1, caster_id);
+
+		if (player->Skill(Arts::SUPPORT_DEMOTION)<1)
+			this->ApplyTrain(Arts::SUPPORT_DEMOTION, 1, caster_id);
+
+		if (player->Skill(Arts::CUP_SUMMONS)<1)
+			this->ApplyTrain(Arts::CUP_SUMMONS, 1, caster_id);
+
+		if (player->Skill(Arts::POWER_TOKEN)<1)
+			this->ApplyTrain(Arts::POWER_TOKEN, 1, caster_id);
+
+		if (player->Skill(Arts::EMPATHY)<1)
+			this->ApplyTrain(Arts::EMPATHY, 1, caster_id);
+
 		LoadString (hInstance, IDS_KNIGHT_SUCCEEDED, disp_message, sizeof(disp_message));
 	}
 	else
@@ -8342,13 +8363,13 @@ _stprintf(message, disp_message, n->Name(), GuildName(guild_id));
 }
 
 //////////////////////////////////////////////////////////////////
-// SupportDemotion
+// Support Demotion
 
 void cArts::StartSupportDemotion(void)
 {
-	if (!player->IsRuler(Guild::NO_GUILD))
+	if (!player->IsKnight(Guild::NO_GUILD) && !player->IsRuler(Guild::NO_GUILD))
 	{
-		LoadString (hInstance, IDS_MUST_BE_RULER, disp_message, sizeof(disp_message));
+		LoadString (hInstance, IDS_MUST_BE_KNIGHT, disp_message, sizeof(disp_message));
 	_stprintf(message, disp_message, this->Descrip(Arts::SUPPORT_DEMOTION));
 		display->DisplayMessage (message);
 		this->ArtFinished(false);
@@ -8363,9 +8384,15 @@ void cArts::StartSupportDemotion(void)
 
 void cArts::MidSupportDemotion(void)
 {
-	if (player->NumGuilds(Guild::RULER) == 1)
+	int knight_guilds = player->NumGuilds(Guild::KNIGHT);
+	int ruler_guilds = player->NumGuilds(Guild::RULER);
+	if (knight_guilds + ruler_guilds == 1)
 	{ // only one choice, skip straight to end
-		int value = GuildID(player->GuildFlags(Guild::RULER));
+		int value;
+		if (player->NumGuilds(Guild::KNIGHT) == 1)
+			value = GuildID(player->GuildFlags(Guild::KNIGHT));
+		else
+			value = GuildID(player->GuildFlags(Guild::RULER));
 		this->EndSupportDemotion(&value);
 		return;
 	}
@@ -8381,7 +8408,9 @@ void cArts::MidSupportDemotion(void)
 						cDD->Hwnd_Main(), (DLGPROC)ChooseGuildDlgProc);
 		chooseguild_callback = (&cArts::EndSupportDemotion);
 		SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+		SendMessage(hDlg, WM_ADD_KNIGHTS, 0, 0);
 		SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
+		SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
 		this->WaitForDialog(hDlg, Arts::SUPPORT_DEMOTION);
 	}
 	return;
@@ -9175,7 +9204,7 @@ void cArts::EndAscend(void *value)
 		else 
 		{
 			prime->DrainMetaEssence(Arts::RULER_DRAIN);
-			gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::ASCEND, guild_id, 0);
+			gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::ASCEND, guild_id, 1);
 			this->ArtFinished(true);
 		}
 	}
@@ -9237,6 +9266,32 @@ void cArts::ResponseAscend(int guild_id, int success)
 	{	// success!!!
 		player->SetGuildRank(guild_id, Guild::RULER);
 
+		// AUTO-UNTRAIN GUARDIAN ONLY ARTS - 6/14/14 AMR
+		if (!player->IsKnight(Guild::NO_GUILD))
+		{ // If no longer a Guardian in any house, remove guardian arts
+			player->SetSkill(Arts::CUP_SUMMONS, 0, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
+			player->SetSkill(Arts::ASCEND, 0, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
+		}
+		
+		// AUTO-TRAIN RULER ARTS - 6/14/14 AMR
+		if (player->Skill(Arts::DEMOTE)<1)
+			player->SetSkill(Arts::DEMOTE, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
+
+		if (player->Skill(Arts::SUPPORT_ASCENSION)<1)
+			player->SetSkill(Arts::SUPPORT_ASCENSION, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
+
+		if (player->Skill(Arts::EXPEL)<1)
+			player->SetSkill(Arts::EXPEL, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
+
+		if (player->Skill(Arts::KNIGHT)<1)
+			player->SetSkill(Arts::KNIGHT, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
+
+		if (player->Skill(Arts::CREATE_ID_TOKEN)<1)
+			player->SetSkill(Arts::CREATE_ID_TOKEN, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
+
+		if (player->Skill(Arts::SUMMON_PRIME)<1)
+			player->SetSkill(Arts::SUMMON_PRIME, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
+
 		LoadString (hInstance, IDS_ASCEND_SUCCEEDED, disp_message, sizeof(disp_message));
 	_stprintf(message, disp_message, GuildName(guild_id));
 		display->DisplayMessage (message);
@@ -9244,13 +9299,14 @@ void cArts::ResponseAscend(int guild_id, int success)
 			tokens[i]->Destroy();
 		gs->UpdateServer();
 	}
+	
 	else
 	{	// failure!
 		LoadString (hInstance, IDS_ASCEND_FAILED, disp_message, sizeof(disp_message));
 	_stprintf(message, disp_message, GuildName(guild_id), num_tokens, Guild::DEMOTE_RULER);
 		display->DisplayMessage (message);
 	}
-
+	
 }
 
 ////////////////////////////////////////////////////////////////

@@ -55,8 +55,8 @@ BEGIN
     EDITTEXT        IDC_BIND_UDP,374,72,24,12,ES_AUTOHSCROLL
     PUSHBUTTON      "Explain Launch Options",IDC_LAUNCH_OPTIONS,320,86,81,11
     GROUPBOX        "Launch Options",IDC_STATIC,315,0,91,99
-    LTEXT           "First time players : Make sure you have gone to http://billing.lyrastudios.com to register for a Lyra account AND an Underlight account. Then, enter your Underlight account name and password (in the email sent to you), read the agreement below, and play!",IDC_STATIC,6,4,291,25
-    LTEXT           "Returning players: Please go to http://billing.lyrastudios.com if you wish to create new Underlight accounts, activate or deactivate Underlight accounts or Underlight game options, or change your billing options.",IDC_STATIC,6,33,291,26
+    LTEXT           "First time players : Make sure you have gone to http://account.clashofdreams.com to register for a KoiWare account AND an Underlight character account. Then, enter your Underlight character name and password, read the agreement below, and play!",IDC_STATIC,6,4,291,25
+    LTEXT           "Returning players: Please go to http://account.clashofdreams.com if you wish to create or activate new Underlight characters.",IDC_STATIC,6,33,291,26
     LTEXT           "Character Name:",IDC_USERNAME_STATIC,8,217,55,8
     LTEXT           "Password:",IDC_STATIC,143,217,35,8
     CONTROL         "Dev",IDC_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,126,90,30,10
@@ -883,7 +883,7 @@ FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Use PPoints",IDC_OK,47,84,50,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,179,84,50,14
-    PUSHBUTTON      "hELP",IDC_ITEMHELP,113,84,50,14
+    PUSHBUTTON      "Help",IDC_ITEMHELP,113,84,50,14
     LTEXT           "What would you like to do?",IDC_STATIC,4,24,131,13,0,WS_EX_RIGHT
     COMBOBOX        IDC_HOW_USE_PP,142,23,129,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "<label text goes here>",IDC_PP_STATIC,2,46,99,11,0,WS_EX_RIGHT
@@ -1219,6 +1219,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
+IDI_PMARE               ICON                    "pmare.ico"
 IDI_LYRA                ICON                    "Lyra.ico"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1717,7 +1718,7 @@ BEGIN
     IDS_TALISMAN_RECHARGED  "You have recharged the %s\n"
     IDS_RECHARGE_FAILED     "You failed to recharge the %s\n"
     IDS_RECHARGE_DESTROYED  "Your attempt to recharge the %s has backfired and destroyed the item!\n"
-    IDS_ASCEND_FAILED       "Your have failed to ascend to the Circle of Rulers for %s. You have only %d unique support tokens; %d are required.\n"
+    IDS_ASCEND_FAILED       "You have failed to ascend to the Circle of Rulers for %s. You have only %d unique support tokens; %d are required.\n"
     IDS_ASCEND_SUCCEEDED    "You have ascended to the Circle of Rulers for %s!\n"
     IDS_NIGHTMARE_ENSLAVED  "You have imprisoned the nightmare!\n"
     IDS_GRANT_XP            "%s has granted you experience points!\n"
