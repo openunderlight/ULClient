@@ -32,7 +32,7 @@ enum blit_types {
 }; 
 
 // utilities
-//void BlitBitmap(HDC dc, HBITMAP bitmap, RECT *region, const window_pos_t& rcregion, int mask = SRCCOPY);
+// void BlitBitmap(HDC dc, HBITMAP bitmap, RECT *region, const window_pos_t& rcregion, int mask = SRCCOPY);
 void BlitBitmap(HDC dc, HBITMAP bitmap, RECT *region, int stretch, int mask = SRCCOPY);
 void TransparentBlitBitmap(HDC dc, int bitmap_id, RECT *region, 
 						   int stretch, int mask = SRCCOPY);

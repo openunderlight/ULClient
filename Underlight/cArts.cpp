@@ -7141,8 +7141,7 @@ void cArts::EndTrain(void)
 		int skill = player->Skill(Arts::TRAIN);
 		if (player->Skill(art_id)<skill)
 			skill = player->Skill(art_id);
-		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::TRAIN,
-			art_id, skill);
+		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::TRAIN, art_id, skill);
 		this->ArtFinished(true);
 	}
 	return;
@@ -8001,8 +8000,10 @@ void cArts::GotInitiated(void *value)
 		player->SetGuildXPPool(initiate_gid, 0);
 
 		// AUTO TRAIN INITIATE ARTS - 6/14/14 AMR
-		if (player->Skill(Arts::HOUSE_MEMBERS)<1)
-			this->ApplyTrain(Arts::HOUSE_MEMBERS, 1, initiator_id);
+		// if (player->Skill(Arts::HOUSE_MEMBERS)<1)
+			// don't know where to go from here...so far I've tried:
+			//gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::TRAIN, Arts::HOUSE_MEMBERS, 1);
+			//this->ApplyTrain(Arts::HOUSE_MEMBERS, 1, initiator_id);
 	}
 	else
 	{
@@ -8163,6 +8164,8 @@ _stprintf(message, disp_message, player->Name());
 		player->SetGuildRank(guild_id, Guild::KNIGHT);
 
 		// AUTO-TRAIN GUARDIAN ARTS - 6/14/14 AMR
+		// what am I doing wrong?
+		/*
 		if (player->Skill(Arts::INITIATE)<1)
 			this->ApplyTrain(Arts::INITIATE, 1, caster_id);
 
@@ -8177,6 +8180,7 @@ _stprintf(message, disp_message, player->Name());
 
 		if (player->Skill(Arts::EMPATHY)<1)
 			this->ApplyTrain(Arts::EMPATHY, 1, caster_id);
+			*/
 
 		LoadString (hInstance, IDS_KNIGHT_SUCCEEDED, disp_message, sizeof(disp_message));
 	}

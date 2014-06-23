@@ -1113,6 +1113,7 @@ void cAI::FindRespawn(GMsg_LevelPlayers& players_msg)
 	cActor *generator=NULL;
 	cActor *respawn_points[MAX_ACTORS];
 	cActor *open_respawn_points[MAX_ACTORS];
+	cActor *clear_respawn_points[MAX_ACTORS];
 	int num_points=0;
 	int nAgentIndex = AgentIndex();
 
@@ -1148,6 +1149,7 @@ void cAI::FindRespawn(GMsg_LevelPlayers& players_msg)
 
 	// how many open points?
 	int num_open_gens = 0;
+	int num_clear_gens = 0;
 	for (int n = 0 ; n < num_points ; n++)
 	{
 		// for each generator, check to see if there are neighbors
@@ -1171,9 +1173,16 @@ void cAI::FindRespawn(GMsg_LevelPlayers& players_msg)
 
 		if ((nPlayers <= MAX_PLAYERS_AT_SPAWN) && (nAgents <= MAX_AGENTS_AT_SPAWN))
 		{
+
 			int mare_type = respawn_points[n]->angle;
 			open_respawn_points[num_open_gens] = respawn_points[n];
 			num_open_gens++;
+			
+			if (nAgents == 0)
+			{
+				clear_respawn_points[num_clear_gens] = respawn_points[n];
+				num_clear_gens++;
+			}
 		}
 	}
 
@@ -1187,9 +1196,18 @@ void cAI::FindRespawn(GMsg_LevelPlayers& players_msg)
 		return;
 	}
 
-	int pos = rand() % num_open_gens;  // randomize position to start from in list
-	// now move to the pos'th open point
-	generator = open_respawn_points[pos];
+	int pos;
+	if (num_clear_gens > 0) // Prioritize spawning in rooms with no other agents.
+	{
+		int pos = rand() % num_clear_gens;
+		generator = clear_respawn_points[pos];
+	}
+	else // If agents are everywhere, spawn with a buddy.
+	{
+		int pos = rand() % num_open_gens;  // randomize position to start from in list
+		// now move to the pos'th open point
+		generator = open_respawn_points[pos];
+	}
 
 	//_tprintf(_T("Agent %s(%d) respawned at the %d of %d open gen. At sector %d, room %d,  X:%d, Y:%d\n"),
 	//		 agent_info[nAgentIndex].name,agent_info[nAgentIndex].id,

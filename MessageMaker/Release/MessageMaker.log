@@ -1,5 +1,5 @@
-﻿Build started 6/15/2014 4:14:25 PM.
-     1>Project "C:\Users\Administrator\UnderlightSource\ULClient\messagemaker\MessageMaker.vcxproj" on node 2 (rebuild target(s)).
+﻿Build started 6/22/2014 11:46:31 PM.
+     1>Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" on node 2 (rebuild target(s)).
      1>InitializeBuildStatus:
          Creating ".\Release\MessageMaker.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
@@ -92,28 +92,28 @@
          LyraMessage.cpp
          md5.cpp
          Generating Code...
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(615): warning C4700: uninitialized local variable 'ward' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(619): warning C4700: uninitialized local variable 'missile' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(623): warning C4700: uninitialized local variable 'amulet' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(627): warning C4700: uninitialized local variable 'area_effect' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(631): warning C4700: uninitialized local variable 'essence' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(635): warning C4700: uninitialized local variable 'support' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(639): warning C4700: uninitialized local variable 'meta_essence' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(643): warning C4700: uninitialized local variable 'scroll' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(647): warning C4700: uninitialized local variable 'teleporter' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(651): warning C4700: uninitialized local variable 'train_support' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(655): warning C4700: uninitialized local variable 'gratitude' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(694): warning C4700: uninitialized local variable 'ward' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(698): warning C4700: uninitialized local variable 'missile' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(702): warning C4700: uninitialized local variable 'amulet' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(706): warning C4700: uninitialized local variable 'area_effect' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(710): warning C4700: uninitialized local variable 'essence' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(714): warning C4700: uninitialized local variable 'support' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(718): warning C4700: uninitialized local variable 'meta_essence' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(722): warning C4700: uninitialized local variable 'scroll' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(726): warning C4700: uninitialized local variable 'teleporter' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(730): warning C4700: uninitialized local variable 'train_support' used
-     1>c:\users\administrator\underlightsource\ulclient\messagemaker\lmitemdefs.cpp(734): warning C4700: uninitialized local variable 'gratitude' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(615): warning C4700: uninitialized local variable 'ward' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(619): warning C4700: uninitialized local variable 'missile' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(623): warning C4700: uninitialized local variable 'amulet' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(627): warning C4700: uninitialized local variable 'area_effect' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(631): warning C4700: uninitialized local variable 'essence' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(635): warning C4700: uninitialized local variable 'support' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(639): warning C4700: uninitialized local variable 'meta_essence' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(643): warning C4700: uninitialized local variable 'scroll' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(647): warning C4700: uninitialized local variable 'teleporter' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(651): warning C4700: uninitialized local variable 'train_support' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(655): warning C4700: uninitialized local variable 'gratitude' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(694): warning C4700: uninitialized local variable 'ward' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(698): warning C4700: uninitialized local variable 'missile' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(702): warning C4700: uninitialized local variable 'amulet' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(706): warning C4700: uninitialized local variable 'area_effect' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(710): warning C4700: uninitialized local variable 'essence' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(714): warning C4700: uninitialized local variable 'support' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(718): warning C4700: uninitialized local variable 'meta_essence' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(722): warning C4700: uninitialized local variable 'scroll' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(726): warning C4700: uninitialized local variable 'teleporter' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(730): warning C4700: uninitialized local variable 'train_support' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(734): warning C4700: uninitialized local variable 'gratitude' used
          Compiling...
          RenderView.cpp
          RmRemotePlayer.cpp
@@ -249,12 +249,12 @@
          .\Release/RMsg_RoomLoginAck.obj
          .\Release/RMsg_Speech.obj
          .\Release/RMsg_Update.obj
-         MessageMaker.vcxproj -> C:\Users\Administrator\UnderlightSource\ULClient\messagemaker\.\Release\MessageMaker.lib
+         MessageMaker.vcxproj -> C:\Lyra\Projects\messagemaker\.\Release\MessageMaker.lib
        FinalizeBuildStatus:
          Deleting file ".\Release\MessageMaker.unsuccessfulbuild".
          Touching ".\Release\MessageMaker.lastbuildstate".
-     1>Done Building Project "C:\Users\Administrator\UnderlightSource\ULClient\messagemaker\MessageMaker.vcxproj" (rebuild target(s)).
+     1>Done Building Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" (rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:48.82
+Time Elapsed 00:00:59.28

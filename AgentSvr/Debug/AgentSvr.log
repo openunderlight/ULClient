@@ -1,18 +1,95 @@
-﻿Build started 6/14/2014 7:21:06 PM.
-     1>Project "C:\Users\Administrator\UnderlightSource\ULClient\AgentSvr\AgentSvr.vcxproj" on node 3 (build target(s)).
+﻿Build started 6/22/2014 11:26:24 PM.
+     1>Project "C:\Lyra\Projects\AgentSvr\AgentSvr.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Debug\AgentSvr.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /I..\AgentSvc /ZI /nologo /W3 /WX- /Od /Oy- /D _DEBUG /D UL_DEBUG /D USE_INLINE /D AGENT /D GAMEMASTER /D WIN32 /D _WINDOWS /D GAME_LYR /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /Gm /EHsc /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gr /TP /analyze- /errorReport:prompt ..\Underlight\BuildView.cpp ..\Underlight\CreateFrame.cpp ..\Underlight\Debug.cpp ..\Underlight\Dialogs.cpp ..\Underlight\Interface.cpp ..\Underlight\Keyboard.cpp ..\Underlight\LoginOptions.cpp ..\Underlight\Mouse.cpp ..\Underlight\Move.cpp ..\Underlight\Options.cpp ..\Underlight\Realm.cpp ..\Underlight\RenderActor.cpp ..\Underlight\RenderView.cpp ..\Underlight\Utils.cpp ..\Underlight\cAI.cpp ..\Underlight\cActor.cpp ..\Underlight\cActorList.cpp ..\Underlight\cAgentBox.cpp ..\Underlight\cAgentDaemon.cpp ..\Underlight\cAgentServer.cpp ..\Underlight\cArts.cpp ..\Underlight\cChat.cpp ..\Underlight\cDetailGoal.cpp ..\Underlight\cDetailQuest.cpp ..\Underlight\cEffects.cpp ..\Underlight\cGameServer.cpp ..\Underlight\cGoalBook.cpp ..\Underlight\cGoalPosting.cpp ..\Underlight\cGoalQuestProcs.cpp ..\Underlight\cItem.cpp ..\Underlight\cKeymap.cpp ..\Underlight\cLevel.cpp ..\Underlight\cList.cpp ..\Underlight\cMissile.cpp ..\Underlight\cNeighbor.cpp ..\Underlight\cOrnament.cpp ..\Underlight\cOutput.cpp ..\Underlight\cPalettes.cpp ..\Underlight\cParty.cpp ..\Underlight\cPlayer.cpp ..\Underlight\cPostGoal.cpp ..\Underlight\cPostQuest.cpp ..\Underlight\cQuestBuilder.cpp ..\Underlight\cReadGoal.cpp ..\Underlight\cReadQuest.cpp ..\Underlight\cReadReport.cpp ..\Underlight\cReportGoal.cpp ..\Underlight\cReviewGoals.cpp ..\Underlight\cSending.cpp ..\underlight\LanguageFilter.cpp Agents.cpp MAIN.CPP cControlPanel.cpp cDSound.cpp
-         Agents.cpp
-         cArts.cpp
-         MKET - Game designer choice goes here when ready
-     1>c:\users\administrator\underlightsource\ulclient\underlight\carts.cpp(7908): warning C4018: '>=' : signed/unsigned mismatch
-         Realm.cpp
-         Interface.cpp
-         Dialogs.cpp
-     1>Done Building Project "C:\Users\Administrator\UnderlightSource\ULClient\AgentSvr\AgentSvr.vcxproj" (build target(s)) -- FAILED.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /I..\AgentSvc /ZI /nologo /W3 /WX- /Od /Oy- /D _DEBUG /D UL_DEBUG /D USE_INLINE /D AGENT /D GAMEMASTER /D WIN32 /D _WINDOWS /D GAME_LYR /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /Gm /EHsc /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gr /TP /analyze- /errorReport:prompt ..\Underlight\cAI.cpp
+         cAI.cpp
+     1>c:\lyra\projects\underlight\cai.cpp(1120): warning C4101: 'timebuf' : unreferenced local variable
+       ResourceCompile:
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\Lyra\Dev\AgentSvrD.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\libs /LIBPATH:..\OggVorbis\lib ../MessageMaker/Debug/MessageMaker.lib oldnames.lib libcmtd.lib winmm.lib ws2_32.lib odbc32.lib odbccp32.lib msimg32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB /MANIFEST /ManifestFile:".\Debug\AgentSvrD.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Debug/AgentSvrD.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"C:\lyra\dev\AgentSvrD.lib" /MACHINE:X86 .\Debug\Underlight.res
+         .\Debug\AgentSvrD.exe.embed.manifest.res
+         .\Debug/Agents.obj
+         .\Debug/BuildView.obj
+         .\Debug/cActor.obj
+         .\Debug/cActorList.obj
+         .\Debug/cAgentBox.obj
+         .\Debug/cAgentDaemon.obj
+         .\Debug/cAgentServer.obj
+         .\Debug/cAI.obj
+         .\Debug/cArts.obj
+         .\Debug/cBanner.obj
+         .\Debug/cBox.obj
+         .\Debug/cChat.obj
+         .\Debug/cControlPanel.obj
+         .\Debug/cDDraw.obj
+         .\Debug/cDetailGoal.obj
+         .\Debug/cDetailQuest.obj
+         .\Debug/cDSound.obj
+         .\Debug/cEffects.obj
+         .\Debug/cGameServer.obj
+         .\Debug/cGif.obj
+         .\Debug/cGoalBook.obj
+         .\Debug/cGoalPosting.obj
+         .\Debug/cGoalQuestProcs.obj
+         .\Debug/cItem.obj
+         .\Debug/cKeymap.obj
+         .\Debug/cLevel.obj
+         .\Debug/cList.obj
+         .\Debug/cMissile.obj
+         .\Debug/cNameTag.obj
+         .\Debug/cNeighbor.obj
+         .\Debug/cOrnament.obj
+         .\Debug/cOutput.obj
+         .\Debug/cPalettes.obj
+         .\Debug/cParty.obj
+         .\Debug/cPlayer.obj
+         .\Debug/cPostGoal.obj
+         .\Debug/cPostQuest.obj
+         .\Debug/cQuestBuilder.obj
+         .\Debug/cReadGoal.obj
+         .\Debug/cReadQuest.obj
+         .\Debug/cReadReport.obj
+         .\Debug/CreateFrame.obj
+         .\Debug/cReportGoal.obj
+         .\Debug/cReviewGoals.obj
+         .\Debug/cSending.obj
+         .\Debug/Debug.obj
+         .\Debug/Dialogs.obj
+         .\Debug/Interface.obj
+         .\Debug/Keyboard.obj
+         .\Debug/LanguageFilter.obj
+         .\Debug/LevelRoomNames.obj
+         .\Debug/LoginOptions.obj
+         .\Debug/MAIN.obj
+         .\Debug/Mouse.obj
+         .\Debug/Move.obj
+         .\Debug/Options.obj
+         .\Debug/Realm.obj
+         .\Debug/RenderActor.obj
+         .\Debug/RenderView.obj
+         .\Debug/RLE.obj
+         .\Debug/Utils.obj
+         C:\Lyra\Projects\messagemaker\Debug\MessageMaker.lib
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:".\Debug\AgentSvrD.exe.embed.manifest" /manifest .\Debug\AgentSvrD.exe.intermediate.manifest
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         AgentSvr.vcxproj -> C:\lyra\dev\AgentSvrD.exe
+       BscMake:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\Debug/AgentSvr.bsc" .\Debug\Agents.sbr .\Debug\BuildView.sbr .\Debug\cActor.sbr .\Debug\cActorList.sbr .\Debug\cAgentBox.sbr .\Debug\cAgentDaemon.sbr .\Debug\cAgentServer.sbr .\Debug\cAI.sbr .\Debug\cArts.sbr .\Debug\cBanner.sbr .\Debug\cBox.sbr .\Debug\cChat.sbr .\Debug\cControlPanel.sbr .\Debug\cDDraw.sbr .\Debug\cDetailGoal.sbr .\Debug\cDetailQuest.sbr .\Debug\cDSound.sbr .\Debug\cEffects.sbr .\Debug\cGameServer.sbr .\Debug\cGif.sbr .\Debug\cGoalBook.sbr .\Debug\cGoalPosting.sbr .\Debug\cGoalQuestProcs.sbr .\Debug\cItem.sbr .\Debug\cKeymap.sbr .\Debug\cLevel.sbr .\Debug\cList.sbr .\Debug\cMissile.sbr .\Debug\cNameTag.sbr .\Debug\cNeighbor.sbr .\Debug\cOrnament.sbr .\Debug\cOutput.sbr .\Debug\cPalettes.sbr .\Debug\cParty.sbr .\Debug\cPlayer.sbr .\Debug\cPostGoal.sbr .\Debug\cPostQuest.sbr .\Debug\cQuestBuilder.sbr .\Debug\cReadGoal.sbr .\Debug\cReadQuest.sbr .\Debug\cReadReport.sbr .\Debug\CreateFrame.sbr .\Debug\cReportGoal.sbr .\Debug\cReviewGoals.sbr .\Debug\cSending.sbr .\Debug\Debug.sbr .\Debug\Dialogs.sbr .\Debug\Interface.sbr .\Debug\Keyboard.sbr .\Debug\LanguageFilter.sbr .\Debug\LevelRoomNames.sbr .\Debug\LoginOptions.sbr .\Debug\MAIN.sbr .\Debug\Mouse.sbr .\Debug\Move.sbr .\Debug\Options.sbr .\Debug\Realm.sbr .\Debug\RenderActor.sbr .\Debug\RenderView.sbr .\Debug\RLE.sbr .\Debug\Utils.sbr
+       CopyFilesToOutputDirectory:
+         Copying file from ".\Debug\AgentSvrD.pdb" to "C:\lyra\dev\AgentSvrD.pdb".
+       FinalizeBuildStatus:
+         Deleting file ".\Debug\AgentSvr.unsuccessfulbuild".
+         Touching ".\Debug\AgentSvr.lastbuildstate".
+     1>Done Building Project "C:\Lyra\Projects\AgentSvr\AgentSvr.vcxproj" (build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:12.99
+Time Elapsed 00:00:11.31
