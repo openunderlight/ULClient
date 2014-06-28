@@ -1,8 +1,6 @@
-﻿Build started 6/19/2014 7:22:29 PM.
-     1>Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" on node 2 (rebuild target(s)).
-     1>_PrepareForClean:
-         Deleting file ".\Debug\MessageMaker.lastbuildstate".
-       InitializeBuildStatus:
+﻿Build started 6/28/2014 3:43:31 AM.
+     1>Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
          Creating ".\Debug\MessageMaker.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /Od /Oy- /D _DEBUG /D WIN32 /D _WINDOWS /D USE_INLINE /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /Gm /EHsc /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gr /TP /analyze- /errorReport:prompt AMsg_AgentInfo.cpp AMsg_ControlAgent.cpp AMsg_ControlAgentAck.cpp AMsg_Login.cpp AMsg_Loginack.cpp AMsg_Logout.cpp AMsg_PosessInfo.cpp GMsg_AgentLogin.cpp GMsg_ChangeAvatar.cpp GMsg_ChangeStat.cpp GMsg_CreateItem.cpp GMsg_DestroyItem.cpp GMsg_DestroyRoomItem.cpp GMsg_Error.cpp GMsg_GetGoalHdrs.cpp GMsg_GetItem.cpp GMsg_GetItemDescription.cpp GMsg_GetLevelPlayers.cpp GMsg_GetPlayerName.cpp GMsg_GetReportHdrs.cpp GMsg_GiveItem.cpp GMsg_GiveItemAck.cpp GMsg_Goal.cpp GMsg_GotoLevel.cpp GMsg_GrantPPoint.cpp GMsg_ItemDescription.cpp GMsg_ItemDrop.cpp GMsg_ItemPickup.cpp GMsg_LevelPlayers.cpp GMsg_LocateAvatar.cpp GMsg_LocateAvatarAck.cpp GMsg_LocateMaresAck.cpp GMsg_LocateNewliesAck.cpp GMsg_Login.cpp GMsg_LoginAck.cpp GMsg_Logout.cpp GMsg_Ping.cpp GMsg_PostGoal.cpp GMsg_PostReport.cpp GMsg_PPointAck.cpp GMsg_PreLogin.cpp GMsg_PreLoginAck.cpp GMsg_PutItem.cpp GMsg_RcvGoalbookHdr.cpp GMsg_RcvGoalDetails.cpp GMsg_RcvGoalHdr.cpp GMsg_RcvGoalText.cpp GMsg_RcvPlayerName.cpp GMsg_RcvReportGoals.cpp GMsg_RcvReportHdr.cpp GMsg_RcvReportText.cpp GMsg_SenseDreamersAck.cpp GMsg_ServerDown.cpp GMsg_SetAvatarDescription.cpp GMsg_ShowItem.cpp GMsg_SummonAvatar.cpp GMsg_SummonAvatarAck.cpp GMsg_TakeItem.cpp GMsg_TakeItemAck.cpp GMsg_UpdateItem.cpp GMsg_UpdateStats.cpp GMsg_UsePPoint.cpp GMsg_ViewItem.cpp LmArts.cpp LmAvatar.cpp LmBit32.cpp LmItem.cpp LmItemDefs.cpp LmItemHdr.cpp LmMesg.cpp LmMesgBuf.cpp LmMesgHdr.cpp lmparty.cpp LmPeerUpdate.cpp LmPosition.cpp LmStats.cpp LmXPTable.cpp LNMD5.cpp LyraMessage.cpp md5.cpp RenderView.cpp RmRemotePlayer.cpp RMsg_ChangeAvatar.cpp RMsg_CupSummons.cpp RMsg_EnterRoom.cpp RMsg_Error.cpp RMsg_GetAvatarDescription.cpp RMsg_GotoRoom.cpp RMsg_ItemDrop.cpp RMsg_ItemHdrDrop.cpp RMsg_ItemPickup.cpp RMsg_JoinedParty.cpp RMsg_LeaveRoom.cpp RMsg_LoginAck.cpp RMsg_Logout.cpp RMsg_NewlyAwakened.cpp RMsg_Party.cpp RMsg_PartyInfo.cpp RMsg_Ping.cpp RMsg_PlayerMsg.cpp RMsg_PlayerUpdate.cpp RMsg_RcvAvatarDescription.cpp RMsg_RoomLoginAck.cpp RMsg_Speech.cpp RMsg_Update.cpp
@@ -257,8 +255,8 @@
        FinalizeBuildStatus:
          Deleting file ".\Debug\MessageMaker.unsuccessfulbuild".
          Touching ".\Debug\MessageMaker.lastbuildstate".
-     1>Done Building Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" (rebuild target(s)).
+     1>Done Building Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:02:09.80
+Time Elapsed 00:02:45.84

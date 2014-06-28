@@ -170,6 +170,34 @@ cOutput::~cOutput(void)
 
 }
 
+// helpers - we need an outside function so that we can use
+// the variable length arguments for the printf #define
+void __cdecl DebugOut(TCHAR *args,...)
+{
+	TCHAR DebugBuffer[DEFAULT_MESSAGE_SIZE];
+
+	va_list ap;
+	va_start(ap,args);
+_vstprintf(DebugBuffer,args,ap);
+	va_end(ap);
+
+	OutputDebugString(DebugBuffer);
+	if(_tcslen(DebugBuffer) && DebugBuffer[_tcslen(DebugBuffer)-1]!='\n')
+		OutputDebugString(_T("\n"));
+
+	int i = _tcslen(DebugBuffer);
+#if defined (UL_DEBUG) || defined (GAMEMASTER)
+	cOutput* pOutput = output;
+	if (!pOutput) // do nothing if variable not defined or if not gm
+#endif
+		return;
+
+	fwrite(DebugBuffer,_tcslen(DebugBuffer),1,output->FileHandle());
+#ifndef BUFFER_DEBUG_OUT
+	if(output) output->ReInit();
+#endif
+}
+
 // Check invariants
 
 #ifdef CHECK_INVARIANTS

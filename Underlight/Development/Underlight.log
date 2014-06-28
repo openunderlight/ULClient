@@ -1,142 +1,98 @@
-﻿Build started 6/20/2014 10:06:14 PM.
-     1>Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" on node 2 (ClCompile target(s)).
-     1>ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\OggVorbis\include /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /O1 /Ob1 /Oy- /D UL_DEBUG /D GAMEMASTER_FULL /D GAMEMASTER /D UL_DEV /D GAME_LYR /D WIN32 /D _WINDOWS /D USE_INLINE /D ENGLISH /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /MTd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Development/" /Fd".\Development/vc100.pdb" /FR".\Development/" /Gr /TP /analyze- /errorReport:prompt Interface.cpp
-         Interface.cpp
-     1>Interface.cpp(1078): error C2065: 'hWnd' : undeclared identifier
-     1>Interface.cpp(1083): error C2065: 'hWnd' : undeclared identifier
-     1>Interface.cpp(1083): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1083): error C2365: 'GetClientRect' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\winuser.h(7368) : see declaration of 'GetClientRect'
-     1>Interface.cpp(1083): error C2078: too many initializers
-     1>Interface.cpp(1083): error C2440: 'initializing' : cannot convert from 'RECT *' to 'int'
-                 There is no context in which this conversion is possible
-     1>Interface.cpp(1084): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1084): error C2365: 'Draw3DRect' : redefinition; previous definition was 'function'
-     1>Interface.cpp(1084): error C2078: too many initializers
-     1>Interface.cpp(1085): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1085): error C2365: 'DeflateRect' : redefinition; previous definition was 'function'
-                 c:\lyra\projects\underlight\Interface.h(59) : see declaration of 'DeflateRect'
-     1>Interface.cpp(1085): error C2078: too many initializers
-     1>Interface.cpp(1089): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1089): error C2371: 'rcTab' : redefinition; different basic types
-                 Interface.cpp(1079) : see declaration of 'rcTab'
-     1>Interface.cpp(1089): error C2440: 'initializing' : cannot convert from 'RECT' to 'int'
-                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-     1>Interface.cpp(1090): error C2143: syntax error : missing ';' before '.'
-     1>Interface.cpp(1090): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1090): error C2371: 'rcTab' : redefinition; different basic types
-                 Interface.cpp(1079) : see declaration of 'rcTab'
-     1>Interface.cpp(1091): error C2100: illegal indirection
-     1>Interface.cpp(1093): error C2065: 'hWnd' : undeclared identifier
-     1>Interface.cpp(1095): error C2059: syntax error : 'if'
-     1>Interface.cpp(1096): error C2143: syntax error : missing ';' before '{'
-     1>Interface.cpp(1096): error C2447: '{' : missing function header (old-style formal list?)
-     1>Interface.cpp(1109): error C2059: syntax error : 'else'
-     1>Interface.cpp(1110): error C2143: syntax error : missing ';' before '{'
-     1>Interface.cpp(1110): error C2447: '{' : missing function header (old-style formal list?)
-     1>Interface.cpp(1122): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1122): error C2371: 'rcTab' : redefinition; different basic types
-                 Interface.cpp(1079) : see declaration of 'rcTab'
-     1>Interface.cpp(1122): error C2440: 'initializing' : cannot convert from 'RECT' to 'int'
-                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-     1>Interface.cpp(1135): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1135): error C2365: 'MoveToEx' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\wingdi.h(4520) : see declaration of 'MoveToEx'
-     1>Interface.cpp(1135): error C2078: too many initializers
-     1>Interface.cpp(1136): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1136): error C2365: 'LineTo' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\wingdi.h(3972) : see declaration of 'LineTo'
-     1>Interface.cpp(1136): error C2078: too many initializers
-     1>Interface.cpp(1138): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1138): error C2365: 'SelectObject' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\wingdi.h(4013) : see declaration of 'SelectObject'
-     1>Interface.cpp(1138): error C2078: too many initializers
-     1>Interface.cpp(1138): error C2440: 'initializing' : cannot convert from 'HPEN' to 'int'
-                 There is no context in which this conversion is possible
-     1>Interface.cpp(1139): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1139): error C2365: 'LineTo' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\wingdi.h(3972) : see declaration of 'LineTo'
-     1>Interface.cpp(1139): error C2078: too many initializers
-     1>Interface.cpp(1140): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1140): error C2365: 'LineTo' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\wingdi.h(3972) : see declaration of 'LineTo'
-     1>Interface.cpp(1140): error C2078: too many initializers
-     1>Interface.cpp(1142): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1142): error C2365: 'SelectObject' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\wingdi.h(4013) : see declaration of 'SelectObject'
-     1>Interface.cpp(1142): error C2078: too many initializers
-     1>Interface.cpp(1142): error C2440: 'initializing' : cannot convert from 'HPEN' to 'int'
-                 There is no context in which this conversion is possible
-     1>Interface.cpp(1146): error C2143: syntax error : missing ';' before '.'
-     1>Interface.cpp(1146): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1146): error C2371: 'rc' : redefinition; different basic types
-                 Interface.cpp(1079) : see declaration of 'rc'
-     1>Interface.cpp(1149): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1149): error C2365: 'FrameRect' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\winuser.h(7941) : see declaration of 'FrameRect'
-     1>Interface.cpp(1149): error C2078: too many initializers
-     1>Interface.cpp(1149): error C2440: 'initializing' : cannot convert from 'HBRUSH' to 'int'
-                 There is no context in which this conversion is possible
-     1>Interface.cpp(1150): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1150): error C2365: 'DeflateRect' : redefinition; previous definition was 'function'
-                 c:\lyra\projects\underlight\Interface.h(59) : see declaration of 'DeflateRect'
-     1>Interface.cpp(1150): error C2078: too many initializers
-     1>Interface.cpp(1154): error C2059: syntax error : 'if'
-     1>Interface.cpp(1155): error C2059: syntax error : 'else'
-     1>Interface.cpp(1157): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1157): error C2365: 'DeleteObject' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\wingdi.h(3323) : see declaration of 'DeleteObject'
-     1>Interface.cpp(1157): error C2440: 'initializing' : cannot convert from 'HBRUSH' to 'int'
-                 There is no context in which this conversion is possible
-     1>Interface.cpp(1158): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1158): error C2365: 'DeleteObject' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\wingdi.h(3323) : see declaration of 'DeleteObject'
-     1>Interface.cpp(1158): error C2440: 'initializing' : cannot convert from 'HBRUSH' to 'int'
-                 There is no context in which this conversion is possible
-     1>Interface.cpp(1167): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1167): error C2365: 'SetTextColor' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\wingdi.h(4061) : see declaration of 'SetTextColor'
-     1>Interface.cpp(1167): error C2078: too many initializers
-     1>Interface.cpp(1169): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1169): error C2365: 'SetBkMode' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\wingdi.h(4022) : see declaration of 'SetBkMode'
-     1>Interface.cpp(1169): error C2078: too many initializers
-     1>Interface.cpp(1171): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1171): error C2365: 'strcpy' : redefinition; previous definition was 'function'
-                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : see declaration of 'strcpy'
-     1>Interface.cpp(1171): error C2078: too many initializers
-     1>Interface.cpp(1171): error C2440: 'initializing' : cannot convert from 'const char [2]' to 'int'
-                 There is no context in which this conversion is possible
-     1>Interface.cpp(1172): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1172): error C2365: 'GetTextExtentPointA' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\wingdi.h(3674) : see declaration of 'GetTextExtentPointA'
-     1>Interface.cpp(1172): error C2078: too many initializers
-     1>Interface.cpp(1172): error C2440: 'initializing' : cannot convert from 'SIZE *' to 'int'
-                 There is no context in which this conversion is possible
-     1>Interface.cpp(1173): error C2143: syntax error : missing ';' before '.'
-     1>Interface.cpp(1173): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1173): error C2371: 'rc' : redefinition; different basic types
-                 Interface.cpp(1079) : see declaration of 'rc'
-     1>Interface.cpp(1175): error C2065: 'hWnd' : undeclared identifier
-     1>Interface.cpp(1175): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1175): error C2365: 'GetWindowTextA' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\winuser.h(7332) : see declaration of 'GetWindowTextA'
-     1>Interface.cpp(1175): error C2078: too many initializers
-     1>Interface.cpp(1176): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1176): error C2365: 'DrawTextA' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\winuser.h(6639) : see declaration of 'DrawTextA'
-     1>Interface.cpp(1176): error C2078: too many initializers
-     1>Interface.cpp(1178): error C2065: 'hWnd' : undeclared identifier
-     1>Interface.cpp(1178): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-     1>Interface.cpp(1178): error C2365: 'EndPaint' : redefinition; previous definition was 'function'
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\winuser.h(6978) : see declaration of 'EndPaint'
-     1>Interface.cpp(1178): error C2078: too many initializers
-     1>Interface.cpp(1178): error C2440: 'initializing' : cannot convert from 'PAINTSTRUCT *' to 'int'
-                 There is no context in which this conversion is possible
-     1>Interface.cpp(1179): error C2059: syntax error : 'return'
-     1>Done Building Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" (ClCompile target(s)) -- FAILED.
+﻿Build started 6/28/2014 1:17:51 PM.
+     1>Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating ".\Development\Underlight.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\OggVorbis\include /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /O1 /Ob1 /Oy- /D UL_DEBUG /D GAMEMASTER_FULL /D GAMEMASTER /D UL_DEV /D GAME_LYR /D WIN32 /D _WINDOWS /D USE_INLINE /D ENGLISH /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /MTd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Development/" /Fd".\Development/vc100.pdb" /FR".\Development/" /Gd /TP /analyze- /errorReport:prompt Realm.cpp
+         Realm.cpp
+     1>Realm.cpp(800): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Realm.cpp(802): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
+       ResourceCompile:
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\lyra\dev\underlight-dev.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\OggVorbis\lib /LIBPATH:..\libs ../MessageMaker/Debug/MessageMaker.lib oldnames.lib th32.lib wininet.lib lz32.lib winmm.lib wsock32.lib ddraw.lib dsound.lib dxguid.lib comctl32.lib libcmtd.lib msimg32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB /NODEFAULTLIB:LIBCMTD /MANIFEST /ManifestFile:".\Development\Underlight-dev.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Development/underlight-dev.pdb" /MAP:".\Development/underlight-dev.map" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"C:\lyra\dev\Underlight-dev.lib" /MACHINE:X86 .\Development\Underlight.res
+         ".\Development\Underlight-dev.exe.embed.manifest.res"
+         .\Development/BuildView.obj
+         .\Development/cActor.obj
+         .\Development/cActorList.obj
+         .\Development/cAgentBox.obj
+         .\Development/cAgentServer.obj
+         .\Development/cAI.obj
+         .\Development/cArts.obj
+         .\Development/cBanner.obj
+         .\Development/cBox.obj
+         .\Development/cChat.obj
+         .\Development/cControlPanel.obj
+         .\Development/cDDraw.obj
+         .\Development/cDetailGoal.obj
+         .\Development/cDetailQuest.obj
+         .\Development/cDSound.obj
+         .\Development/cEffects.obj
+         .\Development/cGameServer.obj
+         .\Development/cGif.obj
+         .\Development/cGoalBook.obj
+         .\Development/cGoalPosting.obj
+         .\Development/cGoalQuestProcs.obj
+         .\Development/cItem.obj
+         .\Development/cKeymap.obj
+         .\Development/cLevel.obj
+         .\Development/cList.obj
+         .\Development/cMissile.obj
+         .\Development/cNameTag.obj
+         .\Development/cNeighbor.obj
+         .\Development/cOrnament.obj
+         .\Development/cOutput.obj
+         .\Development/cPalettes.obj
+         .\Development/cParty.obj
+         .\Development/cPlayer.obj
+         .\Development/cPostGoal.obj
+         .\Development/cPostQuest.obj
+         .\Development/cQuestBuilder.obj
+         .\Development/cReadGoal.obj
+         .\Development/cReadQuest.obj
+         .\Development/cReadReport.obj
+         .\Development/CreateFrame.obj
+         .\Development/cReportGoal.obj
+         .\Development/cReviewGoals.obj
+         .\Development/cSending.obj
+         .\Development/Debug.obj
+         .\Development/Dialogs.obj
+         .\Development/Interface.obj
+         .\Development/Keyboard.obj
+         .\Development/LanguageFilter.obj
+         .\Development/LevelRoomNames.obj
+         .\Development/LoginOptions.obj
+         .\Development/Main.obj
+         .\Development/Mouse.obj
+         .\Development/Move.obj
+         .\Development/Options.obj
+         .\Development/Realm.obj
+         .\Development/RenderActor.obj
+         .\Development/RenderView.obj
+         .\Development/RLE.obj
+         .\Development/Secure.obj
+         .\Development/Utils.obj
+         ..\libs\DDRAW.LIB
+         ..\libs\dsound.lib
+         ..\libs\dxguid.lib
+         ..\libs\TH32.Lib
+         C:\Lyra\Projects\messagemaker\Release\MessageMaker.lib
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:".\Development\Underlight-dev.exe.embed.manifest" /manifest ".\Development\Underlight-dev.exe.intermediate.manifest"
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         Underlight.vcxproj -> C:\lyra\dev\Underlight-dev.exe
+       BscMake:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\Development/Underlight.bsc" .\Development/BuildView.sbr .\Development/cActor.sbr .\Development/cActorList.sbr .\Development/cAgentBox.sbr .\Development/cAgentServer.sbr .\Development/cAI.sbr .\Development/cArts.sbr .\Development/cBanner.sbr .\Development/cBox.sbr .\Development/cChat.sbr .\Development/cControlPanel.sbr .\Development/cDDraw.sbr .\Development/cDetailGoal.sbr .\Development/cDetailQuest.sbr .\Development/cDSound.sbr .\Development/cEffects.sbr .\Development/cGameServer.sbr .\Development/cGif.sbr .\Development/cGoalBook.sbr .\Development/cGoalPosting.sbr .\Development/cGoalQuestProcs.sbr .\Development/cItem.sbr .\Development/cKeymap.sbr .\Development/cLevel.sbr .\Development/cList.sbr .\Development/cMissile.sbr .\Development/cNameTag.sbr .\Development/cNeighbor.sbr .\Development/cOrnament.sbr .\Development/cOutput.sbr .\Development/cPalettes.sbr .\Development/cParty.sbr .\Development/cPlayer.sbr .\Development/cPostGoal.sbr .\Development/cPostQuest.sbr .\Development/cQuestBuilder.sbr .\Development/cReadGoal.sbr .\Development/cReadQuest.sbr .\Development/cReadReport.sbr .\Development/CreateFrame.sbr .\Development/cReportGoal.sbr .\Development/cReviewGoals.sbr .\Development/cSending.sbr .\Development/Debug.sbr .\Development/Dialogs.sbr .\Development/Interface.sbr .\Development/Keyboard.sbr .\Development/LanguageFilter.sbr .\Development/LevelRoomNames.sbr .\Development/LoginOptions.sbr .\Development/Main.sbr .\Development/Mouse.sbr .\Development/Move.sbr .\Development/Options.sbr .\Development/Realm.sbr .\Development/RenderActor.sbr .\Development/RenderView.sbr .\Development/RLE.sbr .\Development/Secure.sbr .\Development/Utils.sbr
+       FinalizeBuildStatus:
+         Deleting file ".\Development\Underlight.unsuccessfulbuild".
+         Touching ".\Development\Underlight.lastbuildstate".
+     1>Done Building Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" (build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:05.85
+Time Elapsed 00:00:25.74

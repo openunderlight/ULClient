@@ -85,7 +85,7 @@ void BlitBitmap(HDC dc, HBITMAP bitmap, RECT *region, int stretch, int mask)
 	int w = region->right - region->left;
 	int h = region->bottom - region->top;
 
-	TransparentBlt(dc, region->left, region->top, w, h, bitmap_dc, 0, 0, w, h, mask);
+	BitBlt(dc, region->left, region->top, w, h, bitmap_dc, 0, 0, mask);
 
 	SelectObject(bitmap_dc, old_object);
 	DeleteDC(bitmap_dc);
@@ -798,7 +798,7 @@ BOOL CALLBACK LyraDialogProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 			SetWindowLong(hDlg, GWL_USERDATA, lParam);
 			SendMessage(hDlg, WM_SETFONT, WPARAM(display_font[0]), 0);
 			ResizeDlg(hDlg);
-			//EnumChildWindows(hDlg, EnumChildProcSetup, NULL);
+			EnumChildWindows(hDlg, EnumChildProcSetup, NULL);
 			break;
 	}
 

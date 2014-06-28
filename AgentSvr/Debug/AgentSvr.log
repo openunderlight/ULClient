@@ -1,13 +1,114 @@
-﻿Build started 6/22/2014 11:26:24 PM.
+﻿Build started 6/28/2014 2:27:10 PM.
      1>Project "C:\Lyra\Projects\AgentSvr\AgentSvr.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Debug\AgentSvr.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /I..\AgentSvc /ZI /nologo /W3 /WX- /Od /Oy- /D _DEBUG /D UL_DEBUG /D USE_INLINE /D AGENT /D GAMEMASTER /D WIN32 /D _WINDOWS /D GAME_LYR /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /Gm /EHsc /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gr /TP /analyze- /errorReport:prompt ..\Underlight\cAI.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /I..\AgentSvc /ZI /nologo /W3 /WX- /Od /Oy- /D _DEBUG /D UL_DEBUG /D USE_INLINE /D AGENT /D GAMEMASTER /D WIN32 /D _WINDOWS /D GAME_LYR /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /Gm /EHsc /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gr /TP /analyze- /errorReport:prompt ..\Underlight\BuildView.cpp ..\Underlight\CreateFrame.cpp ..\Underlight\Debug.cpp ..\Underlight\Dialogs.cpp ..\Underlight\Interface.cpp ..\Underlight\Keyboard.cpp ..\Underlight\LoginOptions.cpp ..\Underlight\Mouse.cpp ..\Underlight\Move.cpp ..\Underlight\Options.cpp ..\Underlight\Realm.cpp ..\Underlight\RenderActor.cpp ..\Underlight\RenderView.cpp ..\Underlight\Utils.cpp ..\Underlight\cAI.cpp ..\Underlight\cActor.cpp ..\Underlight\cActorList.cpp ..\Underlight\cAgentBox.cpp ..\Underlight\cAgentDaemon.cpp ..\Underlight\cAgentServer.cpp ..\Underlight\cArts.cpp ..\Underlight\cChat.cpp ..\Underlight\cDetailGoal.cpp ..\Underlight\cDetailQuest.cpp ..\Underlight\cEffects.cpp ..\Underlight\cGameServer.cpp ..\Underlight\cGoalBook.cpp ..\Underlight\cGoalPosting.cpp ..\Underlight\cGoalQuestProcs.cpp ..\Underlight\cItem.cpp ..\Underlight\cKeymap.cpp ..\Underlight\cLevel.cpp ..\Underlight\cList.cpp ..\Underlight\cMissile.cpp ..\Underlight\cNameTag.cpp ..\Underlight\cNeighbor.cpp ..\Underlight\cOrnament.cpp ..\Underlight\cOutput.cpp ..\Underlight\cPalettes.cpp ..\Underlight\cParty.cpp ..\Underlight\cPlayer.cpp ..\Underlight\cPostGoal.cpp ..\Underlight\cPostQuest.cpp ..\Underlight\cQuestBuilder.cpp ..\Underlight\cReadGoal.cpp ..\Underlight\cReadQuest.cpp ..\Underlight\cReadReport.cpp ..\Underlight\cReportGoal.cpp ..\Underlight\cReviewGoals.cpp ..\Underlight\cSending.cpp ..\underlight\LanguageFilter.cpp Agents.cpp MAIN.CPP cControlPanel.cpp cDDraw.cpp cDSound.cpp
+         Agents.cpp
+         cOutput.cpp
+         cGameServer.cpp
+     1>c:\lyra\projects\underlight\cgameserver.cpp(1809): warning C4101: 'timebuf' : unreferenced local variable
+     1>c:\lyra\projects\underlight\cgameserver.cpp(2965): warning C4244: '=' : conversion from '__int64' to 'unsigned int', possible loss of data
+         cAgentBox.cpp
          cAI.cpp
      1>c:\lyra\projects\underlight\cai.cpp(1120): warning C4101: 'timebuf' : unreferenced local variable
+         Realm.cpp
+     1>c:\lyra\projects\underlight\realm.cpp(800): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\lyra\projects\underlight\realm.cpp(802): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
+         Interface.cpp
+         Generating Code...
+     1>c:\lyra\projects\underlight\cai.cpp(1231): warning C4700: uninitialized local variable 'pos' used
+         Compiling...
+         cDSound.cpp
+         cDDraw.cpp
+         cControlPanel.cpp
+         MAIN.CPP
+         LanguageFilter.cpp
+         cSending.cpp
+         cReviewGoals.cpp
+         cReportGoal.cpp
+         cReadReport.cpp
+         cReadQuest.cpp
+         cReadGoal.cpp
+         cQuestBuilder.cpp
+         cPostQuest.cpp
+         cPostGoal.cpp
+         cPlayer.cpp
+     1>c:\lyra\projects\underlight\cplayer.cpp(1953): warning C4244: 'initializing' : conversion from 'double' to 'unsigned int', possible loss of data
+         cParty.cpp
+         cPalettes.cpp
+         cOrnament.cpp
+         cNeighbor.cpp
+     1>c:\lyra\projects\underlight\cneighbor.cpp(102): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\lyra\projects\underlight\cneighbor.cpp(102): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\lyra\projects\underlight\cneighbor.cpp(107): warning C4244: '=' : conversion from 'short' to 'unsigned char', possible loss of data
+         cNameTag.cpp
+         Generating Code...
+     1>c:\lyra\projects\agentsvr\main.cpp(81): warning C4700: uninitialized local variable 'last_checkup' used
+         Compiling...
+         cMissile.cpp
+         cList.cpp
+         cLevel.cpp
+         Room Decryption Code
+         cKeymap.cpp
+         cItem.cpp
+     1>c:\lyra\projects\underlight\citem.cpp(1375): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\lyra\projects\underlight\citem.cpp(1409): warning C4018: '>' : signed/unsigned mismatch
+         cGoalQuestProcs.cpp
+         cGoalPosting.cpp
+         cGoalBook.cpp
+         cEffects.cpp
+         cDetailQuest.cpp
+         cDetailGoal.cpp
+         cChat.cpp
+         cArts.cpp
+         MKET - Game designer choice goes here when ready
+     1>c:\lyra\projects\underlight\carts.cpp(7907): warning C4018: '>=' : signed/unsigned mismatch
+         cAgentServer.cpp
+         cAgentDaemon.cpp
+     1>c:\lyra\projects\underlight\cagentdaemon.cpp(438): warning C4244: '=' : conversion from 'short' to 'unsigned char', possible loss of data
+         cActorList.cpp
+         cActor.cpp
+         Utils.cpp
+         RenderView.cpp
+     1>c:\lyra\projects\underlight\cpalettes.h(8): warning C4005: 'STRICT' : macro redefinition
+                 c:\program files (x86)\microsoft sdks\windows\v7.0a\include\windef.h(16) : see previous definition of 'STRICT'
+         RenderActor.cpp
+     1>c:\lyra\projects\underlight\cpalettes.h(8): warning C4005: 'STRICT' : macro redefinition
+                 c:\program files (x86)\microsoft sdks\windows\v7.0a\include\windef.h(16) : see previous definition of 'STRICT'
+         Generating Code...
+     1>c:\lyra\projects\underlight\renderactor.cpp(1319): warning C4731: 'RLE_color_table_blit' : frame pointer register 'ebp' modified by inline assembly code
+     1>c:\lyra\projects\underlight\renderactor.cpp(1348): warning C4731: 'RLE_color_table_blit' : frame pointer register 'ebp' modified by inline assembly code
+     1>c:\lyra\projects\underlight\renderactor.cpp(1391): warning C4731: 'RLE_blit' : frame pointer register 'ebp' modified by inline assembly code
+     1>c:\lyra\projects\underlight\renderactor.cpp(1422): warning C4731: 'RLE_blit' : frame pointer register 'ebp' modified by inline assembly code
+     1>c:\lyra\projects\underlight\renderview.cpp(1853): warning C4731: 'blit_flat_double' : frame pointer register 'ebp' modified by inline assembly code
+     1>c:\lyra\projects\underlight\renderview.cpp(1878): warning C4731: 'blit_flat_double' : frame pointer register 'ebp' modified by inline assembly code
+     1>c:\lyra\projects\underlight\renderview.cpp(1895): warning C4731: 'blit_flat_double' : frame pointer register 'ebp' modified by inline assembly code
+     1>c:\lyra\projects\underlight\renderview.cpp(1928): warning C4731: 'blit_flat_single' : frame pointer register 'ebp' modified by inline assembly code
+     1>c:\lyra\projects\underlight\renderview.cpp(1950): warning C4731: 'blit_flat_single' : frame pointer register 'ebp' modified by inline assembly code
+     1>c:\lyra\projects\underlight\renderview.cpp(1959): warning C4731: 'blit_flat_single' : frame pointer register 'ebp' modified by inline assembly code
+         Compiling...
+         Options.cpp
+         Move.cpp
+     1>c:\lyra\projects\underlight\move.cpp(795): warning C4244: 'argument' : conversion from 'long' to 'float', possible loss of data
+     1>c:\lyra\projects\underlight\move.cpp(796): warning C4244: 'argument' : conversion from 'long' to 'float', possible loss of data
+     1>c:\lyra\projects\underlight\move.cpp(798): warning C4244: 'argument' : conversion from 'long' to 'float', possible loss of data
+     1>c:\lyra\projects\underlight\move.cpp(799): warning C4244: 'argument' : conversion from 'long' to 'float', possible loss of data
+     1>c:\lyra\projects\underlight\move.cpp(1218): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\lyra\projects\underlight\move.cpp(1224): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\lyra\projects\underlight\move.cpp(1225): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Mouse.cpp
+         LoginOptions.cpp
+         Keyboard.cpp
+         Dialogs.cpp
+         Debug.cpp
+         CreateFrame.cpp
+     1>c:\lyra\projects\underlight\createframe.cpp(246): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\lyra\projects\underlight\createframe.cpp(285): warning C4018: '>' : signed/unsigned mismatch
+         BuildView.cpp
+         Generating Code...
        ResourceCompile:
-         All outputs are up-to-date.
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _DEBUG /D _VC80_UPGRADE=0x0600 /l"0x0409" /I\Projects\Underlight /nologo /fo".\Debug\Underlight.res" ..\Underlight\Underlight.rc 
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -92,4 +193,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:11.31
+Time Elapsed 00:04:10.09

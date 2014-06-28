@@ -1219,8 +1219,25 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_PMARE               ICON                    "pmare.ico"
+#if defined(APSTUDIO_INVOKED) || \
+    !(defined(PMARE) || defined(AGENT))
 IDI_LYRA                ICON                    "Lyra.ico"
+#endif
+IDI_PMARE               ICON                    "pmare.ico"
+#if defined(APSTUDIO_INVOKED) || defined(PMARE)
+#if defined(APSTUDIO_INVOKED)
+IDI_LYRA$(PMARE)        ICON                    "ico00001.ico"
+#else
+IDI_LYRA                ICON                    "ico00001.ico"
+#endif
+#endif
+#if defined(APSTUDIO_INVOKED) || defined(AGENT)
+#if defined(APSTUDIO_INVOKED)
+IDI_LYRA$(AGENT)        ICON                    "ico00002.ico"
+#else
+IDI_LYRA                ICON                    "ico00002.ico"
+#endif
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2213,7 +2230,7 @@ BEGIN
     IDS_PMARE_DEVOLVE       "Due to your XP loss, you have regressed into a less powerful nightmare!!!\n"
     IDS_PMARE_NO_ITEMS      "You can not manipulate items as a player nightmare\n"
     IDS_NO_CHARGE_PMARE     "Because of the short duration of your session, there will be no charge\n"
-    IDS_CHARGE_PMARE        "You just played for %u minutes, and you previously played %u minutes during this session for a total of %u minutes. Starting as a %s at %2.2f Credits per 15 minutes, the estimated session charge is %2.2f Credits.\n"
+    IDS_CHARGE_PMARE        "You just played for %u minutes, and you previously played %u minutes during this session for a total of %u minutes. Starting as a %s at %u Credits per 15 minutes, the estimated session charge is %u Credits.\n"
     IDS_AGREEMENT_TEXT1     "By entering the game, you are agreeing to the 3 Rules of Underlight, KoiWare account policy, and game policy as described below\r\n\r\n The First Rule -- ""Be Honest with the Software"" \r\n Cheating or hacking of any kind is prohibited. Client software or other programs that alter data transferred between our server and the client that causes damage or unauthorized access to our servers could be considered an attempt to hack our servers. This is a federal offense, and we will prosecute you to the fullest extent of the law."
     IDS_AGREEMENT_TEXT2     "The Second Rule -- ""Respect Others""\r\n Keep your behavior appropriate at all times. If your language or behavior repeatedly annoys or offends others, you will be banned from playing. We place no limits on the use of language. Consenting adults are free to engage in any language or behavior they mutually agree to. Inappropriate behavior includes attacking other players without a valid 'in game reason', using unnecessarily offensive language, annoying others with out of character chat, excessive begging, etc."
     IDS_AGREEMENT_TEXT3     "The Third Rule -- ""Stay in Character""\r\nUnderlight is a true Role Playing game.  Upon entering the City of Dreams, you have to always remember you are pretending to be your character and leave the outside life of the real world behind. Your character would have no way of knowing sports scores or the latest in music or fashion.  So, to protect the environment that all role players are striving for, please leave the real world chat outside.  If you must communicate of real world things, please do so in whispers as to not offend anyone and protect the active role playing that is going on around your character.\n"
@@ -2321,7 +2338,7 @@ BEGIN
     IDS_COORDS3D            "You're at (x,y,z,room,level) = (%d,%d,%d,%d,%d).\n"
     IDS_NEED_PRIME          "%s failed - in order to %s a dreamer into %s, you must be carrying a House Prime Artifact for %s with at least %d charges in it."
     IDS_PMARE_EXPIRED       "We're sorry, but your nightmare session has expired and can no longer be resumed. Please try again  and select a nightmare type to start a new session."
-    IDS_PMARE_RESUME        "Resume Last Session: %1.2f PMare Credits per 15 minutes"
+    IDS_PMARE_RESUME        "Resume Last Session: %u PMare Credits per 15 minutes"
     IDS_ADULT_FILTER_TOGGLE_ON 
                             "The adult language filter is now on, so that adult language is automatically removed from all speech, actions, and avatar descriptions."
     IDS_ADULT_FILTER_TOGGLE_OFF 

@@ -69,7 +69,7 @@ struct timing_t
 };
 
 struct pmare_t {
-	float	charge;
+	UINT	charge;
 	UINT	name; // pointer to string table
 	UINT	descrip; // pointer to string table
 };

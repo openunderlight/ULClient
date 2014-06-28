@@ -1,11 +1,13 @@
-﻿Build started 6/23/2014 12:12:00 AM.
+﻿Build started 6/28/2014 1:17:32 PM.
      1>Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Gamemaster\Underlight.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\OggVorbis\include /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /O1 /Ob1 /Oy- /D NDEBUG /D GAMEMASTER_FULL /D GAMEMASTER /D GAME_LYR /D WIN32 /D _WINDOWS /D USE_INLINE /D ENGLISH /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Gamemaster/" /Fd".\Gamemaster/vc100.pdb" /Gr /TP /analyze- /errorReport:prompt cAgentBox.cpp
-         cAgentBox.cpp
          All outputs are up-to-date.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\OggVorbis\include /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /O1 /Ob1 /Oy- /D NDEBUG /D GAMEMASTER_FULL /D GAMEMASTER /D GAME_LYR /D WIN32 /D _WINDOWS /D USE_INLINE /D ENGLISH /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Gamemaster/" /Fd".\Gamemaster/vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Realm.cpp
+         Realm.cpp
+     1>Realm.cpp(800): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>Realm.cpp(802): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
        ResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -85,4 +87,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.76
+Time Elapsed 00:00:17.40

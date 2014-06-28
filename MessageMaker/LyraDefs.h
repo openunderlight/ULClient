@@ -150,9 +150,9 @@ struct Lyra {
 };
 
 
-const float BOG_PRICE = (float)0.95;
-const float AGO_PRICE = (float)1.95;
-const float SHAM_PRICE = (float)3.95;
+const int BOG_PRICE = (int)1;
+const int AGO_PRICE = (int)2;
+const int SHAM_PRICE = (int)3;
 
 ////
 //// Base Data Types

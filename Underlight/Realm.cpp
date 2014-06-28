@@ -795,8 +795,8 @@ void __cdecl EstimatePmareBilling(void)
 	if (billing_minutes < 15) { billing_minutes = 15; seconds = 0; }
 		
 	int num_blocks = (int)(billing_minutes/15);
-	float block_rate = pmare_info[options.pmare_start_type-3].charge;
-	float charge = num_blocks * block_rate;
+	int block_rate = pmare_info[options.pmare_start_type-3].charge;
+	int charge = num_blocks * block_rate;
 	float minute_rate = block_rate/15;
 	int num_extra_minutes = billing_minutes%15;
 	charge += num_extra_minutes*minute_rate;

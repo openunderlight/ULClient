@@ -1775,6 +1775,9 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ico00001.ico" />
+    <None Include="ico00002.ico" />
+    <None Include="icon1.ico" />
     <None Include="Lyra.ico" />
     <None Include="pmare.ico" />
     <None Include="Target.bmp" />

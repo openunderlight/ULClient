@@ -358,7 +358,7 @@ bool cAI::Update(void)
 			// This which will result in a "LEVELPLAYERS" message which will 
 			// call "FindRespawn" to find us a home and log in.
 			//TCHAR timebuf[128];
-			_tprintf(_T("Agent %d: Trying to find room populations at time %d\n"),AgentIndex(), LyraTime());
+			_tprintf("Agent %d: Trying to find room populations at time %d\n",AgentIndex(), LyraTime());
 
 			agent_info[AgentIndex()].gs_ptr->FindRoomPopulations(agent_info[AgentIndex()].level_ptr->ID());
 		}
@@ -388,7 +388,7 @@ bool cAI::Update(void)
 			this->PercentBusy(),
 			fr,
 			stat);
-		_tprintf(_T("%s"), disp_message);
+		DebugOut(_T("%s"), disp_message);
 	}
 #endif
 

@@ -1,5 +1,5 @@
-﻿Build started 6/22/2014 11:46:31 PM.
-     1>Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" on node 2 (rebuild target(s)).
+﻿Build started 6/28/2014 3:42:29 AM.
+     1>Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Release\MessageMaker.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
@@ -253,8 +253,8 @@
        FinalizeBuildStatus:
          Deleting file ".\Release\MessageMaker.unsuccessfulbuild".
          Touching ".\Release\MessageMaker.lastbuildstate".
-     1>Done Building Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" (rebuild target(s)).
+     1>Done Building Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:59.28
+Time Elapsed 00:01:01.90
