@@ -1101,6 +1101,7 @@ static void VectorMove(move_params_t *m, move_result_t *result)
 			}
 			else if (m->move_type == MOVE_NORMAL)
 			{
+#ifndef AGENT // Mares do not need to teleport when crossing portal trigger lines.  Mares will teleport when GM possessed.
 				if ((l->flags & TRIP_CROSS) &&   (PlayerTripLine(l) == TELEPORTED))
 				{
 					if (result)
@@ -1111,6 +1112,7 @@ static void VectorMove(move_params_t *m, move_result_t *result)
 					}
 					return;
 				}
+#endif //AGENT
 			}
 		}
 
