@@ -2225,7 +2225,7 @@ BEGIN
     IDS_KILLED              "We're sorry, but that character is dead and can no longer be played.  Contact accounts@koiware.org for more information"
     IDS_PLAYER_SUSPENDED    "You have been temporarily suspended from Underlight: Clash of Dreams for %d days. Please contact accounts@koiware.org for more information."
     IDS_PLAYER_TERMINATED   "We're sorry, but your account has been terminated (permanently disabled) by the KoiWare team. Please contact accounts@koiware.org for further information."
-    IDS_NO_PMARE            "We're sorry, but to use a player nightmare character, you must enter a valid credit card for your Lyra account in the Lyra billing system, or have enough cash for at least 15 minutes of play"
+    IDS_NO_PMARE            "We're sorry, but to use a player nightmare character, you must have enough PMare Credits for at least 15 minutes of play.  You can earn more by using Personality Points from your normal character."
     IDS_PMARE_EVOLVE        "Due to your XP gain, you have evolved into a more powerful nightmare!!!\n"
     IDS_PMARE_DEVOLVE       "Due to your XP loss, you have regressed into a less powerful nightmare!!!\n"
     IDS_PMARE_NO_ITEMS      "You can not manipulate items as a player nightmare\n"
