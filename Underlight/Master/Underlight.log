@@ -1,92 +1,9 @@
-﻿Build started 6/28/2014 1:17:06 PM.
-     1>Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
-         Creating ".\Master\Underlight.unsuccessfulbuild" because "AlwaysCreate" was specified.
-       ClCompile:
-         All outputs are up-to-date.
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\OggVorbis\include /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /O1 /Ob1 /Oy- /D NDEBUG /D UL_MASTER /D GAME_CLI /D WIN32 /D _WINDOWS /D USE_INLINE /D ENGLISH /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Master/" /Fd".\Master/vc100.pdb" /FR".\Master/" /Gd /TP /analyze- /errorReport:prompt Realm.cpp
-         Realm.cpp
-     1>Realm.cpp(800): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>Realm.cpp(802): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
-       ResourceCompile:
-         All outputs are up-to-date.
-       Link:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\lyra\dev\Underlight.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\OggVorbis\lib /LIBPATH:..\libs odbc32.lib odbccp32.lib ../MessageMaker/Release/MessageMaker.lib oldnames.lib th32.lib wininet.lib lz32.lib winmm.lib wsock32.lib ddraw.lib dsound.lib dxguid.lib comctl32.lib libcmtd.lib msimg32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB /NODEFAULTLIB:LIBCD /MANIFEST /ManifestFile:".\Master\Underlight.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Master/Underlight.pdb" /MAP:".\Master/Underlight.map" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"C:\lyra\dev\Underlight.lib" /MACHINE:X86 .\Master\Underlight.res
-         .\Master/BuildView.obj
-         .\Master/cActor.obj
-         .\Master/cActorList.obj
-         .\Master/cAgentBox.obj
-         .\Master/cAgentServer.obj
-         .\Master/cAI.obj
-         .\Master/cArts.obj
-         .\Master/cBanner.obj
-         .\Master/cBox.obj
-         .\Master/cChat.obj
-         .\Master/cControlPanel.obj
-         .\Master/cDDraw.obj
-         .\Master/cDetailGoal.obj
-         .\Master/cDetailQuest.obj
-         .\Master/cDSound.obj
-         .\Master/cEffects.obj
-         .\Master/cGameServer.obj
-         .\Master/cGif.obj
-         .\Master/cGoalBook.obj
-         .\Master/cGoalPosting.obj
-         .\Master/cGoalQuestProcs.obj
-         .\Master/cItem.obj
-         .\Master/cKeymap.obj
-         .\Master/cLevel.obj
-         .\Master/cList.obj
-         .\Master/cMissile.obj
-         .\Master/cNameTag.obj
-         .\Master/cNeighbor.obj
-         .\Master/cOrnament.obj
-         .\Master/cOutput.obj
-         .\Master/cPalettes.obj
-         .\Master/cParty.obj
-         .\Master/cPlayer.obj
-         .\Master/cPostGoal.obj
-         .\Master/cPostQuest.obj
-         .\Master/cQuestBuilder.obj
-         .\Master/cReadGoal.obj
-         .\Master/cReadQuest.obj
-         .\Master/cReadReport.obj
-         .\Master/CreateFrame.obj
-         .\Master/cReportGoal.obj
-         .\Master/cReviewGoals.obj
-         .\Master/cSending.obj
-         .\Master/Debug.obj
-         .\Master/Dialogs.obj
-         .\Master/Interface.obj
-         .\Master/Keyboard.obj
-         .\Master/LanguageFilter.obj
-         .\Master/LevelRoomNames.obj
-         .\Master/LoginOptions.obj
-         .\Master/Main.obj
-         .\Master/Mouse.obj
-         .\Master/Move.obj
-         .\Master/Options.obj
-         .\Master/Realm.obj
-         .\Master/RenderActor.obj
-         .\Master/RenderView.obj
-         .\Master/RLE.obj
-         .\Master/Secure.obj
-         .\Master/Utils.obj
-         ..\libs\DDRAW.LIB
-         ..\libs\dsound.lib
-         ..\libs\dxguid.lib
-         ..\libs\TH32.Lib
-         C:\Lyra\Projects\messagemaker\Release\MessageMaker.lib
-         Underlight.vcxproj -> C:\lyra\dev\Underlight.exe
-       Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"\lyra\dev\Underlight.exe;#1" /manifest .\Master\Underlight.exe.intermediate.manifest
-       BscMake:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\Underlight.bsc" .\Master/BuildView.sbr .\Master/cActor.sbr .\Master/cActorList.sbr .\Master/cAgentBox.sbr .\Master/cAgentServer.sbr .\Master/cAI.sbr .\Master/cArts.sbr .\Master/cBanner.sbr .\Master/cBox.sbr .\Master/cChat.sbr .\Master/cControlPanel.sbr .\Master/cDDraw.sbr .\Master/cDetailGoal.sbr .\Master/cDetailQuest.sbr .\Master/cDSound.sbr .\Master/cEffects.sbr .\Master/cGameServer.sbr .\Master/cGif.sbr .\Master/cGoalBook.sbr .\Master/cGoalPosting.sbr .\Master/cGoalQuestProcs.sbr .\Master/cItem.sbr .\Master/cKeymap.sbr .\Master/cLevel.sbr .\Master/cList.sbr .\Master/cMissile.sbr .\Master/cNameTag.sbr .\Master/cNeighbor.sbr .\Master/cOrnament.sbr .\Master/cOutput.sbr .\Master/cPalettes.sbr .\Master/cParty.sbr .\Master/cPlayer.sbr .\Master/cPostGoal.sbr .\Master/cPostQuest.sbr .\Master/cQuestBuilder.sbr .\Master/cReadGoal.sbr .\Master/cReadQuest.sbr .\Master/cReadReport.sbr .\Master/CreateFrame.sbr .\Master/cReportGoal.sbr .\Master/cReviewGoals.sbr .\Master/cSending.sbr .\Master/Debug.sbr .\Master/Dialogs.sbr .\Master/Interface.sbr .\Master/Keyboard.sbr .\Master/LanguageFilter.sbr .\Master/LevelRoomNames.sbr .\Master/LoginOptions.sbr .\Master/Main.sbr .\Master/Mouse.sbr .\Master/Move.sbr .\Master/Options.sbr .\Master/Realm.sbr .\Master/RenderActor.sbr .\Master/RenderView.sbr .\Master/RLE.sbr .\Master/Secure.sbr .\Master/Utils.sbr
-       FinalizeBuildStatus:
-         Deleting file ".\Master\Underlight.unsuccessfulbuild".
-         Touching ".\Master\Underlight.lastbuildstate".
-     1>Done Building Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" (build target(s)).
+﻿Build started 7/23/2014 11:19:33 AM.
+     1>Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" on node 2 (clean target(s)).
+     1>_PrepareForClean:
+         Deleting file ".\Master\Underlight.lastbuildstate".
+     1>Done Building Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" (clean target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:24.64
+Time Elapsed 00:00:00.20

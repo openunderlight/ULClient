@@ -315,6 +315,7 @@ public:
 	void EndChaosPurge(void);
 	void StartCupSummons(void);
 	void ApplyCupSummons(lyra_id_t caster_id);
+	void GotCupSummoned(void *value);
 	void EndCupSummons(void);
   void StartKinesis (void);
   void ApplyKinesis (int skill, lyra_id_t caster_id, int angle);

@@ -783,6 +783,8 @@
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Underlight\ico00001.ico" />
+    <None Include="..\Underlight\ico00002.ico" />
     <None Include="..\Underlight\Lyra.ico" />
     <None Include="..\Underlight\pmare.ico" />
     <None Include="..\Underlight\Target.bmp" />

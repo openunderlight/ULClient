@@ -2225,7 +2225,7 @@ BEGIN
     IDS_KILLED              "We're sorry, but that character is dead and can no longer be played.  Contact accounts@koiware.org for more information"
     IDS_PLAYER_SUSPENDED    "You have been temporarily suspended from Underlight: Clash of Dreams for %d days. Please contact accounts@koiware.org for more information."
     IDS_PLAYER_TERMINATED   "We're sorry, but your account has been terminated (permanently disabled) by the KoiWare team. Please contact accounts@koiware.org for further information."
-    IDS_NO_PMARE            "We're sorry, but to use a player nightmare character, you must have enough PMare Credits for at least 15 minutes of play.  You can earn more by using Personality Points from your normal character."
+    IDS_NO_PMARE            "We're sorry, but to use a player nightmare character, you must enter a valid credit card for your Lyra account in the Lyra billing system, or have enough cash for at least 15 minutes of play"
     IDS_PMARE_EVOLVE        "Due to your XP gain, you have evolved into a more powerful nightmare!!!\n"
     IDS_PMARE_DEVOLVE       "Due to your XP loss, you have regressed into a less powerful nightmare!!!\n"
     IDS_PMARE_NO_ITEMS      "You can not manipulate items as a player nightmare\n"
@@ -3357,7 +3357,7 @@ BEGIN
     IDS_PROPERTY2           "Property %i of use %i cannot be greater than %i."
     IDS_TP                  "Teleporters may have only one charge."
     IDS_NO_EFFECT           "There must be a selected effect for Use 1."
-    IDS_BAD_CHARGES         "An item can not be forged with a number of charges higher than your skill in Forge Talismam."
+    IDS_BAD_CHARGES         "This item's charges cannot exceed your skill in Forge Talisman."
     IDS_BAD_FORMAT          "Error determining header format type.\nYou may be using more than 11 bytes of state."
     IDS_STATE_ERR           "Couldn't set the state for use %i."
     IDS_UNNAMED             "unnamed"
@@ -4196,6 +4196,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_PP_PMARE_TIME_SEL   "# PMare credits:"
+    IDS_CUPSUMMONS_ATTEMPT  "%s has invited you to the Dreamer's Cup Arena! You will teleport there now if you accept."
 END
 
 #endif    // English (United States) resources

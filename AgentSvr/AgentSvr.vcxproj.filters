@@ -425,5 +425,11 @@
     </None>
     <None Include="..\Underlight\AgentSvr.rgs" />
     <None Include="..\Underlight\index.html" />
+    <None Include="..\Underlight\ico00001.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Underlight\ico00002.ico">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

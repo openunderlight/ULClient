@@ -61,7 +61,6 @@
 #define IDD_PARTICLES                   195
 #define IDD_GRANT_PPOINT                196
 #define IDD_USE_PPOINT                  197
-#define IDI_ICON1                       201
 #define IDS_PROPERTIES                  1000
 #define IDC_USERNAME                    1004
 #define IDC_EMAIL                       1005
@@ -2802,6 +2801,7 @@
 #define IDS_PP_PMARE_TIME               4270
 #define IDS_PP_BOUGHT_PMARE_TIME        4271
 #define IDS_PP_PMARE_TIME_SEL           4272
+#define IDS_CUPSUMMONS_ATTEMPT          4273
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

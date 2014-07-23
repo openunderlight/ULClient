@@ -6070,7 +6070,7 @@ void cArts::EndChaosPurge(void)
 
 
 //////////////////////////////////////////////////////////////////
-// CupSummons
+// Cup Summons
 
 void cArts::StartCupSummons(void)
 {
@@ -6101,7 +6101,27 @@ void cArts::ApplyCupSummons(lyra_id_t caster_id)
 
     player->EvokedFX().Activate(Arts::CUP_SUMMONS, false);
 
-	player->Teleport (6958, 7522, 979, 46);	// Cup Arena
+	if (!acceptrejectdlg)
+	{
+		LoadString (hInstance, IDS_CUPSUMMONS_ATTEMPT, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, n->Name());
+			HWND hDlg = CreateLyraDialog(hInstance, (IDD_ACCEPTREJECT),
+							cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
+			acceptreject_callback = (&cArts::GotCupSummoned);
+			SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+			SendMessage(hDlg, WM_SET_AR_NEIGHBOR, 0, (LPARAM)n);
+	}
+	return;
+}
+
+void cArts::GotCupSummoned(void *value)
+{
+	int success = *((int*)value);
+
+	if (success)
+	{
+		player->Teleport (6958, 7522, 979, 46);	// Cup Arena
+	}
 
 //	gs->Talk(
 
