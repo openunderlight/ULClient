@@ -416,14 +416,19 @@ void cAI::MakeMove(void)
 
 	// if our target is still fading in, do nothing yet; this gives players
 	// a chance to orient a bit before getting attacked
-	//_tprintf(_T("nb: %d %d %d\n"), neighbors[target]->CurrBitmap(0), LyraBitmap::ENTRYEXIT_EFFECT, (LyraBitmap::ENTRYEXIT_EFFECT + effects->EffectFrames(LyraBitmap::ENTRYEXIT_EFFECT)));
-/*	if ((target != -1) && this->TargetEntering(target)) {
+	
+	// Do not uncomment the next line below, causes agentsrv to crash over and over - DiscoWay
+	// _tprintf(_T("nb: %d %d %d\n"), neighbors[target]->CurrBitmap(0), LyraBitmap::ENTRYEXIT_EFFECT, (LyraBitmap::ENTRYEXIT_EFFECT + effects->EffectFrames(LyraBitmap::ENTRYEXIT_EFFECT)));
+	
+	// Uncommented as test - DiscoWay
+	if ((target != -1) && this->TargetEntering(target)) {
 		target = -1;
 		last_target_x = -1;
 		last_target_y = -1;
 		velocity = 0;
 	}
-	else */if (flags & ACTOR_PARALYZED)
+	// end of uncomment.  Was commented out between the else and the if just below - DiscoWay
+	else if (flags & ACTOR_PARALYZED)
 	{
 		velocity = 0;
 	}
