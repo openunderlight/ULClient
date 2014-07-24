@@ -560,7 +560,7 @@ void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 	keyresult = RegQueryValueEx(reg_key, _T("tcp_only"), NULL, &reg_type,
 		(unsigned char *)&(options.tcp_only), &size);
 	if ((keyresult != ERROR_SUCCESS) || force) 
-		options.tcp_only = FALSE;
+		options.tcp_only = TRUE;
 
 
 	size = sizeof(options.bind_local_tcp);

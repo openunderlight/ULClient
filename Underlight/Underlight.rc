@@ -1765,7 +1765,7 @@ BEGIN
                             "You transfer the nightmare essence into the Artifact\n"
     IDS_IDENTIFY_META_ESSENCE 
                             "This Prime Artifact belongs to %s. It has %d strength and has had %d nightmare essences placed within it\n"
-    IDS_VERSION_EXPIRED     "This version of Underlight has expired. The patch file will now be automatically downloaded;  run the file patch file and try again! If there are any problems, please go to http://www.underlight.com.\n"
+    IDS_VERSION_EXPIRED     "This version of Underlight has expired. The patch file will now be automatically downloaded;  run the file patch file and try again! If there are any problems, please go to http://www.clashofdreams.com.\n"
     IDS_EMPATHY_OTHER_SUCCEEDED "You have successfully evoked %s upon %s!\n"
     IDS_INVULNERABLE_TOGGLE_ON "Invulnerability On\n"
     IDS_DEAFENING_ROAR      "The nightmare has unleashed a deafening roar!\n"
@@ -3710,10 +3710,10 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_DEV_PATCH_FILE_URL  "https://drive.google.com/folderview?id=0B5kUQrCuMBg2aTBLR2pfYlotOW8&usp=sharing"
+    IDS_DEV_PATCH_FILE_URL  "http://download.clashofdreams.com"
     IDS_LIVE_MANACCOM_PATCH_FILE_URL 
-                            "https://drive.google.com/folderview?id=0B5kUQrCuMBg2aTBLR2pfYlotOW8&usp=sharing"
-    IDS_LIVE_PATCH_FILE_URL "https://drive.google.com/folderview?id=0B5kUQrCuMBg2aTBLR2pfYlotOW8&usp=sharing"
+							"http://download.clashofdreams.com"
+    IDS_LIVE_PATCH_FILE_URL "http://download.clashofdreams.com"
     IDS_ANY_COLOR           "Any Color"
     IDS_ANY_GRAPHIC         "Any Bitmap"
     IDS_AWAIT_UPDATE        "You are not yet well enough in tune with this area to use items; please try again in a moment\n"
