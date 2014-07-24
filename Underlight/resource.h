@@ -2802,6 +2802,8 @@
 #define IDS_PP_BOUGHT_PMARE_TIME        4271
 #define IDS_PP_PMARE_TIME_SEL           4272
 #define IDS_CUPSUMMONS_ATTEMPT          4273
+#define IDS_KNOW_52                     4274
+#define IDS_KNOW52                      4274
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

@@ -1,4 +1,4 @@
-﻿Build started 7/23/2014 11:00:00 PM.
+﻿Build started 7/24/2014 12:01:21 AM.
      1>Project "C:\Lyra\Projects\AgentSvr\AgentSvr.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Touching ".\Release\AgentSvr.unsuccessfulbuild".
@@ -18,4 +18,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:07.30
+Time Elapsed 00:00:34.00
