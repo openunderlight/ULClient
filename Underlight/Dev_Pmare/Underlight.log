@@ -1,12 +1,14 @@
-﻿Build started 7/23/2014 10:28:20 PM.
+﻿Build started 7/23/2014 10:59:22 PM.
      1>Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Dev_Pmare\Underlight.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         All outputs are up-to-date.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\OggVorbis\include /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /O1 /Ob1 /Oy- /D UL_DEBUG /D GAMEMASTER_FULL /D GAMEMASTER /D PMARE /D UL_DEV /D GAME_CLI /D WIN32 /D _WINDOWS /D USE_INLINE /D ENGLISH /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Dev_Pmare/" /Fd".\Dev_Pmare/vc100.pdb" /Gr /TP /analyze- /errorReport:prompt cGameServer.cpp
+         cGameServer.cpp
+     1>cGameServer.cpp(2965): warning C4244: '=' : conversion from '__int64' to 'unsigned int', possible loss of data
          All outputs are up-to-date.
        ResourceCompile:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _DEBUG /D PMARE /D _VC80_UPGRADE=0x0600 /l"0x0409" /nologo /fo".\Dev_Pmare\Underlight.res" Underlight.rc 
+         All outputs are up-to-date.
        Link:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\lyra\dev\pmare-dev.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\OggVorbis\lib /LIBPATH:..\libs ../MessageMaker/Release/MessageMaker.lib vorbisfile_static.lib ogg_static.lib vorbis_static.lib oldnames.lib th32.lib wininet.lib lz32.lib winmm.lib wsock32.lib ddraw.lib dsound.lib dxguid.lib comctl32.lib libcmtd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB /NODEFAULTLIB:LIBCMTD /MANIFEST /ManifestFile:".\Dev_Pmare\pmare-dev.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Dev_Pmare/pmare-dev.pdb" /MAP:".\Dev_Pmare/pmare-dev.map" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"C:\lyra\dev\pmare-dev.lib" /MACHINE:X86 .\Dev_Pmare\Underlight.res
          .\Dev_Pmare/BuildView.obj
@@ -84,4 +86,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.69
+Time Elapsed 00:00:05.78

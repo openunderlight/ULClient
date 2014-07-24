@@ -3710,10 +3710,10 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_DEV_PATCH_FILE_URL  "http://download.clashofdreams.com/underlight-webinstaller.exe"
+    IDS_DEV_PATCH_FILE_URL  "http://download.clashofdreams.com"
     IDS_LIVE_MANACCOM_PATCH_FILE_URL 
-							"http://download.clashofdreams.com/underlight-webinstaller.exe"
-    IDS_LIVE_PATCH_FILE_URL "http://download.clashofdreams.com/underlight-webinstaller.exe"
+							"http://download.clashofdreams.com"
+    IDS_LIVE_PATCH_FILE_URL "http://download.clashofdreams.com"
     IDS_ANY_COLOR           "Any Color"
     IDS_ANY_GRAPHIC         "Any Bitmap"
     IDS_AWAIT_UPDATE        "You are not yet well enough in tune with this area to use items; please try again in a moment\n"
