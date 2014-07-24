@@ -1,9 +1,260 @@
-﻿Build started 7/23/2014 11:19:36 AM.
-     1>Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" on node 2 (clean target(s)).
-     1>_PrepareForClean:
-         Deleting file ".\Release\MessageMaker.lastbuildstate".
-     1>Done Building Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" (clean target(s)).
+﻿Build started 7/23/2014 7:32:52 PM.
+     1>Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating ".\Release\MessageMaker.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MPSDK\inc /I../Underlight /I../MessageMaker /I../AgentMessages /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D _WINDOWS /D USE_INLINE /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release/" /Fd".\Release/vc100.pdb" /Gr /TP /analyze- /errorReport:prompt AMsg_AgentInfo.cpp AMsg_ControlAgent.cpp AMsg_ControlAgentAck.cpp AMsg_Login.cpp AMsg_Loginack.cpp AMsg_Logout.cpp AMsg_PosessInfo.cpp GMsg_AgentLogin.cpp GMsg_ChangeAvatar.cpp GMsg_ChangeStat.cpp GMsg_CreateItem.cpp GMsg_DestroyItem.cpp GMsg_DestroyRoomItem.cpp GMsg_Error.cpp GMsg_GetGoalHdrs.cpp GMsg_GetItem.cpp GMsg_GetItemDescription.cpp GMsg_GetLevelPlayers.cpp GMsg_GetPlayerName.cpp GMsg_GetReportHdrs.cpp GMsg_GiveItem.cpp GMsg_GiveItemAck.cpp GMsg_Goal.cpp GMsg_GotoLevel.cpp GMsg_GrantPPoint.cpp GMsg_ItemDescription.cpp GMsg_ItemDrop.cpp GMsg_ItemPickup.cpp GMsg_LevelPlayers.cpp GMsg_LocateAvatar.cpp GMsg_LocateAvatarAck.cpp GMsg_LocateMaresAck.cpp GMsg_LocateNewliesAck.cpp GMsg_Login.cpp GMsg_LoginAck.cpp GMsg_Logout.cpp GMsg_Ping.cpp GMsg_PostGoal.cpp GMsg_PostReport.cpp GMsg_PPointAck.cpp GMsg_PreLogin.cpp GMsg_PreLoginAck.cpp GMsg_PutItem.cpp GMsg_RcvGoalbookHdr.cpp GMsg_RcvGoalDetails.cpp GMsg_RcvGoalHdr.cpp GMsg_RcvGoalText.cpp GMsg_RcvPlayerName.cpp GMsg_RcvReportGoals.cpp GMsg_RcvReportHdr.cpp GMsg_RcvReportText.cpp GMsg_SenseDreamersAck.cpp GMsg_ServerDown.cpp GMsg_SetAvatarDescription.cpp GMsg_ShowItem.cpp GMsg_SummonAvatar.cpp GMsg_SummonAvatarAck.cpp GMsg_TakeItem.cpp GMsg_TakeItemAck.cpp GMsg_UpdateItem.cpp GMsg_UpdateStats.cpp GMsg_UsePPoint.cpp GMsg_ViewItem.cpp LmArts.cpp LmAvatar.cpp LmBit32.cpp LmItem.cpp LmItemDefs.cpp LmItemHdr.cpp LmMesg.cpp LmMesgBuf.cpp LmMesgHdr.cpp lmparty.cpp LmPeerUpdate.cpp LmPosition.cpp LmStats.cpp LmXPTable.cpp LNMD5.cpp LyraMessage.cpp md5.cpp RenderView.cpp RmRemotePlayer.cpp RMsg_ChangeAvatar.cpp RMsg_CupSummons.cpp RMsg_EnterRoom.cpp RMsg_Error.cpp RMsg_GetAvatarDescription.cpp RMsg_GotoRoom.cpp RMsg_ItemDrop.cpp RMsg_ItemHdrDrop.cpp RMsg_ItemPickup.cpp RMsg_JoinedParty.cpp RMsg_LeaveRoom.cpp RMsg_LoginAck.cpp RMsg_Logout.cpp RMsg_NewlyAwakened.cpp RMsg_Party.cpp RMsg_PartyInfo.cpp RMsg_Ping.cpp RMsg_PlayerMsg.cpp RMsg_PlayerUpdate.cpp RMsg_RcvAvatarDescription.cpp RMsg_RoomLoginAck.cpp RMsg_Speech.cpp RMsg_Update.cpp
+         AMsg_AgentInfo.cpp
+         AMsg_ControlAgent.cpp
+         AMsg_ControlAgentAck.cpp
+         AMsg_Login.cpp
+         AMsg_Loginack.cpp
+         AMsg_Logout.cpp
+         AMsg_PosessInfo.cpp
+         GMsg_AgentLogin.cpp
+         GMsg_ChangeAvatar.cpp
+         GMsg_ChangeStat.cpp
+         GMsg_CreateItem.cpp
+         GMsg_DestroyItem.cpp
+         GMsg_DestroyRoomItem.cpp
+         GMsg_Error.cpp
+         GMsg_GetGoalHdrs.cpp
+         GMsg_GetItem.cpp
+         GMsg_GetItemDescription.cpp
+         GMsg_GetLevelPlayers.cpp
+         GMsg_GetPlayerName.cpp
+         GMsg_GetReportHdrs.cpp
+         Generating Code...
+         Compiling...
+         GMsg_GiveItem.cpp
+         GMsg_GiveItemAck.cpp
+         GMsg_Goal.cpp
+         GMsg_GotoLevel.cpp
+         GMsg_GrantPPoint.cpp
+         GMsg_ItemDescription.cpp
+         GMsg_ItemDrop.cpp
+         GMsg_ItemPickup.cpp
+         GMsg_LevelPlayers.cpp
+         GMsg_LocateAvatar.cpp
+         GMsg_LocateAvatarAck.cpp
+         GMsg_LocateMaresAck.cpp
+         GMsg_LocateNewliesAck.cpp
+         GMsg_Login.cpp
+         GMsg_LoginAck.cpp
+         GMsg_Logout.cpp
+         GMsg_Ping.cpp
+         GMsg_PostGoal.cpp
+         GMsg_PostReport.cpp
+         GMsg_PPointAck.cpp
+         Generating Code...
+         Compiling...
+         GMsg_PreLogin.cpp
+         GMsg_PreLoginAck.cpp
+         GMsg_PutItem.cpp
+         GMsg_RcvGoalbookHdr.cpp
+         GMsg_RcvGoalDetails.cpp
+         GMsg_RcvGoalHdr.cpp
+         GMsg_RcvGoalText.cpp
+         GMsg_RcvPlayerName.cpp
+         GMsg_RcvReportGoals.cpp
+         GMsg_RcvReportHdr.cpp
+         GMsg_RcvReportText.cpp
+         GMsg_SenseDreamersAck.cpp
+         GMsg_ServerDown.cpp
+         GMsg_SetAvatarDescription.cpp
+         GMsg_ShowItem.cpp
+         GMsg_SummonAvatar.cpp
+         GMsg_SummonAvatarAck.cpp
+         GMsg_TakeItem.cpp
+         GMsg_TakeItemAck.cpp
+         GMsg_UpdateItem.cpp
+         Generating Code...
+         Compiling...
+         GMsg_UpdateStats.cpp
+         GMsg_UsePPoint.cpp
+         GMsg_ViewItem.cpp
+         LmArts.cpp
+         LmAvatar.cpp
+         LmBit32.cpp
+         LmItem.cpp
+         LmItemDefs.cpp
+         LmItemHdr.cpp
+         LmMesg.cpp
+     1>LmMesg.cpp(68): warning C4018: '<=' : signed/unsigned mismatch
+         LmMesgBuf.cpp
+         LmMesgHdr.cpp
+         lmparty.cpp
+         LmPeerUpdate.cpp
+         LmPosition.cpp
+         LmStats.cpp
+         LmXPTable.cpp
+         LNMD5.cpp
+         LyraMessage.cpp
+         md5.cpp
+         Generating Code...
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(615): warning C4700: uninitialized local variable 'ward' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(619): warning C4700: uninitialized local variable 'missile' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(623): warning C4700: uninitialized local variable 'amulet' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(627): warning C4700: uninitialized local variable 'area_effect' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(631): warning C4700: uninitialized local variable 'essence' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(635): warning C4700: uninitialized local variable 'support' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(639): warning C4700: uninitialized local variable 'meta_essence' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(643): warning C4700: uninitialized local variable 'scroll' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(647): warning C4700: uninitialized local variable 'teleporter' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(651): warning C4700: uninitialized local variable 'train_support' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(655): warning C4700: uninitialized local variable 'gratitude' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(694): warning C4700: uninitialized local variable 'ward' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(698): warning C4700: uninitialized local variable 'missile' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(702): warning C4700: uninitialized local variable 'amulet' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(706): warning C4700: uninitialized local variable 'area_effect' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(710): warning C4700: uninitialized local variable 'essence' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(714): warning C4700: uninitialized local variable 'support' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(718): warning C4700: uninitialized local variable 'meta_essence' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(722): warning C4700: uninitialized local variable 'scroll' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(726): warning C4700: uninitialized local variable 'teleporter' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(730): warning C4700: uninitialized local variable 'train_support' used
+     1>c:\lyra\projects\messagemaker\lmitemdefs.cpp(734): warning C4700: uninitialized local variable 'gratitude' used
+         Compiling...
+         RenderView.cpp
+         RmRemotePlayer.cpp
+         RMsg_ChangeAvatar.cpp
+         RMsg_CupSummons.cpp
+         RMsg_EnterRoom.cpp
+         RMsg_Error.cpp
+         RMsg_GetAvatarDescription.cpp
+         RMsg_GotoRoom.cpp
+         RMsg_ItemDrop.cpp
+         RMsg_ItemHdrDrop.cpp
+         RMsg_ItemPickup.cpp
+         RMsg_JoinedParty.cpp
+         RMsg_LeaveRoom.cpp
+         RMsg_LoginAck.cpp
+         RMsg_Logout.cpp
+         RMsg_NewlyAwakened.cpp
+         RMsg_Party.cpp
+         RMsg_PartyInfo.cpp
+         RMsg_Ping.cpp
+         RMsg_PlayerMsg.cpp
+         Generating Code...
+         Compiling...
+         RMsg_PlayerUpdate.cpp
+         RMsg_RcvAvatarDescription.cpp
+         RMsg_RoomLoginAck.cpp
+         RMsg_Speech.cpp
+         RMsg_Update.cpp
+         Generating Code...
+       Lib:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:".\Release\MessageMaker.lib" /NOLOGO .\Release/AMsg_AgentInfo.obj
+         .\Release/AMsg_ControlAgent.obj
+         .\Release/AMsg_ControlAgentAck.obj
+         .\Release/AMsg_Login.obj
+         .\Release/AMsg_Loginack.obj
+         .\Release/AMsg_Logout.obj
+         .\Release/AMsg_PosessInfo.obj
+         .\Release/GMsg_AgentLogin.obj
+         .\Release/GMsg_ChangeAvatar.obj
+         .\Release/GMsg_ChangeStat.obj
+         .\Release/GMsg_CreateItem.obj
+         .\Release/GMsg_DestroyItem.obj
+         .\Release/GMsg_DestroyRoomItem.obj
+         .\Release/GMsg_Error.obj
+         .\Release/GMsg_GetGoalHdrs.obj
+         .\Release/GMsg_GetItem.obj
+         .\Release/GMsg_GetItemDescription.obj
+         .\Release/GMsg_GetLevelPlayers.obj
+         .\Release/GMsg_GetPlayerName.obj
+         .\Release/GMsg_GetReportHdrs.obj
+         .\Release/GMsg_GiveItem.obj
+         .\Release/GMsg_GiveItemAck.obj
+         .\Release/GMsg_Goal.obj
+         .\Release/GMsg_GotoLevel.obj
+         .\Release/GMsg_GrantPPoint.obj
+         .\Release/GMsg_ItemDescription.obj
+         .\Release/GMsg_ItemDrop.obj
+         .\Release/GMsg_ItemPickup.obj
+         .\Release/GMsg_LevelPlayers.obj
+         .\Release/GMsg_LocateAvatar.obj
+         .\Release/GMsg_LocateAvatarAck.obj
+         .\Release/GMsg_LocateMaresAck.obj
+         .\Release/GMsg_LocateNewliesAck.obj
+         .\Release/GMsg_Login.obj
+         .\Release/GMsg_LoginAck.obj
+         .\Release/GMsg_Logout.obj
+         .\Release/GMsg_Ping.obj
+         .\Release/GMsg_PostGoal.obj
+         .\Release/GMsg_PostReport.obj
+         .\Release/GMsg_PPointAck.obj
+         .\Release/GMsg_PreLogin.obj
+         .\Release/GMsg_PreLoginAck.obj
+         .\Release/GMsg_PutItem.obj
+         .\Release/GMsg_RcvGoalbookHdr.obj
+         .\Release/GMsg_RcvGoalDetails.obj
+         .\Release/GMsg_RcvGoalHdr.obj
+         .\Release/GMsg_RcvGoalText.obj
+         .\Release/GMsg_RcvPlayerName.obj
+         .\Release/GMsg_RcvReportGoals.obj
+         .\Release/GMsg_RcvReportHdr.obj
+         .\Release/GMsg_RcvReportText.obj
+         .\Release/GMsg_SenseDreamersAck.obj
+         .\Release/GMsg_ServerDown.obj
+         .\Release/GMsg_SetAvatarDescription.obj
+         .\Release/GMsg_ShowItem.obj
+         .\Release/GMsg_SummonAvatar.obj
+         .\Release/GMsg_SummonAvatarAck.obj
+         .\Release/GMsg_TakeItem.obj
+         .\Release/GMsg_TakeItemAck.obj
+         .\Release/GMsg_UpdateItem.obj
+         .\Release/GMsg_UpdateStats.obj
+         .\Release/GMsg_UsePPoint.obj
+         .\Release/GMsg_ViewItem.obj
+         .\Release/LmArts.obj
+         .\Release/LmAvatar.obj
+         .\Release/LmBit32.obj
+         .\Release/LmItem.obj
+         .\Release/LmItemDefs.obj
+         .\Release/LmItemHdr.obj
+         .\Release/LmMesg.obj
+         .\Release/LmMesgBuf.obj
+         .\Release/LmMesgHdr.obj
+         .\Release/lmparty.obj
+         .\Release/LmPeerUpdate.obj
+         .\Release/LmPosition.obj
+         .\Release/LmStats.obj
+         .\Release/LmXPTable.obj
+         .\Release/LNMD5.obj
+         .\Release/LyraMessage.obj
+         .\Release/md5.obj
+         .\Release/RenderView.obj
+         .\Release/RmRemotePlayer.obj
+         .\Release/RMsg_ChangeAvatar.obj
+         .\Release/RMsg_CupSummons.obj
+         .\Release/RMsg_EnterRoom.obj
+         .\Release/RMsg_Error.obj
+         .\Release/RMsg_GetAvatarDescription.obj
+         .\Release/RMsg_GotoRoom.obj
+         .\Release/RMsg_ItemDrop.obj
+         .\Release/RMsg_ItemHdrDrop.obj
+         .\Release/RMsg_ItemPickup.obj
+         .\Release/RMsg_JoinedParty.obj
+         .\Release/RMsg_LeaveRoom.obj
+         .\Release/RMsg_LoginAck.obj
+         .\Release/RMsg_Logout.obj
+         .\Release/RMsg_NewlyAwakened.obj
+         .\Release/RMsg_Party.obj
+         .\Release/RMsg_PartyInfo.obj
+         .\Release/RMsg_Ping.obj
+         .\Release/RMsg_PlayerMsg.obj
+         .\Release/RMsg_PlayerUpdate.obj
+         .\Release/RMsg_RcvAvatarDescription.obj
+         .\Release/RMsg_RoomLoginAck.obj
+         .\Release/RMsg_Speech.obj
+         .\Release/RMsg_Update.obj
+         MessageMaker.vcxproj -> C:\Lyra\Projects\messagemaker\.\Release\MessageMaker.lib
+       FinalizeBuildStatus:
+         Deleting file ".\Release\MessageMaker.unsuccessfulbuild".
+         Touching ".\Release\MessageMaker.lastbuildstate".
+     1>Done Building Project "C:\Lyra\Projects\messagemaker\MessageMaker.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.07
+Time Elapsed 00:01:54.34

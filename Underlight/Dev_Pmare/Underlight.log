@@ -1,9 +1,87 @@
-﻿Build started 7/23/2014 11:19:32 AM.
-     1>Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" on node 2 (clean target(s)).
-     1>_PrepareForClean:
-         Deleting file ".\Dev_Pmare\Underlight.lastbuildstate".
-     1>Done Building Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" (clean target(s)).
+﻿Build started 7/23/2014 8:34:16 PM.
+     1>Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating ".\Dev_Pmare\Underlight.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+       ResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _DEBUG /D PMARE /D _VC80_UPGRADE=0x0600 /l"0x0409" /nologo /fo".\Dev_Pmare\Underlight.res" Underlight.rc 
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\lyra\dev\pmare-dev.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\OggVorbis\lib /LIBPATH:..\libs ../MessageMaker/Release/MessageMaker.lib vorbisfile_static.lib ogg_static.lib vorbis_static.lib oldnames.lib th32.lib wininet.lib lz32.lib winmm.lib wsock32.lib ddraw.lib dsound.lib dxguid.lib comctl32.lib libcmtd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB /NODEFAULTLIB:LIBCMTD /MANIFEST /ManifestFile:".\Dev_Pmare\pmare-dev.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Dev_Pmare/pmare-dev.pdb" /MAP:".\Dev_Pmare/pmare-dev.map" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"C:\lyra\dev\pmare-dev.lib" /MACHINE:X86 .\Dev_Pmare\Underlight.res
+         .\Dev_Pmare/BuildView.obj
+         .\Dev_Pmare/cActor.obj
+         .\Dev_Pmare/cActorList.obj
+         .\Dev_Pmare/cAgentBox.obj
+         .\Dev_Pmare/cAgentServer.obj
+         .\Dev_Pmare/cAI.obj
+         .\Dev_Pmare/cArts.obj
+         .\Dev_Pmare/cBanner.obj
+         .\Dev_Pmare/cBox.obj
+         .\Dev_Pmare/cChat.obj
+         .\Dev_Pmare/cControlPanel.obj
+         .\Dev_Pmare/cDDraw.obj
+         .\Dev_Pmare/cDetailGoal.obj
+         .\Dev_Pmare/cDetailQuest.obj
+         .\Dev_Pmare/cDSound.obj
+         .\Dev_Pmare/cEffects.obj
+         .\Dev_Pmare/cGameServer.obj
+         .\Dev_Pmare/cGif.obj
+         .\Dev_Pmare/cGoalBook.obj
+         .\Dev_Pmare/cGoalPosting.obj
+         .\Dev_Pmare/cGoalQuestProcs.obj
+         .\Dev_Pmare/cItem.obj
+         .\Dev_Pmare/cKeymap.obj
+         .\Dev_Pmare/cLevel.obj
+         .\Dev_Pmare/cList.obj
+         .\Dev_Pmare/cMissile.obj
+         .\Dev_Pmare/cNameTag.obj
+         .\Dev_Pmare/cNeighbor.obj
+         .\Dev_Pmare/cOrnament.obj
+         .\Dev_Pmare/cOutput.obj
+         .\Dev_Pmare/cPalettes.obj
+         .\Dev_Pmare/cParty.obj
+         .\Dev_Pmare/cPlayer.obj
+         .\Dev_Pmare/cPostGoal.obj
+         .\Dev_Pmare/cPostQuest.obj
+         .\Dev_Pmare/cQuestBuilder.obj
+         .\Dev_Pmare/cReadGoal.obj
+         .\Dev_Pmare/cReadQuest.obj
+         .\Dev_Pmare/cReadReport.obj
+         .\Dev_Pmare/CreateFrame.obj
+         .\Dev_Pmare/cReportGoal.obj
+         .\Dev_Pmare/cReviewGoals.obj
+         .\Dev_Pmare/cSending.obj
+         .\Dev_Pmare/Debug.obj
+         .\Dev_Pmare/Dialogs.obj
+         .\Dev_Pmare/Interface.obj
+         .\Dev_Pmare/Keyboard.obj
+         .\Dev_Pmare/LanguageFilter.obj
+         .\Dev_Pmare/LevelRoomNames.obj
+         .\Dev_Pmare/LoginOptions.obj
+         .\Dev_Pmare/Main.obj
+         .\Dev_Pmare/Mouse.obj
+         .\Dev_Pmare/Move.obj
+         .\Dev_Pmare/Options.obj
+         .\Dev_Pmare/Realm.obj
+         .\Dev_Pmare/RenderActor.obj
+         .\Dev_Pmare/RenderView.obj
+         .\Dev_Pmare/RLE.obj
+         .\Dev_Pmare/Secure.obj
+         .\Dev_Pmare/Utils.obj
+         ..\libs\DDRAW.LIB
+         ..\libs\dsound.lib
+         ..\libs\dxguid.lib
+         ..\libs\TH32.Lib
+         C:\Lyra\Projects\messagemaker\Release\MessageMaker.lib
+         Underlight.vcxproj -> C:\lyra\dev\pmare-dev.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"\lyra\dev\pmare-dev.exe;#1" /manifest ".\Dev_Pmare\pmare-dev.exe.intermediate.manifest"
+       FinalizeBuildStatus:
+         Deleting file ".\Dev_Pmare\Underlight.unsuccessfulbuild".
+         Touching ".\Dev_Pmare\Underlight.lastbuildstate".
+     1>Done Building Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.17
+Time Elapsed 00:00:03.44

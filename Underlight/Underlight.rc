@@ -3560,7 +3560,7 @@ BEGIN
     IDS_LISTERR4            "Actor List Invariant Broken: num_elements = 1 but list_head!=list_tail! list_head = %d list_tail = %d %d"
     IDS_MALE_DREAMER        "A male dreamer"
     IDS_FEMALE_DREAMER      "A female dreamer"
-    IDS_UNKNOWN_DREAMER     "An unknown dreamer"
+    IDS_UNKNOWN_DREAMER     "Something odd"
     IDS_DEBUGOUT_ERR        "Could not open .out file!"
     IDS_STARTLOG            "Start Log\n"
     IDS_ENDLOG              " === Bye! Lucid Dreams ===\n"

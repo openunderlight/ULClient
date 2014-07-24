@@ -1,9 +1,85 @@
-﻿Build started 7/23/2014 11:19:35 AM.
-     1>Project "C:\Lyra\Projects\AgentSvr\AgentSvr.vcxproj" on node 2 (clean target(s)).
-     1>_PrepareForClean:
-         Deleting file ".\Release\AgentSvr.lastbuildstate".
-     1>Done Building Project "C:\Lyra\Projects\AgentSvr\AgentSvr.vcxproj" (clean target(s)).
+﻿Build started 7/23/2014 8:34:00 PM.
+     1>Project "C:\Lyra\Projects\AgentSvr\AgentSvr.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating ".\Release\AgentSvr.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+       ResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _VC80_UPGRADE=0x0600 /l"0x0409" /I\Projects\Underlight /nologo /fo".\Release\Underlight.res" ..\Underlight\Underlight.rc 
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\lyra\dev\AgentSvr.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\libs /LIBPATH:..\OggVorbis\lib libcmt.lib ../MessageMaker/Release/MessageMaker.lib oldnames.lib winmm.lib ws2_32.lib odbc32.lib odbccp32.lib msimg32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB /MANIFEST /ManifestFile:".\Release\AgentSvr.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:".\Release/AgentSvr.pdb" /MAP:".\Release/AgentSvr.map" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"C:\lyra\dev\AgentSvr.lib" /MACHINE:X86 .\Release\Underlight.res
+         .\Release/Agents.obj
+         .\Release/BuildView.obj
+         .\Release/cActor.obj
+         .\Release/cActorList.obj
+         .\Release/cAgentBox.obj
+         .\Release/cAgentDaemon.obj
+         .\Release/cAgentServer.obj
+         .\Release/cAI.obj
+         .\Release/cArts.obj
+         .\Release/cBanner.obj
+         .\Release/cBox.obj
+         .\Release/cChat.obj
+         .\Release/cControlPanel.obj
+         .\Release/cDDraw.obj
+         .\Release/cDetailGoal.obj
+         .\Release/cDetailQuest.obj
+         .\Release/cDSound.obj
+         .\Release/cEffects.obj
+         .\Release/cGameServer.obj
+         .\Release/cGif.obj
+         .\Release/cGoalBook.obj
+         .\Release/cGoalPosting.obj
+         .\Release/cGoalQuestProcs.obj
+         .\Release/cItem.obj
+         .\Release/cKeymap.obj
+         .\Release/cLevel.obj
+         .\Release/cList.obj
+         .\Release/cMissile.obj
+         .\Release/cNameTag.obj
+         .\Release/cNeighbor.obj
+         .\Release/cOrnament.obj
+         .\Release/cOutput.obj
+         .\Release/cPalettes.obj
+         .\Release/cParty.obj
+         .\Release/cPlayer.obj
+         .\Release/cPostGoal.obj
+         .\Release/cPostQuest.obj
+         .\Release/cQuestBuilder.obj
+         .\Release/cReadGoal.obj
+         .\Release/cReadQuest.obj
+         .\Release/cReadReport.obj
+         .\Release/CreateFrame.obj
+         .\Release/cReportGoal.obj
+         .\Release/cReviewGoals.obj
+         .\Release/cSending.obj
+         .\Release/Debug.obj
+         .\Release/Dialogs.obj
+         .\Release/Interface.obj
+         .\Release/Keyboard.obj
+         .\Release/LanguageFilter.obj
+         .\Release/LevelRoomNames.obj
+         .\Release/LoginOptions.obj
+         .\Release/MAIN.obj
+         .\Release/Mouse.obj
+         .\Release/Move.obj
+         .\Release/Options.obj
+         .\Release/Realm.obj
+         .\Release/RenderActor.obj
+         .\Release/RenderView.obj
+         .\Release/RLE.obj
+         .\Release/Utils.obj
+         C:\Lyra\Projects\messagemaker\Release\MessageMaker.lib
+         AgentSvr.vcxproj -> C:\lyra\dev\AgentSvr.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"\lyra\dev\AgentSvr.exe;#1" /manifest .\Release\AgentSvr.exe.intermediate.manifest
+       BscMake:
+         All outputs are up-to-date.
+       FinalizeBuildStatus:
+         Deleting file ".\Release\AgentSvr.unsuccessfulbuild".
+         Touching ".\Release\AgentSvr.lastbuildstate".
+     1>Done Building Project "C:\Lyra\Projects\AgentSvr\AgentSvr.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.26
+Time Elapsed 00:00:01.54

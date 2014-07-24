@@ -1,9 +1,89 @@
-﻿Build started 7/23/2014 11:19:32 AM.
-     1>Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" on node 2 (clean target(s)).
-     1>_PrepareForClean:
-         Deleting file ".\Dev_Player\Underlight.lastbuildstate".
-     1>Done Building Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" (clean target(s)).
+﻿Build started 7/23/2014 8:34:19 PM.
+     1>Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating ".\Dev_Player\Underlight.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+       ResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D NDEBUG /D _VC80_UPGRADE=0x0600 /l"0x0409" /nologo /fo".\Dev_Player\Underlight.res" Underlight.rc 
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\lyra\dev\Underlight-dev-player.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\OggVorbis\lib /LIBPATH:..\libs odbc32.lib odbccp32.lib ../MessageMaker/Release/MessageMaker.lib oldnames.lib th32.lib wininet.lib lz32.lib winmm.lib wsock32.lib ddraw.lib dsound.lib dxguid.lib comctl32.lib libcmtd.lib msimg32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB /NODEFAULTLIB:LIBCD /MANIFEST /ManifestFile:".\Dev_Player\Underlight-dev-player.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:".\Dev_Player/Underlight-dev-player.pdb" /MAP:".\Dev_Player/Underlight-dev-player.map" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"C:\lyra\dev\Underlight-dev-player.lib" /MACHINE:X86 .\Dev_Player\Underlight.res
+         .\Dev_Player/BuildView.obj
+         .\Dev_Player/cActor.obj
+         .\Dev_Player/cActorList.obj
+         .\Dev_Player/cAgentBox.obj
+         .\Dev_Player/cAgentServer.obj
+         .\Dev_Player/cAI.obj
+         .\Dev_Player/cArts.obj
+         .\Dev_Player/cBanner.obj
+         .\Dev_Player/cBox.obj
+         .\Dev_Player/cChat.obj
+         .\Dev_Player/cControlPanel.obj
+         .\Dev_Player/cDDraw.obj
+         .\Dev_Player/cDetailGoal.obj
+         .\Dev_Player/cDetailQuest.obj
+         .\Dev_Player/cDSound.obj
+         .\Dev_Player/cEffects.obj
+         .\Dev_Player/cGameServer.obj
+         .\Dev_Player/cGif.obj
+         .\Dev_Player/cGoalBook.obj
+         .\Dev_Player/cGoalPosting.obj
+         .\Dev_Player/cGoalQuestProcs.obj
+         .\Dev_Player/cItem.obj
+         .\Dev_Player/cKeymap.obj
+         .\Dev_Player/cLevel.obj
+         .\Dev_Player/cList.obj
+         .\Dev_Player/cMissile.obj
+         .\Dev_Player/cNameTag.obj
+         .\Dev_Player/cNeighbor.obj
+         .\Dev_Player/cOrnament.obj
+         .\Dev_Player/cOutput.obj
+         .\Dev_Player/cPalettes.obj
+         .\Dev_Player/cParty.obj
+         .\Dev_Player/cPlayer.obj
+         .\Dev_Player/cPostGoal.obj
+         .\Dev_Player/cPostQuest.obj
+         .\Dev_Player/cQuestBuilder.obj
+         .\Dev_Player/cReadGoal.obj
+         .\Dev_Player/cReadQuest.obj
+         .\Dev_Player/cReadReport.obj
+         .\Dev_Player/CreateFrame.obj
+         .\Dev_Player/cReportGoal.obj
+         .\Dev_Player/cReviewGoals.obj
+         .\Dev_Player/cSending.obj
+         .\Dev_Player/Debug.obj
+         .\Dev_Player/Dialogs.obj
+         .\Dev_Player/Interface.obj
+         .\Dev_Player/Keyboard.obj
+         .\Dev_Player/LanguageFilter.obj
+         .\Dev_Player/LevelRoomNames.obj
+         .\Dev_Player/LoginOptions.obj
+         .\Dev_Player/Main.obj
+         .\Dev_Player/Mouse.obj
+         .\Dev_Player/Move.obj
+         .\Dev_Player/Options.obj
+         .\Dev_Player/Realm.obj
+         .\Dev_Player/RenderActor.obj
+         .\Dev_Player/RenderView.obj
+         .\Dev_Player/RLE.obj
+         .\Dev_Player/Secure.obj
+         .\Dev_Player/Utils.obj
+         ..\libs\DDRAW.LIB
+         ..\libs\dsound.lib
+         ..\libs\dxguid.lib
+         ..\libs\TH32.Lib
+         C:\Lyra\Projects\messagemaker\Release\MessageMaker.lib
+         Underlight.vcxproj -> C:\lyra\dev\Underlight-dev-player.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"\lyra\dev\Underlight-dev-player.exe;#1" /manifest ".\Dev_Player\Underlight-dev-player.exe.intermediate.manifest"
+       BscMake:
+         All outputs are up-to-date.
+       FinalizeBuildStatus:
+         Deleting file ".\Dev_Player\Underlight.unsuccessfulbuild".
+         Touching ".\Dev_Player\Underlight.lastbuildstate".
+     1>Done Building Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.10
+Time Elapsed 00:00:04.39
