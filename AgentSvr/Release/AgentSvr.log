@@ -1,14 +1,81 @@
-﻿Build started 7/24/2014 12:01:21 AM.
+﻿Build started 7/24/2014 4:32:28 PM.
      1>Project "C:\Lyra\Projects\AgentSvr\AgentSvr.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Touching ".\Release\AgentSvr.unsuccessfulbuild".
        ClCompile:
-         All outputs are up-to-date.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /I..\AgentSvc /Zi /nologo /W3 /WX- /O1 /Ob1 /Oy- /D USE_INLINE /D AGENT /D GAMEMASTER /D WIN32 /D _WINDOWS /D GAME_LYR /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release/" /Fd".\Release/vc100.pdb" /FR".\Release\\" /Gr /TP /analyze- /errorReport:prompt ..\Underlight\cAI.cpp
+         cAI.cpp
+     1>..\Underlight\cAI.cpp(1127): warning C4101: 'timebuf' : unreferenced local variable
+     1>c:\lyra\projects\underlight\cai.cpp(1238): warning C4700: uninitialized local variable 'pos' used
        ResourceCompile:
          All outputs are up-to-date.
        Link:
-         All outputs are up-to-date.
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\lyra\dev\AgentSvr.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\libs /LIBPATH:..\OggVorbis\lib libcmt.lib ../MessageMaker/Release/MessageMaker.lib oldnames.lib winmm.lib ws2_32.lib odbc32.lib odbccp32.lib msimg32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB /MANIFEST /ManifestFile:".\Release\AgentSvr.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:".\Release/AgentSvr.pdb" /MAP:".\Release/AgentSvr.map" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"C:\lyra\dev\AgentSvr.lib" /MACHINE:X86 .\Release\Underlight.res
+         .\Release/Agents.obj
+         .\Release/BuildView.obj
+         .\Release/cActor.obj
+         .\Release/cActorList.obj
+         .\Release/cAgentBox.obj
+         .\Release/cAgentDaemon.obj
+         .\Release/cAgentServer.obj
+         .\Release/cAI.obj
+         .\Release/cArts.obj
+         .\Release/cBanner.obj
+         .\Release/cBox.obj
+         .\Release/cChat.obj
+         .\Release/cControlPanel.obj
+         .\Release/cDDraw.obj
+         .\Release/cDetailGoal.obj
+         .\Release/cDetailQuest.obj
+         .\Release/cDSound.obj
+         .\Release/cEffects.obj
+         .\Release/cGameServer.obj
+         .\Release/cGif.obj
+         .\Release/cGoalBook.obj
+         .\Release/cGoalPosting.obj
+         .\Release/cGoalQuestProcs.obj
+         .\Release/cItem.obj
+         .\Release/cKeymap.obj
+         .\Release/cLevel.obj
+         .\Release/cList.obj
+         .\Release/cMissile.obj
+         .\Release/cNameTag.obj
+         .\Release/cNeighbor.obj
+         .\Release/cOrnament.obj
+         .\Release/cOutput.obj
+         .\Release/cPalettes.obj
+         .\Release/cParty.obj
+         .\Release/cPlayer.obj
+         .\Release/cPostGoal.obj
+         .\Release/cPostQuest.obj
+         .\Release/cQuestBuilder.obj
+         .\Release/cReadGoal.obj
+         .\Release/cReadQuest.obj
+         .\Release/cReadReport.obj
+         .\Release/CreateFrame.obj
+         .\Release/cReportGoal.obj
+         .\Release/cReviewGoals.obj
+         .\Release/cSending.obj
+         .\Release/Debug.obj
+         .\Release/Dialogs.obj
+         .\Release/Interface.obj
+         .\Release/Keyboard.obj
+         .\Release/LanguageFilter.obj
+         .\Release/LevelRoomNames.obj
+         .\Release/LoginOptions.obj
+         .\Release/MAIN.obj
+         .\Release/Mouse.obj
+         .\Release/Move.obj
+         .\Release/Options.obj
+         .\Release/Realm.obj
+         .\Release/RenderActor.obj
+         .\Release/RenderView.obj
+         .\Release/RLE.obj
+         .\Release/Utils.obj
+         C:\Lyra\Projects\messagemaker\Release\MessageMaker.lib
          AgentSvr.vcxproj -> C:\lyra\dev\AgentSvr.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"\lyra\dev\AgentSvr.exe;#1" /manifest .\Release\AgentSvr.exe.intermediate.manifest
        BscMake:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\Release/AgentSvr.bsc" .\Release\Agents.sbr .\Release\BuildView.sbr .\Release\cActor.sbr .\Release\cActorList.sbr .\Release\cAgentBox.sbr .\Release\cAgentDaemon.sbr .\Release\cAgentServer.sbr .\Release\cAI.sbr .\Release\cArts.sbr .\Release\cBanner.sbr .\Release\cBox.sbr .\Release\cChat.sbr .\Release\cControlPanel.sbr .\Release\cDDraw.sbr .\Release\cDetailGoal.sbr .\Release\cDetailQuest.sbr .\Release\cDSound.sbr .\Release\cEffects.sbr .\Release\cGameServer.sbr .\Release\cGif.sbr .\Release\cGoalBook.sbr .\Release\cGoalPosting.sbr .\Release\cGoalQuestProcs.sbr .\Release\cItem.sbr .\Release\cKeymap.sbr .\Release\cLevel.sbr .\Release\cList.sbr .\Release\cMissile.sbr .\Release\cNameTag.sbr .\Release\cNeighbor.sbr .\Release\cOrnament.sbr .\Release\cOutput.sbr .\Release\cPalettes.sbr .\Release\cParty.sbr .\Release\cPlayer.sbr .\Release\cPostGoal.sbr .\Release\cPostQuest.sbr .\Release\cQuestBuilder.sbr .\Release\cReadGoal.sbr .\Release\cReadQuest.sbr .\Release\cReadReport.sbr .\Release\CreateFrame.sbr .\Release\cReportGoal.sbr .\Release\cReviewGoals.sbr .\Release\cSending.sbr .\Release\Debug.sbr .\Release\Dialogs.sbr .\Release\Interface.sbr .\Release\Keyboard.sbr .\Release\LanguageFilter.sbr .\Release\LevelRoomNames.sbr .\Release\LoginOptions.sbr .\Release\MAIN.sbr .\Release\Mouse.sbr .\Release\Move.sbr .\Release\Options.sbr .\Release\Realm.sbr .\Release\RenderActor.sbr .\Release\RenderView.sbr .\Release\RLE.sbr .\Release\Utils.sbr
        FinalizeBuildStatus:
@@ -18,4 +85,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:34.00
+Time Elapsed 00:00:21.59

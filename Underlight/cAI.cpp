@@ -47,7 +47,7 @@
 // Constants
 
 // const unsigned int NEIGHBOR_CHECK_INTERVAL = 5000; // Original Lyra value - DiscoWay
-const unsigned int NEIGHBOR_CHECK_INTERVAL = 5000; // Testing - Less attack delay on avatar portal entry? Not so much - DiscoWay
+const unsigned int NEIGHBOR_CHECK_INTERVAL = 500; // Testing - Less attack delay on avatar portal entry? - DiscoWay
 const unsigned int CLOSE_ANGLE = Angle_45;
 const unsigned int STAT_WRITE_INTERVAL = (3600000 * 8); // once every 8 hours
 const float MELEE_RANGE = 140.0f; // copied from cmissile
@@ -422,6 +422,7 @@ void cAI::MakeMove(void)
 	// _tprintf(_T("nb: %d %d %d\n"), neighbors[target]->CurrBitmap(0), LyraBitmap::ENTRYEXIT_EFFECT, (LyraBitmap::ENTRYEXIT_EFFECT + effects->EffectFrames(LyraBitmap::ENTRYEXIT_EFFECT)));
 	
 	// Uncommented as test - DiscoWay
+	
 	if ((target != -1) && this->TargetEntering(target)) {
 		target = -1;
 		last_target_x = -1;
