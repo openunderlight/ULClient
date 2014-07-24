@@ -1,112 +1,9 @@
-﻿Build started 7/23/2014 10:11:04 PM.
+﻿Build started 7/23/2014 10:28:02 PM.
      1>Project "C:\Lyra\Projects\AgentSvr\AgentSvr.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Release\AgentSvr.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /I..\AgentSvc /Zi /nologo /W3 /WX- /O1 /Ob1 /Oy- /D USE_INLINE /D AGENT /D GAMEMASTER /D WIN32 /D _WINDOWS /D GAME_LYR /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release/" /Fd".\Release/vc100.pdb" /FR".\Release\\" /Gr /TP /analyze- /errorReport:prompt ..\Underlight\BuildView.cpp ..\Underlight\CreateFrame.cpp ..\Underlight\Debug.cpp ..\Underlight\Dialogs.cpp ..\Underlight\Interface.cpp ..\Underlight\Keyboard.cpp ..\Underlight\LoginOptions.cpp ..\Underlight\Mouse.cpp ..\Underlight\Move.cpp ..\Underlight\Options.cpp ..\Underlight\Realm.cpp ..\Underlight\RenderActor.cpp ..\Underlight\RenderView.cpp ..\Underlight\Utils.cpp ..\Underlight\cAI.cpp ..\Underlight\cActor.cpp ..\Underlight\cActorList.cpp ..\Underlight\cAgentBox.cpp ..\Underlight\cAgentDaemon.cpp ..\Underlight\cAgentServer.cpp ..\Underlight\cArts.cpp ..\Underlight\cChat.cpp ..\Underlight\cDetailGoal.cpp ..\Underlight\cDetailQuest.cpp ..\Underlight\cEffects.cpp ..\Underlight\cGameServer.cpp ..\Underlight\cGoalBook.cpp ..\Underlight\cGoalPosting.cpp ..\Underlight\cGoalQuestProcs.cpp ..\Underlight\cItem.cpp ..\Underlight\cKeymap.cpp ..\Underlight\cLevel.cpp ..\Underlight\cList.cpp ..\Underlight\cMissile.cpp ..\Underlight\cNameTag.cpp ..\Underlight\cNeighbor.cpp ..\Underlight\cOrnament.cpp ..\Underlight\cOutput.cpp ..\Underlight\cPalettes.cpp ..\Underlight\cParty.cpp ..\Underlight\cPlayer.cpp ..\Underlight\cPostGoal.cpp ..\Underlight\cPostQuest.cpp ..\Underlight\cQuestBuilder.cpp ..\Underlight\cReadGoal.cpp ..\Underlight\cReadQuest.cpp ..\Underlight\cReadReport.cpp ..\Underlight\cReportGoal.cpp ..\Underlight\cReviewGoals.cpp ..\Underlight\cSending.cpp ..\underlight\LanguageFilter.cpp Agents.cpp MAIN.CPP cControlPanel.cpp cDDraw.cpp cDSound.cpp
-         BuildView.cpp
-         CreateFrame.cpp
-     1>..\Underlight\CreateFrame.cpp(246): warning C4018: '>' : signed/unsigned mismatch
-     1>..\Underlight\CreateFrame.cpp(285): warning C4018: '>' : signed/unsigned mismatch
-         Debug.cpp
-         Dialogs.cpp
-         Interface.cpp
-         Keyboard.cpp
-         LoginOptions.cpp
-         Mouse.cpp
-         Move.cpp
-     1>..\Underlight\Move.cpp(795): warning C4244: 'argument' : conversion from 'long' to 'float', possible loss of data
-     1>..\Underlight\Move.cpp(796): warning C4244: 'argument' : conversion from 'long' to 'float', possible loss of data
-     1>..\Underlight\Move.cpp(798): warning C4244: 'argument' : conversion from 'long' to 'float', possible loss of data
-     1>..\Underlight\Move.cpp(799): warning C4244: 'argument' : conversion from 'long' to 'float', possible loss of data
-     1>..\Underlight\Move.cpp(1220): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>..\Underlight\Move.cpp(1226): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>..\Underlight\Move.cpp(1227): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-         Options.cpp
-         Realm.cpp
-     1>..\Underlight\Realm.cpp(800): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>..\Underlight\Realm.cpp(802): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
-         RenderActor.cpp
-     1>c:\lyra\projects\underlight\cPalettes.h(8): warning C4005: 'STRICT' : macro redefinition
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\windef.h(16) : see previous definition of 'STRICT'
-         RenderView.cpp
-     1>c:\lyra\projects\underlight\cPalettes.h(8): warning C4005: 'STRICT' : macro redefinition
-                 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\windef.h(16) : see previous definition of 'STRICT'
-         Utils.cpp
-         cAI.cpp
-     1>..\Underlight\cAI.cpp(1126): warning C4101: 'timebuf' : unreferenced local variable
-         cActor.cpp
-         cActorList.cpp
-         cAgentBox.cpp
-         cAgentDaemon.cpp
-     1>..\Underlight\cAgentDaemon.cpp(438): warning C4244: '=' : conversion from 'short' to 'unsigned char', possible loss of data
-         cAgentServer.cpp
-         Generating Code...
-     1>c:\lyra\projects\underlight\cai.cpp(1237): warning C4700: uninitialized local variable 'pos' used
-     1>c:\lyra\projects\underlight\renderview.cpp(1412): warning C4731: 'blit_texture_row' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1429): warning C4731: 'blit_texture_row' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1434): warning C4731: 'blit_texture_row' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1442): warning C4731: 'blit_texture_row' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1459): warning C4731: 'double_blit_texture_row' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1483): warning C4731: 'double_blit_texture_row' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1500): warning C4731: 'double_blit_texture_row' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1853): warning C4731: 'blit_flat_double' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1878): warning C4731: 'blit_flat_double' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1895): warning C4731: 'blit_flat_double' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1928): warning C4731: 'blit_flat_single' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1950): warning C4731: 'blit_flat_single' : frame pointer register 'ebp' modified by inline assembly code
-     1>c:\lyra\projects\underlight\renderview.cpp(1959): warning C4731: 'blit_flat_single' : frame pointer register 'ebp' modified by inline assembly code
-         Compiling...
-         cArts.cpp
-         MKET - Game designer choice goes here when ready
-     1>..\Underlight\cArts.cpp(7927): warning C4018: '>=' : signed/unsigned mismatch
-         cChat.cpp
-         cDetailGoal.cpp
-         cDetailQuest.cpp
-         cEffects.cpp
-         cGameServer.cpp
-     1>..\Underlight\cGameServer.cpp(2965): warning C4244: '=' : conversion from '__int64' to 'unsigned int', possible loss of data
-         cGoalBook.cpp
-         cGoalPosting.cpp
-         cGoalQuestProcs.cpp
-         cItem.cpp
-     1>..\Underlight\cItem.cpp(1375): warning C4018: '>' : signed/unsigned mismatch
-     1>..\Underlight\cItem.cpp(1409): warning C4018: '>' : signed/unsigned mismatch
-         cKeymap.cpp
-         cLevel.cpp
-         Room Decryption Code
-         cList.cpp
-         cMissile.cpp
-         cNameTag.cpp
-         cNeighbor.cpp
-     1>..\Underlight\cNeighbor.cpp(102): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>..\Underlight\cNeighbor.cpp(102): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>..\Underlight\cNeighbor.cpp(107): warning C4244: '=' : conversion from 'short' to 'unsigned char', possible loss of data
-         cOrnament.cpp
-         cOutput.cpp
-         cPalettes.cpp
-         cParty.cpp
-         Generating Code...
-         Compiling...
-         cPlayer.cpp
-     1>..\Underlight\cPlayer.cpp(1953): warning C4244: 'initializing' : conversion from 'double' to 'unsigned int', possible loss of data
-         cPostGoal.cpp
-         cPostQuest.cpp
-         cQuestBuilder.cpp
-         cReadGoal.cpp
-         cReadQuest.cpp
-         cReadReport.cpp
-         cReportGoal.cpp
-         cReviewGoals.cpp
-         cSending.cpp
-         LanguageFilter.cpp
-         Agents.cpp
-         MAIN.CPP
-         cControlPanel.cpp
-         cDDraw.cpp
-         cDSound.cpp
-         Generating Code...
-     1>c:\lyra\projects\agentsvr\main.cpp(81): warning C4700: uninitialized local variable 'last_checkup' used
+         All outputs are up-to-date.
        ResourceCompile:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _VC80_UPGRADE=0x0600 /l"0x0409" /I\Projects\Underlight /nologo /fo".\Release\Underlight.res" ..\Underlight\Underlight.rc 
        Link:
@@ -177,7 +74,7 @@
        Manifest:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"\lyra\dev\AgentSvr.exe;#1" /manifest .\Release\AgentSvr.exe.intermediate.manifest
        BscMake:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\Release/AgentSvr.bsc" .\Release\Agents.sbr .\Release\BuildView.sbr .\Release\cActor.sbr .\Release\cActorList.sbr .\Release\cAgentBox.sbr .\Release\cAgentDaemon.sbr .\Release\cAgentServer.sbr .\Release\cAI.sbr .\Release\cArts.sbr .\Release\cBanner.sbr .\Release\cBox.sbr .\Release\cChat.sbr .\Release\cControlPanel.sbr .\Release\cDDraw.sbr .\Release\cDetailGoal.sbr .\Release\cDetailQuest.sbr .\Release\cDSound.sbr .\Release\cEffects.sbr .\Release\cGameServer.sbr .\Release\cGif.sbr .\Release\cGoalBook.sbr .\Release\cGoalPosting.sbr .\Release\cGoalQuestProcs.sbr .\Release\cItem.sbr .\Release\cKeymap.sbr .\Release\cLevel.sbr .\Release\cList.sbr .\Release\cMissile.sbr .\Release\cNameTag.sbr .\Release\cNeighbor.sbr .\Release\cOrnament.sbr .\Release\cOutput.sbr .\Release\cPalettes.sbr .\Release\cParty.sbr .\Release\cPlayer.sbr .\Release\cPostGoal.sbr .\Release\cPostQuest.sbr .\Release\cQuestBuilder.sbr .\Release\cReadGoal.sbr .\Release\cReadQuest.sbr .\Release\cReadReport.sbr .\Release\CreateFrame.sbr .\Release\cReportGoal.sbr .\Release\cReviewGoals.sbr .\Release\cSending.sbr .\Release\Debug.sbr .\Release\Dialogs.sbr .\Release\Interface.sbr .\Release\Keyboard.sbr .\Release\LanguageFilter.sbr .\Release\LevelRoomNames.sbr .\Release\LoginOptions.sbr .\Release\MAIN.sbr .\Release\Mouse.sbr .\Release\Move.sbr .\Release\Options.sbr .\Release\Realm.sbr .\Release\RenderActor.sbr .\Release\RenderView.sbr .\Release\RLE.sbr .\Release\Utils.sbr
+         All outputs are up-to-date.
        FinalizeBuildStatus:
          Deleting file ".\Release\AgentSvr.unsuccessfulbuild".
          Touching ".\Release\AgentSvr.lastbuildstate".
@@ -185,4 +82,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:02:24.40
+Time Elapsed 00:00:01.34
