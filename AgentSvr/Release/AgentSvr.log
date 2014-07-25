@@ -1,12 +1,14 @@
-﻿Build started 7/24/2014 4:32:28 PM.
+﻿Build started 7/24/2014 9:12:33 PM.
      1>Project "C:\Lyra\Projects\AgentSvr\AgentSvr.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Touching ".\Release\AgentSvr.unsuccessfulbuild".
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /I..\AgentSvc /Zi /nologo /W3 /WX- /O1 /Ob1 /Oy- /D USE_INLINE /D AGENT /D GAMEMASTER /D WIN32 /D _WINDOWS /D GAME_LYR /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release/" /Fd".\Release/vc100.pdb" /FR".\Release\\" /Gr /TP /analyze- /errorReport:prompt ..\Underlight\cAI.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\MessageMaker /I..\AgentMessages /I..\AgentSvr /I..\Underlight /I..\DXSDK\SDK\inc /I..\RWSDK\inc /I..\AgentSvc /Zi /nologo /W3 /WX- /O1 /Ob1 /Oy- /D USE_INLINE /D AGENT /D GAMEMASTER /D WIN32 /D _WINDOWS /D GAME_LYR /D _VC80_UPGRADE=0x0600 /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Release/" /Fd".\Release/vc100.pdb" /FR".\Release\\" /Gr /TP /analyze- /errorReport:prompt Agents.cpp ..\Underlight\cAI.cpp
+         Agents.cpp
          cAI.cpp
-     1>..\Underlight\cAI.cpp(1127): warning C4101: 'timebuf' : unreferenced local variable
-     1>c:\lyra\projects\underlight\cai.cpp(1238): warning C4700: uninitialized local variable 'pos' used
+     1>..\Underlight\cAI.cpp(1128): warning C4101: 'timebuf' : unreferenced local variable
+         Generating Code...
+     1>c:\lyra\projects\underlight\cai.cpp(1239): warning C4700: uninitialized local variable 'pos' used
        ResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -85,4 +87,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:21.59
+Time Elapsed 00:00:18.65

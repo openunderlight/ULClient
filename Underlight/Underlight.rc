@@ -3772,11 +3772,11 @@ STRINGTABLE
 BEGIN
     IDS_KNOW10              "The musty scent of old books lends this room the feel of an ancient library. The floor is clean and spacious, seeming almost ready for apparatus of experimentation to be placed. The myriad designs on the walls evoke the possibilities of understanding the unknown."
     IDS_HOUSE_MEMBERS       "House Members"
-    IDS_NO_MP_LIBRARY       "You should probably never see this string. If you do contact support@koiware.org"
-    IDS_NO_MP_PROC1         "You should probably never see this string. If you do contact support@koiware.org"
-    IDS_NO_MP_CONN          "You should probably never see this string. If you do contact support@koiware.org"
-    IDS_NO_MP_LOGIN         "You should probably never see this string. If you do contact support@koiware.org"
-    IDS_NO_MP_GAME          "You should probably never see this string. If you do contact support@koiware.org"
+    IDS_NO_MP_LIBRARY       "You should probably never see this string. If you do contact support@koiware.com"
+    IDS_NO_MP_PROC1         "You should probably never see this string. If you do contact support@koiware.com"
+    IDS_NO_MP_CONN          "You should probably never see this string. If you do contact support@koiware.com"
+    IDS_NO_MP_LOGIN         "You should probably never see this string. If you do contact support@koiware.com"
+    IDS_NO_MP_GAME          "You should probably never see this string. If you do contact support@koiware.com"
     IDS_FREESOUL_BLADE      "Freesoul Blade"
     IDS_BLADE_CREATED       "You have created a Freesoul Knight Blade!"
     IDS_FREESOUL_KNIGHT_DESCRIP 

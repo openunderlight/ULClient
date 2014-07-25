@@ -1,4 +1,4 @@
-﻿Build started 7/24/2014 4:31:56 PM.
+﻿Build started 7/24/2014 9:12:16 PM.
      1>Project "C:\Lyra\Projects\Underlight\Underlight.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Master\Underlight.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -87,4 +87,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:31.05
+Time Elapsed 00:00:16.78
