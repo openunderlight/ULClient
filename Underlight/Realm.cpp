@@ -612,8 +612,9 @@ bool __cdecl Init_Game(void)
 	effects = new cEffects(); // cDS must be created first
 	MemoryCheck(_T("Created effects controller"));
 
-    cDS->PlaySound(LyraSound::INTRO);
-	cDD->ShowSplashScreen();
+	// Removed Lyra Splash Screen for Beta.
+	// cDS->PlaySound(LyraSound::INTRO);
+	// cDD->ShowSplashScreen();
 
 	// Create Actor List - must be done before player is created
 	actors = new cActorList();

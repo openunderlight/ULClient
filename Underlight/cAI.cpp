@@ -1088,7 +1088,7 @@ int cAI::SetXP(int value, int how, bool initializing)
 			break;
 		case Avatars::BOGROM:
 			orbit = 10;
-			break;
+ 			break;
 		case Avatars::AGOKNIGHT:
 			orbit = 20;
 			break;
