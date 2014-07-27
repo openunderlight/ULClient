@@ -612,7 +612,7 @@ bool __cdecl Init_Game(void)
 	effects = new cEffects(); // cDS must be created first
 	MemoryCheck(_T("Created effects controller"));
 
-	// Removed Lyra Splash Screen for Beta.
+	// Removed Lyra Splash Screen for Beta - DiscoWay
 	// cDS->PlaySound(LyraSound::INTRO);
 	// cDD->ShowSplashScreen();
 
