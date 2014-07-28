@@ -103,7 +103,7 @@ cAI::cAI(float xpos, float ypos, int anglepos, int delay, int mare_type /* = 5 *
 
 	reconnect = LyraTime() + delay;
 
-//	_tprintf(_T("Agent spawn time = %d, delay = %d\n"), spawn_time, delay);
+	// _tprintf(_T("Agent spawn time = %d, delay = %d\n"), spawn_time, delay);
 
 	login_time = LyraTime();
 
@@ -255,6 +255,7 @@ void cAI::SetAgentStats(void)
 		case Avatars::HORRON:
 			stats[Stats::DREAMSOUL].current = stats[Stats::DREAMSOUL].max = 300;
 			min_distance = 250;	
+
 			melee_only = false;
 			speed = RUN_SPEED;
 			if (rand()%5 == 0)
@@ -1058,7 +1059,7 @@ void cAI::Dissolve(lyra_id_t origin_id, int talisman_strength)
 	this->NewDeath();
 //	attack_other_mares = false; //(rand()%10); // false;
 	agent_info[AgentIndex()].gs_ptr->LevelLogout(RMsg_Logout::DEATH);
-	this->SetReconnect(LyraTime() + 60000); // restart in 1 minute
+	this->SetReconnect(LyraTime() + 180000); // restart in 3 minute // Original Lyra Value 60000 milliseconds
 
 	//TCHAR timebuf[128];
 
