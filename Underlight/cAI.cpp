@@ -254,8 +254,7 @@ void cAI::SetAgentStats(void)
 			break;
 		case Avatars::HORRON:
 			stats[Stats::DREAMSOUL].current = stats[Stats::DREAMSOUL].max = 300;
-			min_distance = 250;	
-
+			min_distance = 250;
 			melee_only = false;
 			speed = RUN_SPEED;
 			if (rand()%5 == 0)
