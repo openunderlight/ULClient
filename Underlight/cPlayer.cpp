@@ -970,7 +970,7 @@ void cPlayer::CheckStatus(void)
 			value = 1;
 #else  // dreamers regen slowly
 		if (flags & ACTOR_MEDITATING)
-			 value = 2;
+			 value = 2 + (player->Skill(Arts::MEDITATION) / 10);
 		else
 			 value = 1;
 #endif
