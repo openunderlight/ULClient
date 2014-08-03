@@ -92,7 +92,7 @@ const unsigned short DEFAULT_DEBUG_SERVER_PORT=7599;
 #ifdef UL_DEV
 const unsigned short DEFAULT_NUM_GAME_SERVERS = 1; 
 #else
-const unsigned short DEFAULT_NUM_GAME_SERVERS = 5;
+const unsigned short DEFAULT_NUM_GAME_SERVERS = 6; // 7500 7501 7502 7503 7504 7505 added extra was 5 - DiscoWay
 #endif
 
 //////////////////////////////////////////////////////////////////
