@@ -8021,10 +8021,10 @@ void cArts::GotInitiated(void *value)
 		player->SetGuildXPPool(initiate_gid, 0);
 
 		// AUTO TRAIN INITIATE ARTS - 6/14/14 AMR
-		// if (player->Skill(Arts::HOUSE_MEMBERS)<1)
-			// don't know where to go from here...so far I've tried:
+		if (player->Skill(Arts::HOUSE_MEMBERS)<1) {
 			//gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::TRAIN, Arts::HOUSE_MEMBERS, 1);
-			//this->ApplyTrain(Arts::HOUSE_MEMBERS, 1, initiator_id);
+			this->ApplyTrain(Arts::HOUSE_MEMBERS, 1, initiator_id);
+		}
 	}
 	else
 	{
@@ -8185,23 +8185,23 @@ _stprintf(message, disp_message, player->Name());
 		player->SetGuildRank(guild_id, Guild::KNIGHT);
 
 		// AUTO-TRAIN GUARDIAN ARTS - 6/14/14 AMR
-		// what am I doing wrong?
-		/*
-		if (player->Skill(Arts::INITIATE)<1)
-			this->ApplyTrain(Arts::INITIATE, 1, caster_id);
+		for (int art=0; art<NUM_ARTS; ++art) {
+			switch (art) {
+				case Arts::INITIATE:
+				case Arts::SUPPORT_DEMOTION:
+				case Arts::CUP_SUMMONS:
+				case Arts::ASCEND:
+				case Arts::POWER_TOKEN:
+				case Arts::EMPATHY:
+					if (player->Skill(art)<1){
+						this->ApplyTrain(art, 1, caster_id);
+					}
+					break;
+				default:
+					break;
+			}
+		}
 
-		if (player->Skill(Arts::SUPPORT_DEMOTION)<1)
-			this->ApplyTrain(Arts::SUPPORT_DEMOTION, 1, caster_id);
-
-		if (player->Skill(Arts::CUP_SUMMONS)<1)
-			this->ApplyTrain(Arts::CUP_SUMMONS, 1, caster_id);
-
-		if (player->Skill(Arts::POWER_TOKEN)<1)
-			this->ApplyTrain(Arts::POWER_TOKEN, 1, caster_id);
-
-		if (player->Skill(Arts::EMPATHY)<1)
-			this->ApplyTrain(Arts::EMPATHY, 1, caster_id);
-			*/
 
 		LoadString (hInstance, IDS_KNIGHT_SUCCEEDED, disp_message, sizeof(disp_message));
 	}
@@ -9294,28 +9294,33 @@ void cArts::ResponseAscend(int guild_id, int success)
 		// AUTO-UNTRAIN GUARDIAN ONLY ARTS - 6/14/14 AMR
 		if (!player->IsKnight(Guild::NO_GUILD))
 		{ // If no longer a Guardian in any house, remove guardian arts
-			player->SetSkill(Arts::CUP_SUMMONS, 0, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
-			player->SetSkill(Arts::ASCEND, 0, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
+			player->SetSkill(Arts::CUP_SUMMONS, 0, SET_ABSOLUTE, player->ID(), true);
+			player->SetSkill(Arts::ASCEND, 0, SET_ABSOLUTE, player->ID(), true);
 		}
 		
 		// AUTO-TRAIN RULER ARTS - 6/14/14 AMR
-		if (player->Skill(Arts::DEMOTE)<1)
-			player->SetSkill(Arts::DEMOTE, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
 
-		if (player->Skill(Arts::SUPPORT_ASCENSION)<1)
-			player->SetSkill(Arts::SUPPORT_ASCENSION, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
+		for (int art=0; art<NUM_ARTS; ++art) {
+			switch (art) {
+				case Arts::HOUSE_MEMBERS:
+				case Arts::INITIATE:
+				case Arts::SUPPORT_DEMOTION:
+				case Arts::SUPPORT_ASCENSION:
+				case Arts::DEMOTE:
+				case Arts::POWER_TOKEN:
+				case Arts::EXPEL:
+				case Arts::KNIGHT:
+				case Arts::CREATE_ID_TOKEN:
+				case Arts::SUMMON_PRIME:
+					if (player->Skill(art)<1) {
+						player->SetSkill(art, 1, SET_ABSOLUTE, player->ID(), true);
+					}
+					break;
+				default:
+					break;
+			}
+		}
 
-		if (player->Skill(Arts::EXPEL)<1)
-			player->SetSkill(Arts::EXPEL, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
-
-		if (player->Skill(Arts::KNIGHT)<1)
-			player->SetSkill(Arts::KNIGHT, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
-
-		if (player->Skill(Arts::CREATE_ID_TOKEN)<1)
-			player->SetSkill(Arts::CREATE_ID_TOKEN, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
-
-		if (player->Skill(Arts::SUMMON_PRIME)<1)
-			player->SetSkill(Arts::SUMMON_PRIME, 1, SET_ABSOLUTE, SERVER_UPDATE_ID, true);
 
 		LoadString (hInstance, IDS_ASCEND_SUCCEEDED, disp_message, sizeof(disp_message));
 	_stprintf(message, disp_message, GuildName(guild_id));

@@ -1618,7 +1618,7 @@ BEGIN
     IDS_GOT_KILL            "You have defeated %s!\n"
     IDS_KILLED_BUDDY        "You have defeated %s, a member of your party!\n"
     IDS_SOULEVOKE_SOULSPHERE_ONLY 
-                            "You can only use soulevoke as a soulsphere!\n"
+                            "You can only use Soul Evoke as a soulsphere!\n"
     IDS_DREAMWEAPON_ON      "You concentrate for a moment and create a %s!\n"
     IDS_RANDOM_SELF         "Chaos calls out to you %d\n"
 END
@@ -2098,7 +2098,7 @@ BEGIN
     IDS_AVATAR_DESCRIP      "Description of %s: %s\n"
     IDS_RECALL              "Your location has been marked for recall.\n"
     IDS_NO_SSPHERE          "No effects can be active upon soulspheres\n"
-    IDS_SE                  "You must have at least 10 dreamsoul left to use soulevoke\n"
+    IDS_SE                  "You must have at least 10 dreamsoul left to use Soul Evoke\n"
     IDS_RECHARGE_NOELEMENS  "Elemens can not be recharged\n"
     IDS_RECHARGE_DRAINED    "Your attempt to recharge the %s has backfired and drained the item!\n"
     IDS_VP_DRAW             "You have drained life from %s and healed yourself!\n"

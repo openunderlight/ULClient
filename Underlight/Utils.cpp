@@ -1414,7 +1414,7 @@ cTimedEffects::~cTimedEffects(void)
 
 bool LegalRoom(int roomnum)
 {
-	if ((roomnum > 0) && (roomnum < 33))
+	if ((roomnum > 0) && (roomnum <= Lyra::MAX_LEVELROOMS))
 		return TRUE;
 	else
 		return FALSE;
