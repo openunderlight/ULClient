@@ -8023,7 +8023,8 @@ void cArts::GotInitiated(void *value)
 		// AUTO TRAIN INITIATE ARTS - 6/14/14 AMR
 		if (player->Skill(Arts::HOUSE_MEMBERS)<1) {
 			//gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::TRAIN, Arts::HOUSE_MEMBERS, 1);
-			this->ApplyTrain(Arts::HOUSE_MEMBERS, 1, initiator_id);
+			//this->ApplyTrain(Arts::HOUSE_MEMBERS, 1, initiator_id);
+			player->SetSkill(Arts::HOUSE_MEMBERS, 1, SET_ABSOLUTE, initiator_id, true);
 		}
 	}
 	else
@@ -8187,6 +8188,7 @@ _stprintf(message, disp_message, player->Name());
 		// AUTO-TRAIN GUARDIAN ARTS - 6/14/14 AMR
 		for (int art=0; art<NUM_ARTS; ++art) {
 			switch (art) {
+				case Arts::HOUSE_MEMBERS:
 				case Arts::INITIATE:
 				case Arts::SUPPORT_DEMOTION:
 				case Arts::CUP_SUMMONS:
@@ -8194,11 +8196,12 @@ _stprintf(message, disp_message, player->Name());
 				case Arts::POWER_TOKEN:
 				case Arts::EMPATHY:
 					if (player->Skill(art)<1){
-						this->ApplyTrain(art, 1, caster_id);
+						//this->ApplyTrain(art, 1, caster_id);
+						player->SetSkill(art, 1, SET_ABSOLUTE, caster_id, true);
 					}
-					break;
+					continue;
 				default:
-					break;
+					continue;
 			}
 		}
 
@@ -9315,9 +9318,9 @@ void cArts::ResponseAscend(int guild_id, int success)
 					if (player->Skill(art)<1) {
 						player->SetSkill(art, 1, SET_ABSOLUTE, player->ID(), true);
 					}
-					break;
+					continue;
 				default:
-					break;
+					continue;
 			}
 		}
 
