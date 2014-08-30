@@ -8022,9 +8022,10 @@ void cArts::GotInitiated(void *value)
 
 		// AUTO TRAIN INITIATE ARTS - 6/14/14 AMR
 		if (player->Skill(Arts::HOUSE_MEMBERS)<1) {
-			//gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::TRAIN, Arts::HOUSE_MEMBERS, 1);
-			//this->ApplyTrain(Arts::HOUSE_MEMBERS, 1, initiator_id);
-			player->SetSkill(Arts::HOUSE_MEMBERS, 1, SET_ABSOLUTE, initiator_id, true);
+			player->SetSkill(Arts::HOUSE_MEMBERS, 1, SET_ABSOLUTE, player->ID(), true);
+			LoadString (hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));
+	_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		display->DisplayMessage (message);
 		}
 	}
 	else
@@ -8196,8 +8197,10 @@ _stprintf(message, disp_message, player->Name());
 				case Arts::POWER_TOKEN:
 				case Arts::EMPATHY:
 					if (player->Skill(art)<1){
-						//this->ApplyTrain(art, 1, caster_id);
-						player->SetSkill(art, 1, SET_ABSOLUTE, caster_id, true);
+						player->SetSkill(art, 1, SET_ABSOLUTE, player->ID(), true);
+						LoadString (hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));
+							_stprintf(message, disp_message, this->Descrip(art));
+						display->DisplayMessage (message);
 					}
 					continue;
 				default:
@@ -9317,6 +9320,9 @@ void cArts::ResponseAscend(int guild_id, int success)
 				case Arts::SUMMON_PRIME:
 					if (player->Skill(art)<1) {
 						player->SetSkill(art, 1, SET_ABSOLUTE, player->ID(), true);
+						LoadString (hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));
+							_stprintf(message, disp_message, this->Descrip(art));
+						display->DisplayMessage (message);
 					}
 					continue;
 				default:
