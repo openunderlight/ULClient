@@ -46,6 +46,8 @@ extern unsigned char keyboard[num_keystates];
 extern bool showing_map;
 extern bool map_shows_current_level;
 
+extern cChat *display; // For mousewheel scrolling
+
 
 /////////////////////////////////////////////////
 // Local Global Variables
@@ -197,6 +199,74 @@ void  Realm_OnMButtonUp(HWND hWnd, WORD x, WORD y, WORD fwKeys )
 	return;
 }
 
+void Realm_OnMouseWheelScroll(HWND hWnd, WORD x, WORD y, int direction)
+{
+	POINT pt;
+	pt.x = x; pt.y = y;
+	RECT rect;
+	if (!cp)
+		return;
+
+	GetWindowRect(cp->Hwnd_CP(), &rect);
+	
+	if (PtInRect(&rect, pt))
+	{
+
+		if (direction > 0) // Scrolled up
+		{
+
+			switch (cp->Mode())
+			{
+			case INVENTORY_TAB:
+				
+				cp->ShowPrevItem(2);
+				break;
+			case NEIGHBORS_TAB:
+				cp->ShowPrevNeighbor(2);
+				break;
+			case ARTS_TAB:
+				cp->ShowPrevArt(2);
+				break;
+			default:
+				break;
+			}
+	
+		}
+
+		else // Scrolled down
+		{
+			switch (cp->Mode())
+			{
+			case INVENTORY_TAB:
+				cp->ShowNextItem(2);
+				break;
+			case NEIGHBORS_TAB:
+				cp->ShowNextNeighbor(2);
+				break;
+			case ARTS_TAB:
+				cp->ShowNextArt(2);
+				break;
+			default:
+				break;
+			}
+
+		}
+
+	} // End if PtInRect
+	else
+	{
+		GetWindowRect(display->Hwnd(), &rect);
+		if (PtInRect(&rect, pt)) // Scroll the chat window
+		{
+
+			if (direction > 0) // scrolled up
+				display->ScrollUp(5);
+			else
+				display->ScrollDown(5);
+
+		}
+	}
+}
 
 void  Realm_OnRButtonUp( HWND hWnd,WORD x, WORD y, WORD fwKeys )
 {

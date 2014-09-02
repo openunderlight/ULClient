@@ -142,6 +142,9 @@ LRESULT WINAPI WindowProc ( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		HANDLE_MSG(hWnd, WM_RBUTTONUP, Realm_OnRButtonUp);
 		//HANDLE_MSG(hWnd, WM_COMMAND, Realm_OnCommand);
 
+	case WM_MOUSEWHEEL:
+		Realm_OnMouseWheelScroll(hWnd, LOWORD(lParam), HIWORD(lParam), (short)HIWORD(wParam));
+
 	case WM_TIMER:
 		if (wParam == MIN_FRAME_TIMER)
 			CreateFrame();

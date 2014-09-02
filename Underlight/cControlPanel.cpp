@@ -2216,6 +2216,9 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 	switch(message)
 	{   // the lpfn's and hwnd's need to be passed in so we can use
 		// them even before the cp is fully constructed
+		case WM_MOUSEWHEEL: // pass off to be handled elsewhere so people can scroll even when an item is selected in the listview
+			Realm_OnMouseWheelScroll(hwnd, LOWORD(lParam), HIWORD(lParam), (short)HIWORD(wParam));
+			break;	
 		case WM_DESTROY:
 			break;
 		case WM_PASS_INV_PROC:

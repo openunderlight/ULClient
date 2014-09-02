@@ -56,6 +56,7 @@ void Realm_OnMouseMove(HWND hWnd, WORD x, WORD y, WORD fwKeys);
 void Realm_OnLButtonUp(HWND hWnd, WORD x, WORD y, WORD fwKeys);
 void Realm_OnMButtonUp(HWND hWnd, WORD x, WORD y, WORD fwKeys);
 void Realm_OnRButtonUp(HWND hWnd, WORD x, WORD y, WORD fwKeys );
+void Realm_OnMouseWheelScroll(HWND hWnd, WORD x, WORD y, int direction);
 
 // local functions
 void StartMouseMove(int x);
