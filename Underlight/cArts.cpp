@@ -237,9 +237,9 @@ unsigned long art_chksum[NUM_ARTS] =
 0x8544, // Merge Talisman
 0xA9D8, // NP Symbol
 0xCCD8, // Sense Datoken
-0xED86, // Tempest
-0x12BA, // Kinesis
-0x30E6, // Misdirection
+0xED06, // Tempest
+0x123A, // Kinesis
+0x3066, // Misdirection
 0x5D3E, // Chaotic Vortex
 };
 
@@ -389,9 +389,9 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_MERGE_TALISMAN,				Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS},
 {IDS_NP_SYMBOL_ART_NAME, 			Stats::NO_STAT,		10,  0, 0,	2, 	-1, SANCT},
 {IDS_LOCATE_MARES,					Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT},
-{IDS_TEMPEST,				        Stats::LUCIDITY,	  60, 40, 0,	7, 	-1,  FOCUS},
-{IDS_KINESIS, 			       Stats::WILLPOWER,	  30,  5,  0,	1, 	-1, FOCUS|NEIGH},
-{IDS_MISDIRECTION,         Stats::DREAMSOUL,    60,  30, 0, 5,  -1, NEIGH},
+{IDS_TEMPEST,				        Stats::LUCIDITY,	  60, 40, 0,	7, 	-1,  FOCUS|LEARN},
+{IDS_KINESIS, 			       Stats::WILLPOWER,	  30,  5,  0,	1, 	-1, FOCUS|LEARN|NEIGH},
+{IDS_MISDIRECTION,         Stats::DREAMSOUL,    60,  30, 0, 5,  -1, LEARN|NEIGH},
 {IDS_CHAOTIC_VORTEX,       Stats::DREAMSOUL,    70,  40, 4, 5,  -1, NEIGH|NEED_ITEM},
 };
 
@@ -679,7 +679,7 @@ bool cArts::CanUseArt(int art_id, bool bypass)
 
 	unsigned int checksum1 = art_info[art_id].my_checksum(art_id, myval); // calculated
 	unsigned int checksum2 = art_chksum[art_id]; // listed
-
+	
 	if (checksum1 != checksum2) 
 	//if (0) // checksums disabled temporarily
 	{ // Cheating Bastard!!!!	
