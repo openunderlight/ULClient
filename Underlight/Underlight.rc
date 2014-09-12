@@ -1765,7 +1765,7 @@ BEGIN
                             "You transfer the nightmare essence into the Artifact\n"
     IDS_IDENTIFY_META_ESSENCE 
                             "This Prime Artifact belongs to %s. It has %d strength and has had %d nightmare essences placed within it\n"
-    IDS_VERSION_EXPIRED     "This version of Underlight has expired. The patch file will now be automatically downloaded;  run the file patch file and try again! If there are any problems, please go to http://www.clashofdreams.com.\n"
+    IDS_VERSION_EXPIRED     "This version of Underlight has expired. The patch file will now download;  run underlight-webinstaller.exe and try again! If the file doesn't download, please go to http://download.clashofdreams.com.\n"
     IDS_EMPATHY_OTHER_SUCCEEDED "You have successfully evoked %s upon %s!\n"
     IDS_INVULNERABLE_TOGGLE_ON "Invulnerability On\n"
     IDS_DEAFENING_ROAR      "The nightmare has unleashed a deafening roar!\n"
