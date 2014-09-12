@@ -8192,6 +8192,7 @@ _stprintf(message, disp_message, player->Name());
 				case Arts::HOUSE_MEMBERS:
 				case Arts::INITIATE:
 				case Arts::SUPPORT_DEMOTION:
+				case Arts::SUPPORT_ASCENSION:
 				case Arts::CUP_SUMMONS:
 				case Arts::ASCEND:
 				case Arts::POWER_TOKEN:
@@ -8291,11 +8292,13 @@ void cArts::EndKnight(void *value)
 	return;
 }
 
+// Support Ascension
+
 void cArts::StartSupportAscension(void)
 {
-	if (!player->IsRuler(Guild::NO_GUILD))
+	if ((!player->IsRuler(Guild::NO_GUILD)) && (!player->IsKnight(Guild::NO_GUILD)))
 	{
-		LoadString (hInstance, IDS_MUST_BE_RULER, disp_message, sizeof(disp_message));
+		LoadString (hInstance, IDS_MUST_BE_KNIGHT, disp_message, sizeof(disp_message));
 	_stprintf(message, disp_message, this->Descrip(Arts::SUPPORT_ASCENSION));
 		display->DisplayMessage (message);
 		this->ArtFinished(false);
@@ -8310,9 +8313,16 @@ void cArts::StartSupportAscension(void)
 
 void cArts::MidSupportAscension(void)
 {
-	if (player->NumGuilds(Guild::RULER) == 1)
+	if ((player->NumGuilds(Guild::RULER)) + (player->NumGuilds(Guild::KNIGHT)) == 1)
 	{ // only one choice, skip straight to end
-		int value = GuildID(player->GuildFlags(Guild::RULER));
+
+		int value=0;
+		if (player->NumGuilds(Guild::KNIGHT) == 1) {
+			value = GuildID(player->GuildFlags(Guild::KNIGHT));
+		}
+		else {
+			value = GuildID(player->GuildFlags(Guild::RULER));
+		}
 		this->EndSupportAscension(&value);
 		return;
 	}
@@ -8328,6 +8338,7 @@ void cArts::MidSupportAscension(void)
 						cDD->Hwnd_Main(), (DLGPROC)ChooseGuildDlgProc);
 		chooseguild_callback = (&cArts::EndSupportAscension);
 		SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+		SendMessage(hDlg, WM_ADD_KNIGHTS, 0, 0);
 		SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
 		this->WaitForDialog(hDlg, Arts::SUPPORT_ASCENSION);
 	}
@@ -9317,7 +9328,6 @@ void cArts::ResponseAscend(int guild_id, int success)
 				case Arts::EXPEL:
 				case Arts::KNIGHT:
 				case Arts::CREATE_ID_TOKEN:
-				case Arts::SUMMON_PRIME:
 					if (player->Skill(art)<1) {
 						player->SetSkill(art, 1, SET_ABSOLUTE, player->ID(), true);
 						LoadString (hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));

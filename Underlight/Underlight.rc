@@ -3362,7 +3362,7 @@ BEGIN
     IDS_STATE_ERR           "Couldn't set the state for use %i."
     IDS_UNNAMED             "unnamed"
     IDS_INFINITE            "infinite"
-    IDS_QUEST2              "Quest - %s"
+    IDS_QUEST2              "Quest: %s"
     IDS_QUEST_CODEX         "Quest Codex"
 END
 

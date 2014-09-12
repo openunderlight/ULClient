@@ -20,6 +20,7 @@
 #include "cEffects.h"
 #include "Realm.h"
 #include "LmItemDefs.h"
+#include "LmAvatar.h"
 #include "Utils.h"
 #include "cItem.h"
 #include "resource.h"
@@ -642,8 +643,8 @@ void cItem::Use(void)
 			/*
 			state = this->Lmitem().StateField(0);
 			memcpy(&essence, state, sizeof(essence));
-			meta_essence.set_strength(50000);
-			meta_essence.set_num_mares(50000);
+			meta_essence.set_strength(3500);
+			meta_essence.set_num_mares(0);
 			needsUpdate = true;
 			lmitem.SetStateField(0, &meta_essence, sizeof(meta_essence));
 			break;
@@ -848,10 +849,10 @@ void cItem::Use(void)
 			break;
 		}
 
+		case LyraItem::ESSENCE_FUNCTION:
 		case LyraItem::SUPPORT_FUNCTION:
 		case LyraItem::WARD_FUNCTION:
 		case LyraItem::AMULET_FUNCTION:
-		case LyraItem::ESSENCE_FUNCTION:
 		case LyraItem::AREA_EFFECT_FUNCTION:
 		default:
 			LoadString (hInstance, IDS_NOTHING_HAPPENS, disp_message, sizeof(disp_message));

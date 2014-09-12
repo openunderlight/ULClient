@@ -267,8 +267,8 @@ struct Arts {
 	RULER_DRAIN =   1000,   // amount of essences drained from prime to Ascend Ruler
 	DEMOTE_DRAIN = 500,		// amount of essences drained from prime to demote
 	EXPEL_DRAIN =  100,		// amount of essences drained from prime to expel a soulsphere
-	POWER_TOKEN_DRAIN = 10, // amount of essences drained from prime to make a power token
-	CREATE_ID_DRAIN = 10000,// amount of essences drained from prime to create an id token
+	POWER_TOKEN_DRAIN = 50, // amount of essences drained from prime to make a power token
+	CREATE_ID_DRAIN = 5000,// amount of essences drained from prime to create an id token
 
 	};
 };

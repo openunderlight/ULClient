@@ -443,7 +443,10 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 			break;
 		case RMsg_Speech::WHISPER_EMOTE:
 		case RMsg_Speech::EMOTE:
-		_stprintf(message, _T(">%s "), name);
+			if (speech[0] == '\'')
+				_stprintf(message, _T(">%s"), name);
+			else
+				_stprintf(message, _T(">%s "), name);
 			break;
 		case RMsg_Speech::RAW_EMOTE:
 		_stprintf(message, _T(""));
