@@ -3083,7 +3083,7 @@ void cArts::EndSenseDreamers(void *value)
 	//_stprintf(message, _T(""));
 
 	// now manipulate zeroes 
-	for (int i=0; i<PLANES_SENSED_COUNT; i++) {
+	for (int i=0; i<PLANES_SENSED_COUNT-1; i++) {
 		if (psense_msg->LevelID(i) != 0){
 			LoadString (hInstance, SenseDreamerIDs[i], disp_message, sizeof(disp_message));
 			_stprintf(temp_message, disp_message, level->Name(psense_msg->LevelID(i)));

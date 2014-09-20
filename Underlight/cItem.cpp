@@ -643,7 +643,7 @@ void cItem::Use(void)
 			/*
 			state = this->Lmitem().StateField(0);
 			memcpy(&essence, state, sizeof(essence));
-			meta_essence.set_strength(3500);
+			meta_essence.set_strength(1700);
 			meta_essence.set_num_mares(0);
 			needsUpdate = true;
 			lmitem.SetStateField(0, &meta_essence, sizeof(meta_essence));
