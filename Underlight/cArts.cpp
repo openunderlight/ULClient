@@ -1728,6 +1728,7 @@ static know_t know_strings[] = {
   { 8,   25,  IDS_KNOW50},
   { 12,  32,  IDS_KNOW51},
 	{ 39,	31,	IDS_KNOW52},
+	{ 32,	21, IDS_KNOW53},
 };
 //NUM_KNOW_STRINGS defined here to facilitate future additions - 12/1/2002
 const int NUM_KNOW_STRINGS = sizeof (know_strings) / sizeof (know_t);

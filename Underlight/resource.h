@@ -2805,6 +2805,7 @@
 #define IDS_KNOW_52                     4274
 #define IDS_KNOW52                      4274
 #define IDS_LEARNED_HOUSE_ART           4275
+#define IDS_KNOW53                      4276
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

@@ -214,6 +214,8 @@ void cAI::SetAgentStats(void)
 
 	avatar.SetExtraDamage(0);
 
+	avatar.SetHidden(0);
+
 	switch (avatar.AvatarType())
 	{
 		case Avatars::EMPHANT:

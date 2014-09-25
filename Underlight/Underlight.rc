@@ -42,7 +42,9 @@ BEGIN
     CONTROL         "640x480 (fastest)",IDC_GRAPHIC_RES640,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,81,76,65,9
     CONTROL         "800x600",IDC_GRAPHIC_RES800,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,149,76,40,9
     CONTROL         "1024x768 (best quality)",IDC_GRAPHIC_RES1024,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,191,76,110,9
+    CONTROL         "Specify IP: ",IDC_SPECIFY_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,20,89,46,10
     EDITTEXT        IDC_IP_ADDRESS,63,88,48,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    CONTROL         "Dev",IDC_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,126,90,30,10
     CONTROL         "Live",IDC_LIVE_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,158,90,30,10
     CONTROL         "Debug Server:",IDC_DEBUG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,188,90,56,10
     CONTROL         "Networking:",IDC_NETWORK,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,257,90,46,10
@@ -59,11 +61,9 @@ BEGIN
     LTEXT           "Returning players: Please go to http://account.clashofdreams.com if you wish to create or activate new Underlight characters.",IDC_STATIC,6,33,291,26
     LTEXT           "Character Name:",IDC_USERNAME_STATIC,8,217,55,8
     LTEXT           "Password:",IDC_STATIC,143,217,35,8
-    CONTROL         "Dev",IDC_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,126,90,30,10
     PUSHBUTTON      "Configure Voice Setup",IDC_ROGERWILCO,17,108,69,14
     CONTROL         "Enable Real-Time Voice (Roger Wilco)",IDC_ENABLE_RW,
                     "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_MULTILINE | WS_TABSTOP,126,102,75,17
-    CONTROL         "Specify IP: ",IDC_SPECIFY_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,20,89,46,10
     LTEXT           "Mare Type:",IDC_STATIC_PMARE,233,217,37,8
     LTEXT           "The City of Dreams awaits you...",IDC_URL,276,216,104,14
     CONTROL         "Restart at Last Location",IDC_LAST_LOCATION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,89,86,10
@@ -774,6 +774,7 @@ BEGIN
     PUSHBUTTON      "Read Manual",IDC_MANUAL,118,232,69,14
     PUSHBUTTON      "Go To Billing System",IDC_BILLING,220,232,69,14
     PUSHBUTTON      "Quit",IDC_CANCEL,322,232,69,14
+    CONTROL         "Specify IP: ",IDC_SPECIFY_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,20,89,46,10
     EDITTEXT        IDC_IP_ADDRESS,63,88,48,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
     CONTROL         "Dev",IDC_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,126,90,30,10
     CONTROL         "Live",IDC_LIVE_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,158,90,30,10
@@ -794,7 +795,6 @@ BEGIN
     PUSHBUTTON      "Configure Voice Setup",IDC_ROGERWILCO,17,108,69,14
     CONTROL         "Enable Real-Time Voice (Roger Wilco)",IDC_ENABLE_RW,
                     "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_MULTILINE | WS_TABSTOP,126,102,75,17
-    CONTROL         "Specify IP: ",IDC_SPECIFY_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,20,89,46,10
     LTEXT           "Mare Type:",IDC_STATIC_PMARE,233,217,37,8
     LTEXT           "The City of Dreams awaits you...",IDC_URL,276,216,104,14
     CONTROL         "Restart at Last Location",IDC_LAST_LOCATION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,89,86,10
@@ -4198,6 +4198,7 @@ BEGIN
     IDS_CUPSUMMONS_ATTEMPT  "%s has invited you to the Dreamer's Cup Arena! You will teleport there now if you accept."
     IDS_KNOW52              "Upon entry, this expansive circular room has an inviting atmosphere. A cluster of mounted flames form the illusion of orbiting the elegant chandelier, which dangles from the middle of the tall concave ceiling. Its teardrop crystals reflect the lit candles, casting a glow of illumination across the golden, ornate interior. The hard, polished floor has a spiral design that starts from the center of the room and expands outward. Off to one side, a harp and other musical instruments can be seen. Heavy maroon curtains are draped around ancient murals, as if in presentation. Ground torches gleam near the painted walls, staving off the creeping shadows."
     IDS_LEARNED_HOUSE_ART   "You have learned %s as a result of your new house rank!"
+    IDS_KNOW53              "Intense waves of steam and humidity mix with a faint scent of sulfur through the cavernous room. Condensation drips down the roots gripping the cool stone walls into the warm, bubbling water below."
 END
 
 #endif    // English (United States) resources
