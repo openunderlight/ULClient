@@ -2806,6 +2806,13 @@
 #define IDS_KNOW52                      4274
 #define IDS_LEARNED_HOUSE_ART           4275
 #define IDS_KNOW53                      4276
+#define IDS_SCROLL                      4277
+#define IDS_FLOWER                      4278
+#define IDS_STAFF                       4279
+#define IDS_GIFT                        4280
+#define IDS_RING                        4281
+#define IDS_EGG                         4282
+#define IDS_FEATHER                     4283
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

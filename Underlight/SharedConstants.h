@@ -351,6 +351,15 @@ struct LyraBitmap {
 
 		CODEX = 39,
 
+		SCROLL = 43,
+		FLOWER = 44,
+		GIFT = 46,
+		STAFF = 47,
+		RING = 48,		
+		FEATHER = 50,
+		EGG = 51,
+
+
 		// missiles
 		DREAMBLADE_MISSILE = 40,
 		MINIMUM_MISSILE_BITMAP = DREAMBLADE_MISSILE,

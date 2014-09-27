@@ -1661,7 +1661,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			}
 #ifdef GAMEMASTER
 			// default to star for GMs
-			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 56);
+			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 63);
 #else		// default to talis for players
 			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 1);
 #endif

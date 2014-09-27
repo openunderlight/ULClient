@@ -938,6 +938,13 @@ talisman_name_t talisman_names[] =
 	{true,IDS_TALIS, LyraBitmap::TALISMAN6}, 
 	{true,IDS_COMPENDIUM, LyraBitmap::TALISMAN7}, // RRR was Artifax
 	{true,IDS_ARTIFAX, LyraBitmap::TALISMAN8}, 
+	{true, IDS_SCROLL, LyraBitmap::SCROLL},
+	{true, IDS_FLOWER, LyraBitmap::FLOWER},
+	{true, IDS_STAFF, LyraBitmap::STAFF},
+	{true, IDS_GIFT, LyraBitmap::GIFT},
+	{true, IDS_RING, LyraBitmap::RING},
+	{true, IDS_EGG, LyraBitmap::EGG},
+	{true, IDS_FEATHER, LyraBitmap::FEATHER},
 	{false,IDS_CODEX,   LyraBitmap::CODEX},
 
 	/// RRR Names Clarified

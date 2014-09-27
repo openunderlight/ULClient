@@ -4199,6 +4199,13 @@ BEGIN
     IDS_KNOW52              "Upon entry, this expansive circular room has an inviting atmosphere. A cluster of mounted flames form the illusion of orbiting the elegant chandelier, which dangles from the middle of the tall concave ceiling. Its teardrop crystals reflect the lit candles, casting a glow of illumination across the golden, ornate interior. The hard, polished floor has a spiral design that starts from the center of the room and expands outward. Off to one side, a harp and other musical instruments can be seen. Heavy maroon curtains are draped around ancient murals, as if in presentation. Ground torches gleam near the painted walls, staving off the creeping shadows."
     IDS_LEARNED_HOUSE_ART   "You have learned %s as a result of your new house rank!"
     IDS_KNOW53              "Intense waves of steam and humidity mix with a faint scent of sulfur through the cavernous room. Condensation drips down the roots gripping the cool stone walls into the warm, bubbling water below."
+    IDS_SCROLL              "Scroll"
+    IDS_FLOWER              "Flower"
+    IDS_STAFF               "Staff"
+    IDS_GIFT                "Gift"
+    IDS_RING                "Ring"
+    IDS_EGG                 "Egg"
+    IDS_FEATHER             "Feather"
 END
 
 #endif    // English (United States) resources
