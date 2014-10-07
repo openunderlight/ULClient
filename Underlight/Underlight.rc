@@ -87,7 +87,7 @@ IDD_TALK DIALOGEX 0, 0, 306, 60
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "Arial", 0, 0, 0x1
 BEGIN
-    EDITTEXT        IDC_SPEECH,0,0,243,34,ES_MULTILINE | ES_WANTRETURN,WS_EX_DLGMODALFRAME | WS_EX_STATICEDGE
+    EDITTEXT        IDC_SPEECH,0,0,243,34,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN,WS_EX_DLGMODALFRAME | WS_EX_STATICEDGE
     CONTROL         "Talk",IDC_TALK,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,0,35,30,9
     CONTROL         "Shout",IDC_SHOUT,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,32,35,35,9,WS_EX_NOPARENTNOTIFY
     CONTROL         "Emote",IDC_EMOTE,"Button",BS_AUTORADIOBUTTON | BS_NOTIFY | WS_TABSTOP,71,35,40,9
@@ -557,7 +557,7 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDC_OK,42,84,50,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,174,85,50,14
     LTEXT           "Inscribe Message",IDC_WRITE_SCROLL_STATIC,5,3,51,9
-    EDITTEXT        IDC_SCROLL,5,33,255,49,ES_MULTILINE,WS_EX_STATICEDGE
+    EDITTEXT        IDC_SCROLL,5,33,255,49,ES_MULTILINE | ES_AUTOVSCROLL,WS_EX_STATICEDGE
     LISTBOX         IDC_NUM_SCROLL_CHARGES,48,18,46,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
     LTEXT           "Colors",IDC_COLORS_STATIC,110,19,26,8
     LISTBOX         IDC_COLOR_COMBO1,145,18,53,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
@@ -575,7 +575,7 @@ IDD_CHAT_MACROS DIALOGEX 0, 0, 291, 67
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "Arial", 0, 0, 0x1
 BEGIN
-    EDITTEXT        IDC_SPEECH,52,14,233,34,ES_MULTILINE | ES_WANTRETURN | NOT WS_BORDER,WS_EX_DLGMODALFRAME | WS_EX_STATICEDGE
+    EDITTEXT        IDC_SPEECH,52,14,233,34,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | NOT WS_BORDER,WS_EX_DLGMODALFRAME | WS_EX_STATICEDGE
     PUSHBUTTON      "OK",IDC_OK,69,51,45,13
     PUSHBUTTON      "Cancel",IDC_CANCEL,177,51,45,13
     LISTBOX         IDC_MACRO_NUMBERS,10,27,34,12,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
@@ -1976,7 +1976,7 @@ BEGIN
     IDS_AGENT_INFURIATED    "%s howls in rage at you!\n"
     IDS_REMOVE_XP           "%s has taken away experience points from you!\n"
     IDS_NO_SHIFTRUN         "The numeric keypad will function improperly if the shift key is mapped to a movement function.  The shift key has been unmapped."
-    IDS_TEL_SPHERE_TOO_LOW  "Your sphere is too low to use that portal\n"
+    IDS_TEL_SPHERE_TOO_LOW  "You must be at least %s Sphere to use that portal\n"
     IDS_CRAP_NETWORKING     "There is a problem with your Internet Provider or the Internet itself that prevents you from playing Underlight.  If the problem persists, contact your Internet Provider or support@koiware.org\n"
     IDS_ADD_BUDDY           "Enter the name of the dreamer to add:"
     IDS_BUDDY_LIST_FULL     "Your list is currently full - you must delete names before adding new ones\n"
@@ -4206,6 +4206,9 @@ BEGIN
     IDS_RING                "Ring"
     IDS_EGG                 "Egg"
     IDS_FEATHER             "Feather"
+    IDS_TEL_MUST_BE_FOCUS   "You must be a %s to use that portal\n"
+    IDS_TEL_MUST_HAVE_MARK  "You must possess the %s to use that portal\n"
+    IDS_ARRET_CREST         "Crest of Arret"
 END
 
 #endif    // English (United States) resources

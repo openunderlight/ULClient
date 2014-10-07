@@ -342,6 +342,7 @@ static int current_macro =0;
 			}
 			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_MACRO_NUMBERS),current_macro);
 			SetWindowText(GetDlgItem(hDlg, IDC_SPEECH), macros[current_macro]);
+			Edit_LimitText(GetDlgItem(hDlg, IDC_SPEECH), (Lyra::MAX_SPEECHLEN/2)-Lyra::PLAYERNAME_MAX-3);
 			return TRUE;
 		}
 
@@ -468,6 +469,8 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 			memset(sentence,0,sizeof(sentence_buffers[0]));
 			hwnd_talk = hDlg;
 			hwnd_speech = GetDlgItem(hDlg, IDC_SPEECH);
+
+			Edit_LimitText(hwnd_speech, (Lyra::MAX_SPEECHLEN/2)-Lyra::PLAYERNAME_MAX-3);
 
 			// no bug/cheat reports in training b/c no gs login
 			if (options.welcome_ai)
@@ -4034,7 +4037,7 @@ BOOL CALLBACK WriteScrollDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM 
 			if (!questbuilder_callback) 
 				ShowWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), SW_SHOWNORMAL);
 #endif
-
+			Edit_LimitText(GetDlgItem(hDlg, IDC_SCROLL), Lyra::MAX_ITEMDESC-1);
 			SetFocus(GetDlgItem(hDlg, IDC_SCROLL));
 
 			return TRUE;

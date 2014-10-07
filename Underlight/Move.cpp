@@ -1907,9 +1907,33 @@ bool CanPassPortal(int lock, int guild_id, bool rendering)
 		lock -= 10;
 		if (player->Sphere() < lock)
 		{
-			if (!rendering)
+			if (!rendering) 
 			{
-				LoadString (hInstance, IDS_TEL_SPHERE_TOO_LOW, disp_message, sizeof(disp_message));
+				LoadString (hInstance, IDS_TEL_SPHERE_TOO_LOW, message, sizeof(message));
+
+				switch (lock){
+				case 1:	_stprintf(disp_message, message, "First");
+					break;
+				case 2:	_stprintf(disp_message, message, "Second");
+					break;
+				case 3:	_stprintf(disp_message, message, "Third");
+					break;
+				case 4:	_stprintf(disp_message, message, "Fourth");
+					break;
+				case 5:	_stprintf(disp_message, message, "Fifth");
+					break;
+				case 6:	_stprintf(disp_message, message, "Sixth");
+					break;
+				case 7:	_stprintf(disp_message, message, "Seventh");
+					break;
+				case 8:	_stprintf(disp_message, message, "Eighth");
+					break;
+				case 9:	_stprintf(disp_message, message, "Ninth");
+					break;
+				default: _stprintf(disp_message, message, "a higher");
+					break;
+				}
+
 				display->DisplayMessage(disp_message);
 			}
 			return false;
@@ -1938,47 +1962,61 @@ bool CanPassPortal(int lock, int guild_id, bool rendering)
 
 	if (lock >= 40 && lock <= 49) // locking is by specific art
 	{
-		int art_id;
+		int art_id, str_message;
 
 		switch (lock)
 		{// which art lock is active
 			case 40:
 				art_id = Arts::GATEKEEPER;
+				str_message = IDS_TEL_MUST_BE_FOCUS;
 				break;
 			case 41:
 				art_id = Arts::DREAMSEER;
+				str_message = IDS_TEL_MUST_BE_FOCUS;
 				break;
 			case 42:
 				art_id = Arts::SOULMASTER;
+				str_message = IDS_TEL_MUST_BE_FOCUS;
 				break;
 			case 43:
 				art_id = Arts::FATESENDER;
+				str_message = IDS_TEL_MUST_BE_FOCUS;
 				break;
 			case 44:
 				art_id = Arts::QUEST;
+				str_message = IDS_TEL_MUST_KNOW_ART;
 				break;
 			case 45:
 				art_id = Arts::TRAIN;
+				str_message = IDS_TEL_MUST_KNOW_ART;
 				break;
 			case 46:
 				art_id = Arts::TRAIN_SELF;
+				str_message = IDS_TEL_MUST_KNOW_ART;
 				break;
 			case 47:
 				art_id = Arts::DREAMSMITH_MARK;
+				str_message = IDS_TEL_MUST_HAVE_MARK;
 				break;
 			case 48:
 				art_id = Arts::WORDSMITH_MARK;
+				str_message = IDS_TEL_MUST_HAVE_MARK;
 				break;
 			case 49:
 				art_id = Arts::NP_SYMBOL;
+				str_message = IDS_TEL_MUST_HAVE_MARK;
 				break;
 		}
 		if (player->Skill(art_id) < 1)
 		{
 			if (!rendering)
 			{
-				LoadString (hInstance, IDS_TEL_MUST_KNOW_ART, disp_message, sizeof(disp_message));
-				_stprintf(message, disp_message, arts->Descrip(art_id));
+				LoadString (hInstance, str_message, disp_message, sizeof(disp_message));
+				if (art_id == Arts::NP_SYMBOL){
+					LoadString (hInstance, IDS_ARRET_CREST, temp_message, sizeof(temp_message)); 
+					_stprintf(message, disp_message, temp_message);}
+				else
+					_stprintf(message, disp_message, arts->Descrip(art_id));
 				display->DisplayMessage(message);
 			}
 			return false;

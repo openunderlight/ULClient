@@ -2813,6 +2813,9 @@
 #define IDS_RING                        4281
 #define IDS_EGG                         4282
 #define IDS_FEATHER                     4283
+#define IDS_TEL_MUST_BE_FOCUS           4284
+#define IDS_TEL_MUST_HAVE_MARK          4285
+#define IDS_ARRET_CREST                 4286
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

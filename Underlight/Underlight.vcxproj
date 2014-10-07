@@ -505,7 +505,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_DEBUG;UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;VORBIS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIVE_DEBUG;GAME_CLI;_DEBUG;UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;VORBIS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\Debug/Underlight.pch</PrecompiledHeaderOutputFile>

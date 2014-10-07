@@ -2271,7 +2271,7 @@ void cArts::ApplyMisdirection (int skill, lyra_id_t caster_id)
     // 4 - front right
     // 5 - back right
     int view = FixAngle((player->angle - n->angle)+32)/(Angle_360/Avatars::VIEWS);
-    if (view < 1 || view > 4 || !n->Visible ()) {
+    if (view < 2 || view > 4 || !n->Visible ()) {
       LoadString (hInstance, IDS_MISDIRECTION_FAILED, disp_message, sizeof(disp_message));
       _stprintf (message, disp_message, n->Name ());
       display->DisplayMessage (message);
@@ -4643,6 +4643,7 @@ void cArts::EndGrantXP(void *value)
 		return;
 	}
 	int amount = _ttoi(message);
+
 	if (amount == 0)
 	{
 		this->ArtFinished(false);
