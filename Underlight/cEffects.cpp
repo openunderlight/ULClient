@@ -540,7 +540,7 @@ HBITMAP cEffects::CreateBitmap(int id)
 	
 	//if (bmp != NULL)
 	//	bitmaps[id] = bmp;
-
+	this->FreeEffectBitmaps(id);
 	return bmp;
 }
 

@@ -63,10 +63,10 @@ class cDDraw
 
       HWND hwnd_main;
       HRESULT status;
-      LPDIRECTDRAW            lpDD;           // DirectDraw object
+      LPDIRECTDRAW7            lpDD;           // DirectDraw object
 	  LPDIRECTDRAWCLIPPER     lpDDClipper;
-      LPDIRECTDRAWSURFACE     lpDDSPrimary;   // DirectDraw primary surface
-      LPDIRECTDRAWSURFACE     lpDDSOffscreen;  // DirectDraw back buffer
+      LPDIRECTDRAWSURFACE7     lpDDSPrimary;   // DirectDraw primary surface
+      LPDIRECTDRAWSURFACE7     lpDDSOffscreen;  // DirectDraw back buffer
 
 // methods
    public:

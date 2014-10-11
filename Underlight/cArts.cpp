@@ -199,7 +199,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x1ACA, // Combine
 0x3F28, // Power Token
 0x6D27, // Show Gratitude
-0x8ED4, // Quest
+0x8E44, // Quest
 0xB230, // Empathy
 0xC88a, // Radiant Blaze
 0xF445, // Poison Cloud 
@@ -351,7 +351,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_COMBINE,						Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS},
 {IDS_POWER_TOKEN,					Stats::DREAMSOUL,	10,  0, 0,	10, -1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SHOW_GRATITUDE,				Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
-{IDS_QUEST,							Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEIGH|MAKE_ITEM},
+{IDS_QUEST,							Stats::NO_STAT,		0,   0, 0,	3, -1, SANCT|NEIGH|MAKE_ITEM},
 {IDS_BEQUEATH,						Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
 {IDS_RADIANT_BLAZE,					Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_POISON_CLOUD,					Stats::DREAMSOUL,	20, 10,15,	5,  -1, NEED_ITEM|NEIGH},
@@ -680,7 +680,7 @@ bool cArts::CanUseArt(int art_id, bool bypass)
 	unsigned int checksum1 = art_info[art_id].my_checksum(art_id, myval); // calculated
 	unsigned int checksum2 = art_chksum[art_id]; // listed
 	
-	if (checksum1 != checksum2) 
+	if (checksum1 != checksum2)
 	//if (0) // checksums disabled temporarily
 	{ // Cheating Bastard!!!!	
 		LoadString (hInstance, IDS_DETECTED_CHEATER, message, sizeof(message));

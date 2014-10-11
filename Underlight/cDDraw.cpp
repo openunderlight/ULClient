@@ -208,7 +208,7 @@ void cDDraw::Show()
 // Initialize all the DD stuff
 void cDDraw::InitDDraw()
 {
-	DDSURFACEDESC ddsd;
+	DDSURFACEDESC2 ddsd;
 	int curr_depth, curr_width, curr_height;
 
 	// initialize the pointers so that we can unload them in the
@@ -217,7 +217,7 @@ void cDDraw::InitDDraw()
 	lpDDSPrimary = NULL;
 
 	// get default device
-	TRY_DD(DirectDrawCreate(NULL, &lpDD, NULL));
+	TRY_DD(DirectDrawCreateEx(NULL, (LPVOID* )&lpDD, IID_IDirectDraw7, NULL));
 
 	// Examine current pixel depth
 	ddsd.dwSize = sizeof( ddsd );
@@ -227,7 +227,6 @@ void cDDraw::InitDDraw()
 	curr_width	= ddsd.dwWidth;
 	curr_height = ddsd.dwHeight;
 	// Set up for full screen
-
 #if defined (UL_DEBUG) || defined (GAMEMASTER)
 	TRY_DD(lpDD->SetCooperativeLevel( hwnd_main, DDSCL_NORMAL));
 	if (curr_depth > bpp)
@@ -250,7 +249,7 @@ void cDDraw::InitDDraw()
 	{
 		TRY_DD(lpDD->SetCooperativeLevel( hwnd_main, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN));
 		// reset the display mode to the parameters
-		TRY_DD(lpDD->SetDisplayMode( width, height, bpp ));
+		TRY_DD(lpDD->SetDisplayMode( width, height, bpp, 0, 0));
 	}
 #endif
 
@@ -295,8 +294,8 @@ void cDDraw::InitDDraw()
 
 unsigned char *cDDraw::GetSurface(int id)
 {
-	DDSURFACEDESC		  DDSDesc;
-	LPDIRECTDRAWSURFACE	 lpDDSSurface;
+	DDSURFACEDESC2		  DDSDesc;
+	LPDIRECTDRAWSURFACE7	 lpDDSSurface;
 
 	if (id == PRIMARY)
 		lpDDSSurface = lpDDSPrimary;
@@ -305,8 +304,8 @@ unsigned char *cDDraw::GetSurface(int id)
 	else
 		return NULL;
 
-	memset(&DDSDesc,0,sizeof(DDSURFACEDESC));
-	DDSDesc.dwSize = sizeof(DDSURFACEDESC);
+	memset(&DDSDesc,0,sizeof(DDSURFACEDESC2));
+	DDSDesc.dwSize = sizeof(DDSURFACEDESC2);
 	while( 1 )
 	{
 		status = lpDDSSurface->Lock(NULL,&DDSDesc,0,NULL);
@@ -332,7 +331,7 @@ unsigned char *cDDraw::GetSurface(int id)
 // We're done with the surface pointer
 void cDDraw::ReleaseSurface(int id)
 {
-	LPDIRECTDRAWSURFACE	 lpDDSSurface;
+	LPDIRECTDRAWSURFACE7	 lpDDSSurface;
 
 	if (id == PRIMARY)
 		lpDDSSurface = lpDDSPrimary;
@@ -348,7 +347,7 @@ void cDDraw::ReleaseSurface(int id)
 bool cDDraw::EraseSurface(int id)
 {
 	 DDBLTFX 	 ddbltfx;
-	LPDIRECTDRAWSURFACE	 lpDDSSurface;
+	LPDIRECTDRAWSURFACE7	 lpDDSSurface;
 	RECT rect;
 	POINT wndpt;
 	int xoff=0,yoff=0; // offsets for running in a window
