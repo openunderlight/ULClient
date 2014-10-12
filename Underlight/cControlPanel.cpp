@@ -1470,12 +1470,6 @@ void cControlPanel::SelectNew(bool direction)
 		}
 
 		cp->SetSelectedItem(item);
-		if (item != NO_ITEM)
-		{
-			LoadString (hInstance, IDS_ITEM_SELECTED, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, item->Name());
-			display->DisplayMessage(message);
-		}
 		SendMessage(hwnd_listviews[INVENTORY_TAB], LVM_SORTITEMS, (WPARAM) 0, (LPARAM) ::CompareItems);
 
 	}
@@ -1511,12 +1505,6 @@ void cControlPanel::SelectNew(bool direction)
 		}
 
 		cp->SetSelectedNeighbor(n);
-		if (n != NO_ACTOR)
-		{
-			LoadString (hInstance, IDS_ITEM_SELECTED, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, n->Name());
-			display->DisplayMessage(message, false);
-		}
 		SendMessage(hwnd_listviews[NEIGHBORS_TAB], LVM_SORTITEMS, (WPARAM) 0, (LPARAM) ::CompareNeighbors);
 	}
 	else if (tab_mode == ARTS_TAB)
@@ -1551,12 +1539,6 @@ void cControlPanel::SelectNew(bool direction)
 		}
 
 		cp->SetSelectedArt(art);
-		if (art != Arts::NONE)
-		{
-			LoadString (hInstance, IDS_ITEM_SELECTED, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, arts->Descrip(art));
-			display->DisplayMessage(message, false);
-		}
 		SendMessage(hwnd_listviews[ARTS_TAB], LVM_SORTITEMS, (WPARAM) 0, (LPARAM) ::CompareArts);
 	}
 	return;

@@ -7,7 +7,10 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
+// To compile on VS 2010 Express, comment the following line and uncomment the two after.
 #include "afxres.h"
+// #include "WinResrc.h"
+// #define IDC_STATIC  -1
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -1417,7 +1420,6 @@ BEGIN
     IDS_ITEM_SELECT_INSPECT "You need to select an item before you inspect it! (press N to select)\n"
     IDS_JOIN_SELECT         "Please select the party leader to join by left clicking on their icon  (ESC to cancel)\n"
     IDS_ITEM_NONE           "You have no talismans!\n"
-    IDS_ITEM_SELECTED       "%s selected\n"
     IDS_ART_SELECT          "You need to select an art before you can use it! (press N to select)\n"
     IDS_ITEM_SELECT_USE     "You need to select an item before you can use it!  (press N to select)\n"
     IDS_ITEM_SELECT_DROP    "You need to select an item before you drop it! (press N to select)\n"

@@ -2525,7 +2525,6 @@
 #define IDS_ITEM_SELECT_INSPECT         4004
 #define IDS_JOIN_SELECT                 4005
 #define IDS_ITEM_NONE                   4006
-#define IDS_ITEM_SELECTED               4007
 #define IDS_ART_SELECT                  4008
 #define IDS_ITEM_SELECT_USE             4009
 #define IDS_ITEM_SELECT_DROP            4010
