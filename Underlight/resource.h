@@ -2817,6 +2817,7 @@
 #define IDS_ARRET_CREST                 4286
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
+#define IDC_ART_PROMPTS                 4804
 #define IDC_AVATAR_COMBO                16666
 
 // Next default values for new objects

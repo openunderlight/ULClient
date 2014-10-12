@@ -9,8 +9,8 @@
 //
 // To compile on VS 2010 Express, comment the following line and uncomment the two after.
 #include "afxres.h"
-// #include "WinResrc.h"
-// #define IDC_STATIC  -1
+//#include "WinResrc.h"
+//#define IDC_STATIC  -1
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -126,7 +126,8 @@ BEGIN
     CONTROL         "Multi-Line Chat: ",IDC_MULTILINE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,3,72,67,10
     CONTROL         "Invert Mouse:",IDC_INVERTMOUSE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,11,85,59,10
     CONTROL         "Name Tags:",IDC_NAMETAGS,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,111,5,55,10
-    CONTROL         "FootSteps: ",IDC_FOOTSTEPS,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,113,17,53,10
+    CONTROL         "Footsteps: ",IDC_FOOTSTEPS,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,113,17,53,10
+    CONTROL         "Art Prompts: ",IDC_ART_PROMPTS,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,100,29,66,10
     CONTROL         "Profanity Filter:",IDC_PROFANITY_FILTER,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,98,40,68,10
     CONTROL         "Sound Effects:",IDC_SOUND_ACTIVE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,103,66,63,10
     LISTBOX         IDC_SPEECHCOLOR,270,0,67,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP

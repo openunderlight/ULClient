@@ -623,9 +623,12 @@ void cArts::BeginArt(int art_id, bool bypass)
 
 	if (duration)
 	{	// no begin message for instantaneous arts
-		LoadString (hInstance, IDS_BEGIN_ART, disp_message, sizeof(disp_message));
-		_stprintf(message,disp_message,this->Descrip(art_id));
-		display->DisplayMessage (message, false);
+		if (options.art_prompts)
+		{
+			LoadString (hInstance, IDS_BEGIN_ART, disp_message, sizeof(disp_message));
+			_stprintf(message,disp_message,this->Descrip(art_id));
+			display->DisplayMessage (message, false);
+		}
 		player->EvokingFX().Activate(art_id, true);
 	}
 	else
@@ -1271,20 +1274,29 @@ void cArts::CaptureCP(int new_mode, lyra_id_t art_id)
 	if (new_mode == INVENTORY_TAB)
 	{
 		cp->SetSelectedItem(NO_ACTOR);
-		LoadString (hInstance, IDS_CHOOSE_ITEM, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
+		if (options.art_prompts)
+		{
+			LoadString (hInstance, IDS_CHOOSE_ITEM, disp_message, sizeof(disp_message));
+			display->DisplayMessage (disp_message);
+		}
 	}
 	else if (new_mode == NEIGHBORS_TAB)
 	{
 		cp->SetSelectedNeighbor(NO_ACTOR);
-		LoadString (hInstance, IDS_CHOOSE_AVATAR, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
+		if (options.art_prompts)
+		{
+			LoadString (hInstance, IDS_CHOOSE_AVATAR, disp_message, sizeof(disp_message));
+			display->DisplayMessage (disp_message);
+		}
 	}
 	else if (new_mode == ARTS_TAB)
 	{
 		cp->SetSelectedArt(Arts::NONE);
-		LoadString (hInstance, IDS_CHOOSE_ART, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
+		if (options.art_prompts)
+		{
+			LoadString (hInstance, IDS_CHOOSE_ART, disp_message, sizeof(disp_message));
+			display->DisplayMessage (disp_message);
+		}
 	}
 
 	return;
@@ -1405,15 +1417,18 @@ void cArts::DisplayUsedOnOther(cNeighbor *n, lyra_id_t art_id)
 {
 	if (n != NO_ACTOR)
 	{
-		LoadString (hInstance, IDS_ART_APPLIED_TO_OTHER, disp_message, sizeof(disp_message));
-		if (n->ID() == player->ID())
+		if (options.art_prompts)
 		{
-		LoadString(hInstance, IDS_YOURSELF, temp_message, sizeof(temp_message));
-		_stprintf(message, disp_message, this->Descrip(art_id), temp_message);
+			LoadString (hInstance, IDS_ART_APPLIED_TO_OTHER, disp_message, sizeof(disp_message));
+			if (n->ID() == player->ID())
+			{
+			LoadString(hInstance, IDS_YOURSELF, temp_message, sizeof(temp_message));
+			_stprintf(message, disp_message, this->Descrip(art_id), temp_message);
+			}
+			else
+			_stprintf(message, disp_message, this->Descrip(art_id), n->Name());
+			display->DisplayMessage (message, false);
 		}
-		else
-		_stprintf(message, disp_message, this->Descrip(art_id), n->Name());
-		display->DisplayMessage (message, false);
 	}
 	return;
 }
