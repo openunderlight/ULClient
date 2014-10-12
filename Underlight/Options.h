@@ -94,6 +94,7 @@ struct options_t {
 	BOOL autoreject; // always reject all parties
 	BOOL autorejoin; // always rejoin last party leader
 	BOOL footsteps;  // play footstep sounds
+	BOOL art_prompts; // show art prompts
 	BOOL mouselook; // mouse movements turn player by default
 	BOOL invertmouse; // inverts y-axis of movement during mouselook
 	BOOL log_chat; // write out player chat to a log
