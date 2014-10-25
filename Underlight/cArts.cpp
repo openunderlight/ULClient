@@ -2146,7 +2146,7 @@ void cArts::ApplyReflectedArt(int art_id, lyra_id_t caster_id)
 		ApplySoulShield(player->Skill(art_id),player->ID());
 		break;
   case Arts::KINESIS:
-    ApplyKinesis (player->Skill (art_id), player->ID (), player->angle);
+    ApplyKinesis (player->Skill (art_id), REFLECT_ID, ((player->angle)+Angle_180)/4);
     break;
 	};
 	
@@ -4136,13 +4136,16 @@ void cArts::ApplyKinesis (int skill, lyra_id_t caster_id, int angle)
 {
 	player->EvokedFX().Activate(Arts::KINESIS, false);
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
-  if (n == NO_ACTOR)
+  if (n == NO_ACTOR && caster_id != REFLECT_ID)
     return;
+  angle = angle*4;
 	this->DisplayUsedByOther(n, Arts::KINESIS);
   MoveActor (player, angle, PUSH_DISTANCE, MOVE_NORMAL);
+  if (caster_id != REFLECT_ID) { // No need to show Kinesis was reflected again
   LoadString (hInstance, IDS_KINESIS_APPLIED, disp_message, sizeof(disp_message));
   _stprintf (message, disp_message, n->Name ());
 	display->DisplayMessage (message);
+  }
 	player->PerformedAction();
 	return;
 }
@@ -4166,7 +4169,7 @@ void cArts::EndKinesis (void)
 		if (n->IsVulnerable() && !(player->flags & ACTOR_BLINDED) && 
 			(n->Room() == player->Room())) 
 		{
-			gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::KINESIS, player->Skill(Arts::KINESIS), player->angle);
+			gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::KINESIS, player->Skill(Arts::KINESIS), (player->angle)/4);
 			this->DisplayUsedOnOther(n, Arts::KINESIS);
 			this->ArtFinished(true);
 		}
@@ -8575,7 +8578,6 @@ void cArts::EndPowerToken(void *value)
 	else
 	{	// any prime will do
 		cItem* prime = FindPrime(Guild::NO_GUILD, Arts::POWER_TOKEN_DRAIN);
-
 		if (prime == NO_ITEM) 
 		{
 			LoadString (hInstance, IDS_NEED_PRIME_PT, disp_message, sizeof(disp_message));
