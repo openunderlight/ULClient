@@ -2160,9 +2160,12 @@ void cArts::ApplyReflectedArt(int art_id, lyra_id_t caster_id)
 	case Arts::SOUL_SHIELD:
 		ApplySoulShield(player->Skill(art_id),player->ID());
 		break;
-  case Arts::KINESIS:
-    ApplyKinesis (player->Skill (art_id), REFLECT_ID, ((player->angle)+Angle_180)/4);
-    break;
+	case Arts::KINESIS:
+		ApplyKinesis (player->Skill(art_id), REFLECT_ID, ((player->angle)+Angle_180)/4);
+		break;
+	case Arts::PEACE_AURA:
+		ApplyPeaceAura(player->Skill(art_id), player->ID());
+		break;
 	};
 	
 	return;
@@ -5703,7 +5706,7 @@ void cArts::StartPeaceAura(void)
 void cArts::ApplyPeaceAura(int skill, lyra_id_t caster_id)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
-	if (n == NO_ACTOR)
+	if ((n == NO_ACTOR) && (caster_id != player->ID()))
 		return;
 
 	player->EvokedFX().Activate(Arts::PEACE_AURA, false);
