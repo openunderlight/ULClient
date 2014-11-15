@@ -210,7 +210,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>../MessageMaker/Release/MessageMaker.lib;vorbisfile_static.lib;ogg_static.lib;vorbis_static.lib;oldnames.lib;th32.lib;wininet.lib;lz32.lib;winmm.lib;wsock32.lib;ddraw.lib;dsound.lib;dxguid.lib;comctl32.lib;libcmtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>\lyra\dev\pmare-dev.exe</OutputFile>
+      <OutputFile>$(OutDir)\pmare-dev.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -316,7 +316,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;../MessageMaker/Release/MessageMaker.lib;vorbisfile_static.lib;ogg_static.lib;vorbis_static.lib;oldnames.lib;th32.lib;wininet.lib;lz32.lib;winmm.lib;wsock32.lib;ddraw.lib;dsound.lib;dxguid.lib;comctl32.lib;libcmtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>\lyra\dev\pmare.exe</OutputFile>
+      <OutputFile>$(OutDir)\pmare.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -368,7 +368,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>libcd.lib;../MessageMaker/Unicod/MessageMaker.lib;vorbisfile_static.lib;ogg_static.lib;vorbis_static.lib;oldnames.lib;th32.lib;wininet.lib;lz32.lib;winmm.lib;wsock32.lib;ddraw.lib;dsound.lib;dxguid.lib;comctl32.lib;libcmtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>\lyra\dev\underlight-unicode.exe</OutputFile>
+      <OutputFile>$(OutDir)\underlight-unicode.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -422,7 +422,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;../MessageMaker/Release/MessageMaker.lib;oldnames.lib;th32.lib;wininet.lib;lz32.lib;winmm.lib;wsock32.lib;ddraw.lib;dsound.lib;dxguid.lib;comctl32.lib;libcmtd.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>\lyra\dev\Underlight-dev-player.exe</OutputFile>
+      <OutputFile>$(OutDir)\Underlight-dev-player.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -474,7 +474,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>../MessageMaker/Release/MessageMaker.lib;oldnames.lib;th32.lib;wininet.lib;lz32.lib;winmm.lib;wsock32.lib;ddraw.lib;dsound.lib;dxguid.lib;comctl32.lib;libcmtd.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>\lyra\dev\gm-underlight.exe</OutputFile>
+      <OutputFile>$(OutDir)\gm-underlight.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -505,7 +505,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIVE_DEBUG;GAME_CLI;_DEBUG;UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;VORBIS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GAME_CLI;_DEBUG;UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;VORBIS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\Debug/Underlight.pch</PrecompiledHeaderOutputFile>
@@ -576,7 +576,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>../MessageMaker/Debug/MessageMaker.lib;dxguid.lib;oldnames.lib;th32.lib;wininet.lib;lz32.lib;winmm.lib;wsock32.lib;ddraw.lib;dsound.lib;comctl32.lib;libcmt.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>\lyra\dev\underlight-debug.exe</OutputFile>
+      <OutputFile>$(OutDir)\underlight-debug.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -630,7 +630,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;../MessageMaker/Release/MessageMaker.lib;oldnames.lib;th32.lib;wininet.lib;lz32.lib;winmm.lib;wsock32.lib;ddraw.lib;dsound.lib;dxguid.lib;comctl32.lib;libcmtd.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>\lyra\dev\Underlight.exe</OutputFile>
+      <OutputFile>$(OutDir)\Underlight.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
