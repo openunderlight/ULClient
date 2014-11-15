@@ -264,7 +264,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>../MessageMaker/Debug/MessageMaker.lib;oldnames.lib;th32.lib;wininet.lib;lz32.lib;winmm.lib;wsock32.lib;ddraw.lib;dsound.lib;dxguid.lib;comctl32.lib;libcmtd.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>\lyra\dev\underlight-dev.exe</OutputFile>
+      <OutputFile>$(OutDir)\underlight-dev.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>LIBCMTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
