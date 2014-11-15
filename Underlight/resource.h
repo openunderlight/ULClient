@@ -443,6 +443,7 @@
 #define IDC_BIND_LOCAL                  1859
 #define IDC_UDP_PROXY                   1859
 #define IDC_INVERTMOUSE                 1860
+#define IDC_ART_PROMPTS                 1861
 #define IDC_TURNSPD                     1862
 #define IDC_FAST                        1863
 #define IDC_SLOW                        1864
@@ -2817,7 +2818,6 @@
 #define IDS_ARRET_CREST                 4286
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
-#define IDC_ART_PROMPTS                 4804
 #define IDC_AVATAR_COMBO                16666
 
 // Next default values for new objects
