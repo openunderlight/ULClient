@@ -82,11 +82,7 @@ const int CHANCE_SPELL_FAILURE = 1; // % chance of art failure
 
 const float PUSH_DISTANCE = 75.0f;
 
-#if defined (UL_DEBUG) && !defined (LIVE_DEBUG)	
-const int CHANCE_SKILL_INCREASE = 66;
-#else
-const int CHANCE_SKILL_INCREASE = 3; // % chance of skill increase
-#endif
+const int CHANCE_SKILL_INCREASE = 15; // % chance of skill increase
 
 const int CASTING_TIME_MULTIPLIER = 150; // milliseconds per unit of casting time
 const int MIN_DS_SOULEVOKE = 10;
