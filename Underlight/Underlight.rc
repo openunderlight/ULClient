@@ -116,38 +116,37 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    CONTROL         "Reverse Stereo",IDC_REVERSESTEREO,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_LEFT | BS_VCENTER | WS_TABSTOP,5,19,80,10
-    CONTROL         "Reject All",IDC_AUTOREJECT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_LEFT | BS_VCENTER | WS_TABSTOP,5,31,80,10
-    CONTROL         "Rejoin Parties",IDC_AUTOREJOIN,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_LEFT | BS_VCENTER | WS_TABSTOP,5,43,80,10
-    CONTROL         "Log Chat",IDC_CHATLOG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_LEFT | BS_VCENTER | WS_TABSTOP,5,55,80,10
-    CONTROL         "Multi-Line Chat: ",IDC_MULTILINE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_LEFT | BS_VCENTER | WS_TABSTOP,5,67,80,10
-    CONTROL         "Invert Mouse:",IDC_INVERTMOUSE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_LEFT | BS_VCENTER | WS_TABSTOP,5,79,80,10
-    CONTROL         "Name Tags:",IDC_NAMETAGS,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | BS_VCENTER | WS_TABSTOP,108,5,80,10,WS_EX_RIGHT
-    CONTROL         "Footsteps: ",IDC_FOOTSTEPS,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | BS_VCENTER | WS_TABSTOP,108,17,80,10,WS_EX_RIGHT
-    CONTROL         "Art Prompts: ",IDC_ART_PROMPTS,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | BS_VCENTER | WS_TABSTOP,108,29,80,10,WS_EX_RIGHT
-    CONTROL         "Profanity Filter:",IDC_PROFANITY_FILTER,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | BS_VCENTER | WS_TABSTOP,108,41,80,10,WS_EX_RIGHT
-    CONTROL         "Sound Effects:",IDC_SOUND_ACTIVE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | BS_VCENTER | WS_TABSTOP,108,65,80,10,WS_EX_RIGHT
-    LISTBOX         IDC_SPEECHCOLOR,277,1,67,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
-    LISTBOX         IDC_MESSAGECOLOR,277,15,67,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
-    LISTBOX         IDC_BGCOLOR,277,29,67,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
-    CONTROL         "Slider1",IDC_EFFECTS_VOLUME,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,295,44,31,10
-    CONTROL         "Slider1",IDC_TURNSPEED,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,295,66,31,10
-    PUSHBUTTON      "OK",IDC_OK,101,81,45,14,NOT WS_TABSTOP
-    PUSHBUTTON      "Cancel",IDC_CANCEL,170,81,45,14,NOT WS_TABSTOP
-    PUSHBUTTON      "Configure Keyboard",IDC_KEYBOARD,239,81,90,14
+    CONTROL         "Reverse Stereo",IDC_REVERSESTEREO,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,7,20,63,10
+    CONTROL         "Reject All Parties",IDC_AUTOREJECT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,9,33,61,10
+    CONTROL         "Rejoin Parties",IDC_AUTOREJOIN,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,8,46,62,10
+    CONTROL         "Log Chat",IDC_CHATLOG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,25,59,45,10
+    CONTROL         "Multi-Line Chat: ",IDC_MULTILINE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,3,72,67,10
+    CONTROL         "Invert Mouse:",IDC_INVERTMOUSE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,11,85,59,10
+    CONTROL         "Name Tags:",IDC_NAMETAGS,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,111,5,55,10
+    CONTROL         "FootSteps: ",IDC_FOOTSTEPS,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,113,17,53,10
+    CONTROL         "Profanity Filter:",IDC_PROFANITY_FILTER,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,98,40,68,10
+    CONTROL         "Sound Effects:",IDC_SOUND_ACTIVE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,103,66,63,10
+    LISTBOX         IDC_SPEECHCOLOR,270,0,67,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_MESSAGECOLOR,270,14,67,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    LISTBOX         IDC_BGCOLOR,270,28,67,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+    CONTROL         "Slider1",IDC_EFFECTS_VOLUME,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,276,43,31,10
+    CONTROL         "Slider1",IDC_TURNSPEED,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,276,65,31,10
+    PUSHBUTTON      "OK",IDC_OK,84,81,45,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Cancel",IDC_CANCEL,153,81,45,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Configure Keyboard",IDC_KEYBOARD,222,81,90,14
     LTEXT           "Underlight Options",IDC_OPTIONSTITLE,0,0,68,10
-    LTEXT           "Turn Speed:",IDC_TURNSPD,204,67,40,10
-    LTEXT           "Fast",IDC_FAST,325,66,16,10
-    LTEXT           "Slow",IDC_SLOW,275,66,16,10
-    LTEXT           "Chat Text Color:",IDC_CHATTEXTCOLOR,209,2,54,9
-    LTEXT           "Message Color:",IDC_MSGCOLOR,209,15,51,9
-    LTEXT           "Background Color:",IDC_BKGNDCOLOR,209,29,60,9
-    LTEXT           "Effects Volume:",IDC_EFFECTS_VOL,204,43,49,10
-    LTEXT           "Low",IDC_LOW,275,48,16,10
-    LTEXT           "High",IDC_HIGH,325,48,16,10
-    CONTROL         "Background Music:",IDC_BGMUSIC_ACTIVE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | BS_VCENTER | WS_TABSTOP,108,53,80,10,WS_EX_RIGHT
-    LTEXT           "Music Volume:",IDC_MUSIC_VOL,204,54,47,10
-    CONTROL         "Slider1",IDC_MUSIC_VOLUME,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,295,55,31,10
+    LTEXT           "Turn Speed:",IDC_TURNSPD,202,66,40,10
+    LTEXT           "Fast",IDC_FAST,312,65,16,10
+    LTEXT           "Slow",IDC_SLOW,255,65,16,10
+    LTEXT           "Chat Text Color:",IDC_CHATTEXTCOLOR,202,1,54,9
+    LTEXT           "Message Color:",IDC_MSGCOLOR,202,14,51,9
+    LTEXT           "Background Color:",IDC_BKGNDCOLOR,202,28,60,9
+    LTEXT           "Effects Volume:",IDC_EFFECTS_VOL,202,42,49,10
+    LTEXT           "Low",IDC_LOW,260,47,16,10
+    LTEXT           "High",IDC_HIGH,310,47,16,10
+    CONTROL         "Background Music:",IDC_BGMUSIC_ACTIVE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,88,53,78,10
+    LTEXT           "Music Volume:",IDC_MUSIC_VOL,202,53,47,10
+    CONTROL         "Slider1",IDC_MUSIC_VOLUME,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,276,54,31,10
 END
 
 IDD_AGENT_LOGIN DIALOGEX 0, 0, 224, 86
@@ -224,6 +223,7 @@ BEGIN
     CONTROL         "Describe",IDC_ITEM_DESCRIP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,308,3,49,10
     LTEXT           "Quest Item Definition",IDC_QUEST_STATIC,0,0,87,10
     CONTROL         "Any Charges",IDC_ANY_CHARGES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,2,12,62,17
+    CONTROL         "Use PT",IDC_ITEM_USE_PT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_CENTER | NOT WS_VISIBLE | WS_TABSTOP,308,22,49,10
 END
 
 IDD_KEYBOARD_CONFIG DIALOGEX 0, 0, 409, 100
@@ -518,7 +518,7 @@ IDD_CREDITS DIALOG 0, 0, 426, 115
 STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif"
 BEGIN
-    DEFPUSHBUTTON   "OK",IDC_OK,367,105,50,14
+    DEFPUSHBUTTON   "OK",IDC_OK,367,91,50,14
 END
 
 IDD_LOCATE_AVATAR DIALOGEX 0, 0, 217, 102
@@ -870,7 +870,7 @@ IDD_GRANT_PPOINT DIALOG 0, 0, 304, 95
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif"
 BEGIN
-    DEFPUSHBUTTON   "Grant RP",IDC_OK,49,81,54,14
+    DEFPUSHBUTTON   "Grant PP",IDC_OK,49,81,54,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,205,81,50,14
     EDITTEXT        IDC_WHY_PPOINT,28,55,247,17,ES_MULTILINE | ES_AUTOHSCROLL
     LTEXT           "text goes here",IDC_GRANT_PPOINT,6,20,290,29
@@ -882,16 +882,16 @@ IDD_USE_PPOINT DIALOGEX 0, 0, 276, 103
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "Use RPoints",IDC_OK,47,84,50,14
+    DEFPUSHBUTTON   "Use PPoints",IDC_OK,47,84,50,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,179,84,50,14
     PUSHBUTTON      "Help",IDC_ITEMHELP,113,84,50,14
     LTEXT           "What would you like to do?",IDC_STATIC,4,24,131,13,0,WS_EX_RIGHT
     COMBOBOX        IDC_HOW_USE_PP,142,23,129,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "<label text goes here>",IDC_PP_STATIC,2,46,99,11,0,WS_EX_RIGHT
     COMBOBOX        IDC_PP_SUBSEL,110,45,88,68,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Cost in RPoints:",IDC_STATIC,145,65,68,12,0,WS_EX_RIGHT
+    LTEXT           "Cost in PPoints:",IDC_STATIC,145,65,68,12,0,WS_EX_RIGHT
     EDITTEXT        IDC_PP_COST,227,65,28,12,ES_CENTER | ES_READONLY
-    LTEXT           "RPoints to Spend:",IDC_STATIC,4,65,87,12,0,WS_EX_RIGHT
+    LTEXT           "PPoints to Spend:",IDC_STATIC,4,65,87,12,0,WS_EX_RIGHT
     EDITTEXT        IDC_PP_CURRENT,105,65,28,12,ES_CENTER | ES_READONLY
     LTEXT           "Plateau:",IDC_SKILL_PP,206,46,34,10,WS_TABSTOP,WS_EX_RIGHT
     COMBOBOX        IDC_SKILL,245,45,31,67,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -1418,6 +1418,7 @@ BEGIN
     IDS_ITEM_SELECT_INSPECT "You need to select an item before you inspect it! (press N to select)\n"
     IDS_JOIN_SELECT         "Please select the party leader to join by left clicking on their icon  (ESC to cancel)\n"
     IDS_ITEM_NONE           "You have no talismans!\n"
+    IDS_ITEM_SELECTED       "%s selected\n"
     IDS_ART_SELECT          "You need to select an art before you can use it! (press N to select)\n"
     IDS_ITEM_SELECT_USE     "You need to select an item before you can use it!  (press N to select)\n"
     IDS_ITEM_SELECT_DROP    "You need to select an item before you drop it! (press N to select)\n"
@@ -1472,14 +1473,14 @@ BEGIN
     IDS_TOGGLE_GUI          "Toggle GUI"
     IDS_LEVEL_SELECT        "Level Selection"
     IDS_EFFECT_ERR10        "Couldn't find model with id %u, called from %u"
-    IDS_GRANT_OK            "You have successfully granted a Roleplay Point!"
-    IDS_GRANT_ERROR         "You were unable to grant a roleplay point; please try again later."
-    IDS_GRANT_REPEAT        "You can not grant a roleplay point to that Dreamer because you have granted a point to him/her too recently. You may only grant one roleplay point to any given Dreamer once every 7 days."
+    IDS_GRANT_OK            "You have successfully granted a Personality Point!"
+    IDS_GRANT_ERROR         "You were unable to grant a personality point; please try again later."
+    IDS_GRANT_REPEAT        "You can not grant a personality point to that Dreamer because you have granted a point to him/her too recently. You may only grant one personality point to any given Dreamer once every 7 days."
     IDS_GRANT_PPOINT        "Reward"
     IDS_QUEST_REPORT        "Quest stat: %d sphere: %d summary: %s text: %s"
-    IDS_NEED_PP_POOL        "You can not grant any roleplay points because your reward pool is currently empty. This pool will automatically replenish itself over time (2 points per day, 3 for teachers.)"
-    IDS_GOT_PP              "Congratulations! You have been granted a roleplay point for excellent play!"
-    IDS_SHOWXP_PPOINT       "XP: %d  Roleplay Points:  %d   Reward Pool: %d"
+    IDS_NEED_PP_POOL        "You can not grant any personality points because your reward pool is currently empty. This pool will automatically replenish itself over time (2 points per day, 3 for teachers.)"
+    IDS_GOT_PP              "Congratulations! You have been granted a personality point for excellent play!"
+    IDS_SHOWXP_PPOINT       "XP: %d  Personality Points:  %d   Reward Pool: %d"
     IDS_KNOW41              "Cameo reliefs of ancient FateSenders are carved into the blood-red walls of the Guild Hall. Flames make the deep shadows dance across the faces and gives them a hauntingly lifelike quality, some so much so that they appear to be speaking. The warmth of the boiling pool in the center can be felt throughout the room; it awakens the senses. Everything seems to be slightly out of focus here as if altered by a FateSender's practice."
     IDS_KNOW42              "Soft lit sand stone walls are hung with tapestries depicting Initiates, Guardians and Rulers of the Union in amicable discussion. A slender, long haired woman balancing an amphora on her shoulder watches from the background."
 END
@@ -2225,7 +2226,7 @@ BEGIN
     IDS_KILLED              "We're sorry, but that character is dead and can no longer be played.  Contact accounts@koiware.org for more information"
     IDS_PLAYER_SUSPENDED    "You have been temporarily suspended from Underlight: Clash of Dreams for %d days. Please contact accounts@koiware.org for more information."
     IDS_PLAYER_TERMINATED   "We're sorry, but your account has been terminated (permanently disabled) by the KoiWare team. Please contact accounts@koiware.org for further information."
-    IDS_NO_PMARE            "We're sorry, but to use a player nightmare character, you must have enough PMare credits for at least 15 minutes of play. Earn more by using Roleplay Points on your regular player character."
+    IDS_NO_PMARE            "We're sorry, but to use a player nightmare character, you must have enough PMare credits for at least 15 minutes of play. Earn more by using Personality Points on your regular player character."
     IDS_PMARE_EVOLVE        "Due to your XP gain, you have evolved into a more powerful nightmare!!!\n"
     IDS_PMARE_DEVOLVE       "Due to your XP loss, you have regressed into a less powerful nightmare!!!\n"
     IDS_PMARE_NO_ITEMS      "You can not manipulate items as a player nightmare\n"
@@ -3905,11 +3906,11 @@ BEGIN
     IDS_KNOW47              "The ancient stone walls of this armory are engraved with four full length bas reliefs of people. Above each is carved a simple balance. The first shows a smiling, slender man. He holds a leafy twig in his right hand. Beneath his feet is the inscription ""Chance"". The second bas relief shows a tall, stern faced woman. She wears a necklace of tear shaped crystals, and a blade at her belt. Her inscription reads ""Takana"". The third image shows a man in warrior's leathers. He holds a dove between his hands, and a round shield rests against his legs. His legend reads ""Tierlan"". The last engraving is of a slender man in silken robes. In his right hand he holds a tongue of flame, and his left grasps a wine bottle. His inscription reads ""Sigwulf."""
     IDS_KNOW48              "An obscured tunnel encircled with foliage and overgrowth appearing to conceal the mysteries of long ago."
     IDS_KNOW49              "A healthy natural growth of plantlife with an aroma of greenery first catches your senses.  A cool calming mist pulls you into the Study and a tranquilizing sound of trickling water surrounds you.  A brilliant glow of soft sparkling dew drops dance around giving off a splash effect."
-    IDS_GRANT_PPOINT_DLG    "Please enter the reason for your Roleplay Point grant below. Players are reminded to only make grants for excellent play - see the Help screen for more information."
-    IDS_PPOINT_HELP         "What are Roleplay Points? Roleplay Points (RPs) are a system in Underlight to reward excellent play where there is not already a game mechanism in place to do so (such as XP or item acquisition).  \n\nBecause Underlight is driven by players interaction, RPs are an important way to encourage roleplay, creativity, and enthusiasm. This ensures that players who focus on roleplay, develop strong personalities, and generally make the game fun for everyone are rewarded for their efforts."
-    IDS_PPOINT_HELP2        "How are Roleplay Points gained? Characters only gain RPs when other give them a RP using the Art of Reward (which can be used directly or via the ""Grant RP"" button on the control panel.) Each character has a ""pool"" of RPs he may grant to others each day via Reward; when given away, the RPs in this pool are automatically refreshed every 24 hours. Characters do not lose anything for granting RPs out of their pool (RPs in your pool can only be granted, and never used by you.). Each time a RP is granted, the granting character must provide a short description of what was done to earn the RP. To prevent favoritism, each character may only grant one RP to any other character once per 7 days."
-    IDS_PPOINT_HELP3        "What can I do with Roleplay Points? Characteres may use RPs to advance their charaters in ways not normally possible - including permanent stat increases, bypassing Train requirements, and evoking Arts the character can not normally cast! RPs allow an entirely new path of advancement beyond gaining XP and advancing in House rank. This allows characters who focus on roleplay, social interaction, and developing their personality to become more powerful through the acquisition and use of RPs. To use RPs, use the 'Use RP' button on the bottom left of the control panel. \n\n"
-    IDS_PPOINT_HELP4        "When should I grant a Roleplay Point via Reward? Whenever a character does anything that is especially cool or that otherwise makes the game more fun! Good examples include: excellent roleplay; organizing an event; being helpful; being creative, enthusiastic, passionate, and/or original; and doing something purely because it fits the character's personality and beliefs, especially when doing so is disadvantageous for the character! In short, use Reward anytime another player should be thanked for making the game more fun for you. Lastly, because RP grants are, like XP, out of character, players are encouraged to grant RPs to friends and foes alike...after all, a great hero can not exist without a great villain to oppose him!"
+    IDS_GRANT_PPOINT_DLG    "Please enter the reason for your Personality Point grant below. Players are reminded to only make grants for excellent play - see the Help screen for more information."
+    IDS_PPOINT_HELP         "What are Personality Points? Personality Points (PPs) is a system in Underlight to reward excellent play where there is not already a game mechanism in place to do so (such as XP or item acquisition).  \n\nBecause Underlight is driven by players interaction, PPs are an important way to encourage roleplay, creativity, and enthusiasm. This ensures that players who focus on roleplay, develop strong personalities, and generally make the game fun for everyone are rewarded for their efforts."
+    IDS_PPOINT_HELP2        "How are Personality Points gained? Characters only gain PPs when other give them a PP using the Art of Reward (which can be used directly or via the ""Grant PP"" button on the control panel.) Each character has a ""pool"" of PPs he may grant to others each day via Reward; when given away, the PPs in this pool are automatically refreshed every 24 hours. Characters do not lose anything for granting PPs out of their pool (PPs in your pool can only be granted, and never used by you.). Each time a PP is granted, the granting character must provide a short description of what was done to earn the PP. To prevent favoritism, each character may only grant one PP to any other character once per 7 days."
+    IDS_PPOINT_HELP3        "What can I do with Personalty Points? Characteres may use PPs to advance their charaters in ways not normally possible - including permanent stat increases, bypassing Train requirements, and evoking Arts the character can not normally cast! PPs allow an entirely new path of advancement beyond gaining XP and advancing in House rank. This allows characters who focus on roleplay, social interaction, and developing their personality to become more powerful through the acquisition and use of PPs. To use PPs, use the 'Use PP' button on the bottom left of the control panel. \n\n"
+    IDS_PPOINT_HELP4        "When should I grant a Personality Point via Reward? Whenever a character does anything that is especially cool or that otherwise makes the game more fun! Good examples include: excellent roleplay; organizing an event; being helpful; being creative, enthusiastic, passionate, and/or original; and doing something purely because it fits the character's personality and beliefs, especially when doing so is disadvantageous for the character! In short, use Reward anytime another player should be thanked for making the game more fun for you. Lastly, because PP grants are, like XP, out of character, players are encouraged to grant PPs to friends and foes alike...after all, a great hero can not exist without a great villain to oppose him!"
     IDS_PPOINT_HELP5        "\n"
     IDS_PP_STAT             "Permanent Stat Increase"
 END
@@ -3917,21 +3918,21 @@ END
 STRINGTABLE
 BEGIN
     IDC_PPOINT_NEXT         "D"
-    IDS_PPOINT_NEXT         "Please press 'OK' to go to the next Roleplay Points Help screen."
+    IDS_PPOINT_NEXT         "Please press 'OK' to go to the next Personality Points Help screen."
 END
 
 STRINGTABLE
 BEGIN
     IDS_PP_ART              "Evoke an Art once"
-    IDS_TOO_MUCH_PP         "You do not have enough Roleplay Points to do that right now"
-    IDS_SELECT_SOMETHING    "You need to select how you wish to spend your Personalty Points before you click 'OK'. If you do not wish to spend any Roleplay Points right now, please click 'Cancel' to exit the Roleplay Points screen."
-    IDS_USE_ERROR           "An error has occured while attempting to redeem your Roleplay Points. Please try again later, and if this error continues to occur, please report it as a bug with all available details (how you tried to spend your RPs, current RP total, etc.)"
-    IDS_USE_NOT_ENOUGH      "You do not have enough Roleplay Points to do that"
-    IDS_USE_STAT_MAX        "You cannot increase that stat with Roleplay Points because it is already at the maximum possible level"
-    IDS_USE_ART_MAX         "You cannot increase your skill in that Art with Roleplay Points because it is already at the maximum possible level"
-    IDS_USE_CANT_TRAIN      "You cannot use Roleplay Points to Train in that Art; perhaps you are not yet ready to improve, or perhaps it is already at its maximum level."
-    IDS_USE_CANT_SPHERE     "You cannot use Roleplay Points to Sphere yourself, either because you are not ready to Sphere (because your XP is not maxed out for your current Sphere) or perhaps because you are already at maximum Sphere"
-    IDS_STAT_INCREASE_PP    "Congratulations! You have permanently increased your %s with Roleplay Points!"
+    IDS_TOO_MUCH_PP         "You do not have enough Personality Points to do that right now"
+    IDS_SELECT_SOMETHING    "You need to select how you wish to spend your Personalty Points before you click 'OK'. If you do not wish to spend any Personality Points right now, please click 'Cancel' to exit the Personality Points screen."
+    IDS_USE_ERROR           "An error has occured while attempting to redeem your Personality Points. Please try again later, and if this error continues to occur, please report it as a bug with all available details (how you tried to spend your pps, current pp total, etc.)"
+    IDS_USE_NOT_ENOUGH      "You do not have enough Personality Points to do that"
+    IDS_USE_STAT_MAX        "You cannot increase that stat with Personality Points because it is already at the maximum possible level"
+    IDS_USE_ART_MAX         "You cannot increase your skill in that Art with Personality Points because it is already at the maximum possible level"
+    IDS_USE_CANT_TRAIN      "You cannot use Personality Points to Train in that Art; perhaps you are not yet ready to improve, or perhaps it is already at its maximum level."
+    IDS_USE_CANT_SPHERE     "You cannot use Personality Points to Sphere yourself, either because you are not ready to Sphere (because your XP is not maxed out for your current Sphere) or perhaps because you are already at maximum Sphere"
+    IDS_STAT_INCREASE_PP    "Congratulations! You have permanently increased your %s with Personality Points!"
     IDS_STAT_LABEL          "Stat to Increase:"
     IDS_USEART_LABEL        "Art to Evoke: "
     IDS_BYPASS_TRAIN_SEL    "Art to Learn/Plateau:"
@@ -3942,17 +3943,17 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_SPHERE_INCREASE_PP  "Congratulations! You have advanced to the next Sphere with Roleplay Points!"
+    IDS_SPHERE_INCREASE_PP  "Congratulations! Y ou have advanced to the next Sphere with Personality Points!"
     IDS_PP_LEARN_ART        "%s (to level %d)"
     IDS_EFFECT_ERR11        "Couldn't find particle script with id %u, called from %u."
     IDS_PPOINT_CYCLE        "Press 'OK' to start again, or 'Cancel' to close this help screen."
     IDS_PP_XP               "Gain XP"
-    IDS_TRAIN_PP            "You have successfully trained yourself in the Art of %s with Roleplay Points!"
+    IDS_TRAIN_PP            "You have successfully trained yourself in the Art of %s with Personality Points!"
     IDS_ORBIT_MAX           "You are already at maximum Orbit"
     IDS_CANT_GET_XP         "You can not gain XP right now"
     IDS_GAIN_XP             "Gain %d XP"
-    IDS_PP_GAIN_XP          "You have successfully used a Roleplay Point to gain XP!"
-    IDS_PP_EVOKE_ART        "You have successfully used Roleplay Points to evoke %s at skill %d!"
+    IDS_PP_GAIN_XP          "You have successfully used a Personality Point to gain XP!"
+    IDS_PP_EVOKE_ART        "You have successfully used Personality Points to evoke %s at skill %d!"
     IDS_SCAN                "Scan"
     IDS_PASSLOCK            "Passlock"
     IDS_HEAL                "Heal"
@@ -3976,14 +3977,14 @@ BEGIN
     IDS_TIMER_PROBLEM       "Unfortunately your system timer is not capable of providing sufficient resolution to run Underlight. Please make sure your operating system is up to date, reboot, and try again"
     IDS_TIMER_PROBLEM_CAPTION "Timer Problem"
     IDS_BACKUP_LOG          "%s-backup-%d-%d-%d.out"
-    IDS_NO_PP_MONSTER       "Nightmares cannot receive roleplay points!"
+    IDS_NO_PP_MONSTER       "Nightmares can not receive personality points!"
     IDS_NP_SYMBOL_ART_NAME  "NP Symbol"
 END
 
 STRINGTABLE
 BEGIN
     IDS_NP_SYMBOL           "That Art is not meant to be invoked directly, but instead changes your appearance automatically."
-    IDS_NO_PP_USE           "Only Dreamer characters may grant and use Roleplay Points"
+    IDS_NO_PP_USE           "Only Dreamer characters may grant and use Personality Points"
     IDS_CANT_ADD_NULL       "Enter a name to add first, then hit ok.\n"
     IDS_GUI_CREATION_ERROR  "Unable to create GUI.  Seeing this error indicates that the GUI attempted to load the player's default skin and failed and then attempted to load the %s skin and failed."
     IDS_GUI_SKIN_LOAD_ERROR "Underlight3D was unable to load to the new skin and failed to restore the previous skin.  If this error persists, and you have recently changed your GUI skin, try setting your skin back to the default Underlight3D skin in the user_interface.ini file."
@@ -4115,7 +4116,7 @@ BEGIN
     IDS_PROMPT_TO_ARCHIVE   "Your task archive is full. If you still wish to archive this task, remove a task from your archive, then try again."
     IDS_GENERIC_PLAT_FAILURE "Your plateau attempt has failed!"
     IDS_GENERIC_PLAT_SUCCESS "Your plateau attempt was succesful!"
-    IDS_FOUND_GUILD_DESCRIP "In order to succesfully found a guild, you must meet the following requirements:\n\tThere must be 9 other dreamers in your guild\n\tAll members of the guild must be present in this room\n\tAll members of the guild must agree upon the beliefs and charter\n\tAll members must have 5 Roleplay Points to spend to found the guild\n\nIf all of these requirements are met, your proto-guild will be created following approval of the GM team."
+    IDS_FOUND_GUILD_DESCRIP "In order to succesfully found a guild, you must meet the following requirements:\n\tThere must be 9 other dreamers in your guild\n\tAll members of the guild must be present in this room\n\tAll members of the guild must agree upon the beliefs and charter\n\tAll members must have 5 Personality Points to spend to found the guild\n\nIf all of these requirements are met, your proto-guild will be created following approval of the GM team."
     IDS_PROTO_CHOOSE_RULER  "Select a ruler."
     IDS_PROTO_CHOOSE_GUARDIAN "Select a guardian."
     IDS_PROTO_CHOOSE_INITIATE "Select an initiate."
@@ -4189,7 +4190,7 @@ BEGIN
     IDS_KNOW51              "The night air from the open roof drifts down around you. The walls are splashed with bright colors. There are shelves on all four walls filled with burnt candles, half full vials, herbs, driftwood, and shiny metals. A large table stands in the far corner covered with parchments. The room has a distinct feeling of distraction."
     IDS_PP_PMARE_TIME       "Buy PMare Time"
     IDS_PP_BOUGHT_PMARE_TIME 
-                            "You have successfully purchased PMare credits with Roleplay Points!"
+                            "You have successfully purchased PMare credits with Personality Points!"
 END
 
 STRINGTABLE
@@ -4225,4 +4226,3 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

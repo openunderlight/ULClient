@@ -94,7 +94,7 @@ public:
 	inline bool DoingLocate(void) {return fDoingLocate; };
   inline bool DisplayedAwaitUpdateArt (void) { return displayed_await_update_art; };
 	
-	int EffectiveForgeSkill(int player_skill);
+	int EffectiveForgeSkill(int player_skill, bool usePowerToken);
 	int Duration(int art_id, int skill); // calculates duration for art
 	bool UseInSanctuary(int art_id); // usable in sanctuary?
 	bool Restricted(int art_id); // focus restricted?
@@ -154,7 +154,7 @@ public:
 	void Darkness(void);
 	void ApplyDarkness(int skill, lyra_id_t caster_id);
 	void StartForgeTalisman(void);
-	void EndForgeTalisman(void *value);
+	void EndForgeTalisman(void *value, bool usePT);
 	void Terror(void);
 	void ApplyTerror(int skill, lyra_id_t caster_id);
 	void HealingAura(void);
@@ -446,6 +446,7 @@ public:
 	void StartSummonPrime(void);
 	void ApplySummonPrime(int guild_id, int success);
 	void EndSummonPrime(void* value);
+	int CountPowerTokens(cItem** tokens, lyra_id_t guild_id = Guild::NO_GUILD);
 
 	// pseudo arts that need to use cArts methods 
 	void StartShowGratitude(void);
@@ -480,8 +481,7 @@ private:
 	void ArtFinished(bool drain, bool allow_skill_increase = true);
 
 	// helper methods that go through a player's inventory
-	int CountTrainSphereTokens(lyra_id_t art_id, lyra_id_t target_id, cItem** tokens, bool unique = true);
-	int CountPowerTokens(cItem** tokens, lyra_id_t guild_id = Guild::NO_GUILD);
+	int CountTrainSphereTokens(lyra_id_t art_id, lyra_id_t target_id, cItem** tokens, bool unique = true);	
 	int CountAscensionTokens(lyra_id_t guild_id, cItem** tokens);
 	int CountDemotionTokens(lyra_id_t guild_id, cItem** tokens, cNeighbor* n);
 	cItem* FindPrime(lyra_id_t guild_id, int min_charges);
