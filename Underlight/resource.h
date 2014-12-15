@@ -155,8 +155,8 @@
 #define IDC_ITEM_DESCRIP                1068
 #define IDC_VOTEEXPIRATION              1069
 #define IDC_NOVOTES                     1070
-#define IDC_ITEM_DESCRIP2               1071
-#define IDC_ITEM_USE_PT                 1071
+#define IDC_ITEM_DESCRIP2               1070
+#define IDC_ITEM_USE_PT                 1070
 #define IDC_ITEM_FLAG1                  1074
 #define IDC_ITEM_FLAG2                  1075
 #define IDC_ITEM_FLAG3                  1076
@@ -445,6 +445,7 @@
 #define IDC_BIND_LOCAL                  1859
 #define IDC_UDP_PROXY                   1859
 #define IDC_INVERTMOUSE                 1860
+#define IDC_ART_PROMPTS                 1861
 #define IDC_TURNSPD                     1862
 #define IDC_FAST                        1863
 #define IDC_SLOW                        1864
@@ -2527,7 +2528,6 @@
 #define IDS_ITEM_SELECT_INSPECT         4004
 #define IDS_JOIN_SELECT                 4005
 #define IDS_ITEM_NONE                   4006
-#define IDS_ITEM_SELECTED               4007
 #define IDS_ART_SELECT                  4008
 #define IDS_ITEM_SELECT_USE             4009
 #define IDS_ITEM_SELECT_DROP            4010
