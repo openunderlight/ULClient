@@ -15,6 +15,7 @@
 #define IDS_NO_MEMORY                   9
 #define IDS_STRING10                    10
 #define IDS_GOALBOOK_ERR                11
+#define IDS_IDENTIFY_ESSENCE_NEXUS      12
 #define IDR_AgentSvr                    100
 #define IDS_SERVICENAME                 100
 #define IDD_LOGIN                       101

@@ -3527,6 +3527,8 @@ BEGIN
     IDS_NO_MEMORY           "Out of memory - can't allocate %u bytes"
     IDS_STRING10            "b"
     IDS_GOALBOOK_ERR        "Invariant broken - goal id at index %u should be NULL --- line %u"
+    IDS_IDENTIFY_ESSENCE_NEXUS 
+                            "This Essence Phylactory contains %d essences and has a strength of %d. It has a maximum capacity of %d essences and %d strength."
 END
 
 STRINGTABLE
