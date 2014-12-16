@@ -97,6 +97,15 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
 
   // NOTE: these MUST be in the same order as the function constants are defined!
 
+  /*
+  *		SUPER IMPORTANT NOTE!!!!!
+  *		
+  *		Items can have up to 6 function entries but forge can only forge up to 5!!!!
+  *		Don't bother trying to change forge: that way lies madness. Simply accept the fact and move on!
+  *			- MDA, 2014
+  *
+  */
+
   // WARD_FUNCTION
   { ITEM_WARD, 10, 5, true, false, false, true, true, false, true, {
     { ITEM_STR, 1, TRANSLATION_NONE, true, Stats::SKILL_MIN, Stats::SKILL_MAX},
@@ -267,6 +276,13 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_TARGETLO, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
     NO_FIELD},
   },
+
+  { ITEM_NEXUS, 9, 4, true, false, true, true, false, false, false, {
+	  { ITEM_STR, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
+	  { ITEM_ESSENCE, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
+	  { ITEM_STRCAP, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
+	  { ITEM_ESSCAP, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
+	  NO_FIELD, NO_FIELD }, }
 };
 
 const int LyraItem::item_functions_num =
@@ -654,6 +670,10 @@ void FASTCALL LyraItem::ConvertStateToNetwork(void* ssptr)
 	lyra_item_gratitude_t gratitude;
 	convert_hton(gratitude, ssptr);
 	break;
+  case META_ESSENCE_NEXUS_FUNCTION:
+	  lyra_item_meta_essence_nexus_t nexus;
+	  convert_hton(nexus, ssptr);
+	  break;
   case NO_FUNCTION: // should be an error
   case EFFECT_PLAYER_FUNCTION:
   case CHANGE_STAT_FUNCTION:
@@ -733,6 +753,10 @@ void FASTCALL LyraItem::ConvertStateToHost(void* ssptr)
 	lyra_item_gratitude_t gratitude;
 	convert_ntoh(gratitude, ssptr);
 	break;
+  case META_ESSENCE_NEXUS_FUNCTION:
+	  lyra_item_meta_essence_nexus_t nexus;
+	  convert_ntoh(nexus, ssptr);
+	  break;
   case NO_FUNCTION: // should be an error
   case EFFECT_PLAYER_FUNCTION:
   case CHANGE_STAT_FUNCTION:

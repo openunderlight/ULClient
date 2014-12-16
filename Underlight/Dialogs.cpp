@@ -1893,7 +1893,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						int curr_selection = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
 						int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), curr_selection);
 
-						for (int i = 0; i < LyraItem::MAX_FIELDS_PER_FUNCTION; i++)
+						for (int i = 0; i < LyraItem::MAX_FIELDS_PER_FUNCTION - 1; i++)
 						{
 							ShowWindow(GetDlgItem(hDlg, property_tags[i]), SW_HIDE);
 							ShowWindow(GetDlgItem(hDlg, property_fields[i]), SW_HIDE);
@@ -1902,7 +1902,14 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						// Read in info from effect definition
 
 						for (i = 0; i < LyraItem::FunctionEntries(curr_effect); i++)
-						{	 // Set label text, show the appopriate tags and fields
+						{	
+							// This is literally disgusting.
+							// Here's the thing: items can have 6 fields, but forge only has 5 properties
+							// Rather than adding property fields to forge -- that'd be annoying -- we simply break here
+							// You should never try to forge an item with >5 FunctionEntries!
+							if (i >= 5)
+								break;
+							// Set label text, show the appopriate tags and fields
 							SetWindowText(GetDlgItem(hDlg, property_tags[i]), LyraItem::EntryName(curr_effect, i));
 							ShowWindow(GetDlgItem(hDlg, property_tags[i]), SW_SHOWNORMAL);
 							ShowWindow(GetDlgItem(hDlg, property_fields[i]), SW_SHOWNORMAL);

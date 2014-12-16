@@ -7,10 +7,7 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-// To compile on VS 2010 Express, comment the following line and uncomment the two after.
 #include "afxres.h"
-//#include "WinResrc.h"
-//#define IDC_STATIC  -1
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -3530,6 +3527,8 @@ BEGIN
     IDS_NO_MEMORY           "Out of memory - can't allocate %u bytes"
     IDS_STRING10            "b"
     IDS_GOALBOOK_ERR        "Invariant broken - goal id at index %u should be NULL --- line %u"
+    IDS_IDENTIFY_ESSENCE_NEXUS 
+                            "This Essence Phylactory contains %d essences and has a strength of %d. It has a maximum capacity of %d essences and %d strength."
 END
 
 STRINGTABLE
