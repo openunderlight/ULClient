@@ -277,12 +277,14 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     NO_FIELD},
   },
 
-  { ITEM_NEXUS, 9, 4, true, false, true, true, false, false, false, {
+  // META_ESSENCE_NEXUS_FUNCTION
+  { ITEM_NEXUS, 10, 4, true, false, true, true, false, false, false, {
+	  { ITEM_UNUSED, 1, TRANSLATION_NONE, false, 0, 0}, // might eventually be the type, like Imprison, Banish, etc.
 	  { ITEM_STR, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
 	  { ITEM_ESSENCE, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
 	  { ITEM_STRCAP, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
 	  { ITEM_ESSCAP, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
-	  NO_FIELD, NO_FIELD }, }
+	  NO_FIELD }, }
 };
 
 const int LyraItem::item_functions_num =
