@@ -237,6 +237,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x123A, // Kinesis
 0x3066, // Misdirection
 0x5D3E, // Chaotic Vortex
+0x7BCA, // Essence Container
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -386,9 +387,10 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_NP_SYMBOL_ART_NAME, 			Stats::NO_STAT,		10,  0, 0,	2, 	-1, SANCT},
 {IDS_LOCATE_MARES,					Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT},
 {IDS_TEMPEST,				        Stats::LUCIDITY,	  60, 40, 0,	7, 	-1,  FOCUS|LEARN},
-{IDS_KINESIS, 			       Stats::WILLPOWER,	  30,  5,  0,	1, 	-1, FOCUS|LEARN|NEIGH},
-{IDS_MISDIRECTION,         Stats::DREAMSOUL,    60,  30, 0, 5,  -1, LEARN|NEIGH},
-{IDS_CHAOTIC_VORTEX,       Stats::DREAMSOUL,    70,  40, 4, 5,  -1, NEIGH|NEED_ITEM},
+{IDS_KINESIS, 						Stats::WILLPOWER,	  30,  5,  0,	1, 	-1, FOCUS|LEARN|NEIGH},
+{IDS_MISDIRECTION,					Stats::DREAMSOUL,    60,  30, 0, 5,  -1, LEARN|NEIGH},
+{IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,    70,  40, 4, 5,  -1, NEIGH|NEED_ITEM},
+{IDS_ESSENCE_CONTAINER,				Stats::DREAMSOUL, 30, 5, 0, 5, -1, SANCT|MAKE_ITEM|LEARN },
 };
 
 
@@ -1132,6 +1134,7 @@ void cArts::ApplyArt(void)
     case Arts::KINESIS: method = &cArts::StartKinesis; break;
     case Arts::MISDIRECTION: method = &cArts::Misdirection; break;
     case Arts::CHAOTIC_VORTEX: method = &cArts::ChaoticVortex; break;
+	case Arts::ESSENCE_CONTAINER: method = &cArts::EssenceContainer; break;
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
 	}
@@ -1487,6 +1490,36 @@ void cArts::Meditate(void)
 			cDS->PlaySound(LyraSound::MEDITATION, player->x, player->y, true);
 	this->ArtFinished(true);
 	return;
+}
+
+
+void cArts::EssenceContainer(void)
+{
+	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, 200, 200 };
+	LmItem info;
+	LmItemHdr header;
+	cItem *item;
+
+	header.Init(0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE);
+	header.SetGraphic(LyraBitmap::GIFT);
+	header.SetColor1(15); header.SetColor2(0);
+	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::META_ESSENCE_NEXUS_FUNCTION), 0, 0));
+
+	_stprintf(message, _T("%s"), _T("Essence Box"));
+	_tcsnccpy(disp_message, message, LmItem::NAME_LENGTH - 1);
+	disp_message[LmItem::NAME_LENGTH - 1] = '\0';
+	info.Init(header, disp_message, 0, 0, 0);
+	info.SetStateField(0, &nexus, sizeof(nexus));
+	info.SetCharges(1);
+	item = CreateItem(player->x, player->y, player->angle, info, 0, false, GMsg_PutItem::DEFAULT_TTL);
+	if (item == NO_ITEM)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	this->ArtFinished(true);
 }
 
 //////////////////////////////////////////////////////////////////
