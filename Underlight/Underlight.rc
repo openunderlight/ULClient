@@ -3528,7 +3528,7 @@ BEGIN
     IDS_STRING10            "b"
     IDS_GOALBOOK_ERR        "Invariant broken - goal id at index %u should be NULL --- line %u"
     IDS_IDENTIFY_ESSENCE_NEXUS 
-                            "This Essence Phylactory contains %d essences and has a strength of %d. It has a maximum capacity of %d essences and %d strength."
+                            "This essence container contains %d essences and has a strength of %d. It has a maximum capacity of %d essences and %d strength."
 END
 
 STRINGTABLE
@@ -4211,6 +4211,7 @@ BEGIN
     IDS_TEL_MUST_BE_FOCUS   "You must be a %s to use that portal\n"
     IDS_TEL_MUST_HAVE_MARK  "You must possess the %s to use that portal\n"
     IDS_ARRET_CREST         "Crest of Arret"
+    IDS_ESSENCE_CONTAINER   "Essence Container"
 END
 
 #endif    // English (United States) resources
