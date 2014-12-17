@@ -344,6 +344,7 @@ struct lyra_item_support_t {  // 10 bytes
 
 struct lyra_item_meta_essence_nexus_t { // 9 bytes
 	unsigned char type;			// META_ESSENCE_NEXUS_FUNCTION
+	unsigned char unused;
 	unsigned short strength;
 	unsigned short essences;
 	unsigned short strength_cap;

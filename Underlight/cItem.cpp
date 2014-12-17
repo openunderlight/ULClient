@@ -239,7 +239,6 @@ bool cItem::RightClick(void)
 			gs->SendItemDescripRequest(lmitem.Header());
 	}
 
-
 	if (this->ItemFunction(0) == LyraItem::META_ESSENCE_FUNCTION)
 	{
 		const void *state = lmitem.StateField(0);
