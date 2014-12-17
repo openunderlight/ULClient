@@ -1495,15 +1495,16 @@ void cArts::Meditate(void)
 
 void cArts::EssenceContainer(void)
 {
-	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, 200, 200 };
+	int capacity = 20 * ((player->Skill(Arts::ESSENCE_CONTAINER) / 10) + 1);
+	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity, capacity };
 	LmItem info;
 	LmItemHdr header;
 	cItem *item;
 
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE);
-	header.SetGraphic(LyraBitmap::GIFT);
-	header.SetColor1(15); header.SetColor2(0);
+	header.SetGraphic(LyraBitmap::SOUL_ESSENCE);
+	header.SetColor1(0); header.SetColor2(0);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::META_ESSENCE_NEXUS_FUNCTION), 0, 0));
 
 	_stprintf(message, _T("%s"), _T("Essence Box"));
