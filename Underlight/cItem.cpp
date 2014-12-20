@@ -713,14 +713,18 @@ void cItem::Use(void)
 		{
 			lyra_item_meta_essence_nexus_t nexus;
 			lyra_item_essence_t essence;
-			bool drains = false;
+			bool drains = false, full = false;
 			memcpy(&nexus, state, sizeof(nexus));
 
 			for (cItem *item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
 			{
-				if (nexus.strength >= nexus.strength_cap || nexus.essences >= nexus.essence_cap)
-					break;
+				if (nexus.strength >= nexus.strength_cap || nexus.essences >= nexus.essence_cap) {
+					if (!drains)
+						LoadString(hInstance, IDS_CHAOS_WELL_FULL, disp_message, sizeof(disp_message));
 
+					full = true;
+					break;
+				}
 				if ((item->Status() == ITEM_OWNED) && (item->ItemFunction(0) == LyraItem::ESSENCE_FUNCTION))
 				{ // it's essence - add to meta if it's not a user
 					state = item->Lmitem().StateField(0);
@@ -737,14 +741,15 @@ void cItem::Use(void)
 			}
 
 			actors->IterateItems(DONE);
+			// if I drained, regardless if I filled it, display success
 			if (drains)
 			{
-				LoadString(hInstance, IDS_META_ESSENCE_SUCCESS, disp_message, sizeof(disp_message));
+				LoadString(hInstance, IDS_CHAOS_WELL_SUCCESS, disp_message, sizeof(disp_message));
 				lmitem.SetStateField(0, &nexus, sizeof(nexus));
 				needsUpdate = true;
-			}
-			else
-				LoadString(hInstance, IDS_META_ESSENCE_FAILURE, disp_message, sizeof(disp_message));
+			} // if I didn't drain and I'm not full display failure
+			else if (!full)
+				LoadString(hInstance, IDS_CHAOS_WELL_FAILURE, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
 
 		}
