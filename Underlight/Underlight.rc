@@ -4214,6 +4214,13 @@ BEGIN
     IDS_CHAOS_WELL          "Chaos Well"
 END
 
+STRINGTABLE
+BEGIN
+    IDS_CHAOS_WELL_FULL     "That Chaos Well is full and cannot contain any more essences."
+    IDS_CHAOS_WELL_SUCCESS  "You transfer the nightmare essence into the Chaos Well\n"
+    IDS_CHAOS_WELL_FAILURE  "You have no nightmare essence to place into the Chaos Well\n"
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
