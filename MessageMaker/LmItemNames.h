@@ -71,7 +71,7 @@
 #define ITEM_CREATORHI _T("Creator ID (hi)")
 
 #define ITEM_PRIME _T("House Prime")
-#define ITEM_NEXUS _T("Nexus")
+#define ITEM_NEXUS _T("Chaos Well")
 #define ITEM_GID _T("Guild ID")
 #define ITEM_STRHI _T("Strength (hi)")
 #define ITEM_STRLO _T("Strength (low)")
