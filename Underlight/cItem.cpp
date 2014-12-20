@@ -1468,6 +1468,9 @@ bool cItem::DrainEssence(int amount)
 		player->SetCurrStat(player->SelectedStat(), drain, SET_RELATIVE, player->ID());
 		nexus.strength -= drain;
 		if (nexus.strength <= 0) {
+			LoadString(hInstance, IDS_ITEM_DISCHARGED, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, this->Name());
+			display->DisplayMessage(message);
 			this->Destroy();
 			return true;
 		}

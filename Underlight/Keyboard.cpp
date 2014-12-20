@@ -921,9 +921,9 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 
 	case VK_F9:
 	{
-	// use this to fix checksums
-	for (int q=0;q<NUM_ARTS;q++)
-		arts->CanUseArt(q, true);
+		// use this to fix checksums
+		for (int q=0;q<NUM_ARTS;q++)
+			arts->CanUseArt(1, true);
 		return true;
 	}
 		
