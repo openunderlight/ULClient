@@ -1505,7 +1505,7 @@ void cArts::EssenceContainer(void)
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE);
 	header.SetGraphic(LyraBitmap::BOX);
-	header.SetColor1(player->Avatar().Color0()); header.SetColor2(player->Avatar().Color4());
+	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::META_ESSENCE_NEXUS_FUNCTION), 0, 0));
 
 	LoadString(hInstance, IDS_CHAOS_WELL, message, sizeof(message));
