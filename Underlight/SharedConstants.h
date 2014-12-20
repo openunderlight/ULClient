@@ -259,7 +259,7 @@ struct Arts {
   KINESIS,    // Kinesis
   MISDIRECTION, // Misdirection
   CHAOTIC_VORTEX, // Chaotic Vortex
-  ESSENCE_CONTAINER, // Essence Container
+  CHAOS_WELL, // Essence Container
 
 	// END OF ARTS LIST - below are art-related constants
 
@@ -354,6 +354,7 @@ struct LyraBitmap {
 
 		SCROLL = 43,
 		FLOWER = 44,
+		BOX = 45,
 		GIFT = 46,
 		STAFF = 47,
 		RING = 48,		
