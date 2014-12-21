@@ -82,7 +82,11 @@ const int CHANCE_SPELL_FAILURE = 1; // % chance of art failure
 
 const float PUSH_DISTANCE = 75.0f;
 
-const int CHANCE_SKILL_INCREASE = 15; // % chance of skill increase
+#if defined (UL_DEBUG) && !defined (LIVE_DEBUG)	
+const int CHANCE_SKILL_INCREASE = 66;
+#else
+const int CHANCE_SKILL_INCREASE = 3; // % chance of skill increase
+#endif
 
 const int CASTING_TIME_MULTIPLIER = 150; // milliseconds per unit of casting time
 const int MIN_DS_SOULEVOKE = 10;
@@ -619,12 +623,9 @@ void cArts::BeginArt(int art_id, bool bypass)
 
 	if (duration)
 	{	// no begin message for instantaneous arts
-		if (options.art_prompts)
-		{
-			LoadString (hInstance, IDS_BEGIN_ART, disp_message, sizeof(disp_message));
-			_stprintf(message,disp_message,this->Descrip(art_id));
-			display->DisplayMessage (message, false);
-		}
+		LoadString (hInstance, IDS_BEGIN_ART, disp_message, sizeof(disp_message));
+		_stprintf(message,disp_message,this->Descrip(art_id));
+		display->DisplayMessage (message, false);
 		player->EvokingFX().Activate(art_id, true);
 	}
 	else
@@ -1270,29 +1271,20 @@ void cArts::CaptureCP(int new_mode, lyra_id_t art_id)
 	if (new_mode == INVENTORY_TAB)
 	{
 		cp->SetSelectedItem(NO_ACTOR);
-		if (options.art_prompts)
-		{
-			LoadString (hInstance, IDS_CHOOSE_ITEM, disp_message, sizeof(disp_message));
-			display->DisplayMessage (disp_message);
-		}
+		LoadString (hInstance, IDS_CHOOSE_ITEM, disp_message, sizeof(disp_message));
+		display->DisplayMessage (disp_message);
 	}
 	else if (new_mode == NEIGHBORS_TAB)
 	{
 		cp->SetSelectedNeighbor(NO_ACTOR);
-		if (options.art_prompts)
-		{
-			LoadString (hInstance, IDS_CHOOSE_AVATAR, disp_message, sizeof(disp_message));
-			display->DisplayMessage (disp_message);
-		}
+		LoadString (hInstance, IDS_CHOOSE_AVATAR, disp_message, sizeof(disp_message));
+		display->DisplayMessage (disp_message);
 	}
 	else if (new_mode == ARTS_TAB)
 	{
 		cp->SetSelectedArt(Arts::NONE);
-		if (options.art_prompts)
-		{
-			LoadString (hInstance, IDS_CHOOSE_ART, disp_message, sizeof(disp_message));
-			display->DisplayMessage (disp_message);
-		}
+		LoadString (hInstance, IDS_CHOOSE_ART, disp_message, sizeof(disp_message));
+		display->DisplayMessage (disp_message);
 	}
 
 	return;
@@ -1413,18 +1405,15 @@ void cArts::DisplayUsedOnOther(cNeighbor *n, lyra_id_t art_id)
 {
 	if (n != NO_ACTOR)
 	{
-		if (options.art_prompts)
+		LoadString (hInstance, IDS_ART_APPLIED_TO_OTHER, disp_message, sizeof(disp_message));
+		if (n->ID() == player->ID())
 		{
-			LoadString (hInstance, IDS_ART_APPLIED_TO_OTHER, disp_message, sizeof(disp_message));
-			if (n->ID() == player->ID())
-			{
-			LoadString(hInstance, IDS_YOURSELF, temp_message, sizeof(temp_message));
-			_stprintf(message, disp_message, this->Descrip(art_id), temp_message);
-			}
-			else
-			_stprintf(message, disp_message, this->Descrip(art_id), n->Name());
-			display->DisplayMessage (message, false);
+		LoadString(hInstance, IDS_YOURSELF, temp_message, sizeof(temp_message));
+		_stprintf(message, disp_message, this->Descrip(art_id), temp_message);
 		}
+		else
+		_stprintf(message, disp_message, this->Descrip(art_id), n->Name());
+		display->DisplayMessage (message, false);
 	}
 	return;
 }
@@ -2156,12 +2145,9 @@ void cArts::ApplyReflectedArt(int art_id, lyra_id_t caster_id)
 	case Arts::SOUL_SHIELD:
 		ApplySoulShield(player->Skill(art_id),player->ID());
 		break;
-	case Arts::KINESIS:
-		ApplyKinesis (player->Skill(art_id), REFLECT_ID, ((player->angle)+Angle_180)/4);
-		break;
-	case Arts::PEACE_AURA:
-		ApplyPeaceAura(player->Skill(art_id), player->ID());
-		break;
+  case Arts::KINESIS:
+    ApplyKinesis (player->Skill (art_id), player->ID (), player->angle);
+    break;
 	};
 	
 	return;
@@ -3047,16 +3033,19 @@ void cArts::StartForgeTalisman(void)
 	return;
 }
 
-void cArts::EndForgeTalisman(void *value)
+void cArts::EndForgeTalisman(void *value, bool usePT)
 {
 	int success = *((int*)value);
 	if (success)
 	{
 		cDS->PlaySound(LyraSound::FORGE, player->x, player->y, true);
-		cItem* power_tokens[Lyra::INVENTORY_MAX];
-		int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
-		if(num_tokens)
-			power_tokens[0]->Destroy();
+		if(usePT)
+		{
+			cItem* power_tokens[Lyra::INVENTORY_MAX];
+			int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
+			if(num_tokens)
+				power_tokens[0]->Destroy();
+		}
 		this->ArtFinished(true);
 	}
 	else
@@ -4150,16 +4139,13 @@ void cArts::ApplyKinesis (int skill, lyra_id_t caster_id, int angle)
 {
 	player->EvokedFX().Activate(Arts::KINESIS, false);
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
-  if (n == NO_ACTOR && caster_id != REFLECT_ID)
+  if (n == NO_ACTOR)
     return;
-  angle = angle*4;
 	this->DisplayUsedByOther(n, Arts::KINESIS);
   MoveActor (player, angle, PUSH_DISTANCE, MOVE_NORMAL);
-  if (caster_id != REFLECT_ID) { // No need to show Kinesis was reflected again
   LoadString (hInstance, IDS_KINESIS_APPLIED, disp_message, sizeof(disp_message));
   _stprintf (message, disp_message, n->Name ());
 	display->DisplayMessage (message);
-  }
 	player->PerformedAction();
 	return;
 }
@@ -4183,7 +4169,7 @@ void cArts::EndKinesis (void)
 		if (n->IsVulnerable() && !(player->flags & ACTOR_BLINDED) && 
 			(n->Room() == player->Room())) 
 		{
-			gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::KINESIS, player->Skill(Arts::KINESIS), (player->angle)/4);
+			gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::KINESIS, player->Skill(Arts::KINESIS), player->angle);
 			this->DisplayUsedOnOther(n, Arts::KINESIS);
 			this->ArtFinished(true);
 		}
@@ -5409,10 +5395,14 @@ int cArts::CountPowerTokens(cItem** tokens, lyra_id_t guild_id)
 }
 
 // return the effective skill if we take power tokens into account
-int cArts::EffectiveForgeSkill(int player_skill)
-{
-	cItem* power_tokens[Lyra::INVENTORY_MAX];
-	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
+int cArts::EffectiveForgeSkill(int player_skill, bool usePowerToken)
+{	
+	int num_tokens = 0;
+	if(usePowerToken) {
+		cItem* power_tokens[Lyra::INVENTORY_MAX];
+		num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
+	}
+
 	if(!num_tokens)
 		return MAX(1,player_skill / 4);
 	return player_skill;
@@ -5702,7 +5692,7 @@ void cArts::StartPeaceAura(void)
 void cArts::ApplyPeaceAura(int skill, lyra_id_t caster_id)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
-	if ((n == NO_ACTOR) && (caster_id != player->ID()))
+	if (n == NO_ACTOR)
 		return;
 
 	player->EvokedFX().Activate(Arts::PEACE_AURA, false);
@@ -8592,6 +8582,7 @@ void cArts::EndPowerToken(void *value)
 	else
 	{	// any prime will do
 		cItem* prime = FindPrime(Guild::NO_GUILD, Arts::POWER_TOKEN_DRAIN);
+
 		if (prime == NO_ITEM) 
 		{
 			LoadString (hInstance, IDS_NEED_PRIME_PT, disp_message, sizeof(disp_message));
