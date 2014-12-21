@@ -239,7 +239,6 @@ bool cItem::RightClick(void)
 			gs->SendItemDescripRequest(lmitem.Header());
 	}
 
-
 	if (this->ItemFunction(0) == LyraItem::META_ESSENCE_FUNCTION)
 	{
 		const void *state = lmitem.StateField(0);
@@ -248,6 +247,15 @@ bool cItem::RightClick(void)
 		LoadString (hInstance, IDS_IDENTIFY_META_ESSENCE, disp_message, sizeof(disp_message));
 	_stprintf(message, disp_message, GuildName(meta_essence.guild_id),
 			meta_essence.strength(), meta_essence.num_mares());
+		display->DisplayMessage(message, false);
+	}
+	else if (this->ItemFunction(0) == LyraItem::META_ESSENCE_NEXUS_FUNCTION)
+	{
+		const void *state = lmitem.StateField(0);
+		lyra_item_meta_essence_nexus_t nexus;
+		memcpy(&nexus, state, sizeof(nexus));
+		LoadString(hInstance, IDS_IDENTIFY_ESSENCE_NEXUS, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, nexus.essences, nexus.strength, nexus.essence_cap, nexus.strength_cap);
 		display->DisplayMessage(message, false);
 	}
 	else
@@ -636,6 +644,7 @@ void cItem::Use(void)
 		{
 			lyra_item_meta_essence_t meta_essence;
 			lyra_item_essence_t essence;
+			lyra_item_meta_essence_nexus_t nexus;
 			bool drains = false;
 			memcpy(&meta_essence, state, sizeof(meta_essence));
 
@@ -653,18 +662,40 @@ void cItem::Use(void)
 
 			// check that the proper # of ruler support tokens are carried
 			for (cItem *item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
-				if ((item->Status() == ITEM_OWNED) && (item->ItemFunction(0) == LyraItem::ESSENCE_FUNCTION))
-				{ // it's essence - add to meta if it's not a user
-					state = item->Lmitem().StateField(0);
-					memcpy(&essence, state, sizeof(essence));
-					if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE)
-					{ // add strength to meta talisman
-						meta_essence.set_strength(meta_essence.strength() + essence.strength);
-						meta_essence.set_num_mares(meta_essence.num_mares() + 1);
-						item->Lmitem().SetCharges(0);
-						drains = true;
+				if (item->Status() == ITEM_OWNED)
+				{
+						switch (item->ItemFunction(0))
+						{
+							case LyraItem::ESSENCE_FUNCTION:
+							{
+								// it's essence - add to meta if it's not a user
+								state = item->Lmitem().StateField(0);
+								memcpy(&essence, state, sizeof(essence));
+								if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE)
+								{ // add strength to meta talisman
+									meta_essence.set_strength(meta_essence.strength() + essence.strength);
+									meta_essence.set_num_mares(meta_essence.num_mares() + 1);
+									item->Lmitem().SetCharges(0);
+									drains = true;
+								}
+							}
+								break;
+							case LyraItem::META_ESSENCE_NEXUS_FUNCTION:
+							{
+								state = item->Lmitem().StateField(0);
+								memcpy(&nexus, state, sizeof(nexus));
+								if (nexus.essences > 0)
+									meta_essence.set_num_mares(meta_essence.num_mares() + nexus.essences);
+								if (nexus.strength > 0)
+									meta_essence.set_strength(meta_essence.strength() + nexus.strength);
+								// MDA: Note, should this just be Destroy()?
+								item->Lmitem().SetCharges(0);
+								drains = true;
+							}
+								break;
 					}
 				}
+				
 			actors->IterateItems(DONE);
 			if (drains)
 			{
@@ -677,7 +708,52 @@ void cItem::Use(void)
 			display->DisplayMessage (disp_message);
 		}
 			break;
+	
+		case LyraItem::META_ESSENCE_NEXUS_FUNCTION:
+		{
+			lyra_item_meta_essence_nexus_t nexus;
+			lyra_item_essence_t essence;
+			bool drains = false, full = false;
+			memcpy(&nexus, state, sizeof(nexus));
 
+			for (cItem *item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+			{
+				if (nexus.strength >= nexus.strength_cap || nexus.essences >= nexus.essence_cap) {
+					if (!drains)
+						LoadString(hInstance, IDS_CHAOS_WELL_FULL, disp_message, sizeof(disp_message));
+
+					full = true;
+					break;
+				}
+				if ((item->Status() == ITEM_OWNED) && (item->ItemFunction(0) == LyraItem::ESSENCE_FUNCTION))
+				{ // it's essence - add to meta if it's not a user
+					state = item->Lmitem().StateField(0);
+					memcpy(&essence, state, sizeof(essence));
+					if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE && 
+						essence.strength <= 1) // prevent strength > 1 from being absorbed by nexus
+					{ // add strength to meta talisman
+						nexus.strength += essence.strength;
+						nexus.essences++;
+						item->Lmitem().SetCharges(0);
+						drains = true;
+					}
+				}
+			}
+
+			actors->IterateItems(DONE);
+			// if I drained, regardless if I filled it, display success
+			if (drains)
+			{
+				LoadString(hInstance, IDS_CHAOS_WELL_SUCCESS, disp_message, sizeof(disp_message));
+				lmitem.SetStateField(0, &nexus, sizeof(nexus));
+				needsUpdate = true;
+			} // if I didn't drain and I'm not full display failure
+			else if (!full)
+				LoadString(hInstance, IDS_CHAOS_WELL_FAILURE, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+
+		}
+			break;
 		case LyraItem::ARMOR_FUNCTION:
 			if (player->SetActiveShield(this))
 			{
@@ -1329,6 +1405,8 @@ bool cItem::DrainEssence(int amount)
 {
 	lyra_item_essence_t essence;
 	lyra_item_meta_essence_t meta_essence;
+	lyra_item_meta_essence_nexus_t nexus;
+
 	int drain;
 	int multiplier = 1; // drain multiplier
 	const void* state;
@@ -1381,6 +1459,29 @@ bool cItem::DrainEssence(int amount)
 		player->SetCurrStat(player->SelectedStat(), drain, SET_RELATIVE, player->ID());
 		meta_essence.set_strength(meta_essence.strength() - drain);
 		lmitem.SetStateField(0, &meta_essence, sizeof(meta_essence));
+		needsUpdate = true;
+		return true;
+	}
+
+	if (this->ItemFunction(0) == LyraItem::META_ESSENCE_NEXUS_FUNCTION)
+	{
+		state = lmitem.StateField(0);
+		memcpy(&nexus, state, sizeof(nexus));
+		if (amount > nexus.strength)
+			drain = nexus.strength;
+		else
+			drain = amount;
+		player->SetCurrStat(player->SelectedStat(), drain, SET_RELATIVE, player->ID());
+		nexus.strength -= drain;
+		if (nexus.strength <= 0) {
+			LoadString(hInstance, IDS_ITEM_DISCHARGED, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, this->Name());
+			display->DisplayMessage(message);
+			this->Destroy();
+			return true;
+		}
+
+		lmitem.SetStateField(0, &nexus, sizeof(nexus));
 		needsUpdate = true;
 		return true;
 	}

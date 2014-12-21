@@ -3528,6 +3528,8 @@ BEGIN
     IDS_NO_MEMORY           "Out of memory - can't allocate %u bytes"
     IDS_STRING10            "b"
     IDS_GOALBOOK_ERR        "Invariant broken - goal id at index %u should be NULL --- line %u"
+    IDS_IDENTIFY_ESSENCE_NEXUS 
+                            "This chaos well contains %d essences and has a strength of %d. It has a maximum capacity of %d essences and %d strength."
 END
 
 STRINGTABLE
@@ -4210,6 +4212,14 @@ BEGIN
     IDS_TEL_MUST_BE_FOCUS   "You must be a %s to use that portal\n"
     IDS_TEL_MUST_HAVE_MARK  "You must possess the %s to use that portal\n"
     IDS_ARRET_CREST         "Crest of Arret"
+    IDS_CHAOS_WELL          "Chaos Well"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CHAOS_WELL_FULL     "That Chaos Well is full and cannot contain any more essences."
+    IDS_CHAOS_WELL_SUCCESS  "You transfer the nightmare essence into the Chaos Well\n"
+    IDS_CHAOS_WELL_FAILURE  "You have no nightmare essence to place into the Chaos Well\n"
 END
 
 #endif    // English (United States) resources

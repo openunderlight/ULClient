@@ -182,7 +182,7 @@ public:
   void ApplyMisdirection (int skill, lyra_id_t caster_id);
   void ChaoticVortex (void);
   void ApplyChaoticVortex (int skill, lyra_id_t caster_id);
-
+  void EssenceContainer(void);
 	// arts that require selecting a neighbor
 	void StartJoin(void);
 	void EndJoin(void);
