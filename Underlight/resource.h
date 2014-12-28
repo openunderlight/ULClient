@@ -15,7 +15,6 @@
 #define IDS_NO_MEMORY                   9
 #define IDS_STRING10                    10
 #define IDS_GOALBOOK_ERR                11
-#define IDS_IDENTIFY_ESSENCE_NEXUS      12
 #define IDR_AgentSvr                    100
 #define IDS_SERVICENAME                 100
 #define IDD_LOGIN                       101
@@ -2820,10 +2819,6 @@
 #define IDS_TEL_MUST_BE_FOCUS           4284
 #define IDS_TEL_MUST_HAVE_MARK          4285
 #define IDS_ARRET_CREST                 4286
-#define IDS_CHAOS_WELL                  4287
-#define IDS_CHAOS_WELL_FULL             4288
-#define IDS_CHAOS_WELL_SUCCESS          4289
-#define IDS_CHAOS_WELL_FAILURE          4290
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
