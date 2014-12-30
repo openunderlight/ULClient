@@ -1595,8 +1595,6 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 	TC_ITEM tab_item;
 	const int TAB_HEIGHT = 20;
 	const int TAB_WIDTH = 50;
-	static int usePowerToken = 0;
-	bool gotUsePt = false;
 
 	// iteration facilitators
 	UINT property_tags[5] = {IDC_PROPERTY1_HEADER, IDC_PROPERTY2_HEADER,
@@ -1670,7 +1668,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 #else		// default to talis for players
 			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 1);
 #endif
-			ShowWindow(GetDlgItem(hDlg, IDC_ITEM_USE_PT), SW_HIDE);
+
 			LoadString(hInstance, IDS_SELECT_FUNCTION, message, sizeof(message));
 
 			ListBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), message);
@@ -1826,11 +1824,6 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 				}
 
 				case CreateItem::FORGE_ITEM: {
-				cItem* power_tokens[Lyra::INVENTORY_MAX];
-				int num_tokens = arts->CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
-				if(num_tokens)
-					ShowWindow(GetDlgItem(hDlg, IDC_ITEM_USE_PT), SW_SHOW);
-
 					opened_by = CreateItem::FORGE_ITEM;
 					LoadString(hInstance, IDS_FORGE_TEXT, message, sizeof(message));
 					Edit_SetText(GetDlgItem(hDlg, IDC_FORGE_TEXT), message);
@@ -1854,7 +1847,6 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					tab_item.mask = TCIF_TEXT;
 					LoadString (hInstance, IDS_ITEM_FUNCTION, disp_message, sizeof(disp_message));
 					tab_item.pszText = disp_message;
-					usePowerToken = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_USE_PT));
 					TabCtrl_InsertItem(GetDlgItem(hDlg, IDC_FUNCTION_TAB), 0, &tab_item);
 					for (int i = 1; i < LyraItem::NumItemFunctions(); i++)
 						if (LyraItem::FunctionCreateByForge(i))
@@ -1863,7 +1855,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							ListBox_SetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), (ListBox_GetCount(GetDlgItem(hDlg, IDC_TYPE_COMBO))-1), i);
 						}
 
-					_stprintf(message, _T("%d"), arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN), usePowerToken > 0));
+					_stprintf(message, _T("%d"), arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN)));
 					//SendMessage(GetDlgItem(hDlg, IDC_CHARGES), EM_SETREADONLY, 1, 0);
 					
 					ShowWindow (GetDlgItem(hDlg, IDC_ITEM_DESCRIP), SW_SHOWNORMAL);
@@ -1894,17 +1886,14 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 		case WM_COMMAND:
 			switch (LOWORD(wParam))
 			{
-			
-			case IDC_ITEM_USE_PT:
-				usePowerToken = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_USE_PT));
-				gotUsePt = true;
+
 			case IDC_TYPE_COMBO:
-						  if (HIWORD(wParam) == LBN_SELCHANGE || gotUsePt)
+						  if (HIWORD(wParam) == LBN_SELCHANGE)
 					{
 						int curr_selection = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
 						int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), curr_selection);
 
-						for (int i = 0; i < LyraItem::MAX_FIELDS_PER_FUNCTION - 1; i++)
+						for (int i = 0; i < LyraItem::MAX_FIELDS_PER_FUNCTION; i++)
 						{
 							ShowWindow(GetDlgItem(hDlg, property_tags[i]), SW_HIDE);
 							ShowWindow(GetDlgItem(hDlg, property_fields[i]), SW_HIDE);
@@ -1913,14 +1902,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						// Read in info from effect definition
 
 						for (i = 0; i < LyraItem::FunctionEntries(curr_effect); i++)
-						{	
-							// This is literally disgusting.
-							// Here's the thing: items can have 6 fields, but forge only has 5 properties
-							// Rather than adding property fields to forge -- that'd be annoying -- we simply break here
-							// You should never try to forge an item with >5 FunctionEntries!
-							if (i >= 5)
-								break;
-							// Set label text, show the appopriate tags and fields
+						{	 // Set label text, show the appopriate tags and fields
 							SetWindowText(GetDlgItem(hDlg, property_tags[i]), LyraItem::EntryName(curr_effect, i));
 							ShowWindow(GetDlgItem(hDlg, property_tags[i]), SW_SHOWNORMAL);
 							ShowWindow(GetDlgItem(hDlg, property_fields[i]), SW_SHOWNORMAL);
@@ -1936,7 +1918,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								int start_at = LyraItem::EntryMinValue(curr_effect, i);
 								for (int j = start_at; j < start_at + num_trans; j++)
 								{
-									if ((opened_by != CreateItem::FORGE_ITEM) || (CanPlayerForgeValue(LyraItem::EntryTranslation(curr_effect, i),j, usePowerToken > 0)))
+									if ((opened_by != CreateItem::FORGE_ITEM) || (CanPlayerForgeValue(LyraItem::EntryTranslation(curr_effect, i),j)))
 									{
 										TranslateValue(LyraItem::EntryTranslation(curr_effect, i), j);
 										SendMessage((GetDlgItem(hDlg, property_fields[i])), LB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
@@ -2346,7 +2328,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							else
 								i = 1;
 							if (art_callback)
-								arts->EndForgeTalisman(&i, usePowerToken > 0);
+								arts->EndForgeTalisman(&i);
 							else if (opened_by == CreateItem::QUEST_ITEM)
 							{
 								//int color1 = ListBox_GetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ListBox_GetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1)));
@@ -2362,7 +2344,6 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 
 							SendMessage(hNextDlg, WM_SET_ITEM, 0, (LPARAM)(&info));
 							SendMessage(hNextDlg, WM_SET_SCROLL_FORGE_CALLBACK, 0, 0);
-							SendMessage(hNextDlg, WM_SET_USE_PT, 0, usePowerToken > 0);
 						}
 						DestroyWindow(hDlg);
 
@@ -2474,7 +2455,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								int start_at = LyraItem::EntryMinValue(curr_effect, i);
 								for (int j = start_at; j < start_at + num_trans; j++)
 								{
-									if ((opened_by != CreateItem::FORGE_ITEM) || (CanPlayerForgeValue(LyraItem::EntryTranslation(curr_effect, i),j,usePowerToken > 0)))
+									if ((opened_by != CreateItem::FORGE_ITEM) || (CanPlayerForgeValue(LyraItem::EntryTranslation(curr_effect, i),j)))
 									{
 										TranslateValue(LyraItem::EntryTranslation(curr_effect, i), j);
 										SendMessage((GetDlgItem(hDlg, property_fields[i])), LB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
@@ -3921,7 +3902,6 @@ BOOL CALLBACK WriteScrollDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM 
 	static LmItem associated_item;
 	static bool forge_callback;
 	static bool quest_callback;
-	static bool usePToken;
 	static bool questbuilder_callback;
 
 	if (HBRUSH brush = SetControlColors(hDlg, Message, wParam, lParam))
@@ -3946,12 +3926,6 @@ BOOL CALLBACK WriteScrollDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM 
 			ShowWindow(GetDlgItem(hDlg, IDC_COLORS_STATIC), SW_HIDE);
 			ShowWindow(GetDlgItem(hDlg, IDC_COLOR_COMBO1), SW_HIDE);
 			ShowWindow(GetDlgItem(hDlg, IDC_COLOR_COMBO2), SW_HIDE);
-			return TRUE;
-		}
-
-		case WM_SET_USE_PT:
-		{
-			usePToken = (bool)lParam;			
 			return TRUE;
 		}
 
@@ -4116,7 +4090,7 @@ BOOL CALLBACK WriteScrollDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM 
 						else
 							i = 1;
 						if (forge_callback)
-							arts->EndForgeTalisman(&i, usePToken);
+							arts->EndForgeTalisman(&i);
 					}
 					else
 					{ // using the write scroll art

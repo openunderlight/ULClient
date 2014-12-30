@@ -58,7 +58,6 @@ public:
     TELEPORTER_FUNCTION,     // 10 bytes
 	SUPPORT_TRAIN_FUNCTION,  // 10 bytes
 	GRATITUDE_FUNCTION,		 // 10 bytes
-	META_ESSENCE_NEXUS_FUNCTION, // 9 bytes
     
     // translation types for item effect fields
     TRANSLATION_NONE = 0,
@@ -340,29 +339,6 @@ struct lyra_item_support_t {  // 10 bytes
     NTOHS(target_lo_bits);
     NTOHS(creator_lo_bits);
   }
-};
-
-struct lyra_item_meta_essence_nexus_t { // 9 bytes
-	unsigned char type;			// META_ESSENCE_NEXUS_FUNCTION
-	unsigned char unused;
-	unsigned short strength;
-	unsigned short essences;
-	unsigned short strength_cap;
-	unsigned short essence_cap;
-
-	inline void hton() {
-		HTONS(strength);
-		HTONS(essences);
-		HTONS(essence_cap);
-		HTONS(strength_cap);
-	}
-
-	inline void ntoh() {
-		NTOHS(strength);
-		NTOHS(essences);
-		NTOHS(essence_cap);
-		NTOHS(strength_cap);
-	}
 };
 
 struct lyra_item_meta_essence_t {  // 10 bytes 

@@ -184,7 +184,7 @@ FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_ITEM_NAME,36,14,119,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_CHARGES,36,28,28,12,ES_AUTOHSCROLL
-    CONTROL         " Artifact",IDC_ITEM_ARTIFACT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,313,22,44,10
+    CONTROL         " Artifact",IDC_ITEM_ARTIFACT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,313,13,44,10
     PUSHBUTTON      "Help",IDC_ITEMHELP,307,73,45,14
     CONTROL         "Always send state",IDC_ITEM_FLAG1,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,78,70,73,10
     CONTROL         "Immutable",IDC_ITEM_FLAG2,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE,85,70,59,10
@@ -224,7 +224,6 @@ BEGIN
     CONTROL         "Describe",IDC_ITEM_DESCRIP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,308,3,49,10
     LTEXT           "Quest Item Definition",IDC_QUEST_STATIC,0,0,87,10
     CONTROL         "Any Charges",IDC_ANY_CHARGES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,2,12,62,17
-    CONTROL         "Use PT",IDC_ITEM_USE_PT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,313,13,44,10
 END
 
 IDD_KEYBOARD_CONFIG DIALOGEX 0, 0, 409, 100
@@ -3528,8 +3527,6 @@ BEGIN
     IDS_NO_MEMORY           "Out of memory - can't allocate %u bytes"
     IDS_STRING10            "b"
     IDS_GOALBOOK_ERR        "Invariant broken - goal id at index %u should be NULL --- line %u"
-    IDS_IDENTIFY_ESSENCE_NEXUS 
-                            "This chaos well contains %d essences and has a strength of %d. It has a maximum capacity of %d essences and %d strength."
 END
 
 STRINGTABLE
@@ -4212,14 +4209,6 @@ BEGIN
     IDS_TEL_MUST_BE_FOCUS   "You must be a %s to use that portal\n"
     IDS_TEL_MUST_HAVE_MARK  "You must possess the %s to use that portal\n"
     IDS_ARRET_CREST         "Crest of Arret"
-    IDS_CHAOS_WELL          "Chaos Well"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_CHAOS_WELL_FULL     "That Chaos Well is full and cannot contain any more essences."
-    IDS_CHAOS_WELL_SUCCESS  "You transfer the nightmare essence into the Chaos Well\n"
-    IDS_CHAOS_WELL_FAILURE  "You have no nightmare essence to place into the Chaos Well\n"
 END
 
 #endif    // English (United States) resources

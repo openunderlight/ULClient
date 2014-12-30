@@ -78,7 +78,7 @@ int CalculateModifierMax(int modifier);
 int CalculateModifierMin(int modifier);
 int CalculateDuration(int index);
 void TranslateValue(int type, int value);
-bool CanPlayerForgeValue(int type, int value, bool usePowerToken);
+bool CanPlayerForgeValue(int type, int value);
 int	MinModifierSkill(int value);
 int NumberTranslations(int type);
 TCHAR* GuildName(int guild_id);

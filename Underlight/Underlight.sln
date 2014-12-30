@@ -1,8 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AgentSvc", "..\AgentSvc\AgentSvc.vcxproj", "{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AgentSvr", "..\AgentSvr\AgentSvr.vcxproj", "{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}"
@@ -30,7 +28,9 @@ Global
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.AgentSvr|Win32.ActiveCfg = Release|Win32
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.AgentSvr|Win32.Build.0 = Release|Win32
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Debug|Win32.Build.0 = Debug|Win32
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Dev Player|Win32.ActiveCfg = Debug|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Dev Player|Win32.Build.0 = Debug|Win32
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Dev Pmare|Win32.ActiveCfg = Debug|Win32
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Dev Pmare|Win32.Build.0 = Debug|Win32
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Development|Win32.ActiveCfg = Debug|Win32
@@ -58,8 +58,8 @@ Global
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.AgentSvr|Win32.Build.0 = Release|Win32
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Debug|Win32.ActiveCfg = Debug|Win32
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Debug|Win32.Build.0 = Debug|Win32
-		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Dev Player|Win32.ActiveCfg = Release|Win32
-		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Dev Player|Win32.Build.0 = Release|Win32
+		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Dev Player|Win32.ActiveCfg = Debug|Win32
+		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Dev Player|Win32.Build.0 = Debug|Win32
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Dev Pmare|Win32.ActiveCfg = Release|Win32
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Dev Pmare|Win32.Build.0 = Release|Win32
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Development|Win32.ActiveCfg = Debug|Win32

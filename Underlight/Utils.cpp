@@ -522,9 +522,9 @@ void TranslateValue(int type, int value)
 // must have a certain skill to create weapons with high damage
 // categories, and must have access to the related arts to create
 // items that cause timed effects
-bool CanPlayerForgeValue(int type, int value, bool usePowerToken)
+bool CanPlayerForgeValue(int type, int value)
 {
-	int forge_skill = arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN), usePowerToken);
+	int forge_skill = arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN));
 	switch (type)
 	{
 		case LyraItem::TRANSLATION_MODIFIER:

@@ -46,7 +46,6 @@ const int ACCEPTREJECT_TIMER  =  WM_USER + DIALOG_MAGIC + 50;
 //#define WM_SET_SCROLL_QUEST_CALLBACK DIALOG_MAGIC + WM_USER + 19
 #define WM_INIT_ITEMFIELDS DIALOG_MAGIC + WM_USER + 20
 #define WM_SET_SCROLL_QUESTBUILDER_CALLBACK  DIALOG_MAGIC + WM_USER + 21	
-#define WM_SET_USE_PT DIALOG_MAGIC + WM_USER + 22
 
 //////////////////////////////////////////////////////////////////
 // New Types
