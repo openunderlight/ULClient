@@ -149,7 +149,7 @@ extern char agent_gs_ip_address[16];
 // if GAME_LYR is defined, use game.lyr, unless we are overriding by setting GAME_CLI
 #ifdef GAME_CLI
 #ifdef PMARE // starting level 1
-int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x001A891F << 2);  // for pmare game.cli
+int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x001A970A << 2);  // for pmare game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1D22B3B2 << 2);
 #else
 int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031EFCA << 2);  // for game.cli
