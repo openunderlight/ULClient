@@ -82,7 +82,11 @@ const int CHANCE_SPELL_FAILURE = 1; // % chance of art failure
 
 const float PUSH_DISTANCE = 75.0f;
 
+#if defined (UL_DEBUG) && !defined (LIVE_DEBUG)
+const int CHANCE_SKILL_INCREASE = 66;
+#else
 const int CHANCE_SKILL_INCREASE = 15; // % chance of skill increase
+#endif
 
 const int CASTING_TIME_MULTIPLIER = 150; // milliseconds per unit of casting time
 const int MIN_DS_SOULEVOKE = 10;
@@ -3047,16 +3051,20 @@ void cArts::StartForgeTalisman(void)
 	return;
 }
 
-void cArts::EndForgeTalisman(void *value)
+void cArts::EndForgeTalisman(void *value, bool usePT)
 {
 	int success = *((int*)value);
 	if (success)
 	{
 		cDS->PlaySound(LyraSound::FORGE, player->x, player->y, true);
-		cItem* power_tokens[Lyra::INVENTORY_MAX];
-		int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
-		if(num_tokens)
-			power_tokens[0]->Destroy();
+		if (usePT)
+		{
+			cItem* power_tokens[Lyra::INVENTORY_MAX];
+			int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
+			if (num_tokens)
+				power_tokens[0]->Destroy();
+		}
+
 		this->ArtFinished(true);
 	}
 	else
@@ -5409,10 +5417,13 @@ int cArts::CountPowerTokens(cItem** tokens, lyra_id_t guild_id)
 }
 
 // return the effective skill if we take power tokens into account
-int cArts::EffectiveForgeSkill(int player_skill)
+int cArts::EffectiveForgeSkill(int player_skill, bool usePowerToken)
 {
-	cItem* power_tokens[Lyra::INVENTORY_MAX];
-	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
+	int num_tokens = 0;
+	if (usePowerToken) {
+		cItem* power_tokens[Lyra::INVENTORY_MAX];
+		num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
+	}
 	if(!num_tokens)
 		return MAX(1,player_skill / 4);
 	return player_skill;
