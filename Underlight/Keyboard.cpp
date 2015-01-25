@@ -385,8 +385,29 @@ bool HandleLyraDebugKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			*/
 
 		}
-	case VK_F12: 
-		quests->Activate();
+	case VK_F12:
+		{
+			lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, 200, 200 };
+			LmItem info;
+			LmItemHdr header;
+			cItem *item;
+			header.Init(0, 0);
+			header.SetFlags(LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_SENDSTATE);
+			header.SetGraphic(LyraBitmap::META_ESSENCE);
+			header.SetColor1(15); header.SetColor2(15);
+			header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::META_ESSENCE_NEXUS_FUNCTION), 0, 0));
+			_stprintf(message, _T("%s"), _T("Essence Box"));
+			_tcsnccpy(disp_message, message, LmItem::NAME_LENGTH - 1);
+			disp_message[LmItem::NAME_LENGTH - 1] = '\0';
+			info.Init(header, disp_message, 0, 0, 0);
+			info.SetStateField(0, &nexus, sizeof(nexus));
+			info.SetCharges(1);
+			int ttl = 120000;
+
+			TCHAR descrip[512] = _T("This is my essence string");
+			item = CreateItem(player->x, player->y, player->angle, info, 0, false, GMsg_PutItem::DEFAULT_TTL, descrip);
+			return true;
+		}
   
 	default:
 		return false;
@@ -900,9 +921,9 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 
 	case VK_F9:
 	{
-	// use this to fix checksums
-	for (int q=0;q<NUM_ARTS;q++)
-		arts->CanUseArt(q, true);
+		// use this to fix checksums
+		for (int q=0;q<NUM_ARTS;q++)
+			arts->CanUseArt(1, true);
 		return true;
 	}
 
