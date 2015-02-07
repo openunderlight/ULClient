@@ -923,7 +923,7 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	{
 		// use this to fix checksums
 		for (int q=0;q<NUM_ARTS;q++)
-			arts->CanUseArt(1, true);
+			arts->CanUseArt(q, true);
 		return true;
 	}
 

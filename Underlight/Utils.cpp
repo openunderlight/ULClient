@@ -940,6 +940,7 @@ talisman_name_t talisman_names[] =
 	{true,IDS_ARTIFAX, LyraBitmap::TALISMAN8}, 
 	{true, IDS_SCROLL, LyraBitmap::SCROLL},
 	{true, IDS_FLOWER, LyraBitmap::FLOWER},
+	{false, IDS_CHAOS_WELL, LyraBitmap::BOX},
 	{true, IDS_STAFF, LyraBitmap::STAFF},
 	{true, IDS_GIFT, LyraBitmap::GIFT},
 	{true, IDS_RING, LyraBitmap::RING},
