@@ -154,7 +154,10 @@
 #define IDC_YESVOTES                    1068
 #define IDC_ITEM_DESCRIP                1068
 #define IDC_VOTEEXPIRATION              1069
+#define IDC_ITEM_ARTIFACT2              1069
 #define IDC_NOVOTES                     1070
+#define IDC_ITEM_DESCRIP2               1070
+#define IDC_ITEM_USE_PT                 1070
 #define IDC_ITEM_FLAG1                  1074
 #define IDC_ITEM_FLAG2                  1075
 #define IDC_ITEM_FLAG3                  1076
