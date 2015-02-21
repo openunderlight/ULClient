@@ -113,6 +113,7 @@ BOOL CALLBACK OptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 			Button_SetCheck(GetDlgItem(hDlg, IDC_NAMETAGS),      options.nametags);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_MULTILINE),     options.multiline);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_FOOTSTEPS),     options.footsteps);
+			Button_SetCheck(GetDlgItem(hDlg, IDC_ART_PROMPTS),   options.art_prompts);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_MOUSELOOK),     options.mouselook);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_INVERTMOUSE),   options.invertmouse);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_CHATLOG),       options.log_chat);
@@ -225,6 +226,11 @@ BOOL CALLBACK OptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 				else 
 					options.footsteps=false;
 
+				if (Button_GetCheck(GetDlgItem(hDlg, IDC_ART_PROMPTS))) 
+					options.art_prompts=true; 
+				else 
+					options.art_prompts=false;
+
 				BOOL old_adult_filter = options.adult_filter;
 
 				if (Button_GetCheck(GetDlgItem(hDlg, IDC_PROFANITY_FILTER))) 
@@ -321,6 +327,8 @@ void __cdecl SaveInGameRegistryOptionValues(HKEY reg_key)
 		(unsigned char *)&(options.multiline), sizeof(options.multiline));
 	RegSetValueEx(reg_key, _T("footsteps"), 0, REG_DWORD,  
 		(unsigned char *)&(options.footsteps), sizeof(options.footsteps));
+	RegSetValueEx(reg_key, _T("art_prompts"), 0, REG_DWORD,  
+		(unsigned char *)&(options.art_prompts), sizeof(options.art_prompts));
 	RegSetValueEx(reg_key, _T("mouselook"), 0, REG_DWORD,  
 		(unsigned char *)&(options.mouselook), sizeof(options.mouselook));
 	RegSetValueEx(reg_key, _T("invertmouse"), 0, REG_DWORD,  
@@ -436,9 +444,14 @@ void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
 	size = sizeof(options.footsteps);
 	keyresult = RegQueryValueEx(reg_key, _T("footsteps"), NULL, &reg_type,
 		(unsigned char *)&(options.footsteps), &size);
-
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.footsteps = TRUE;
+
+	size = sizeof(options.art_prompts);
+	keyresult = RegQueryValueEx(reg_key, _T("art_prompts"), NULL, &reg_type,
+		(unsigned char *)&(options.art_prompts), &size);
+	if ((keyresult != ERROR_SUCCESS) || force)
+		options.art_prompts = TRUE;
 
 	size = sizeof(options.mouselook);
 	keyresult = RegQueryValueEx(reg_key, _T("mouselook"), NULL, &reg_type,

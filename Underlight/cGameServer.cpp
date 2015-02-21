@@ -149,10 +149,10 @@ extern char agent_gs_ip_address[16];
 // if GAME_LYR is defined, use game.lyr, unless we are overriding by setting GAME_CLI
 #ifdef GAME_CLI
 #ifdef PMARE // starting level 1
-int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x001A891F << 2);  // for pmare game.cli
+int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x001A970A << 2);  // for pmare game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1D22B3B2 << 2);
 #else
-int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031F073 << 2);  // for game.cli
+int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031EFCA << 2);  // for game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1DCF4AD3 << 2);
 #endif // #ifdef PMARE
 #else
@@ -2285,14 +2285,14 @@ void cGameServer::HandleMessage(void)
 		{
 			RMsg_PlayerMsg player_msg;
 			if (player_msg.Read(msgbuf) < 0) { GAME_ERROR(IDS_ERR_READ_PLAYER_MSG); return;}
-      if (player_msg.ArtType (player_msg.MsgType ()) != Arts::NONE && !got_peer_updates)
-      {
-        if (player_msg.ArtType (player_msg.MsgType ()) == Arts::BLAST)
-        {
-          gs->SendPlayerMessage(player_msg.SenderID(), RMsg_PlayerMsg::BLAST_ACK, 0, 0);
-        }
-        break;
-      } 
+			if (player_msg.ArtType (player_msg.MsgType ()) != Arts::NONE && !got_peer_updates)
+			{
+				if (player_msg.ArtType (player_msg.MsgType ()) == Arts::BLAST)
+				{
+					gs->SendPlayerMessage(player_msg.SenderID(), RMsg_PlayerMsg::BLAST_ACK, 0, 0);
+				}
+				break;
+			} 
 			bool art_reflected = false;
 			if (player->flags & ACTOR_REFLECT) {
 				// 25% chance of success plus 5% per plateau
@@ -2379,17 +2379,20 @@ void cGameServer::HandleMessage(void)
 					break;
 				case RMsg_PlayerMsg::SOUL_SHIELD:
 					art_id = Arts::SOUL_SHIELD;
-          break;
-        case RMsg_PlayerMsg::KINESIS:
-          art_id = Arts::KINESIS;
-          break;
+					break;
+				case RMsg_PlayerMsg::PEACE_AURA:
+					art_id = Arts::PEACE_AURA;
+					break;
+				case RMsg_PlayerMsg::KINESIS:
+					art_id = Arts::KINESIS;
+					break;
 				default:
 					art_reflected = false; // If not one of the arts we reflect
 					break;
 				};
 				if (art_reflected){
 					LoadString (hInstance, IDS_REFLECT, disp_message, sizeof(disp_message));
-				_stprintf(message, disp_message, n->Name(), arts->Descrip(art_id));
+					_stprintf(message, disp_message, n->Name(), arts->Descrip(art_id));
 					display->DisplayMessage(message);					
 					gs->SendPlayerMessage(player_msg.SenderID(), RMsg_PlayerMsg::REFLECT_ART,
 						player->Skill(Arts::REFLECT), art_id);
@@ -2507,7 +2510,7 @@ void cGameServer::HandleMessage(void)
 					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
 					arts->ApplyFirestorm(player_msg.State1(), player_msg.SenderID());
 						break;
-        case RMsg_PlayerMsg::TEMPEST:	  // skill, angle
+				case RMsg_PlayerMsg::TEMPEST:	  // skill, angle
 					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
 					arts->ApplyTempest (player_msg.State2(), player_msg.SenderID());
 						break;
@@ -2644,8 +2647,8 @@ void cGameServer::HandleMessage(void)
 						arts->ApplyPoisonCloud(player_msg.State1(), player_msg.SenderID());
 						break;
         
-        case RMsg_PlayerMsg::KINESIS: // skill, angle
-          if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+				case RMsg_PlayerMsg::KINESIS: // skill, angle
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
 						arts->ApplyKinesis(player_msg.State1(), player_msg.SenderID(), player_msg.State2 ());
 						break;
 
@@ -2682,12 +2685,12 @@ void cGameServer::HandleMessage(void)
 //						LoadString (hInstance, IDS_KILLED_TEHTHU, message, sizeof(message));
 //						display->DisplayMessage(message);
 					break;
-        case RMsg_PlayerMsg::MISDIRECTION:
-          arts->ApplyMisdirection (player_msg.State1 (), player_msg.SenderID ());
-          break;
-        case RMsg_PlayerMsg::CHAOTIC_VORTEX:
-          arts->ApplyChaoticVortex (player_msg.State1 (), player_msg.SenderID ());
-          break;
+				case RMsg_PlayerMsg::MISDIRECTION:
+					arts->ApplyMisdirection (player_msg.State1 (), player_msg.SenderID ());
+					break;
+				case RMsg_PlayerMsg::CHAOTIC_VORTEX:
+					arts->ApplyChaoticVortex (player_msg.State1 (), player_msg.SenderID ());
+					break;
 
 				case RMsg_PlayerMsg::YOUGOTME:	  // victim's orbit or nightmare index+100/150/200, health
 #ifdef AGENT
