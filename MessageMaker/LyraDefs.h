@@ -63,7 +63,7 @@ struct ByteOrder {
 // global constants that don't belong anywhere else
 struct Lyra {
   enum {
-    GAME_VERSION = 15361,      // build / protocol version number - MUST be 5 digits!
+    GAME_VERSION = 15362,      // build / protocol version number - MUST be 5 digits!
     GAME_SUBVERSION = GAME_VERSION,
 
     ID_UNKNOWN = 0,         // invalid id
