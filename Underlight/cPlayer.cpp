@@ -147,6 +147,8 @@ void cPlayer::InitPlayer(void)
 	item_flags_sorting_changed = false;
 	//  Initialize curse_strength to zero
 	curse_strength = 0; // no curse on new player
+	poison_strength = 0;
+	last_poisoner = Lyra::ID_UNKNOWN;
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
 	session_id = 0;
@@ -824,10 +826,17 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 			return false;
 		}
 
+		if (caster_id != player->ID())
+			last_poisoner = caster_id;
+		int new_strength = (duration/600000) + 1;	
+		if (new_strength>10) new_strength = 10;
+		if (new_strength>poison_strength)
+			poison_strength = new_strength;
+									  } break;
+
   case LyraEffect::PLAYER_SPIN:
     {
     }break;
-	}
 
 	default:
 		break; 
@@ -942,6 +951,10 @@ void cPlayer::RemoveTimedEffect(int effect)
 	else if (effect == LyraEffect::PLAYER_CURSED)
 		curse_strength = 0;
 
+	else if (effect == LyraEffect::PLAYER_POISONED) {
+		last_poisoner = Lyra::ID_UNKNOWN;
+		poison_strength = 0;
+	}
 	return;
 };
 
@@ -1008,7 +1021,7 @@ void cPlayer::CheckStatus(void)
 
 	if ((flags & ACTOR_POISONED) && (LyraTime() > next_poison))
 	{	 // sap dreamsoul...
-		this->SetCurrStat(Stats::DREAMSOUL, -1, SET_RELATIVE, playerID);
+		this->SetCurrStat(Stats::DREAMSOUL, -(poison_strength), SET_RELATIVE, last_poisoner);
 		next_poison = LyraTime() + POISON_INTERVAL;
 	}
 
@@ -1707,7 +1720,6 @@ void cPlayer::ValidateChecksums(void)
 
 	return;
 }
-
 int cPlayer::SetSkill(int art_id, int value, int how, lyra_id_t origin_id, bool initializing)
 {
 
