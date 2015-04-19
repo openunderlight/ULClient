@@ -1605,10 +1605,11 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 #endif
 #endif
 				return gs->PlayerAttack(LyraBitmap::MARE_MELEE_MISSILE, MELEE_VELOCITY, LyraEffect::NONE, BOGROM_DAMAGE);
+				break;
 
 		case Avatars::AGOKNIGHT:  // 10-20 damage, melee, can roar and blast
 #ifdef AGENT
-			if ((rand()%1500) == 0) // roar and blast instead
+			if ((rand()%250) == 0) // roar and blast instead
 			{
 				if (target)
 					gs->SendPlayerMessage(target, RMsg_PlayerMsg::BLAST, 30, 0);
@@ -1617,6 +1618,7 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 			else
 #endif
 				return gs->PlayerAttack(LyraBitmap::MARE_MELEE_MISSILE, MELEE_VELOCITY, LyraEffect::NONE, AGOKNIGHT_DAMAGE);
+			break;
 
 		case Avatars::SHAMBLIX: 
 			// 10-30 damage, paralysis fireballs
@@ -1624,7 +1626,29 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 
 		case Avatars::HORRON: // 12-40 damage, blinding fireballs
 			{
-			int value = LyraEffect::PLAYER_BLIND;
+#ifdef AGENT
+			if (target)
+			{
+			switch (rand()%1500)
+			{
+			case 0: // Abjure instead
+				gs->SendPlayerMessage(target, RMsg_PlayerMsg::ABJURE, 10, 0);
+				gs->SetLastSound(LyraSound::MONSTER_ROAR);
+				break;
+			case 1: // Razorwind instead
+				gs->SendPlayerMessage(target, RMsg_PlayerMsg::RAZORWIND, 50, 0);
+				gs->SetLastSound(LyraSound::MONSTER_ROAR);
+				break;
+			case 3: // Tempest instead
+				gs->SendPlayerMessage(target, RMsg_PlayerMsg::TEMPEST, 50, player->angle/4);
+				gs->SetLastSound(LyraSound::MONSTER_ROAR);
+				break;
+			default:
+				break;
+			}
+
+			}
+#endif
 			return gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE, -5, LyraEffect::PLAYER_BLIND, HORRON_DAMAGE);
 			break;
 			}

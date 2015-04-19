@@ -2432,7 +2432,13 @@ void cGameServer::HandleMessage(void)
 					break;
 				case RMsg_PlayerMsg::BLAST:	  // skill, not used
 					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					{
 						arts->ApplyBlast(player_msg.State1(), player_msg.SenderID());
+#ifdef AGENT
+					if ((player->AvatarType() == Avatars::AGOKNIGHT) && (rand()%10 == 0))
+						gs->SendPlayerMessage(player_msg.SenderID(), RMsg_PlayerMsg::BLAST, 30, 0);
+#endif
+					}
 					else
 						gs->SendPlayerMessage(player_msg.SenderID(), RMsg_PlayerMsg::BLAST_ACK, 0, 0); 
 					break;
