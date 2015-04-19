@@ -333,7 +333,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_HYPNOTIC_WEAVE_ART_NAME,		Stats::LUCIDITY,	60, 40, 4,	7,	4, FOCUS|LEARN},
 {IDS_VAMPRIC_DRAW,					Stats::RESILIENCE,	60, 5,	0,	5,	3, FOCUS|LEARN|NEIGH|NEED_ITEM},
 {IDS_TERROR_ART_NAME,				Stats::LUCIDITY,	60, 40, 4,	1,	3, FOCUS|LEARN},
-{IDS_HEAL_AURA,						Stats::RESILIENCE,	60, 40, 0,	9, 	-1, FOCUS|NEIGH|SANCT},
+{IDS_HEAL_AURA,						Stats::RESILIENCE,	60, 40, 0,	7, 	-1, FOCUS|NEIGH|SANCT},
 {IDS_TELEPATHY,						Stats::NO_STAT,		75, 0,  0,	0, 	-1, SANCT|NEIGH},	// roger wilco voice
 {IDS_DREAMSMITH_MARK_ART_NAME, 		Stats::NO_STAT,		50, 0,  0,	1, 	-1, SANCT},
 {IDS_SUPPORT_TRAIN,					Stats::NO_STAT,		10, 0,  0,	10,	-1, SANCT|NEIGH|MAKE_ITEM},
@@ -2623,7 +2623,8 @@ void cArts::ApplyHealingAura(int skill, lyra_id_t caster_id)
 	}
 	display->DisplayMessage(message);
 
-	int healing = 8 + ((skill/10)+1)*(rand()%3);
+	// int healing = 8 + ((skill/10)+1)*(rand()%3);
+	int healing = 4 + ((skill/10)+5)*(rand()%3+1);
 	player->SetCurrStat(Stats::DREAMSOUL, healing, SET_RELATIVE, caster_id);
 
 	return;
