@@ -1124,10 +1124,10 @@ void cPlayer::CheckStatus(void)
 						if (n->Visible() && (view == 3)) // face-on
 						{ // gaze effects here
 							if ((n->Avatar().AvatarType() == Avatars::SHAMBLIX) &&
-								!(flags & ACTOR_CURSED))
+								!(flags & ACTOR_CURSED) && !(flags & ACTOR_PROT_CURSE))
 								arts->ApplyCurse(1, n->ID());
 							if ((n->Avatar().AvatarType() == Avatars::HORRON) &&
-								!(flags & ACTOR_PARALYZED))
+								!(flags & ACTOR_PARALYZED) && !(flags & ACTOR_FREE_ACTION))
 							{
 								arts->ApplyParalyze(Arts::PARALYZE, 2, n->ID());
 	// 						arts->ApplyAbjure(1, n->ID());
@@ -1137,7 +1137,7 @@ void cPlayer::CheckStatus(void)
 						if (n->Avatar().AvatarType() == Avatars::HORRON)
 						{
 							if ((dist < HORRON_FEAR_DISTANCE) &&
-								!(flags & ACTOR_SCARED))
+								!(flags & ACTOR_SCARED) && !(flags & ACTOR_PROT_FEAR))
 								arts->ApplyScare(1, n->ID());
 							if (dist < HORRON_DRAIN_DISTANCE)
 								this->SetCurrStat(Stats::DREAMSOUL, -1, SET_RELATIVE, n->ID());
