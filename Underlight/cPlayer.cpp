@@ -147,6 +147,7 @@ void cPlayer::InitPlayer(void)
 	item_flags_sorting_changed = false;
 	//  Initialize curse_strength to zero
 	curse_strength = 0; // no curse on new player
+	blast_chance = 0; // no chance Ago will return Blast to start
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
 	session_id = 0;
@@ -1629,23 +1630,23 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 #ifdef AGENT
 			if (target)
 			{
-			switch (rand()%1500)
-			{
-			case 0: // Abjure instead
-				gs->SendPlayerMessage(target, RMsg_PlayerMsg::ABJURE, 10, 0);
-				gs->SetLastSound(LyraSound::MONSTER_ROAR);
-				break;
-			case 1: // Razorwind instead
-				gs->SendPlayerMessage(target, RMsg_PlayerMsg::RAZORWIND, 50, 0);
-				gs->SetLastSound(LyraSound::MONSTER_ROAR);
-				break;
-			case 3: // Tempest instead
-				gs->SendPlayerMessage(target, RMsg_PlayerMsg::TEMPEST, 50, player->angle/4);
-				gs->SetLastSound(LyraSound::MONSTER_ROAR);
-				break;
-			default:
-				break;
-			}
+				switch (rand()%1500)
+				{
+				case 0: // Abjure instead
+					gs->SendPlayerMessage(target, RMsg_PlayerMsg::ABJURE, 10, 0);
+					gs->SetLastSound(LyraSound::MONSTER_ROAR);
+					break;
+				case 1: // Razorwind instead
+					gs->SendPlayerMessage(target, RMsg_PlayerMsg::RAZORWIND, 50, 0);
+					gs->SetLastSound(LyraSound::MONSTER_ROAR);
+					break;
+				case 3: // Tempest instead
+					gs->SendPlayerMessage(target, RMsg_PlayerMsg::TEMPEST, 50, player->angle/4);
+					gs->SetLastSound(LyraSound::MONSTER_ROAR);
+					break;
+				default:
+					break;
+				}
 
 			}
 #endif
@@ -1993,6 +1994,7 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 		if (this->CurrStat(Stats::DREAMSOUL) > 0)
 			i = this->CurrStat(Stats::DREAMSOUL);
 		j = 100 + this->AvatarType(); // night mare = 100+
+		blast_chance = 0; // reset Ago's Blast Chance on collapse
 #else 
 // if player mare = 200+
 #ifdef PMARE
