@@ -4111,7 +4111,7 @@ void cArts::ApplyBlast(int skill, lyra_id_t caster_id)
 
 #ifdef AGENT // powerful monsters are immune to blast
 
-	if (player->AvatarType() >= Avatars::AGOKNIGHT)
+	if (player->AvatarType() >= Avatars::SHAMBLIX)
 		return;
 #endif
 //#endif 0	// MKET - Game designer choice
