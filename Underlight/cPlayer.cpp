@@ -1021,7 +1021,7 @@ void cPlayer::CheckStatus(void)
 
 	if ((flags & ACTOR_POISONED) && (LyraTime() > next_poison))
 	{	 // sap dreamsoul...
-		this->SetCurrStat(Stats::DREAMSOUL, -(poison_strength), SET_RELATIVE, last_poisoner);
+		this->SetCurrStat(Stats::DREAMSOUL, -((rand()%poison_strength)+1), SET_RELATIVE, last_poisoner);
 		next_poison = LyraTime() + POISON_INTERVAL;
 	}
 
