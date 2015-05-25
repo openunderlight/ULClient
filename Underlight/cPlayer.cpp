@@ -1630,18 +1630,18 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 #ifdef AGENT
 			if (target)
 			{
-				switch (rand()%1500)
+				switch (rand()%2000)
 				{
-				case 0: // Abjure instead
+				case 0: // Abjure the target instead
 					gs->SendPlayerMessage(target, RMsg_PlayerMsg::ABJURE, 10, 0);
 					gs->SetLastSound(LyraSound::MONSTER_ROAR);
 					break;
-				case 1: // Razorwind instead
-					gs->SendPlayerMessage(target, RMsg_PlayerMsg::RAZORWIND, 50, 0);
+				case 1: // Razorwind the room instead
+					gs->SendPlayerMessage(0, RMsg_PlayerMsg::RAZORWIND, 50, 0);
 					gs->SetLastSound(LyraSound::MONSTER_ROAR);
 					break;
-				case 3: // Tempest instead
-					gs->SendPlayerMessage(target, RMsg_PlayerMsg::TEMPEST, 50, player->angle/4);
+				case 3: // Tempest the room instead
+					gs->SendPlayerMessage(0, RMsg_PlayerMsg::TEMPEST, 50, player->angle/4);
 					gs->SetLastSound(LyraSound::MONSTER_ROAR);
 					break;
 				default:
