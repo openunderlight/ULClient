@@ -237,7 +237,7 @@ void cPlayer::ResetEyeHeight(void)
 // Returns the height delta for missiles fired by the player
 int cPlayer::HeightDelta(void)
 {
-	 return (int)((vertical_tilt - vertical_tilt_origin)/28);
+	 return (int)((vertical_tilt - vertical_tilt_origin)/42);
 }
 
 bool cPlayer::Update(void)
