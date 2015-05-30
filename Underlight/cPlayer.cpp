@@ -147,6 +147,7 @@ void cPlayer::InitPlayer(void)
 	item_flags_sorting_changed = false;
 	//  Initialize curse_strength to zero
 	curse_strength = 0; // no curse on new player
+	blast_chance = 0; // no chance Ago will return Blast to start
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
 	session_id = 0;
@@ -236,7 +237,7 @@ void cPlayer::ResetEyeHeight(void)
 // Returns the height delta for missiles fired by the player
 int cPlayer::HeightDelta(void)
 {
-	 return (int)((vertical_tilt - vertical_tilt_origin)/28);
+	 return (int)((vertical_tilt - vertical_tilt_origin)/42);
 }
 
 bool cPlayer::Update(void)
@@ -1124,10 +1125,10 @@ void cPlayer::CheckStatus(void)
 						if (n->Visible() && (view == 3)) // face-on
 						{ // gaze effects here
 							if ((n->Avatar().AvatarType() == Avatars::SHAMBLIX) &&
-								!(flags & ACTOR_CURSED))
+								!(flags & ACTOR_CURSED) && !(flags & ACTOR_PROT_CURSE))
 								arts->ApplyCurse(1, n->ID());
 							if ((n->Avatar().AvatarType() == Avatars::HORRON) &&
-								!(flags & ACTOR_PARALYZED))
+								!(flags & ACTOR_PARALYZED) && !(flags & ACTOR_FREE_ACTION))
 							{
 								arts->ApplyParalyze(Arts::PARALYZE, 2, n->ID());
 	// 						arts->ApplyAbjure(1, n->ID());
@@ -1137,7 +1138,7 @@ void cPlayer::CheckStatus(void)
 						if (n->Avatar().AvatarType() == Avatars::HORRON)
 						{
 							if ((dist < HORRON_FEAR_DISTANCE) &&
-								!(flags & ACTOR_SCARED))
+								!(flags & ACTOR_SCARED) && !(flags & ACTOR_PROT_FEAR))
 								arts->ApplyScare(1, n->ID());
 							if (dist < HORRON_DRAIN_DISTANCE)
 								this->SetCurrStat(Stats::DREAMSOUL, -1, SET_RELATIVE, n->ID());
@@ -1605,10 +1606,11 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 #endif
 #endif
 				return gs->PlayerAttack(LyraBitmap::MARE_MELEE_MISSILE, MELEE_VELOCITY, LyraEffect::NONE, BOGROM_DAMAGE);
+				break;
 
 		case Avatars::AGOKNIGHT:  // 10-20 damage, melee, can roar and blast
 #ifdef AGENT
-			if ((rand()%1500) == 0) // roar and blast instead
+			if ((rand()%250) == 0) // roar and blast instead
 			{
 				if (target)
 					gs->SendPlayerMessage(target, RMsg_PlayerMsg::BLAST, 30, 0);
@@ -1617,6 +1619,7 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 			else
 #endif
 				return gs->PlayerAttack(LyraBitmap::MARE_MELEE_MISSILE, MELEE_VELOCITY, LyraEffect::NONE, AGOKNIGHT_DAMAGE);
+			break;
 
 		case Avatars::SHAMBLIX: 
 			// 10-30 damage, paralysis fireballs
@@ -1624,7 +1627,29 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 
 		case Avatars::HORRON: // 12-40 damage, blinding fireballs
 			{
-			int value = LyraEffect::PLAYER_BLIND;
+#ifdef AGENT
+			if (target)
+			{
+				switch (rand()%2000)
+				{
+				case 0: // Abjure the target instead
+					gs->SendPlayerMessage(target, RMsg_PlayerMsg::ABJURE, 10, 0);
+					gs->SetLastSound(LyraSound::MONSTER_ROAR);
+					break;
+				case 1: // Razorwind the room instead
+					gs->SendPlayerMessage(0, RMsg_PlayerMsg::RAZORWIND, 50, 0);
+					gs->SetLastSound(LyraSound::MONSTER_ROAR);
+					break;
+				case 3: // Tempest the room instead
+					gs->SendPlayerMessage(0, RMsg_PlayerMsg::TEMPEST, 50, player->angle/4);
+					gs->SetLastSound(LyraSound::MONSTER_ROAR);
+					break;
+				default:
+					break;
+				}
+
+			}
+#endif
 			return gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE, -5, LyraEffect::PLAYER_BLIND, HORRON_DAMAGE);
 			break;
 			}
@@ -1969,6 +1994,7 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 		if (this->CurrStat(Stats::DREAMSOUL) > 0)
 			i = this->CurrStat(Stats::DREAMSOUL);
 		j = 100 + this->AvatarType(); // night mare = 100+
+		blast_chance = 0; // reset Ago's Blast Chance on collapse
 #else 
 // if player mare = 200+
 #ifdef PMARE

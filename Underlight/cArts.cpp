@@ -2278,8 +2278,8 @@ void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 void cArts::Tempest (void)
 {
   gs->SendPlayerMessage (0, RMsg_PlayerMsg::TEMPEST,
-    player->Skill (Arts::TEMPEST), player->angle);
-  this->ApplyTempest (player->angle, player->ID ());
+    player->Skill (Arts::TEMPEST), player->angle/4);
+  this->ApplyTempest (player->angle/4, player->ID ());
   this->ArtFinished (true);
   return;
 }
@@ -2294,7 +2294,7 @@ void cArts::ApplyTempest (int angle, lyra_id_t caster_id)
 	}
   else
   {
-    MoveActor (player, angle, PUSH_DISTANCE, MOVE_NORMAL);
+    MoveActor (player, angle*4, PUSH_DISTANCE, MOVE_NORMAL);
     LoadString (hInstance, IDS_TEMPEST_APPLIED, disp_message, sizeof(disp_message));
 	  display->DisplayMessage (disp_message);
 		player->PerformedAction();
@@ -4111,7 +4111,7 @@ void cArts::ApplyBlast(int skill, lyra_id_t caster_id)
 
 #ifdef AGENT // powerful monsters are immune to blast
 
-	if (player->AvatarType() >= Avatars::AGOKNIGHT)
+	if (player->AvatarType() >= Avatars::SHAMBLIX)
 		return;
 #endif
 //#endif 0	// MKET - Game designer choice

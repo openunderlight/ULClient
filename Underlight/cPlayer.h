@@ -174,6 +174,7 @@ class cPlayer : public cActor
 	  void ValidateChecksums(void); // check for stat tampering
 
 	  int curse_strength; // Curse Strength public field keeps track of art failure rate
+	  int blast_chance; // Blast Chance tracks the chance an Ago will reciprocate your Blast
 	  
 	  // Selection Functions
 	  virtual TCHAR* Name(void);
