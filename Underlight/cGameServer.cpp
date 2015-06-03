@@ -2521,7 +2521,7 @@ void cGameServer::HandleMessage(void)
 						break;
 				case RMsg_PlayerMsg::TEMPEST:	  // skill, angle
 					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
-					arts->ApplyTempest (player_msg.State2(), player_msg.SenderID());
+					arts->ApplyTempest (player_msg.State1(), player_msg.State2(), player_msg.SenderID());
 						break;
 				case RMsg_PlayerMsg::RAZORWIND:	  // skill, not used
 					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
