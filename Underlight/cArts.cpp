@@ -4946,6 +4946,14 @@ void cArts::ResponseSphere(lyra_id_t caster_id, int success, int sphere)
     // actors->IterateItems(DONE); // this is unnecessary... CountTrainSphereTokens resets the depth
                                    // doing this here causes a crash because then UpdateServer iterates
                                    // on an incorrect depth.
+
+	// now destroy the sphere quest item
+
+		if (actors->ValidItem(quest_item))
+			quest_item->Destroy();
+
+		quest_item = NULL;
+
 		gs->UpdateServer();
 	}
 	else
@@ -4966,9 +4974,23 @@ void cArts::EndSphere(void)
 {
 	cNeighbor *n = cp->SelectedNeighbor();
 	lyra_id_t art_id = cp->SelectedArt();
+	quest_item = NO_ITEM;
+
 	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
 	{
 		this->DisplayNeighborBailed(Arts::LEVELTRAIN);
+		this->ArtFinished(false);
+		return;
+	}
+
+	// in order to sphere, teacher must be holding a quest codex for the appropriate
+	// player and art of sphere
+
+	// necessity of Quest item below 
+	if ((quest_item = HasQuestCodex(n->ID(), Arts::LEVELTRAIN)) == NO_ITEM)
+	{
+		LoadString (hInstance, IDS_NEED_SPHERE_QUEST, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
