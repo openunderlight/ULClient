@@ -1679,7 +1679,7 @@ static int PlayerTripLine(linedef *aLine)
 					LoadString (hInstance, IDS_TRAIN_HOUSES_FINDTEACHER, trip_message, sizeof(trip_message));
 					display->DisplayMessage (trip_message);
 				break;
-
+				/*
 				case TRAIN_BELIEF_MOON:
 					LoadString (hInstance, IDS_TRAIN_BELIEF_MOON, trip_message, sizeof(trip_message));
 					display->DisplayMessage (trip_message);
@@ -1719,7 +1719,7 @@ static int PlayerTripLine(linedef *aLine)
 					LoadString (hInstance, IDS_TRAIN_BELIEF_LIGHT, trip_message, sizeof(trip_message));
 					display->DisplayMessage (trip_message);
 				break;
-
+				*/
 				case TRAIN_QUEST_BUILDER1:
 					LoadString (hInstance, IDS_QUEST_BUILDER1, trip_message, sizeof(trip_message));
 					display->DisplayMessage (trip_message);
