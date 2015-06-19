@@ -1516,7 +1516,7 @@ BEGIN
     IDS_NEEDED_SKILL        "; you need a skill of at least  %d  in %s to use it"
     IDS_LOGIN_BADPASSWORD   "Incorrect password - please try again!"
     IDS_MAP_AREA            "That area is known as %s"
-    IDS_LOGIN_ALREADYIN     "That character, or another character linked to the same billing account, is already logged in - please try again in 5 minutes. If you still can't log in after 15 minutes, please email accounts@koiware.com."
+    IDS_LOGIN_ALREADYIN     "That character, or another character linked to the same billing account, is already logged in - please try again in 5 minutes. If you still can't log in after 15 minutes, please email accounts@underlight.com."
     IDS_SOUND_FAILED_INIT   "Failed to initialize Sound, trying again...\n"
     IDS_LOGIN_GAMEFULL      "We're sorry, but the game is currently full - please try again later!"
 END
@@ -1978,7 +1978,7 @@ BEGIN
     IDS_REMOVE_XP           "%s has taken away experience points from you!\n"
     IDS_NO_SHIFTRUN         "The numeric keypad will function improperly if the shift key is mapped to a movement function.  The shift key has been unmapped."
     IDS_TEL_SPHERE_TOO_LOW  "You must be at least %s Sphere to use that portal\n"
-    IDS_CRAP_NETWORKING     "There is a problem with your Internet Provider or the Internet itself that prevents you from playing Underlight.  If the problem persists, contact your Internet Provider or support@koiware.com\n"
+    IDS_CRAP_NETWORKING     "There is a problem with your Internet Provider or the Internet itself that prevents you from playing Underlight.  If the problem persists, contact your Internet Provider or support@underlight.com\n"
     IDS_ADD_BUDDY           "Enter the name of the dreamer to add:"
     IDS_BUDDY_LIST_FULL     "Your list is currently full - you must delete names before adding new ones\n"
     IDS_ALREADY_ON_LIST     "That dreamer is already on your list\n"
@@ -2088,7 +2088,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_NO_MPLAYER          "You should probably never see this string. If you do contact support@koiware.com"
+    IDS_NO_MPLAYER          "You should probably never see this string. If you do contact support@underlight.com"
     IDS_RUN_TOGGLE_ON       "Autorun On\n"
     IDS_LOGIN_MPLAYERID     "you can only use an Underlight account from the MPlayer account that was used to create it. Please restart MPlayer with the proper MPlayer account and try again. "
     IDS_UNTRAIN_OTHER       "You have removed the ability of %s to perform %s\n"
@@ -2138,7 +2138,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_BAD_LEVELFILE       "Error - incorrect or corrupted level file. Please ensure you have applied the latest patches, and, if necessary, download and install Underlight again. Or, contact support@koiware.com for help."
+    IDS_BAD_LEVELFILE       "Error - incorrect or corrupted level file. Please ensure you have applied the latest patches, and, if necessary, download and install Underlight again. Or, contact support@underlight.com for help."
     IDS_REFLECTS_BACK       "Your attempt to drainself reflects off the chaos of %s's soulphere!"
     IDS_SUMMON              "Your head swims in a shower of color as your avatar changes into pure energy and then is restored. When your eyes focus you find yourself at the feet of %s."
     IDS_DETECTED_CHEATER    "\n**\n**  C H E A T E R ! ! !\n**  Know that this infraction has been logged!\n**  If similar activity continues, this account will be TERMINATED\n**  and the appropriate legal actions taken.\n**\n"
@@ -2152,7 +2152,7 @@ BEGIN
     IDS_RWJOIN              "You feel that your mind has become linked to another..."
     IDS_RWLEAVE             "You feel that another has just unlinked from your mind..."
     IDS_NOVOICE             "Because you have chosen to disable telepathy before entering the dream, you must exit, enable it, and reenter before you can use it"
-    IDS_LOGIN_EXPIRED       "We're sorry, but that account has expired. To reactivate, please send email to accounts@koiware.com, and include the e-mail address for this character, plus any information that shows ownership."
+    IDS_LOGIN_EXPIRED       "We're sorry, but that account has expired. To reactivate, please send email to accounts@underlight.com, and include the e-mail address for this character, plus any information that shows ownership."
     IDS_LOGIN_BILLING_LOCKOUT 
                             "There has been a problem with your billing which must be resolved before you may play Underlight. Please go to www.underlight.com and contact a KoiWare representative for assistance."
 END
@@ -2195,10 +2195,10 @@ BEGIN
     IDS_SOUL_SHIELD_OFF     "You are no longer shielded from the Chaos swirling around you!\n"
     IDS_SS_MB               "Your attempt to activate Mind Blank has failed because of interference from your Soul Shield\n"
     IDS_HOW_MANY_DAYS       "How many days of suspension? "
-    IDS_DISABLED            "We're sorry, but your Underlight account has been disabled. You may reactivate it at http://account.underlight.com, or email accounts@koiware.com"
-    IDS_TERMINATED          "We're sorry, but that Underlight account has been terminated and may no longer be used. Please contact accounts@koiware.com for more information."
-    IDS_SUSPENDED           "We're sorry, but that Underlight account has been temporarily suspended,  and can not be used for %d more days. Please contact accounts@koiware.com for more information."
-    IDS_MISMATCH            "We're sorry, but that Underlight account can not be used with this version of Underlight. Please contact accounts@koiware.com for more information."
+    IDS_DISABLED            "We're sorry, but your Underlight account has been disabled. You may reactivate it at http://account.underlight.com, or email accounts@underlight.com"
+    IDS_TERMINATED          "We're sorry, but that Underlight account has been terminated and may no longer be used. Please contact accounts@underlight.com for more information."
+    IDS_SUSPENDED           "We're sorry, but that Underlight account has been temporarily suspended,  and can not be used for %d more days. Please contact accounts@underlight.com for more information."
+    IDS_MISMATCH            "We're sorry, but that Underlight account can not be used with this version of Underlight. Please contact accounts@underlight.com for more information."
 END
 
 STRINGTABLE
@@ -2223,9 +2223,9 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_KILLED              "We're sorry, but that character is dead and can no longer be played.  Contact accounts@koiware.com for more information"
-    IDS_PLAYER_SUSPENDED    "You have been temporarily suspended from Underlight for %d days. Please contact accounts@koiware.com for more information."
-    IDS_PLAYER_TERMINATED   "We're sorry, but your account has been terminated (permanently disabled) by the KoiWare team. Please contact accounts@koiware.com for further information."
+    IDS_KILLED              "We're sorry, but that character is dead and can no longer be played.  Contact accounts@underlight.com for more information"
+    IDS_PLAYER_SUSPENDED    "You have been temporarily suspended from Underlight for %d days. Please contact accounts@underlight.com for more information."
+    IDS_PLAYER_TERMINATED   "We're sorry, but your account has been terminated (permanently disabled) by the KoiWare team. Please contact accounts@underlight.com for further information."
     IDS_NO_PMARE            "We're sorry, but to use a player nightmare character, you must have enough PMare credits for at least 15 minutes of play. Earn more by using Roleplay Points on your regular player character."
     IDS_PMARE_EVOLVE        "Due to your XP gain, you have evolved into a more powerful nightmare!!!\n"
     IDS_PMARE_DEVOLVE       "Due to your XP loss, you have regressed into a less powerful nightmare!!!\n"
@@ -2235,7 +2235,7 @@ BEGIN
     IDS_AGREEMENT_TEXT1     "By entering the game, you are agreeing to the 3 Rules of Underlight, KoiWare account policy, and game policy as described below.\r\n\r\nThe First Rule -- ""Be Honest with the Software"" \r\n Cheating or hacking of any kind is prohibited. Client software or other programs that alter data transferred between our server and the client that causes damage or unauthorized access to our servers could be considered an attempt to hack our servers. This is a federal offense, and we will prosecute you to the fullest extent of the law."
     IDS_AGREEMENT_TEXT2     "The Second Rule -- ""Respect Others""\r\n Keep your behavior appropriate at all times. If your language or behavior repeatedly annoys or offends others, you will be banned from playing. We place no limits on the use of language. Consenting adults are free to engage in any language or behavior they mutually agree to. Inappropriate behavior includes attacking other players without a valid 'in game reason', using unnecessarily offensive language, annoying others with out of character chat, excessive begging, etc."
     IDS_AGREEMENT_TEXT3     "The Third Rule -- ""Stay in Character""\r\nUnderlight is a true Role Playing game.  Upon entering the City of Dreams, you have to always remember you are pretending to be your character and leave the outside life of the real world behind. Your character would have no way of knowing sports scores or the latest in music or fashion.  So, to protect the environment that all role players are striving for, please leave the real world chat outside.  If you must communicate of real world things, please do so in whispers as to not offend anyone and protect the active role playing that is going on around your character.\n"
-    IDS_AGREEMENT_TEXT4     "KoiWare Underlight Account Policy\r\n\r\nAll Underlight accounts are the property of KoiWare and reside on  the KoiWare servers. KoiWare reserves the right to change, modify, or disable any account at any time, for any reason, with or without notice. By clicking 'I Agree', you are verifying that either:\r\n1) You are 18 years of age or older, and are the controller of the KoiWare account for this Underlight character,\r\n or \r\n2) You are under 18 and have permission from the adult controller of the KoiWare account for this Underlight character to be the exclusive user for this character.\r\n\r\nIf you do not agree, please click 'Quit' and send email to accounts@koiware.com so that your KoiWare and Underlight accounts can be deactivated. For more info, go to \nhttp://www.underlight.com"
+    IDS_AGREEMENT_TEXT4     "KoiWare Underlight Account Policy\r\n\r\nAll Underlight accounts are the property of KoiWare and reside on  the KoiWare servers. KoiWare reserves the right to change, modify, or disable any account at any time, for any reason, with or without notice. By clicking 'I Agree', you are verifying that either:\r\n1) You are 18 years of age or older, and are the controller of the KoiWare account for this Underlight character,\r\n or \r\n2) You are under 18 and have permission from the adult controller of the KoiWare account for this Underlight character to be the exclusive user for this character.\r\n\r\nIf you do not agree, please click 'Quit' and send email to accounts@underlight.com so that your KoiWare and Underlight accounts can be deactivated. For more info, go to \nhttp://www.underlight.com"
     IDS_AGREEMENT_TEXT5     "As a player nightmare, you gain and lose XP just like a dreamer. However,there are no sphere restrictions, and your nightmare form changes as you gain and lose orbits. Orbits 0-4 are Bogrom;  Orbits 5-14 are Agoknight;Orbits 15-44 are Shamblix; Orbits 45 and above are Horron.\r\n\r\nAs a player nightmare, you may use only predefined actions and speech, and will hear babble from dreamers. You can not use items, and your only arts are Show Talisman, Sense Dreamers, and Drain Essence,  which drains dreamer essences to replenishish your focal energy. You will take damage within sanctuaries. If you are collapsed, you will automatically reform immediately in the player nightmare threshold. Finally, you can never be blinded, paralyzed or staggered.\r\n\r\n"
     IDS_PMARE_NO_ARTS       "You may not use arts as a nightmare\n"
     IDS_PMARE_BOGROM        "Bogrom (Weakest): 1 PMare credit per 15 minutes"
@@ -3775,11 +3775,11 @@ STRINGTABLE
 BEGIN
     IDS_KNOW10              "The musty scent of old books lends this room the feel of an ancient library. The floor is clean and spacious, seeming almost ready for apparatus of experimentation to be placed. The myriad designs on the walls evoke the possibilities of understanding the unknown."
     IDS_HOUSE_MEMBERS       "House Members"
-    IDS_NO_MP_LIBRARY       "You should probably never see this string. If you do contact support@koiware.com"
-    IDS_NO_MP_PROC1         "You should probably never see this string. If you do contact support@koiware.com"
-    IDS_NO_MP_CONN          "You should probably never see this string. If you do contact support@koiware.com"
-    IDS_NO_MP_LOGIN         "You should probably never see this string. If you do contact support@koiware.com"
-    IDS_NO_MP_GAME          "You should probably never see this string. If you do contact support@koiware.com"
+    IDS_NO_MP_LIBRARY       "You should probably never see this string. If you do contact support@underlight.com"
+    IDS_NO_MP_PROC1         "You should probably never see this string. If you do contact support@underlight.com"
+    IDS_NO_MP_CONN          "You should probably never see this string. If you do contact support@underlight.com"
+    IDS_NO_MP_LOGIN         "You should probably never see this string. If you do contact support@underlight.com"
+    IDS_NO_MP_GAME          "You should probably never see this string. If you do contact support@underlight.com"
     IDS_FREESOUL_BLADE      "Freesoul Blade"
     IDS_BLADE_CREATED       "You have created a Freesoul Knight Blade!"
     IDS_FREESOUL_KNIGHT_DESCRIP 
@@ -4159,7 +4159,7 @@ BEGIN
     IDS_TAINT_PRIME_SUCCESS "You have succesfully evoked Taint Prime! The prime is now tainted!"
     IDS_NO_HOSTNAME         "Could not resolve hostname. Please make sure you are connected to the internet and try again."
     IDS_PROTO_REJECT_UNKNOWN 
-                            "The server could not accept your Found Guild request. Please contact support@koiware.com if this problem persists."
+                            "The server could not accept your Found Guild request. Please contact support@underlight.com if this problem persists."
     IDS_PROTO_REJECT_BAD_NEIGHBOR 
                             "The server could not accept your Found Guild request because: you selected a neighbor that is already in another guild."
     IDS_MOVEMENT            "Movement"
