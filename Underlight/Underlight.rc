@@ -3706,7 +3706,7 @@ BEGIN
     IDS_DSERR_UNINITIALIZED "DSERR_UNINITIALIZED"
     IDS_LIVE_GAME_SERVER_IP "199.58.75.230"
     IDS_DEV_GAME_SERVER_IP  "199.58.75.231"
-    IDS_GAME_MANUAL_URL     "http://www.underlightwiki.com"
+    IDS_GAME_MANUAL_URL     "http://wiki.underlight.com"
     IDS_BILLING_URL         "http://forums.underlight.com/viewtopic.php?f=2&t=78"
     IDS_FIREWALL_FAQ_URL    "http://www.underlight.com/"
 END
