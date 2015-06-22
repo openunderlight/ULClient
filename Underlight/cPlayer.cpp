@@ -1630,7 +1630,7 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 #ifdef AGENT
 			if (target)
 			{
-				switch (rand()%2000)
+				switch (rand()%1500)
 				{
 				case 0: // Abjure the target instead
 					gs->SendPlayerMessage(target, RMsg_PlayerMsg::ABJURE, 10, 0);

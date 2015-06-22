@@ -177,7 +177,7 @@ public:
 	void GuildHouse(void);
 	void TehthusOblivion(void);
   void Tempest (void);
-  void ApplyTempest (int angle, lyra_id_t caster_id);
+  void ApplyTempest (int skill, int angle, lyra_id_t caster_id);
   void Misdirection (void);
   void ApplyMisdirection (int skill, lyra_id_t caster_id);
   void ChaoticVortex (void);

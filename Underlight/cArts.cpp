@@ -2279,12 +2279,12 @@ void cArts::Tempest (void)
 {
   gs->SendPlayerMessage (0, RMsg_PlayerMsg::TEMPEST,
     player->Skill (Arts::TEMPEST), player->angle/4);
-  this->ApplyTempest (player->angle/4, player->ID ());
+  this->ApplyTempest (player->Skill (Arts::TEMPEST), player->angle/4, player->ID ());
   this->ArtFinished (true);
   return;
 }
 
-void cArts::ApplyTempest (int angle, lyra_id_t caster_id)
+void cArts::ApplyTempest (int skill, int angle, lyra_id_t caster_id)
 {
 	if ((caster_id == player->ID()) || (gs && gs->Party() && gs->Party()->IsInParty(caster_id)))
 	{ // by caster or caster's party - no damage
@@ -2294,7 +2294,7 @@ void cArts::ApplyTempest (int angle, lyra_id_t caster_id)
 	}
   else
   {
-    MoveActor (player, angle*4, PUSH_DISTANCE, MOVE_NORMAL);
+    MoveActor (player, angle*4, (PUSH_DISTANCE * ((1/3)*(skill/10)+1)), MOVE_NORMAL);
     LoadString (hInstance, IDS_TEMPEST_APPLIED, disp_message, sizeof(disp_message));
 	  display->DisplayMessage (disp_message);
 		player->PerformedAction();
