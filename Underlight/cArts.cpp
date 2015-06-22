@@ -2278,13 +2278,13 @@ void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 void cArts::Tempest (void)
 {
   gs->SendPlayerMessage (0, RMsg_PlayerMsg::TEMPEST,
-    player->Skill (Arts::TEMPEST), player->angle);
-  this->ApplyTempest (player->angle, player->ID ());
+    player->Skill (Arts::TEMPEST), player->angle/4);
+  this->ApplyTempest (player->Skill (Arts::TEMPEST), player->angle/4, player->ID ());
   this->ArtFinished (true);
   return;
 }
 
-void cArts::ApplyTempest (int angle, lyra_id_t caster_id)
+void cArts::ApplyTempest (int skill, int angle, lyra_id_t caster_id)
 {
 	if ((caster_id == player->ID()) || (gs && gs->Party() && gs->Party()->IsInParty(caster_id)))
 	{ // by caster or caster's party - no damage
@@ -2294,7 +2294,7 @@ void cArts::ApplyTempest (int angle, lyra_id_t caster_id)
 	}
   else
   {
-    MoveActor (player, angle, PUSH_DISTANCE, MOVE_NORMAL);
+    MoveActor (player, angle*4, (PUSH_DISTANCE * ((1/3)*(skill/10)+1)), MOVE_NORMAL);
     LoadString (hInstance, IDS_TEMPEST_APPLIED, disp_message, sizeof(disp_message));
 	  display->DisplayMessage (disp_message);
 		player->PerformedAction();
@@ -4111,7 +4111,7 @@ void cArts::ApplyBlast(int skill, lyra_id_t caster_id)
 
 #ifdef AGENT // powerful monsters are immune to blast
 
-	if (player->AvatarType() >= Avatars::AGOKNIGHT)
+	if (player->AvatarType() >= Avatars::SHAMBLIX)
 		return;
 #endif
 //#endif 0	// MKET - Game designer choice
@@ -4946,6 +4946,14 @@ void cArts::ResponseSphere(lyra_id_t caster_id, int success, int sphere)
     // actors->IterateItems(DONE); // this is unnecessary... CountTrainSphereTokens resets the depth
                                    // doing this here causes a crash because then UpdateServer iterates
                                    // on an incorrect depth.
+
+	// now destroy the sphere quest item
+
+		if (actors->ValidItem(quest_item))
+			quest_item->Destroy();
+
+		quest_item = NULL;
+
 		gs->UpdateServer();
 	}
 	else
@@ -4966,9 +4974,23 @@ void cArts::EndSphere(void)
 {
 	cNeighbor *n = cp->SelectedNeighbor();
 	lyra_id_t art_id = cp->SelectedArt();
+	quest_item = NO_ITEM;
+
 	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
 	{
 		this->DisplayNeighborBailed(Arts::LEVELTRAIN);
+		this->ArtFinished(false);
+		return;
+	}
+
+	// in order to sphere, teacher must be holding a quest codex for the appropriate
+	// player and art of sphere
+
+	// necessity of Quest item below 
+	if ((quest_item = HasQuestCodex(n->ID(), Arts::LEVELTRAIN)) == NO_ITEM)
+	{
+		LoadString (hInstance, IDS_NEED_SPHERE_QUEST, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}

@@ -72,6 +72,7 @@
 
 
 #ifdef AGENT
+extern int blast_chance;
 extern int num_logins;
 #include "cAI.h"
 #endif
@@ -2432,7 +2433,15 @@ void cGameServer::HandleMessage(void)
 					break;
 				case RMsg_PlayerMsg::BLAST:	  // skill, not used
 					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					{
 						arts->ApplyBlast(player_msg.State1(), player_msg.SenderID());
+#ifdef AGENT
+					if ((player->AvatarType() == Avatars::AGOKNIGHT) && (rand()%100 < player->blast_chance))
+						gs->SendPlayerMessage(player_msg.SenderID(), RMsg_PlayerMsg::BLAST, 30, 0);
+
+					if (player->blast_chance < 100) player->blast_chance += 5;
+#endif
+					}
 					else
 						gs->SendPlayerMessage(player_msg.SenderID(), RMsg_PlayerMsg::BLAST_ACK, 0, 0); 
 					break;
@@ -2512,7 +2521,7 @@ void cGameServer::HandleMessage(void)
 						break;
 				case RMsg_PlayerMsg::TEMPEST:	  // skill, angle
 					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
-					arts->ApplyTempest (player_msg.State2(), player_msg.SenderID());
+					arts->ApplyTempest (player_msg.State1(), player_msg.State2(), player_msg.SenderID());
 						break;
 				case RMsg_PlayerMsg::RAZORWIND:	  // skill, not used
 					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))

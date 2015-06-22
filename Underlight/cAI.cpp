@@ -916,7 +916,8 @@ bool cAI::HasBeenStruck(int view)
 	// Powerful agents may get vision when injured
 	if (this->avatar.AvatarType() >= Avatars::AGOKNIGHT) 
 	{
-		if (!struck_before && (rand()%15 == 0)) 
+		//if (!struck_before && (rand()%15 == 0)) 
+		if (rand()%15 == 0)
 		{
 			this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 10000000, player->ID());
 		}
@@ -1206,15 +1207,15 @@ void cAI::FindRespawn(GMsg_LevelPlayers& players_msg)
 		return;
 	}
 
-	int pos;
+	int pos = 0;
 	if (num_clear_gens > 0) // Prioritize spawning in rooms with no other agents.
 	{
-		int pos = rand() % num_clear_gens;
+		pos = rand() % num_clear_gens;
 		generator = clear_respawn_points[pos];
 	}
 	else // If agents are everywhere, spawn with a buddy.
 	{
-		int pos = rand() % num_open_gens;  // randomize position to start from in list
+		pos = rand() % num_open_gens;  // randomize position to start from in list
 		// now move to the pos'th open point
 		generator = open_respawn_points[pos];
 	}
