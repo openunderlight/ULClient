@@ -4019,6 +4019,7 @@ BEGIN
     IDS_UNKNOWN_SKELETON    "unknown skeleton ID %d requested"
     IDS_FOUNDGUILD_ACCEPTED "You have successfully accepted the charter for the %s guild."
     IDS_FOUNDGUILD_REJECTED "You have successfully rejected the charter for the %s guild."
+    IDS_NEED_SPHERE_QUEST   "In order to Sphere a Dreamer, you must have in your pack a Quest item (created by the Quest Art) made specifically for that Dreamer and the art of Sphere."
 END
 
 STRINGTABLE
@@ -4212,7 +4213,7 @@ BEGIN
     IDS_TEL_MUST_BE_FOCUS   "You must be a %s to use that portal\n"
     IDS_TEL_MUST_HAVE_MARK  "You must possess the %s to use that portal\n"
     IDS_ARRET_CREST         "Crest of Arret"
-    IDS_CHAOS_WELL	    "Chaos Well"
+    IDS_CHAOS_WELL          "Chaos Well"
 END
 
 STRINGTABLE
@@ -4221,7 +4222,6 @@ BEGIN
     IDS_CHAOS_WELL_SUCCESS  "You transfer the nightmare essence into the Chaos Well\n"
     IDS_CHAOS_WELL_FAILURE  "You have no nightmare essence to place into the Chaos Well\n"
 END
-
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
