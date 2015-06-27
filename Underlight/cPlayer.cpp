@@ -692,7 +692,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_CURSE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		//  Curse and Protection offset and partially cancel
-//		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration;
+		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration;
 		return false;
 		}
 		// Implementing Curse Effect
@@ -724,7 +724,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_PARALYZE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Paralyze and Free Action now offset and partially cancel
-		//timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration; // new code
+		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration; // new code
 		return false;
 									  }
 		// If actually paralyzed, cancel any current evoke.
@@ -737,7 +737,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_STAGGER_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Stagger and Free Action now offset and partially cancel
-		//timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration; // new code
+		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration; // new code
 		return false;
 								  }} break;
 	case LyraEffect::PLAYER_FEAR:{
@@ -746,7 +746,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_FEAR_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Fear and Resist Fear now offset and partially cancel
-	//	timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR]-=duration;
+		timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR]-=duration;
 		return false;
 								 }} break;
 	case LyraEffect::PLAYER_BLIND:{
@@ -757,7 +757,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_BLIND_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Blind and Vision now offset and partially cancel
-	//	timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE]-=duration;
+		timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE]-=duration;
 		return false;
 								  }} break;
 //  Players must know how to Recall, Transform, etc. in case talisman causes effect
