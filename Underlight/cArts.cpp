@@ -180,7 +180,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x6222, // Hypnotic Weave 
 0x8E57, // Vampiric Draw 
 0xADC8, // Terror 
-0xD74E, // Healing Aura 
+0xD7CE, // Healing Aura 
 0xff5F, // RogerWilco
 0x24FE, // Dreamsmith Mark
 0x435B, // Support Train
@@ -189,14 +189,14 @@ unsigned long art_chksum[NUM_ARTS] =
 0xae98,	// Soul Shield
 0xd56D, // Summon
 0xf999,	// Suspend 
-0x1A43, // Reflect
+0x1BC3, // Reflect
 0x3dFD, // Sacrifice
 0x659F, // Cleanse Nightmare
 0x8149, // Create ID Token
 0xAC49, // Sense Dreamers
 0xCCD3, // Expel
 0xF6A4, // Locate Newly Awakened
-0x1ACA, // Combine
+0x1A4A, // Combine
 0x3F28, // Power Token
 0x6D27, // Show Gratitude
 0x8E44, // Quest
@@ -236,7 +236,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x664D, // Forge Master
 0x8544, // Merge Talisman
 0xA9D8, // NP Symbol
-0xCCD8, // Sense Datoken
+0xCC58, // Sense Datoken
 0xED06, // Tempest
 0x123A, // Kinesis
 0x3066, // Misdirection
@@ -333,7 +333,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_HYPNOTIC_WEAVE_ART_NAME,		Stats::LUCIDITY,	60, 40, 4,	7,	4, FOCUS|LEARN},
 {IDS_VAMPRIC_DRAW,					Stats::RESILIENCE,	60, 5,	0,	5,	3, FOCUS|LEARN|NEIGH|NEED_ITEM},
 {IDS_TERROR_ART_NAME,				Stats::LUCIDITY,	60, 40, 4,	1,	3, FOCUS|LEARN},
-{IDS_HEAL_AURA,						Stats::RESILIENCE,	60, 40, 0,	9, 	-1, FOCUS|NEIGH|SANCT},
+{IDS_HEAL_AURA,						Stats::RESILIENCE,	60, 40, 0,	9, 	-1, FOCUS|NEIGH|SANCT|LEARN},
 {IDS_TELEPATHY,						Stats::NO_STAT,		75, 0,  0,	0, 	-1, SANCT|NEIGH},	// roger wilco voice
 {IDS_DREAMSMITH_MARK_ART_NAME, 		Stats::NO_STAT,		50, 0,  0,	1, 	-1, SANCT},
 {IDS_SUPPORT_TRAIN,					Stats::NO_STAT,		10, 0,  0,	10,	-1, SANCT|NEIGH|MAKE_ITEM},
@@ -342,14 +342,14 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_SOUL_SHIELD,					Stats::DREAMSOUL,	40, 20, 15, 5,  2, SANCT|LEARN},
 {IDS_SUMMON_ART_NAME,				Stats::NO_STAT,		0,  0,  0,  0,  -1, SANCT},
 {IDS_SUSPEND,						Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},
-{IDS_REFLECT_ART_NAME,				Stats::WILLPOWER,   65, 40, 9,  3,	-1, SANCT|FOCUS},
+{IDS_REFLECT_ART_NAME,				Stats::WILLPOWER,   65, 40, 9,  3,	-1, SANCT|FOCUS|LEARN},
 {IDS_SACRIFICE,						Stats::RESILIENCE,	10, 5,  0,	1, 	-1, SANCT|NEED_ITEM},
 {IDS_CLEANSE_MARE,					Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
 {IDS_CREATE_ID_TOKEN,				Stats::DREAMSOUL,	0,  20, 0,	1, 	-1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SENSE,							Stats::DREAMSOUL,	0,  0,  0,	1,  -1, SANCT|LEARN},
 {IDS_EXPEL_ART_NAME,				Stats::DREAMSOUL,	20, 0,  0,	1,  -1, SANCT|NEED_ITEM|NEIGH},
 {IDS_NEWLY_AWAKENED,				Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT|LEARN},
-{IDS_COMBINE,						Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS},
+{IDS_COMBINE,						Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
 {IDS_POWER_TOKEN,					Stats::DREAMSOUL,	10,  0, 0,	10, -1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SHOW_GRATITUDE,				Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
 {IDS_QUEST,							Stats::NO_STAT,		0,   0, 0,	3, -1, SANCT|NEIGH|MAKE_ITEM},
@@ -389,12 +389,12 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_FORGE_MASTER,		 			Stats::NO_STAT,		50, 0,  0,	1, 	-1, SANCT},
 {IDS_MERGE_TALISMAN,				Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS},
 {IDS_NP_SYMBOL_ART_NAME, 			Stats::NO_STAT,		10,  0, 0,	2, 	-1, SANCT},
-{IDS_LOCATE_MARES,					Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT},
-{IDS_TEMPEST,				        Stats::LUCIDITY,	  60, 40, 0,	7, 	-1,  FOCUS|LEARN},
-{IDS_KINESIS, 						Stats::WILLPOWER,	  30,  5,  0,	1, 	-1, FOCUS|LEARN|NEIGH},
-{IDS_MISDIRECTION,					Stats::DREAMSOUL,    60,  30, 0, 5,  -1, LEARN|NEIGH},
-{IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,    70,  40, 4, 5,  -1, NEIGH|NEED_ITEM},
-{IDS_CHAOS_WELL,					Stats::DREAMSOUL, 30, 5, 0, 5, -1, SANCT | MAKE_ITEM | LEARN },
+{IDS_LOCATE_MARES,					Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT|LEARN},
+{IDS_TEMPEST,				        Stats::LUCIDITY,	60, 40, 0,	7, 	-1, FOCUS|LEARN},
+{IDS_KINESIS, 						Stats::WILLPOWER,	30, 5,  0,	1, 	-1, FOCUS|LEARN|NEIGH},
+{IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN|NEIGH},
+{IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
+{IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT|MAKE_ITEM|LEARN},
 };
 
 
@@ -483,7 +483,55 @@ short cArts::PPMultiplier(int art_id)
 		return art_info[art_id].pp_multiplier;;
 }
 
+int cArts::CanPlateauArt(int art_id) // Returns the next skill level if art can be plateaued
+{
+	if ((art_id < 0) || (art_id >= NUM_ARTS))
+	{
+	LoadString(hInstance, IDS_INVALID_ART, message, sizeof(message));
+	_stprintf(errbuf,message, art_id);
+		NONFATAL_ERROR(errbuf);
+		return 0;
+	}
+	else
+	{
+		int skill = player->Skill(art_id);
+		if (!skill)
+			return 0;
+		int the_max = 99;
+		// if the art has no focus stat, or matches player's focus,
+		// then the limit is 99 or player's orbit for anyone
+		if ((art_info[art_id].stat == Stats::NO_STAT) ||
+			(art_info[art_id].stat == Stats::DREAMSOUL) ||
+			(art_info[art_id].stat == player->FocusStat())) {
+			the_max = player->Orbit();
+		}
 
+		else {
+		// otherwise, focus stats do not match, so limit is below 3rd plateau (29),
+		// and for non-focus arts can be learned only to 2 spheres less than
+		// the player's sphere
+
+		// player's orbit high enough?  (must be 2 spheres above art's sphere)
+		int sphere = player->Sphere();
+		int min_sphere = art_info[art_id].min_orbit/10;
+			min_sphere += 2;
+		int sphere_diff = sphere - min_sphere;
+		if (sphere_diff < 0)
+			sphere_diff = 0;
+		int art_max = sphere_diff*10 + 9;
+
+		the_max = MIN(the_max, art_max);
+		the_max = MIN(the_max, 29);
+		}
+
+		if ((the_max > skill) && ((skill % 10) == 9))
+		{
+			return (player->Skill(art_id))+1;
+		}
+
+		return 0;
+	}
+}
 
 bool cArts::Learnable(int art_id)
 {

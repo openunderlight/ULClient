@@ -98,6 +98,7 @@ public:
 	int Duration(int art_id, int skill); // calculates duration for art
 	bool UseInSanctuary(int art_id); // usable in sanctuary?
 	bool Restricted(int art_id); // focus restricted?
+	int CanPlateauArt(int art_id);
 	bool Learnable(int art_id);
 	bool DisplayLearnable(int art_id);
 	bool IncreaseSkill(int art_id,int chance_increase);
