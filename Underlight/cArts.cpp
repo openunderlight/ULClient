@@ -2692,7 +2692,8 @@ void cArts::ApplyHealingAura(int skill, lyra_id_t caster_id)
 	}
 	display->DisplayMessage(message);
 
-	int healing = 8 + ((skill/10)+1)*(rand()%3);
+	// int healing = 8 + ((skill/10)+1)*(rand()%3);
+	int healing = 4 + ((skill/10)+5)*(rand()%3+1);
 	player->SetCurrStat(Stats::DREAMSOUL, healing, SET_RELATIVE, caster_id);
 
 	return;
