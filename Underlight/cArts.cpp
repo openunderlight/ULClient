@@ -9225,8 +9225,11 @@ void cArts::EndVampiricDraw(void)
 		}
 		unsigned char amount = player->SkillSphere(Arts::VAMPIRIC_DRAW)*3+5;
 		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::VAMPIRIC_DRAW, amount, player->SelectedStat());
-		if (!item->Destroy()) // destroy returns true for delayed destruction
-			item->SetTerminate();
+
+		if (player->SkillSphere(Arts::VAMPIRIC_DRAW) <= rand()%10) {
+			if (!item->Destroy()) // destroy returns true for delayed destruction
+				item->SetTerminate();
+		}
 //		this->VampiricDrawAck(player->ID(), amount);
 	}
 
