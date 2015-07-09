@@ -146,7 +146,7 @@ class cPlayer : public cActor
 
 	   int next_collapse_index;
 	   player_collapse_t collapses[COLLAPSES_TRACKED]; // record last 100 collapses
-
+	   lyra_id_t last_poisoner;
 	   DWORD next_heal,next_poison,next_trail,next_nightmare_check,next_regeneration,next_sector_tag;
 
 	   int   vertical_tilt;
