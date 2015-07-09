@@ -175,6 +175,7 @@ class cPlayer : public cActor
 
 	  int curse_strength; // Curse Strength public field keeps track of art failure rate
 	  int blast_chance; // Blast Chance tracks the chance an Ago will reciprocate your Blast
+	  int poison_strength;
 	  
 	  // Selection Functions
 	  virtual TCHAR* Name(void);

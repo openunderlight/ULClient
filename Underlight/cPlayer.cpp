@@ -148,6 +148,8 @@ void cPlayer::InitPlayer(void)
 	//  Initialize curse_strength to zero
 	curse_strength = 0; // no curse on new player
 	blast_chance = 0; // no chance Ago will return Blast to start
+	poison_strength = 0;
+ 	last_poisoner = Lyra::ID_UNKNOWN;
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
 	session_id = 0;

@@ -4105,6 +4105,8 @@ void cArts::ApplyPoison(int skill, lyra_id_t caster_id)
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::POISON);
 	int duration = this->Duration(Arts::POISON, skill);
+	//if (player->poison_strength < skill)
+	//	player->poison_strength = skill;
 	player->SetTimedEffect(LyraEffect::PLAYER_POISONED, duration, caster_id);
 	return;
 }
