@@ -180,7 +180,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x6222, // Hypnotic Weave 
 0x8E57, // Vampiric Draw 
 0xADC8, // Terror 
-0xD7CE, // Healing Aura 
+0xD7EE, // Healing Aura 
 0xff5F, // RogerWilco
 0x24FE, // Dreamsmith Mark
 0x435B, // Support Train
