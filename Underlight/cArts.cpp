@@ -126,7 +126,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xB501, // Purify 
 0xDFAC, // Drain Self 
 0x0281, // Abjure 
-0x2685, // Poison 
+0x274B, // Poison
 0x4A46, // Antidote 
 0x6C08, // Curse 
 0x953C, // Drain Essence 
@@ -142,7 +142,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xFC86, // Darkness 
 0x20A3, // Paralyze  
 0x4B10, // Firestorm 
-0x6ED7, // Razorwind 
+0x6ED5, // Razorwind
 0x8E9A, // Recall 
 0xB0A3, // Push 
 0xD632, // Soul Evoke 
@@ -204,7 +204,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xC88a, // Radiant Blaze
 0xF445, // Poison Cloud 
 0x106E,	// Break Covenant
-0x3A09,	// Peace Aura
+0x3A08, // Peace Aura
 0x5A62,	// Sable Shield
 0x8684,	// Entrancement
 0xA2E4,	// Shadow Step
@@ -279,7 +279,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_PURIFY,				Stats::RESILIENCE,	5,  15, 0,	2, 	1, SANCT|LEARN},
 {IDS_DRAIN_SELF, 			Stats::RESILIENCE,	20, 5,  0,	2, 	2, SANCT|NEIGH|FOCUS|LEARN},
 {IDS_ABJURE,				Stats::RESILIENCE,	50, 30, 0,	3, 	4, FOCUS|LEARN},
-{IDS_POISON,				Stats::RESILIENCE,	30, 15, 23, 3, 	2, NEIGH| FOCUS|LEARN},
+{IDS_POISON,				Stats::RESILIENCE,	30, 15, 13, 3, 	2, NEIGH|FOCUS|LEARN},
 {IDS_ANTIDOTE,				Stats::RESILIENCE,	30, 10, 0,	2, 	3, SANCT|FOCUS|LEARN},
 {IDS_CURSE,					Stats::RESILIENCE,	40, 10, 13, 3, 	3, NEIGH|FOCUS|LEARN},
 {IDS_DRAIN_ESSENCE,			Stats::RESILIENCE,	0,  0,  0,	1, 	1, SANCT|NEED_ITEM|LEARN},
@@ -295,7 +295,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_DARKNESS_ART_NAME,		Stats::LUCIDITY,	50, 25, 4,	5, 	3, NEIGH|FOCUS|LEARN},
 {IDS_PARALYZE,				Stats::LUCIDITY,	30, 20, 2,	3, 	3, NEIGH|FOCUS|LEARN},  
 {IDS_FIRESTORM,				Stats::LUCIDITY,	50, 25, 0,	7, 	3, FOCUS|LEARN},
-{IDS_RAZORWIND,				Stats::LUCIDITY,	70, 40, 0,	9, 	4, FOCUS|LEARN},
+{IDS_RAZORWIND,				Stats::LUCIDITY,	70, 40, 6,	9, 	4, FOCUS|LEARN},
 {IDS_RECALL_ART_NAME,		Stats::DREAMSOUL,	25, 1,  25, 1, 	1, SANCT|LEARN},
 {IDS_PUSH, 					Stats::DREAMSOUL,	0,  0,  0,	1, 	1, NEIGH|LEARN},
 {IDS_SOUL_EVOKE, 			Stats::DREAMSOUL,	15, 1,  23, 1, 	1, SANCT|LEARN},
@@ -357,7 +357,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_RADIANT_BLAZE,					Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_POISON_CLOUD,					Stats::DREAMSOUL,	20, 10,15,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_BREAK_COVENANT,				Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
-{IDS_PEACE_AURA_ART_NAME,			Stats::DREAMSOUL,	20, 10,13,	5,  -1, NEED_ITEM|SANCT},
+{IDS_PEACE_AURA_ART_NAME,			Stats::DREAMSOUL,	20, 10, 6,	5,  -1, NEED_ITEM|SANCT},
 {IDS_SABLE_SHIELD,					Stats::DREAMSOUL,	20, 10,16,	5,  -1, NEED_ITEM|SANCT},
 {IDS_ENTRANCEMENT,					Stats::DREAMSOUL,	20, 10,13,	5,  -1, NEED_ITEM|SANCT},
 {IDS_SHADOW_STEP,					Stats::DREAMSOUL,	20, 10,10,	5,  -1, NEED_ITEM|SANCT},
@@ -787,7 +787,7 @@ bool cArts::CanUseArt(int art_id, bool bypass)
 		return false;
 	}
 
-	if (player->flags & ACTOR_PEACE_AURA)
+	if ((player->flags & ACTOR_PEACE_AURA) && !art_info[art_id].usable_in_sanctuary())
 	{
 		LoadString (hInstance, IDS_PA_NO_ARTS, message, sizeof(message));
 		display->DisplayMessage(message);
@@ -2269,6 +2269,9 @@ void cArts::ApplyReflectedArt(int art_id, lyra_id_t caster_id)
 	case Arts::PEACE_AURA:
 		ApplyPeaceAura(player->Skill(art_id), player->ID());
 		break;
+	case Arts::HEALING_AURA:
+		ApplyHealingAura(player->Skill(art_id), player->ID());
+		break;
 	};
 	
 	return;
@@ -2485,6 +2488,8 @@ void cArts::ApplyRazorwind(int skill, lyra_id_t caster_id)
 		int damage = 12 + (((skill/10)+1) * (rand()%4));
 		this->DamagePlayer(damage, caster_id);
 		//player->SetCurrStat(Stats::DREAMSOUL, -damage, SET_RELATIVE, caster_id);
+		int duration = this->Duration(Arts::RAZORWIND, skill);
+		player->SetTimedEffect(LyraEffect::PLAYER_BLEED, duration, caster_id);
 	}
 	return;
 }
@@ -5844,29 +5849,24 @@ void cArts::ApplyPeaceAura(int skill, lyra_id_t caster_id)
 	if ((n == NO_ACTOR) && (caster_id != player->ID()))
 		return;
 
+	if (player->IsMonster())
+	{
+		return;
+	}
+
 	player->EvokedFX().Activate(Arts::PEACE_AURA, false);
 	this->DisplayUsedByOther(n, Arts::PEACE_AURA);
 
-//	bool can_apply_aura = false;
-	// can always apply to agents mares and pmares
-//#ifndef AGENT
-//#ifndef PMARE 
-	//if (player->GuildRank(Guild::ECLIPSE) >= Guild::INITIATE)
-//#endif
-//#endif
-//	can_apply_aura = true;
-
-//	if (can_apply_aura)
-//	{	// no damage to HC
-		int duration = this->Duration(Arts::PEACE_AURA, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_PEACE_AURA, duration, caster_id);
-//	}
-//	else
-//	{
-//		LoadString (hInstance, IDS_MUST_BE_MEMBER_APPLY, disp_message, sizeof(disp_message));
- //      _stprintf(message, disp_message, GuildName(Guild::ECLIPSE), this->Descrip(Arts::PEACE_AURA));
-//		display->DisplayMessage(message, false);
-//	}
+	int duration = this->Duration(Arts::PEACE_AURA, skill);
+	player->SetTimedEffect(LyraEffect::PLAYER_PEACE_AURA, duration, caster_id);
+	
+/*	else
+	{
+		LoadString (hInstance, IDS_MUST_BE_MEMBER_APPLY, disp_message, sizeof(disp_message));
+      _stprintf(message, disp_message, GuildName(Guild::ECLIPSE), this->Descrip(Arts::PEACE_AURA));
+		display->DisplayMessage(message, false);
+	}
+*/
 	return;
 }
 
@@ -5901,7 +5901,7 @@ void cArts::EndPeaceAura(void)
 		this->ArtFinished(false);
 		return;
 	}
-	
+
 	if (n->ID() == player->ID())
 		this->ApplyPeaceAura(player->Skill(Arts::PEACE_AURA), player->ID());
 	else gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::PEACE_AURA,
@@ -9250,9 +9250,10 @@ void cArts::EndVampiricDraw(void)
 		unsigned char amount = player->SkillSphere(Arts::VAMPIRIC_DRAW)*3+5;
 		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::VAMPIRIC_DRAW, amount, player->SelectedStat());
 
-		if (player->SkillSphere(Arts::VAMPIRIC_DRAW) <= rand()%10) {
-			if (!item->Destroy()) // destroy returns true for delayed destruction
-				item->SetTerminate();
+		if (player->SkillSphere(Arts::VAMPIRIC_DRAW) <= rand()%15) {
+			item->Lmitem().SetCharges(0); // destroy essence with confirmation message
+			//if (!item->Destroy()) // destroy returns true for delayed destruction
+			//	item->SetTerminate();
 		}
 //		this->VampiricDrawAck(player->ID(), amount);
 	}

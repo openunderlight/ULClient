@@ -1184,7 +1184,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_POISONED;
 	related_art[i] = Arts::POISON;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
-	default_duration[i] = 23; // 10 min
+	default_duration[i] = 13; // 1 min
 	harmful[i] = true;
 
 	i = LyraEffect::PLAYER_DETECT_INVISIBLE;
@@ -1401,6 +1401,18 @@ cTimedEffects::cTimedEffects(void)
 	default_duration[i] = 3; // 15 sec
 	harmful[i] = true;
 
+  i = LyraEffect::PLAYER_BLEED;
+	LoadString (hInstance, IDS_PLAYER_BLEED_ON, disp_message, sizeof(disp_message));
+	start_descrip[i] = _tcsdup(disp_message);
+	LoadString (hInstance, IDS_PLAYER_BLEED_MORE, disp_message, sizeof(disp_message));
+	more_descrip[i] = _tcsdup(disp_message);
+	LoadString (hInstance, IDS_PLAYER_BLEED_OFF, disp_message, sizeof(disp_message));
+	expire_descrip[i] = _tcsdup(disp_message);
+	actor_flag[i] = ACTOR_BLEED;
+	related_art[i] = Arts::RAZORWIND;
+	LoadString(hInstance, IDS_BLEED, name[i], sizeof(name[i]));
+	default_duration[i] = 7; // 15 seconds
+	harmful[i] = true;
 
 	return;
 }

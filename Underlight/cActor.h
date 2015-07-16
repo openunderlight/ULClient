@@ -93,7 +93,8 @@ const unsigned __int64  ACTOR_SOULEVOKE		  = 0x0000000080000000;
 
 // having run out of 32 bit actor flags, we now have 64 flag bits
 const unsigned __int64  ACTOR_NO_POISON		  = 0x000000000000000100000000;
-const unsigned __int64  ACTOR_SPIN          = 0x000000000000000200000000;
+const unsigned __int64  ACTOR_SPIN			  = 0x000000000000000200000000;
+const unsigned __int64  ACTOR_BLEED			  = 0x000000000000000400000000;
 
 
 

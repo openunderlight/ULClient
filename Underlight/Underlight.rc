@@ -1575,12 +1575,17 @@ STRINGTABLE
 BEGIN
     IDS_PLAYER_DINVIS_ON    "Your senses seem sharpened...\n"
     IDS_PLAYER_DINVIS_OFF   "Your senses return to normal.\n"
+    IDS_PLAYER_BLEED_ON     "You start bleeding from your wounds! \n"
+    IDS_PLAYER_BLEED_MORE   "Your bleeding worsens... \n"
+    IDS_PLAYER_BLEED_OFF    "Your wounds have started to heal. \n"
+    IDS_PLAYER_BLEED_DEFLECT "You are protected from bleeding! \n"
     IDS_PLAYER_PFEAR_ON     "You feel much bolder...\n"
     IDS_PLAYER_PFEAR_OFF    "Your bold feeling goes away.\n"
     IDS_PLAYER_PCURSE_ON    "You feel strengthened...\n"
     IDS_PLAYER_PCURSE_OFF   "Your strength returns to normal.\n"
     IDS_PLAYER_PPARALYZE_ON "Your movement feels smooth and limber...\n"
     IDS_PLAYER_PPARALYZE_OFF "Your movement returns to normal.\n"
+    IDS_BLEED               "Bleeding"
     IDS_PLAYER_MEDITATE_ON  "You enter a meditative trance.\n"
     IDS_PLAYER_MEDITATE_OFF "You emerge from the trance.\n"
 END
@@ -1616,6 +1621,7 @@ BEGIN
     IDS_PLAYER_DISSOLVED_BY_OTHER 
                             "%s has collapsed you into a soulsphere!  If you exit the dream, the shock to your raw soul will be severe!  Seek a Sanctuary to regain coherence.\n"
     IDS_PARTY_KILL          "A party member has defeated %s!\n"
+    IDS_ANNOUNCE_COLLAPSE   "was collapsed into a soulsphere by %s!"
     IDS_GOT_KILL            "You have defeated %s!\n"
     IDS_KILLED_BUDDY        "You have defeated %s, a member of your party!\n"
     IDS_SOULEVOKE_SOULSPHERE_ONLY 
@@ -3040,7 +3046,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_PA_NO_ARTS          "You can not evoke arts or attack while shielded by your Peace Aura\n"
+    IDS_PA_NO_ARTS          "You can not make aggressive acts while shielded by your Peace Aura\n"
     IDS_USE_GUILD_HOUSE     "You concentrate for a moment and move to your Focus Guild Room "
     IDS_GUILD_HOUSE         "Guild House"
     IDS_CANT_BE_MEMBER_APPLY 

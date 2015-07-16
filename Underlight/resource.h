@@ -592,9 +592,13 @@
 #define IDS_PLAYER_DINVIS_ON            2128
 #define IDS_PLAYER_DINVIS_OFF           2129
 #define IDS_PLAYER_DDISGUISE_ON         2130
+#define IDS_PLAYER_BLEED_ON             2130
 #define IDS_PLAYER_DDISGUISE_OFF        2131
+#define IDS_PLAYER_BLEED_MORE           2131
 #define IDS_PLAYER_DCURSE_ON            2132
+#define IDS_PLAYER_BLEED_OFF            2132
 #define IDS_PLAYER_DCURSE_OFF           2133
+#define IDS_PLAYER_BLEED_DEFLECT        2133
 #define IDS_PLAYER_PFEAR_ON             2134
 #define IDS_PLAYER_PFEAR_OFF            2135
 #define IDS_PLAYER_PCURSE_ON            2136
@@ -602,6 +606,7 @@
 #define IDS_PLAYER_PPARALYZE_ON         2138
 #define IDS_PLAYER_PPARALYZE_OFF        2139
 #define IDS_PLAYER_SEE_TRUE_ON          2140
+#define IDS_BLEED                       2140
 #define IDS_PLAYER_SEE_TRUE_OFF         2141
 #define IDS_PLAYER_MEDITATE_ON          2142
 #define IDS_PLAYER_MEDITATE_OFF         2143
@@ -632,6 +637,7 @@
 #define IDS_PLAYER_DISSOLVED_BY_OTHER   2167
 #define IDS_PARTY_KILL                  2168
 #define IDS_BLAST_DENIED                2169
+#define IDS_ANNOUNCE_COLLAPSE           2169
 #define IDS_GOT_KILL                    2170
 #define IDS_KILLED_BUDDY                2171
 #define IDS_SOULEVOKE_SOULSPHERE_ONLY   2172
