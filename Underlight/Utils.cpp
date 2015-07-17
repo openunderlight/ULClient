@@ -543,6 +543,8 @@ bool CanPlayerForgeValue(int type, int value, bool usePowerToken)
 				return false;
 			else if (value == LyraEffect::PLAYER_INVISIBLE)
 				return false;
+			else if (value == LyraEffect::PLAYER_BLEED)
+				return false;
 			else
 				return (player->Skill(timed_effects->related_art[value]) > 0);
 		case LyraItem::TRANSLATION_STAT:

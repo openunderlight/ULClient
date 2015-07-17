@@ -11,7 +11,7 @@
 // NOTE: keep consistent with Visual Effects.ASC!
 
  
-const int NUM_TIMED_EFFECTS = 29; // add one for NONE
+const int NUM_TIMED_EFFECTS = 30; // add one for NONE
 const int NUM_ARTS = 145;
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
