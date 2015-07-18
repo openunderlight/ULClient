@@ -242,6 +242,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x3066, // Misdirection
 0x5D3E, // Chaotic Vortex
 0x7EE1, // Chaos Well
+0xA059, // Rally
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -395,6 +396,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN|NEIGH},
 {IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
 {IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT|MAKE_ITEM|LEARN},
+{IDS_RALLY,							Stats::WILLPOWER,	60, 40, 0,  5,   4, SANCT|NEIGH|FOCUS},
 };
 
 
@@ -1188,6 +1190,7 @@ void cArts::ApplyArt(void)
     case Arts::MISDIRECTION: method = &cArts::Misdirection; break;
     case Arts::CHAOTIC_VORTEX: method = &cArts::ChaoticVortex; break;
 	case Arts::CHAOS_WELL: method = &cArts::EssenceContainer; break;
+	case Arts::RALLY: method = &cArts::StartRally; break;
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
 	}
@@ -5360,6 +5363,91 @@ void cArts::EndSummon(void)
 	return;
 }
 
+//////////////////////////////////////////////////////////////////
+// Rally
+
+void cArts::StartRally(void)
+{
+	for (int i=0; i<num_no_rally_levels; i++) 
+		if (no_rally_levels[i] == level->ID())
+		{
+			LoadString (hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
+			display->DisplayMessage (disp_message);
+			this->ArtFinished(false);
+			return;
+		}
+	if (gs->Party()->Members() < 1){
+		LoadString (hInstance, IDS_RALLY_NOPARTY, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+	this->WaitForSelection(&cArts::EndRally, Arts::RALLY);
+	this->CaptureCP(NEIGHBORS_TAB, Arts::RALLY);
+	return;
+}
+
+void cArts::ApplyRally(lyra_id_t caster_id)
+{
+	cNeighbor *n = this->LookUpNeighbor(caster_id);
+	if (n == NO_ACTOR)
+		return;
+	rally_id = caster_id;
+	if (!acceptrejectdlg)
+		{
+			LoadString (hInstance, IDS_QUERY_RALLY, disp_message, sizeof(disp_message));
+				_stprintf(message, disp_message, level->RoomName(n->Room()), n->Name());
+			HWND hDlg = CreateLyraDialog(hInstance, (IDD_ACCEPTREJECT),
+							cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
+			acceptreject_callback = (&cArts::GotRallied);
+			SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+			SendMessage(hDlg, WM_SET_AR_NEIGHBOR, 0, (LPARAM)n);
+		}
+	return;
+}
+
+void cArts::GotRallied(void *value)
+{
+	int success = *((int*)value);
+	if (success)
+	{
+		player->EvokedFX().Activate(Arts::RALLY, false);
+		cNeighbor *n = this->LookUpNeighbor(rally_id);
+		this->DisplayUsedByOther(n,Arts::RALLY);
+		player->EvokedFX().Activate(Arts::RALLY, false);
+		player->Teleport (n->x, n->y, n->angle, NO_LEVEL);
+	}
+	rally_id = 0;
+	return;
+}
+
+void cArts::EndRally(void)
+{
+	cNeighbor *n = cp->SelectedNeighbor();
+
+	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
+	{
+		this->DisplayNeighborBailed(Arts::RALLY);
+		this->ArtFinished(false);
+		return;
+	}
+
+	if (!gs->Party()->IsInParty(n->ID())){
+		LoadString (hInstance, IDS_RALLY_NOTMEMBER, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, n->Name());
+		display->DisplayMessage(message);
+		this->ArtFinished(false);
+		return;
+	}
+
+	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
+	this->DisplayUsedOnOther(n, Arts::RALLY);
+	_stprintf(disp_message,"x,y,angle,level = %i, %i, %i, %i",(int)player->x,(int)player->y,player->angle,level->ID());
+	display->DisplayMessage(disp_message);
+
+	this->ArtFinished(true);
+	return;
+}
 //////////////////////////////////////////////////////////////////
 // Suspend
 

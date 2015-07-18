@@ -1289,6 +1289,10 @@
 #define IDS_MUST_HAVE_POWER_TOKENS      2771
 #define IDS_NO_DREAM_STRIKE_LEVEL       2772
 #define IDS_TEL_MUST_KNOW_ART           2773
+#define IDS_RALLY_QUERY                 2774
+#define IDS_QUERY_RALLY                 2774
+#define IDS_RALLY_NOPARTY               2775
+#define IDS_RALLY_NOTMEMBER             2776
 #define IDS_BASELINE_NOT_SET            2777
 #define IDS_INCORRECT_INDEX             2778
 #define IDS_ERROR_READ_GS_LOGOUT        2779
@@ -1354,6 +1358,7 @@
 #define IDS_ERR_READ_ITEM_HDR_DROP_MSG  2839
 #define IDS_ERR_READ_PLAYER_MSG         2840
 #define IDS_ERR_READ_FOUNDGUILD_MSG     2841
+#define IDS_RALLY                       2842
 #define IDS_ERR_READ_AVATAR_CHANGE_MSG  2843
 #define IDS_ERR_READ_AVATAR_DESC_MSG    2844
 #define IDS_ERR_READ_LOCAL_GRP_INFO_MSG 2845
@@ -1374,6 +1379,7 @@
 #define IDS_NO_SEEK_FIND_FLAT           2860
 #define IDS_NO_READ_FLAT_BIT            2861
 #define IDS_ERR_READ_TEACHERPLAT_MSG    2862
+#define IDS_NO_RALLY_LEVEL              2863
 #define IDS_NO_ACCESS_REGISTRY          2867
 #define IDS_0                           2868
 #define IDS_1                           2869

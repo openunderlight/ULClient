@@ -2624,6 +2624,10 @@ void cGameServer::HandleMessage(void)
 					arts->ApplyCupSummons(player_msg.SenderID());
 					break;
 
+				case RMsg_PlayerMsg::RALLY:
+					arts->ApplyRally(player_msg.SenderID());
+					break;
+
 				case RMsg_PlayerMsg::REDEEM_GRATITUDE:
 				{
 					cItem *iterate_item;

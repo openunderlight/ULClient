@@ -2446,6 +2446,9 @@ BEGIN
     IDS_NO_DREAM_STRIKE_LEVEL 
                             "You can not use Dreamstrike in this plane of the Dream; please try elsewhere.\n"
     IDS_TEL_MUST_KNOW_ART   "You must be trained in the art of %s to use that portal\n"
+    IDS_QUERY_RALLY         "You are being rallied to %s by %s. Do you accept?"
+    IDS_RALLY_NOPARTY       "You can only Rally members of your party.  You must join a party first."
+    IDS_RALLY_NOTMEMBER     "%s is not a member of your party."
     IDS_BASELINE_NOT_SET    "Baseline not set for surface"
     IDS_INCORRECT_INDEX     "Incorrect index adding to agent box"
     IDS_ERROR_READ_GS_LOGOUT "Error reading gs logout message"
@@ -2530,6 +2533,7 @@ BEGIN
     IDS_ERR_READ_ITEM_HDR_DROP_MSG "Error reading item header drop message"
     IDS_ERR_READ_PLAYER_MSG "Error reading player message"
     IDS_ERR_READ_FOUNDGUILD_MSG "Error reading found guild message"
+    IDS_RALLY               "Rally"
     IDS_ERR_READ_AVATAR_CHANGE_MSG "Error reading avatar change message"
     IDS_ERR_READ_AVATAR_DESC_MSG "Error reading avatar description message"
     IDS_ERR_READ_LOCAL_GRP_INFO_MSG "Error reading local group info message"
@@ -2554,6 +2558,7 @@ BEGIN
     IDS_NO_SEEK_FIND_FLAT   "Could Not Seek to Find Flat."
     IDS_NO_READ_FLAT_BIT    "Could not read flat bits."
     IDS_ERR_READ_TEACHERPLAT_MSG "Error reading teacher plat message"
+    IDS_NO_RALLY_LEVEL      "You can not Rally others in this plane of the Dream; please try elsewhere.\n"
 END
 
 STRINGTABLE
