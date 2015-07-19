@@ -9158,6 +9158,9 @@ void cArts::EndCombine(void)
 	else if ((item1->NumFunctions() > 1) ||
 			 (item2->NumFunctions() > 1))
 		combinable = false; 
+	else if ((item1->Lmitem().Charges() == INFINITE_CHARGES) ||
+		(item2->Lmitem().Charges() == INFINITE_CHARGES))
+		combinable = false;
 
 	else switch (item1->ItemFunction(0))
 	{

@@ -2389,7 +2389,7 @@ BEGIN
     IDS_NEED_PRIME_PT       "Power Token creation failed - in order to create a Power Token for %s, you must be carrying the House Prime Artifact for %s with at least %d charges in it."
     IDS_PT_CREATED          "You have created a Power Token for %s!"
     IDS_COMBINED            "You have successfully combined the two items into one!\n"
-    IDS_NO_COMBINE          "You may only combine two identical items (only the number of charges may differ) that are alterors, elemens, chakrams, or blades, and that do not have descriptions.\n"
+    IDS_NO_COMBINE          "You may only combine two identical items that are alterors, elemens, chakrams, or blades, and do not have descriptions.  Items can have different charges, but must not have infinite charges.\n"
     IDS_COMBINED_DESCRIP    "An item fused together by the power of insight!"
     IDS_ART_APPLIED_TO_SELF_BY_HIDDEN_GM "%s has been invoked upon you!"
 END
