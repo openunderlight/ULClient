@@ -1380,6 +1380,7 @@
 #define IDS_NO_READ_FLAT_BIT            2861
 #define IDS_ERR_READ_TEACHERPLAT_MSG    2862
 #define IDS_NO_RALLY_LEVEL              2863
+#define IDS_RALLY_NO_SS                 2864
 #define IDS_NO_ACCESS_REGISTRY          2867
 #define IDS_0                           2868
 #define IDS_1                           2869

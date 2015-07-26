@@ -2444,11 +2444,11 @@ BEGIN
     IDS_MUST_HAVE_POWER_TOKENS 
                             "You must have at least %d power token(s) from %s in order to use %s\n"
     IDS_NO_DREAM_STRIKE_LEVEL 
-                            "You can not use Dreamstrike in this plane of the Dream; please try elsewhere.\n"
+                            "You can not use Dreamstrike in this plane of the Dream; please try elsewhere\n"
     IDS_TEL_MUST_KNOW_ART   "You must be trained in the art of %s to use that portal\n"
     IDS_QUERY_RALLY         "You are being rallied to %s by %s. Do you accept?"
-    IDS_RALLY_NOPARTY       "You can only Rally members of your party.  You must join a party first."
-    IDS_RALLY_NOTMEMBER     "%s is not a member of your party."
+    IDS_RALLY_NOPARTY       "You can only Rally members of your party. You must join a party first\n"
+    IDS_RALLY_NOTMEMBER     "%s is not a member of your party\n"
     IDS_BASELINE_NOT_SET    "Baseline not set for surface"
     IDS_INCORRECT_INDEX     "Incorrect index adding to agent box"
     IDS_ERROR_READ_GS_LOGOUT "Error reading gs logout message"
@@ -2563,6 +2563,7 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_RALLY_NO_SS         "You cannot Rally a soulsphere!\n"
     IDS_NO_ACCESS_REGISTRY  "Cannot access registry"
     IDS_0                   "0"
     IDS_1                   "1"

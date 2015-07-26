@@ -104,11 +104,11 @@ unsigned long art_chksum[NUM_ARTS] =
 0x2216, // Protection 
 0x4E90, // Free Action 
 0x6E00, // Ward 
-0x91A8, // Amulet 
+0x91A8, // Amulet
 #ifndef PMARE
 0xBABF, // Shatter 
 #else
-0xB5C0, // shatter - pmare
+0xB5C0, // Shatter - pmare 
 #endif
 0xDEFA, // Return 
 0x00E9, // Know 
@@ -126,12 +126,12 @@ unsigned long art_chksum[NUM_ARTS] =
 0xB501, // Purify 
 0xDFAC, // Drain Self 
 0x0281, // Abjure 
-0x274B, // Poison
+0x274B, // Poison 
 0x4A46, // Antidote 
 0x6C08, // Curse 
 0x953C, // Drain Essence 
-0xB0F4, // Banish 'Mare 
-0xDC59, // Imprison 'Mare 
+0xB0F4, // Banish Nightmare 
+0xDC59, // Imprison Nightmare 
 0xFAE1, // Trap Nightmare 
 0x2191, // Dreamblade 
 0x48FC, // Trail 
@@ -140,9 +140,9 @@ unsigned long art_chksum[NUM_ARTS] =
 0xB40F, // Deafen 
 0xDAC5, // Blind 
 0xFC86, // Darkness 
-0x20A3, // Paralyze  
+0x20A3, // Paralyze 
 0x4B10, // Firestorm 
-0x6ED5, // Razorwind
+0x6ED5, // Razorwind 
 0x8E9A, // Recall 
 0xB0A3, // Push 
 0xD632, // Soul Evoke 
@@ -154,9 +154,9 @@ unsigned long art_chksum[NUM_ARTS] =
 0xBA93, // Knight 
 0xDBBF, // Support Ascension 
 0x04AB, // Ascend to Ruler 
-0x2395, // Instant Collapse
+0x2395, // Instant Collapse 
 0x48C6, // Grant XP 
-0x6Df2, // Terminate 
+0x6DF2, // Terminate 
 0x9097, // Sphere 
 0xB1D9, // Support Demotion 
 0xD980, // Demote 
@@ -173,76 +173,76 @@ unsigned long art_chksum[NUM_ARTS] =
 0x65AA, // Destroy Talisman 
 0x8BEF, // Mind Blank 
 0xB179, // Show Talisman 
-0xdb0B, // Awaken 
-0xff24, // UnTrain 
+0xDB0B, // Awaken 
+0xFF24, // UnTrain 
 0x21A8, // Grant RP XP 
-0x3BDB, // Dreamquake
+0x3BDB, // Dreamquake 
 0x6222, // Hypnotic Weave 
 0x8E57, // Vampiric Draw 
 0xADC8, // Terror 
 0xD7EE, // Healing Aura 
-0xff5F, // RogerWilco
-0x24FE, // Dreamsmith Mark
-0x435B, // Support Train
-0x6F37, // Support Sphere
-0x8d20, // Train Self,
-0xae98,	// Soul Shield
-0xd56D, // Summon
-0xf999,	// Suspend 
-0x1BC3, // Reflect
-0x3dFD, // Sacrifice
-0x659F, // Cleanse Nightmare
-0x8149, // Create ID Token
-0xAC49, // Sense Dreamers
-0xCCD3, // Expel
-0xF6A4, // Locate Newly Awakened
-0x1A4A, // Combine
-0x3F28, // Power Token
-0x6D27, // Show Gratitude
-0x8E44, // Quest
-0xB230, // Empathy
-0xC88a, // Radiant Blaze
+0xFF5F, // Telepathy 
+0x24FE, // Dreamsmith Mark 
+0x435B, // Support Train 
+0x6F37, // Support Sphere 
+0x8D20, // Train Self 
+0xAE98, // Soul Shield 
+0xD56D, // Summon 
+0xF999, // Suspend 
+0x1BC3, // Reflect 
+0x3DFD, // Sacrifice 
+0x659F, // Cleanse Nightmare 
+0x8149, // Create ID Token 
+0xAC49, // Sense Dreamers 
+0xCCD3, // Expel 
+0xF6A4, // Newly Awakened 
+0x1A4A, // Combine 
+0x3F28, // Power Token 
+0x6D27, // Show Gratitude 
+0x8E44, // Quest 
+0xB230, // Bequeath 
+0xC88A, // Radiant Blaze 
 0xF445, // Poison Cloud 
-0x106E,	// Break Covenant
-0x3A08, // Peace Aura
-0x5A62,	// Sable Shield
-0x8684,	// Entrancement
-0xA2E4,	// Shadow Step
-0xC950, // Dazzle
-0xFD03, // Guild House
-0x131D, // Corrupt Essence
-0x3E30, // Tehthu's Obvlivion
-0x58A2, // Chaos Purge
-0x8C82, // Wordsmith Mark
-0xAA1F, // Cup Summons
-0xCD70, // House Members
-0xEB02, // Freesoul Blade
-0x14D8, // Illuminated Blade
-0x332E, // Summon Prime
-0x665F, // Grant PPoint
+0x106E, // Break Covenant 
+0x3A08, // Peace Aura 
+0x5A62, // Sable Shield 
+0x8684, // Entrancement 
+0xA2E4, // Shadow Step 
+0xC950, // Dazzle 
+0xFD03, // Guild House 
+0x131D, // Corrupt Essence 
+0x3E30, // Tehthu's Oblivion 
+0x58A2, // Chaos Purge 
+0x8C82, // Wordsmith Mark 
+0xAA1F, // Cup Summons 
+0xCD70, // House Members 
+0xEB02, // Freesoul Blade 
+0x14D8, // Illuminated Blade 
+0x332E, // Summon Prime 
+0x665F, // Reward 
 0x803A, // Scan 
 0xA5E2, // Passlock 
 0xCAFE, // Heal 
-0xED56, // Sanctify
-0x1282, // Lock
-0x3614, // Key
-0x586F, // Break Lock
-0x8380, // Repair
-0xA29F, // Remove Curse
-0xCFED, // Hold Avatar
-0xE842, // Sanctuary
-0x1237, // Shove
-0x37E2, // Scribe NOT
-0x664D, // Forge Master
-0x8544, // Merge Talisman
-0xA9D8, // NP Symbol
-0xCC58, // Sense Datoken
-0xED06, // Tempest
-0x123A, // Kinesis
-0x3066, // Misdirection
-0x5D3E, // Chaotic Vortex
-0x7EE1, // Chaos Well
-0xA059, // Rally
+0xED56, // Sanctify 
+0x1282, // Lock 
+0x3614, // Key 
+0x586F, // Break Lock 
+0x8380, // Repair 
+0xA29F, // Remove Curse 
+0xCFED, // Hold Avatar 
+0xE842, // Sanctuary 
+0x1237, // Shove 
+0x37E2, // Inscribe 
+0x664D, // Forge Master 
+0x8544, // Merge Talisman 
+0xA9D8, // NP Symbol 
+0xCC58, // Sense Datoken 
+0xED06, // Tempest 
+0x123A, // Kinesis 
+0x3066, // Misdirection 
+0x5D3E, // Chaotic Vortex 
+0x7EE1, // Chaos Well 
+0xA08F, // Rally 
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -396,7 +396,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN|NEIGH},
 {IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
 {IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT|MAKE_ITEM|LEARN},
-{IDS_RALLY,							Stats::WILLPOWER,	60, 40, 0,  5,   4, SANCT|NEIGH|FOCUS},
+{IDS_RALLY,							Stats::WILLPOWER,	60, 30, 0,  5,   4, SANCT|NEIGH|FOCUS},
 };
 
 
@@ -5369,14 +5369,13 @@ void cArts::EndSummon(void)
 void cArts::StartRally(void)
 {
 	for (int i=0; i<num_no_rally_levels; i++) 
-		if (no_rally_levels[i] == level->ID())
-		{
+		if (no_rally_levels[i] == level->ID()){ // Cannot use Rally in levels with sphere/house locks
 			LoadString (hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
 			display->DisplayMessage (disp_message);
 			this->ArtFinished(false);
 			return;
 		}
-	if (gs->Party()->Members() < 1){
+	if (gs->Party()->Members() < 1){ // Must be in a party to use Rally
 		LoadString (hInstance, IDS_RALLY_NOPARTY, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
@@ -5393,6 +5392,9 @@ void cArts::ApplyRally(lyra_id_t caster_id)
 	if (n == NO_ACTOR)
 		return;
 	rally_id = caster_id;
+	this->DisplayUsedByOther(n,Arts::RALLY);
+	if (player->flags & ACTOR_SOULSPHERE)
+		return;
 	if (!acceptrejectdlg)
 		{
 			LoadString (hInstance, IDS_QUERY_RALLY, disp_message, sizeof(disp_message));
@@ -5408,12 +5410,12 @@ void cArts::ApplyRally(lyra_id_t caster_id)
 
 void cArts::GotRallied(void *value)
 {
+	if (player->flags & ACTOR_SOULSPHERE)
+		return;
 	int success = *((int*)value);
-	if (success)
-	{
+	if (success){
 		player->EvokedFX().Activate(Arts::RALLY, false);
 		cNeighbor *n = this->LookUpNeighbor(rally_id);
-		this->DisplayUsedByOther(n,Arts::RALLY);
 		player->EvokedFX().Activate(Arts::RALLY, false);
 		player->Teleport (n->x, n->y, n->angle, NO_LEVEL);
 	}
@@ -5425,25 +5427,29 @@ void cArts::EndRally(void)
 {
 	cNeighbor *n = cp->SelectedNeighbor();
 
-	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
-	{
+	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n))){
 		this->DisplayNeighborBailed(Arts::RALLY);
 		this->ArtFinished(false);
 		return;
 	}
 
-	if (!gs->Party()->IsInParty(n->ID())){
+	if (!gs->Party()->IsInParty(n->ID())){ //target must be in player's party
 		LoadString (hInstance, IDS_RALLY_NOTMEMBER, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, n->Name());
-		display->DisplayMessage(message);
+		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
-
+/*
+	if (n->flags & ACTOR_SOULSPHERE){
+		LoadString (hInstance, IDS_RALLY_NO_SS, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+*/
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
 	this->DisplayUsedOnOther(n, Arts::RALLY);
-	_stprintf(disp_message,"x,y,angle,level = %i, %i, %i, %i",(int)player->x,(int)player->y,player->angle,level->ID());
-	display->DisplayMessage(disp_message);
 
 	this->ArtFinished(true);
 	return;
