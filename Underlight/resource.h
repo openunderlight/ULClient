@@ -2860,6 +2860,8 @@
 #define IDS_KNOW2204                    4310
 #define IDS_KNOW1604                    4311
 #define IDS_KNOW2209                    4312
+#define IDS_PEACE_AURA_MARES            4313
+#define IDS_SELF_DEMOTE                 4314
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

@@ -1831,7 +1831,7 @@ BEGIN
     IDS_AVATAR_NAME         "Please enter the dreamer 's name:"
     IDS_DEMOTE_FAILED       "You fail to demote %s within %s. You need %d unique tokens to accomplish the demotion.\n"
     IDS_DEMOTE_SUCCEEDED    "You have demoted %s in %s!\n"
-    IDS_DEMOTED             "You have been demoted within %s! All House arts that required your previous rank have been removed.\n"
+    IDS_DEMOTED             "You have been demoted %s %s! All house arts that required your previous rank have been removed.\n"
     IDS_REPORT_TOOMUCHXP    "Please enter a lower XP amount.  You have %i XP remaining in your current award pool."
     IDS_TRAIN_JUMP          "\nPress the 'J' key to jump across this divide.  You might need to take a running start first.  Back up and hold down the forward arrow and shift key to run.  Just before you reach the edge, press the J key to jump across.\n\nIf you get stuck in the crevice, you can jump backwards to get out.\n"
     IDS_QUEST_ERROR         "Sorry, your quest was not accepted -- there may be some problem that needs to be fixed.\n"
@@ -3732,7 +3732,7 @@ BEGIN
     IDS_ANY_GRAPHIC         "Any Bitmap"
     IDS_AWAIT_UPDATE        "You are not yet well enough in tune with this area to use items; please try again in a moment\n"
     IDS_AWAIT_UPDATE_MARE   "You are not yet well enough in tune with this area to use attacks; please try again in a moment\n"
-    IDS_PEACE_AURA_MARE     "The powerful aura of peace arounds you prevents you from making any attacks\n"
+    IDS_PEACE_AURA_MARE     "The powerful aura of peace around you prevents you from making any attacks\n"
     IDS_QUEST_BUILDER1      "The oddly shaped, dark blue portal you see to your left is a Quest Mission Posting board. You can use it to review and accept quests created by other Dreamers. The quests generally involve retrieving some sort of item for bonus experience points (XP). You can find one Quest Boards in the Library of Dreams in Threshhold, as well as one in Threshold Pits. To activate it, stand close to it and press the spacebar."
     IDS_QUEST_BUILDER2      "Good job, Dreamer! If you were actually in the Dream now, you would have activated the Quest Mission Posting system. Now go and seek out the real Quest Mission Posting system in the Library of Souls and Threshold Pits to start yourself off in Underlight!"
     IDS_QUEST_HELP          "Welcome to the Underlight Quest Mission Posting system, where veteran Dreamers can create and post quests for new Dreamers to complete. All Dreamers can view and accept quests that are appropriate for their focus stat and sphere, while all Teachers, Guardians, and Rulers can post new quests.\n\nMost quests revolve around obtaining a certain type of item, and bringing it back to receive an award of experience points.\n\nThe summaries of the available quests are displayed on this screen. To learn more about a given quest, click 'Show Details'. To accept a quest, click 'Accept'; it will then be added to your goal book. There are two basic types of quests: talisman quests and codex quests. \n\nFor talisman quests, you need to find an item (talisman) of the appropriate type. The exact type of item is described on the details screen. Note that the number of charges specified is a minimum - it's always OK to retrieve an item with more charges!\n\n"
@@ -4259,6 +4259,8 @@ BEGIN
     IDS_KNOW2204            "Water, thick with living nutrient, flows through the room and off towards unknown filtration areas. Situated to allow for a showcase of floating displays, the center portion of the room stands out as it is uniquely lit by the heavens."
     IDS_KNOW1604            "Where elsewhere in the city vegetation overgrows rocks, here it is the rocks that have been planted, like beige seeds struggling to find enough sunlight within the uncontrolled mass of verdant fungal growth. The thick walls of lichens have been carved and shaped to allow passage, though its abundant growth threatens to retake the pathway at any time."
     IDS_KNOW2209            "Worn foot marks speak to the pacing strides of thoughtful visitors. Scorch marks scattered about the room give indication of the Star's resting place. Though the room shows obvious signs of traffic the corners are decorated with lounge pillows and countless journals depicting algorithms and training exercises."
+    IDS_PEACE_AURA_MARES    "Your attempt to contain the chaos with your Peace Aura is futile!\n"
+    IDS_SELF_DEMOTE         "Are you sure you really want to demote yourself %s %s?"
 END
 
 #endif    // English (United States) resources

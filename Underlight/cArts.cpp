@@ -159,7 +159,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x6DF2, // Terminate 
 0x9097, // Sphere 
 0xB1D9, // Support Demotion 
-0xD980, // Demote 
+0xD998, // Demote 
 0xFECE, // Invisibility 
 0x248B, // Give 
 0x4501, // GateSmasher 
@@ -313,7 +313,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_TERMINATE,				Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},		
 {IDS_SPHERE,				Stats::NO_STAT,		20, 0,  0,	1, 	-1, SANCT|NEIGH},
 {IDS_SUPPORT_DEMOTION,		Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT|NEIGH|MAKE_ITEM},
-{IDS_DEMOTE,				Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT|NEIGH|NEED_ITEM},
+{IDS_DEMOTE,				Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT},
 {IDS_INVISIBILITY,			Stats::INSIGHT,		40, 20, 6,	3, 	3, SANCT|FOCUS|LEARN},
 {IDS_GIVE, 					Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT|NEIGH|NEED_ITEM|LEARN},
 {IDS_GATESMASHER,			Stats::WILLPOWER,	0,  5,  23, 1, 	-1, SANCT|MAKE_ITEM|FOCUS},
@@ -2369,7 +2369,7 @@ void cArts::ApplyTempest (int skill, int angle, lyra_id_t caster_id)
 	}
   else
   {
-    MoveActor (player, angle*4, (PUSH_DISTANCE * ((1/3)*(skill/10)+1)), MOVE_NORMAL);
+    MoveActor (player, angle*4, (PUSH_DISTANCE * ((skill/10)+1)), MOVE_NORMAL);
     LoadString (hInstance, IDS_TEMPEST_APPLIED, disp_message, sizeof(disp_message));
 	  display->DisplayMessage (disp_message);
 		player->PerformedAction();
@@ -5996,6 +5996,14 @@ void cArts::EndPeaceAura(void)
 		return;
 	}
 
+	if (n->IsMonster())
+	{
+		LoadString (hInstance, IDS_PEACE_AURA_MARES, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message); 
+		this->ArtFinished(false);
+		return;
+	}
+
 	if (n->ID() == player->ID())
 		this->ApplyPeaceAura(player->Skill(Arts::PEACE_AURA), player->ID());
 	else gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::PEACE_AURA,
@@ -8273,11 +8281,20 @@ void cArts::GotInitiated(void *value)
 		player->SetGuildXPPool(initiate_gid, 0);
 
 		// AUTO TRAIN INITIATE ARTS - 6/14/14 AMR
-		if (player->Skill(Arts::HOUSE_MEMBERS)<1) {
-			player->SetSkill(Arts::HOUSE_MEMBERS, 1, SET_ABSOLUTE, player->ID(), true);
-			LoadString (hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));
-	_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
-		display->DisplayMessage (message);
+		for (int art=0; art<NUM_ARTS; ++art) {
+			switch (art) {
+			case Arts::HOUSE_MEMBERS:
+			case Arts::DEMOTE:
+				if (player->Skill(art)<1){
+					player->SetSkill(art, 1, SET_ABSOLUTE, player->ID(), true);
+					LoadString (hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));
+						_stprintf(message, disp_message, this->Descrip(art));
+					display->DisplayMessage (message);
+				}
+				continue;
+			default:
+				continue;
+			}
 		}
 	}
 	else
@@ -8443,6 +8460,7 @@ _stprintf(message, disp_message, player->Name());
 			switch (art) {
 				case Arts::HOUSE_MEMBERS:
 				case Arts::INITIATE:
+				case Arts::DEMOTE:
 				case Arts::SUPPORT_DEMOTION:
 				case Arts::SUPPORT_ASCENSION:
 				case Arts::CUP_SUMMONS:
@@ -9621,9 +9639,11 @@ void cArts::ResponseAscend(int guild_id, int success)
 
 void cArts::StartDemote(void)
 {
-	if (!player->IsRuler(Guild::NO_GUILD))
+	if (!player->IsInitiate(Guild::NO_GUILD) &&
+		!player->IsKnight(Guild::NO_GUILD) &&
+		!player->IsRuler(Guild::NO_GUILD))
 	{
-		LoadString (hInstance, IDS_MUST_BE_RULER, disp_message, sizeof(disp_message));
+		LoadString (hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, this->Descrip(Arts::DEMOTE));
 		display->DisplayMessage (message);
 		this->ArtFinished(false);
@@ -9631,6 +9651,7 @@ void cArts::StartDemote(void)
 	}
 
 	this->WaitForSelection(&cArts::MidDemote, Arts::DEMOTE);
+	this->AddDummyNeighbor();
 	this->CaptureCP(NEIGHBORS_TAB, Arts::DEMOTE);
 
 	return;
@@ -9638,28 +9659,52 @@ void cArts::StartDemote(void)
 
 void cArts::MidDemote(void)
 {
-
-	if (player->NumGuilds(Guild::RULER) == 1)
-	{ // only one choice, skip straight to end
-		int value = GuildID(player->GuildFlags(Guild::RULER));
-		this->EndDemote(&value);
-		return;
+	if (cp->SelectedNeighbor()->ID() == player->ID())
+	{ // Player evoked on self - can be any rank to demote self
+		if (player->NumGuilds(Guild::RULER_PENDING) == 1)
+		{ // only one choice, skip straight to end
+			int value = GuildID(player->GuildFlags(Guild::RULER_PENDING));
+			this->EndDemote(&value);
+			return;
+		}
 	}
 	else
-	{
-		if (chooseguilddlg)
-		{
+	{ // Player evoked on another player - must be a Ruler
+		if (player->NumGuilds(Guild::RULER) == 0)
+		{ // Not a ruler in any house - cannot evoke Demote on others
+			LoadString (hInstance, IDS_MUST_BE_RULER, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, this->Descrip(Arts::DEMOTE));
+			display->DisplayMessage (message);
 			this->ArtFinished(false);
 			return;
 		}
-		chooseguilddlg = true;
-		HWND hDlg =  CreateLyraDialog(hInstance, (IDD_CHOOSE_GUILD),
-						cDD->Hwnd_Main(), (DLGPROC)ChooseGuildDlgProc);
-		chooseguild_callback = (&cArts::EndDemote);
-		SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
-		SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
-		this->WaitForDialog(hDlg, Arts::DEMOTE);
+		else if (player->NumGuilds(Guild::RULER) == 1)
+		{ // only one choice, skip straight to end
+			int value = GuildID(player->GuildFlags(Guild::RULER));
+			this->EndDemote(&value);
+			return;
+		} 
 	}
+
+	// Player is in more than one house
+	if (chooseguilddlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+	chooseguilddlg = true;
+	HWND hDlg =  CreateLyraDialog(hInstance, (IDD_CHOOSE_GUILD),
+					cDD->Hwnd_Main(), (DLGPROC)ChooseGuildDlgProc);
+	chooseguild_callback = (&cArts::EndDemote);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
+	if (cp->SelectedNeighbor()->ID() == player->ID())
+	{ // Only show options for other ranks if player evoked on self
+		SendMessage(hDlg, WM_ADD_KNIGHTS, 0, 0);
+		SendMessage(hDlg, WM_ADD_INITIATES, 0, 0);
+	}
+	this->WaitForDialog(hDlg, Arts::DEMOTE);
+
 	return;
 }
 
@@ -9667,7 +9712,7 @@ void cArts::EndDemote(void *value)
 {
 	int num_tokens = 0;
 	cItem* tokens[MAX_DEMOTE_TOKENS_NEEDED]; // holds token pointers
-	int guild_id = *((int*)value);
+	demote_guild_id = *((int*)value);
 	bool duplicate = false;
 	cNeighbor *n = cp->SelectedNeighbor();
 
@@ -9677,16 +9722,57 @@ void cArts::EndDemote(void *value)
 		this->ArtFinished(false);
 		return;
 	}
-	else if (guild_id == Guild::NO_GUILD)
+	else if (demote_guild_id == Guild::NO_GUILD)
 	{
 		this->CancelArt();
 		return;
 	}
+	if (n->ID() == player->ID())
+	{
+		if (!acceptrejectdlg)
+		{
+			LoadString (hInstance, IDS_SELF_DEMOTE, disp_message, sizeof(disp_message));
+			if (player->GuildRank(demote_guild_id) > Guild::INITIATE)
+				_stprintf(message, disp_message, "within", GuildName(demote_guild_id));
+			else
+				_stprintf(message, disp_message, "from", GuildName(demote_guild_id));
+			HWND hDlg = CreateLyraDialog(hInstance, (IDD_ACCEPTREJECT),
+							cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
+			acceptreject_callback = (&cArts::SelfDemote);
+			SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+		}
+		return;
 
-	num_tokens = this->CountDemotionTokens(guild_id, (cItem**)tokens, n);
-	
-	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::DEMOTE, guild_id, num_tokens);
+	}
+
+	num_tokens = this->CountDemotionTokens(demote_guild_id, (cItem**)tokens, n);
+
+	if (!player->IsRuler(Guild::NO_GUILD))
+	{
+		LoadString (hInstance, IDS_MUST_BE_RULER, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, this->Descrip(Arts::DEMOTE));
+		display->DisplayMessage (message);
+		this->ArtFinished(false);
+		return;
+	}
+
+	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::DEMOTE, demote_guild_id, num_tokens);
 	this->ArtFinished(true);
+	return;
+}
+
+void cArts::SelfDemote(void *value)
+{
+	int success = *((int*)value);
+	if (success)
+	{
+		int num_tokens = MAX_DEMOTE_TOKENS_NEEDED + 1000;
+		gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::DEMOTE, demote_guild_id, num_tokens);
+		this->ArtFinished(true);
+	}
+	else
+		this->CancelArt();
+
 	return;
 }
 
@@ -9736,6 +9822,8 @@ int cArts::CountDemotionTokens(lyra_id_t guild_id, cItem** tokens, cNeighbor* n)
 
 void cArts::ResponseDemote(bool success, realmid_t target_id, int guild_id, int num_tokens_used)
 {
+	if (target_id != player->ID())
+	{
 	TCHAR targetname[Lyra::PLAYERNAME_MAX] = { NULL };
 	cItem* tokens[MAX_DEMOTE_TOKENS_NEEDED]; // holds token pointers
 	int i, num_tokens = 0;
@@ -9743,34 +9831,36 @@ void cArts::ResponseDemote(bool success, realmid_t target_id, int guild_id, int 
 
 
 	n = LookUpNeighbor(target_id);
-	if (n == NO_ACTOR)
-	{
-		LoadString(hInstance, IDS_THE_TARGET, message, sizeof(message));
-		_tcscpy(targetname, message);
-	}
-	else
-		_tcsnccpy(targetname, n->Name(), _tcslen(n->Name()));
 
-	num_tokens = this->CountDemotionTokens(guild_id, (cItem**)tokens, n);
+		if (n == NO_ACTOR)
+		{
+			LoadString(hInstance, IDS_THE_TARGET, message, sizeof(message));
+			_tcscpy(targetname, message);
+		}
+		else
+			_tcsnccpy(targetname, n->Name(), _tcslen(n->Name()));
 
-	if (success)
-	{	// success!!!
-		// remove the appropriate tokens
-		LoadString (hInstance, IDS_DEMOTE_SUCCEEDED, disp_message, sizeof(disp_message));
-	_stprintf(message, disp_message, targetname, GuildName(guild_id));
-		display->DisplayMessage (message);
+		num_tokens = this->CountDemotionTokens(guild_id, (cItem**)tokens, n);
+
+		if (success)
+		{	// success!!!
+			// remove the appropriate tokens
+			LoadString (hInstance, IDS_DEMOTE_SUCCEEDED, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, targetname, GuildName(guild_id));
+			display->DisplayMessage (message);
 	
-		if (num_tokens > 1000) // special code to signify a membership token found
-			num_tokens = 1;
-		for (i=0; i<num_tokens; i++)
-			tokens[i]->Destroy();
-		gs->UpdateServer();
-	}
-	else
-	{	// failure!
-		LoadString (hInstance, IDS_DEMOTE_FAILED, disp_message, sizeof(disp_message));
-	_stprintf(message, disp_message, targetname, GuildName(guild_id), num_tokens_used);
-		display->DisplayMessage (message);
+			if (num_tokens > 1000) // special code to signify a membership token found
+				num_tokens = 1;
+			for (i=0; i<num_tokens; i++)
+				tokens[i]->Destroy();
+			gs->UpdateServer();
+		}
+		else
+		{	// failure!
+			LoadString (hInstance, IDS_DEMOTE_FAILED, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, targetname, GuildName(guild_id), num_tokens_used);
+			display->DisplayMessage (message);
+		}
 	}
 	this->ArtFinished(true);
 	return;
@@ -9785,7 +9875,10 @@ void cArts::ApplyDemote(int guild_id)
 		player->SetGuildRank(guild_id, guild_rank - 1);
 
 		LoadString (hInstance, IDS_DEMOTED, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, GuildName(guild_id));
+		if (guild_rank > Guild::INITIATE)
+			_stprintf(message, disp_message, "within", GuildName(guild_id));
+		else
+			_stprintf(message, disp_message, "from", GuildName(guild_id));
 		display->DisplayMessage (message);
 	}
 }

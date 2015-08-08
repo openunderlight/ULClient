@@ -67,7 +67,7 @@ private:
 	// random state variables used by arts
 	TCHAR knight_name[Lyra::PLAYERNAME_MAX];
 	lyra_id_t restore_id, initiator_id, initiate_gid, rogerwilco_id, rally_id;
-	int restore_skill, restore_art;
+	int restore_skill, restore_art, demote_guild_id;
 	cItem *giving_item;
 	cItem *combining_item;
 	cItem *gratitude_item;
@@ -446,6 +446,7 @@ public:
 	void EndWriteScroll(void *value);
 	void StartDemote(void);
 	void MidDemote(void);
+	void SelfDemote(void *value);
 	void EndDemote(void *value);
 	void ResponseDemote(bool success, realmid_t target_id, int guild_id, int num_tokens_used);
 	void ApplyDemote(int guild_id);
