@@ -1587,6 +1587,7 @@ void cArts::Ward(void)
 	LmItemHdr header;
 	cItem *item;
 	lyra_item_ward_t ward = {LyraItem::WARD_FUNCTION, 0, 0, 0, 0};
+	int items_in_room = 0;
 
 	linedef *line; line = FindTeleportal(player);
 
@@ -1606,8 +1607,12 @@ void cArts::Ward(void)
 		return;
 	}
 
-	// see if there's already ward on the teleportal
+	// see if the room is full of items or there's already ward on the teleportal
 	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+	{
+		if ((item->Status() == ITEM_UNOWNED))
+			items_in_room++;
+
 		if ((item->ItemFunction(0) == LyraItem::WARD_FUNCTION) && (line == ((linedef*)item->Extra())))
 		{
 			actors->IterateItems(DONE);
@@ -1616,7 +1621,16 @@ void cArts::Ward(void)
 			this->ArtFinished(false);
 			return;
 		}
+	}
 	actors->IterateItems(DONE);
+
+	if (items_in_room >= Lyra::MAX_ROOMITEMS)
+	{
+		LoadString (hInstance, IDS_MAX_ROOMITEMS, disp_message, sizeof(disp_message));
+		display->DisplayMessage (disp_message);
+		this->ArtFinished(false);
+		return;
+	}
 
 	// see if we can pass this teleportal
 
