@@ -240,10 +240,16 @@ void cMissile::StrikeActor(cActor* actor)
 #if defined (UL_DEBUG) && !defined (LIVE_DEBUG)
 	//  Allow bouncing charms to hit owner in debugging
 	if (actor->IsPlayer() /* && (owner != player) */ && effect) {
+		//if ((effect == LyraEffect::PLAYER_POISONED) && (player->poison_strength < MinModifierSkill(damage_type))) {
+		//		player->poison_strength = MinModifierSkill(damage_type);
+		//}
 		player->SetTimedEffect(effect, CalculateDuration(timed_effects->default_duration[effect]), owner_id);
 	}
 #else
 	if (actor->IsPlayer() && (owner != player)  && effect) {
+		//if ((effect == LyraEffect::PLAYER_POISONED) && (player->poison_strength < MinModifierSkill(damage_type))) {
+		//		player->poison_strength = MinModifierSkill(damage_type);
+		//}
 		player->SetTimedEffect(effect, CalculateDuration(timed_effects->default_duration[effect]), owner_id);
 	}
 #endif

@@ -800,7 +800,7 @@ bool cNeighbor::CanWhisper(void)
 {
 	if (gs->Party()->IsInParty(id))
 		return true;
-
+#ifndef GAMEMASTER // GMs can whisper any distance
 	float dx = (player->x - x);
 	float dy = (player->y - y);
 	float dz = (player->z - player->physht - z);
@@ -810,6 +810,7 @@ bool cNeighbor::CanWhisper(void)
 		((z - player->z) > MAX_WHISPER_HEIGHT))
 		 return FALSE;
 	else
+#endif //GM
 		return TRUE;
 }
 

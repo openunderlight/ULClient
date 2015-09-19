@@ -11,8 +11,8 @@
 // NOTE: keep consistent with Visual Effects.ASC!
 
  
-const int NUM_TIMED_EFFECTS = 29; // add one for NONE
-const int NUM_ARTS = 145;
+const int NUM_TIMED_EFFECTS = 30; // add one for NONE
+const int NUM_ARTS = 146;
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
 const int NUM_PLAYER_STATS = 5;
@@ -260,6 +260,7 @@ struct Arts {
   MISDIRECTION, // Misdirection
   CHAOTIC_VORTEX, // Chaotic Vortex
   CHAOS_WELL, // Essence Container
+  RALLY, // Summon party member
 
 	// END OF ARTS LIST - below are art-related constants
 
@@ -658,9 +659,10 @@ struct LyraEffect {
     PLAYER_CURSED,
     PLAYER_BLIND,
     PLAYER_PARALYZED,
+	PLAYER_BLEED,
 
 	MIN_BAD_EFFECT = PLAYER_DEAF,
-	MAX_BAD_EFFECT = PLAYER_PARALYZED,	
+	MAX_BAD_EFFECT = PLAYER_BLEED,	
 //	MAX_ITEM_EFFECT = PLAYER_PARALYZED, 
 	PLAYER_RECALL, 
 	PLAYER_TRANSFORMED,
@@ -823,5 +825,11 @@ const int no_dreamstrike_levels[] =
 
 const int num_no_dreamstrike_levels =
   sizeof(no_dreamstrike_levels) / sizeof(int);
+
+const int no_rally_levels[] = 
+{1, 17, 18, 21, 22, 23, 24, 25, 26, 39, 41, 43, 46, 47};
+
+const int num_no_rally_levels =
+  sizeof(no_rally_levels) / sizeof(int);
 
 #endif

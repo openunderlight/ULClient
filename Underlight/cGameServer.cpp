@@ -2387,6 +2387,9 @@ void cGameServer::HandleMessage(void)
 				case RMsg_PlayerMsg::KINESIS:
 					art_id = Arts::KINESIS;
 					break;
+				case RMsg_PlayerMsg::HEALING_AURA:
+					art_id = Arts::HEALING_AURA;
+					break;
 				default:
 					art_reflected = false; // If not one of the arts we reflect
 					break;
@@ -2619,6 +2622,10 @@ void cGameServer::HandleMessage(void)
 
 				case RMsg_PlayerMsg::CUP_SUMMONS:
 					arts->ApplyCupSummons(player_msg.SenderID());
+					break;
+
+				case RMsg_PlayerMsg::RALLY:
+					arts->ApplyRally(player_msg.SenderID());
 					break;
 
 				case RMsg_PlayerMsg::REDEEM_GRATITUDE:

@@ -66,8 +66,8 @@ private:
 
 	// random state variables used by arts
 	TCHAR knight_name[Lyra::PLAYERNAME_MAX];
-	lyra_id_t restore_id, initiator_id, initiate_gid, rogerwilco_id;
-	int restore_skill, restore_art;
+	lyra_id_t restore_id, initiator_id, initiate_gid, rogerwilco_id, rally_id;
+	int restore_skill, restore_art, demote_guild_id;
 	cItem *giving_item;
 	cItem *combining_item;
 	cItem *gratitude_item;
@@ -98,6 +98,7 @@ public:
 	int Duration(int art_id, int skill); // calculates duration for art
 	bool UseInSanctuary(int art_id); // usable in sanctuary?
 	bool Restricted(int art_id); // focus restricted?
+	int CanPlateauArt(int art_id);
 	bool Learnable(int art_id);
 	bool DisplayLearnable(int art_id);
 	bool IncreaseSkill(int art_id,int chance_increase);
@@ -321,6 +322,10 @@ public:
   void StartKinesis (void);
   void ApplyKinesis (int skill, lyra_id_t caster_id, int angle);
   void EndKinesis (void);
+  void StartRally (void);
+  void ApplyRally (lyra_id_t caster_id);
+  void GotRallied (void *value);
+  void EndRally (void);
 
 	// arts that require selecting a skill
 	void StartTrainSelf(void);
@@ -441,6 +446,7 @@ public:
 	void EndWriteScroll(void *value);
 	void StartDemote(void);
 	void MidDemote(void);
+	void SelfDemote(void *value);
 	void EndDemote(void *value);
 	void ResponseDemote(bool success, realmid_t target_id, int guild_id, int num_tokens_used);
 	void ApplyDemote(int guild_id);
