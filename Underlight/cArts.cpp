@@ -104,11 +104,11 @@ unsigned long art_chksum[NUM_ARTS] =
 0x2216, // Protection 
 0x4E90, // Free Action 
 0x6E00, // Ward 
-0x91A8, // Amulet 
+0x91A8, // Amulet
 #ifndef PMARE
 0xBABF, // Shatter 
 #else
-0xB5C0, // shatter - pmare
+0xB5C0, // Shatter - pmare 
 #endif
 0xDEFA, // Return 
 0x00E9, // Know 
@@ -126,12 +126,12 @@ unsigned long art_chksum[NUM_ARTS] =
 0xB501, // Purify 
 0xDFAC, // Drain Self 
 0x0281, // Abjure 
-0x2685, // Poison 
+0x274B, // Poison 
 0x4A46, // Antidote 
 0x6C08, // Curse 
 0x953C, // Drain Essence 
-0xB0F4, // Banish 'Mare 
-0xDC59, // Imprison 'Mare 
+0xB0F4, // Banish Nightmare 
+0xDC59, // Imprison Nightmare 
 0xFAE1, // Trap Nightmare 
 0x2191, // Dreamblade 
 0x48FC, // Trail 
@@ -140,9 +140,9 @@ unsigned long art_chksum[NUM_ARTS] =
 0xB40F, // Deafen 
 0xDAC5, // Blind 
 0xFC86, // Darkness 
-0x20A3, // Paralyze  
+0x20A3, // Paralyze 
 0x4B10, // Firestorm 
-0x6ED7, // Razorwind 
+0x6ED5, // Razorwind 
 0x8E9A, // Recall 
 0xB0A3, // Push 
 0xD632, // Soul Evoke 
@@ -154,12 +154,12 @@ unsigned long art_chksum[NUM_ARTS] =
 0xBA93, // Knight 
 0xDBBF, // Support Ascension 
 0x04AB, // Ascend to Ruler 
-0x2395, // Instant Collapse
+0x2395, // Instant Collapse 
 0x48C6, // Grant XP 
-0x6Df2, // Terminate 
+0x6DF2, // Terminate 
 0x9097, // Sphere 
 0xB1D9, // Support Demotion 
-0xD980, // Demote 
+0xD998, // Demote 
 0xFECE, // Invisibility 
 0x248B, // Give 
 0x4501, // GateSmasher 
@@ -173,75 +173,76 @@ unsigned long art_chksum[NUM_ARTS] =
 0x65AA, // Destroy Talisman 
 0x8BEF, // Mind Blank 
 0xB179, // Show Talisman 
-0xdb0B, // Awaken 
-0xff24, // UnTrain 
+0xDB0B, // Awaken 
+0xFF24, // UnTrain 
 0x21A8, // Grant RP XP 
-0x3BDB, // Dreamquake
+0x3BDB, // Dreamquake 
 0x6222, // Hypnotic Weave 
 0x8E57, // Vampiric Draw 
 0xADC8, // Terror 
-0xD74E, // Healing Aura 
-0xff5F, // RogerWilco
-0x24FE, // Dreamsmith Mark
-0x435B, // Support Train
-0x6F37, // Support Sphere
-0x8d20, // Train Self,
-0xae98,	// Soul Shield
-0xd56D, // Summon
-0xf999,	// Suspend 
-0x1A43, // Reflect
-0x3dFD, // Sacrifice
-0x659F, // Cleanse Nightmare
-0x8149, // Create ID Token
-0xAC49, // Sense Dreamers
-0xCCD3, // Expel
-0xF6A4, // Locate Newly Awakened
-0x1ACA, // Combine
-0x3F28, // Power Token
-0x6D27, // Show Gratitude
-0x8E44, // Quest
-0xB230, // Empathy
-0xC88a, // Radiant Blaze
+0xD7EE, // Healing Aura 
+0xFF5F, // Telepathy 
+0x24FE, // Dreamsmith Mark 
+0x435B, // Support Train 
+0x6F37, // Support Sphere 
+0x8D20, // Train Self 
+0xAE98, // Soul Shield 
+0xD56D, // Summon 
+0xF999, // Suspend 
+0x1BC3, // Reflect 
+0x3DFD, // Sacrifice 
+0x659F, // Cleanse Nightmare 
+0x8149, // Create ID Token 
+0xAC49, // Sense Dreamers 
+0xCCD3, // Expel 
+0xF6A4, // Newly Awakened 
+0x1A4A, // Combine 
+0x3F28, // Power Token 
+0x6D27, // Show Gratitude 
+0x8E44, // Quest 
+0xB230, // Bequeath 
+0xC88A, // Radiant Blaze 
 0xF445, // Poison Cloud 
-0x106E,	// Break Covenant
-0x3A09,	// Peace Aura
-0x5A62,	// Sable Shield
-0x8684,	// Entrancement
-0xA2E4,	// Shadow Step
-0xC950, // Dazzle
-0xFD03, // Guild House
-0x131D, // Corrupt Essence
-0x3E30, // Tehthu's Obvlivion
-0x58A2, // Chaos Purge
-0x8C82, // Wordsmith Mark
-0xAA1F, // Cup Summons
-0xCD70, // House Members
-0xEB02, // Freesoul Blade
-0x14D8, // Illuminated Blade
-0x332E, // Summon Prime
-0x665F, // Grant PPoint
+0x106E, // Break Covenant 
+0x3A08, // Peace Aura 
+0x5A62, // Sable Shield 
+0x8684, // Entrancement 
+0xA2E4, // Shadow Step 
+0xC950, // Dazzle 
+0xFD03, // Guild House 
+0x131D, // Corrupt Essence 
+0x3E30, // Tehthu's Oblivion 
+0x58A2, // Chaos Purge 
+0x8C82, // Wordsmith Mark 
+0xAA1F, // Cup Summons 
+0xCD70, // House Members 
+0xEB02, // Freesoul Blade 
+0x14D8, // Illuminated Blade 
+0x332E, // Summon Prime 
+0x665F, // Reward 
 0x803A, // Scan 
 0xA5E2, // Passlock 
 0xCAFE, // Heal 
-0xED56, // Sanctify
-0x1282, // Lock
-0x3614, // Key
-0x586F, // Break Lock
-0x8380, // Repair
-0xA29F, // Remove Curse
-0xCFED, // Hold Avatar
-0xE842, // Sanctuary
-0x1237, // Shove
-0x37E2, // Scribe NOT
-0x664D, // Forge Master
-0x8544, // Merge Talisman
-0xA9D8, // NP Symbol
-0xCCD8, // Sense Datoken
-0xED06, // Tempest
-0x123A, // Kinesis
-0x3066, // Misdirection
-0x5D3E, // Chaotic Vortex
-0x7EE1, // Chaos Well
+0xED56, // Sanctify 
+0x1282, // Lock 
+0x3614, // Key 
+0x586F, // Break Lock 
+0x8380, // Repair 
+0xA29F, // Remove Curse 
+0xCFED, // Hold Avatar 
+0xE842, // Sanctuary 
+0x1237, // Shove 
+0x37E2, // Inscribe 
+0x664D, // Forge Master 
+0x8544, // Merge Talisman 
+0xA9D8, // NP Symbol 
+0xCC58, // Sense Datoken 
+0xED06, // Tempest 
+0x123A, // Kinesis 
+0x3066, // Misdirection 
+0x5D3E, // Chaotic Vortex 
+0x7EE1, // Chaos Well 
+0xA08F, // Rally 
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -279,7 +280,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_PURIFY,				Stats::RESILIENCE,	5,  15, 0,	2, 	1, SANCT|LEARN},
 {IDS_DRAIN_SELF, 			Stats::RESILIENCE,	20, 5,  0,	2, 	2, SANCT|NEIGH|FOCUS|LEARN},
 {IDS_ABJURE,				Stats::RESILIENCE,	50, 30, 0,	3, 	4, FOCUS|LEARN},
-{IDS_POISON,				Stats::RESILIENCE,	30, 15, 23, 3, 	2, NEIGH| FOCUS|LEARN},
+{IDS_POISON,				Stats::RESILIENCE,	30, 15, 13, 3, 	2, NEIGH|FOCUS|LEARN},
 {IDS_ANTIDOTE,				Stats::RESILIENCE,	30, 10, 0,	2, 	3, SANCT|FOCUS|LEARN},
 {IDS_CURSE,					Stats::RESILIENCE,	40, 10, 13, 3, 	3, NEIGH|FOCUS|LEARN},
 {IDS_DRAIN_ESSENCE,			Stats::RESILIENCE,	0,  0,  0,	1, 	1, SANCT|NEED_ITEM|LEARN},
@@ -295,7 +296,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_DARKNESS_ART_NAME,		Stats::LUCIDITY,	50, 25, 4,	5, 	3, NEIGH|FOCUS|LEARN},
 {IDS_PARALYZE,				Stats::LUCIDITY,	30, 20, 2,	3, 	3, NEIGH|FOCUS|LEARN},  
 {IDS_FIRESTORM,				Stats::LUCIDITY,	50, 25, 0,	7, 	3, FOCUS|LEARN},
-{IDS_RAZORWIND,				Stats::LUCIDITY,	70, 40, 0,	9, 	4, FOCUS|LEARN},
+{IDS_RAZORWIND,				Stats::LUCIDITY,	70, 40, 6,	9, 	4, FOCUS|LEARN},
 {IDS_RECALL_ART_NAME,		Stats::DREAMSOUL,	25, 1,  25, 1, 	1, SANCT|LEARN},
 {IDS_PUSH, 					Stats::DREAMSOUL,	0,  0,  0,	1, 	1, NEIGH|LEARN},
 {IDS_SOUL_EVOKE, 			Stats::DREAMSOUL,	15, 1,  23, 1, 	1, SANCT|LEARN},
@@ -312,7 +313,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_TERMINATE,				Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},		
 {IDS_SPHERE,				Stats::NO_STAT,		20, 0,  0,	1, 	-1, SANCT|NEIGH},
 {IDS_SUPPORT_DEMOTION,		Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT|NEIGH|MAKE_ITEM},
-{IDS_DEMOTE,				Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT|NEIGH|NEED_ITEM},
+{IDS_DEMOTE,				Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT},
 {IDS_INVISIBILITY,			Stats::INSIGHT,		40, 20, 6,	3, 	3, SANCT|FOCUS|LEARN},
 {IDS_GIVE, 					Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT|NEIGH|NEED_ITEM|LEARN},
 {IDS_GATESMASHER,			Stats::WILLPOWER,	0,  5,  23, 1, 	-1, SANCT|MAKE_ITEM|FOCUS},
@@ -333,7 +334,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_HYPNOTIC_WEAVE_ART_NAME,		Stats::LUCIDITY,	60, 40, 4,	7,	4, FOCUS|LEARN},
 {IDS_VAMPRIC_DRAW,					Stats::RESILIENCE,	60, 5,	0,	5,	3, FOCUS|LEARN|NEIGH|NEED_ITEM},
 {IDS_TERROR_ART_NAME,				Stats::LUCIDITY,	60, 40, 4,	1,	3, FOCUS|LEARN},
-{IDS_HEAL_AURA,						Stats::RESILIENCE,	60, 40, 0,	9, 	-1, FOCUS|NEIGH|SANCT},
+{IDS_HEAL_AURA,						Stats::RESILIENCE,	60, 40, 0,	7, 	-1, FOCUS|NEIGH|SANCT|LEARN},
 {IDS_TELEPATHY,						Stats::NO_STAT,		75, 0,  0,	0, 	-1, SANCT|NEIGH},	// roger wilco voice
 {IDS_DREAMSMITH_MARK_ART_NAME, 		Stats::NO_STAT,		50, 0,  0,	1, 	-1, SANCT},
 {IDS_SUPPORT_TRAIN,					Stats::NO_STAT,		10, 0,  0,	10,	-1, SANCT|NEIGH|MAKE_ITEM},
@@ -342,14 +343,14 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_SOUL_SHIELD,					Stats::DREAMSOUL,	40, 20, 15, 5,  2, SANCT|LEARN},
 {IDS_SUMMON_ART_NAME,				Stats::NO_STAT,		0,  0,  0,  0,  -1, SANCT},
 {IDS_SUSPEND,						Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},
-{IDS_REFLECT_ART_NAME,				Stats::WILLPOWER,   65, 40, 9,  3,	-1, SANCT|FOCUS},
+{IDS_REFLECT_ART_NAME,				Stats::WILLPOWER,   65, 40, 9,  3,	-1, SANCT|FOCUS|LEARN},
 {IDS_SACRIFICE,						Stats::RESILIENCE,	10, 5,  0,	1, 	-1, SANCT|NEED_ITEM},
 {IDS_CLEANSE_MARE,					Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
 {IDS_CREATE_ID_TOKEN,				Stats::DREAMSOUL,	0,  20, 0,	1, 	-1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SENSE,							Stats::DREAMSOUL,	0,  0,  0,	1,  -1, SANCT|LEARN},
 {IDS_EXPEL_ART_NAME,				Stats::DREAMSOUL,	20, 0,  0,	1,  -1, SANCT|NEED_ITEM|NEIGH},
 {IDS_NEWLY_AWAKENED,				Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT|LEARN},
-{IDS_COMBINE,						Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS},
+{IDS_COMBINE,						Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
 {IDS_POWER_TOKEN,					Stats::DREAMSOUL,	10,  0, 0,	10, -1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SHOW_GRATITUDE,				Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
 {IDS_QUEST,							Stats::NO_STAT,		0,   0, 0,	3, -1, SANCT|NEIGH|MAKE_ITEM},
@@ -357,7 +358,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_RADIANT_BLAZE,					Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_POISON_CLOUD,					Stats::DREAMSOUL,	20, 10,15,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_BREAK_COVENANT,				Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
-{IDS_PEACE_AURA_ART_NAME,			Stats::DREAMSOUL,	20, 10,13,	5,  -1, NEED_ITEM|SANCT},
+{IDS_PEACE_AURA_ART_NAME,			Stats::DREAMSOUL,	20, 10, 6,	5,  -1, NEED_ITEM|SANCT},
 {IDS_SABLE_SHIELD,					Stats::DREAMSOUL,	20, 10,16,	5,  -1, NEED_ITEM|SANCT},
 {IDS_ENTRANCEMENT,					Stats::DREAMSOUL,	20, 10,13,	5,  -1, NEED_ITEM|SANCT},
 {IDS_SHADOW_STEP,					Stats::DREAMSOUL,	20, 10,10,	5,  -1, NEED_ITEM|SANCT},
@@ -389,12 +390,13 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_FORGE_MASTER,		 			Stats::NO_STAT,		50, 0,  0,	1, 	-1, SANCT},
 {IDS_MERGE_TALISMAN,				Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS},
 {IDS_NP_SYMBOL_ART_NAME, 			Stats::NO_STAT,		10,  0, 0,	2, 	-1, SANCT},
-{IDS_LOCATE_MARES,					Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT},
-{IDS_TEMPEST,				        Stats::LUCIDITY,	  60, 40, 0,	7, 	-1,  FOCUS|LEARN},
-{IDS_KINESIS, 						Stats::WILLPOWER,	  30,  5,  0,	1, 	-1, FOCUS|LEARN|NEIGH},
-{IDS_MISDIRECTION,					Stats::DREAMSOUL,    60,  30, 0, 5,  -1, LEARN|NEIGH},
-{IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,    70,  40, 4, 5,  -1, NEIGH|NEED_ITEM},
-{IDS_CHAOS_WELL,					Stats::DREAMSOUL, 30, 5, 0, 5, -1, SANCT | MAKE_ITEM | LEARN },
+{IDS_LOCATE_MARES,					Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT|LEARN},
+{IDS_TEMPEST,				        Stats::LUCIDITY,	60, 40, 0,	7, 	-1, FOCUS|LEARN},
+{IDS_KINESIS, 						Stats::WILLPOWER,	30, 5,  0,	1, 	-1, FOCUS|LEARN|NEIGH},
+{IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN|NEIGH},
+{IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
+{IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT|MAKE_ITEM|LEARN},
+{IDS_RALLY,							Stats::WILLPOWER,	60, 30, 0,  5,   4, SANCT|NEIGH|FOCUS},
 };
 
 
@@ -483,7 +485,55 @@ short cArts::PPMultiplier(int art_id)
 		return art_info[art_id].pp_multiplier;;
 }
 
+int cArts::CanPlateauArt(int art_id) // Returns the next skill level if art can be plateaued
+{
+	if ((art_id < 0) || (art_id >= NUM_ARTS))
+	{
+	LoadString(hInstance, IDS_INVALID_ART, message, sizeof(message));
+	_stprintf(errbuf,message, art_id);
+		NONFATAL_ERROR(errbuf);
+		return 0;
+	}
+	else
+	{
+		int skill = player->Skill(art_id);
+		if (!skill)
+			return 0;
+		int the_max = 99;
+		// if the art has no focus stat, or matches player's focus,
+		// then the limit is 99 or player's orbit for anyone
+		if ((art_info[art_id].stat == Stats::NO_STAT) ||
+			(art_info[art_id].stat == Stats::DREAMSOUL) ||
+			(art_info[art_id].stat == player->FocusStat())) {
+			the_max = player->Orbit();
+		}
 
+		else {
+		// otherwise, focus stats do not match, so limit is below 3rd plateau (29),
+		// and for non-focus arts can be learned only to 2 spheres less than
+		// the player's sphere
+
+		// player's orbit high enough?  (must be 2 spheres above art's sphere)
+		int sphere = player->Sphere();
+		int min_sphere = art_info[art_id].min_orbit/10;
+			min_sphere += 2;
+		int sphere_diff = sphere - min_sphere;
+		if (sphere_diff < 0)
+			sphere_diff = 0;
+		int art_max = sphere_diff*10 + 9;
+
+		the_max = MIN(the_max, art_max);
+		the_max = MIN(the_max, 29);
+		}
+
+		if ((the_max > skill) && ((skill % 10) == 9))
+		{
+			return (player->Skill(art_id))+1;
+		}
+
+		return 0;
+	}
+}
 
 bool cArts::Learnable(int art_id)
 {
@@ -739,7 +789,7 @@ bool cArts::CanUseArt(int art_id, bool bypass)
 		return false;
 	}
 
-	if (player->flags & ACTOR_PEACE_AURA)
+	if ((player->flags & ACTOR_PEACE_AURA) && !art_info[art_id].usable_in_sanctuary())
 	{
 		LoadString (hInstance, IDS_PA_NO_ARTS, message, sizeof(message));
 		display->DisplayMessage(message);
@@ -1140,6 +1190,7 @@ void cArts::ApplyArt(void)
     case Arts::MISDIRECTION: method = &cArts::Misdirection; break;
     case Arts::CHAOTIC_VORTEX: method = &cArts::ChaoticVortex; break;
 	case Arts::CHAOS_WELL: method = &cArts::EssenceContainer; break;
+	case Arts::RALLY: method = &cArts::StartRally; break;
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
 	}
@@ -1536,6 +1587,7 @@ void cArts::Ward(void)
 	LmItemHdr header;
 	cItem *item;
 	lyra_item_ward_t ward = {LyraItem::WARD_FUNCTION, 0, 0, 0, 0};
+	int items_in_room = 0;
 
 	linedef *line; line = FindTeleportal(player);
 
@@ -1555,8 +1607,12 @@ void cArts::Ward(void)
 		return;
 	}
 
-	// see if there's already ward on the teleportal
+	// see if the room is full of items or there's already ward on the teleportal
 	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+	{
+		if ((item->Status() == ITEM_UNOWNED))
+			items_in_room++;
+
 		if ((item->ItemFunction(0) == LyraItem::WARD_FUNCTION) && (line == ((linedef*)item->Extra())))
 		{
 			actors->IterateItems(DONE);
@@ -1565,7 +1621,16 @@ void cArts::Ward(void)
 			this->ArtFinished(false);
 			return;
 		}
+	}
 	actors->IterateItems(DONE);
+
+	if (items_in_room >= Lyra::MAX_ROOMITEMS)
+	{
+		LoadString (hInstance, IDS_MAX_ROOMITEMS, disp_message, sizeof(disp_message));
+		display->DisplayMessage (disp_message);
+		this->ArtFinished(false);
+		return;
+	}
 
 	// see if we can pass this teleportal
 
@@ -1724,60 +1789,81 @@ struct know_t {
 #ifndef AGENT
 //const int NUM_KNOW_STRINGS = 50; //11/19/02 - MDA -- array size changed to 50 to allow for further additions
 static know_t know_strings[] = {
-	{ 9, 13, IDS_KNOW1},
-	{ 2, 16, IDS_KNOW2},
-	{ 3, 12, IDS_KNOW3},
-	{ 14, 4, IDS_KNOW4},
-	{ 34,13, IDS_KNOW5},
-	{ 7,  9, IDS_KNOW6},
-	{ 42, 3, IDS_KNOW7},
-	{ 20,11, IDS_KNOW8},
-	{ 20, 9, IDS_KNOW9},
-	{ 20, 7, IDS_KNOW10},
-	{ 20, 5, IDS_KNOW11},
-	{ 20, 3, IDS_KNOW12},
-	{ 20, 15, IDS_KNOW13},
-	{ 20, 13, IDS_KNOW14},
-	{ 20, 1, IDS_KNOW15},
-	{ 1,  3, IDS_KNOW16},
-	{ 11, 16, IDS_KNOW17},
-	{ 6,  29, IDS_KNOW18},
-	{ 5,  28, IDS_KNOW19},
-	{ 4,  1, IDS_KNOW20},
-	{ 3, 26, IDS_KNOW21},
-	{ 13, 1, IDS_KNOW22},
-	{ 12, 2, IDS_KNOW23},
-	{ 15, 22, IDS_KNOW24},
-	//{ 29, 17, IDS_KNOW25},
-	//{ 30, 7, IDS_KNOW26},
-	//{ 33, 18, IDS_KNOW27},
-	//{ 27, 1, IDS_KNOW28},
-	{ 6,  12, IDS_KNOW29},
-	{ 7,  6, IDS_KNOW30},
-	{ 7,  1, IDS_KNOW31},
-	{ 39,  7, IDS_KNOW32},
-	{ 39,  9, IDS_KNOW33},
-	{ 39,  14, IDS_KNOW34},
-	{ 39,  15, IDS_KNOW34},
-	{ 37,  4, IDS_KNOW35},
-	{ 37,  3, IDS_KNOW36},
-	{ 37,  2, IDS_KNOW37},
-	{ 37,  1, IDS_KNOW38},
-	{ 6,  27, IDS_KNOW39},
-	{ 39,  13, IDS_KNOW40},
-	{ 29,  21, IDS_KNOW41},
-	{ 26,  4,  IDS_KNOW42},
-	{ 26,  13,  IDS_KNOW43},
-	{ 26,  3,  IDS_KNOW44},
-	{ 26,  2,  IDS_KNOW45},
-	{ 26,  14,  IDS_KNOW46},
-	{ 26,  30,  IDS_KNOW47},
-	{ 31,  17,  IDS_KNOW48},
-	{ 2,   31,  IDS_KNOW49},
-  { 8,   25,  IDS_KNOW50},
-  { 12,  32,  IDS_KNOW51},
-	{ 39,	31,	IDS_KNOW52},
-	{ 32,	21, IDS_KNOW53},
+	{ 1, 3, IDS_KNOW0103},
+	{ 2, 16, IDS_KNOW0216},
+	{ 2, 31, IDS_KNOW0231},
+	{ 3, 12, IDS_KNOW0312},
+	{ 3, 26, IDS_KNOW0326},
+	{ 4, 1, IDS_KNOW0401},
+	{ 5, 28, IDS_KNOW0528},
+	{ 6, 1, IDS_KNOW0601},
+	{ 6, 2, IDS_KNOW0602},
+	{ 6, 6, IDS_KNOW0606},
+	{ 6, 12, IDS_KNOW0612},
+	{ 6, 13, IDS_KNOW0613},
+	{ 6, 17, IDS_KNOW0617},
+	{ 6, 23, IDS_KNOW0623},
+	{ 6, 27, IDS_KNOW0627},
+	{ 6, 29, IDS_KNOW0629},
+	{ 7, 1, IDS_KNOW0701},
+	{ 7, 3, IDS_KNOW0703},
+	{ 7, 4, IDS_KNOW0704},
+	{ 7, 5, IDS_KNOW0705},
+	{ 7, 6, IDS_KNOW0706},
+	{ 7, 9, IDS_KNOW0709},
+	{ 8, 25, IDS_KNOW0825},
+	{ 9, 13, IDS_KNOW0913},
+	{ 11, 16, IDS_KNOW1116},
+	{ 12, 2, IDS_KNOW1202},
+	{ 12, 32, IDS_KNOW1232},
+	{ 13, 1, IDS_KNOW1301},
+	{ 14, 4, IDS_KNOW1404},
+	{ 15, 17, IDS_KNOW1517},
+	{ 15, 22, IDS_KNOW1522},
+	{ 16, 1, IDS_KNOW1601},
+	{ 16, 4, IDS_KNOW1604},
+	{ 16, 7, IDS_KNOW1607},
+	{ 16, 8, IDS_KNOW1608},
+	{ 20, 1, IDS_KNOW2001},
+	{ 20, 3, IDS_KNOW2003},
+	{ 20, 5, IDS_KNOW2005},
+	{ 20, 7, IDS_KNOW2007},
+	{ 20, 9, IDS_KNOW2009},
+	{ 20, 11, IDS_KNOW2011},
+	{ 20, 13, IDS_KNOW2013},
+	{ 20, 15, IDS_KNOW2015},
+	{ 22, 2, IDS_KNOW2202},
+	{ 22, 3, IDS_KNOW2203},
+	{ 22, 4, IDS_KNOW2204},
+	{ 22, 6, IDS_KNOW2206},
+	{ 22, 9, IDS_KNOW2209},
+	{ 22, 16, IDS_KNOW2216},
+	{ 22, 30, IDS_KNOW2230},
+	{ 26, 2, IDS_KNOW2602},
+	{ 26, 3, IDS_KNOW2603},
+	{ 26, 4, IDS_KNOW2604},
+	{ 26, 13, IDS_KNOW2613},
+	{ 26, 14, IDS_KNOW2614},
+	{ 26, 30, IDS_KNOW2630},
+	// { 27, 1, IDS_KNOW2701},
+	// { 29, 17, IDS_KNOW2917},
+	{ 29, 21, IDS_KNOW2921},
+	// { 30, 7, IDS_KNOW3007},
+	{ 31, 17, IDS_KNOW3117},
+	{ 32, 21, IDS_KNOW3221},
+	// { 33, 18, IDS_KNOW3318},
+	{ 34, 13, IDS_KNOW3413},
+	{ 37, 1, IDS_KNOW3701},
+	{ 37, 2, IDS_KNOW3702},
+	{ 37, 3, IDS_KNOW3703},
+	{ 37, 4, IDS_KNOW3704},
+	{ 39, 7, IDS_KNOW3907},
+	{ 39, 9, IDS_KNOW3909},
+	{ 39, 13, IDS_KNOW3913},
+	{ 39, 14, IDS_KNOW3914},
+	{ 39, 15, IDS_KNOW3915},
+	{ 39, 31, IDS_KNOW3931},
+	{ 42, 3, IDS_KNOW4203},
 };
 //NUM_KNOW_STRINGS defined here to facilitate future additions - 12/1/2002
 const int NUM_KNOW_STRINGS = sizeof (know_strings) / sizeof (know_t);
@@ -2200,6 +2286,9 @@ void cArts::ApplyReflectedArt(int art_id, lyra_id_t caster_id)
 	case Arts::PEACE_AURA:
 		ApplyPeaceAura(player->Skill(art_id), player->ID());
 		break;
+	case Arts::HEALING_AURA:
+		ApplyHealingAura(player->Skill(art_id), player->ID());
+		break;
 	};
 	
 	return;
@@ -2294,7 +2383,7 @@ void cArts::ApplyTempest (int skill, int angle, lyra_id_t caster_id)
 	}
   else
   {
-    MoveActor (player, angle*4, (PUSH_DISTANCE * ((1/3)*(skill/10)+1)), MOVE_NORMAL);
+    MoveActor (player, angle*4, (PUSH_DISTANCE * ((skill/10)+1)), MOVE_NORMAL);
     LoadString (hInstance, IDS_TEMPEST_APPLIED, disp_message, sizeof(disp_message));
 	  display->DisplayMessage (disp_message);
 		player->PerformedAction();
@@ -2416,6 +2505,8 @@ void cArts::ApplyRazorwind(int skill, lyra_id_t caster_id)
 		int damage = 12 + (((skill/10)+1) * (rand()%4));
 		this->DamagePlayer(damage, caster_id);
 		//player->SetCurrStat(Stats::DREAMSOUL, -damage, SET_RELATIVE, caster_id);
+		int duration = this->Duration(Arts::RAZORWIND, skill);
+		player->SetTimedEffect(LyraEffect::PLAYER_BLEED, duration, caster_id);
 	}
 	return;
 }
@@ -2623,7 +2714,8 @@ void cArts::ApplyHealingAura(int skill, lyra_id_t caster_id)
 	}
 	display->DisplayMessage(message);
 
-	int healing = 8 + ((skill/10)+1)*(rand()%3);
+	// int healing = 8 + ((skill/10)+1)*(rand()%3);
+	int healing = 4 + ((skill/10)+5)*(rand()%3+1);
 	player->SetCurrStat(Stats::DREAMSOUL, healing, SET_RELATIVE, caster_id);
 
 	return;
@@ -4036,6 +4128,8 @@ void cArts::ApplyPoison(int skill, lyra_id_t caster_id)
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::POISON);
 	int duration = this->Duration(Arts::POISON, skill);
+	//if (player->poison_strength < skill)
+	//	player->poison_strength = skill;
 	player->SetTimedEffect(LyraEffect::PLAYER_POISONED, duration, caster_id);
 	return;
 }
@@ -5284,6 +5378,97 @@ void cArts::EndSummon(void)
 }
 
 //////////////////////////////////////////////////////////////////
+// Rally
+
+void cArts::StartRally(void)
+{
+	for (int i=0; i<num_no_rally_levels; i++) 
+		if (no_rally_levels[i] == level->ID()){ // Cannot use Rally in levels with sphere/house locks
+			LoadString (hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
+			display->DisplayMessage (disp_message);
+			this->ArtFinished(false);
+			return;
+		}
+	if (gs->Party()->Members() < 1){ // Must be in a party to use Rally
+		LoadString (hInstance, IDS_RALLY_NOPARTY, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+	this->WaitForSelection(&cArts::EndRally, Arts::RALLY);
+	this->CaptureCP(NEIGHBORS_TAB, Arts::RALLY);
+	return;
+}
+
+void cArts::ApplyRally(lyra_id_t caster_id)
+{
+	cNeighbor *n = this->LookUpNeighbor(caster_id);
+	if (n == NO_ACTOR)
+		return;
+	rally_id = caster_id;
+	this->DisplayUsedByOther(n,Arts::RALLY);
+	if (player->flags & ACTOR_SOULSPHERE)
+		return;
+	if (!acceptrejectdlg)
+		{
+			LoadString (hInstance, IDS_QUERY_RALLY, disp_message, sizeof(disp_message));
+				_stprintf(message, disp_message, level->RoomName(n->Room()), n->Name());
+			HWND hDlg = CreateLyraDialog(hInstance, (IDD_ACCEPTREJECT),
+							cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
+			acceptreject_callback = (&cArts::GotRallied);
+			SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+			SendMessage(hDlg, WM_SET_AR_NEIGHBOR, 0, (LPARAM)n);
+		}
+	return;
+}
+
+void cArts::GotRallied(void *value)
+{
+	if (player->flags & ACTOR_SOULSPHERE)
+		return;
+	int success = *((int*)value);
+	if (success){
+		player->EvokedFX().Activate(Arts::RALLY, false);
+		cNeighbor *n = this->LookUpNeighbor(rally_id);
+		player->EvokedFX().Activate(Arts::RALLY, false);
+		player->Teleport (n->x, n->y, n->angle, NO_LEVEL);
+	}
+	rally_id = 0;
+	return;
+}
+
+void cArts::EndRally(void)
+{
+	cNeighbor *n = cp->SelectedNeighbor();
+
+	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n))){
+		this->DisplayNeighborBailed(Arts::RALLY);
+		this->ArtFinished(false);
+		return;
+	}
+
+	if (!gs->Party()->IsInParty(n->ID())){ //target must be in player's party
+		LoadString (hInstance, IDS_RALLY_NOTMEMBER, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, n->Name());
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+/*
+	if (n->flags & ACTOR_SOULSPHERE){
+		LoadString (hInstance, IDS_RALLY_NO_SS, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+*/
+	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
+	this->DisplayUsedOnOther(n, Arts::RALLY);
+
+	this->ArtFinished(true);
+	return;
+}
+//////////////////////////////////////////////////////////////////
 // Suspend
 
 void cArts::StartSuspend(void)
@@ -5772,29 +5957,24 @@ void cArts::ApplyPeaceAura(int skill, lyra_id_t caster_id)
 	if ((n == NO_ACTOR) && (caster_id != player->ID()))
 		return;
 
+	if (player->IsMonster())
+	{
+		return;
+	}
+
 	player->EvokedFX().Activate(Arts::PEACE_AURA, false);
 	this->DisplayUsedByOther(n, Arts::PEACE_AURA);
 
-//	bool can_apply_aura = false;
-	// can always apply to agents mares and pmares
-//#ifndef AGENT
-//#ifndef PMARE 
-	//if (player->GuildRank(Guild::ECLIPSE) >= Guild::INITIATE)
-//#endif
-//#endif
-//	can_apply_aura = true;
-
-//	if (can_apply_aura)
-//	{	// no damage to HC
-		int duration = this->Duration(Arts::PEACE_AURA, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_PEACE_AURA, duration, caster_id);
-//	}
-//	else
-//	{
-//		LoadString (hInstance, IDS_MUST_BE_MEMBER_APPLY, disp_message, sizeof(disp_message));
- //      _stprintf(message, disp_message, GuildName(Guild::ECLIPSE), this->Descrip(Arts::PEACE_AURA));
-//		display->DisplayMessage(message, false);
-//	}
+	int duration = this->Duration(Arts::PEACE_AURA, skill);
+	player->SetTimedEffect(LyraEffect::PLAYER_PEACE_AURA, duration, caster_id);
+	
+/*	else
+	{
+		LoadString (hInstance, IDS_MUST_BE_MEMBER_APPLY, disp_message, sizeof(disp_message));
+      _stprintf(message, disp_message, GuildName(Guild::ECLIPSE), this->Descrip(Arts::PEACE_AURA));
+		display->DisplayMessage(message, false);
+	}
+*/
 	return;
 }
 
@@ -5829,7 +6009,15 @@ void cArts::EndPeaceAura(void)
 		this->ArtFinished(false);
 		return;
 	}
-	
+
+	if (n->IsMonster())
+	{
+		LoadString (hInstance, IDS_PEACE_AURA_MARES, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message); 
+		this->ArtFinished(false);
+		return;
+	}
+
 	if (n->ID() == player->ID())
 		this->ApplyPeaceAura(player->Skill(Arts::PEACE_AURA), player->ID());
 	else gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::PEACE_AURA,
@@ -8107,11 +8295,20 @@ void cArts::GotInitiated(void *value)
 		player->SetGuildXPPool(initiate_gid, 0);
 
 		// AUTO TRAIN INITIATE ARTS - 6/14/14 AMR
-		if (player->Skill(Arts::HOUSE_MEMBERS)<1) {
-			player->SetSkill(Arts::HOUSE_MEMBERS, 1, SET_ABSOLUTE, player->ID(), true);
-			LoadString (hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));
-	_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
-		display->DisplayMessage (message);
+		for (int art=0; art<NUM_ARTS; ++art) {
+			switch (art) {
+			case Arts::HOUSE_MEMBERS:
+			case Arts::DEMOTE:
+				if (player->Skill(art)<1){
+					player->SetSkill(art, 1, SET_ABSOLUTE, player->ID(), true);
+					LoadString (hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));
+						_stprintf(message, disp_message, this->Descrip(art));
+					display->DisplayMessage (message);
+				}
+				continue;
+			default:
+				continue;
+			}
 		}
 	}
 	else
@@ -8277,6 +8474,7 @@ _stprintf(message, disp_message, player->Name());
 			switch (art) {
 				case Arts::HOUSE_MEMBERS:
 				case Arts::INITIATE:
+				case Arts::DEMOTE:
 				case Arts::SUPPORT_DEMOTION:
 				case Arts::SUPPORT_ASCENSION:
 				case Arts::CUP_SUMMONS:
@@ -8998,6 +9196,9 @@ void cArts::EndCombine(void)
 	else if ((item1->NumFunctions() > 1) ||
 			 (item2->NumFunctions() > 1))
 		combinable = false; 
+	else if ((item1->Lmitem().Charges() == INFINITE_CHARGES) ||
+		(item2->Lmitem().Charges() == INFINITE_CHARGES))
+		combinable = false;
 
 	else switch (item1->ItemFunction(0))
 	{
@@ -9177,8 +9378,12 @@ void cArts::EndVampiricDraw(void)
 		}
 		unsigned char amount = player->SkillSphere(Arts::VAMPIRIC_DRAW)*3+5;
 		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::VAMPIRIC_DRAW, amount, player->SelectedStat());
-		if (!item->Destroy()) // destroy returns true for delayed destruction
-			item->SetTerminate();
+
+		if (player->SkillSphere(Arts::VAMPIRIC_DRAW) <= rand()%15) {
+			item->Lmitem().SetCharges(0); // destroy essence with confirmation message
+			//if (!item->Destroy()) // destroy returns true for delayed destruction
+			//	item->SetTerminate();
+		}
 //		this->VampiricDrawAck(player->ID(), amount);
 	}
 
@@ -9448,9 +9653,11 @@ void cArts::ResponseAscend(int guild_id, int success)
 
 void cArts::StartDemote(void)
 {
-	if (!player->IsRuler(Guild::NO_GUILD))
+	if (!player->IsInitiate(Guild::NO_GUILD) &&
+		!player->IsKnight(Guild::NO_GUILD) &&
+		!player->IsRuler(Guild::NO_GUILD))
 	{
-		LoadString (hInstance, IDS_MUST_BE_RULER, disp_message, sizeof(disp_message));
+		LoadString (hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, this->Descrip(Arts::DEMOTE));
 		display->DisplayMessage (message);
 		this->ArtFinished(false);
@@ -9458,6 +9665,7 @@ void cArts::StartDemote(void)
 	}
 
 	this->WaitForSelection(&cArts::MidDemote, Arts::DEMOTE);
+	this->AddDummyNeighbor();
 	this->CaptureCP(NEIGHBORS_TAB, Arts::DEMOTE);
 
 	return;
@@ -9465,28 +9673,52 @@ void cArts::StartDemote(void)
 
 void cArts::MidDemote(void)
 {
-
-	if (player->NumGuilds(Guild::RULER) == 1)
-	{ // only one choice, skip straight to end
-		int value = GuildID(player->GuildFlags(Guild::RULER));
-		this->EndDemote(&value);
-		return;
+	if (cp->SelectedNeighbor()->ID() == player->ID())
+	{ // Player evoked on self - can be any rank to demote self
+		if (player->NumGuilds(Guild::RULER_PENDING) == 1)
+		{ // only one choice, skip straight to end
+			int value = GuildID(player->GuildFlags(Guild::RULER_PENDING));
+			this->EndDemote(&value);
+			return;
+		}
 	}
 	else
-	{
-		if (chooseguilddlg)
-		{
+	{ // Player evoked on another player - must be a Ruler
+		if (player->NumGuilds(Guild::RULER) == 0)
+		{ // Not a ruler in any house - cannot evoke Demote on others
+			LoadString (hInstance, IDS_MUST_BE_RULER, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, this->Descrip(Arts::DEMOTE));
+			display->DisplayMessage (message);
 			this->ArtFinished(false);
 			return;
 		}
-		chooseguilddlg = true;
-		HWND hDlg =  CreateLyraDialog(hInstance, (IDD_CHOOSE_GUILD),
-						cDD->Hwnd_Main(), (DLGPROC)ChooseGuildDlgProc);
-		chooseguild_callback = (&cArts::EndDemote);
-		SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
-		SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
-		this->WaitForDialog(hDlg, Arts::DEMOTE);
+		else if (player->NumGuilds(Guild::RULER) == 1)
+		{ // only one choice, skip straight to end
+			int value = GuildID(player->GuildFlags(Guild::RULER));
+			this->EndDemote(&value);
+			return;
+		} 
 	}
+
+	// Player is in more than one house
+	if (chooseguilddlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+	chooseguilddlg = true;
+	HWND hDlg =  CreateLyraDialog(hInstance, (IDD_CHOOSE_GUILD),
+					cDD->Hwnd_Main(), (DLGPROC)ChooseGuildDlgProc);
+	chooseguild_callback = (&cArts::EndDemote);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
+	if (cp->SelectedNeighbor()->ID() == player->ID())
+	{ // Only show options for other ranks if player evoked on self
+		SendMessage(hDlg, WM_ADD_KNIGHTS, 0, 0);
+		SendMessage(hDlg, WM_ADD_INITIATES, 0, 0);
+	}
+	this->WaitForDialog(hDlg, Arts::DEMOTE);
+
 	return;
 }
 
@@ -9494,7 +9726,7 @@ void cArts::EndDemote(void *value)
 {
 	int num_tokens = 0;
 	cItem* tokens[MAX_DEMOTE_TOKENS_NEEDED]; // holds token pointers
-	int guild_id = *((int*)value);
+	demote_guild_id = *((int*)value);
 	bool duplicate = false;
 	cNeighbor *n = cp->SelectedNeighbor();
 
@@ -9504,16 +9736,57 @@ void cArts::EndDemote(void *value)
 		this->ArtFinished(false);
 		return;
 	}
-	else if (guild_id == Guild::NO_GUILD)
+	else if (demote_guild_id == Guild::NO_GUILD)
 	{
 		this->CancelArt();
 		return;
 	}
+	if (n->ID() == player->ID())
+	{
+		if (!acceptrejectdlg)
+		{
+			LoadString (hInstance, IDS_SELF_DEMOTE, disp_message, sizeof(disp_message));
+			if (player->GuildRank(demote_guild_id) > Guild::INITIATE)
+				_stprintf(message, disp_message, "within", GuildName(demote_guild_id));
+			else
+				_stprintf(message, disp_message, "from", GuildName(demote_guild_id));
+			HWND hDlg = CreateLyraDialog(hInstance, (IDD_ACCEPTREJECT),
+							cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
+			acceptreject_callback = (&cArts::SelfDemote);
+			SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+		}
+		return;
 
-	num_tokens = this->CountDemotionTokens(guild_id, (cItem**)tokens, n);
-	
-	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::DEMOTE, guild_id, num_tokens);
+	}
+
+	num_tokens = this->CountDemotionTokens(demote_guild_id, (cItem**)tokens, n);
+
+	if (!player->IsRuler(Guild::NO_GUILD))
+	{
+		LoadString (hInstance, IDS_MUST_BE_RULER, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, this->Descrip(Arts::DEMOTE));
+		display->DisplayMessage (message);
+		this->ArtFinished(false);
+		return;
+	}
+
+	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::DEMOTE, demote_guild_id, num_tokens);
 	this->ArtFinished(true);
+	return;
+}
+
+void cArts::SelfDemote(void *value)
+{
+	int success = *((int*)value);
+	if (success)
+	{
+		int num_tokens = MAX_DEMOTE_TOKENS_NEEDED + 1000;
+		gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::DEMOTE, demote_guild_id, num_tokens);
+		this->ArtFinished(true);
+	}
+	else
+		this->CancelArt();
+
 	return;
 }
 
@@ -9563,6 +9836,8 @@ int cArts::CountDemotionTokens(lyra_id_t guild_id, cItem** tokens, cNeighbor* n)
 
 void cArts::ResponseDemote(bool success, realmid_t target_id, int guild_id, int num_tokens_used)
 {
+	if (target_id != player->ID())
+	{
 	TCHAR targetname[Lyra::PLAYERNAME_MAX] = { NULL };
 	cItem* tokens[MAX_DEMOTE_TOKENS_NEEDED]; // holds token pointers
 	int i, num_tokens = 0;
@@ -9570,34 +9845,36 @@ void cArts::ResponseDemote(bool success, realmid_t target_id, int guild_id, int 
 
 
 	n = LookUpNeighbor(target_id);
-	if (n == NO_ACTOR)
-	{
-		LoadString(hInstance, IDS_THE_TARGET, message, sizeof(message));
-		_tcscpy(targetname, message);
-	}
-	else
-		_tcsnccpy(targetname, n->Name(), _tcslen(n->Name()));
 
-	num_tokens = this->CountDemotionTokens(guild_id, (cItem**)tokens, n);
+		if (n == NO_ACTOR)
+		{
+			LoadString(hInstance, IDS_THE_TARGET, message, sizeof(message));
+			_tcscpy(targetname, message);
+		}
+		else
+			_tcsnccpy(targetname, n->Name(), _tcslen(n->Name()));
 
-	if (success)
-	{	// success!!!
-		// remove the appropriate tokens
-		LoadString (hInstance, IDS_DEMOTE_SUCCEEDED, disp_message, sizeof(disp_message));
-	_stprintf(message, disp_message, targetname, GuildName(guild_id));
-		display->DisplayMessage (message);
+		num_tokens = this->CountDemotionTokens(guild_id, (cItem**)tokens, n);
+
+		if (success)
+		{	// success!!!
+			// remove the appropriate tokens
+			LoadString (hInstance, IDS_DEMOTE_SUCCEEDED, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, targetname, GuildName(guild_id));
+			display->DisplayMessage (message);
 	
-		if (num_tokens > 1000) // special code to signify a membership token found
-			num_tokens = 1;
-		for (i=0; i<num_tokens; i++)
-			tokens[i]->Destroy();
-		gs->UpdateServer();
-	}
-	else
-	{	// failure!
-		LoadString (hInstance, IDS_DEMOTE_FAILED, disp_message, sizeof(disp_message));
-	_stprintf(message, disp_message, targetname, GuildName(guild_id), num_tokens_used);
-		display->DisplayMessage (message);
+			if (num_tokens > 1000) // special code to signify a membership token found
+				num_tokens = 1;
+			for (i=0; i<num_tokens; i++)
+				tokens[i]->Destroy();
+			gs->UpdateServer();
+		}
+		else
+		{	// failure!
+			LoadString (hInstance, IDS_DEMOTE_FAILED, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, targetname, GuildName(guild_id), num_tokens_used);
+			display->DisplayMessage (message);
+		}
 	}
 	this->ArtFinished(true);
 	return;
@@ -9612,7 +9889,10 @@ void cArts::ApplyDemote(int guild_id)
 		player->SetGuildRank(guild_id, guild_rank - 1);
 
 		LoadString (hInstance, IDS_DEMOTED, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, GuildName(guild_id));
+		if (guild_rank > Guild::INITIATE)
+			_stprintf(message, disp_message, "within", GuildName(guild_id));
+		else
+			_stprintf(message, disp_message, "from", GuildName(guild_id));
 		display->DisplayMessage (message);
 	}
 }

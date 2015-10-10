@@ -1651,27 +1651,70 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		break;
 #endif
 			bool has_learnable = false;
+			bool can_plateau = false;
 			for (int i=0; i<NUM_ARTS; i++)
+			{
 				if (arts->Learnable(i) && arts->DisplayLearnable(i))
 				{
 					has_learnable = true;
 					break;
 				}
-								
-				if (has_learnable)
+				if (arts->CanPlateauArt(i)>0)
 				{
-					LoadString (hInstance, IDS_LEARNABLE_ARTS, disp_message, sizeof(disp_message));
-					display->DisplayMessage(disp_message);
+					can_plateau = true;
+					break;
+				}
+			}
+			if ((has_learnable) || (can_plateau))
+			{
+				int plat_skill = 0;
+				LoadString (hInstance, IDS_LEARNABLE_ARTS, disp_message, sizeof(disp_message));
+				display->DisplayMessage(disp_message);
 					
-					for (int i=0; i<NUM_ARTS; i++)
-						if (arts->Learnable(i)&& arts->DisplayLearnable(i))
-							display->DisplayMessage(arts->Descrip(i));
-				}
-				else
+				for (int i=0; i<NUM_ARTS; i++)
 				{
-					LoadString (hInstance, IDS_NO_LEARNABLE_ARTS, disp_message, sizeof(disp_message));
-					display->DisplayMessage(disp_message);
+					if ((arts->Learnable(i)) && (arts->DisplayLearnable(i)))
+					{
+						display->DisplayMessage(arts->Descrip(i));
+					}
+
+					plat_skill = arts->CanPlateauArt(i);
+					if (plat_skill>0)
+					{
+						int plat = plat_skill/10;
+						switch (plat){
+							case 1:	_stprintf(message, "first");
+								break;
+							case 2:	_stprintf(message, "second");
+								break;
+							case 3:	_stprintf(message, "third");
+								break;
+							case 4:	_stprintf(message, "fourth");
+								break;
+							case 5:	_stprintf(message, "fifth");
+								break;
+							case 6:	_stprintf(message, "sixth");
+								break;
+							case 7:	_stprintf(message, "seventh");
+								break;
+							case 8:	_stprintf(message, "eighth");
+								break;
+							case 9:	_stprintf(message, "ninth");
+								break;
+							default: _stprintf(message, "next higher");
+								break;
+							}
+
+						_stprintf(disp_message,"%s to the %s plateau",arts->Descrip(i),message);
+						display->DisplayMessage(disp_message);
+					}
 				}
+			}
+			else
+			{
+				LoadString (hInstance, IDS_NO_LEARNABLE_ARTS, disp_message, sizeof(disp_message));
+				display->DisplayMessage(disp_message);
+			}
 								
 		}
 		break;

@@ -543,6 +543,8 @@ bool CanPlayerForgeValue(int type, int value, bool usePowerToken)
 				return false;
 			else if (value == LyraEffect::PLAYER_INVISIBLE)
 				return false;
+			else if (value == LyraEffect::PLAYER_BLEED)
+				return false;
 			else
 				return (player->Skill(timed_effects->related_art[value]) > 0);
 		case LyraItem::TRANSLATION_STAT:
@@ -1184,7 +1186,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_POISONED;
 	related_art[i] = Arts::POISON;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
-	default_duration[i] = 23; // 10 min
+	default_duration[i] = 13; // 1 min
 	harmful[i] = true;
 
 	i = LyraEffect::PLAYER_DETECT_INVISIBLE;
@@ -1401,6 +1403,18 @@ cTimedEffects::cTimedEffects(void)
 	default_duration[i] = 3; // 15 sec
 	harmful[i] = true;
 
+  i = LyraEffect::PLAYER_BLEED;
+	LoadString (hInstance, IDS_PLAYER_BLEED_ON, disp_message, sizeof(disp_message));
+	start_descrip[i] = _tcsdup(disp_message);
+	LoadString (hInstance, IDS_PLAYER_BLEED_MORE, disp_message, sizeof(disp_message));
+	more_descrip[i] = _tcsdup(disp_message);
+	LoadString (hInstance, IDS_PLAYER_BLEED_OFF, disp_message, sizeof(disp_message));
+	expire_descrip[i] = _tcsdup(disp_message);
+	actor_flag[i] = ACTOR_BLEED;
+	related_art[i] = Arts::RAZORWIND;
+	LoadString(hInstance, IDS_BLEED, name[i], sizeof(name[i]));
+	default_duration[i] = 7; // 15 seconds
+	harmful[i] = true;
 
 	return;
 }
@@ -1460,10 +1474,10 @@ int __cdecl OutOfMemory(size_t size)
 
 
 // note: update these yearly!
-const int DT_START_MONTH = 4;
-const int DT_END_MONTH = 10;
-const int DT_START_DAY = 1;
-const int DT_END_DAY = 28;
+const int DT_START_MONTH = 3;
+const int DT_END_MONTH = 11;
+const int DT_START_DAY = 13;
+const int DT_END_DAY = 1;
 const int DT_START_HOUR = 2;
 const int DT_END_HOUR = 2;
 

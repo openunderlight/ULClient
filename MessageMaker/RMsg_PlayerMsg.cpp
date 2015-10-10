@@ -172,6 +172,7 @@ int RMsg_PlayerMsg::ArtType(int msgtype)
   case KINESIS:         retval = Arts::KINESIS; break;
   case MISDIRECTION:    retval = Arts::MISDIRECTION; break;
   case CHAOTIC_VORTEX:  retval = Arts::CHAOTIC_VORTEX; break;
+  case RALLY:				retval = Arts::RALLY; break;
 
   default:
     retval = Arts::NONE;

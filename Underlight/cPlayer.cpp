@@ -52,6 +52,7 @@ const int HEAL_INTERVAL = 5000; // natural healing
 const int SECTOR_TAG_INTERVAL = 2000; // apply sector tags every 2 seconds
 const int NIGHTMARE_CHECK_INTERVAL = 1000; // for area effect mare stuff
 const int POISON_INTERVAL = 4000;
+const int BLEED_INTERVAL = 3000;
 const int TRAIL_INTERVAL = 5000;
 const float MIN_TRAIL_SEPARATION = 300.0f;
 const float UPDOWNVEL=12.0f; // speed at which we look/down
@@ -140,7 +141,7 @@ void cPlayer::InitPlayer(void)
 	next_heal = next_regeneration = LyraTime() + HEAL_INTERVAL;
 	next_sector_tag = LyraTime() + SECTOR_TAG_INTERVAL;
 	next_nightmare_check = LyraTime() + NIGHTMARE_CHECK_INTERVAL;
-	next_poison = next_trail = 0;
+	next_poison = next_bleed = next_trail = 0;
 	free_moves = 5;
 	step_frame = avatar_poses[WALKING].start_frame;
 	checksum_incorrect = last_loc_valid = false;
@@ -148,6 +149,8 @@ void cPlayer::InitPlayer(void)
 	//  Initialize curse_strength to zero
 	curse_strength = 0; // no curse on new player
 	blast_chance = 0; // no chance Ago will return Blast to start
+	poison_strength = 0;
+ 	last_poisoner = last_bleeder = Lyra::ID_UNKNOWN;
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
 	session_id = 0;
@@ -692,7 +695,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_CURSE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		//  Curse and Protection offset and partially cancel
-//		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration;
+		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration*3;
 		return false;
 		}
 		// Implementing Curse Effect
@@ -724,7 +727,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_PARALYZE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Paralyze and Free Action now offset and partially cancel
-		//timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration; // new code
+		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration*3; // new code
 		return false;
 									  }
 		// If actually paralyzed, cancel any current evoke.
@@ -737,7 +740,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_STAGGER_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Stagger and Free Action now offset and partially cancel
-		//timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration; // new code
+		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration*3; // new code
 		return false;
 								  }} break;
 	case LyraEffect::PLAYER_FEAR:{
@@ -746,7 +749,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_FEAR_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Fear and Resist Fear now offset and partially cancel
-	//	timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR]-=duration;
+		timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR]-=duration*3;
 		return false;
 								 }} break;
 	case LyraEffect::PLAYER_BLIND:{
@@ -757,7 +760,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_BLIND_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Blind and Vision now offset and partially cancel
-	//	timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE]-=duration;
+		timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE]-=duration*3;
 		return false;
 								  }} break;
 //  Players must know how to Recall, Transform, etc. in case talisman causes effect
@@ -815,7 +818,26 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		{
 			gs->SendPlayerMessage(0, RMsg_PlayerMsg::MIND_BLANK, 1, 0);
 		}
-	}
+										} break;
+
+	case LyraEffect::PLAYER_PEACE_AURA: {
+		if (this->flags & ACTOR_PEACE_AURA) { // 2nd evoke - Peace Aura
+			this->RemoveTimedEffect(LyraEffect::PLAYER_PEACE_AURA);
+			return(true);
+		}
+									 } break;
+
+	case LyraEffect::PLAYER_BLEED: {
+		if (this->flags & ACTOR_PROT_CURSE) {
+			LoadString (hInstance, IDS_PLAYER_BLEED_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration*3;
+			return false;
+		}
+		if (caster_id != player->ID())
+
+			last_bleeder = caster_id;
+								   } break;
 
 	case LyraEffect::PLAYER_POISONED: {
 		if (flags & ACTOR_NO_POISON)
@@ -825,9 +847,22 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 			return false;
 		}
 
+		if (caster_id != player->ID())
+
+			last_poisoner = caster_id;
+
+		int new_strength = (duration/60000) + 1;	
+
+		if (new_strength>10) new_strength = 10;
+
+		if (new_strength>poison_strength)
+
+		poison_strength = new_strength;
+
+		} break;
   case LyraEffect::PLAYER_SPIN:
     {
-    }break;
+    break;
 	}
 
 	default:
@@ -943,6 +978,14 @@ void cPlayer::RemoveTimedEffect(int effect)
 	else if (effect == LyraEffect::PLAYER_CURSED)
 		curse_strength = 0;
 
+	else if (effect == LyraEffect::PLAYER_POISONED) {
+		last_poisoner = Lyra::ID_UNKNOWN;
+		poison_strength = 0;
+	}
+	else if (effect == LyraEffect::PLAYER_BLEED) {
+		last_bleeder = Lyra::ID_UNKNOWN;
+	}
+
 	return;
 };
 
@@ -1009,8 +1052,14 @@ void cPlayer::CheckStatus(void)
 
 	if ((flags & ACTOR_POISONED) && (LyraTime() > next_poison))
 	{	 // sap dreamsoul...
-		this->SetCurrStat(Stats::DREAMSOUL, -1, SET_RELATIVE, playerID);
+		this->SetCurrStat(Stats::DREAMSOUL, -((rand()%poison_strength)+1), SET_RELATIVE,last_poisoner);
 		next_poison = LyraTime() + POISON_INTERVAL;
+	}
+
+	if ((flags & ACTOR_BLEED) && (LyraTime() > next_bleed))
+	{	 // sap dreamsoul...
+		this->SetCurrStat(Stats::DREAMSOUL, -1, SET_RELATIVE,last_bleeder);
+		next_bleed = LyraTime() + BLEED_INTERVAL;
 	}
 
 	if ((flags & ACTOR_REGENERATING) && (LyraTime() > next_regeneration) )
@@ -1940,6 +1989,16 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 #endif
 		_stprintf(message, disp_message, n->Name());
 		display->DisplayMessage(message);
+
+		LoadString(hInstance, IDS_ANNOUNCE_COLLAPSE, message, sizeof(message));
+		if (n != NO_ACTOR) {
+			_stprintf(disp_message, message, n->Name());
+		} else {
+			LoadString(hInstance, IDS_ANOTHER_DREAMER, temp_message, sizeof(temp_message));
+			_stprintf(disp_message, message, temp_message);
+		}
+		gs->Talk(disp_message, RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN);
+
 #ifndef AGENT
 		// check to see if this other entity has collapsed us too many
 		// times recently - if so, issue a cheat report

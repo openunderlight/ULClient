@@ -2003,8 +2003,8 @@ bool CanPassPortal(int lock, int guild_id, bool rendering)
 				str_message = IDS_TEL_MUST_HAVE_MARK;
 				break;
 			case 49:
-				art_id = Arts::NP_SYMBOL;
-				str_message = IDS_TEL_MUST_HAVE_MARK;
+				art_id = Arts::FORGE_TALISMAN;
+				str_message = IDS_TEL_MUST_KNOW_ART;
 				break;
 		}
 		if (player->Skill(art_id) < 1)
@@ -2012,10 +2012,10 @@ bool CanPassPortal(int lock, int guild_id, bool rendering)
 			if (!rendering)
 			{
 				LoadString (hInstance, str_message, disp_message, sizeof(disp_message));
-				if (art_id == Arts::NP_SYMBOL){
+/*				if (art_id == Arts::NP_SYMBOL){
 					LoadString (hInstance, IDS_ARRET_CREST, temp_message, sizeof(temp_message)); 
 					_stprintf(message, disp_message, temp_message);}
-				else
+				else */
 					_stprintf(message, disp_message, arts->Descrip(art_id));
 				display->DisplayMessage(message);
 			}

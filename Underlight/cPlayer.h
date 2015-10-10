@@ -146,8 +146,8 @@ class cPlayer : public cActor
 
 	   int next_collapse_index;
 	   player_collapse_t collapses[COLLAPSES_TRACKED]; // record last 100 collapses
-
-	   DWORD next_heal,next_poison,next_trail,next_nightmare_check,next_regeneration,next_sector_tag;
+	   lyra_id_t last_poisoner,last_bleeder;
+	   DWORD next_heal,next_poison,next_bleed,next_trail,next_nightmare_check,next_regeneration,next_sector_tag;
 
 	   int   vertical_tilt;
 	   int   vertical_tilt_origin;
@@ -175,6 +175,7 @@ class cPlayer : public cActor
 
 	  int curse_strength; // Curse Strength public field keeps track of art failure rate
 	  int blast_chance; // Blast Chance tracks the chance an Ago will reciprocate your Blast
+	  int poison_strength;
 	  
 	  // Selection Functions
 	  virtual TCHAR* Name(void);

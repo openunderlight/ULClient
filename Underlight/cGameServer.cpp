@@ -150,10 +150,10 @@ extern char agent_gs_ip_address[16];
 // if GAME_LYR is defined, use game.lyr, unless we are overriding by setting GAME_CLI
 #ifdef GAME_CLI
 #ifdef PMARE // starting level 1
-int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x001A970A << 2);  // for pmare game.cli
+int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031EC50 << 2);  // for pmare game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1D22B3B2 << 2);
 #else
-int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031EFE3 << 2);  // for game.cli
+int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031EC50 << 2);  // for game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1DCF4AD3 << 2);
 #endif // #ifdef PMARE
 #else
@@ -2387,6 +2387,9 @@ void cGameServer::HandleMessage(void)
 				case RMsg_PlayerMsg::KINESIS:
 					art_id = Arts::KINESIS;
 					break;
+				case RMsg_PlayerMsg::HEALING_AURA:
+					art_id = Arts::HEALING_AURA;
+					break;
 				default:
 					art_reflected = false; // If not one of the arts we reflect
 					break;
@@ -2619,6 +2622,10 @@ void cGameServer::HandleMessage(void)
 
 				case RMsg_PlayerMsg::CUP_SUMMONS:
 					arts->ApplyCupSummons(player_msg.SenderID());
+					break;
+
+				case RMsg_PlayerMsg::RALLY:
+					arts->ApplyRally(player_msg.SenderID());
 					break;
 
 				case RMsg_PlayerMsg::REDEEM_GRATITUDE:
