@@ -1638,8 +1638,57 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 	}
 #endif
 
+int mare_avatar = this->CurrentAvatarType();
+
+#ifdef AGENT
+	if (this->AvatarType() < Avatars::MIN_NIGHTMARE_TYPE)
+	{ // Revenant borrow attack strength from the nightmare agent they replace based on agent username e.g. Shamblix_14=Shamblix
+		int pi;
+		TCHAR marename[Lyra::PLAYERNAME_MAX];
+		// *** STRING LITERAL ***  
+		if (_stscanf(agent_info[AgentIndex()].name, "%[^_]_%d", marename, &pi) != 2) {
+		  // couldn't parse it
+		 _tcsnccpy(marename, agent_info[AgentIndex()].name, sizeof(marename));
+		}
+		mare_avatar = WhichMonsterName(marename);
+	}
+#endif
+
 	switch (this->CurrentAvatarType())
 	{
+#ifdef AGENT
+		case Avatars::MALE:
+		case Avatars::FEMALE:
+			int rev_damage;
+			int rev_effect;
+			switch (mare_avatar){ // Revenant damage and effects based on nightmare they replaced
+				case Avatars::EMPHANT: rev_damage = EMPHANT_DAMAGE; rev_effect = LyraEffect::NONE; break;
+				case Avatars::BOGROM: rev_damage = BOGROM_DAMAGE; rev_effect = LyraEffect::PLAYER_CURSED; break;
+				case Avatars::AGOKNIGHT: rev_damage = AGOKNIGHT_DAMAGE; rev_effect = LyraEffect::PLAYER_BLEED; break;
+				case Avatars::SHAMBLIX: rev_damage = SHAMBLIX_DAMAGE; rev_effect = LyraEffect::PLAYER_POISONED; break;
+				case Avatars::HORRON: rev_damage = HORRON_DAMAGE; rev_effect = LyraEffect::PLAYER_PARALYZED; break;
+				default: rev_damage = SHAMBLIX_DAMAGE; rev_effect = LyraEffect::NONE; break;
+			}
+			switch (rand()%1500)
+			{ // All Revenant have a chance to apply this effects
+				case 0: // Abjure the target instead
+					gs->SendPlayerMessage(target, RMsg_PlayerMsg::ABJURE, 1, 0);
+					break;
+				case 1: // Darkness the room instead
+					gs->SendPlayerMessage(0, RMsg_PlayerMsg::DARKNESS, 1, 0);
+					break;
+				case 3: // Terrorize the room instead
+					gs->SendPlayerMessage(0, RMsg_PlayerMsg::TERROR, 1,0);
+					break;
+				default:
+					if (mare_avatar > rand()%20)
+						return gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE, 3, rev_effect, rev_damage);
+					else
+						return gs->PlayerAttack(LyraBitmap::DREAMBLADE_MISSILE, MELEE_VELOCITY, rev_effect, rev_damage);
+					break;
+			}
+#endif
+
 		case Avatars::EMPHANT: // 1-4 damage, melee
 			return gs->PlayerAttack(LyraBitmap::MARE_MELEE_MISSILE, MELEE_VELOCITY, LyraEffect::NONE, EMPHANT_DAMAGE);
 
