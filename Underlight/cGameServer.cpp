@@ -514,9 +514,16 @@ void cGameServer::HandleMessage(void)
 				// NOTE: no subbuild for this message
 				GMsg_AgentLogin alogin_msg;
 				// reset agent login information
-				
+#ifdef AGENT
 				// FOR NOW AGENTS ARE NEVER TCPONLY!
-				alogin_msg.Init(build, player->Name(), udp_port, player->ID(), 0);
+				if (agent_info[AgentIndex()].type < Avatars::MIN_NIGHTMARE_TYPE){
+					alogin_msg.Init(build, player->Name(), udp_port, agent_info[AgentIndex()].id *1000, 0);
+				} else {
+					alogin_msg.Init(build, player->Name(), udp_port, agent_info[AgentIndex()].id, 0);
+				}
+#else
+					alogin_msg.Init(build, player->Name(), udp_port, player->ID(), 0);
+#endif
 				//alogin_msg.SetPassword(player->Password());
 				alogin_msg.SetHash(hash);
 				sendbuf.ReadMessage(alogin_msg);

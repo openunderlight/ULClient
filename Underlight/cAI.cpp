@@ -181,8 +181,14 @@ void cAI::SetAgentStats(void)
 
 
 // set eyes
-	avatar.SetColor2(6);
-	avatar.SetColor3(7);
+	if (agent_type < Avatars::MIN_NIGHTMARE_TYPE){ // Revenants get random clothing colors
+		avatar.SetColor2(rand()%NUM_ACTOR_COLORS);
+		avatar.SetColor3(rand()%NUM_ACTOR_COLORS);
+		avatar.SetColor4(rand()%NUM_ACTOR_COLORS);
+	} else {
+		avatar.SetColor2(6);
+		avatar.SetColor3(7);
+	}
 
 // if color is set to 1, 2, or 3 in the agents file, set main mare
 // colors to 0/1, 2/3, or 4/5, respectively
@@ -190,31 +196,43 @@ void cAI::SetAgentStats(void)
 
 	int color = agent_info[AgentIndex()].color;
 
-	if (!color)
-		color = (rand()%3)+1;
+	if (agent_type < Avatars::MIN_NIGHTMARE_TYPE){ // Revenants get limited skin, random hair colors
+		color = rand()%6;
+		if (color > 0)
+			avatar.SetColor1(color+10);
+		else
+			avatar.SetColor1(color);
 
-	switch (color)
-	{
-		case 1:
-			avatar.SetColor0(0);
-			avatar.SetColor1(1);
-			break;
-		case 2:
-			avatar.SetColor0(2);
-			avatar.SetColor1(3);
-			break;
-		case 3:
-			avatar.SetColor0(4);
-			avatar.SetColor1(5);
-			break;
-		case 4:
-			avatar.SetColor0(7);
-			avatar.SetColor1(3);
-			break;
-		default:
-			avatar.SetColor0(4);
-			avatar.SetColor1(5);
-			break;
+		avatar.SetColor0(rand()%NUM_ACTOR_COLORS);
+
+	} else { // Nightmares have colors set by agent file
+
+		if (!color)
+			color = (rand()%3)+1;
+
+		switch (color)
+		{
+			case 1:
+				avatar.SetColor0(0);
+				avatar.SetColor1(1);
+				break;
+			case 2:
+				avatar.SetColor0(2);
+				avatar.SetColor1(3);
+				break;
+			case 3:
+				avatar.SetColor0(4);
+				avatar.SetColor1(5);
+				break;
+			case 4:
+				avatar.SetColor0(7);
+				avatar.SetColor1(3);
+				break;
+			default:
+				avatar.SetColor0(4);
+				avatar.SetColor1(5);
+				break;
+		}
 	}
 
 	avatar.SetExtraDamage(0);
