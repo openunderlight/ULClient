@@ -2727,7 +2727,7 @@ void cGameServer::HandleMessage(void)
 							(player_msg.State1() > 150)) // avatar/pmare/dmare kill
 						_stprintf(message, disp_message, n->Name());
 						else // regular nightmare kill
-						_stprintf(message, disp_message, NightmareName(player_msg.State1() - 100));
+						_stprintf(message, disp_message, NightmareName(n->Avatar().AvatarType()));
 						display->DisplayMessage(message);
 					}
 #endif
@@ -2741,7 +2741,7 @@ void cGameServer::HandleMessage(void)
 							(player_msg.State1() > 150)) // avatar/pmare/dmare kill
 						_stprintf(message, disp_message, n->Name());
 						else // nightmare kill
-						_stprintf(message, disp_message, NightmareName(player_msg.State1() - 100));
+						_stprintf(message, disp_message, NightmareName(n->Avatar().AvatarType()));
 						display->DisplayMessage(message);
 					}
 					else if (n != NO_ACTOR)
@@ -2751,7 +2751,7 @@ void cGameServer::HandleMessage(void)
 							(player_msg.State1() > 150)) // avatar/pmare/dmare kill
 						_stprintf(message, disp_message, n->Name());
 						else // nightmare kill
-						_stprintf(message, disp_message, NightmareName(player_msg.State1() - 100));
+						_stprintf(message, disp_message, NightmareName(n->Avatar().AvatarType()));
 						display->DisplayMessage(message);
 					}
 					break;

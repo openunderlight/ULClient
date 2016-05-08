@@ -241,6 +241,13 @@ void cAI::SetAgentStats(void)
 
 	switch (avatar.AvatarType())
 	{
+		case Avatars::MALE:
+		case Avatars::FEMALE: // Male & Female Revenant agents get same stats
+			stats[Stats::DREAMSOUL].current = stats[Stats::DREAMSOUL].max = 300;
+			min_distance = 120;	//120.0f;
+			melee_only = false;
+			speed = SHAMBLE_SPEED;
+			break;
 		case Avatars::EMPHANT:
 			stats[Stats::DREAMSOUL].current = stats[Stats::DREAMSOUL].max = 10;
 			min_distance = 120;	//120.0f;
@@ -276,13 +283,6 @@ void cAI::SetAgentStats(void)
 				this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 10000000, this->ID());
 				flags = flags | ACTOR_DETECT_INVIS;
 			}
-			break;
-		case Avatars::MALE:
-		case Avatars::FEMALE: // Male & Female Revenant agents get same stats
-			stats[Stats::DREAMSOUL].current = stats[Stats::DREAMSOUL].max = 200;
-			min_distance = 120;	//120.0f;
-			melee_only = false;
-			speed = SHAMBLE_SPEED;
 			break;
 		case Avatars::HORRON:
 			stats[Stats::DREAMSOUL].current = stats[Stats::DREAMSOUL].max = 300;
