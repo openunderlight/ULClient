@@ -90,8 +90,8 @@ cAI::cAI(float xpos, float ypos, int anglepos, int delay, int mare_type /* = 5 *
 // agent_type = WhichMonsterName(options.username);
 	agent_type = mare_type;
 
-	if (!agent_type)
-		agent_type = 5; // default to Sham
+	if ((agent_type<Avatars::MIN_AVATAR_TYPE) || (agent_type>Avatars::MAX_AVATAR_TYPE))//	if (!agent_type)
+		agent_type = 5; // default to Sham if not a valid agent type.  Male & Female are Revenant agents
 
 	kills = deaths = num_stuck_frames = num_sightless_frames = 0;
 
@@ -120,7 +120,12 @@ cAI::cAI(float xpos, float ypos, int anglepos, int delay, int mare_type /* = 5 *
 
 	view_missile = NULL;
 
-	attack_other_mares = false; //false; //((rand()%10)==0); // false;
+	if (agent_type<Avatars::MIN_NIGHTMARE_TYPE){ // If Revenant Male or Female form, attack nightmares in room
+		attack_other_mares = true;
+	} else {
+		attack_other_mares = false; //false; //((rand()%10)==0); // false;
+	}
+
 	has_been_struck = rampaging = unsticking = wandering = false;
 	alone = true;
 
@@ -176,8 +181,14 @@ void cAI::SetAgentStats(void)
 
 
 // set eyes
-	avatar.SetColor2(6);
-	avatar.SetColor3(7);
+	if (agent_type < Avatars::MIN_NIGHTMARE_TYPE){ // Revenants get random clothing colors
+		avatar.SetColor2(rand()%NUM_ACTOR_COLORS);
+		avatar.SetColor3(rand()%NUM_ACTOR_COLORS);
+		avatar.SetColor4(rand()%NUM_ACTOR_COLORS);
+	} else {
+		avatar.SetColor2(6);
+		avatar.SetColor3(7);
+	}
 
 // if color is set to 1, 2, or 3 in the agents file, set main mare
 // colors to 0/1, 2/3, or 4/5, respectively
@@ -185,31 +196,43 @@ void cAI::SetAgentStats(void)
 
 	int color = agent_info[AgentIndex()].color;
 
-	if (!color)
-		color = (rand()%3)+1;
+	if (agent_type < Avatars::MIN_NIGHTMARE_TYPE){ // Revenants get limited skin, random hair colors
+		color = rand()%6;
+		if (color > 0)
+			avatar.SetColor1(color+10);
+		else
+			avatar.SetColor1(color);
 
-	switch (color)
-	{
-		case 1:
-			avatar.SetColor0(0);
-			avatar.SetColor1(1);
-			break;
-		case 2:
-			avatar.SetColor0(2);
-			avatar.SetColor1(3);
-			break;
-		case 3:
-			avatar.SetColor0(4);
-			avatar.SetColor1(5);
-			break;
-		case 4:
-			avatar.SetColor0(7);
-			avatar.SetColor1(3);
-			break;
-		default:
-			avatar.SetColor0(4);
-			avatar.SetColor1(5);
-			break;
+		avatar.SetColor0(rand()%NUM_ACTOR_COLORS);
+
+	} else { // Nightmares have colors set by agent file
+
+		if (!color)
+			color = (rand()%3)+1;
+
+		switch (color)
+		{
+			case 1:
+				avatar.SetColor0(0);
+				avatar.SetColor1(1);
+				break;
+			case 2:
+				avatar.SetColor0(2);
+				avatar.SetColor1(3);
+				break;
+			case 3:
+				avatar.SetColor0(4);
+				avatar.SetColor1(5);
+				break;
+			case 4:
+				avatar.SetColor0(7);
+				avatar.SetColor1(3);
+				break;
+			default:
+				avatar.SetColor0(4);
+				avatar.SetColor1(5);
+				break;
+		}
 	}
 
 	avatar.SetExtraDamage(0);
@@ -218,6 +241,13 @@ void cAI::SetAgentStats(void)
 
 	switch (avatar.AvatarType())
 	{
+		case Avatars::MALE:
+		case Avatars::FEMALE: // Male & Female Revenant agents get same stats
+			stats[Stats::DREAMSOUL].current = stats[Stats::DREAMSOUL].max = 300;
+			min_distance = 120;	//120.0f;
+			melee_only = false;
+			speed = SHAMBLE_SPEED;
+			break;
 		case Avatars::EMPHANT:
 			stats[Stats::DREAMSOUL].current = stats[Stats::DREAMSOUL].max = 10;
 			min_distance = 120;	//120.0f;
@@ -296,7 +326,7 @@ bool cAI::DetermineAlone(void)
 			alone = false;
 		if ((!(n->flags & ACTOR_INVISIBLE) || (this->flags & ACTOR_DETECT_INVIS)))
 		{
-			if (!(n->IsAgentAccount()) || attack_other_mares) 
+			if (!(n->IsAgentAccount()) || (attack_other_mares && n->IsMonster()))  // Nightmares do not attack, but Revenant agents attack Nightmares
 			{
 				//_tprintf(_T("Neighbor %s, type %d found\n"), n->Name(), n->GetAccountType());
 				neighbors[num_neighbors] = n;
@@ -470,15 +500,17 @@ void cAI::PursueTarget(int target)
 {
 	if (target == -1)
 		return;
-
-	int r = (rand()%10000);
-	if (r == 0) {LoadString(hInstance, IDS_GRRZT_PAL, disp_message, sizeof(disp_message)); _stprintf(message,disp_message,NeighborName(target)); Speak(message,target);}
-	if (r == 1) {LoadString(hInstance, IDS_PALGA_ULPDA, disp_message, sizeof(disp_message)); _stprintf(message,disp_message,this->Name()); Speak(message,-1);}
-	if (r == 2) {LoadString(hInstance, IDS_PA_PLAHKA, disp_message, sizeof(disp_message)); Speak(disp_message, -1);}
-	if (r == 3) {LoadString(hInstance, IDS_KLOPTA_VANG, disp_message, sizeof(disp_message)); _stprintf(message,disp_message,NeighborName(target)); Speak(message,target);}
-	if (r == 4) {LoadString(hInstance, IDS_PRAZAH, disp_message, sizeof(disp_message)); _stprintf(message,disp_message,NeighborName(target)); Speak(message,target);}
-	if (r == 5) {LoadString(hInstance, IDS_GRAAAH, disp_message, sizeof(disp_message)); Speak(disp_message,-1);}
-	if (r == 6) {LoadString(hInstance, IDS_UUURA, disp_message, sizeof(disp_message)); Speak(disp_message,-1);}
+	if (agent_type>=Avatars::MIN_NIGHTMARE_TYPE) // Only nightmares should speak Maren (not Revenant)
+	{
+		int r = (rand()%10000);
+		if (r == 0) {LoadString(hInstance, IDS_GRRZT_PAL, disp_message, sizeof(disp_message)); _stprintf(message,disp_message,NeighborName(target)); Speak(message,target);}
+		if (r == 1) {LoadString(hInstance, IDS_PALGA_ULPDA, disp_message, sizeof(disp_message)); _stprintf(message,disp_message,this->Name()); Speak(message,-1);}
+		if (r == 2) {LoadString(hInstance, IDS_PA_PLAHKA, disp_message, sizeof(disp_message)); Speak(disp_message, -1);}
+		if (r == 3) {LoadString(hInstance, IDS_KLOPTA_VANG, disp_message, sizeof(disp_message)); _stprintf(message,disp_message,NeighborName(target)); Speak(message,target);}
+		if (r == 4) {LoadString(hInstance, IDS_PRAZAH, disp_message, sizeof(disp_message)); _stprintf(message,disp_message,NeighborName(target)); Speak(message,target);}
+		if (r == 5) {LoadString(hInstance, IDS_GRAAAH, disp_message, sizeof(disp_message)); Speak(disp_message,-1);}
+		if (r == 6) {LoadString(hInstance, IDS_UUURA, disp_message, sizeof(disp_message)); Speak(disp_message,-1);}
+	}
 
 	bool angle_close = false;
 	this->StopRampaging();
@@ -1145,8 +1177,13 @@ void cAI::FindRespawn(GMsg_LevelPlayers& players_msg)
 		{
 //			_tprintf(_T("Found gen of type %d; we are type %d\n"), 
 //				((cOrnament*)gen)->Data(), this->AvatarType());
-			if ((((cOrnament*)gen)->Data()) == this->AvatarType())
+			if (this->AvatarType()>=Avatars::MIN_NIGHTMARE_TYPE) // Nightmares find proper respawn gen
+			{
+				if ((((cOrnament*)gen)->Data()) == this->AvatarType())
+					respawn_points[num_points++] = gen;
+			} else { // Revenant respawn at any agent respawn in level
 				respawn_points[num_points++] = gen;
+			}
 		}
 	}
 	agent_info[nAgentIndex].actors_ptr->IterateActors(DONE);

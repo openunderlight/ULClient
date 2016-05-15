@@ -4260,6 +4260,8 @@ BEGIN
     IDS_KNOW2209            "Worn foot marks speak to the pacing strides of thoughtful visitors. Scorch marks scattered about the room give indication of the Star's resting place. Though the room shows obvious signs of traffic the corners are decorated with lounge pillows and countless journals depicting algorithms and training exercises."
     IDS_PEACE_AURA_MARES    "Your attempt to contain the chaos with your Peace Aura is futile!\n"
     IDS_SELF_DEMOTE         "Are you sure you really want to demote yourself %s %s?"
+    IDS_MALE_REVENANT       "Revenant"
+    IDS_FEMALE_REVENANT     "Revenant"
 END
 
 #endif    // English (United States) resources

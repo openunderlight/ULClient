@@ -851,8 +851,10 @@ struct nightmare_name_t
 
 nightmare_name_t nightmare_names[Avatars::MAX_AVATAR_TYPE + 1] =
 {
-	{IDS_MALE_AVATAR},
-	{IDS_FEMALE_AVATAR},
+	{IDS_MALE_REVENANT},
+	{IDS_FEMALE_REVENANT},
+//	{IDS_MALE_AVATAR},
+//	{IDS_FEMALE_AVATAR},
 	{IDS_EMPHANT},
 	{IDS_BOGROM},
 	{IDS_AGOKNIGHT},
