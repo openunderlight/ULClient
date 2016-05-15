@@ -626,9 +626,9 @@ void cGameServer::HandleMessage(void)
 			{				_stprintf(message, _T("local: %u server: %u"), Lyra::GAME_VERSION, abs(version));
 	//			MessageBox(NULL, message, "version", MB_OK);
 				LoadString (hInstance, IDS_VERSION_EXPIRED, disp_message, sizeof(message));
-				this->ServerError(disp_message);
 				ShellExecute(NULL, _T("open"), options.patch_URL, NULL, NULL, SW_SHOWNORMAL);
-
+				this->ServerError(disp_message);
+				
 				return;
 			}
 #endif//AGENT

@@ -130,10 +130,6 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			ShowWindow(GetDlgItem(hDlg, IDC_DEBUG),SW_SHOW);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_DEBUG),  options.debug);
 
-
-			ShowWindow(GetDlgItem(hDlg, IDC_DEVELOPMENTSERVER),SW_SHOW);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_DEVELOPMENTSERVER), 1);
-
 #ifdef UL_DEBUG_MASTER
 			ShowWindow(GetDlgItem(hDlg, IDC_LIVE_SERVER),SW_SHOW);
 			ShowWindow(GetDlgItem(hDlg, IDC_SPECIFY_SERVER),SW_SHOW);
@@ -142,6 +138,13 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 #endif UL_DEBUG_MASTER
 
 #endif// UL_DEBUG
+
+#ifdef UL_DEV
+			ShowWindow(GetDlgItem(hDlg, IDC_DEV_SERVER1),SW_SHOW);
+			Button_SetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER1), 1);
+
+			ShowWindow(GetDlgItem(hDlg, IDC_DEV_SERVER2),SW_SHOW);
+#endif // UL_DEV
 
 			TCHAR huge_text[4096];
 			TCHAR disp1[1024]; TCHAR disp2[1024]; TCHAR disp3[1024]; TCHAR disp4[1024]; 
@@ -289,7 +292,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 #ifdef UL_DEV
 //				LoadString(hInstance, IDS_DEV_GAMED_URL, options.gamed_URL, sizeof(options.gamed_URL));
 				LoadString(hInstance, IDS_DEV_PATCH_FILE_URL, options.patch_URL, sizeof(options.patch_URL));
-				LoadString(hInstance, IDS_DEV_GAME_SERVER_IP, options.game_server, sizeof(options.game_server)) ;
+				LoadString(hInstance, IDS_DEV_GAME_SERVER_IP1, options.game_server, sizeof(options.game_server)) ;
 
 				if (Button_GetCheck(GetDlgItem(hDlg, IDC_LIVE_SERVER)))
 				{
@@ -297,8 +300,10 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 //					LoadString(hInstance, IDS_LIVE_GAMED_URL, options.gamed_URL, ) ;
 					LoadString(hInstance, IDS_LIVE_GAME_SERVER_IP, options.game_server, sizeof(options.game_server)) ;
 				}
-				else if (Button_GetCheck(GetDlgItem(hDlg, IDC_SPECIFY_SERVER)))
-					GetWindowText(GetDlgItem(hDlg, IDC_IP_ADDRESS), options.game_server, sizeof(options.game_server));
+				else if (Button_GetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER2)))
+					//GetWindowText(GetDlgItem(hDlg, IDC_IP_ADDRESS), options.game_server, sizeof(options.game_server));
+					LoadString(hInstance, IDS_DEV_GAME_SERVER_IP2, options.game_server, sizeof(options.game_server)) ;
+
 #else
 //				LoadString(hInstance,options.gamed_URL, LIVE_GAMED_URL);
 //#define MANACCOM
