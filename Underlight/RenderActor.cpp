@@ -617,12 +617,12 @@ int pp;
 //int center_col =0;
 		if (avatar.BitmapID() == LyraBitmap::FEMALE_AVATAR)
 			{
-				pp = 7;
+				pp = PP_EVOKING + 1;
 // 			if (current_view == 3)
 // 				center_col -= 16;
 			}
 			else
-				pp = 6;
+				pp = PP_EVOKING;
 
 			cArtFX &ev = actor->EvokingFX();
 			patch_point *evoking_pos = points + pp;
@@ -715,7 +715,7 @@ int pp;
 					int bitmap_center =	effects->EffectBitmap(halo_bitmap)->h/2;
 
 					patch.resolution	= 4.0f;
-					patch.row			= halo_pos->row - 7;
+					patch.row			= halo_pos->row - 6;
 					patch.col			= halo_pos->col - float2int(bitmap_center/patch.resolution);
 					patch.bitmap		= halo_bitmap;
 					patch.palette_id	= LyraPalette::FX_PALETTE;

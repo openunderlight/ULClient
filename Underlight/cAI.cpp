@@ -32,7 +32,6 @@
 #include "SharedConstants.h"
 #include "utils.h"
 #include "Resource.h"
-#include <limits>
 
 #undef gs
 #undef level

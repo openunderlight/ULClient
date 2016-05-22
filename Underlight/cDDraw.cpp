@@ -258,9 +258,9 @@ void cDDraw::InitDDraw()
 	DDPIXELFORMAT ddpf;
 	ZeroMemory(&ddpf, sizeof(ddpf));
 	ddpf.dwSize = sizeof(ddpf);
-	ddpf.dwRBitMask = 63488;
-	ddpf.dwGBitMask = 2016;
-	ddpf.dwBBitMask = 31;
+	ddpf.dwRBitMask = 0x00F800;
+	ddpf.dwGBitMask = 0x0007E0;
+	ddpf.dwBBitMask = 0x00001F;
 	ddpf.dwRGBBitCount = 16;
 	ddpf.dwFlags = DDPF_RGB;
 

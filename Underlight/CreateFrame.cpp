@@ -110,9 +110,9 @@ void RenderView(void)
 			RenderMap(viewBuffer,map_shows_current_level);
 
 
-		// draw the icon on the viewport
-		if (cp->DragItem() != NO_ITEM) 
-			cp->DrawDrag(true, viewBuffer);
+		// draw the icon on the viewport - not needed with Win10 changes
+//		if (cp->DragItem() != NO_ITEM) 
+//			cp->DrawDrag(true, viewBuffer);
 
 		cDD->ReleaseSurface(BACK_BUFFER);
 

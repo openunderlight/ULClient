@@ -7664,7 +7664,7 @@ void cArts::MidQuest2(void)
 		this->ArtFinished(false);
 		return;
 	}
-
+	quest_student = cp->SelectedNeighbor();
 	HWND hDlg =  CreateLyraDialog(hInstance, IDD_WRITE_SCROLL,
 					cDD->Hwnd_Main(), (DLGPROC)WriteScrollDlgProc);
 	this->WaitForDialog(hDlg, Arts::QUEST);
@@ -7676,8 +7676,7 @@ void cArts::EndQuest(void *value)
 {
 	scroll_t *scroll_type = (scroll_t*)value;
 
-	cNeighbor *n = cp->SelectedNeighbor();
-	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
+	if ((quest_student == NO_ACTOR) || !(actors->ValidNeighbor(quest_student)))
 	{
 		this->DisplayNeighborBailed(Arts::QUEST);
 		this->ArtFinished(false);
@@ -7705,7 +7704,7 @@ void cArts::EndQuest(void *value)
 	header.SetFlags(flags);
 
 	scroll.set_creatorid(player->ID());
-	scroll.set_targetid(n->ID());
+	scroll.set_targetid(quest_student->ID());
 	scroll.art_id = cp->SelectedArt()+1;
 
 	int tid = scroll.targetid();

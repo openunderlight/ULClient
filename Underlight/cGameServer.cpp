@@ -2977,7 +2977,7 @@ void cGameServer::HandlePositionUpdate(RMsg_PlayerUpdate& position_msg)
 	cNeighbor			*n;
 	int					i;
 	float 				oldxheight;
-	unsigned int		old_flags;
+	__int64				old_flags;
 
 
 	//_tprintf("got update message with %d players\n", position_msg.NumPlayers());

@@ -2544,6 +2544,7 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 							 cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
 					Button_SetCheck(GetDlgItem(hDlg, IDC_WHISPER), 1);
 					Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
+					return (LRESULT)0;
 				}
 			}
 #endif

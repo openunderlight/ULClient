@@ -1684,7 +1684,7 @@ int mare_avatar = this->CurrentAvatarType();
 					gs->SendPlayerMessage(0, RMsg_PlayerMsg::FIRESTORM, (mare_avatar*10),0);
 					break;
 				case 5: // Tempest the room instead
-					gs->SendPlayerMessage(0, RMsg_PlayerMsg::TEMPEST, 50, player->angle/4);
+					gs->SendPlayerMessage(0, RMsg_PlayerMsg::TEMPEST, (mare_avatar*10), player->angle/4);
 					break;
 				case 6: // DreamQuake the room instead
 					gs->SendPlayerMessage(0, RMsg_PlayerMsg::EARTHQUAKE, (mare_avatar*10),0);
