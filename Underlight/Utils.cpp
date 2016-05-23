@@ -1454,7 +1454,7 @@ int WhichMonsterName(TCHAR *name)
 	LoadString(hInstance, IDS_SHAMBLIX, temp_buffer[Avatars::SHAMBLIX], DEFAULT_MESSAGE_SIZE);
 	LoadString(hInstance, IDS_HORRON, temp_buffer[Avatars::HORRON],DEFAULT_MESSAGE_SIZE);
 
-	for (int i=Avatars::EMPHANT; i<Avatars::HORRON; i++)
+	for (int i=Avatars::MIN_NIGHTMARE_TYPE; i<=Avatars::MAX_AVATAR_TYPE; i++)
 	{
 		if (_tcsicmp(name, temp_buffer[i]) == 0) 
 			return i;

@@ -2111,7 +2111,6 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 	if (this->AvatarType() < Avatars::MIN_NIGHTMARE_TYPE)
 	{ // Revenant borrow attack strength from the nightmare agent they replace based on agent username e.g. Shamblix_14=Shamblix
 		int pi;
-		int mare_type = this->AvatarType();
 		TCHAR marename[Lyra::PLAYERNAME_MAX];
 		// *** STRING LITERAL ***  
 		if (_stscanf(agent_info[AgentIndex()].name, "%[^_]_%d", marename, &pi) != 2) {

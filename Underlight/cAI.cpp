@@ -775,7 +775,7 @@ int cAI::RampageAngle(void)
 
 float cAI::Wander(void)
 {
-	if (rand()%10000 == 0) 
+	if ((agent_type >= Avatars::MIN_NIGHTMARE_TYPE) && (rand()%10000 == 0)) // Revenant do not speak Maren
 	{
 		LoadString(hInstance, IDS_VDERE_KLOPTA, disp_message, sizeof(disp_message));
 		_stprintf(message,disp_message); Speak(message,-2); // Shout
