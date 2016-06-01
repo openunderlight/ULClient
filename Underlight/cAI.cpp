@@ -246,6 +246,9 @@ void cAI::SetAgentStats(void)
 			min_distance = 120;	//120.0f;
 			melee_only = false;
 			speed = SHAMBLE_SPEED;
+			this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 10000000, this->ID());
+			this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 10000000, this->ID());
+			flags = flags | ACTOR_REFLECT | ACTOR_DETECT_INVIS;
 			break;
 		case Avatars::EMPHANT:
 			stats[Stats::DREAMSOUL].current = stats[Stats::DREAMSOUL].max = 10;
@@ -368,9 +371,10 @@ bool cAI::Update(void)
 		{
 			// if we're alone in the room, go back to our spawn position
 			if (alone && agent_info[AgentIndex()].gs_ptr->LoggedIntoLevel() && !num_neighbors && !invis_neighbors && !soulsphere_neighbors)
+			{
 				this->PlaceActor(spawn_x, spawn_y, 0, angle, SET_XHEIGHT, true);
-
-			alone_ticks++;
+				alone_ticks++;
+			}
 		}
 	}
 
@@ -420,7 +424,7 @@ bool cAI::Update(void)
 			this->PercentBusy(),
 			fr,
 			stat);
-		DebugOut(_T("%s"), disp_message);
+		_tprintf(_T("%s"), disp_message);
 	}
 #endif
 
@@ -1160,7 +1164,7 @@ void cAI::FindRespawn(GMsg_LevelPlayers& players_msg)
 	int nAgentIndex = AgentIndex();
 
 	TCHAR timebuf[128];
-  // _tprintf(_T("Trying to find a respawn point for agent %s(%d). reconnect = %d at time %s"),  agent_info[nAgentIndex].name,agent_info[nAgentIndex].id, reconnect, _tstrtime(timebuf));
+   _tprintf(_T("Trying to find a respawn point for agent %s(%d). reconnect = %d at time %s\n"),  agent_info[nAgentIndex].name,agent_info[nAgentIndex].id, reconnect, _tstrtime(timebuf));
 
 	this->SetAgentStats();
 
@@ -1215,7 +1219,7 @@ void cAI::FindRespawn(GMsg_LevelPlayers& players_msg)
 		int nPlayers = players_msg.NumPlayers(index);
 		int nAgents	 = players_msg.NumAgents(index);
 
-	_tprintf(_T("Gen scan for agent %d at time %u at sector %d, room %d has %d players and %d agents present"),
+	_tprintf(_T("Gen scan for agent %d at time %u at sector %d, room %d has %d players and %d agents present\n"),
 				 agent_info[nAgentIndex].id, LyraTime(), sector, room, nPlayers, nAgents);
 
 		if ((nPlayers <= MAX_PLAYERS_AT_SPAWN) && (nAgents <= MAX_AGENTS_AT_SPAWN))

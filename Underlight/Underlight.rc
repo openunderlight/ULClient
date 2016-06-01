@@ -31,9 +31,9 @@ CAPTION
 "                                                           Welcome to Underlight"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    EDITTEXT        IDC_AGREEMENT_TEXT,7,104,399,107,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
     COMBOBOX        IDC_USERNAME,62,215,75,53,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_PASSWORD,184,215,41,12,ES_PASSWORD | NOT WS_VISIBLE,WS_EX_STATICEDGE
+    EDITTEXT        IDC_AGREEMENT_TEXT,7,104,399,107,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
     COMBOBOX        IDC_PMARE_LIST,272,215,141,42,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "I Agree, Let Me In! ",IDC_OK,16,232,69,14
     PUSHBUTTON      "Underlight Wiki",IDC_MANUAL,118,232,69,14
@@ -42,8 +42,8 @@ BEGIN
     CONTROL         "640x480 (fastest)",IDC_GRAPHIC_RES640,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,81,76,65,9
     CONTROL         "800x600",IDC_GRAPHIC_RES800,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,149,76,40,9
     CONTROL         "1024x768 (best quality)",IDC_GRAPHIC_RES1024,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,191,76,110,9
+    CONTROL         "Dev 1",IDC_DEV_SERVER1,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,90,90,32,10
     CONTROL         "Dev 2",IDC_DEV_SERVER2,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,127,90,32,10
-    CONTROL         "Dev 1",IDC_DEV_SERVER1,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,90,90,32,10
     CONTROL         "Live",IDC_LIVE_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,165,90,30,10
     CONTROL         "Debug Server:",IDC_DEBUG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,199,90,56,10
     CONTROL         "Networking:",IDC_NETWORK,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,257,90,46,10
@@ -1222,20 +1222,26 @@ END
 #if defined(APSTUDIO_INVOKED) || \
     !(defined(PMARE) || defined(AGENT))
 IDI_LYRA                ICON                    "Lyra.ico"
+
 #endif
 IDI_PMARE               ICON                    "pmare.ico"
+
 #if defined(APSTUDIO_INVOKED) || defined(PMARE)
 #if defined(APSTUDIO_INVOKED)
 IDI_LYRA$(PMARE)        ICON                    "ico00001.ico"
+
 #else
 IDI_LYRA                ICON                    "ico00001.ico"
+
 #endif
 #endif
 #if defined(APSTUDIO_INVOKED) || defined(AGENT)
 #if defined(APSTUDIO_INVOKED)
 IDI_LYRA$(AGENT)        ICON                    "ico00002.ico"
+
 #else
 IDI_LYRA                ICON                    "ico00002.ico"
+
 #endif
 #endif
 
@@ -1285,6 +1291,7 @@ END
 //
 
 IDB_TARGET              BITMAP                  "Target.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1403,6 +1410,7 @@ END
 //
 
 IDR_AgentSvr            REGISTRY                "AgentSvr.rgs"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -3716,10 +3724,14 @@ BEGIN
     IDS_DSERR_UNINITIALIZED "DSERR_UNINITIALIZED"
     IDS_LIVE_GAME_SERVER_IP "metatron.koiware.com"
     IDS_DEV_GAME_SERVER_IP1 "dev1.koiware.com"
-	IDS_DEV_GAME_SERVER_IP2 "dev2.koiware.com"
     IDS_GAME_MANUAL_URL     "http://wiki.underlight.com"
     IDS_BILLING_URL         "http://forums.underlight.com/viewtopic.php?f=2&t=78"
     IDS_FIREWALL_FAQ_URL    "http://www.underlight.com/"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DEV_GAME_SERVER_IP2 "dev2.koiware.com"
 END
 
 STRINGTABLE

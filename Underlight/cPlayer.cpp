@@ -669,7 +669,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 
 #ifdef GAMEMASTER
 #ifdef AGENT
-	if ((this->AvatarType() >= Avatars::AGOKNIGHT) &&
+	if (((this->AvatarType() >= Avatars::AGOKNIGHT) || (this->AvatarType() < Avatars::MIN_NIGHTMARE_TYPE)) &&
 		timed_effects->harmful[effect])
 		return false;
 #else
@@ -840,7 +840,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 								   } break;
 
 	case LyraEffect::PLAYER_POISONED: {
-		if (flags & ACTOR_NO_POISON)
+		if ((flags & ACTOR_NO_POISON) || (player->IsPMare()) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
 		{
 			LoadString (hInstance, IDS_PLAYER_POISON_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
