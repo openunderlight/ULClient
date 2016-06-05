@@ -500,7 +500,12 @@ void TranslateValue(int type, int value)
 		
 		case LyraItem::TRANSLATION_NIGHTMARE:
 			{
-				_stprintf(message, _T("%s"), NightmareName(value));
+				if (value == Avatars::MALE)
+					LoadString(hInstance, IDS_MALE_AVATAR, message, sizeof(message));
+				else if (value == Avatars::FEMALE)
+					LoadString(hInstance, IDS_FEMALE_AVATAR, message, sizeof(message));
+				else
+					_stprintf(message, _T("%s"), NightmareName(value));
 			}
 			break;
 	

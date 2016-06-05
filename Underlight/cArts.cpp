@@ -10051,12 +10051,17 @@ void cArts::EndLocate(void *value)
 
 		locate_msg.Init(num_buddies); // set num players
 		int count = 0;
-		for (i=0; i<num_buddies; i++)
+		for (i = 0; i < num_buddies; i++)
 		{
 			if (WhichMonsterName(buddies[i].name))
 			{
-				LoadString (hInstance, IDS_LOCATE_MARE, disp_message, sizeof(disp_message));
+				LoadString(hInstance, IDS_LOCATE_MARE, disp_message, sizeof(disp_message));
 				display->DisplayMessage(disp_message, false);
+			}
+			else if (_tcsicmp(buddies[i].name, _T("Revenant")) == 0)
+			{
+				_stprintf(disp_message, "The invasion has begun...\n");
+				display->DisplayMessage(disp_message);
 			}
 			else
 			{
@@ -10083,6 +10088,13 @@ void cArts::EndLocate(void *value)
 		{
 			LoadString (hInstance, IDS_LOCATE_MARE, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message, false);
+			this->ArtFinished(false);
+			return;
+		}
+		else if (_tcsicmp(name, _T("Revenant")) == 0)
+		{
+			_stprintf(disp_message, "The invasion has begun...\n");
+			display->DisplayMessage(disp_message);
 			this->ArtFinished(false);
 			return;
 		}
