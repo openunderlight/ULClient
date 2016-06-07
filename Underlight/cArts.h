@@ -67,8 +67,8 @@ private:
 
 	// random state variables used by arts
 	TCHAR knight_name[Lyra::PLAYERNAME_MAX];
-	lyra_id_t restore_id, initiator_id, initiate_gid, rogerwilco_id, rally_id;
-	int restore_skill, restore_art, demote_guild_id;
+	lyra_id_t restore_id, initiator_id, initiate_gid, rogerwilco_id;
+	int restore_skill, restore_art, demote_guild_id, rally_x, rally_y;
 	cItem *giving_item;
 	cItem *combining_item;
 	cItem *gratitude_item;
@@ -324,7 +324,7 @@ public:
   void ApplyKinesis (int skill, lyra_id_t caster_id, int angle);
   void EndKinesis (void);
   void StartRally (void);
-  void ApplyRally (lyra_id_t caster_id);
+  void ApplyRally(lyra_id_t caster_id, int x, int y);
   void GotRallied (void *value);
   void EndRally (void);
 

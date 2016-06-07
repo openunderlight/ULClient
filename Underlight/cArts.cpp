@@ -5400,19 +5400,23 @@ void cArts::StartRally(void)
 	return;
 }
 
-void cArts::ApplyRally(lyra_id_t caster_id)
+void cArts::ApplyRally(lyra_id_t caster_id, int dest_x, int dest_y)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	if (n == NO_ACTOR)
 		return;
-	rally_id = caster_id;
+	rally_x = dest_x;
+	rally_y = dest_y;
+	_stprintf(disp_message, "Got Rally coords %i, %i.\n", rally_x, rally_y);
+	display->DisplayMessage(disp_message);
+	ushort dest_room = level->Rooms[level->Sectors[FindSector(rally_x, rally_y, 0, true)]->room].id;
 	this->DisplayUsedByOther(n,Arts::RALLY);
 	if (player->flags & ACTOR_SOULSPHERE)
 		return;
 	if (!acceptrejectdlg)
 		{
 			LoadString (hInstance, IDS_QUERY_RALLY, disp_message, sizeof(disp_message));
-				_stprintf(message, disp_message, level->RoomName(n->Room()), n->Name());
+				_stprintf(message, disp_message, level->RoomName(dest_room), n->Name());
 			HWND hDlg = CreateLyraDialog(hInstance, (IDD_ACCEPTREJECT),
 							cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
 			acceptreject_callback = (&cArts::GotRallied);
@@ -5429,11 +5433,8 @@ void cArts::GotRallied(void *value)
 	int success = *((int*)value);
 	if (success){
 		player->EvokedFX().Activate(Arts::RALLY, false);
-		cNeighbor *n = this->LookUpNeighbor(rally_id);
-		player->EvokedFX().Activate(Arts::RALLY, false);
-		player->Teleport (n->x, n->y, n->angle, NO_LEVEL);
+		player->Teleport(rally_x, rally_y, 0, NO_LEVEL);
 	}
-	rally_id = 0;
 	return;
 }
 
@@ -5462,7 +5463,11 @@ void cArts::EndRally(void)
 		return;
 	}
 */
-	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
+	short dest_x = (short)(player->x);
+	short dest_y = (short)(player->y);
+	_stprintf(disp_message, "Sending Rally coords %i, %i.\n", dest_x, dest_y);
+	display->DisplayMessage(disp_message);
+	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::RALLY, dest_x, dest_y);
 	this->DisplayUsedOnOther(n, Arts::RALLY);
 
 	this->ArtFinished(true);
