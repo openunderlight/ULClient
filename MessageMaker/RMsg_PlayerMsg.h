@@ -180,6 +180,7 @@ private:
     short mtype;
     short state1;
     short state2;
+    short _unused;
   } data_;
 
 };
