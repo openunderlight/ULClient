@@ -1768,8 +1768,7 @@ void cGameServer::HandleMessage(void)
 				case RMsg_RoomLoginAck::LOGIN_ROOMNOTFOUND:
 					LoadString (hInstance, IDS_LOGIN_ROOMNOTFOUND, disp_message, sizeof(disp_message));
 					_stprintf(message, disp_message, player->Room(), level->ID());
-					display->DisplayMessage(message);
-					//this->ServerError(message);
+					this->ServerError(message);
 					return;
 				case RMsg_RoomLoginAck::LOGIN_UNKNOWN:
 				case RMsg_RoomLoginAck::LOGIN_ERROR:
