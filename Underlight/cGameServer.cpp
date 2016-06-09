@@ -4263,8 +4263,6 @@ void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, sh
 	}
 
 	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2);
-	_stprintf(disp_message, "Sending PlayerMsg with dest %i ; type %i ; arg1 %i ; arg2 %i \n", destination_id, msg_type, param1, param2);
-	display->DisplayMessage(disp_message);
 	sendbuf.ReadMessage(player_msg);
 	send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
 

@@ -5407,8 +5407,6 @@ void cArts::ApplyRally(lyra_id_t caster_id, int dest_x, int dest_y)
 		return;
 	rally_x = dest_x;
 	rally_y = dest_y;
-	_stprintf(disp_message, "Got Rally coords %i, %i.\n", rally_x, rally_y);
-	display->DisplayMessage(disp_message);
 	ushort dest_room = level->Rooms[level->Sectors[FindSector(rally_x, rally_y, 0, true)]->room].id;
 	this->DisplayUsedByOther(n,Arts::RALLY);
 	if (player->flags & ACTOR_SOULSPHERE)
@@ -5428,13 +5426,20 @@ void cArts::ApplyRally(lyra_id_t caster_id, int dest_x, int dest_y)
 
 void cArts::GotRallied(void *value)
 {
-	if (player->flags & ACTOR_SOULSPHERE)
-		return;
-	int success = *((int*)value);
-	if (success){
-		player->EvokedFX().Activate(Arts::RALLY, false);
-		player->Teleport(rally_x, rally_y, 0, NO_LEVEL);
+	if (player->flags & ACTOR_SOULSPHERE) {
+		LoadString(hInstance, IDS_RALLY_NO_SS, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 	}
+	else {
+		int success = *((int*)value);
+		if (success) {
+			player->EvokedFX().Activate(Arts::RALLY, false);
+			player->Teleport(rally_x, rally_y, 0, NO_LEVEL);
+		}
+	}
+	// Regardless of success or failure, send message back to server to remove being_summoned flag!
+	// Just recycle the PlayerMsg::RALLY and we don't need a RALLY_ACK created.
+	// gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
 	return;
 }
 
@@ -5465,8 +5470,6 @@ void cArts::EndRally(void)
 */
 	short dest_x = (short)(player->x);
 	short dest_y = (short)(player->y);
-	_stprintf(disp_message, "Sending Rally coords %i, %i.\n", dest_x, dest_y);
-	display->DisplayMessage(disp_message);
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::RALLY, dest_x, dest_y);
 	this->DisplayUsedOnOther(n, Arts::RALLY);
 
