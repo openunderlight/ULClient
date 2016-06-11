@@ -138,7 +138,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	}
 
 	// set up and register window class
-	wc.style 		  = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
+	wc.style 		  = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC;
 	wc.lpfnWndProc   = wproc;
 	wc.cbClsExtra	  = 0;
 	wc.cbWndExtra	  = 0;
@@ -226,6 +226,8 @@ void cDDraw::InitDDraw()
 	curr_depth	= ddsd.ddpfPixelFormat.dwRGBBitCount;
 	curr_width	= ddsd.dwWidth;
 	curr_height = ddsd.dwHeight;
+
+	bpp = curr_depth;
 	// Set up for full screen
 #if defined (UL_DEBUG) || defined (GAMEMASTER)
 	TRY_DD(lpDD->SetCooperativeLevel( hwnd_main, DDSCL_NORMAL));
@@ -253,6 +255,15 @@ void cDDraw::InitDDraw()
 	}
 #endif
 
+	DDPIXELFORMAT ddpf;
+	ZeroMemory(&ddpf, sizeof(ddpf));
+	ddpf.dwSize = sizeof(ddpf);
+	ddpf.dwRBitMask = 0x00F800;
+	ddpf.dwGBitMask = 0x0007E0;
+	ddpf.dwBBitMask = 0x00001F;
+	ddpf.dwRGBBitCount = 16;
+	ddpf.dwFlags = DDPF_RGB;
+
 	// Allocate the surface
 	// For now, just use one primary surface on the vid card
 	memset(&ddsd, 0, sizeof( ddsd));
@@ -272,7 +283,8 @@ void cDDraw::InitDDraw()
 	// create offscreen surface in system memory
 	memset(&ddsd, 0, sizeof( ddsd));
 	ddsd.dwSize 			  = sizeof( ddsd );
-	ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
+	ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT;
+	ddsd.ddpfPixelFormat = ddpf;
 	ddsd.dwHeight = viewy;
 	ddsd.dwWidth = viewx;
 	ddsd.ddsCaps.dwCaps	  = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
@@ -423,14 +435,14 @@ bool cDDraw::BlitOffScreenSurface(void)
 		}
 		else
 // REG 6/11/00: Following keeps cDD from redrawing while minimized.
-#if defined (UL_DEBUG) || defined (GAMEMASTER)
-		{
+//#if defined (UL_DEBUG) || defined (GAMEMASTER)
+//		{
 			if( !IsIconic(cDD->Hwnd_Main()) )
 				status = lpDDSPrimary->BltFast(0,0,lpDDSOffscreen, &srcRect, DDBLTFAST_NOCOLORKEY|DDBLTFAST_WAIT);
-		}
-#else
-			status = lpDDSPrimary->BltFast(0,0,lpDDSOffscreen, &srcRect, DDBLTFAST_NOCOLORKEY|DDBLTFAST_WAIT);
-#endif
+//		}
+//#else
+//			status = lpDDSPrimary->BltFast(0,0,lpDDSOffscreen, &srcRect, DDBLTFAST_NOCOLORKEY|DDBLTFAST_WAIT);
+//#endif
 		if( status == DD_OK )
 			  return true;
 
@@ -1236,8 +1248,8 @@ void cDDraw::TraceErrorDD(HRESULT hErr, int nLine)
 		break;
 
 	case DDERR_WRONGMODE:
-	if (exit_time == UINT_MAX)
-			exit_time = LyraTime() + 5000;
+//	if (exit_time == UINT_MAX)
+//			exit_time = LyraTime() + 5000;
 		// This surface cannot be restored because it was created in a different mode.
 		//DDERR( IDS_DDERR_WRONGMODE);
 		return;

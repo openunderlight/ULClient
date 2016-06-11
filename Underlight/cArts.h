@@ -56,6 +56,7 @@ private:
 	lyra_id_t art_in_use; // set to the id of art in use, else NO_ART
 	art_method_t callback_method; // pointer to callback method when for mouse selection, else NULL
 	cNeighbor *dummy; // dummy neighbor representing the player
+	cNeighbor *quest_student; // set before Quest text dialog so other Who list selections during evoke don't interrupt
 	int cp_mode; // store current tab on cp for when we change it
 	DWORD art_completion_time; // time at which current casting finishes
 	bool fDoingLocate;

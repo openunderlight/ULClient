@@ -294,8 +294,23 @@ void cMissile::StrikeActor(cActor* actor)
 	else
 		damage = 0; 
 
+	unsigned int maretype = player->Avatar().AvatarType();
+#ifdef AGENT
+	if (player->Avatar().AvatarType() < Avatars::MIN_NIGHTMARE_TYPE)
+	{ // Revenant borrow shielding from the nightmare agent they replace based on agent username e.g. Shamblix_14=Shamblix
+		int pi;
+		TCHAR marename[Lyra::PLAYERNAME_MAX];
+		// *** STRING LITERAL ***  
+		if (_stscanf(agent_info[AgentIndex()].name, "%[^_]_%d", marename, &pi) != 2) {
+			// couldn't parse it
+			_tcsnccpy(marename, agent_info[AgentIndex()].name, sizeof(marename));
+		}
+		maretype = WhichMonsterName(marename);
+}
+#endif //AGENT
+
     // certain agents can only be attacked from some angles
-	if (player->Avatar().AvatarType() >= Avatars::MIN_NIGHTMARE_TYPE)
+	if (maretype >= Avatars::MIN_NIGHTMARE_TYPE)
 	{
 		if (!actors->ValidActor(owner))
 			damage = 0;
@@ -308,7 +323,7 @@ void cMissile::StrikeActor(cActor* actor)
 // 3 - front
 // 4 - front right
 // 5 - back right
-			switch (player->AvatarType())
+			switch (maretype)
 			{
 				case Avatars::EMPHANT:
 				case Avatars::BOGROM: 

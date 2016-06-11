@@ -64,8 +64,10 @@ extern cAgentBox *agentbox;
 extern timing_t *timing;
 extern HINSTANCE hInstance;
 extern bool acceptrejectdlg;
-extern bool exit_switch_task;
+// extern bool exit_switch_task;
 extern DWORD last_keystroke;
+extern unsigned long *origcolors;
+extern bool IsLyraColors;
 
 //////////////////////////////////////////////////////
 const unsigned int	POSITION_UPDATE_INTERVAL = 100; // server position updates
@@ -108,9 +110,9 @@ void RenderView(void)
 			RenderMap(viewBuffer,map_shows_current_level);
 
 
-		// draw the icon on the viewport
-		if (cp->DragItem() != NO_ITEM) 
-			cp->DrawDrag(true, viewBuffer);
+		// draw the icon on the viewport - not needed with Win10 changes
+//		if (cp->DragItem() != NO_ITEM) 
+//			cp->DrawDrag(true, viewBuffer);
 
 		cDD->ReleaseSurface(BACK_BUFFER);
 
@@ -185,18 +187,12 @@ void __cdecl CreateFrame(void)
 #ifndef UL_DEBUG
 #ifndef GAMEMASTER
    HWND focus_hwnd = GetFocus();
-   if (focus_hwnd == NULL)
-   {
-	   // prepare to shut down
-	   if (exit_time == UINT_MAX)
-		exit_switch_task = true;
-		StartExit();
-	    //exiting = true;
-		//LoadString (hInstance, IDS_SWITCH_TASK, message, sizeof(message));
-	    //LyraDialogBox(hInstance, IDD_FATAL_ERROR, NULL, (DLGPROC)FatalErrorDlgProc);
-		//Exit();
-		//exit(-1);
-   }
+   if ((focus_hwnd == NULL) && (IsLyraColors == TRUE) && (origcolors))
+	{
+		SetSysColors(11, syscolors, origcolors);
+		IsLyraColors = FALSE;
+	}
+   
 #endif
 #endif
 #endif
@@ -228,11 +224,11 @@ void __cdecl CreateFrame(void)
    if (exit_time < LyraTime())
    {
 	    exiting = true;
-		if (exit_switch_task)
+/*		if (exit_switch_task)
 		{
 			LoadString (hInstance, IDS_SWITCH_TASK, message, sizeof(message));
 			LyraDialogBox(hInstance, IDD_FATAL_ERROR, NULL, (DLGPROC)FatalErrorDlgProc);
-		}
+		} */
 		Exit();
 		exit(-1);
    }
@@ -396,14 +392,14 @@ _tprintf(disp_message);
 			cDD->ShowIntroBitmap();
    }
 
-		if (cp->DragItem() != NO_ITEM) // if dragging an item
+/*		if (cp->DragItem() != NO_ITEM) // if dragging an item
 		{
 			unsigned char *viewBuffer = cDD->GetSurface(PRIMARY);
 			if (cp->UndrawDrag(viewBuffer))
 				cp->DrawDrag(false, viewBuffer);
 			cDD->ReleaseSurface(PRIMARY);
 		}
-
+*/
 // draw the item off the viewport
    if (!goals->Active() && !quests->Active())
 		BlitView(); // always blit, unless we're in goal posting mode

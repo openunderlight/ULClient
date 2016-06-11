@@ -204,11 +204,15 @@ cNeighbor* cActorList::LookUpNeighbor(realmid_t playerID)
 
 	if (deleting)
 		return NO_ACTOR;
-	
-	for (a = neighbors->Head(); a != NO_ACTOR; a = a->Next())
-		if (((cNeighbor*)a)->ID() == playerID)
+	for (a = neighbors->Iterate(INIT); a != NO_ACTOR; a = neighbors->Iterate(NEXT)) 
+	{
+	//	for (a = neighbors->Head(); a != NO_ACTOR; a = a->Next())
+		if (((cNeighbor*)a)->ID() == playerID) {
+			neighbors->Iterate(DONE);
 			return ((cNeighbor*)a);
-
+		}
+	}
+	neighbors->Iterate(DONE);
 	return NO_ACTOR; // not found
 }
 
@@ -221,11 +225,13 @@ int cActorList::NumNonHiddenNeighbors(void)
 		return 0;
 
 	int count = 0;
-	
-	for (a = neighbors->Head(); a != NO_ACTOR; a = a->Next())
+	for (a = neighbors->Iterate(INIT); a != NO_ACTOR; a = neighbors->Iterate(NEXT))
+	{
+		// for (a = neighbors->Head(); a != NO_ACTOR; a = a->Next())
 		if (0 == ((cNeighbor*)a)->Avatar().Hidden())
 			count++;
-
+	}
+	neighbors->Iterate(DONE);
 	return count;
 
 }
@@ -237,10 +243,15 @@ cItem* cActorList::LookUpItem(const LmItemHdr& item_id)
 	if (deleting)
 		return NO_ACTOR;
 
-	for (a = items->Head(); a != NO_ACTOR; a = a->Next())
-		if (((cItem*)a)->ID().Equals(item_id))
+	for (a = items->Iterate(INIT); a != NO_ACTOR; a = items->Iterate(NEXT))
+	{
+		// for (a = items->Head(); a != NO_ACTOR; a = a->Next())
+		if (((cItem*)a)->ID().Equals(item_id)) {
+			items->Iterate(DONE);
 			return ((cItem*)a);
-
+		}
+	}
+	items->Iterate(DONE);
 	return NO_ITEM; // not found
 }
 

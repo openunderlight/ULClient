@@ -22,7 +22,6 @@
 //#include "cBanner.h"
 #include "LmItemDefs.h"
 #include "cDSound.h"
-#include "cDSound.h"
 #include "cWave.h"
 #include "Utils.h" 
 #include "Interface.h"
@@ -219,7 +218,7 @@ bool framerate = false; // display frame rate
 bool leveleditor = false; // true if launched by level editor
 bool lost_server = false; // true when server connection is lost
 bool agents_in = false; // used for agent login/logout timer
-bool exit_switch_task = false; // did they switch task to exit?
+// bool exit_switch_task = false; // did they switch task to exit?
 int nonfataldlg = 0; // count of simple, stateless message dialogs that are up
 long g_lExeFileCheckSum = 0;
 
@@ -265,6 +264,7 @@ _CrtMemState memstuff;
 #ifndef AGENT
 #if !(defined (UL_DEBUG) || defined (GAMEMASTER))
 unsigned long *origcolors = NULL;
+bool IsLyraColors = FALSE;
 #endif
 #endif
 
@@ -282,7 +282,7 @@ cOrnament *test_object;
 
 /////////////////////////////////////////////////
 // Constants
-
+/* MOVED TO Realm.h
 const unsigned long lyra_colors[11] =
 	{BLUE, LTBLUE, DKBLUE, LTBLUE, ORANGE, BLUE, 
 	 ORANGE, BLACK, ORANGE, ORANGE, BLUE};
@@ -292,7 +292,7 @@ const int syscolors[11] =
 	 COLOR_BTNSHADOW, COLOR_3DLIGHT, COLOR_BTNTEXT, COLOR_HIGHLIGHT,
 	 COLOR_HIGHLIGHTTEXT, COLOR_WINDOW, COLOR_WINDOWTEXT, COLOR_GRAYTEXT,
 	 COLOR_INFOBK};
-
+*/
 /////////////////////////////////////////////////
 // Functions
 
@@ -713,6 +713,7 @@ bool __cdecl Init_Game(void)
 	}
 
 	SetSysColors (11, syscolors, lyra_colors);
+	IsLyraColors = TRUE;
 #endif
 #endif
 #endif

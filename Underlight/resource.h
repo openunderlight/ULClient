@@ -263,8 +263,7 @@
 #define IDC_TEXT_PROMPT                 1332
 #define IDC_MPATHSERVER                 1333
 #define IDC_MPATH_EBT_SERVER            1334
-#define IDC_DEVELOPMENTSERVER           1335
-#define IDC_DEV_SERVER                  1335
+#define IDC_DEV_SERVER1                 1335
 #define IDC_ROGERWILCO                  1336
 #define IDC_LIVE_SERVER                 1337
 #define IDC_SPECIFY_SERVER              1338
@@ -379,6 +378,8 @@
 #define IDC_BPP_GP                      1437
 #define IDC_SERVER_GP                   1438
 #define IDC_TCP_ONLY                    1441
+#define IDC_DEV_SERVER2                 1442
+#define IDS_DEV_GAME_SERVER_IP2         1443
 #define IDC_OK                          1800
 #define IDC_CANCEL                      1801
 #define IDC_FIREWALL_FAQ                1801
@@ -2375,7 +2376,7 @@
 #define IDS_DSERR_OTHERAPPHASPRIO       3769
 #define IDS_DSERR_UNINITIALIZED         3770
 #define IDS_LIVE_GAME_SERVER_IP         3771
-#define IDS_DEV_GAME_SERVER_IP          3772
+#define IDS_DEV_GAME_SERVER_IP1         3772
 #define IDS_GAME_MANUAL_URL             3773
 #define IDS_BILLING_URL                 3774
 #define IDS_FIREWALL_FAQ_URL            3775
@@ -2862,6 +2863,8 @@
 #define IDS_KNOW2209                    4312
 #define IDS_PEACE_AURA_MARES            4313
 #define IDS_SELF_DEMOTE                 4314
+#define IDS_MALE_REVENANT               4315
+#define IDS_FEMALE_REVENANT             4316
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
@@ -2873,7 +2876,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        202
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1442
+#define _APS_NEXT_CONTROL_VALUE         1444
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

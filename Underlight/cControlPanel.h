@@ -103,7 +103,7 @@ private:
 	int curr_avatar_view; // view of current avatar
 
 	unsigned char munched_bits[ICON_WIDTH*ICON_HEIGHT*BYTES_PER_PIXEL];
-	BOOL munched_bits_valid; // if this has been successfully filled in
+//	BOOL munched_bits_valid; // if this has been successfully filled in
 	cItem *selected_item; // pointer to selected item
 	cNeighbor *selected_neighbor; // pointer to selected neighbor
 	lyra_id_t selected_art; // id of selected art

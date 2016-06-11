@@ -29,6 +29,15 @@ const unsigned int BLACK =  0x00000000;
 const unsigned int BLUE = 0x00996633;
 const unsigned int LTBLUE = 0x00CC9966;
 const unsigned int DKBLUE = 0x00663300;
+const unsigned long lyra_colors[11] =
+	{BLUE, LTBLUE, DKBLUE, LTBLUE, ORANGE, BLUE, 
+	 ORANGE, BLACK, ORANGE, ORANGE, BLUE};
+
+const int syscolors[11] = 
+	{COLOR_BTNFACE, COLOR_BTNHIGHLIGHT, 
+	 COLOR_BTNSHADOW, COLOR_3DLIGHT, COLOR_BTNTEXT, COLOR_HIGHLIGHT,
+	 COLOR_HIGHLIGHTTEXT, COLOR_WINDOW, COLOR_WINDOWTEXT, COLOR_GRAYTEXT,
+	 COLOR_INFOBK};
 
 extern int tlsTiming;
 

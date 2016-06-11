@@ -43,6 +43,7 @@ extern bool exiting;				// true when quiting the game
 extern LPTSTR argv;				// command line arguments
 extern int argc;
 extern DWORD last_keystroke;
+extern bool IsLyraColors;
 
 const int MIN_FRAME_TIMER = WM_USER + 9234;
  
@@ -150,6 +151,15 @@ LRESULT WINAPI WindowProc ( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			CreateFrame();
 		break;
 
+#if !(defined (AGENT) || defined (UL_DEBUG) || defined (GAMEMASTER))
+	case WM_QUERYOPEN:
+		if (!IsLyraColors)
+		{
+			SetSysColors(11, syscolors, lyra_colors);
+			IsLyraColors = TRUE;
+		}
+		break;
+#endif
 
 	case WM_CLOSE:
 	  if (!exiting)

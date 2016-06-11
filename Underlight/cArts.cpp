@@ -7664,7 +7664,7 @@ void cArts::MidQuest2(void)
 		this->ArtFinished(false);
 		return;
 	}
-
+	quest_student = cp->SelectedNeighbor();
 	HWND hDlg =  CreateLyraDialog(hInstance, IDD_WRITE_SCROLL,
 					cDD->Hwnd_Main(), (DLGPROC)WriteScrollDlgProc);
 	this->WaitForDialog(hDlg, Arts::QUEST);
@@ -7676,8 +7676,7 @@ void cArts::EndQuest(void *value)
 {
 	scroll_t *scroll_type = (scroll_t*)value;
 
-	cNeighbor *n = cp->SelectedNeighbor();
-	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
+	if ((quest_student == NO_ACTOR) || !(actors->ValidNeighbor(quest_student)))
 	{
 		this->DisplayNeighborBailed(Arts::QUEST);
 		this->ArtFinished(false);
@@ -7705,7 +7704,7 @@ void cArts::EndQuest(void *value)
 	header.SetFlags(flags);
 
 	scroll.set_creatorid(player->ID());
-	scroll.set_targetid(n->ID());
+	scroll.set_targetid(quest_student->ID());
 	scroll.art_id = cp->SelectedArt()+1;
 
 	int tid = scroll.targetid();
@@ -10052,12 +10051,17 @@ void cArts::EndLocate(void *value)
 
 		locate_msg.Init(num_buddies); // set num players
 		int count = 0;
-		for (i=0; i<num_buddies; i++)
+		for (i = 0; i < num_buddies; i++)
 		{
 			if (WhichMonsterName(buddies[i].name))
 			{
-				LoadString (hInstance, IDS_LOCATE_MARE, disp_message, sizeof(disp_message));
+				LoadString(hInstance, IDS_LOCATE_MARE, disp_message, sizeof(disp_message));
 				display->DisplayMessage(disp_message, false);
+			}
+			else if (_tcsicmp(buddies[i].name, _T("Revenant")) == 0)
+			{
+				_stprintf(disp_message, "The invasion has begun...\n");
+				display->DisplayMessage(disp_message);
 			}
 			else
 			{
@@ -10084,6 +10088,13 @@ void cArts::EndLocate(void *value)
 		{
 			LoadString (hInstance, IDS_LOCATE_MARE, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message, false);
+			this->ArtFinished(false);
+			return;
+		}
+		else if (_tcsicmp(name, _T("Revenant")) == 0)
+		{
+			_stprintf(disp_message, "The invasion has begun...\n");
+			display->DisplayMessage(disp_message);
 			this->ArtFinished(false);
 			return;
 		}
