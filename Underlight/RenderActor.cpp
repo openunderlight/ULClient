@@ -617,12 +617,12 @@ int pp;
 //int center_col =0;
 		if (avatar.BitmapID() == LyraBitmap::FEMALE_AVATAR)
 			{
-				pp = 7;
+				pp = PP_EVOKING + 1;
 // 			if (current_view == 3)
 // 				center_col -= 16;
 			}
 			else
-				pp = 6;
+				pp = PP_EVOKING;
 
 			cArtFX &ev = actor->EvokingFX();
 			patch_point *evoking_pos = points + pp;
@@ -715,7 +715,7 @@ int pp;
 					int bitmap_center =	effects->EffectBitmap(halo_bitmap)->h/2;
 
 					patch.resolution	= 4.0f;
-					patch.row			= halo_pos->row - 7;
+					patch.row			= halo_pos->row - 6;
 					patch.col			= halo_pos->col - float2int(bitmap_center/patch.resolution);
 					patch.bitmap		= halo_bitmap;
 					patch.palette_id	= LyraPalette::FX_PALETTE;
@@ -1076,7 +1076,7 @@ static void RLE_color_table_blit(void);
 static void RLE_blit(void);
 
 static int	  scale;
-static int	  remainder;
+static int	  rle_remainder;
 static int	  height;
 static short *color_table;
 static PIXEL *RLE_palette;
@@ -1092,7 +1092,7 @@ static void blit_RLE_column(PostDraw *pdraw)
 	RLE_palette	 = pdraw->palette;
 	height		 = pdraw->destheight;
 	repeat		 = pdraw->repeat+1;
-	remainder	 = 0;
+	rle_remainder	 = 0;
 
 	dest= pdraw->screencol;
 	src = pdraw->ColumnPtr;
@@ -1103,7 +1103,7 @@ static void blit_RLE_column(PostDraw *pdraw)
 		v_offset += *src * scale ;
 		if (v_offset >= v)
 		{
-			remainder = v_offset- v - *src * scale;
+			rle_remainder = v_offset- v - *src * scale;
 			break;
 		}
 		src += 2;
@@ -1126,7 +1126,7 @@ static void blit_RLE2_column(PostDraw *pdraw)
 	RLE_palette  = pdraw->palette;
 	height		 = pdraw->destheight;
 	repeat		 = pdraw->repeat+1;
-	remainder	 = 0;
+	rle_remainder	 = 0;
 
 	dest= pdraw->screencol;
 	src = pdraw->ColumnPtr;
@@ -1148,7 +1148,7 @@ static void blit_RLE2_column(PostDraw *pdraw)
 			v_offset += length;
 			if (v_offset >= v)
 			{
-				remainder = (v_offset- v - length) * scale;
+				rle_remainder = (v_offset- v - length) * scale;
 				break;
 			}
 			src++;
@@ -1164,7 +1164,7 @@ static void blit_RLE2_column(PostDraw *pdraw)
 			v_offset += *src ;
 			if (v_offset >= v)
 			{
-				remainder = (v_offset- v - *src) * scale;
+				rle_remainder = (v_offset- v - *src) * scale;
 				break;
 			}
 		src += 2;
@@ -1209,11 +1209,11 @@ same_table_loop:
 			mov	al,cl						// save in al
 			shr	cl,5						// make cl run length
 			imul	ecx,scale 				// multiply by scale (16:16 fixed point) to get screen run length
-			add	ecx,remainder			// add remainder to ensure accuracy
+			add	ecx,rle_remainder			// add remainder to ensure accuracy
 			mov	ebx,ecx					// move length	into ebx (top 16)
 			and	ecx,0xFFFF 				// mask off integer part to get new remainder
 			shr	ebx,16					// shift top 16 to get actual length
-			mov	remainder,ecx 			// save remainder
+			mov	rle_remainder,ecx 			// save remainder
 			cmp	ebx,0						// check if run has length
 			jbe	same_table_check		//
 			and	al,0x1F					// mask off offset
@@ -1283,12 +1283,12 @@ mloop:
 			mov	cl,byte ptr [edx]
 			add	edx,2
 			imul	ecx,scale
-			add	ecx,remainder
+			add	ecx,rle_remainder
 			xor	eax,eax
 			mov	ebx,ecx
 			and	ecx,0xFFFF
 			shr	ebx,16
-			mov	remainder,ecx
+			mov	rle_remainder,ecx
 			cmp	ebx,0
 			jbe	mloop
 
@@ -1364,12 +1364,12 @@ void RLE_blit(void)
 			mov	cl,byte ptr [edx]
 			add	edx,2
 			imul	ecx,scale
-			add	ecx,remainder
+			add	ecx,rle_remainder
 			xor	eax,eax
 			mov	ebx,ecx
 			and	ecx,0xFFFF
 			shr	ebx,16
-			mov	remainder,ecx
+			mov	rle_remainder,ecx
 			cmp	ebx,0
 			jbe	mloop
 

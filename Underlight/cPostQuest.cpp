@@ -660,7 +660,7 @@ void cPostQuest::PrePost(void)
 	GetWindowText(hwnd_quest_xp, quest_xp_string, 7);
 	maxaccepted_string[3]=_T('\0');
 	expiration_string[3]=_T('\0');
-	quest_xp_string[7]=_T('\0');
+	quest_xp_string[6]=_T('\0');
 	maxaccepted = _tcstol (maxaccepted_string, &stopstring, 10);
 	expirationdays = _tcstol (expiration_string, &stopstring, 10);
 	quest_xp = _tcstol (quest_xp_string, &stopstring, 10);

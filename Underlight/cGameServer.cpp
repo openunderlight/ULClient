@@ -514,9 +514,16 @@ void cGameServer::HandleMessage(void)
 				// NOTE: no subbuild for this message
 				GMsg_AgentLogin alogin_msg;
 				// reset agent login information
-				
+#ifdef AGENT
 				// FOR NOW AGENTS ARE NEVER TCPONLY!
-				alogin_msg.Init(build, player->Name(), udp_port, player->ID(), 0);
+				if (agent_info[AgentIndex()].type < Avatars::MIN_NIGHTMARE_TYPE){
+					alogin_msg.Init(build, player->Name(), udp_port, agent_info[AgentIndex()].id *1000, 0);
+				} else {
+					alogin_msg.Init(build, player->Name(), udp_port, agent_info[AgentIndex()].id, 0);
+				}
+#else
+					alogin_msg.Init(build, player->Name(), udp_port, player->ID(), 0);
+#endif
 				//alogin_msg.SetPassword(player->Password());
 				alogin_msg.SetHash(hash);
 				sendbuf.ReadMessage(alogin_msg);
@@ -626,9 +633,9 @@ void cGameServer::HandleMessage(void)
 			{				_stprintf(message, _T("local: %u server: %u"), Lyra::GAME_VERSION, abs(version));
 	//			MessageBox(NULL, message, "version", MB_OK);
 				LoadString (hInstance, IDS_VERSION_EXPIRED, disp_message, sizeof(message));
-				this->ServerError(disp_message);
 				ShellExecute(NULL, _T("open"), options.patch_URL, NULL, NULL, SW_SHOWNORMAL);
-
+				this->ServerError(disp_message);
+				
 				return;
 			}
 #endif//AGENT
@@ -2720,7 +2727,7 @@ void cGameServer::HandleMessage(void)
 							(player_msg.State1() > 150)) // avatar/pmare/dmare kill
 						_stprintf(message, disp_message, n->Name());
 						else // regular nightmare kill
-						_stprintf(message, disp_message, NightmareName(player_msg.State1() - 100));
+						_stprintf(message, disp_message, NightmareName(n->Avatar().AvatarType()));
 						display->DisplayMessage(message);
 					}
 #endif
@@ -2734,7 +2741,7 @@ void cGameServer::HandleMessage(void)
 							(player_msg.State1() > 150)) // avatar/pmare/dmare kill
 						_stprintf(message, disp_message, n->Name());
 						else // nightmare kill
-						_stprintf(message, disp_message, NightmareName(player_msg.State1() - 100));
+						_stprintf(message, disp_message, NightmareName(n->Avatar().AvatarType()));
 						display->DisplayMessage(message);
 					}
 					else if (n != NO_ACTOR)
@@ -2744,7 +2751,7 @@ void cGameServer::HandleMessage(void)
 							(player_msg.State1() > 150)) // avatar/pmare/dmare kill
 						_stprintf(message, disp_message, n->Name());
 						else // nightmare kill
-						_stprintf(message, disp_message, NightmareName(player_msg.State1() - 100));
+						_stprintf(message, disp_message, NightmareName(n->Avatar().AvatarType()));
 						display->DisplayMessage(message);
 					}
 					break;
@@ -2970,7 +2977,7 @@ void cGameServer::HandlePositionUpdate(RMsg_PlayerUpdate& position_msg)
 	cNeighbor			*n;
 	int					i;
 	float 				oldxheight;
-	unsigned int		old_flags;
+	__int64				old_flags;
 
 
 	//_tprintf("got update message with %d players\n", position_msg.NumPlayers());

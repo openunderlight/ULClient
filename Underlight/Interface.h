@@ -39,6 +39,8 @@ void TransparentBlitBitmap(HDC dc, int bitmap_id, RECT *region,
 void DrawListBoxArrow(HWND hWnd, HDC dc, RECT r);
 bool IsSpecialListBox(HWND hWnd);
 
+HCURSOR __cdecl BitmapToCursor(HBITMAP bmp, HCURSOR cursor);
+
 HBITMAP CreateWindowsBitmap(int bitmap_id);
 void CreateWindowsBitmaps(int bitmap_id, HBITMAP hBitmaps[]);
 

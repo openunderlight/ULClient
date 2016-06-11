@@ -49,9 +49,6 @@
     <ClCompile Include="cChat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cChat_singleline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="cControlPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

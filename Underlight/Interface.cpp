@@ -43,8 +43,8 @@ extern cChat *display;
 extern HFONT display_font[MAX_RESOLUTIONS];
 extern float scale_x;
 extern float scale_y;
-const unsigned long lyra_colors[9] = {BLUE, LTBLUE, DKBLUE, LTBLUE, ORANGE, BLUE,
-	ORANGE, BLACK, ORANGE};
+//const unsigned long lyra_colors[9] = {BLUE, LTBLUE, DKBLUE, LTBLUE, ORANGE, BLUE,
+//	ORANGE, BLACK, ORANGE};
 
 //////////////////////////////////////////////////////////////////
 // Constant Structures
@@ -116,6 +116,73 @@ void TransparentBlitBitmap(HDC dc, int bitmap_id, RECT *region, int stretch, int
 
 }
 
+HCURSOR __cdecl BitmapToCursor(HBITMAP bmp, HCURSOR cursor)
+{
+	HDC hDC = GetDC(NULL);
+	HDC hMainDC = CreateCompatibleDC(hDC); 
+	HDC hAndMaskDC = CreateCompatibleDC(hDC); 
+	HDC hXorMaskDC = CreateCompatibleDC(hDC); 
+	HBITMAP cursorandmask = NULL;
+	HBITMAP cursorxormask = NULL;
+
+	//Get the dimensions of the source bitmap
+
+	BITMAP bm;
+	GetObject(bmp, sizeof(BITMAP), &bm);
+
+	cursorandmask  = CreateCompatibleBitmap(hDC, bm.bmWidth,bm.bmHeight);
+	cursorxormask  = CreateCompatibleBitmap(hDC, bm.bmWidth,bm.bmHeight);
+
+	//Select the bitmaps to DC
+
+	HBITMAP hOldMainBitmap = (HBITMAP)::SelectObject(hMainDC, bmp);
+	HBITMAP hOldAndMaskBitmap  = (HBITMAP)::SelectObject(hAndMaskDC, cursorandmask);
+	HBITMAP hOldXorMaskBitmap  = (HBITMAP)::SelectObject(hXorMaskDC, cursorxormask);
+
+	//Scan each pixel of the souce bitmap and create the masks
+
+	COLORREF MainBitPixel;
+	for(int x=0;x<bm.bmWidth;++x)
+	{
+		for(int y=0;y<bm.bmHeight;++y)
+		{
+			MainBitPixel = ::GetPixel(hMainDC,x,y);
+			if(MainBitPixel == 0)
+			{
+				SetPixel(hAndMaskDC,x,y,RGB(255,255,255));
+				SetPixel(hXorMaskDC,x,y,RGB(0,0,0));
+			}
+			else
+			{
+				SetPixel(hAndMaskDC,x,y,RGB(0,0,0));
+				SetPixel(hXorMaskDC,x,y,MainBitPixel);
+			}
+		}
+	}
+  
+	SelectObject(hMainDC,hOldMainBitmap);
+	SelectObject(hAndMaskDC,hOldAndMaskBitmap);
+	SelectObject(hXorMaskDC,hOldXorMaskBitmap);
+
+	DeleteDC(hXorMaskDC);
+	DeleteDC(hAndMaskDC);
+	DeleteDC(hMainDC);
+
+	ReleaseDC(NULL,hDC);
+
+	ICONINFO iconinfo = {0};
+	iconinfo.fIcon        = FALSE;
+	iconinfo.xHotspot       = 0;
+	iconinfo.yHotspot       = 0;
+	iconinfo.hbmMask        = cursorandmask;
+	iconinfo.hbmColor       = cursorxormask;
+
+	cursor = CreateIconIndirect(&iconinfo);
+
+	return cursor;
+}
+
+
 // Creates a windows bitmap from an effects bitmap with given bitmap ID
 HBITMAP CreateWindowsBitmap(int bitmap_id)
 {
@@ -144,8 +211,8 @@ void CreateWindowsBitmaps(int bitmap_id, HBITMAP hBitmaps[] )
 		PIXEL *src = (PIXEL *)effects->EffectBitmap(bitmap_id)->address;
 
 		// Normal Version
-		hBitmaps[0] = CreateBitmap(effects->EffectWidth(bitmap_id), effects->EffectHeight(bitmap_id), 1,
-														BITS_PER_PIXEL,src );
+		hBitmaps[0] = effects->Create16bppBitmapFromBits((unsigned char *)src, 
+								effects->EffectWidth(bitmap_id), effects->EffectHeight(bitmap_id));
 
 		// Grayed Version
 		PIXEL *buffer = new PIXEL[size];
@@ -163,8 +230,8 @@ void CreateWindowsBitmaps(int bitmap_id, HBITMAP hBitmaps[] )
 			buffer[i] = (average << 11) | (average<< 6) | average;
 		}
 
-		hBitmaps[1] = CreateBitmap(effects->EffectWidth(bitmap_id), effects->EffectHeight(bitmap_id), 1,
-														BITS_PER_PIXEL,buffer );
+		hBitmaps[1] = effects->Create16bppBitmapFromBits((unsigned char *)buffer, 
+								effects->EffectWidth(bitmap_id), effects->EffectHeight(bitmap_id));
 
 		delete [] buffer;
 

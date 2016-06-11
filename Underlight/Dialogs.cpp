@@ -395,7 +395,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 	static WNDPROC  lpfn_speech;
 	// ToDo: make LList
 	const int MAX_SENTENCE = 10;
-	static TCHAR sentence_buffers[MAX_SENTENCE][Lyra::MAX_SPEECHLEN-Lyra::PLAYERNAME_MAX];
+	static TCHAR sentence_buffers[MAX_SENTENCE][(Lyra::MAX_SPEECHLEN / 2)];
 	static int cur_sentence = 0;	// increment/wrap at exit
 	static TCHAR* sentence = (TCHAR*)sentence_buffers;
 	static realmid_t neighborid[64]; // store neighbor id's for whisper
@@ -438,7 +438,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 			// ToDo : roll only to non-empty slots
 			cur_sentence--;
 			if (cur_sentence < 0)
-				cur_sentence = MAX_SENTENCE;
+				cur_sentence = MAX_SENTENCE-1;
 			sentence = sentence_buffers[cur_sentence];
 			Edit_SetText(GetDlgItem(hDlg, IDC_SPEECH), sentence);
 			Edit_SetSel(GetDlgItem(hDlg, IDC_SPEECH), 0, -1); // tacky, but this positions
@@ -451,7 +451,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 		{
 			// ToDo : roll only to non-empty slots
 			cur_sentence++;
-			if (cur_sentence > MAX_SENTENCE)
+			if (cur_sentence >= MAX_SENTENCE)
 				cur_sentence = 0;
 			sentence = sentence_buffers[cur_sentence];
 			Edit_SetText(GetDlgItem(hDlg, IDC_SPEECH), sentence);
@@ -466,7 +466,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 			talkdlg = true;
 			stripdot = stripret = false;
 			sentence = sentence_buffers[cur_sentence];
-			memset(sentence,0,sizeof(sentence_buffers[0]));
+			memset(sentence,0,sizeof(sentence_buffers[cur_sentence]));
 			hwnd_talk = hDlg;
 			hwnd_speech = GetDlgItem(hDlg, IDC_SPEECH);
 
@@ -750,7 +750,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 				DestroyWindow(hDlg);
 
 				cur_sentence++;
-				if (cur_sentence > MAX_SENTENCE)
+				if (cur_sentence >= MAX_SENTENCE)
 					cur_sentence = 0;
 
 				return TRUE;

@@ -1780,16 +1780,25 @@ void cControlPanel::StartDrag(cItem *item, int xoffset, int yoffset)
 
 	drag_item = item;
 
-	munched_bits_valid = false;
+	// munched_bits_valid = false;
 
-	ShowCursor(FALSE);
+	HBITMAP bmp = effects->Create16bppBitmapFromBits(item->IconBits(), ICON_WIDTH, ICON_HEIGHT);
+
+	HCURSOR hc = NULL;
+	hc = BitmapToCursor(bmp, hc);
+	SetCursor(hc);
+//	ShowCursor(FALSE);
 	//this->DrawDrag(false);
-
-	SetCapture(hwnd_cp);	
-};	
+	DeleteObject(bmp);
+	SetCapture(hwnd_cp);
+}
 
 void cControlPanel::EndDrag(void)
 {
+	HCURSOR hCursor = LoadCursor(NULL,IDC_ARROW);
+	SetCursor(hCursor);
+	ReleaseCapture();
+	captured = false;
 
 	POINT cursor_pos;
 	RECT view_rect, inv_rect, tab_rect, item_rect;
@@ -1798,7 +1807,7 @@ void cControlPanel::EndDrag(void)
 
 	GetCursorPos(&cursor_pos);
 
-	if (!this->UndrawDrag()) // in case we couldn't undo the last draw...
+/*	if (!this->UndrawDrag()) // in case we couldn't undo the last draw...
 	{
 		InvalidateRect(cDD->Hwnd_Main(), NULL, TRUE);
 		if (display)
@@ -1814,7 +1823,7 @@ void cControlPanel::EndDrag(void)
 	}
 	ReleaseCapture();
 	captured = false;
-
+*/
 	cDD->ViewRect(&view_rect);
 	GetWindowRect(hwnd_listviews[INVENTORY_TAB], &inv_rect);
 	GetWindowRect(hwnd_tab, &tab_rect);
@@ -1840,7 +1849,7 @@ void cControlPanel::EndDrag(void)
 			sort_index = drag_item->SortIndex();
 			closest_diff = INT_MAX;
 			cursor_pos.y -= inv_rect.top; // set cursor to be relative to window
-			int i =0;
+			int i;
 			for (i=0; i<num_items; i++)
 			{
 				ListView_GetItemRect(hwnd_listviews[INVENTORY_TAB], i, &item_rect, LVIR_BOUNDS);
@@ -1875,9 +1884,9 @@ void cControlPanel::EndDrag(void)
 
 	drag_item = NO_ITEM;
 
-	ShowCursor(TRUE);
+//	ShowCursor(TRUE);
 
-};
+}
 
 // scroll inventory list up/down if holding the drag item at
 // the bottom/top of the listview
@@ -1910,6 +1919,7 @@ void cControlPanel::CheckDragScroll(void)
 // captured; returns true otherwise
 bool cControlPanel::DrawDrag(bool viewport, unsigned char *buffer)
 {
+/* None of the old code here is needed due to the update to Windows 10 -- JAH 5/2/16
 	unsigned char *dst = buffer;
 	unsigned char *source = drag_item->IconBits();
 	int	i,j,p,xoff,yoff;
@@ -1979,7 +1989,7 @@ bool cControlPanel::DrawDrag(bool viewport, unsigned char *buffer)
 		last_drag.x = cursor.x;
 		last_drag.y = cursor.y;
 		munched_bits_valid = true;
-	}
+	} */
 	return true;
 }
 
@@ -1989,6 +1999,8 @@ bool cControlPanel::DrawDrag(bool viewport, unsigned char *buffer)
 // redrawn so we don't undraw over the viewport
 bool cControlPanel::UndrawDrag(unsigned char *buffer)
 {
+/* // This was mostly deprecated in favor of massively less code required for drawing items that were
+// 'on the cursor' due to Windows 10 update -- JAH 5/2/16
 	unsigned char *dst = buffer;
 	unsigned char *source = (unsigned char*)munched_bits;
 	int	i,j,p,xoff,yoff;
@@ -2029,7 +2041,9 @@ bool cControlPanel::UndrawDrag(unsigned char *buffer)
 		cDD->ReleaseSurface(PRIMARY);
 
 	munched_bits_valid = false;
-
+*/
+	if (drag_item == NO_ITEM)
+		return false;
 	return true;
 }
 
@@ -2530,6 +2544,7 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 							 cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
 					Button_SetCheck(GetDlgItem(hDlg, IDC_WHISPER), 1);
 					Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
+					return (LRESULT)0;
 				}
 			}
 #endif
