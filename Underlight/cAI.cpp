@@ -323,6 +323,10 @@ bool cAI::DetermineAlone(void)
 	num_neighbors = 0;
 	for (n = agent_info[AgentIndex()].actors_ptr->IterateNeighbors(INIT); n != NO_ACTOR; n = agent_info[AgentIndex()].actors_ptr->IterateNeighbors(NEXT))
 	{
+		if (n->ID() == agent_info[AgentIndex()].id)
+		{
+			break;
+		}
 		if (n->GetAccountType() != LmAvatar::ACCT_NIGHTMARE)
 			// There's someone around to impress
 			alone = false;
