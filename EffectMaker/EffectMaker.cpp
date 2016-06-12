@@ -6,6 +6,7 @@
 #define STRICT
 #define RLE
 
+#include "Central.h"
 #include <windows.h>
 #include <windowsx.h>
 #include <stdio.h>
@@ -379,16 +380,19 @@ int WriteVisualEffects(FILE *fh)
 			return -1;
 		}
 
-			if (assigned[id])
-		{
-			char message[512];
-			sprintf(message, "Error: bitmap id %d used twice!\n", id);
-			printf("%s\n", message);
-			MessageBox(NULL, message, "Oops!", MB_OK);
-			return -1;
+		int all_ids = id;
+		for (all_ids; all_ids < id + (frames * views); all_ids++) {
+			if (assigned[all_ids])
+			{
+				char message[512];
+				sprintf(message, "Error: bitmap id %d used twice!\n", all_ids);
+				printf("%s\n", message);
+				MessageBox(NULL, message, "Oops!", MB_OK);
+				return -1;
 
+			}
+			assigned[all_ids] = true;
 		}
-
 
 		flip = true;
 		bpp = 1;
@@ -414,7 +418,7 @@ int WriteVisualEffects(FILE *fh)
 
 		//printf("nm: %s views: %d frames: %d bpp: %d\n",filename,views,frames,bpp);
 
-		assigned[id] = true;
+		
 
 		int len = LoadAndConcatImages(filename, big_buffer, &file_size, frames, views, flip, 
 																	bpp,avatar_bitmap);
@@ -823,7 +827,7 @@ static void ExtractAvatarPatchPoints(const char *filepath, patch_point patch_poi
 	}
 
 	// average out totals to get actual points
-	for(i = 0; i < NUM_PATCHPOINTS; i++)
+	for(int i = 0; i < NUM_PATCHPOINTS; i++)
 	{
 		if (points[i].num_points)
 		{
