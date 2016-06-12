@@ -4274,6 +4274,7 @@ BEGIN
     IDS_SELF_DEMOTE         "Are you sure you really want to demote yourself %s %s?"
     IDS_MALE_REVENANT       "Revenant"
     IDS_FEMALE_REVENANT     "Revenant"
+    IDS_RALLY_PREEMOTE      "%s has been rallied to another location!\n"
 END
 
 #endif    // English (United States) resources

@@ -5382,19 +5382,21 @@ void cArts::EndSummon(void)
 
 void cArts::StartRally(void)
 {
-	for (int i=0; i<num_no_rally_levels; i++) 
-		if (no_rally_levels[i] == level->ID()){ // Cannot use Rally in levels with sphere/house locks
-			LoadString (hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
-			display->DisplayMessage (disp_message);
+	for (int i = 0; i < num_no_rally_levels; i++) {
+		if (no_rally_levels[i] == level->ID()) { // Cannot use Rally in levels with sphere/house locks
+			LoadString(hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
 			this->ArtFinished(false);
 			return;
 		}
+	}
 	if (gs->Party()->Members() < 1){ // Must be in a party to use Rally
 		LoadString (hInstance, IDS_RALLY_NOPARTY, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
+	if ()
 	this->WaitForSelection(&cArts::EndRally, Arts::RALLY);
 	this->CaptureCP(NEIGHBORS_TAB, Arts::RALLY);
 	return;
@@ -5426,20 +5428,23 @@ void cArts::ApplyRally(lyra_id_t caster_id, int dest_x, int dest_y)
 
 void cArts::GotRallied(void *value)
 {
+	int success = *((int*)value);
 	if (player->flags & ACTOR_SOULSPHERE) {
 		LoadString(hInstance, IDS_RALLY_NO_SS, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 	}
-	else {
-		int success = *((int*)value);
-		if (success) {
-			player->EvokedFX().Activate(Arts::RALLY, false);
-			player->Teleport(rally_x, rally_y, 0, NO_LEVEL);
+	else if (success) {
+		if (player->Room() != level->Rooms[level->Sectors[FindSector(rally_x, rally_y, 0, true)]->room].id) {
+			LoadString(hInstance, IDS_RALLY_PREEMOTE, message, sizeof(message));
+			_stprintf(disp_message, message, player->Name());
+			gs->Talk(disp_message, RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN);
 		}
+		player->Teleport(rally_x, rally_y, 0, NO_LEVEL);
+		player->EvokedFX().Activate(Arts::RALLY, false);
+		return;
 	}
-	// Regardless of success or failure, send message back to server to remove being_summoned flag!
-	// Just recycle the PlayerMsg::RALLY and we don't need a RALLY_ACK created.
-	// gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
+	// If not rallied, send message to server to remove Rally room/level id;
+	gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
 	return;
 }
 
@@ -5456,7 +5461,7 @@ void cArts::EndRally(void)
 	if (!gs->Party()->IsInParty(n->ID())){ //target must be in player's party
 		LoadString (hInstance, IDS_RALLY_NOTMEMBER, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, n->Name());
-		display->DisplayMessage(disp_message);
+		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
 	}
