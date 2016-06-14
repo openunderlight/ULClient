@@ -2564,7 +2564,7 @@ BEGIN
     IDS_NO_SEEK_FIND_FLAT   "Could Not Seek to Find Flat."
     IDS_NO_READ_FLAT_BIT    "Could not read flat bits."
     IDS_ERR_READ_TEACHERPLAT_MSG "Error reading teacher plat message"
-    IDS_NO_RALLY_LEVEL      "You can not Rally others in this plane of the Dream; please try elsewhere.\n"
+    IDS_NO_RALLY_LEVEL      "You cannot use Rally here. Try again in another room or plane.\n"
 END
 
 STRINGTABLE
@@ -4274,7 +4274,7 @@ BEGIN
     IDS_SELF_DEMOTE         "Are you sure you really want to demote yourself %s %s?"
     IDS_MALE_REVENANT       "Revenant"
     IDS_FEMALE_REVENANT     "Revenant"
-    IDS_RALLY_PREEMOTE      "%s has been rallied to another location!\n"
+    IDS_RALLY_PREEMOTE      "has been rallied away by another dreamer"
 END
 
 #endif    // English (United States) resources

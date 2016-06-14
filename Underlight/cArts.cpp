@@ -396,7 +396,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN|NEIGH},
 {IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
 {IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT|MAKE_ITEM|LEARN},
-{IDS_RALLY,							Stats::WILLPOWER,	60, 30, 0,  5,   4, SANCT|NEIGH|FOCUS},
+{IDS_RALLY,							Stats::WILLPOWER,	60, 30, 0,  5,  -1, SANCT|NEIGH|FOCUS},
 };
 
 
@@ -5390,13 +5390,25 @@ void cArts::StartRally(void)
 			return;
 		}
 	}
+
 	if (gs->Party()->Members() < 1){ // Must be in a party to use Rally
 		LoadString (hInstance, IDS_RALLY_NOPARTY, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
-	if ()
+
+	int p_sector = FindSector(player->x, player->y, 0, false);
+	if ((p_sector == DEAD_SECTOR) ||  // Cannot Rally if stuck inside a wall, outside of a valid room (climbing area), or space is too small to stand.
+	  (level->Sectors[p_sector]->room == 0) ||
+	  (level->Sectors[p_sector]->CeilHt(player->x,player->y) - level->Sectors[p_sector]->FloorHt(player->x, player->y) <= player->physht))
+	{
+		LoadString(hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	this->WaitForSelection(&cArts::EndRally, Arts::RALLY);
 	this->CaptureCP(NEIGHBORS_TAB, Arts::RALLY);
 	return;
@@ -5436,8 +5448,7 @@ void cArts::GotRallied(void *value)
 	else if (success) {
 		if (player->Room() != level->Rooms[level->Sectors[FindSector(rally_x, rally_y, 0, true)]->room].id) {
 			LoadString(hInstance, IDS_RALLY_PREEMOTE, message, sizeof(message));
-			_stprintf(disp_message, message, player->Name());
-			gs->Talk(disp_message, RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN);
+			gs->Talk(message, RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN);
 		}
 		player->Teleport(rally_x, rally_y, 0, NO_LEVEL);
 		player->EvokedFX().Activate(Arts::RALLY, false);
