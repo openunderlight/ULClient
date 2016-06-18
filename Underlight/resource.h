@@ -2539,6 +2539,7 @@
 #define IDS_FOUNDGUILD_ACCEPTED         3930
 #define IDS_FOUNDGUILD_REJECTED         3931
 #define IDS_NEED_SPHERE_QUEST           3932
+#define IDS_ERR_READ_ROOM_DESC_MSG      3950
 #define IDS_ITEM_DESELECT               4001
 #define IDS_ART_DESELECT                4002
 #define IDS_NEIGHBOR_DESELECT           4003

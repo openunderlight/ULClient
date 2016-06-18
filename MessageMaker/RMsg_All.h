@@ -14,6 +14,7 @@
 #include "RMsg_EnterRoom.h"
 #include "RMsg_Error.h"
 #include "RMsg_GetAvatarDescription.h"
+#include "RMsg_GetRoomDescription.h"
 #include "RMsg_GotoRoom.h"
 #include "RMsg_ItemDrop.h"
 #include "RMsg_ItemHdrDrop.h"
@@ -30,6 +31,7 @@
 #include "RMsg_PlayerMsg.h"
 #include "RMsg_PlayerUpdate.h"
 #include "RMsg_RcvAvatarDescription.h"
+#include "RMsg_RoomDescription.h"
 #include "RMsg_Speech.h"
 #include "RMsg_Update.h"
 

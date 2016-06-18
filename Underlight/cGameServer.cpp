@@ -2878,6 +2878,23 @@ void cGameServer::HandleMessage(void)
 			}
 		}
 		break;
+
+		case RMsg::ROOMDESCRIPTION:
+		{
+			RMsg_RoomDescription rmDesc_msg;
+			if (rmDesc_msg.Read(msgbuf) < 0) { GAME_ERROR(IDS_ERR_READ_AVATAR_DESC_MSG); return; }
+			if ((rmDesc_msg.LevelID() == level->ID()) &&
+				(rmDesc_msg.RoomID() == player->Room()) &&
+				(rmDesc_msg.Description() != _T("\0")))
+			{
+				TCHAR* rmDescrip = (TCHAR*)(rmDesc_msg.Description());
+				_stprintf(message, "%s", rmDescrip);
+				display->DisplayMessage(message, false);
+			}
+		}
+		break;
+
+
 		default:
 			break;
 	}
@@ -4614,6 +4631,15 @@ void cGameServer::GetAvatarDescrip(lyra_id_t player_id)
 	return;
 }
 
+void cGameServer::GetRoomDescrip(int levelid, int roomid)
+{
+	RMsg_GetRoomDescription rmDesc_msg;
+
+	rmDesc_msg.Init((short)levelid, (short)roomid);
+	sendbuf.ReadMessage(rmDesc_msg);
+	send(sd_game, (char *)sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
+	return;
+}
 
 // Send the login message to the server upon completion of the welcome AI
 

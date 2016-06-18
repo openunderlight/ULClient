@@ -4276,6 +4276,12 @@ BEGIN
     IDS_FEMALE_REVENANT     "Revenant"
 END
 
+STRINGTABLE
+BEGIN
+    IDS_ERR_READ_ROOM_DESC_MSG 
+                            "Error reading room description message from server!"
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
