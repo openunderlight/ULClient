@@ -89,6 +89,8 @@ private:
 	HWND hwnd_drop; 
 	HWND hwnd_meta; 
 	HWND hwnd_give;
+	HWND hwnd_invcounter;
+
 	HWND hwnd_usepp;
 	HWND hwnd_grantpp;
 
@@ -220,6 +222,7 @@ public:
 	// update displays
 	void UpdateStats(void);
 	void UpdateArt(lyra_id_t art);
+	void UpdateInvCount(void);
 	void FillInArtString(lyra_id_t art, TCHAR *buffer);
 
 

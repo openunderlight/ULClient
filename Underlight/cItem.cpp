@@ -448,7 +448,7 @@ void cItem::SetStatus(int new_status)
 			break;
 	}
 
-
+	cp->UpdateInvCount();
 	return;
 }
 

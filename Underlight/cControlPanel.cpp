@@ -87,7 +87,7 @@ const unsigned int GREEN = 0x0000FF00;
 
 // position for the control panel, relative to the main window
 const struct window_pos_t cpPos[MAX_RESOLUTIONS] = 
-{ { 480, 0, 160, 499 }, { 600, 0, 200, 623 }, { 768, 0, 256, 798 } };
+{ { 480, 0, 160, 480 }, { 600, 0, 200, 600 }, { 768, 0, 256, 768 } };
 
 
 // position for avatar
@@ -108,9 +108,13 @@ const struct window_pos_t rightPos[MAX_RESOLUTIONS] =
 const struct window_pos_t tabPos[MAX_RESOLUTIONS] = 
 { { 480, 0, 160, 38 }, { 600, 0, 200, 47 }, { 768, 0, 256, 60 } };
 
+// position for inventory counter, relative to tab control
+const struct window_pos_t invcountPos[MAX_RESOLUTIONS] =
+{ { 60, 20, 40, 12}, { 75, 30, 50, 16}, {96, 40, 64, 20 } };
+
 // position for main control panel bitmap, relative to main window
 const struct window_pos_t mainPos[MAX_RESOLUTIONS] = 
-{ { 480, 38, 160, 442 }, { 600, 47, 200, 553 }, { 768, 60, 256, 707 } };
+{ { 480, 38, 160, 442 }, { 600, 47, 200, 553 }, { 768, 60, 256, 708 } };
 
 // position of listviews, relative to cp bitmap
 const struct window_pos_t listviewPos[MAX_RESOLUTIONS] = 
@@ -416,6 +420,17 @@ cControlPanel::cControlPanel(void)
 		}
 	}
 
+	// create static control for inventory count
+
+	hwnd_invcounter = CreateWindowEx(WS_EX_TRANSPARENT,
+		_T("static"), NULL, WS_CHILD | SS_CENTER,
+		invcountPos[cDD->Res()].x, invcountPos[cDD->Res()].y,
+		invcountPos[cDD->Res()].width, invcountPos[cDD->Res()].height,
+		hwnd_tab,
+		NULL, hInstance, NULL);
+	SendMessage(hwnd_invcounter, WM_SETFONT, WPARAM(display_font[cDD->Res()]), 0);
+	
+
 
     // create orbit static control
 	hwnd_orbit = CreateWindowEx(WS_EX_TRANSPARENT,
@@ -628,6 +643,7 @@ void cControlPanel::SetMode(int new_mode, bool art_capture, bool force_redraw)
 		ShowWindow(hwnd_use, SW_HIDE);
 		ShowWindow(hwnd_drop, SW_HIDE);
 		ShowWindow(hwnd_give, SW_HIDE);
+		ShowWindow(hwnd_invcounter, SW_HIDE);
 		ShowWindow(hwnd_left, SW_SHOWNORMAL);
 		ShowWindow(hwnd_right, SW_SHOWNORMAL);
 		ShowWindow(hwnd_avatar, SW_SHOWNORMAL);
@@ -637,6 +653,7 @@ void cControlPanel::SetMode(int new_mode, bool art_capture, bool force_redraw)
 		ShowWindow(hwnd_use, SW_SHOWNORMAL);
 		ShowWindow(hwnd_drop, SW_SHOWNORMAL);
 		ShowWindow(hwnd_give, SW_SHOWNORMAL);
+		ShowWindow(hwnd_invcounter, SW_SHOWNORMAL);
 		ShowWindow(hwnd_left, SW_HIDE);
 		ShowWindow(hwnd_right, SW_HIDE);
 		ShowWindow(hwnd_avatar, SW_HIDE);
@@ -646,6 +663,7 @@ void cControlPanel::SetMode(int new_mode, bool art_capture, bool force_redraw)
 		ShowWindow(hwnd_use, SW_HIDE);
 		ShowWindow(hwnd_drop, SW_HIDE);
 		ShowWindow(hwnd_give, SW_HIDE);
+		ShowWindow(hwnd_invcounter, SW_HIDE);
 		ShowWindow(hwnd_left, SW_HIDE);
 		ShowWindow(hwnd_right, SW_HIDE);
 		ShowWindow(hwnd_avatar, SW_HIDE);
@@ -655,6 +673,7 @@ void cControlPanel::SetMode(int new_mode, bool art_capture, bool force_redraw)
 		ShowWindow(hwnd_use, SW_SHOWNORMAL);
 		ShowWindow(hwnd_drop, SW_HIDE);
 		ShowWindow(hwnd_give, SW_HIDE);
+		ShowWindow(hwnd_invcounter, SW_HIDE);
 		ShowWindow(hwnd_left, SW_HIDE);
 		ShowWindow(hwnd_right, SW_HIDE);
 		ShowWindow(hwnd_avatar, SW_HIDE);
@@ -1699,6 +1718,41 @@ void cControlPanel::UpdateArt(lyra_id_t art)
 	return;
 }
 
+// update display of inventory counter
+void cControlPanel::UpdateInvCount(void)
+{
+	TCHAR new_value[STAT_LENGTH];
+	TCHAR old_value[STAT_LENGTH];
+	RECT region;
+	cItem *item = NO_ITEM;
+	int count = 0;
+
+	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT)) {
+		if (item->Status() == ITEM_OWNED)
+		{
+			count++;
+			if (count > Lyra::INVENTORY_MAX)
+				count = Lyra::INVENTORY_MAX;
+		}
+	}
+	actors->IterateItems(DONE);
+
+
+		_stprintf(new_value, _T("%02d/%02d\0"), count, Lyra::INVENTORY_MAX);
+		GetWindowText(hwnd_invcounter, old_value, STAT_LENGTH);
+		if (_tcscmp(new_value, old_value))
+		{
+			SetWindowText(hwnd_invcounter, new_value);
+			region.left = invcountPos[cDD->Res()].x;
+			region.top = invcountPos[cDD->Res()].y;
+			region.right = invcountPos[cDD->Res()].x + invcountPos[cDD->Res()].width;
+			region.bottom = invcountPos[cDD->Res()].y + invcountPos[cDD->Res()].height;
+			InvalidateRect(hwnd_tab, &region, FALSE);
+		}
+
+	return;
+}
+
 // update display of stats; only blit new value if necessary
 void cControlPanel::UpdateStats(void)
 {
@@ -2658,6 +2712,16 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 		case WM_PAINT:
 			if (cp->HandlePaint(hwnd))
 				return 0L; 
+		case WM_WINDOWPOSCHANGED:
+			if (cp)
+			{
+				RECT cpr;
+				GetWindowRect(cp->Hwnd_CP(), &cpr);
+				if (cpr.top != mainPos[cDD->Res()].y) {
+					display->DisplayMessage("Moving CP to proper alignment\n", false);
+					MoveWindow(cp->Hwnd_CP(), mainPos[cDD->Res()].x, mainPos[cDD->Res()].y, mainPos[cDD->Res()].width, mainPos[cDD->Res()].height, true);
+				}
+			}
 		break;
 	}  
 
