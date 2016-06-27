@@ -200,7 +200,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x3F28, // Power Token 
 0x6D27, // Show Gratitude 
 0x8E44, // Quest 
-0xB230, // Bequeath 
+0xB220, // Bequeath 
 0xC88A, // Radiant Blaze 
 0xF445, // Poison Cloud 
 0x106E, // Break Covenant 
@@ -354,7 +354,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_POWER_TOKEN,					Stats::DREAMSOUL,	10,  0, 0,	10, -1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SHOW_GRATITUDE,				Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
 {IDS_QUEST,							Stats::NO_STAT,		0,   0, 0,	3, -1, SANCT|NEIGH|MAKE_ITEM},
-{IDS_BEQUEATH,						Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
+{IDS_BEQUEATH,						Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEIGH},
 {IDS_RADIANT_BLAZE,					Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_POISON_CLOUD,					Stats::DREAMSOUL,	20, 10,15,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_BREAK_COVENANT,				Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
@@ -4807,6 +4807,8 @@ void cArts::EndGrantXP(void *value)
 		negative = true;
 		amount = -amount;
 	}
+	if (amount > 99999)
+		amount = 100000;
 
 	int k,c;
 	k = amount/1000;
@@ -5250,6 +5252,12 @@ void cArts::EndGrantRPXP(void *value)
 		this->ArtFinished(false);
 		return;
 	}
+
+	if (amount > 99999)
+		amount = 100000;
+	if (amount < -99999)
+		amount = -100000;
+
 	int k,c;
 	k = amount/1000;
 	amount = amount%1000;
@@ -5262,7 +5270,9 @@ void cArts::EndGrantRPXP(void *value)
 		return;
 	}
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::GRANT_RP_XP, k, c);
-	this->DisplayUsedOnOther(n,Arts::GRANT_RP_XP );
+	//this->DisplayUsedOnOther(n,Arts::GRANT_RP_XP );
+	_stprintf(disp_message, "You have anonymously granted %i RP XP to %s", ((k * 1000) + (c * 100)), n->Name());
+	display->DisplayMessage(disp_message);
 	this->ArtFinished(true);
 	return;
 }
@@ -5737,7 +5747,7 @@ void cArts::EndEmpathy(void* value)
 		return;
 	}
 	int amount = _ttoi(message);
-	if ((amount < 100) || (amount > 10000) || (amount*2 > player->XP()))
+	if ((amount < 100) || (amount > 50000) || (amount*2 > player->XP()))
 	{
 		LoadString (hInstance, IDS_BEQUEATH_LIMITS, message, sizeof(message));
 		display->DisplayMessage(message);
@@ -5760,7 +5770,7 @@ void cArts::EndEmpathy(void* value)
 	} 
 
 
-
+	/* Removed Bequeath PT Requirement 6/27/16 - AMR
 	cItem* power_tokens[Lyra::INVENTORY_MAX];
 	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
 	
@@ -5775,7 +5785,7 @@ void cArts::EndEmpathy(void* value)
 	}
 
 	power_tokens[0]->Destroy();
-	
+	*/
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::EMPATHY, k, c);
 
 	this->ArtFinished(true);
