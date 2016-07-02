@@ -4276,6 +4276,11 @@ BEGIN
     IDS_FEMALE_REVENANT     "Revenant"
 END
 
+STRINGTABLE
+BEGIN
+    IDS_DOORBELL_ALERT      "%s has entered the house plane at %s\n"
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 

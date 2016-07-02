@@ -2156,7 +2156,16 @@ void cGameServer::HandleMessage(void)
 
 			RMsg_NewlyAwakened newly_msg;
 			if (newly_msg.Read(msgbuf) < 0) { GAME_ERROR(IDS_ERR_READ_NEWLY_WAKE_NOTIF_MSG); return; }
-			LoadString (hInstance, IDS_NEWLY_ALERT, disp_message, sizeof(message));
+			int guildID = LevelGuild(level->ID());
+			if ((guildID != Guild::NO_GUILD) && (player->IsInitiate(guildID) ||
+				player->IsKnight(guildID) || player->IsRuler(guildID)))
+			{ // This is a house plane and player is a member of the house - show who just arrived
+				LoadString(hInstance, IDS_DOORBELL_ALERT, disp_message, sizeof(message));
+			}
+			else { // Normal newly alerts for any other players and levels
+				LoadString(hInstance, IDS_NEWLY_ALERT, disp_message, sizeof(message));
+			}
+
 			_stprintf(message, disp_message,  newly_msg.PlayerName(), level->RoomName(newly_msg.RoomID()));
 			display->DisplayMessage(message);
 
