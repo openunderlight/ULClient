@@ -47,6 +47,11 @@ struct last_attack_t
 	int		velocity;
 };
 
+struct alert_t {
+	TCHAR playerName[Lyra::PLAYERNAME_MAX];
+	DWORD alertTime;
+};
+
 // make manipulation of goal detail message easier
 typedef TCHAR pname_t[Lyra::PLAYERNAME_MAX];
 
@@ -130,6 +135,7 @@ class cGameServer
 	   long			mp_sessionid;
 	   int			last_room_target;
 	   int			last_level_target;
+	   int			alert_count;
 
    public:
       cGameServer(unsigned short udp_port_num = DEFAULT_UDP_PORT, unsigned short gs_port_num = 0);
