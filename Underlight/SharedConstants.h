@@ -12,7 +12,7 @@
 
  
 const int NUM_TIMED_EFFECTS = 30; // add one for NONE
-const int NUM_ARTS = 146;
+const int NUM_ARTS = 147;
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
 const int NUM_PLAYER_STATS = 5;
