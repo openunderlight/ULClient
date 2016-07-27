@@ -187,6 +187,8 @@ public:
   void EssenceContainer(void);
 
 	// arts that require selecting a neighbor
+	void StartChannel(void);
+	void EndChannel(void);
 	void StartJoin(void);
 	void EndJoin(void);
 	void StartResistFear(void);
