@@ -2872,6 +2872,7 @@
 #define IDS_CHANNEL_NOPARTY             4321
 #define IDS_CHANNEL_EXPIRED             4322
 #define IDS_CHANNEL_CREATE              4323
+#define IDS_CHANNEL                     4324
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
