@@ -1193,6 +1193,7 @@ void cArts::ApplyArt(void)
     case Arts::CHAOTIC_VORTEX: method = &cArts::ChaoticVortex; break;
 	case Arts::CHAOS_WELL: method = &cArts::EssenceContainer; break;
 	case Arts::RALLY: method = &cArts::StartRally; break;
+	case Arts::CHANNEL: method = &cArts::StartChannel; break;
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
 	}
