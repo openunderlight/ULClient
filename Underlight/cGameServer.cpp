@@ -2763,6 +2763,24 @@ void cGameServer::HandleMessage(void)
 						display->DisplayMessage(message);
 					}
 					break;
+                case RMsg_PlayerMsg::CHANNEL:
+    				n = actors->LookUpNeighbor(player_msg.SenderID());
+                    if(n != NO_ACTOR)
+                    {
+                        LoadString (hInstance, IDS_RECEIVE_CHANNEL, disp_message, sizeof(disp_message));
+                        _stprintf(message, disp_message, n->Name());
+                        display->DisplayMessage(message);
+                    }
+                    break;
+                case RMsg_PlayerMsg::CHANNELKILL:
+                    n = actors->LookUpNeighbor(player_msg.SenderID());
+                    if(n != NO_ACTOR)
+                    {
+                        LoadString (hInstance, IDS_RECEIVE_CHANNELKILL, disp_message, sizeof(disp_message));
+                        _stprintf(message, disp_message, n->Name());
+                        display->DisplayMessage(message);
+                    }
+                    break;
 				case RMsg_PlayerMsg::RANDOM:
 					n = actors->LookUpNeighbor(player_msg.SenderID());
 					cDS->PlaySound(LyraSound::RANDOM);
