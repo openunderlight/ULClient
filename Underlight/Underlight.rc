@@ -4278,6 +4278,12 @@ BEGIN
     IDS_LOGIN_PMARE_LOCK    "Game Masters have temporarily disabled Player Mares due to an in-game event.  Please log in with your regular character and try again later."
 END
 
+STRINGTABLE
+BEGIN
+    IDS_RECEIVE_CHANNEL     "Energy from %s begins coursing through you."
+    IDS_RECEIVE_CHANNELKILL "%s channels more energy to you."
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
