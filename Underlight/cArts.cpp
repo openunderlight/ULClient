@@ -3252,6 +3252,64 @@ void cArts::EndSenseDreamers(void *value)
 ////////////////////////////////////////////////////////////////
 // *** Arts that require selecting a neighbor ***
 ////////////////////////////////////////////////////////////////
+void cArts::StartChannel()
+{
+    if(gs->Party()->Members() < 1 && !player->IsChannelling())
+    {
+        LoadString(hInstance, IDS_PARTY_NOTMEMBER, message, sizeof(message));
+        display->DisplayMessage(message);
+        this->ArtFinished(false);
+        return;
+    }
+    
+    if(player->IsChannelling())
+    {
+        gs->SendPlayerMessage(0, RMsg_PlayerMsg::CHANNEL,
+		    0, 0);
+        LoadString(hInstance, IDS_CHANNEL_EXPIRED, message, sizeof(message));
+        display->DisplayMessage(message);
+        player->SetIsChannelling(false);
+        this->ArtFinished(true);		    
+    }
+    else
+    {
+    	this->WaitForSelection(&cArts::EndChannel, Arts::CHANNEL);
+	    this->CaptureCP(NEIGHBORS_TAB, Arts::CHANNEL);
+	    return;
+    }
+}
+
+void cArts::EndChannel()
+{
+	cNeighbor *n;
+	if (((n = cp->SelectedNeighbor()) != NO_ACTOR) && options.network &&
+		gs->Party() && (n->ID() != Lyra::ID_UNKNOWN))
+		{
+		    if(!gs->Party()->IsInParty(n->ID())
+		    {
+                LoadString(hInstance, IDS_CHANNEL_NOPARTY, message, sizeof(message));
+                display->DisplayMessage(message);
+                this->ArtFinished(false);
+                return;
+		    }
+		    else
+		    {
+                gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::CHANNEL,
+		            player->Skill(Arts::CHANNEL), 0);
+                LoadString(hInstance, IDS_CHANNEL_CREATE, disp_message, sizeof(disp_message));
+                _stprintf(message, disp_message, n->Name());
+                display->DisplayMessage(message);
+                player->SetIsChannelling(true);
+                // TODO: SET TIMED EFFECT!
+                this->ArtFinished(true);		    
+		    }
+        }
+    else
+    {
+        this->ArtFinished(false);
+        return;
+    }
+}
 
 //////////////////////////////////////////////////////////////////
 // Join Party
