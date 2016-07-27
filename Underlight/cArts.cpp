@@ -243,6 +243,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x5D3E, // Chaotic Vortex 
 0x7EE1, // Chaos Well 
 0xA08F, // Rally 
+0x0000, // Channel
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -397,6 +398,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
 {IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT|MAKE_ITEM|LEARN},
 {IDS_RALLY,							Stats::WILLPOWER,	60, 30, 0,  5,   4, SANCT|NEIGH|FOCUS},
+{IDS_CHANNEL,                       Stats::DREAMSOUL,   40, 35, 25, 3,  -1, SANCT|NEIGH|LEARN}, 
 };
 
 
