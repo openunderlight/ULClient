@@ -4282,6 +4282,7 @@ STRINGTABLE
 BEGIN
     IDS_RECEIVE_CHANNEL     "Energy from %s begins coursing through you."
     IDS_RECEIVE_CHANNELKILL "%s channels more energy to you."
+    IDS_CHANNEL_NOPARTY     "You can only channel energy to those in party with you."
 END
 
 #endif    // English (United States) resources
