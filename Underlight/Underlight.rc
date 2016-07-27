@@ -4284,6 +4284,7 @@ BEGIN
     IDS_RECEIVE_CHANNELKILL "%s channels more energy to you."
     IDS_CHANNEL_NOPARTY     "You can only channel energy to those in party with you."
     IDS_CHANNEL_EXPIRED     "Channel has expired."
+    IDS_CHANNEL_CREATE      "You begin channelling energy to %s."
 END
 
 #endif    // English (United States) resources
