@@ -243,7 +243,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x5D3E, // Chaotic Vortex 
 0x7EE1, // Chaos Well 
 0xA08F, // Rally 
-0x0000, // Channel
+0xC767, // Channel
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -704,7 +704,7 @@ bool cArts::CanUseArt(int art_id, bool bypass)
 	
 #ifdef UL_DEBUG
 
-#define MAKE_CKSUM 
+//#define MAKE_CKSUM 
 #ifdef  MAKE_CKSUM
 
 	int art_num;
