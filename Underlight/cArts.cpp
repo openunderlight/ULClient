@@ -3288,7 +3288,7 @@ void cArts::EndChannel()
 	if (((n = cp->SelectedNeighbor()) != NO_ACTOR) && options.network &&
 		gs->Party() && (n->ID() != Lyra::ID_UNKNOWN))
 		{
-		    if(!gs->Party()->IsInParty(n->ID())
+		    if(!gs->Party()->IsInParty(n->ID()))
 		    {
                 LoadString(hInstance, IDS_CHANNEL_NOPARTY, message, sizeof(message));
                 display->DisplayMessage(message);
