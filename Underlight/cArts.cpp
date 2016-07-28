@@ -704,7 +704,7 @@ bool cArts::CanUseArt(int art_id, bool bypass)
 	
 #ifdef UL_DEBUG
 
-//#define MAKE_CKSUM 
+#define MAKE_CKSUM 
 #ifdef  MAKE_CKSUM
 
 	int art_num;
