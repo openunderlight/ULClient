@@ -3265,14 +3265,9 @@ void cArts::StartChannel()
         return;
     }
     
-    if(player->IsChannelling())
+    if(arts->ExpireChannel())
     {
-        gs->SendPlayerMessage(0, RMsg_PlayerMsg::CHANNEL,
-		    0, 0);
-        LoadString(hInstance, IDS_CHANNEL_EXPIRED, message, sizeof(message));
-        display->DisplayMessage(message);
-        player->SetIsChannelling(false);
-        this->ArtFinished(true);		    
+        this->ArtFinished(true);
     }
     else
     {
@@ -3282,31 +3277,52 @@ void cArts::StartChannel()
     }
 }
 
+bool cArts::ExpireChannel()
+{
+    if(player->IsChannelling())
+    {
+        gs->SendPlayerMessage(0, RMsg_PlayerMsg::CHANNEL,
+		    0, 0);
+        LoadString(hInstance, IDS_CHANNEL_EXPIRED, message, sizeof(message));
+        display->DisplayMessage(message);
+        player->SetChannelTarget(0);
+        return true;
+    }
+    
+    return false;
+}
+
+bool cArts::SetChannel(lyra_id_t nid)
+{
+    cNeighbor* n = actors->LookUpNeighbor(nid);
+    
+    if(!n || !gs->Party()->IsInParty(nid)
+	{
+        LoadString(hInstance, IDS_CHANNEL_NOPARTY, message, sizeof(message));
+        display->DisplayMessage(message);
+        return false;
+	}
+    else
+    {
+        gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::CHANNEL,
+		    player->Skill(Arts::CHANNEL), 0);
+        LoadString(hInstance, IDS_CHANNEL_CREATE, disp_message, sizeof(disp_message));
+        _stprintf(message, disp_message, n->Name());
+        display->DisplayMessage(message);
+        player->SetChannelTarget(nid);
+        return true;
+    }
+}
+
 void cArts::EndChannel()
 {
 	cNeighbor *n;
 	if (((n = cp->SelectedNeighbor()) != NO_ACTOR) && options.network &&
 		gs->Party() && (n->ID() != Lyra::ID_UNKNOWN))
-		{
-		    if(!gs->Party()->IsInParty(n->ID()))
-		    {
-                LoadString(hInstance, IDS_CHANNEL_NOPARTY, message, sizeof(message));
-                display->DisplayMessage(message);
-                this->ArtFinished(false);
-                return;
-		    }
-		    else
-		    {
-                gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::CHANNEL,
-		            player->Skill(Arts::CHANNEL), 0);
-                LoadString(hInstance, IDS_CHANNEL_CREATE, disp_message, sizeof(disp_message));
-                _stprintf(message, disp_message, n->Name());
-                display->DisplayMessage(message);
-                player->SetIsChannelling(true);
-                // TODO: SET TIMED EFFECT!
-                this->ArtFinished(true);		    
-		    }
-        }
+	{
+        this.ArtFinished(arts->SetChannel(n->ID()));
+        return;
+    }            
     else
     {
         this->ArtFinished(false);
