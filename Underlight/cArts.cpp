@@ -3296,7 +3296,7 @@ bool cArts::SetChannel(lyra_id_t nid)
 {
     cNeighbor* n = actors->LookUpNeighbor(nid);
     
-    if(!n || !gs->Party()->IsInParty(nid)
+    if(!n || !gs->Party()->IsInParty(nid))
 	{
         LoadString(hInstance, IDS_CHANNEL_NOPARTY, message, sizeof(message));
         display->DisplayMessage(message);
