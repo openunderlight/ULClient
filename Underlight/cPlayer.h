@@ -212,7 +212,7 @@ class cPlayer : public cActor
 	  inline bool Teleporting(void) { return teleporting; };
 	  inline bool FreeMoves(void) { return free_moves != 0; };
 	  inline bool IsChannelling(void) { return channelTarget != 0 && channelTarget != playerID; };
-	  inline lyra_id_it ChannelTarget(void) { return channelTarget; };
+	  inline lyra_id_t ChannelTarget(void) { return channelTarget; };
 	  inline int FocusStat(void) { return focus_stat; };
 	  inline int SelectedStat(void) { return selected_stat; };
 	  int Skill(int art_id);
