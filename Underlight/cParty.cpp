@@ -30,6 +30,7 @@ extern cLevel *level;
 extern HINSTANCE hInstance;
 extern options_t options;
 extern bool acceptrejectdlg;
+extern cArts* arts;
 
 //////////////////////////////////////////////////////////////////
 // Constants
@@ -306,7 +307,10 @@ void cParty::MemberExit(realmid_t playerID, int status)
 		return;
 
 	n = actors->LookUpNeighbor(playerID);
-
+    
+    if(player->IsChannelling() && playerID == player->ChannelTarget())
+        arts->ExpireChannel();
+    
 	if (n == NO_ACTOR)
 		LoadString(hInstance, IDS_JP4, name, sizeof(name));
 	else
@@ -322,7 +326,7 @@ void cParty::MemberExit(realmid_t playerID, int status)
 			LoadString (hInstance, IDS_PARTY_LEAVE_LOGOUT, disp_message, sizeof(disp_message));
 			_stprintf(message, disp_message, name, level->Name(level->ID()));
 		}
-
+    
 		display->DisplayMessage(message);
 	}
 	//_tprintf("On enter - Members: %d locked neighbors: %d\n",party_members,gs->LockedNeighbors());
@@ -517,7 +521,10 @@ void cParty::DissolveParty(void)
 	int i;
 
 	dissolving = true;
-	
+    
+    if(player->IsChannelling())
+        arts->ExpireChannel();
+        
 	for (i=0; i<(Lyra::MAX_PARTYSIZE-1); i++)
 		if (members[i]!=Lyra::ID_UNKNOWN)
 			this->MemberExit(members[i]);
