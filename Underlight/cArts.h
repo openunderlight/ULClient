@@ -188,6 +188,8 @@ public:
 
 	// arts that require selecting a neighbor
 	void StartChannel(void);
+	bool ExpireChannel(void);
+	bool SetChannel(lyra_id_t nid);
 	void EndChannel(void);
 	void StartJoin(void);
 	void EndJoin(void);
