@@ -3320,7 +3320,7 @@ void cArts::EndChannel()
 	if (((n = cp->SelectedNeighbor()) != NO_ACTOR) && options.network &&
 		gs->Party() && (n->ID() != Lyra::ID_UNKNOWN))
 	{
-        this.ArtFinished(arts->SetChannel(n->ID()));
+        this->ArtFinished(arts->SetChannel(n->ID()));
         return;
     }            
     else
