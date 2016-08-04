@@ -59,19 +59,19 @@ cParty::cParty(void)
 
 	leader = Lyra::ID_UNKNOWN;
 	party_members = 0;
-    num_requests = 0; 
+	num_requests = 0;
 	curr_request = DEAD_REQUEST;
 	request_outstanding = Lyra::ID_UNKNOWN;
 	accepts_outstanding = 0;
 	dissolving = false;
 
-	for (i=0; i<Lyra::MAX_PARTYSIZE-1; i++)
+	for (i = 0; i<Lyra::MAX_PARTYSIZE - 1; i++)
 	{
 		members[i] = Lyra::ID_UNKNOWN;
 		channellers[i] = Lyra::ID_UNKNOWN;
 	}
 
-	for (i=0; i<MAX_QUEUED_REQUESTS; i++)
+	for (i = 0; i<MAX_QUEUED_REQUESTS; i++)
 		requests[i].playerID = Lyra::ID_UNKNOWN;
 
 	this->CheckInvariants(__LINE__);
@@ -83,44 +83,50 @@ cParty::cParty(void)
 // if we have our own outstanding join party request, or if the party
 // is full. Note that the party might be full because we have accepted
 // members into the party that haven't officially joined yet.
-void cParty::OnPartyQuery(realmid_t playerID, bool auto_join) 
+void cParty::OnPartyQuery(realmid_t playerID, bool auto_join)
 {
 	int index;
 #ifdef AGENT
-	gs->RejectPartyQuery(RMsg_Party::REJECT_NO,playerID);
+	gs->RejectPartyQuery(RMsg_Party::REJECT_NO, playerID);
 #endif
 	//_tprintf("Got a party query for player ID %d\n",playerID);
 
 	if (playerID == Lyra::ID_UNKNOWN)
 	{ // not a valid request
-		gs->RejectPartyQuery(RMsg_Party::REJECT_QUEUEFULL,playerID); // too many requests
+		gs->RejectPartyQuery(RMsg_Party::REJECT_QUEUEFULL, playerID); // too many requests
 	}
 	else if (num_requests == MAX_QUEUED_REQUESTS) // maxed out the queue! reject!
 	{
-		gs->RejectPartyQuery(RMsg_Party::REJECT_QUEUEFULL,playerID); // too many requests
+		gs->RejectPartyQuery(RMsg_Party::REJECT_QUEUEFULL, playerID); // too many requests
 		//_tprintf("rejecting query b/c our queue is full!\n");
-	} else if (party_members && (leader!=player->ID()))
+	}
+	else if (party_members && (leader != player->ID()))
 	{
-		gs->RejectPartyQuery(RMsg_Party::REJECT_NOTLEADER,playerID); // not the leader
+		gs->RejectPartyQuery(RMsg_Party::REJECT_NOTLEADER, playerID); // not the leader
 		//_tprintf("rejecting query b/c we are not the leader!\n");
-	} else if (request_outstanding != Lyra::ID_UNKNOWN)
+	}
+	else if (request_outstanding != Lyra::ID_UNKNOWN)
 	{
-		gs->RejectPartyQuery(RMsg_Party::REJECT_BUSY,playerID); // we're joining another's party
+		gs->RejectPartyQuery(RMsg_Party::REJECT_BUSY, playerID); // we're joining another's party
 		//_tprintf("rejecting query b/c we made our own request!\n");
-	} else if (party_members + accepts_outstanding >= Lyra::MAX_PARTYSIZE - 1)
+	}
+	else if (party_members + accepts_outstanding >= Lyra::MAX_PARTYSIZE - 1)
 	{
 		gs->RejectPartyQuery(RMsg_Party::REJECT_PARTYFULL, playerID); // party full
 		//_tprintf("rejecting query b/c our party is full!!\n");
-	} else if (actors->LookUpNeighbor(playerID) == NO_ACTOR)
+	}
+	else if (actors->LookUpNeighbor(playerID) == NO_ACTOR)
 	{
-		gs->RejectPartyQuery(RMsg_Party::REJECT_NO,playerID);
-	} else if (options.autoreject)
+		gs->RejectPartyQuery(RMsg_Party::REJECT_NO, playerID);
+	}
+	else if (options.autoreject)
 	{
-		gs->RejectPartyQuery(RMsg_Party::REJECT_NO,playerID);
-	} else if (player->flags & ACTOR_NO_PARTY)
+		gs->RejectPartyQuery(RMsg_Party::REJECT_NO, playerID);
+	}
+	else if (player->flags & ACTOR_NO_PARTY)
 	{
-		gs->RejectPartyQuery(RMsg_Party::REJECT_NO,playerID);
-		LoadString (hInstance, IDS_NO_PARTY, disp_message, sizeof(disp_message));
+		gs->RejectPartyQuery(RMsg_Party::REJECT_NO, playerID);
+		LoadString(hInstance, IDS_NO_PARTY, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 	}
 	else
@@ -129,7 +135,7 @@ void cParty::OnPartyQuery(realmid_t playerID, bool auto_join)
 		if (curr_request == DEAD_REQUEST)
 			curr_request = index = 0; //
 		else
-			index = (curr_request + num_requests)%MAX_QUEUED_REQUESTS;
+			index = (curr_request + num_requests) % MAX_QUEUED_REQUESTS;
 		//_tprintf("Adding new request in slot %d\n",index);
 		requests[index].playerID = playerID;
 		num_requests++;
@@ -143,31 +149,31 @@ void cParty::OnPartyQuery(realmid_t playerID, bool auto_join)
 }
 
 // return the neighbor making the current join party request
-cNeighbor* cParty::CurrNeighbor(void) 
-{ 	
+cNeighbor* cParty::CurrNeighbor(void)
+{
 	return actors->LookUpNeighbor(requests[curr_request].playerID);
 };
 
 
 // return the name of the player making the current join party request
-TCHAR* cParty::CurrName(void) 
-{ 
+TCHAR* cParty::CurrName(void)
+{
 	cNeighbor *n;
-	
+
 	n = actors->LookUpNeighbor(requests[curr_request].playerID);
 	if (n != NO_ACTOR)
 		return n->Name();
 	else
 	{
-		LoadString(hInstance, IDS_UNKNOWN , party_msg, sizeof(party_msg));
+		LoadString(hInstance, IDS_UNKNOWN, party_msg, sizeof(party_msg));
 		return party_msg;
 	}
- };
+};
 
 // returns true if the current request is a valid neighbor, false
 // otherwise
-BOOL cParty::CurrValid(void) 
-{ 
+BOOL cParty::CurrValid(void)
+{
 	cNeighbor *n;
 
 	n = actors->LookUpNeighbor(requests[curr_request].playerID);
@@ -175,7 +181,7 @@ BOOL cParty::CurrValid(void)
 		return TRUE;
 	else
 		return FALSE;
- };
+};
 
 
 // throw up the dialog box to ask if the player can join the party
@@ -187,12 +193,12 @@ void cParty::DialogQuery(void)
 	{
 		HWND prevDlg = GetFocus();
 		LoadString(hInstance, IDS_JP1, party_msg, sizeof(party_msg));
-		_stprintf(message, party_msg,this->CurrName());					
-		HWND hDlg = CreateLyraDialog(hInstance, IDD_ACCEPTREJECT, 
-									   cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
-		SendMessage(hDlg, WM_SET_CALLBACK, 0,  (LPARAM)PartyDlgCallback);
+		_stprintf(message, party_msg, this->CurrName());
+		HWND hDlg = CreateLyraDialog(hInstance, IDD_ACCEPTREJECT,
+			cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
+		SendMessage(hDlg, WM_SET_CALLBACK, 0, (LPARAM)PartyDlgCallback);
 		SendMessage(hDlg, WM_SET_AR_NEIGHBOR, 0, (LPARAM)this->CurrNeighbor());
-				
+
 		if (prevDlg) {
 			SetActiveWindow(prevDlg);
 			SetFocus(prevDlg);
@@ -213,10 +219,10 @@ void cParty::DialogQuery(void)
 void cParty::RejectRequest(void)
 {
 	LoadString(hInstance, IDS_JP2, party_msg, sizeof(party_msg));
-	_stprintf(errbuf,party_msg, curr_request);
+	_stprintf(errbuf, party_msg, curr_request);
 	INFO(errbuf);
 
-	gs->RejectPartyQuery(RMsg_Party::REJECT_NO,requests[curr_request].playerID);
+	gs->RejectPartyQuery(RMsg_Party::REJECT_NO, requests[curr_request].playerID);
 	DisableRequest(curr_request);
 
 	this->CheckInvariants(__LINE__);
@@ -265,9 +271,9 @@ void cParty::MemberEnter(const RmRemotePlayer& buddy)
 	if (leader == player->ID())
 		accepts_outstanding--;
 
-	for (i=0; i<Lyra::MAX_PARTYSIZE-1; i++)
+	for (i = 0; i<Lyra::MAX_PARTYSIZE - 1; i++)
 		if (members[i] == Lyra::ID_UNKNOWN)
-		{	
+		{
 			channellers[i] = Lyra::ID_UNKNOWN;
 			members[i] = buddy.PlayerID();
 			party_members++;
@@ -284,7 +290,7 @@ void cParty::MemberEnter(const RmRemotePlayer& buddy)
 				gs->HandlePositionUpdate(update);
 				n->SetXHeight();
 			}
-			LoadString (hInstance, IDS_PARTY_PLAYERJOINED, disp_message, sizeof(disp_message));
+			LoadString(hInstance, IDS_PARTY_PLAYERJOINED, disp_message, sizeof(disp_message));
 			_stprintf(message, disp_message, n->Name());
 			display->DisplayMessage(message);
 			n->Lock(); //rs->LockNeighbor(index);
@@ -292,7 +298,7 @@ void cParty::MemberEnter(const RmRemotePlayer& buddy)
 		}
 
 	this->CheckInvariants(__LINE__);
-	return;	
+	return;
 }
 
 // An existing party member has bailed! If it is the leader, the
@@ -302,7 +308,7 @@ void cParty::MemberExit(realmid_t playerID, int status)
 {
 	int i;
 	cNeighbor *n;
-	TCHAR name [Lyra::PLAYERNAME_MAX];
+	TCHAR name[Lyra::PLAYERNAME_MAX];
 
 	//_stprintf(message, "Member %d leaving party, status %d\n", playerID, status);
 	//LOGIT(message);
@@ -311,56 +317,62 @@ void cParty::MemberExit(realmid_t playerID, int status)
 		return;
 
 	n = actors->LookUpNeighbor(playerID);
-    
-    if(player->IsChannelling() && playerID == player->ChannelTarget())
-        arts->ExpireChannel();
-    
+
+	if (player->IsChannelling() && playerID == player->ChannelTarget())
+		arts->ExpireChannel();
+
 	if (n == NO_ACTOR)
 		LoadString(hInstance, IDS_JP4, name, sizeof(name));
 	else
 	{
-		_tcscpy(name, n->Name());			
+		_tcscpy(name, n->Name());
 		if (status == RMsg_Party::LEAVE_NORMAL)
 		{
-			LoadString (hInstance, IDS_PARTY_PLAYERLEFT, disp_message, sizeof(disp_message));
+			LoadString(hInstance, IDS_PARTY_PLAYERLEFT, disp_message, sizeof(disp_message));
 			_stprintf(message, disp_message, name);
 		}
 		else
 		{
-			LoadString (hInstance, IDS_PARTY_LEAVE_LOGOUT, disp_message, sizeof(disp_message));
+			LoadString(hInstance, IDS_PARTY_LEAVE_LOGOUT, disp_message, sizeof(disp_message));
 			_stprintf(message, disp_message, name, level->Name(level->ID()));
 		}
-    
+
 		display->DisplayMessage(message);
 	}
 	//_tprintf("On enter - Members: %d locked neighbors: %d\n",party_members,gs->LockedNeighbors());
 
-	for (i=0; i<Lyra::MAX_PARTYSIZE-1; i++)
+	for (i = 0; i<Lyra::MAX_PARTYSIZE - 1; i++)
 		if (members[i] == playerID)
-		{	
+		{
 			members[i] = Lyra::ID_UNKNOWN;
+			if (channellers[i] != Lyra::ID_UNKNOWN)
+			{
+				LoadString(hInstance, IDS_CHANNEL_CLOSED, disp_message, sizeof(disp_message));
+				_stprintf(message, disp_message, name);
+				display->DisplayMessage(message);
+			}
 			channellers[i] = Lyra::ID_UNKNOWN;
 			party_members--;
 			if (playerID == leader)
 			{
-				if (status == RMsg_Party::LEAVE_NORMAL && !dissolving)  
-					player->SetLastLeaderID(Lyra::ID_UNKNOWN);		
+				if (status == RMsg_Party::LEAVE_NORMAL && !dissolving)
+					player->SetLastLeaderID(Lyra::ID_UNKNOWN);
 				leader = Lyra::ID_UNKNOWN;
 				this->DissolveParty();
 			}
 			else if (!party_members && (leader == player->ID()))
-				leader = Lyra::ID_UNKNOWN;				
-	//	_tprintf("Player %d left; Leader now: %d Members now: %d\n",playerID,leader,party_members);
-	//	_tprintf("After find new leader - Members: %d locked neighbors: %d\n",party_members,gs->LockedNeighbors());
+				leader = Lyra::ID_UNKNOWN;
+			//	_tprintf("Player %d left; Leader now: %d Members now: %d\n",playerID,leader,party_members);
+			//	_tprintf("After find new leader - Members: %d locked neighbors: %d\n",party_members,gs->LockedNeighbors());
 			if (n != NO_ACTOR)
 				n->Unlock();
 			break;
-	//	_tprintf("After unlock - Members: %d locked neighbors: %d\n",party_members,gs->LockedNeighbors());
+			//	_tprintf("After unlock - Members: %d locked neighbors: %d\n",party_members,gs->LockedNeighbors());
 
 		}
 
 	//if (i == (Lyra::MAX_PARTYSIZE-1))
-		//_tprintf("ERROR: can't find party member %d to delete!!!!\n",playerID);
+	//_tprintf("ERROR: can't find party member %d to delete!!!!\n",playerID);
 
 	this->CheckInvariants(__LINE__);
 	return;
@@ -382,8 +394,8 @@ bool cParty::SetChanneller(realmid_t playerID, bool set)
 			channellers[i] = set ? playerID : Lyra::ID_UNKNOWN;
 			return true;
 		}
-    
-    return false;		
+
+	return false;
 }
 
 // Send out a request to join this player's party, if we are not
@@ -403,24 +415,25 @@ void cParty::JoinParty(realmid_t playerID, TCHAR *name, bool automatic)
 	{
 		if (!automatic)
 		{
-			LoadString (hInstance, IDS_PARTY_ALREADYJOINING, disp_message, sizeof(disp_message));
-			display->DisplayMessage (disp_message);
+			LoadString(hInstance, IDS_PARTY_ALREADYJOINING, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
 		}
 		return;
-	} else if (party_members > 0)
+	}
+	else if (party_members > 0)
 	{
 		if (!automatic)
 		{
-			LoadString (hInstance, IDS_PARTY_MUSTLEAVE, disp_message, sizeof(disp_message));
-			display->DisplayMessage (disp_message);
+			LoadString(hInstance, IDS_PARTY_MUSTLEAVE, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
 		}
 		return;
 	}
 
-	gs->JoinParty(playerID,automatic);
+	gs->JoinParty(playerID, automatic);
 
-	LoadString (hInstance, IDS_PARTY_REQUEST, disp_message, sizeof(disp_message));
-	_stprintf(message,disp_message,name);
+	LoadString(hInstance, IDS_PARTY_REQUEST, disp_message, sizeof(disp_message));
+	_stprintf(message, disp_message, name);
 	display->DisplayMessage(message, false);
 	request_outstanding = playerID;
 
@@ -436,12 +449,12 @@ void cParty::JoinedParty(RMsg_PartyInfo& partyinfo)
 	cNeighbor *n;
 	TCHAR name[Lyra::PLAYERNAME_MAX];
 	LoadString(hInstance, IDS_UNKNOWN, name, sizeof(name));
-	
+
 	request_outstanding = Lyra::ID_UNKNOWN;
 
 	//_tprintf("party leader: %d\n",leader);
-	for (i=0; i<partyinfo.PartySize(); i++) 
-		if ((partyinfo.PartyMember(i).PlayerID() != Lyra::ID_UNKNOWN) && 
+	for (i = 0; i<partyinfo.PartySize(); i++)
+		if ((partyinfo.PartyMember(i).PlayerID() != Lyra::ID_UNKNOWN) &&
 			(partyinfo.PartyMember(i).PlayerID() != player->ID()))
 			this->MemberEnter(partyinfo.PartyMember(i));
 
@@ -450,11 +463,11 @@ void cParty::JoinedParty(RMsg_PartyInfo& partyinfo)
 
 	n = actors->LookUpNeighbor(leader);
 	if (n != NO_ACTOR)
-		_tcscpy(name,n->Name());
+		_tcscpy(name, n->Name());
 
-	LoadString (hInstance, IDS_PARTY_JOINED, disp_message, sizeof(disp_message));
+	LoadString(hInstance, IDS_PARTY_JOINED, disp_message, sizeof(disp_message));
 
-_stprintf(message,disp_message,name,party_members+1);
+	_stprintf(message, disp_message, name, party_members + 1);
 	display->DisplayMessage(message);
 
 	//_tprintf("We've joined a party; leader = %d, members = %d\n",leader,party_members);
@@ -472,47 +485,47 @@ void cParty::Rejected(int reason, realmid_t player_id)
 
 	request_outstanding = Lyra::ID_UNKNOWN;
 	player->SetLastLeaderID(Lyra::ID_UNKNOWN);
-	
+
 	n = actors->LookUpNeighbor(player_id);
 	if (n != NO_ACTOR)
-		_tcscpy(name,n->Name());
+		_tcscpy(name, n->Name());
 
 	switch (reason)
 	{
 	case RMsg_Party::REJECT_LEFT:
-		LoadString (hInstance, IDS_JOINREJ_LEFT, message, sizeof(message));
+		LoadString(hInstance, IDS_JOINREJ_LEFT, message, sizeof(message));
 		display->DisplayMessage(message);
 		return;
 
 	case RMsg_Party::REJECT_NOTLEADER:
 		if (n == NO_ACTOR)
-			LoadString (hInstance, IDS_JOINREJ_LEADER_UNKNOWN, message, sizeof(message));
+			LoadString(hInstance, IDS_JOINREJ_LEADER_UNKNOWN, message, sizeof(message));
 		else
 		{
-			LoadString (hInstance, IDS_PARTY_REJ_NOTLEADER, disp_message, sizeof(disp_message));
-		_stprintf(message,disp_message,name);
+			LoadString(hInstance, IDS_PARTY_REJ_NOTLEADER, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, name);
 		}
 		break;
 	case RMsg_Party::REJECT_PARTYFULL:
-		LoadString (hInstance, IDS_PARTY_REJ_FULL, message, sizeof(message));
+		LoadString(hInstance, IDS_PARTY_REJ_FULL, message, sizeof(message));
 		break;
 	case RMsg_Party::REJECT_MUSTLEAVEPARTY:
-		LoadString (hInstance, IDS_PARTY_REJ_LEAVE, message, sizeof(message));
+		LoadString(hInstance, IDS_PARTY_REJ_LEAVE, message, sizeof(message));
 		break;
 	case RMsg_Party::REJECT_NO:
-		LoadString (hInstance, IDS_PARTY_REJ_NO, disp_message, sizeof(disp_message));
-	_stprintf(message,disp_message,name);
+		LoadString(hInstance, IDS_PARTY_REJ_NO, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, name);
 		break;
 	case RMsg_Party::REJECT_BUSY:
-		LoadString (hInstance, IDS_PARTY_REJ_BUSY, disp_message, sizeof(disp_message));
-	_stprintf(message,disp_message,name);
+		LoadString(hInstance, IDS_PARTY_REJ_BUSY, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, name);
 		break;
 	case RMsg_Party::REJECT_QUEUEFULL:
-		LoadString (hInstance, IDS_PARTY_REJ_TOOMANY, disp_message, sizeof(disp_message));
-	_stprintf(message,disp_message,name);
+		LoadString(hInstance, IDS_PARTY_REJ_TOOMANY, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, name);
 		break;
 	default:
-		LoadString (hInstance, IDS_PARTY_REJ_UNKNOWN, message, sizeof(message));
+		LoadString(hInstance, IDS_PARTY_REJ_UNKNOWN, message, sizeof(message));
 	}
 
 	display->DisplayMessage(message);
@@ -524,11 +537,11 @@ void cParty::Rejected(int reason, realmid_t player_id)
 
 // Leave the current party
 void cParty::LeaveParty(void)
-{	
+{
 	if (party_members == 0)
 	{
-		LoadString (hInstance, IDS_PARTY_NOTMEMBER, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
+		LoadString(hInstance, IDS_PARTY_NOTMEMBER, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 	}
 	else
 	{
@@ -546,12 +559,12 @@ void cParty::DissolveParty(void)
 	int i;
 
 	dissolving = true;
-    
-    if(player->IsChannelling())
-        arts->ExpireChannel();
-        
-	for (i=0; i<(Lyra::MAX_PARTYSIZE-1); i++)
-		if (members[i]!=Lyra::ID_UNKNOWN)
+
+	if (player->IsChannelling())
+		arts->ExpireChannel();
+
+	for (i = 0; i<(Lyra::MAX_PARTYSIZE - 1); i++)
+		if (members[i] != Lyra::ID_UNKNOWN)
 			this->MemberExit(members[i]);
 
 	dissolving = false;
@@ -565,7 +578,7 @@ void cParty::DissolveParty(void)
 void cParty::DisableRequest(int request_num)
 {
 	LoadString(hInstance, IDS_DISABLE, party_msg, sizeof(party_msg));
-	_stprintf(errbuf, party_msg,request_num, num_requests);
+	_stprintf(errbuf, party_msg, request_num, num_requests);
 	INFO(errbuf);
 
 	requests[request_num].playerID = Lyra::ID_UNKNOWN;
@@ -573,7 +586,8 @@ void cParty::DisableRequest(int request_num)
 	{
 		num_requests = 0;
 		curr_request = DEAD_REQUEST;
-	} else // else make the next the current
+	}
+	else // else make the next the current
 	{
 		num_requests--;
 		curr_request++;
@@ -581,7 +595,7 @@ void cParty::DisableRequest(int request_num)
 			curr_request = 0;
 		if (party_members + accepts_outstanding >= Lyra::MAX_PARTYSIZE - 1)
 			this->RejectRequest();
-	
+
 	}
 
 	this->CheckInvariants(__LINE__);
@@ -596,15 +610,15 @@ void cParty::FindNewLeader(void)
 
 	if (party_members == 0)
 		leader = Lyra::ID_UNKNOWN;
-	else 
+	else
 	{
 
 		leader = player->ID();
-		for (i=0; i<Lyra::MAX_PARTYSIZE-1; i++)
+		for (i = 0; i<Lyra::MAX_PARTYSIZE - 1; i++)
 			if ((members[i] != Lyra::ID_UNKNOWN) && (members[i] < leader))
 				leader = members[i];
 		if (leader == player->ID())
-			LoadString (hInstance, IDS_PARTY_YOULEAD, message, 128);
+			LoadString(hInstance, IDS_PARTY_YOULEAD, message, 128);
 		else
 		{
 			n = actors->LookUpNeighbor(leader);
@@ -612,8 +626,8 @@ void cParty::FindNewLeader(void)
 				LoadString(hInstance, IDS_JP6, message, sizeof(message));
 			else
 			{
-				LoadString (hInstance, IDS_PARTY_OTHERLEAD, disp_message, 116);
-				_stprintf(message,disp_message,n->Name());
+				LoadString(hInstance, IDS_PARTY_OTHERLEAD, disp_message, 116);
+				_stprintf(message, disp_message, n->Name());
 			}
 		}
 		display->DisplayMessage(message);
@@ -626,9 +640,9 @@ void cParty::FindNewLeader(void)
 
 // returns true if this neighbor is in our party
 bool cParty::IsInParty(lyra_id_t player_id)
-{					
-	for (int i=0; i<Lyra::MAX_PARTYSIZE-1; i++) // the members struct is NOT 
-		if (this->MemberID(i) == player_id) 
+{
+	for (int i = 0; i<Lyra::MAX_PARTYSIZE - 1; i++) // the members struct is NOT 
+		if (this->MemberID(i) == player_id)
 			return true;
 
 	return false;
@@ -636,34 +650,35 @@ bool cParty::IsInParty(lyra_id_t player_id)
 
 // Destructor
 cParty::~cParty(void)
-{	
+{
 }
 
 #ifdef CHECK_INVARIANTS
 void cParty::CheckInvariants(int line)
 {
-	int i,j;
-	
+	int i, j;
+
 	// all active requests should have real player ID's, and all
 	// inactive requests should have Lyra::ID_UNKNOWN
 	if (curr_request == DEAD_REQUEST) // no active requests
 	{
-		for (i=0; i<MAX_QUEUED_REQUESTS; i++)
+		for (i = 0; i<MAX_QUEUED_REQUESTS; i++)
 			if (requests[i].playerID != Lyra::ID_UNKNOWN)
 			{
 				LoadString(hInstance, IDS_JP7, party_msg, sizeof(party_msg));
-				_stprintf(errbuf, party_msg,i,requests[i].playerID,line);
+				_stprintf(errbuf, party_msg, i, requests[i].playerID, line);
 				NONFATAL_ERROR(errbuf);
 			}
-	} else // some active requests
+	}
+	else // some active requests
 	{
-		i = curr_request; 
-		while (i != ((curr_request + num_requests)%MAX_QUEUED_REQUESTS))
+		i = curr_request;
+		while (i != ((curr_request + num_requests) % MAX_QUEUED_REQUESTS))
 		{	// check active requests
 			if (requests[i].playerID == Lyra::ID_UNKNOWN)
 			{
 				LoadString(hInstance, IDS_JP8, party_msg, sizeof(party_msg));
-				_stprintf(errbuf, party_msg,i,line);
+				_stprintf(errbuf, party_msg, i, line);
 				NONFATAL_ERROR(errbuf);
 			}
 			i++;
@@ -675,7 +690,7 @@ void cParty::CheckInvariants(int line)
 			if (requests[i].playerID != Lyra::ID_UNKNOWN)
 			{
 				LoadString(hInstance, IDS_JP9, party_msg, sizeof(party_msg));
-				_stprintf(errbuf,party_msg,i,requests[i].playerID,line);
+				_stprintf(errbuf, party_msg, i, requests[i].playerID, line);
 				NONFATAL_ERROR(errbuf);
 			}
 			i++;
@@ -685,12 +700,12 @@ void cParty::CheckInvariants(int line)
 	}
 
 	// Can't be the leader if no one is in the party
-	if (!dissolving && (leader!=Lyra::ID_UNKNOWN) && !party_members)
+	if (!dissolving && (leader != Lyra::ID_UNKNOWN) && !party_members)
 	{
 		LoadString(hInstance, IDS_JP10, party_msg, sizeof(party_msg));
-		_stprintf(errbuf,party_msg, line);
+		_stprintf(errbuf, party_msg, line);
 		NONFATAL_ERROR(errbuf);
-	} 
+	}
 
 
 	// Make sure we have a leader in the array if there are party members
@@ -700,38 +715,38 @@ void cParty::CheckInvariants(int line)
 		{
 			GAME_ERROR2(IDS_JP11, party_members, line);
 		}
-		for (i=0; i<Lyra::MAX_PARTYSIZE-1; i++)
-			if (leader==members[i])
+		for (i = 0; i<Lyra::MAX_PARTYSIZE - 1; i++)
+			if (leader == members[i])
 				break;
-		if ((i==(Lyra::MAX_PARTYSIZE-1)) && (leader!=player->ID()) && !dissolving)
+		if ((i == (Lyra::MAX_PARTYSIZE - 1)) && (leader != player->ID()) && !dissolving)
 		{
-			GAME_ERROR3(IDS_JP12, party_members,leader,line);
+			GAME_ERROR3(IDS_JP12, party_members, leader, line);
 		}
 	}
 
 	// Proper # of people in the party? party_members should be equal
 	// to the # of non-unknown entries in the members array
-	j=0;
-	for (i=0; i<Lyra::MAX_PARTYSIZE-1; i++)
-		if (members[i]!=Lyra::ID_UNKNOWN)
+	j = 0;
+	for (i = 0; i<Lyra::MAX_PARTYSIZE - 1; i++)
+		if (members[i] != Lyra::ID_UNKNOWN)
 			j++;
-	if (party_members!=j)
+	if (party_members != j)
 	{
-		GAME_ERROR3(IDS_JP13, party_members,j,line);
-	} 
+		GAME_ERROR3(IDS_JP13, party_members, j, line);
+	}
 
 	// Make sure we're not in the members structure
-	for (i=0; i<Lyra::MAX_PARTYSIZE-1; i++)
+	for (i = 0; i<Lyra::MAX_PARTYSIZE - 1; i++)
 		if ((player->ID() != Lyra::ID_UNKNOWN) && (members[i] == player->ID()))
 		{
 			GAME_ERROR2(IDS_JP14, i, line);
-		} 
+		}
 
 	// Make sure there is a sane # of accepts outstanding; < MAX - party_members
-	if (accepts_outstanding > (Lyra::MAX_PARTYSIZE - party_members - 1))
-		{
-			GAME_ERROR3(IDS_JP15, accepts_outstanding,party_members,line);
-		} 
+	if (accepts_outstanding >(Lyra::MAX_PARTYSIZE - party_members - 1))
+	{
+		GAME_ERROR3(IDS_JP15, accepts_outstanding, party_members, line);
+	}
 
 	return;
 
