@@ -366,7 +366,7 @@ void cParty::MemberExit(realmid_t playerID, int status)
 	return;
 }
 
-void cParty::SetChanneller(realmid_t playerID, bool set)
+bool cParty::SetChanneller(realmid_t playerID, bool set)
 {
 	cNeighbor *n;
 
@@ -374,14 +374,16 @@ void cParty::SetChanneller(realmid_t playerID, bool set)
 	//LOGIT(message);
 
 	if (playerID == Lyra::ID_UNKNOWN)
-		return;
+		return false;
 
 	for (int i = 0; i<Lyra::MAX_PARTYSIZE - 1; i++)
 		if (members[i] == playerID)
 		{
 			channellers[i] = set ? playerID : Lyra::ID_UNKNOWN;
-			break;
+			return true;
 		}
+    
+    return false;		
 }
 
 // Send out a request to join this player's party, if we are not
