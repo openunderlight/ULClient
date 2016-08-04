@@ -72,7 +72,7 @@ class cParty
 	  void DissolveParty(void); // party has broken up
 
 	  bool IsInParty(lyra_id_t player_id);
-	  void SetChanneller(realmid_t playerID, bool set = true);
+	  bool SetChanneller(realmid_t playerID, bool set = true);
 	  
 	  // Selectors
 	  inline int Members(void) { return party_members; };
