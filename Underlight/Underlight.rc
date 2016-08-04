@@ -4288,6 +4288,7 @@ BEGIN
     IDS_CHANNEL             "Channel"
     IDS_SHOW_IN_PARTY_CHANNEL 
                             "%s (Channel receiver) is in your party"
+    IDS_CHANNEL_CLOSED      "%s is no longer channelling energy to you."                            
 END
 
 #endif    // English (United States) resources
