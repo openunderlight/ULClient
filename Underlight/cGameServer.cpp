@@ -2764,14 +2764,28 @@ void cGameServer::HandleMessage(void)
 					}
 					break;
                 case RMsg_PlayerMsg::CHANNEL:
+                 case RMsg_PlayerMsg::CHANNEL:
     				n = actors->LookUpNeighbor(player_msg.SenderID());
-                    if(n != NO_ACTOR)
-                    {
-                        LoadString (hInstance, IDS_RECEIVE_CHANNEL, disp_message, sizeof(disp_message));
-                        _stprintf(message, disp_message, n->Name());
-                        display->DisplayMessage(message);
-                    }
-                    break;
+					if (player_msg.State1() > 0)
+					{
+						if (n != NO_ACTOR)
+						{
+							LoadString(hInstance, IDS_RECEIVE_CHANNEL, disp_message, sizeof(disp_message));
+							_stprintf(message, disp_message, n->Name());
+							display->DisplayMessage(message);
+							party->SetChanneller(player_msg.SenderID());
+						}
+					}
+					else if (party->SetChanneller(player_msg.SenderID(), false))
+					{
+						if (n != NO_ACTOR)
+						{
+							LoadString(hInstance, IDS_CHANNEL_CLOSED, disp_message, sizeof(disp_message));
+							_stprintf(message, disp_message, n->Name());
+							display->DisplayMessage(message);
+						}
+					}
+					break;
                 case RMsg_PlayerMsg::CHANNELKILL:
                     n = actors->LookUpNeighbor(player_msg.SenderID());
                     if(n != NO_ACTOR)
