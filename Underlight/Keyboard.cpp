@@ -1310,7 +1310,11 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		{
 			if (gs && gs->Party() && gs->Party()->IsInParty(n->ID()))
 			{
-				LoadString (hInstance, IDS_SHOW_IN_PARTY, disp_message, sizeof(disp_message));
+			    if(player->IsChannelling() && player->ChannelTarget() == n->ID())
+			        LoadString(hInstance, IDS_SHOW_IN_PARTY_CHANNEL, disp_message, sizeof(disp_message));
+                else			        
+				    LoadString (hInstance, IDS_SHOW_IN_PARTY, disp_message, sizeof(disp_message));
+				    
 				_stprintf(message, disp_message, n->Name());
 				display->DisplayMessage (message, false);
 			}
