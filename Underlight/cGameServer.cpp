@@ -2764,7 +2764,6 @@ void cGameServer::HandleMessage(void)
 					}
 					break;
                 case RMsg_PlayerMsg::CHANNEL:
-                 case RMsg_PlayerMsg::CHANNEL:
     				n = actors->LookUpNeighbor(player_msg.SenderID());
 					if (player_msg.State1() > 0)
 					{
