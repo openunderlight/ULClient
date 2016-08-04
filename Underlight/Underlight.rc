@@ -4286,6 +4286,8 @@ BEGIN
     IDS_CHANNEL_EXPIRED     "Channel has expired."
     IDS_CHANNEL_CREATE      "You begin channelling energy to %s."
     IDS_CHANNEL             "Channel"
+    IDS_SHOW_IN_PARTY_CHANNEL 
+                            "%s (Channel receiver) is in your party"
 END
 
 #endif    // English (United States) resources
