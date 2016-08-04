@@ -66,7 +66,10 @@ cParty::cParty(void)
 	dissolving = false;
 
 	for (i=0; i<Lyra::MAX_PARTYSIZE-1; i++)
+	{
 		members[i] = Lyra::ID_UNKNOWN;
+		channellers[i] = Lyra::ID_UNKNOWN;
+	}
 
 	for (i=0; i<MAX_QUEUED_REQUESTS; i++)
 		requests[i].playerID = Lyra::ID_UNKNOWN;
@@ -265,6 +268,7 @@ void cParty::MemberEnter(const RmRemotePlayer& buddy)
 	for (i=0; i<Lyra::MAX_PARTYSIZE-1; i++)
 		if (members[i] == Lyra::ID_UNKNOWN)
 		{	
+			channellers[i] = Lyra::ID_UNKNOWN;
 			members[i] = buddy.PlayerID();
 			party_members++;
 			n = actors->LookUpNeighbor(buddy.PlayerID());
@@ -335,6 +339,7 @@ void cParty::MemberExit(realmid_t playerID, int status)
 		if (members[i] == playerID)
 		{	
 			members[i] = Lyra::ID_UNKNOWN;
+			channellers[i] = Lyra::ID_UNKNOWN;
 			party_members--;
 			if (playerID == leader)
 			{
@@ -359,6 +364,24 @@ void cParty::MemberExit(realmid_t playerID, int status)
 
 	this->CheckInvariants(__LINE__);
 	return;
+}
+
+void cParty::SetChanneller(realmid_t playerID, bool set)
+{
+	cNeighbor *n;
+
+	//_stprintf(message, "Member %d leaving party, status %d\n", playerID, status);
+	//LOGIT(message);
+
+	if (playerID == Lyra::ID_UNKNOWN)
+		return;
+
+	for (int i = 0; i<Lyra::MAX_PARTYSIZE - 1; i++)
+		if (members[i] == playerID)
+		{
+			channellers[i] = set ? playerID : Lyra::ID_UNKNOWN;
+			break;
+		}
 }
 
 // Send out a request to join this player's party, if we are not
