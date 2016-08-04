@@ -2874,6 +2874,7 @@
 #define IDS_CHANNEL_CREATE              4323
 #define IDS_CHANNEL                     4324
 #define IDS_SHOW_IN_PARTY_CHANNEL       4325
+#define IDS_CHANNEL_CLOSED              4326
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
