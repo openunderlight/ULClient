@@ -5452,9 +5452,9 @@ void cArts::GotRallied(void *value)
 		}
 		player->Teleport(rally_x, rally_y, 0, NO_LEVEL);
 		player->EvokedFX().Activate(Arts::RALLY, false);
-		return;
 	}
-	// If not rallied, send message to server to remove Rally room/level id;
+    
+    // clear rally info on server in ALL CASES.
 	gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
 	return;
 }
