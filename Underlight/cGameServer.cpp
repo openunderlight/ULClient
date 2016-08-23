@@ -1,5 +1,3 @@
-
-
 // A Game Server Class
 
 // Copyright Lyra LLC, 1996. All rights reserved.
@@ -728,6 +726,16 @@ void cGameServer::HandleMessage(void)
 					_tprintf(_T("%s\n"), disp_message);
 					this->ServerError(disp_message);					
 					return;
+                case GMsg_LoginAck::LOGIN_COOLOFF:
+                    LoadString( hInstance, IDS_LOGIN_COOLOFF, disp_message, sizeof( disp_message ) );
+                    _tprintf( _T( "%s\n" ), disp_message );
+                    this->ServerError( disp_message );
+                    return;
+                case GMsg_LoginAck::LOGIN_PMARE_LOCK:
+                    LoadString( hInstance, IDS_LOGIN_PMARE_LOCK, disp_message, sizeof( disp_message ) );
+                    _tprintf( _T( "%s\n" ), disp_message );
+                    this->ServerError( disp_message );
+                    return;                    
 				case GMsg_LoginAck::LOGIN_SUSPENDED:
 					LoadString (hInstance, IDS_SUSPENDED, message, sizeof(message));
 					_stprintf(disp_message, message, loginack_msg.NumItems());

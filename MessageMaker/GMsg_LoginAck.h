@@ -38,7 +38,9 @@ public:
 	LOGIN_NO_PMARE     = 'C',  // credit card account needed for pmare
     LOGIN_UNKNOWNERROR = 'E',  // unknown server error
     LOGIN_GAMEFULL     = 'F',  // game is full
+    LOGIN_COOLOFF      = 'H',  // cooloff period between alts
 	LOGIN_KILLED	   = 'K',  // player dead
+	LOGIN_PMARE_LOCK   = 'L',  // PMare Global Lock in effect
 	LOGIN_MISMATCH	   = 'M',  // account/build mismatch
     LOGIN_USERNOTFOUND = 'N',  // user not in database
     LOGIN_OK           = 'O',  // successful login

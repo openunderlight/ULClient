@@ -4274,6 +4274,8 @@ BEGIN
     IDS_SELF_DEMOTE         "Are you sure you really want to demote yourself %s %s?"
     IDS_MALE_REVENANT       "Revenant"
     IDS_FEMALE_REVENANT     "Revenant"
+    IDS_LOGIN_COOLOFF       "You must wait 60 minutes between logins of different player characters."
+    IDS_LOGIN_PMARE_LOCK    "Game Masters have temporarily disabled Player Mares due to an in-game event.  Please log in with your regular character and try again later."
 END
 
 STRINGTABLE
