@@ -1730,8 +1730,18 @@ void cControlPanel::UpdateInvCount(void)
 	TCHAR old_value[STAT_LENGTH];
 	RECT region;
 	cItem *item = NO_ITEM;
+	int count = 0;
+	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT)) 
+	{
+		if (item->Status() == ITEM_OWNED)
+		{
+			count++;
+			if (count > Lyra::INVENTORY_MAX)
+				count = Lyra::INVENTORY_MAX;
+		}
+	}
 
-	_stprintf(new_value, _T("%02d/%02d\0"), num_items, Lyra::INVENTORY_MAX);
+	_stprintf(new_value, _T("%02d/%02d\0"), count, Lyra::INVENTORY_MAX);
 	GetWindowText(hwnd_invcounter, old_value, STAT_LENGTH);
 	if (_tcscmp(new_value, old_value))
 	{
