@@ -76,7 +76,7 @@ const unsigned int  PACKET_CHECK_INTERVAL = 120000;
 const unsigned int  PACKET_COUNT_INTERVAL = 1000;
 const unsigned int  CHECK_DRAG_SCROLL_INTERVAL = 1000;
 const unsigned int  MAX_IDLE_TIME = 800000;
-const unsigned int  CHECK_INV_COUNT_INTERVAL = 2000;
+const unsigned int  CHECK_INV_COUNT_INTERVAL = 500;
 
 #ifdef AGENT
 #define MIN_MSECS_PER_FRAME 80

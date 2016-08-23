@@ -1740,6 +1740,7 @@ void cControlPanel::UpdateInvCount(void)
 				count = Lyra::INVENTORY_MAX;
 		}
 	}
+	actors->IterateItems(DONE);
 
 	_stprintf(new_value, _T("%02d/%02d\0"), count, Lyra::INVENTORY_MAX);
 	GetWindowText(hwnd_invcounter, old_value, STAT_LENGTH);
