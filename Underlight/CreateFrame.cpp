@@ -303,7 +303,6 @@ void __cdecl CreateFrame(void)
 		///_tprintf("not updating - not logged in\n");
 
 #ifndef AGENT
-
 		if (timing->lastFrame > timing->lastServerUpdate + PLAYER_STATS_UPDATE_INTERVAL)
 		{
 			gs->UpdateServer();
@@ -409,7 +408,7 @@ _tprintf(disp_message);
 	display->DisplayMessage(disp_message);
 _tprintf(disp_message);
 #endif
-
+		cp->UpdateInvCount();
 #endif
 	
    timing->frames++;

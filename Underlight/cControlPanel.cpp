@@ -222,6 +222,7 @@ cControlPanel::cControlPanel(void)
 	   tab_mode = NEIGHBORS_TAB; // default 
    captured = last_select_by_click = giving = useing = false;
    first_paint = true;
+   setCounter = false;
    WNDCLASS wc;
    WNDPROC	lpfn_inventory, lpfn_neighbors, lpfn_arts;
 
@@ -1721,34 +1722,26 @@ void cControlPanel::UpdateArt(lyra_id_t art)
 // update display of inventory counter
 void cControlPanel::UpdateInvCount(void)
 {
+	if(!setCounter)
+		return;
+
+	setCounter = false;
 	TCHAR new_value[STAT_LENGTH];
 	TCHAR old_value[STAT_LENGTH];
 	RECT region;
 	cItem *item = NO_ITEM;
-	int count = 0;
 
-	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT)) {
-		if (item->Status() == ITEM_OWNED)
-		{
-			count++;
-			if (count > Lyra::INVENTORY_MAX)
-				count = Lyra::INVENTORY_MAX;
-		}
+	_stprintf(new_value, _T("%02d/%02d\0"), num_items, Lyra::INVENTORY_MAX);
+	GetWindowText(hwnd_invcounter, old_value, STAT_LENGTH);
+	if (_tcscmp(new_value, old_value))
+	{
+		SetWindowText(hwnd_invcounter, new_value);
+		region.left = invcountPos[cDD->Res()].x;
+		region.top = invcountPos[cDD->Res()].y;
+		region.right = invcountPos[cDD->Res()].x + invcountPos[cDD->Res()].width;
+		region.bottom = invcountPos[cDD->Res()].y + invcountPos[cDD->Res()].height;
+		InvalidateRect(hwnd_tab, &region, FALSE);
 	}
-	actors->IterateItems(DONE);
-
-
-		_stprintf(new_value, _T("%02d/%02d\0"), count, Lyra::INVENTORY_MAX);
-		GetWindowText(hwnd_invcounter, old_value, STAT_LENGTH);
-		if (_tcscmp(new_value, old_value))
-		{
-			SetWindowText(hwnd_invcounter, new_value);
-			region.left = invcountPos[cDD->Res()].x;
-			region.top = invcountPos[cDD->Res()].y;
-			region.right = invcountPos[cDD->Res()].x + invcountPos[cDD->Res()].width;
-			region.bottom = invcountPos[cDD->Res()].y + invcountPos[cDD->Res()].height;
-			InvalidateRect(hwnd_tab, &region, FALSE);
-		}
 
 	return;
 }
