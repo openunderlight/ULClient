@@ -2865,6 +2865,8 @@
 #define IDS_SELF_DEMOTE                 4314
 #define IDS_MALE_REVENANT               4315
 #define IDS_FEMALE_REVENANT             4316
+#define IDS_LOGIN_COOLOFF               4317
+#define IDS_LOGIN_PMARE_LOCK            4318
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
