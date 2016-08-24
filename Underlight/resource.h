@@ -2868,7 +2868,6 @@
 #define IDS_FEMALE_REVENANT             4316
 #define IDS_LOGIN_COOLOFF               4317
 #define IDS_LOGIN_PMARE_LOCK            4318
-<<<<<<< HEAD
 #define IDS_RECEIVE_CHANNEL             4319
 #define IDS_RECEIVE_CHANNELKILL         4320
 #define IDS_CHANNEL_NOPARTY             4321
