@@ -4290,6 +4290,7 @@ BEGIN
     IDS_SHOW_IN_PARTY_CHANNEL 
                             "%s (Channel receiver) is in your party"
     IDS_CHANNEL_CLOSED      "%s is no longer channelling energy to you."                            
+    IDS_DOORBELL_ALERT      "%s has entered the house plane at %s\n"
 END
 
 #endif    // English (United States) resources

@@ -83,6 +83,10 @@ const int				MAX_NETWORK_VELOCITY =8;
 const TCHAR				NOT_A_SCROLL[Lyra::PLAYERNAME_MAX] = _T("****");
 // # of ms a player can't use items after a room change until a UDP update is received
 const DWORD				ROOM_CHANGE_THRESHHOLD = 2000; 
+const int				ALERT_TABLE_SIZE = 10;
+const int				ALERT_MSG_INTERVAL = 600000; // 10 minutes
+
+alert_t newly_alert[ALERT_TABLE_SIZE];
 
 // live server
 //ROUND_ROBIN
@@ -239,7 +243,11 @@ cGameServer::cGameServer(unsigned short udp_port_num, unsigned short gs_port_num
 	last_update.SetFlags(0);
 	last_room_target = last_level_target = -1;
 	displayed_item_use_message = false;
-
+	alert_count = 0;
+	for (int i = 0; i < ALERT_TABLE_SIZE; i++) {
+		_tcscpy(newly_alert[i].playerName, _T("0"));
+		newly_alert[i].alertTime = NULL;
+	}
 	num_packets_expected = num_packets_received = 0;
 	for (int i=0; i<DEFAULT_NUM_GAME_SERVERS; i++)
 		game_server_full[i] = false;
@@ -2161,13 +2169,35 @@ void cGameServer::HandleMessage(void)
 
 		case RMsg::NEWLYAWAKENED: // a newly awakened dreamer has entered our plane
 		{
-
 			RMsg_NewlyAwakened newly_msg;
 			if (newly_msg.Read(msgbuf) < 0) { GAME_ERROR(IDS_ERR_READ_NEWLY_WAKE_NOTIF_MSG); return; }
-			LoadString (hInstance, IDS_NEWLY_ALERT, disp_message, sizeof(message));
-			_stprintf(message, disp_message,  newly_msg.PlayerName(), level->RoomName(newly_msg.RoomID()));
-			display->DisplayMessage(message);
 
+			bool alert = true;
+			for (int i = 0; i < ALERT_TABLE_SIZE; i++) {
+				if ((_tcscmp(newly_alert[i].playerName, newly_msg.PlayerName()) == 0) && 
+					(newly_alert[i].alertTime + ALERT_MSG_INTERVAL > LyraTime())) {
+					alert = false;
+					break;
+				}
+			}
+			if (alert) {
+				int guildID = LevelGuild(level->ID());
+				if ((guildID != Guild::NO_GUILD) && (guildID == player->Avatar().GuildID()))
+				{ // This is a house plane and player is wearing the house crest - show who just arrived
+					LoadString(hInstance, IDS_DOORBELL_ALERT, disp_message, sizeof(message));
+				}
+				else { // Normal newly alerts for any other players and levels
+					LoadString(hInstance, IDS_NEWLY_ALERT, disp_message, sizeof(message));
+				}
+				_stprintf(message, disp_message, newly_msg.PlayerName(), level->RoomName(newly_msg.RoomID()));
+				display->DisplayMessage(message);
+
+				newly_alert[alert_count].alertTime = LyraTime();
+				_tcscpy(newly_alert[alert_count].playerName, newly_msg.PlayerName());
+				alert_count++;
+				if (alert_count >= ALERT_TABLE_SIZE)
+					alert_count = 0;
+			}
 		}
 		break;
 
@@ -4709,6 +4739,13 @@ void cGameServer::LevelLogout(int how)
 			party->RejectRequest();
 		party->DissolveParty();
 		delete party; party = NULL;
+	}
+
+	// Reset newly_alerts array table
+	alert_count = 0;
+	for (int i = 0; i < ALERT_TABLE_SIZE; i++) {
+		_tcscpy(newly_alert[i].playerName, _T("0"));
+		newly_alert[i].alertTime = NULL;
 	}
 
 	

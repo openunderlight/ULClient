@@ -84,6 +84,8 @@ int NumberTranslations(int type);
 TCHAR* GuildName(int guild_id);
 int GuildFlag(int guild_id);
 int	GuildID(int guild_flag);
+int GuildLevel(int guild_id);
+int LevelGuild(int level_id);
 TCHAR* RankName(int rank);
 TCHAR* RankGoalName(int rank);
 TCHAR* MonsterColorName(int color);
