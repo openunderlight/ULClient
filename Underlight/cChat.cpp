@@ -42,7 +42,7 @@ const int MIN_REPEAT_INTERVAL = 1000; // same message no more than once/sec
 
 // position for chat display area - no ads 
 const struct window_pos_t chatPos[MAX_RESOLUTIONS] = 
-{ { 0, 300, 480, 179 }, { 0, 375, 600, 223 }, { 0, 480, 768, 286 } };
+{ { 0, 300, 480, 180 }, { 0, 375, 600, 225 }, { 0, 480, 768, 288 } };
 	
 // position for chat display area - with banner
 //const struct window_pos_t chatPos = {0, 300, 480, 119}; 
@@ -595,6 +595,11 @@ LRESULT WINAPI RichEditWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 
 	    case WM_SETCURSOR:
 			return 0;
+		case WM_MOUSEWHEEL: {
+			Realm_OnMouseWheelScroll(hwnd, LOWORD(lParam), HIWORD(lParam), (short)HIWORD(wParam));
+			return (LRESULT)0;
+		}
+		break;
 	}  
 
 	return CallWindowProc( lpfn_wproc, hwnd, message, wParam, lParam);

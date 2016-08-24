@@ -76,6 +76,7 @@ const unsigned int  PACKET_CHECK_INTERVAL = 120000;
 const unsigned int  PACKET_COUNT_INTERVAL = 1000;
 const unsigned int  CHECK_DRAG_SCROLL_INTERVAL = 1000;
 const unsigned int  MAX_IDLE_TIME = 800000;
+const unsigned int  CHECK_INV_COUNT_INTERVAL = 500;
 
 #ifdef AGENT
 #define MIN_MSECS_PER_FRAME 80
@@ -303,7 +304,6 @@ void __cdecl CreateFrame(void)
 		///_tprintf("not updating - not logged in\n");
 
 #ifndef AGENT
-
 		if (timing->lastFrame > timing->lastServerUpdate + PLAYER_STATS_UPDATE_INTERVAL)
 		{
 			gs->UpdateServer();
@@ -409,7 +409,11 @@ _tprintf(disp_message);
 	display->DisplayMessage(disp_message);
 _tprintf(disp_message);
 #endif
-
+	if(timing->lastFrame > timing->lastInvCountUpdate + CHECK_INV_COUNT_INTERVAL)
+	{
+		timing->lastInvCountUpdate = timing->lastFrame;
+		cp->UpdateInvCount();
+	}
 #endif
 	
    timing->frames++;

@@ -89,6 +89,8 @@ private:
 	HWND hwnd_drop; 
 	HWND hwnd_meta; 
 	HWND hwnd_give;
+	HWND hwnd_invcounter;
+
 	HWND hwnd_usepp;
 	HWND hwnd_grantpp;
 
@@ -101,6 +103,7 @@ private:
 				 // intentionally misspelled since using is a reserved word
 	bool last_select_by_click; // true if last selection was made by a click
 	int curr_avatar_view; // view of current avatar
+	bool setCounter;
 
 	unsigned char munched_bits[ICON_WIDTH*ICON_HEIGHT*BYTES_PER_PIXEL];
 //	BOOL munched_bits_valid; // if this has been successfully filled in
@@ -220,6 +223,7 @@ public:
 	// update displays
 	void UpdateStats(void);
 	void UpdateArt(lyra_id_t art);
+	void UpdateInvCount(void);
 	void FillInArtString(lyra_id_t art, TCHAR *buffer);
 
 
@@ -227,6 +231,7 @@ public:
 	int  Mode(void);
 
 	inline bool MouseCaptured(void) { return captured;};
+	inline void SetUpdateInvCount(bool s) { setCounter = s; };	
 
 	// drag methods
 	bool UndrawDrag(unsigned char *buffer = NULL);

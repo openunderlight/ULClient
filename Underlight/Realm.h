@@ -67,7 +67,7 @@ struct timing_t
 	int	lastPacketCount;
 	int	lastDragScrollCheck;
 	int	frameCount;
-
+	int	lastInvCountUpdate;
 
 	inline timing_t() { memset(this,0,sizeof(timing_t));}
 
