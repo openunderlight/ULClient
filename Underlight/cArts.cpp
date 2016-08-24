@@ -7362,6 +7362,23 @@ cItem* cArts::HasQuestCodex(lyra_id_t neighbor_id, lyra_id_t art_id)
 	return quest_codex;
 }
 
+bool cArts::IsSharesFocus(lyra_id_t target_focus_id)
+{
+	if (player->Avatar().Focus() == target_focus_id) {
+		return true;
+	}
+	switch (target_focus_id)
+	{
+		case Arts::GATEKEEPER: return player->Skill(Arts::GATEKEEPER);
+		case Arts::DREAMSEER: return player->Skill(Arts::DREAMSEER);
+		case Arts::SOULMASTER: return player->Skill(Arts::SOULMASTER);
+		case Arts::FATESENDER: return player->Skill(Arts::FATESENDER);
+		default: return false;
+	}
+	// default to not the same focus
+	return false;
+}
+
 
 void cArts::EndTrain(void)
 {
@@ -7421,7 +7438,7 @@ void cArts::EndTrain(void)
 
 	}
 #ifndef GAMEMASTER	//GMs SHOULD be allowed to train arts even if not within their primary focus
-	else if (art_info[art_id].restricted() && (player->Avatar().Focus() != n->Avatar().Focus()))
+	else if (art_info[art_id].restricted() && !this->IsSharesFocus(n->Avatar().Focus()))
 	{
 		LoadString (hInstance, IDS_TRAIN_OTHER_FAILED, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, n->Name(), this->Descrip(art_id));
