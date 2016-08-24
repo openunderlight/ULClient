@@ -108,6 +108,7 @@ struct Lyra {
 
     ROOMNAME_MAX = 32,      // maximum room name length
     LEVELNAME_MAX = 64,     // maximum level name length
+	ROOMDESC_MAX = 1024,    // maximum room description length
 
 	MAX_CLOSING_GAMEDS = 1,  // number of gamed's that can be closing at one time
 	IP_LENGTH		  = 64,

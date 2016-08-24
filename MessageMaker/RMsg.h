@@ -52,13 +52,14 @@ struct RMsg {
     CHANGEAVATAR,          // CS/SC player changed avatar
     GETAVATARDESCRIPTION,  // CS    request avatar description
     RCVAVATARDESCRIPTION,  // SC    avatar description info
+
     NEWLYAWAKENED,		   // SC    alert teachers/guardians/rulers to newlies
 	CUPSUMMONS,			   // SC    alert when players enter the Cup Arena
+	ROOMLOGINACK,		   // SC    sent to client on each room login
+	GETROOMDESCRIPTION,    // CS    request room description
+	ROOMDESCRIPTION,       // SC    receive room description
 
-	ROOMLOGINACK,		   // SC    sent to client on each room login; required to prevent use 
-						   //		of aggressive arts, etc. before neighbors arrive
-
-    // 24 total
+    // 26 total
 
     MAX                    // maximum known type (must be last, and less than
                            // LyraMessage::RMSG_MAX)

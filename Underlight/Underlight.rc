@@ -4293,6 +4293,12 @@ BEGIN
     IDS_DOORBELL_ALERT      "%s has entered the house plane at %s\n"
 END
 
+STRINGTABLE
+BEGIN
+    IDS_ERR_READ_ROOM_DESC_MSG 
+                            "Error reading room description message from server!"
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 

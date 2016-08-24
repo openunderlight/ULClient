@@ -232,6 +232,7 @@ class cGameServer
 	  void SendItemDescripRequest(LmItemHdr& itemheader);
 	  void SendAvatarDescrip(void);
 	  void GetAvatarDescrip(lyra_id_t player_id);
+	  void GetRoomDescrip(int levelid, int roomid);
 
 	  void UsePPoints(short how, short var1, short var2, short var3);
 	  void GrantPPoint(lyra_id_t target_id, TCHAR* why);

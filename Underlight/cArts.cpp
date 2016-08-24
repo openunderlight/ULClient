@@ -1883,15 +1883,23 @@ void cArts::Know(void)
 	display->DisplayMessage (message, false);
 	this->ArtFinished(true);
 	cDS->PlaySound(LyraSound::KNOW, player->x, player->y, true);
+
 #ifndef AGENT
-	// look for room-specific description
-	for (int i=0;i<NUM_KNOW_STRINGS;i++)
-		if ((know_strings[i].level == level->ID()) && (know_strings[i].room == player->Room()))
-		{
-			LoadString (hInstance, know_strings[i].string, disp_message, sizeof(disp_message));
-			display->DisplayMessage (disp_message, false);
-		}
-#endif
+	if ((options.network) && gs && (gs->LoggedIntoLevel()))
+	{ // Logged in, get server database room description
+		gs->GetRoomDescrip(level->ID(), player->Room());
+	}
+	else
+	{	// network disabled or in training area, check for client-coded descriptions
+		for (int i = 0; i < NUM_KNOW_STRINGS; i++)
+			if ((know_strings[i].level == level->ID()) && (know_strings[i].room == player->Room()))
+			{
+				LoadString(hInstance, know_strings[i].string, disp_message, sizeof(disp_message));
+				display->DisplayMessage(disp_message, false);
+			}
+	}
+#endif // NOT AGENT
+
 	return;
 }
 
