@@ -2867,7 +2867,15 @@
 #define IDS_FEMALE_REVENANT             4316
 #define IDS_LOGIN_COOLOFF               4317
 #define IDS_LOGIN_PMARE_LOCK            4318
-#define IDS_RALLY_PREEMOTE              4319
+#define IDS_RECEIVE_CHANNEL             4319
+#define IDS_RECEIVE_CHANNELKILL         4320
+#define IDS_CHANNEL_NOPARTY             4321
+#define IDS_CHANNEL_EXPIRED             4322
+#define IDS_CHANNEL_CREATE              4323
+#define IDS_CHANNEL                     4324
+#define IDS_SHOW_IN_PARTY_CHANNEL       4325
+#define IDS_CHANNEL_CLOSED              4326
+#define IDS_RALLY_PREEMOTE              4327
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

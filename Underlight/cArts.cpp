@@ -243,6 +243,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x5D3E, // Chaotic Vortex 
 0x7EE1, // Chaos Well 
 0xA08F, // Rally 
+0xC767, // Channel
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -397,6 +398,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
 {IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT|MAKE_ITEM|LEARN},
 {IDS_RALLY,							Stats::WILLPOWER,	60, 30, 0,  5,  -1, SANCT|NEIGH|FOCUS},
+{IDS_CHANNEL,                       Stats::DREAMSOUL,   40, 35, 25, 3,  -1, SANCT|NEIGH|LEARN}
 };
 
 
@@ -1191,6 +1193,7 @@ void cArts::ApplyArt(void)
     case Arts::CHAOTIC_VORTEX: method = &cArts::ChaoticVortex; break;
 	case Arts::CHAOS_WELL: method = &cArts::EssenceContainer; break;
 	case Arts::RALLY: method = &cArts::StartRally; break;
+	case Arts::CHANNEL: method = &cArts::StartChannel; break;
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
 	}
@@ -3252,6 +3255,80 @@ void cArts::EndSenseDreamers(void *value)
 ////////////////////////////////////////////////////////////////
 // *** Arts that require selecting a neighbor ***
 ////////////////////////////////////////////////////////////////
+void cArts::StartChannel()
+{
+    if(gs->Party()->Members() < 1 && !player->IsChannelling())
+    {
+        LoadString(hInstance, IDS_PARTY_NOTMEMBER, message, sizeof(message));
+        display->DisplayMessage(message);
+        this->ArtFinished(false);
+        return;
+    }
+    
+    if(arts->ExpireChannel())
+    {
+        this->ArtFinished(true);
+    }
+    else
+    {
+    	this->WaitForSelection(&cArts::EndChannel, Arts::CHANNEL);
+	    this->CaptureCP(NEIGHBORS_TAB, Arts::CHANNEL);
+	    return;
+    }
+}
+
+bool cArts::ExpireChannel()
+{
+    if(player->IsChannelling())
+    {
+        gs->SendPlayerMessage(0, RMsg_PlayerMsg::CHANNEL,
+		    0, 0);
+        LoadString(hInstance, IDS_CHANNEL_EXPIRED, message, sizeof(message));
+        display->DisplayMessage(message);
+        player->SetChannelTarget(0);
+        return true;
+    }
+    
+    return false;
+}
+
+bool cArts::SetChannel(lyra_id_t nid)
+{
+    cNeighbor* n = actors->LookUpNeighbor(nid);
+    
+    if(!n || !gs->Party()->IsInParty(nid))
+	{
+        LoadString(hInstance, IDS_CHANNEL_NOPARTY, message, sizeof(message));
+        display->DisplayMessage(message);
+        return false;
+	}
+    else
+    {
+        gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::CHANNEL,
+		    player->Skill(Arts::CHANNEL), 0);
+        LoadString(hInstance, IDS_CHANNEL_CREATE, disp_message, sizeof(disp_message));
+        _stprintf(message, disp_message, n->Name());
+        display->DisplayMessage(message);
+        player->SetChannelTarget(nid);
+        return true;
+    }
+}
+
+void cArts::EndChannel()
+{
+	cNeighbor *n;
+	if (((n = cp->SelectedNeighbor()) != NO_ACTOR) && options.network &&
+		gs->Party() && (n->ID() != Lyra::ID_UNKNOWN))
+	{
+        this->ArtFinished(arts->SetChannel(n->ID()));
+        return;
+    }            
+    else
+    {
+        this->ArtFinished(false);
+        return;
+    }
+}
 
 //////////////////////////////////////////////////////////////////
 // Join Party
