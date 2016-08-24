@@ -2564,12 +2564,12 @@ BEGIN
     IDS_NO_SEEK_FIND_FLAT   "Could Not Seek to Find Flat."
     IDS_NO_READ_FLAT_BIT    "Could not read flat bits."
     IDS_ERR_READ_TEACHERPLAT_MSG "Error reading teacher plat message"
-    IDS_NO_RALLY_LEVEL      "You can not Rally others in this plane of the Dream; please try elsewhere.\n"
+    IDS_NO_RALLY_LEVEL      "You cannot use Rally here. Try again in another room or plane.\n"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_RALLY_NO_SS         "You cannot Rally a soulsphere!\n"
+    IDS_RALLY_NO_SS         "Rally cannot work on a soulsphere!\n"
     IDS_NO_ACCESS_REGISTRY  "Cannot access registry"
     IDS_0                   "0"
     IDS_1                   "1"
@@ -4274,6 +4274,7 @@ BEGIN
     IDS_SELF_DEMOTE         "Are you sure you really want to demote yourself %s %s?"
     IDS_MALE_REVENANT       "Revenant"
     IDS_FEMALE_REVENANT     "Revenant"
+    IDS_RALLY_PREEMOTE      "has been rallied away by another dreamer"
     IDS_LOGIN_COOLOFF       "You must wait 60 minutes between logins of different player characters."
     IDS_LOGIN_PMARE_LOCK    "Game Masters have temporarily disabled Player Mares due to an in-game event.  Please log in with your regular character and try again later."
 END

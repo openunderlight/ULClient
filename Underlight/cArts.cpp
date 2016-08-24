@@ -396,7 +396,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN|NEIGH},
 {IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
 {IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT|MAKE_ITEM|LEARN},
-{IDS_RALLY,							Stats::WILLPOWER,	60, 30, 0,  5,   4, SANCT|NEIGH|FOCUS},
+{IDS_RALLY,							Stats::WILLPOWER,	60, 30, 0,  5,  -1, SANCT|NEIGH|FOCUS},
 };
 
 
@@ -5382,37 +5382,53 @@ void cArts::EndSummon(void)
 
 void cArts::StartRally(void)
 {
-	for (int i=0; i<num_no_rally_levels; i++) 
-		if (no_rally_levels[i] == level->ID()){ // Cannot use Rally in levels with sphere/house locks
-			LoadString (hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
-			display->DisplayMessage (disp_message);
+	for (int i = 0; i < num_no_rally_levels; i++) {
+		if (no_rally_levels[i] == level->ID()) { // Cannot use Rally in levels with sphere/house locks
+			LoadString(hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
 			this->ArtFinished(false);
 			return;
 		}
+	}
+
 	if (gs->Party()->Members() < 1){ // Must be in a party to use Rally
 		LoadString (hInstance, IDS_RALLY_NOPARTY, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
+
+	int p_sector = FindSector(player->x, player->y, 0, false);
+	if ((p_sector == DEAD_SECTOR) ||  // Cannot Rally if stuck inside a wall, outside of a valid room (climbing area), or space is too small to stand.
+	  (level->Sectors[p_sector]->room == 0) ||
+	  (level->Sectors[p_sector]->CeilHt(player->x,player->y) - level->Sectors[p_sector]->FloorHt(player->x, player->y) <= player->physht))
+	{
+		LoadString(hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	this->WaitForSelection(&cArts::EndRally, Arts::RALLY);
 	this->CaptureCP(NEIGHBORS_TAB, Arts::RALLY);
 	return;
 }
 
-void cArts::ApplyRally(lyra_id_t caster_id)
+void cArts::ApplyRally(lyra_id_t caster_id, int dest_x, int dest_y)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	if (n == NO_ACTOR)
 		return;
-	rally_id = caster_id;
+	rally_x = dest_x;
+	rally_y = dest_y;
+	ushort dest_room = level->Rooms[level->Sectors[FindSector(rally_x, rally_y, 0, true)]->room].id;
 	this->DisplayUsedByOther(n,Arts::RALLY);
 	if (player->flags & ACTOR_SOULSPHERE)
 		return;
 	if (!acceptrejectdlg)
 		{
 			LoadString (hInstance, IDS_QUERY_RALLY, disp_message, sizeof(disp_message));
-				_stprintf(message, disp_message, level->RoomName(n->Room()), n->Name());
+				_stprintf(message, disp_message, level->RoomName(dest_room), n->Name());
 			HWND hDlg = CreateLyraDialog(hInstance, (IDD_ACCEPTREJECT),
 							cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
 			acceptreject_callback = (&cArts::GotRallied);
@@ -5424,16 +5440,22 @@ void cArts::ApplyRally(lyra_id_t caster_id)
 
 void cArts::GotRallied(void *value)
 {
-	if (player->flags & ACTOR_SOULSPHERE)
-		return;
 	int success = *((int*)value);
-	if (success){
-		player->EvokedFX().Activate(Arts::RALLY, false);
-		cNeighbor *n = this->LookUpNeighbor(rally_id);
-		player->EvokedFX().Activate(Arts::RALLY, false);
-		player->Teleport (n->x, n->y, n->angle, NO_LEVEL);
+	if (player->flags & ACTOR_SOULSPHERE) {
+		LoadString(hInstance, IDS_RALLY_NO_SS, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 	}
-	rally_id = 0;
+	else if (success) {
+		if (player->Room() != level->Rooms[level->Sectors[FindSector(rally_x, rally_y, 0, true)]->room].id) {
+			LoadString(hInstance, IDS_RALLY_PREEMOTE, message, sizeof(message));
+			gs->Talk(message, RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN);
+		}
+		player->Teleport(rally_x, rally_y, 0, NO_LEVEL);
+		player->EvokedFX().Activate(Arts::RALLY, false);
+	}
+    
+    // clear rally info on server in ALL CASES.
+	gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
 	return;
 }
 
@@ -5450,7 +5472,7 @@ void cArts::EndRally(void)
 	if (!gs->Party()->IsInParty(n->ID())){ //target must be in player's party
 		LoadString (hInstance, IDS_RALLY_NOTMEMBER, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, n->Name());
-		display->DisplayMessage(disp_message);
+		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
 	}
@@ -5462,7 +5484,9 @@ void cArts::EndRally(void)
 		return;
 	}
 */
-	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
+	short dest_x = (short)(player->x);
+	short dest_y = (short)(player->y);
+	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::RALLY, dest_x, dest_y);
 	this->DisplayUsedOnOther(n, Arts::RALLY);
 
 	this->ArtFinished(true);

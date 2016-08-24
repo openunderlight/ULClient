@@ -71,6 +71,8 @@ void RMsg_PlayerMsg::hton()
   HTONL(data_.senderid);
   HTONL(data_.receiverid);
   HTONS(data_.mtype);
+  HTONS(data_.state1);
+  HTONS(data_.state2);
   // no conversion: state1, state2
 }
 
@@ -83,6 +85,8 @@ void RMsg_PlayerMsg::ntoh()
   NTOHL(data_.senderid);
   NTOHL(data_.receiverid);
   NTOHS(data_.mtype);
+  NTOHS(data_.state1);
+  NTOHS(data_.state2);
   // no conversion: state1, state2
 }
 

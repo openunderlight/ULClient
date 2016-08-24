@@ -2640,7 +2640,7 @@ void cGameServer::HandleMessage(void)
 					break;
 
 				case RMsg_PlayerMsg::RALLY:
-					arts->ApplyRally(player_msg.SenderID());
+					arts->ApplyRally(player_msg.SenderID(), player_msg.State1(), player_msg.State2());
 					break;
 
 				case RMsg_PlayerMsg::REDEEM_GRATITUDE:
@@ -4251,24 +4251,24 @@ void cGameServer::AcceptPartyQuery(realmid_t playerID)
 }
 
 // Send a message to another player
-void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, unsigned char param1, unsigned char param2)
+void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2)
 {
-  RMsg_PlayerMsg player_msg;
-  cNeighbor * n;
-  
-  // don't send an art msg to another player if you haven't received updates from them yet.
-  // **** ALTERNATIVE TO WHO LIST DELAY ***
-  if ((RMsg_PlayerMsg::ArtType (msg_type) != Arts::NONE) && (destination_id > 0)) {
-    for (n = actors->IterateNeighbors(INIT); n != NO_ACTOR; n = actors->IterateNeighbors(NEXT))
-    {
-      if ((n->ID () == destination_id) && (!n->GotUpdate ()))
-	    {
-		    actors->IterateNeighbors (DONE);
-        return;
-	    }
-	  }
-	  actors->IterateNeighbors (DONE);
-  }
+	RMsg_PlayerMsg player_msg;
+	cNeighbor * n;
+
+	// don't send an art msg to another player if you haven't received updates from them yet.
+	// **** ALTERNATIVE TO WHO LIST DELAY ***
+	if ((RMsg_PlayerMsg::ArtType(msg_type) != Arts::NONE) && (destination_id > 0)) {
+		for (n = actors->IterateNeighbors(INIT); n != NO_ACTOR; n = actors->IterateNeighbors(NEXT))
+		{
+			if ((n->ID() == destination_id) && (!n->GotUpdate()))
+			{
+				actors->IterateNeighbors(DONE);
+				return;
+			}
+		}
+		actors->IterateNeighbors(DONE);
+	}
 
 	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2);
 	sendbuf.ReadMessage(player_msg);
