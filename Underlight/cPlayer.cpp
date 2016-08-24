@@ -695,7 +695,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_CURSE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		//  Curse and Protection offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration*3;
+		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration/4;
 		return false;
 		}
 		// Implementing Curse Effect
