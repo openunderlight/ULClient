@@ -659,16 +659,18 @@ int pp;
 		}
 		break;
 		case 6: // halo
-			if ( avatar.Teacher())
+			
+			if ( avatar.Teacher() || avatar.Apprentice())
 			{
-				const int NUM_HALO_COLORS = 5;
+				const int NUM_HALO_COLORS = 6;
 				static short halo_colors[NUM_HALO_COLORS][2] =
 				{
 					{2,0}, //	WILLPOWER, Yellow
 					{6,0}, //	INSIGHT, Blue
 					{3,0}, //	RESILIENCE, Green
 					{1,0},  //	LUCIDITY, Red
-					{7,0}  //	BLACK, NP Symbol
+					{7,0},  //	BLACK, NP Symbol
+					{0,0} //   Apprentice, Chalk
 				};
 
 				patch_point *halo_pos = points+PP_HEAD;
@@ -684,9 +686,18 @@ int pp;
 					patch.col			= halo_pos->col - float2int(bitmap_center/patch.resolution);
 					patch.bitmap		= halo_bitmap;
 					patch.palette_id	= LyraPalette::FX_PALETTE;
-					int halo_color      = min(avatar.Focus()-1, NUM_HALO_COLORS-1); // teacher's focus stat
+					int halo_color;
+
+					// NPSymbol takes priority
 					if (avatar.NPSymbol())
 						halo_color = 4;
+					// Teacher is second priority
+					else if (avatar.Teacher())
+						halo_color = min(avatar.Focus() - 1, NUM_HALO_COLORS - 2); // teacher's focus stat
+					// Default to apprentice, if exists
+					else if (avatar.Apprentice())
+						halo_color = 5;
+
 					patch.color_table	= &halo_colors[halo_color][0];
 					patch_visible		= true;
 				}
