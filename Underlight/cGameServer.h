@@ -47,6 +47,11 @@ struct last_attack_t
 	int		velocity;
 };
 
+struct alert_t {
+	TCHAR playerName[Lyra::PLAYERNAME_MAX];
+	DWORD alertTime;
+};
+
 // make manipulation of goal detail message easier
 typedef TCHAR pname_t[Lyra::PLAYERNAME_MAX];
 
@@ -130,6 +135,7 @@ class cGameServer
 	   long			mp_sessionid;
 	   int			last_room_target;
 	   int			last_level_target;
+	   int			alert_count;
 
    public:
       cGameServer(unsigned short udp_port_num = DEFAULT_UDP_PORT, unsigned short gs_port_num = 0);
@@ -212,8 +218,8 @@ class cGameServer
 	  void JoinParty(realmid_t playerID, bool auto_rejoin = false); // join another player's party
 	  void RejectPartyQuery(int reason, realmid_t playerID); // reject request
 	  void AcceptPartyQuery(realmid_t playerID); // accept request
+	  void SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2);
 	  void LeaveParty(realmid_t playerID); // leave the current party
-	  void SendPlayerMessage(lyra_id_t destination_id, short msg_type, unsigned char param1, unsigned char param2);
 	  void AvatarChange(LmAvatar new_avatar, bool permanent);
 	  void LocateAvatar(GMsg_LocateAvatar& locate_msg);
 
@@ -226,6 +232,7 @@ class cGameServer
 	  void SendItemDescripRequest(LmItemHdr& itemheader);
 	  void SendAvatarDescrip(void);
 	  void GetAvatarDescrip(lyra_id_t player_id);
+	  void GetRoomDescrip(int levelid, int roomid);
 
 	  void UsePPoints(short how, short var1, short var2, short var3);
 	  void GrantPPoint(lyra_id_t target_id, TCHAR* why);

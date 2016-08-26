@@ -298,6 +298,7 @@
     <ClInclude Include="RMsg_EnterRoom.h" />
     <ClInclude Include="RMsg_Error.h" />
     <ClInclude Include="RMsg_GetAvatarDescription.h" />
+    <ClInclude Include="RMsg_GetRoomDescription.h" />
     <ClInclude Include="RMsg_GotoRoom.h" />
     <ClInclude Include="RMsg_ItemDrop.h" />
     <ClInclude Include="RMsg_ItemHdrDrop.h" />
@@ -313,6 +314,7 @@
     <ClInclude Include="RMsg_PlayerMsg.h" />
     <ClInclude Include="RMsg_PlayerUpdate.h" />
     <ClInclude Include="RMsg_RcvAvatarDescription.h" />
+    <ClInclude Include="RMsg_RoomDescription.h" />
     <ClInclude Include="RMsg_RoomLoginAck.h" />
     <ClInclude Include="RMsg_Speech.h" />
     <ClInclude Include="RMsg_Update.h" />
@@ -402,6 +404,7 @@
     <None Include="RMsg_EnterRoom.i" />
     <None Include="RMsg_Error.i" />
     <None Include="RMsg_GetAvatarDescription.i" />
+    <None Include="RMsg_GetRoomDescription.i" />
     <None Include="RMsg_GotoRoom.i" />
     <None Include="RMsg_ItemDrop.i" />
     <None Include="RMsg_ItemHdrDrop.i" />
@@ -417,6 +420,7 @@
     <None Include="RMsg_PlayerMsg.i" />
     <None Include="RMsg_PlayerUpdate.i" />
     <None Include="RMsg_RcvAvatarDescription.i" />
+    <None Include="RMsg_RoomDescription.i" />
     <None Include="RMsg_RoomLoginAck.i" />
     <None Include="RMsg_Speech.i" />
     <None Include="RMsg_Update.i" />
@@ -1283,6 +1287,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="RMsg_GetRoomDescription.cpp" />
     <ClCompile Include="RMsg_GotoRoom.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -1433,6 +1438,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="RMsg_RoomDescription.cpp" />
     <ClCompile Include="RMsg_RoomLoginAck.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

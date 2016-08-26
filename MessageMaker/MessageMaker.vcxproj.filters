@@ -366,6 +366,12 @@
     <ClInclude Include="unix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RMsg_GetRoomDescription.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RMsg_RoomDescription.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="AMsg_AgentInfo.i">
@@ -667,6 +673,12 @@
     </None>
     <None Include="RMsg_Update.i">
       <Filter>Inline</Filter>
+    </None>
+    <None Include="RMsg_GetRoomDescription.i">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="RMsg_RoomDescription.i">
+      <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -983,6 +995,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LmXPTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_RoomDescription.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RMsg_GetRoomDescription.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
