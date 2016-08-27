@@ -1500,10 +1500,10 @@ int __cdecl OutOfMemory(size_t size)
 
 
 // note: update these yearly!
-const int DT_START_MONTH = 3;
-const int DT_END_MONTH = 11;
-const int DT_START_DAY = 13;
-const int DT_END_DAY = 1;
+const int DT_START_MONTH = 3; // 2017
+const int DT_END_MONTH = 11; // 2016
+const int DT_START_DAY = 12; // 2017
+const int DT_END_DAY = 6; // 2016
 const int DT_START_HOUR = 2;
 const int DT_END_HOUR = 2;
 
