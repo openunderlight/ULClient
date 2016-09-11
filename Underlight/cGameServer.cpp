@@ -2341,10 +2341,8 @@ void cGameServer::HandleMessage(void)
 			} 
 			bool art_reflected = false;
 			if (player->flags & ACTOR_REFLECT) {
-				// 1-50% chance (starts at 1%, increases 1% every other art improvement, 5% per plateau)
-				// sets to level 49 if the player does not have the art (set by item)
-				int skillCheck = player->Skill(Arts::REFLECT) == 0 ? 49 : player->Skill(Arts::REFLECT);
-				if (rand()%100 <= (1+ skillCheck)/2)
+				
+				if (rand()%100 <= player->reflect_strength)
 					art_reflected = true;
 				if (art_reflected){
 						cNeighbor *n = actors->LookUpNeighbor(player_msg.SenderID());
