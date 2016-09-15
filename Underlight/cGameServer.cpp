@@ -4329,7 +4329,7 @@ void cGameServer::AcceptPartyQuery(realmid_t playerID)
 }
 
 // Send a message to another player
-void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2)
+void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2, short param3)
 {
 	RMsg_PlayerMsg player_msg;
 	cNeighbor * n;
@@ -4348,7 +4348,7 @@ void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, sh
 		actors->IterateNeighbors(DONE);
 	}
 
-	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2);
+	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2, param3);
 	sendbuf.ReadMessage(player_msg);
 	send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
 
