@@ -5422,7 +5422,7 @@ void cArts::EndSoulShield(void)
 void cArts::StartSummon(void)
 {
 #ifdef GAMEMASTER
-	this->WaitForSelection(&cArts::EndSummon, Arts::SUMMON);
+	this->WaitForSelection(&cArts::MidSummon, Arts::SUMMON);
 	this->AddDummyNeighbor();
 	this->CaptureCP(NEIGHBORS_TAB, Arts::SUMMON);
 #else
@@ -5430,6 +5430,25 @@ void cArts::StartSummon(void)
 	display->DisplayMessage (disp_message);
 	this->ArtFinished(true);
 #endif
+	return;
+}
+
+void cArts::MidSummon(void)
+{
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+	entervaluedlg = true;
+	//LoadString(hInstance, IDS_TELEPORT_DLG_MSG, message, sizeof(message));
+	strcpy(message, "Enter Teleport Coordinates (x; y; level)");
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
+	entervalue_callback = (&cArts::EndSummon);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	this->WaitForDialog(hDlg, Arts::SUMMON);
+
 	return;
 }
 
@@ -5448,28 +5467,44 @@ void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int level)
 	return;
 }
 
-void cArts::EndSummon(void)
+void cArts::EndSummon(void *value)
 {
+
+	if (!value)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
 	cNeighbor *n = cp->SelectedNeighbor();
 
+	float x, y; int level_id;
 	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
 	{
 		this->DisplayNeighborBailed(Arts::SUMMON);
 		this->ArtFinished(false);
 		return;
-	} else if (n->ID() == player->ID())
-	{
-		this->ApplySummon(player->ID(), -7839, 12457, 43); // Unknown
 	}
+	// parse the message into appropriate coordinates
+	else if (_stscanf(message, _T("%f;%f;%d"), &x, &y, &level_id) == 3)
+	{
+		if (n->ID() == player->ID())
+		{
+			this->ApplySummon(player->ID(), x, y, level_id);
+		}
+		else
+		{
+			gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::SUMMON, x, y, level_id);
+			this->DisplayUsedOnOther(n, Arts::SUMMON);
+		}
 
+		this->ArtFinished(true);
+		return;
+	}
 	else
 	{
-		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::SUMMON, -7839, 12457, 43);
-		this->DisplayUsedOnOther(n, Arts::SUMMON);
+		this->ArtFinished(false);
 	}
-
-	this->ArtFinished(true);
-	return;
 }
 
 //////////////////////////////////////////////////////////////////
