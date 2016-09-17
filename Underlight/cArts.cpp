@@ -5433,7 +5433,7 @@ void cArts::StartSummon(void)
 	return;
 }
 
-void cArts::ApplySummon(lyra_id_t caster_id)
+void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int level)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::SUMMON);
@@ -5442,8 +5442,8 @@ void cArts::ApplySummon(lyra_id_t caster_id)
 		return;
 
     player->EvokedFX().Activate(Arts::SUMMON, false);
-
-	player->Teleport (-7839,12457,-90,43 );	// Unknown
+	// use the supplied coordinates
+	player->Teleport(x, y, 0, level);
 
 	return;
 }
@@ -5459,12 +5459,12 @@ void cArts::EndSummon(void)
 		return;
 	} else if (n->ID() == player->ID())
 	{
-		player->Teleport (-7839,12457,-90,43);	// Unknown
+		this->ApplySummon(player->ID(), -7839, 12457, 43); // Unknown
 	}
 
 	else
 	{
-		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::SUMMON, player->Skill(Arts::SUMMON), 0);
+		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::SUMMON, -7839, 12457, 43);
 		this->DisplayUsedOnOther(n, Arts::SUMMON);
 	}
 

@@ -296,7 +296,7 @@ public:
 	void ApplySoulShield(int skill, lyra_id_t caster_id);
 	void EndSoulShield(void);
 	void StartSummon(void);
-	void ApplySummon(lyra_id_t caster_id);
+	void ApplySummon(lyra_id_t caster_id, int x, int y, int level);
 	void EndSummon(void);
 	void StartSuspend(void);
 	void MidSuspend(void);
