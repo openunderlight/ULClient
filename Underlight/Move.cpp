@@ -1836,8 +1836,8 @@ static int PlayerTripLine(linedef *aLine)
 						//if (actors->ValidItem(amulets[i]))
 						// amulets[i]->DrainCharge();
 					}
-				if (!has_proper_amulet && player->flags & ACTOR_BLENDED)
-				{ // player is blended, so kill the blending but pass the ward
+				if (ward.strength < 100 && !has_proper_amulet && player->flags & ACTOR_BLENDED)
+				{ // player is blended and the ward is blendable, so kill the blending but pass the ward
 					has_proper_amulet = true;
 					player->RemoveTimedEffect(LyraEffect::PLAYER_BLENDED);
 				}

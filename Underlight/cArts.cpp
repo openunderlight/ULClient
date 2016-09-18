@@ -1175,7 +1175,7 @@ void cArts::ApplyArt(void)
 		case Arts::PASSLOCK: method = &cArts::Blend; break;
 		case Arts::HEAL: method = &cArts::StartRestore; break;
 		case Arts::SANCTIFY: method = &cArts::StartResistCurse; break;
-		case Arts::LOCK: method = &cArts::Ward; break;
+		case Arts::LOCK: method = &cArts::Lock; break;
 		case Arts::KEY: method = &cArts::Amulet; break;
 		case Arts::BREAK_LOCK: method = &cArts::Shatter; break;
 		case Arts::REPAIR: method = &cArts::StartReweave; break;
@@ -1581,22 +1581,18 @@ void cArts::EssenceContainer(void)
 	this->ArtFinished(true);
 }
 
-//////////////////////////////////////////////////////////////////
-// Ward
-
-void cArts::Ward(void)
+void cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 {
 	LmItem info;
-	LmItemHdr header;
 	cItem *item;
-	lyra_item_ward_t ward = {LyraItem::WARD_FUNCTION, 0, 0, 0, 0};
+
 	int items_in_room = 0;
 
 	linedef *line; line = FindTeleportal(player);
 
 	if (line == NULL)
 	{	// no teleportal nearby
-		LoadString (hInstance, IDS_NO_TELEPORTAL, disp_message, sizeof(disp_message));
+		LoadString(hInstance, IDS_NO_TELEPORTAL, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
@@ -1604,7 +1600,7 @@ void cArts::Ward(void)
 
 	if ((line->flags & LINE_NO_WARD) || (level->Rooms[player->Room()].flags & ROOM_NOREAP))
 	{	// can't ward this teleportal; in no reap areas, wards would last forever!
-		LoadString (hInstance, IDS_NO_WARDING, disp_message, sizeof(disp_message));
+		LoadString(hInstance, IDS_NO_WARDING, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
@@ -1619,7 +1615,7 @@ void cArts::Ward(void)
 		if ((item->ItemFunction(0) == LyraItem::WARD_FUNCTION) && (line == ((linedef*)item->Extra())))
 		{
 			actors->IterateItems(DONE);
-			LoadString (hInstance, IDS_ALREADY_WARDED, disp_message, sizeof(disp_message));
+			LoadString(hInstance, IDS_ALREADY_WARDED, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
 			this->ArtFinished(false);
 			return;
@@ -1629,8 +1625,8 @@ void cArts::Ward(void)
 
 	if (items_in_room >= Lyra::MAX_ROOMITEMS)
 	{
-		LoadString (hInstance, IDS_MAX_ROOMITEMS, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
+		LoadString(hInstance, IDS_MAX_ROOMITEMS, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
@@ -1640,28 +1636,22 @@ void cArts::Ward(void)
 	int guild_id = GetTripGuild(line->flags);
 	if (!CanPassPortal(line->trip3, guild_id, true))
 	{
-		LoadString (hInstance, IDS_CANT_WARD_IMPASSABLE, disp_message, sizeof(disp_message));
+		LoadString(hInstance, IDS_CANT_WARD_IMPASSABLE, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
 
 	// uncomment to prevent warding of trip_cross teleportals
-// if (!(line->flags & TRIP_ACTIVATE))
-// {
-// 	LoadString (hInstance, IDS_WARD_TRIP_ONLY, disp_message, sizeof(disp_message));
-// 	display->DisplayMessage(disp_message);
-// 	this->ArtFinished(false);
-// 	return;
-// }
+	// if (!(line->flags & TRIP_ACTIVATE))
+	// {
+	// 	LoadString (hInstance, IDS_WARD_TRIP_ONLY, disp_message, sizeof(disp_message));
+	// 	display->DisplayMessage(disp_message);
+	// 	this->ArtFinished(false);
+	// 	return;
+	// }
 
-	header.Init(0, 0);
-	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP );
-	header.SetGraphic(LyraBitmap::WARD);
-	header.SetColor1(0); header.SetColor2(0);
-	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
-
-	ward.strength = player->Skill(art_in_use);
+	// common ward attributes
 	ward.from_vert = (short)line->from;
 	ward.to_vert = (short)line->to;
 	ward.set_player_id(player->ID());
@@ -1670,7 +1660,7 @@ void cArts::Ward(void)
 	info.Init(header, message, 0, 0, 0);
 	info.SetStateField(0, &ward, sizeof(ward));
 	info.SetCharges(1);
-	int ttl = 120*((player->SkillSphere(art_in_use))+1);
+	int ttl = 120 * (player->SkillSphere(Arts::WARD) + 1);
 	item = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
 	if (item == NO_ITEM)
 	{
@@ -1682,6 +1672,49 @@ void cArts::Ward(void)
 
 	this->ArtFinished(true);
 	return;
+}
+
+void cArts::Lock(void)
+{
+#ifndef GAMEMASTER
+	LoadString(hInstance, IDS_GM_ONLY, disp_message, sizeof(disp_message));
+	display->DisplayMessage(disp_message);
+	this->ArtFinished(true);
+#endif
+	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
+	LmItemHdr header;
+
+	header.Init(0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_NOREAP);
+	
+	//header.SetGraphic(LyraBitmap::META_ESSENCE); 
+	header.SetGraphic(LyraBitmap::WARD);
+	header.SetColor1(0); header.SetColor2(0);
+	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
+
+	// Set strength to a high level to mark it as unable to blend/shatter
+	ward.strength = 1000;
+
+	this->PlaceLock(ward, header);
+}
+
+//////////////////////////////////////////////////////////////////
+// Ward
+
+void cArts::Ward(void)
+{
+	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
+	LmItemHdr header;
+
+	header.Init(0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.SetGraphic(LyraBitmap::WARD);
+	header.SetColor1(0); header.SetColor2(0);
+	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
+
+	ward.strength = player->Skill(art_in_use);
+
+	this->PlaceLock(ward, header);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -1749,19 +1782,35 @@ void cArts::Shatter(void)
 	{	// see if there's a ward on the teleportal
 		for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
 			if ((item->ItemFunction(0) == LyraItem::WARD_FUNCTION) && (line == ((linedef*)item->Extra())))
+			{
+				memcpy(&ward, item->Lmitem().StateField(0), sizeof(ward));
 				break;
+			}
 		actors->IterateItems(DONE);
 	}
 
 	if ((line == NULL) || (item == NO_ACTOR))
 	{
-		LoadString (hInstance, IDS_NO_WARD, disp_message, sizeof(disp_message));
+		LoadString(hInstance, IDS_NO_WARD, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
+
+	if (item->NoReap())
+	{
+#ifndef GAMEMASTER
+		//LoadString(hInstance, IDS_NO_WARD, disp_message, sizeof(disp_message));
+		strcpy(disp_message, "That ward cannot be shattered.");
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+#endif
+	}
+
 	if (!item->Destroy())
 		item->SetTerminate();
+	
 	LoadString (hInstance, IDS_WARD_SHATTERED, disp_message, sizeof(disp_message));
 	display->DisplayMessage(disp_message, false);
 	cDS->PlaySound(LyraSound::SHATTER, player->x, player->y, true);
