@@ -2054,7 +2054,7 @@ BEGIN
                             "Enter the City of Dreams in the chambers of House Calenture.\n"
     IDS_TRAIN_HOUSES_ENTRANCED 
                             "Enter the City of Dreams in the chambers of the Gathering of the Entranced.\n"
-    IDS_TRAIN_HOUSES_LIGHT  "Enter the City of Dreams in the chambers of the Dreamers of Light.\n"
+    IDS_TRAIN_HOUSES_LIGHT  "Enter the City of Dreams in the chambers of the Order of Light.\n"
 END
 
 STRINGTABLE
@@ -2749,7 +2749,7 @@ STRINGTABLE
 BEGIN
     IDS_HC                  "House Calenture"
     IDS_GOE                 "Gathering of the Entranced"
-    IDS_DOL                 "Dreamers of Light"
+    IDS_DOL                 "Order of Light"
     IDS_ANY_HOUSE           "any house"
     IDS_NONE                "None"
     IDS_GOAL                "goal"
@@ -2838,7 +2838,7 @@ BEGIN
     IDS_POR_MEMBER_TOKEN    "Protectors of the Radiance Membership Token"
     IDS_HC_MEMBER_TOKEN     "House Calenture Membership Token"
     IDS_GOE_MEMBER_TOKEN    "Gathering of the Entranced Membership Token"
-    IDS_DOL_MEMBER_TOKEN    "Dreamers of Light Membership Token"
+    IDS_DOL_MEMBER_TOKEN    "Order of Light Membership Token"
     IDS_CLEANSED_NIGHTMARE_TOKEN "Cleansed Nightmare Token"
 END
 
@@ -3075,7 +3075,7 @@ BEGIN
                             "House Calenture is a Freesoul house, knowing full well that nothing experienced in the Dream will have physical effect on the shards of Cloudsbreak. Knowing this, they also believe that the Dream is a place where the scatted folks of Cloudsbreak may commune. They defend this meeting place from Nightmares and other destroyers with dour Warrior skills. House Calenture uses the Orb of Calenture to Banish Nightmare Essences. This sacred relic was the first such device ever forged. "
     IDS_TRAIN_BELIEF_ENTRANCED 
                             "The Gathering of the Entranced in an Illuminated house that beliefs in a delicate balance between all planes of existence and it is their goal to bring this balance to all things.They wage an eternal holy war against what they call ""Taint"", the embodiment of the evils of all creatures. They wish to convert all living things to their faith, and so stop the taint from spreading. The nightmares represent the physical form of taint in the dream, and so are the enemy of the Entranced."
-    IDS_TRAIN_BELIEF_LIGHT  "The Dreamers of Light is an Illuminated House dedicated to the saving, and protection of the Unawakened.  They believe that imprisoning Nightmares is the best, and surest way of dealing with them."
+    IDS_TRAIN_BELIEF_LIGHT  "The Order of Light is an Illuminated House dedicated to the saving, and protection of the Unawakened.  They believe that imprisoning Nightmares is the best, and surest way of dealing with them."
     IDS_ACTIVE              "Active"
     IDS_COMPLETED           "Completed"
     IDS_MAX_ACCEPTED        "Max Accepted"
@@ -3840,7 +3840,7 @@ STRINGTABLE
 BEGIN
     IDS_KNOW0629            "The turf here is lush and springy, suggestive of marshy conditions. A cool breeze carries the scent of exotic flowers and the cries of birds. A crystalline stream forms a path leading to the Alliance of the Eclipse."
     IDS_KNOW0528            "A wasteland of stone and sand stretches before you. The air is dry and hot. Ancient mounds, worn by time, dot the landscape. A carefully fitted stone path meanders among the natural splendors on its way to the Union of the Covenant."
-    IDS_KNOW0401            "Massive rock walls rise up to delineate a path along an escarpment. Strong winds gust from time to time, pushing at you with a strong force. The footpath up the mountain is worn from countless travelers' steps on its way to the Dreamers of Light."
+    IDS_KNOW0401            "Massive rock walls rise up to delineate a path along an escarpment. Strong winds gust from time to time, pushing at you with a strong force. The footpath up the mountain is worn from countless travelers' steps on its way to the Order of Light."
     IDS_KNOW2005            "A radiant sense of peace and warmth pervades the atmosphere here, the gentle colors are pleasing to the eye. The hand-woven tapestries that hang from the ceiling are of exceptional quality and show a master artist's touch."
     IDS_NO_ARTS_DOCA_PIT    "No Arts can be evoked in this room."
     IDS_KNOW0326            "Graceful arches coax your gaze up to the stars of a pastel sky. A warm, gentle breeze carries the scent of flowers and waterfalls gently through the grasses. A pathway of polished stone leads onward to the Gathering of the Entranced."
