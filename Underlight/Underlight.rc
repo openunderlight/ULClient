@@ -2049,7 +2049,7 @@ BEGIN
     IDS_TRAIN_HOUSES_COVENANT 
                             "Enter the City of Dreams in the chambers of the Union of the Covenant.\n"
     IDS_TRAIN_HOUSES_RADIANCE 
-                            "Enter the City of Dreams in the chambers of the Protectors of the Radiance.\n"
+                            "Enter the City of Dreams in the chambers of the Peace Corpse.\n"
     IDS_TRAIN_HOUSES_CALENTURE 
                             "Enter the City of Dreams in the chambers of House Calenture.\n"
     IDS_TRAIN_HOUSES_ENTRANCED 
@@ -2742,7 +2742,7 @@ BEGIN
     IDS_AOE                 "Alliance of the Eclipse"
     IDS_KOES                "Keepers of Eternal Shadow"
     IDS_UOC                 "Union of the Covenant"
-    IDS_POR                 "Protectors of the Radiance"
+    IDS_POR                 "Peace Corpse"
 END
 
 STRINGTABLE
@@ -2835,7 +2835,7 @@ BEGIN
     IDS_AOE_MEMBER_TOKEN    "Alliance of the Eclipse Membership Token"
     IDS_KOES_MEMBER_TOKEN   "Keepers of Eternal Shadow Membership Token"
     IDS_UOC_MEMBER_TOKEN    "Union of the Covenant Membership Token"
-    IDS_POR_MEMBER_TOKEN    "Protectors of the Radiance Membership Token"
+    IDS_POR_MEMBER_TOKEN    "Peace Corpse Membership Token"
     IDS_HC_MEMBER_TOKEN     "House Calenture Membership Token"
     IDS_GOE_MEMBER_TOKEN    "Gathering of the Entranced Membership Token"
     IDS_DOL_MEMBER_TOKEN    "Dreamers of Light Membership Token"
@@ -3070,7 +3070,7 @@ BEGIN
     IDS_TRAIN_BELIEF_COVENANT 
                             "The Union of the Covenant is a Freesoul House and follows the tenets of Justice, Freedom, Defense, and Honor. Their duty is to the Covenant in which they take to live by, and defend those tenets.  They believe Essence of Nightmares is merely the energy left behind from an avatar, and drain that energy for its uses."
     IDS_TRAIN_BELIEF_RADIANCE 
-                            "Protectors of the Radiance is a Warrior Illuminated House. They save the souls of the unawakened by banishing essences, which they call the Crusade of the Unawakened. It is a Protector's solemn duty to follow Illuminated beliefs and the Crusade. They use an artifact known as the ""Soul of Radiance"" to banish nightmare essences."
+                            "Peace Corpse is a Warrior House. They save the souls of the unawakened by banishing essences, which they call the Crusade of the Unawakened. It is a Protector's solemn duty to follow Illuminated beliefs and the Crusade. They use an artifact known as the ""Soul of Radiance"" to banish nightmare essences."
     IDS_TRAIN_BELIEF_CALENTURE 
                             "House Calenture is a Freesoul house, knowing full well that nothing experienced in the Dream will have physical effect on the shards of Cloudsbreak. Knowing this, they also believe that the Dream is a place where the scatted folks of Cloudsbreak may commune. They defend this meeting place from Nightmares and other destroyers with dour Warrior skills. House Calenture uses the Orb of Calenture to Banish Nightmare Essences. This sacred relic was the first such device ever forged. "
     IDS_TRAIN_BELIEF_ENTRANCED 
@@ -3844,7 +3844,7 @@ BEGIN
     IDS_KNOW2005            "A radiant sense of peace and warmth pervades the atmosphere here, the gentle colors are pleasing to the eye. The hand-woven tapestries that hang from the ceiling are of exceptional quality and show a master artist's touch."
     IDS_NO_ARTS_DOCA_PIT    "No Arts can be evoked in this room."
     IDS_KNOW0326            "Graceful arches coax your gaze up to the stars of a pastel sky. A warm, gentle breeze carries the scent of flowers and waterfalls gently through the grasses. A pathway of polished stone leads onward to the Gathering of the Entranced."
-    IDS_KNOW1301            "A deep grand valley opens before you. High above the winds howl like the clamor of battle, while below all is hushed silence. Gigantic monuments of stone, formed in impossible shapes, mark the path leading to the Protectors of Radiance."
+    IDS_KNOW1301            "A deep grand valley opens before you. High above the winds howl like the clamor of battle, while below all is hushed silence. Gigantic monuments of stone, formed in impossible shapes, mark the path leading to the Peace Corpse."
     IDS_KNOW1202            "Scorched and blackened earth spreads out before you. The gloomy sky hangs low and heavy, blanketing the land in perpetual twilight. An ancient path, clear of ash, leads through the darkened realm towards House Calenture."
     IDS_KNOW1522            "Plantlife of all varieties covers ground and walls. A hazy sky casts muted light and long shadows. A small warm breeze whispers as an indistinct path makes its way in and out of dark tunnels on its way to the Keepers of Eternal Shadow."
     IDS_KNOW2917            "The air here is dank and cold. Where elsewhere even the slightest hum of energy can be felt, this place is utterly lifeless. A sense of loss and foreboding hangs in the atmosphere like a dark spectre."
