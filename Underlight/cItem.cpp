@@ -87,6 +87,9 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 	max_sort_index++;
 	sort_index = max_sort_index;
 
+	if (lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP))
+		draggable = false;
+
 	if (palette == MAGIC_AVATAR_PALETTE_1)
 		num_color_regions = 2;
 
@@ -239,8 +242,7 @@ bool cItem::RightClick(void)
 		if ((!is_scroll) || ((lmitem.Charges() >= INFINITE_CHARGES - 1) && (status == ITEM_UNOWNED)))
 			gs->SendItemDescripRequest(lmitem.Header());
 	}
-
-
+		
 	if (this->ItemFunction(0) == LyraItem::META_ESSENCE_FUNCTION)
 	{
 		const void *state = lmitem.StateField(0);
@@ -262,6 +264,12 @@ bool cItem::RightClick(void)
 	}
 	else
 	{
+#if ! (defined (UL_DEBUG) || defined (GAMEMASTER))
+		// forged ornament - don't go further, we'll display the description text on Right Click
+		// but they shouldn't see the That's a W_F_BOOBIES_1 message.
+		if (!draggable)
+			return true;
+#endif
 		LoadString (hInstance, IDS_ITEM_DESCRIBE, disp_message, sizeof(disp_message));
 		// only colorize talismans t0-t9
 		if (bitmap_id == LyraBitmap::DREAMBLADE)
@@ -1639,5 +1647,6 @@ cItem* CreateItem(float i_x, float i_y, int i_angle, LmItem& i_lmitem,
 
 	return item;
 }
+
 
 
