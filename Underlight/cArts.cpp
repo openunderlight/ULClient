@@ -91,6 +91,11 @@ const int CHANCE_SKILL_INCREASE = 15; // % chance of skill increase
 const int CASTING_TIME_MULTIPLIER = 150; // milliseconds per unit of casting time
 const int MIN_DS_SOULEVOKE = 10;
 
+// last summon coords
+float last_summon_x = -7839;
+float last_summon_y = 12457;
+int last_summon_level = 43;
+
 unsigned long art_chksum[NUM_ARTS] =
 {
 0x0970, // Join Party 
@@ -5441,10 +5446,9 @@ void cArts::MidSummon(void)
 		return;
 	}
 	entervaluedlg = true;
-	//LoadString(hInstance, IDS_TELEPORT_DLG_MSG, message, sizeof(message));
-	strcpy(message, "Enter Teleport Coordinates (x; y; level)");
+	_stprintf(message, _T("%d;%d;%d"), (int)last_summon_x, (int)last_summon_y, last_summon_level);
 	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
-		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
+		cDD->Hwnd_Main(), (DLGPROC)SummonDlgProc);
 	entervalue_callback = (&cArts::EndSummon);
 	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
 	this->WaitForDialog(hDlg, Arts::SUMMON);
@@ -5488,6 +5492,9 @@ void cArts::EndSummon(void *value)
 	// parse the message into appropriate coordinates
 	else if (_stscanf(message, _T("%f;%f;%d"), &x, &y, &level_id) == 3)
 	{
+		last_summon_x = x;
+		last_summon_y = y;
+		last_summon_level = level_id;
 		if (n->ID() == player->ID())
 		{
 			this->ApplySummon(player->ID(), x, y, level_id);
