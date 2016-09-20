@@ -91,6 +91,11 @@ const int CHANCE_SKILL_INCREASE = 15; // % chance of skill increase
 const int CASTING_TIME_MULTIPLIER = 150; // milliseconds per unit of casting time
 const int MIN_DS_SOULEVOKE = 10;
 
+// last summon coords
+float last_summon_x = -7839;
+float last_summon_y = 12457;
+int last_summon_level = 43;
+
 unsigned long art_chksum[NUM_ARTS] =
 {
 0x0970, // Join Party 
@@ -5422,7 +5427,7 @@ void cArts::EndSoulShield(void)
 void cArts::StartSummon(void)
 {
 #ifdef GAMEMASTER
-	this->WaitForSelection(&cArts::EndSummon, Arts::SUMMON);
+	this->WaitForSelection(&cArts::MidSummon, Arts::SUMMON);
 	this->AddDummyNeighbor();
 	this->CaptureCP(NEIGHBORS_TAB, Arts::SUMMON);
 #else
@@ -5433,7 +5438,25 @@ void cArts::StartSummon(void)
 	return;
 }
 
-void cArts::ApplySummon(lyra_id_t caster_id)
+void cArts::MidSummon(void)
+{
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+	entervaluedlg = true;
+	_stprintf(message, _T("%d;%d;%d"), (int)last_summon_x, (int)last_summon_y, last_summon_level);
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)SummonDlgProc);
+	entervalue_callback = (&cArts::EndSummon);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	this->WaitForDialog(hDlg, Arts::SUMMON);
+
+	return;
+}
+
+void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int level)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::SUMMON);
@@ -5442,34 +5465,53 @@ void cArts::ApplySummon(lyra_id_t caster_id)
 		return;
 
     player->EvokedFX().Activate(Arts::SUMMON, false);
-
-	player->Teleport (-7839,12457,-90,43 );	// Unknown
+	// use the supplied coordinates
+	player->Teleport(x, y, 0, level);
 
 	return;
 }
 
-void cArts::EndSummon(void)
+void cArts::EndSummon(void *value)
 {
+
+	if (!value)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
 	cNeighbor *n = cp->SelectedNeighbor();
 
+	float x, y; int level_id;
 	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
 	{
 		this->DisplayNeighborBailed(Arts::SUMMON);
 		this->ArtFinished(false);
 		return;
-	} else if (n->ID() == player->ID())
-	{
-		player->Teleport (-7839,12457,-90,43);	// Unknown
 	}
+	// parse the message into appropriate coordinates
+	else if (_stscanf(message, _T("%f;%f;%d"), &x, &y, &level_id) == 3)
+	{
+		last_summon_x = x;
+		last_summon_y = y;
+		last_summon_level = level_id;
+		if (n->ID() == player->ID())
+		{
+			this->ApplySummon(player->ID(), x, y, level_id);
+		}
+		else
+		{
+			gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::SUMMON, x, y, level_id);
+			this->DisplayUsedOnOther(n, Arts::SUMMON);
+		}
 
+		this->ArtFinished(true);
+		return;
+	}
 	else
 	{
-		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::SUMMON, player->Skill(Arts::SUMMON), 0);
-		this->DisplayUsedOnOther(n, Arts::SUMMON);
+		this->ArtFinished(false);
 	}
-
-	this->ArtFinished(true);
-	return;
 }
 
 //////////////////////////////////////////////////////////////////

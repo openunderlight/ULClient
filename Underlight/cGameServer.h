@@ -218,7 +218,7 @@ class cGameServer
 	  void JoinParty(realmid_t playerID, bool auto_rejoin = false); // join another player's party
 	  void RejectPartyQuery(int reason, realmid_t playerID); // reject request
 	  void AcceptPartyQuery(realmid_t playerID); // accept request
-	  void SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2);
+	  void SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2, short param3=0);
 	  void LeaveParty(realmid_t playerID); // leave the current party
 	  void AvatarChange(LmAvatar new_avatar, bool permanent);
 	  void LocateAvatar(GMsg_LocateAvatar& locate_msg);

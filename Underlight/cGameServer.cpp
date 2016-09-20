@@ -2339,6 +2339,7 @@ void cGameServer::HandleMessage(void)
 				}
 				break;
 			} 
+			
 			bool art_reflected = false;
 			if (player->flags & ACTOR_REFLECT) {
 				// 25% chance of success plus 5% per plateau
@@ -2612,11 +2613,10 @@ void cGameServer::HandleMessage(void)
 					arts->ApplyBoot(player_msg.SenderID());
 					break;
 
-				case RMsg_PlayerMsg::SUMMON:
-					arts->ApplySummon(player_msg.SenderID());
+				case RMsg_PlayerMsg::SUMMON:	// x, y, level
+					arts->ApplySummon(player_msg.SenderID(), player_msg.State1(), player_msg.State2(), player_msg.State3());
 					break;
-
-
+					
 				case RMsg_PlayerMsg::UNTRAIN:
 					arts->ApplyUnTrain(player_msg.State1(), player_msg.SenderID());
 					break;
@@ -4329,7 +4329,7 @@ void cGameServer::AcceptPartyQuery(realmid_t playerID)
 }
 
 // Send a message to another player
-void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2)
+void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2, short param3)
 {
 	RMsg_PlayerMsg player_msg;
 	cNeighbor * n;
@@ -4348,10 +4348,9 @@ void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, sh
 		actors->IterateNeighbors(DONE);
 	}
 
-	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2);
+	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2, param3);
 	sendbuf.ReadMessage(player_msg);
 	send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
-
 	return;
 }
 
