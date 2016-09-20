@@ -854,6 +854,7 @@ void __cdecl StartExit(void)
 			//CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
 			//	cDD->Hwnd_Main(), (DLGPROC)NonfatalErrorDlgProc);
 		}
+		gs->LeaveParty(player->ID());
 	}
 	else // not logged into a level, exit immediately
 #endif

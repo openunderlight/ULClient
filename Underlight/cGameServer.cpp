@@ -4806,7 +4806,6 @@ void cGameServer::Logout(int how, bool final_logout)
 	cItem *item;
 	GMsg_Logout logout_msg;
 #ifndef AGENT
-	//this->LeaveParty(player->ID());
 	this->UpdateServer();
 #endif
 
