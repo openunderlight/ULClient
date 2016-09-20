@@ -224,6 +224,7 @@ BEGIN
     CONTROL         "Use PT",IDC_ITEM_USE_PT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,313,13,44,10
     CONTROL         "Tab1",IDC_FUNCTION_TAB,"SysTabControl32",0x0,195,0,110,15
     LTEXT           "",IDC_FORGE_TEXT,1,58,135,41
+    CONTROL         "NoPickup",IDC_ITEM_NOPICKUP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,308,13,44,10
 END
 
 IDD_KEYBOARD_CONFIG DIALOGEX 0, 0, 409, 100
@@ -518,7 +519,7 @@ IDD_CREDITS DIALOGEX 0, 0, 426, 115
 STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    DEFPUSHBUTTON   "OK",IDC_OK,203,98,50,14
+    DEFPUSHBUTTON   "OK",IDC_OK,218,108,50,14
 END
 
 IDD_LOCATE_AVATAR DIALOGEX 0, 0, 217, 102
@@ -1222,26 +1223,20 @@ END
 #if defined(APSTUDIO_INVOKED) || \
     !(defined(PMARE) || defined(AGENT))
 IDI_LYRA                ICON                    "Lyra.ico"
-
 #endif
 IDI_PMARE               ICON                    "pmare.ico"
-
 #if defined(APSTUDIO_INVOKED) || defined(PMARE)
 #if defined(APSTUDIO_INVOKED)
 IDI_LYRA$(PMARE)        ICON                    "ico00001.ico"
-
 #else
 IDI_LYRA                ICON                    "ico00001.ico"
-
 #endif
 #endif
 #if defined(APSTUDIO_INVOKED) || defined(AGENT)
 #if defined(APSTUDIO_INVOKED)
 IDI_LYRA$(AGENT)        ICON                    "ico00002.ico"
-
 #else
 IDI_LYRA                ICON                    "ico00002.ico"
-
 #endif
 #endif
 
@@ -1291,7 +1286,6 @@ END
 //
 
 IDB_TARGET              BITMAP                  "Target.bmp"
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1411,7 +1405,6 @@ END
 
 IDR_AgentSvr            REGISTRY                "AgentSvr.rgs"
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
@@ -1525,6 +1518,76 @@ BEGIN
     IDS_LOGIN_ALREADYIN     "That character, or another character linked to the same billing account, is already logged in - please try again in 5 minutes. If you still can't log in after 15 minutes, please email accounts@underlight.com."
     IDS_SOUND_FAILED_INIT   "Failed to initialize Sound, trying again...\n"
     IDS_LOGIN_GAMEFULL      "We're sorry, but the game is currently full - please try again later!"
+END
+
+STRINGTABLE
+BEGIN
+	IDS_TORCH    "TORCH"
+	IDS_LUMITWIST    "LUMITWIST"
+	IDS_RAIN    "RAIN"
+	IDS_HELI    "HELI"
+	IDS_STATUE_1    "STATUE_1"
+	IDS_STATUE_2    "STATUE_2"
+	IDS_FEM_STATUE_1    "FEM_STATUE_1"
+	IDS_FEM_STATUE_2    "FEM_STATUE_2"
+	IDS_FEM_STATUE_3    "FEM_STATUE_3"
+	IDS_FEM_STATUE_4    "FEM_STATUE_4"
+	IDS_ST_L		"ST_L"
+	IDS_ST_I		"ST_I"
+	IDS_ST_W		"ST_W"
+	IDS_WEP_A		"WEP_A"
+	IDS_DRIP		"DRIP"
+	IDS_FI_SM		"FI_SM"
+	IDS_FI_MD		"FI_MD"
+	IDS_TORCH_1		"TORCH_1"
+	IDS_TORCH_2		"TORCH_2"
+	IDS_EYES_1    "EYES_1"
+	IDS_EYES_2    "EYES_2"
+	IDS_W_HOLE    "W_HOLE"
+	IDS_S_ALT2    "S_ALT2"
+	IDS_ALTAR1    "ALTAR1"
+	IDS_DTORCH    "DTORCH"
+	IDS_LIGHTNING    "LIGHTNING"
+	IDS_LIGHTNING_SM    "LIGHTNING_SM"
+	IDS_AOE_ORNAMENT    "AOE_ORNAMENT"
+	IDS_TELESCOPE    "TELESCOPE"
+	IDS_VINE1    "VINE1"
+	IDS_VINE2    "VINE2"
+	IDS_VINE3    "VINE3"
+	IDS_VINE4    "VINE4"
+	IDS_DOL_CL_BNR    "DOL_CL_BNR"
+	IDS_DOL_FL_BNR    "DOL_FL_BNR"
+	IDS_HC_CL_BNR    "HC_CL_BNR"
+	IDS_HC_CL_PCE    "HC_CL_PCE"
+	IDS_HC_CL_SYM    "HC_CL_SYM"
+	IDS_HC_FL_BNR    "HC_FL_BNR"
+	IDS_HC_RAIL    "HC_RAIL"
+	IDS_HC_TETS    "HC_TETS"
+	IDS_TREE_HAND    "TREE_HAND"
+	IDS_TREE_MILO    "TREE_MILO"
+	IDS_RVINE1    "RVINE1"
+	IDS_RVINE2    "RVINE2"
+	IDS_DOL_CHAN    "DOL_CHAN"
+	IDS_DOL_DECO    "DOL_DECO"
+	IDS_TOMBSTONE    "TOMBSTONE"
+	IDS_COPPER_STATUE    "COPPER_STATUE"
+	IDS_AOE_FLAG    "AOE_FLAG"
+	IDS_DOL_FLAG    "DOL_FLAG"
+	IDS_GOE_FLAG    "GOE_FLAG"
+	IDS_HC_FLAG    "HC_FLAG"
+	IDS_KOES_FLAG    "KOES_FLAG"
+	IDS_OOSM_FLAG    "OOSM_FLAG"
+	IDS_POR_FLAG    "POR_FLAG"
+	IDS_UOC_FLAG    "UOC_FLAG"
+	IDS_AOE_SYM    "AOE_SYM"
+	IDS_HC_SYM    "HC_SYM"
+	IDS_UOC_SYM    "UOC_SYM"
+	IDS_DOL_SYM    "DOL_SYM"
+	IDS_GOE_SYM    "GOE_SYM"
+	IDS_KOES_SYM    "KOES_SYM"
+	IDS_POR_SYM    "POR_SYM"
+	IDS_OOSM_SYM    "OOSM_SYM"
+	IDS_BANISH    "BANISH"
 END
 
 STRINGTABLE
@@ -2049,12 +2112,12 @@ BEGIN
     IDS_TRAIN_HOUSES_COVENANT 
                             "Enter the City of Dreams in the chambers of the Union of the Covenant.\n"
     IDS_TRAIN_HOUSES_RADIANCE 
-                            "Enter the City of Dreams in the chambers of the Peace Corpse.\n"
+                            "Enter the City of Dreams in the chambers of the Protectors of the Radiance.\n"
     IDS_TRAIN_HOUSES_CALENTURE 
                             "Enter the City of Dreams in the chambers of House Calenture.\n"
     IDS_TRAIN_HOUSES_ENTRANCED 
                             "Enter the City of Dreams in the chambers of the Gathering of the Entranced.\n"
-    IDS_TRAIN_HOUSES_LIGHT  "Enter the City of Dreams in the chambers of the Order of Light.\n"
+    IDS_TRAIN_HOUSES_LIGHT  "Enter the City of Dreams in the chambers of the Dreamers of Light.\n"
 END
 
 STRINGTABLE
@@ -2742,14 +2805,14 @@ BEGIN
     IDS_AOE                 "Alliance of the Eclipse"
     IDS_KOES                "Keepers of Eternal Shadow"
     IDS_UOC                 "Union of the Covenant"
-    IDS_POR                 "Peace Corpse"
+    IDS_POR                 "Protectors of the Radiance"
 END
 
 STRINGTABLE
 BEGIN
     IDS_HC                  "House Calenture"
     IDS_GOE                 "Gathering of the Entranced"
-    IDS_DOL                 "Order of Light"
+    IDS_DOL                 "Dreamers of Light"
     IDS_ANY_HOUSE           "any house"
     IDS_NONE                "None"
     IDS_GOAL                "goal"
@@ -2835,10 +2898,10 @@ BEGIN
     IDS_AOE_MEMBER_TOKEN    "Alliance of the Eclipse Membership Token"
     IDS_KOES_MEMBER_TOKEN   "Keepers of Eternal Shadow Membership Token"
     IDS_UOC_MEMBER_TOKEN    "Union of the Covenant Membership Token"
-    IDS_POR_MEMBER_TOKEN    "Peace Corpse Membership Token"
+    IDS_POR_MEMBER_TOKEN    "Protectors of the Radiance Membership Token"
     IDS_HC_MEMBER_TOKEN     "House Calenture Membership Token"
     IDS_GOE_MEMBER_TOKEN    "Gathering of the Entranced Membership Token"
-    IDS_DOL_MEMBER_TOKEN    "Order of Light Membership Token"
+    IDS_DOL_MEMBER_TOKEN    "Dreamers of Light Membership Token"
     IDS_CLEANSED_NIGHTMARE_TOKEN "Cleansed Nightmare Token"
 END
 
@@ -3070,12 +3133,12 @@ BEGIN
     IDS_TRAIN_BELIEF_COVENANT 
                             "The Union of the Covenant is a Freesoul House and follows the tenets of Justice, Freedom, Defense, and Honor. Their duty is to the Covenant in which they take to live by, and defend those tenets.  They believe Essence of Nightmares is merely the energy left behind from an avatar, and drain that energy for its uses."
     IDS_TRAIN_BELIEF_RADIANCE 
-                            "Peace Corpse is a Warrior House. They save the souls of the unawakened by banishing essences, which they call the Crusade of the Unawakened. It is a Protector's solemn duty to follow Illuminated beliefs and the Crusade. They use an artifact known as the ""Soul of Radiance"" to banish nightmare essences."
+                            "Protectors of the Radiance is a Warrior Illuminated House. They save the souls of the unawakened by banishing essences, which they call the Crusade of the Unawakened. It is a Protector's solemn duty to follow Illuminated beliefs and the Crusade. They use an artifact known as the ""Soul of Radiance"" to banish nightmare essences."
     IDS_TRAIN_BELIEF_CALENTURE 
                             "House Calenture is a Freesoul house, knowing full well that nothing experienced in the Dream will have physical effect on the shards of Cloudsbreak. Knowing this, they also believe that the Dream is a place where the scatted folks of Cloudsbreak may commune. They defend this meeting place from Nightmares and other destroyers with dour Warrior skills. House Calenture uses the Orb of Calenture to Banish Nightmare Essences. This sacred relic was the first such device ever forged. "
     IDS_TRAIN_BELIEF_ENTRANCED 
                             "The Gathering of the Entranced in an Illuminated house that beliefs in a delicate balance between all planes of existence and it is their goal to bring this balance to all things.They wage an eternal holy war against what they call ""Taint"", the embodiment of the evils of all creatures. They wish to convert all living things to their faith, and so stop the taint from spreading. The nightmares represent the physical form of taint in the dream, and so are the enemy of the Entranced."
-    IDS_TRAIN_BELIEF_LIGHT  "The Order of Light is an Illuminated House dedicated to the saving, and protection of the Unawakened.  They believe that imprisoning Nightmares is the best, and surest way of dealing with them."
+    IDS_TRAIN_BELIEF_LIGHT  "The Dreamers of Light is an Illuminated House dedicated to the saving, and protection of the Unawakened.  They believe that imprisoning Nightmares is the best, and surest way of dealing with them."
     IDS_ACTIVE              "Active"
     IDS_COMPLETED           "Completed"
     IDS_MAX_ACCEPTED        "Max Accepted"
@@ -3840,11 +3903,11 @@ STRINGTABLE
 BEGIN
     IDS_KNOW0629            "The turf here is lush and springy, suggestive of marshy conditions. A cool breeze carries the scent of exotic flowers and the cries of birds. A crystalline stream forms a path leading to the Alliance of the Eclipse."
     IDS_KNOW0528            "A wasteland of stone and sand stretches before you. The air is dry and hot. Ancient mounds, worn by time, dot the landscape. A carefully fitted stone path meanders among the natural splendors on its way to the Union of the Covenant."
-    IDS_KNOW0401            "Massive rock walls rise up to delineate a path along an escarpment. Strong winds gust from time to time, pushing at you with a strong force. The footpath up the mountain is worn from countless travelers' steps on its way to the Order of Light."
+    IDS_KNOW0401            "Massive rock walls rise up to delineate a path along an escarpment. Strong winds gust from time to time, pushing at you with a strong force. The footpath up the mountain is worn from countless travelers' steps on its way to the Dreamers of Light."
     IDS_KNOW2005            "A radiant sense of peace and warmth pervades the atmosphere here, the gentle colors are pleasing to the eye. The hand-woven tapestries that hang from the ceiling are of exceptional quality and show a master artist's touch."
     IDS_NO_ARTS_DOCA_PIT    "No Arts can be evoked in this room."
     IDS_KNOW0326            "Graceful arches coax your gaze up to the stars of a pastel sky. A warm, gentle breeze carries the scent of flowers and waterfalls gently through the grasses. A pathway of polished stone leads onward to the Gathering of the Entranced."
-    IDS_KNOW1301            "A deep grand valley opens before you. High above the winds howl like the clamor of battle, while below all is hushed silence. Gigantic monuments of stone, formed in impossible shapes, mark the path leading to the Peace Corpse."
+    IDS_KNOW1301            "A deep grand valley opens before you. High above the winds howl like the clamor of battle, while below all is hushed silence. Gigantic monuments of stone, formed in impossible shapes, mark the path leading to the Protectors of Radiance."
     IDS_KNOW1202            "Scorched and blackened earth spreads out before you. The gloomy sky hangs low and heavy, blanketing the land in perpetual twilight. An ancient path, clear of ash, leads through the darkened realm towards House Calenture."
     IDS_KNOW1522            "Plantlife of all varieties covers ground and walls. A hazy sky casts muted light and long shadows. A small warm breeze whispers as an indistinct path makes its way in and out of dark tunnels on its way to the Keepers of Eternal Shadow."
     IDS_KNOW2917            "The air here is dank and cold. Where elsewhere even the slightest hum of energy can be felt, this place is utterly lifeless. A sense of loss and foreboding hangs in the atmosphere like a dark spectre."
@@ -4274,22 +4337,25 @@ BEGIN
     IDS_SELF_DEMOTE         "Are you sure you really want to demote yourself %s %s?"
     IDS_MALE_REVENANT       "Revenant"
     IDS_FEMALE_REVENANT     "Revenant"
-    IDS_RALLY_PREEMOTE      "has been rallied away by another dreamer"
     IDS_LOGIN_COOLOFF       "You must wait 60 minutes between logins of different player characters."
     IDS_LOGIN_PMARE_LOCK    "Game Masters have temporarily disabled Player Mares due to an in-game event.  Please log in with your regular character and try again later."
+    IDS_RECEIVE_CHANNEL     "Energy from %s begins coursing through you."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_RECEIVE_CHANNEL     "Energy from %s begins coursing through you."
     IDS_RECEIVE_CHANNELKILL "%s channels more energy to you."
     IDS_CHANNEL_NOPARTY     "You can only channel energy to those in party with you."
     IDS_CHANNEL_EXPIRED     "Channel has expired."
     IDS_CHANNEL_CREATE      "You begin channelling energy to %s."
     IDS_CHANNEL             "Channel"
-    IDS_SHOW_IN_PARTY_CHANNEL 
-                            "%s (Channel receiver) is in your party"
-    IDS_CHANNEL_CLOSED      "%s is no longer channelling energy to you."                            
+    IDS_SHOW_IN_PARTY_CHANNEL "%s (Channel receiver) is in your party"
+    IDS_CHANNEL_CLOSED      "%s is no longer channelling energy to you."
+    IDS_RALLY_PREEMOTE      "has been rallied away by another dreamer"
+END
+
+STRINGTABLE
+BEGIN
     IDS_DOORBELL_ALERT      "%s has entered the house plane at %s\n"
 END
 
@@ -4313,4 +4379,5 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
+
 

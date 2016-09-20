@@ -655,7 +655,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 				if (Button_GetCheck(GetDlgItem(hDlg, IDC_EMOTE)))
 				{
 					for (i = 0; i < message_length; i++)
-						if (sentence[i] == '>' || sentence[i] == '›')
+						if (sentence[i] == '>' || sentence[i] == 'â€º')
 						{
 							sentence[i] = '\0';
 							break;
@@ -1812,6 +1812,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					TabCtrl_InsertItem(GetDlgItem(hDlg, IDC_FUNCTION_TAB), 2, &tab_item);
 
 					ShowWindow (GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), SW_SHOWNORMAL);
+					ShowWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), SW_SHOWNORMAL);
 					ShowWindow (GetDlgItem(hDlg, IDC_ITEM_DESCRIP), SW_SHOWNORMAL);
 					
 
@@ -2206,7 +2207,8 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						// Get and set the item flags
 						if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT)))
 							header.SetFlag(LyraItem::FLAG_NOREAP | LyraItem::FLAG_ALWAYS_DROP);
-
+						else if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP)))
+							header.SetFlag(LyraItem::FLAG_NOREAP);
 						// Figure next three flags out based on selected effect types
 						int immutable = 0;
 						int changecharges = 0;
@@ -5842,4 +5844,5 @@ BOOL CALLBACK AgentLoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 }
 
 #endif
+
 
