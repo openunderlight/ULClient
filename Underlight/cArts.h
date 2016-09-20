@@ -67,8 +67,8 @@ private:
 
 	// random state variables used by arts
 	TCHAR knight_name[Lyra::PLAYERNAME_MAX];
-	lyra_id_t restore_id, initiator_id, initiate_gid, rogerwilco_id, rally_id;
-	int restore_skill, restore_art, demote_guild_id;
+	lyra_id_t restore_id, initiator_id, initiate_gid, rogerwilco_id;
+	int restore_skill, restore_art, demote_guild_id, rally_x, rally_y;
 	cItem *giving_item;
 	cItem *combining_item;
 	cItem *gratitude_item;
@@ -187,6 +187,10 @@ public:
   void EssenceContainer(void);
 
 	// arts that require selecting a neighbor
+	void StartChannel(void);
+	bool ExpireChannel(void);
+	bool SetChannel(lyra_id_t nid);
+	void EndChannel(void);
 	void StartJoin(void);
 	void EndJoin(void);
 	void StartResistFear(void);
@@ -324,7 +328,7 @@ public:
   void ApplyKinesis (int skill, lyra_id_t caster_id, int angle);
   void EndKinesis (void);
   void StartRally (void);
-  void ApplyRally (lyra_id_t caster_id);
+  void ApplyRally(lyra_id_t caster_id, int x, int y);
   void GotRallied (void *value);
   void EndRally (void);
 
@@ -494,6 +498,7 @@ private:
 	int CountDemotionTokens(lyra_id_t guild_id, cItem** tokens, cNeighbor* n);
 	cItem* FindPrime(lyra_id_t guild_id, int min_charges);
 	cItem* HasQuestCodex(lyra_id_t neighbor_id, lyra_id_t art_id);
+	bool IsSharesFocus(lyra_id_t target_focus_id);
 
 
 	// copy constructor and assignment operator are

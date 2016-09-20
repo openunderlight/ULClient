@@ -43,6 +43,7 @@ class cParty
 	  lyra_id_t				leader; // ID of leader
 	  int					party_members; // # of others in party
 	  lyra_id_t				members[Lyra::MAX_PARTYSIZE-1]; 
+	  lyra_id_t				channellers[Lyra::MAX_PARTYSIZE - 1];
 	  int					num_requests; // # of outstanding requests from others to join our party
 	  int					curr_request; // current live request from another to join our party
 	  lyra_id_t				request_outstanding; // if we've queried another to join their party
@@ -71,7 +72,8 @@ class cParty
 	  void DissolveParty(void); // party has broken up
 
 	  bool IsInParty(lyra_id_t player_id);
-
+	  bool SetChanneller(realmid_t playerID, bool set = true);
+	  
 	  // Selectors
 	  inline int Members(void) { return party_members; };
 	  inline lyra_id_t MemberID(int i) { return members[i]; };
@@ -101,8 +103,3 @@ class cParty
 #endif
  };
 #endif
-
-
-
-
-

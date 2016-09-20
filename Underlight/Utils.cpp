@@ -666,19 +666,20 @@ struct guild_name_t
 {
 	UINT			name; // pointer to string table
 	int				flag;
+	unsigned char	levelid; // level of guild's house plane
 };
 
 guild_name_t guild_names[NUM_GUILDS+1] =
 {
-	{IDS_OOSM, Guild::MOON_FLAG},
-	{IDS_AOE, Guild::ECLIPSE_FLAG},
-	{IDS_KOES, Guild::SHADOW_FLAG},
-	{IDS_UOC, Guild::COVENANT_FLAG},
-	{IDS_POR, Guild::RADIANCE_FLAG},
-	{IDS_HC, Guild::CALENTURE_FLAG},
-	{IDS_GOE, Guild::ENTRANCED_FLAG},
-	{IDS_DOL, Guild::LIGHT_FLAG},		
-	{IDS_ANY_HOUSE, 0},
+	{IDS_OOSM, Guild::MOON_FLAG, 25},
+	{IDS_AOE, Guild::ECLIPSE_FLAG, 22},
+	{IDS_KOES, Guild::SHADOW_FLAG, 24},
+	{IDS_UOC, Guild::COVENANT_FLAG, 26},
+	{IDS_POR, Guild::RADIANCE_FLAG, 21},
+	{IDS_HC, Guild::CALENTURE_FLAG, 17},
+	{IDS_GOE, Guild::ENTRANCED_FLAG, 23},
+	{IDS_DOL, Guild::LIGHT_FLAG, 18},		
+	{IDS_ANY_HOUSE, 0, 0},
 
 };
 
@@ -706,6 +707,24 @@ int	GuildID(int guild_flag)
 {
 	for (int i=0; i<NUM_GUILDS; i++)
 		if (guild_flag == guild_names[i].flag)
+			return i;
+	return Guild::NO_GUILD;
+}
+
+// translates a guild id into a level id
+int GuildLevel(int guild_id)
+{
+	for (int i = 0; i<NUM_GUILDS; i++)
+		if (i == guild_id)
+			return guild_names[i].levelid;
+	return 0;
+}
+
+// translates a level id into a guild id
+int LevelGuild(int level_id)
+{
+	for (int i = 0; i<NUM_GUILDS; i++)
+		if (level_id == guild_names[i].levelid)
 			return i;
 	return Guild::NO_GUILD;
 }
@@ -1116,7 +1135,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_CURSED;
 	related_art[i] = Arts::CURSE;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
-	default_duration[i] = 23; // 10 min
+	default_duration[i] = 13; // 1 min
 	harmful[i] = true;
 
 	i = LyraEffect::PLAYER_BLIND;

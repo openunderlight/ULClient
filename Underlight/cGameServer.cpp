@@ -83,6 +83,10 @@ const int				MAX_NETWORK_VELOCITY =8;
 const TCHAR				NOT_A_SCROLL[Lyra::PLAYERNAME_MAX] = _T("****");
 // # of ms a player can't use items after a room change until a UDP update is received
 const DWORD				ROOM_CHANGE_THRESHHOLD = 2000; 
+const int				ALERT_TABLE_SIZE = 10;
+const int				ALERT_MSG_INTERVAL = 600000; // 10 minutes
+
+alert_t newly_alert[ALERT_TABLE_SIZE];
 
 // live server
 //ROUND_ROBIN
@@ -239,7 +243,11 @@ cGameServer::cGameServer(unsigned short udp_port_num, unsigned short gs_port_num
 	last_update.SetFlags(0);
 	last_room_target = last_level_target = -1;
 	displayed_item_use_message = false;
-
+	alert_count = 0;
+	for (int i = 0; i < ALERT_TABLE_SIZE; i++) {
+		_tcscpy(newly_alert[i].playerName, _T("0"));
+		newly_alert[i].alertTime = NULL;
+	}
 	num_packets_expected = num_packets_received = 0;
 	for (int i=0; i<DEFAULT_NUM_GAME_SERVERS; i++)
 		game_server_full[i] = false;
@@ -2161,13 +2169,35 @@ void cGameServer::HandleMessage(void)
 
 		case RMsg::NEWLYAWAKENED: // a newly awakened dreamer has entered our plane
 		{
-
 			RMsg_NewlyAwakened newly_msg;
 			if (newly_msg.Read(msgbuf) < 0) { GAME_ERROR(IDS_ERR_READ_NEWLY_WAKE_NOTIF_MSG); return; }
-			LoadString (hInstance, IDS_NEWLY_ALERT, disp_message, sizeof(message));
-			_stprintf(message, disp_message,  newly_msg.PlayerName(), level->RoomName(newly_msg.RoomID()));
-			display->DisplayMessage(message);
 
+			bool alert = true;
+			for (int i = 0; i < ALERT_TABLE_SIZE; i++) {
+				if ((_tcscmp(newly_alert[i].playerName, newly_msg.PlayerName()) == 0) && 
+					(newly_alert[i].alertTime + ALERT_MSG_INTERVAL > LyraTime())) {
+					alert = false;
+					break;
+				}
+			}
+			if (alert) {
+				int guildID = LevelGuild(level->ID());
+				if ((guildID != Guild::NO_GUILD) && (guildID == player->Avatar().GuildID()))
+				{ // This is a house plane and player is wearing the house crest - show who just arrived
+					LoadString(hInstance, IDS_DOORBELL_ALERT, disp_message, sizeof(message));
+				}
+				else { // Normal newly alerts for any other players and levels
+					LoadString(hInstance, IDS_NEWLY_ALERT, disp_message, sizeof(message));
+				}
+				_stprintf(message, disp_message, newly_msg.PlayerName(), level->RoomName(newly_msg.RoomID()));
+				display->DisplayMessage(message);
+
+				newly_alert[alert_count].alertTime = LyraTime();
+				_tcscpy(newly_alert[alert_count].playerName, newly_msg.PlayerName());
+				alert_count++;
+				if (alert_count >= ALERT_TABLE_SIZE)
+					alert_count = 0;
+			}
 		}
 		break;
 
@@ -2640,7 +2670,7 @@ void cGameServer::HandleMessage(void)
 					break;
 
 				case RMsg_PlayerMsg::RALLY:
-					arts->ApplyRally(player_msg.SenderID());
+					arts->ApplyRally(player_msg.SenderID(), player_msg.State1(), player_msg.State2());
 					break;
 
 				case RMsg_PlayerMsg::REDEEM_GRATITUDE:
@@ -2763,6 +2793,37 @@ void cGameServer::HandleMessage(void)
 						display->DisplayMessage(message);
 					}
 					break;
+                case RMsg_PlayerMsg::CHANNEL:
+    				n = actors->LookUpNeighbor(player_msg.SenderID());
+					if (player_msg.State1() > 0)
+					{
+						if (n != NO_ACTOR)
+						{
+							LoadString(hInstance, IDS_RECEIVE_CHANNEL, disp_message, sizeof(disp_message));
+							_stprintf(message, disp_message, n->Name());
+							display->DisplayMessage(message);
+							party->SetChanneller(player_msg.SenderID());
+						}
+					}
+					else if (party->SetChanneller(player_msg.SenderID(), false))
+					{
+						if (n != NO_ACTOR)
+						{
+							LoadString(hInstance, IDS_CHANNEL_CLOSED, disp_message, sizeof(disp_message));
+							_stprintf(message, disp_message, n->Name());
+							display->DisplayMessage(message);
+						}
+					}
+					break;
+                case RMsg_PlayerMsg::CHANNELKILL:
+                    n = actors->LookUpNeighbor(player_msg.SenderID());
+                    if(n != NO_ACTOR)
+                    {
+                        LoadString (hInstance, IDS_RECEIVE_CHANNELKILL, disp_message, sizeof(disp_message));
+                        _stprintf(message, disp_message, n->Name());
+                        display->DisplayMessage(message);
+                    }
+                    break;
 				case RMsg_PlayerMsg::RANDOM:
 					n = actors->LookUpNeighbor(player_msg.SenderID());
 					cDS->PlaySound(LyraSound::RANDOM);
@@ -2886,6 +2947,23 @@ void cGameServer::HandleMessage(void)
 			}
 		}
 		break;
+
+		case RMsg::ROOMDESCRIPTION:
+		{
+			RMsg_RoomDescription rmDesc_msg;
+			if (rmDesc_msg.Read(msgbuf) < 0) { GAME_ERROR(IDS_ERR_READ_AVATAR_DESC_MSG); return; }
+			if ((rmDesc_msg.LevelID() == level->ID()) &&
+				(rmDesc_msg.RoomID() == player->Room()) &&
+				(rmDesc_msg.Description() != _T("\0")))
+			{
+				TCHAR* rmDescrip = (TCHAR*)(rmDesc_msg.Description());
+				_stprintf(message, "%s", rmDescrip);
+				display->DisplayMessage(message, false);
+			}
+		}
+		break;
+
+
 		default:
 			break;
 	}
@@ -4251,24 +4329,24 @@ void cGameServer::AcceptPartyQuery(realmid_t playerID)
 }
 
 // Send a message to another player
-void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, unsigned char param1, unsigned char param2)
+void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2)
 {
-  RMsg_PlayerMsg player_msg;
-  cNeighbor * n;
-  
-  // don't send an art msg to another player if you haven't received updates from them yet.
-  // **** ALTERNATIVE TO WHO LIST DELAY ***
-  if ((RMsg_PlayerMsg::ArtType (msg_type) != Arts::NONE) && (destination_id > 0)) {
-    for (n = actors->IterateNeighbors(INIT); n != NO_ACTOR; n = actors->IterateNeighbors(NEXT))
-    {
-      if ((n->ID () == destination_id) && (!n->GotUpdate ()))
-	    {
-		    actors->IterateNeighbors (DONE);
-        return;
-	    }
-	  }
-	  actors->IterateNeighbors (DONE);
-  }
+	RMsg_PlayerMsg player_msg;
+	cNeighbor * n;
+
+	// don't send an art msg to another player if you haven't received updates from them yet.
+	// **** ALTERNATIVE TO WHO LIST DELAY ***
+	if ((RMsg_PlayerMsg::ArtType(msg_type) != Arts::NONE) && (destination_id > 0)) {
+		for (n = actors->IterateNeighbors(INIT); n != NO_ACTOR; n = actors->IterateNeighbors(NEXT))
+		{
+			if ((n->ID() == destination_id) && (!n->GotUpdate()))
+			{
+				actors->IterateNeighbors(DONE);
+				return;
+			}
+		}
+		actors->IterateNeighbors(DONE);
+	}
 
 	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2);
 	sendbuf.ReadMessage(player_msg);
@@ -4622,6 +4700,15 @@ void cGameServer::GetAvatarDescrip(lyra_id_t player_id)
 	return;
 }
 
+void cGameServer::GetRoomDescrip(int levelid, int roomid)
+{
+	RMsg_GetRoomDescription rmDesc_msg;
+
+	rmDesc_msg.Init((short)levelid, (short)roomid);
+	sendbuf.ReadMessage(rmDesc_msg);
+	send(sd_game, (char *)sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
+	return;
+}
 
 // Send the login message to the server upon completion of the welcome AI
 
@@ -4678,6 +4765,13 @@ void cGameServer::LevelLogout(int how)
 			party->RejectRequest();
 		party->DissolveParty();
 		delete party; party = NULL;
+	}
+
+	// Reset newly_alerts array table
+	alert_count = 0;
+	for (int i = 0; i < ALERT_TABLE_SIZE; i++) {
+		_tcscpy(newly_alert[i].playerName, _T("0"));
+		newly_alert[i].alertTime = NULL;
 	}
 
 	

@@ -1,4 +1,3 @@
-
  // The Player Class
 
 // Copyright Lyra LLC, 1996. All rights reserved.
@@ -143,6 +142,7 @@ void cPlayer::InitPlayer(void)
 	next_nightmare_check = LyraTime() + NIGHTMARE_CHECK_INTERVAL;
 	next_poison = next_bleed = next_trail = 0;
 	free_moves = 5;
+	channelTarget = 0;
 	step_frame = avatar_poses[WALKING].start_frame;
 	checksum_incorrect = last_loc_valid = false;
 	item_flags_sorting_changed = false;
@@ -695,14 +695,17 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_CURSE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		//  Curse and Protection offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration*3;
+		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration;
 		return false;
 		}
 		// Implementing Curse Effect
 		// I also added some debugging checks for this
 		// Fixing Curse effect to Balthiir's specs
 		// Make sure that this strength computation is in the release
-		int new_strength = (duration/15000) + 6;	
+		// I recalculated the strength of curse and made it a buildable effect - Ajax
+		int new_strength = (duration/20000)+1;		
+		new_strength = new_strength + curse_strength;
+
 		if (new_strength>50) new_strength = 50;
 		// Note that these messages are now debug ONLY
 #ifdef UL_DEBUG

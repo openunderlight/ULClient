@@ -12,7 +12,7 @@
 
  
 const int NUM_TIMED_EFFECTS = 30; // add one for NONE
-const int NUM_ARTS = 146;
+const int NUM_ARTS = 147;
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
 const int NUM_PLAYER_STATS = 5;
@@ -261,7 +261,7 @@ struct Arts {
   CHAOTIC_VORTEX, // Chaotic Vortex
   CHAOS_WELL, // Essence Container
   RALLY, // Summon party member
-
+  CHANNEL,     
 	// END OF ARTS LIST - below are art-related constants
 
 	INITIATE_DRAIN = 100,   // amount of essences drained from prime to Initiate
@@ -827,7 +827,7 @@ const int num_no_dreamstrike_levels =
   sizeof(no_dreamstrike_levels) / sizeof(int);
 
 const int no_rally_levels[] = 
-{1, 17, 18, 21, 22, 23, 24, 25, 26, 39, 41, 43, 46, 47};
+{1, 17, 18, 21, 22, 23, 24, 25, 26, 41, 43, 46, 47};
 
 const int num_no_rally_levels =
   sizeof(no_rally_levels) / sizeof(int);

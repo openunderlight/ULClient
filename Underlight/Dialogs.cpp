@@ -5332,18 +5332,32 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 							pp.cost = 0;
 						} else {
 							int xp_gain = LmStats::XPPPCost(player->XP());
-							LoadString (hInstance, IDS_GAIN_XP, disp_message, sizeof(disp_message));
-							_stprintf(message, disp_message, xp_gain);
-							pp.cost = 1;
-							pp.sub_cursel = xp_gain;
-						}
+							int curr_orbit = player->Orbit();
+							int curr_xp = player->XP();
+							int max_xp = 0;
 
+							if (curr_orbit % 10 == 9) // Next orbit is a new sphere
+								max_xp = LmStats::OrbitXPBase(curr_orbit + 1) - 1;  // Only gain enough to max this sphere
+							else max_xp = LmStats::OrbitXPBase(curr_orbit + 1) + 1; // Only gain enough to get next orbit
+
+							ShowWindow(GetDlgItem(hDlg, IDC_PP_SUBSEL), SW_SHOWNORMAL);
+							LoadString(hInstance, IDS_GAIN_XP, message, sizeof(message));
+
+							for (int i = 1; i <= player->PPoints(); i++)
+							{	
+								if (max_xp <= curr_xp + (i*xp_gain)) {
+									_stprintf(disp_message, "%d", max_xp - curr_xp);
+									ComboBox_AddString(GetDlgItem(hDlg, IDC_PP_SUBSEL), disp_message);
+									break;
+								} else {
+									_stprintf(disp_message, "%d", i*xp_gain);
+									ComboBox_AddString(GetDlgItem(hDlg, IDC_PP_SUBSEL), disp_message);
+								}
+							}
+						}
+						
 						Edit_SetText(GetDlgItem(hDlg, IDC_PP_STATIC), message);
 						ShowWindow(GetDlgItem(hDlg, IDC_PP_STATIC), SW_SHOWNORMAL);
-						_stprintf(disp_message, "%d", pp.cost);
-						ShowWindow(GetDlgItem(hDlg, IDC_PP_COST), SW_HIDE);
-						Edit_SetText(GetDlgItem(hDlg, IDC_PP_COST), disp_message);
-						ShowWindow(GetDlgItem(hDlg, IDC_PP_COST), SW_SHOWNORMAL);
 						break;
 					}
 #if 0 // PP Sphere - disabled for now
@@ -5465,6 +5479,19 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 						}
 #endif
 						case GMsg_UsePPoint::GAIN_XP: 
+						{
+							int oldsel = pp.sub_cursel;
+							pp.sub_cursel = ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PP_SUBSEL));
+							if (pp.sub_cursel == -1)
+								break;
+							if (oldsel == pp.sub_cursel)
+								break;
+							pp.cost = (pp.sub_cursel + 1);
+							_stprintf(message, "%d", pp.cost);
+							ShowWindow(GetDlgItem(hDlg, IDC_PP_COST), SW_HIDE);
+							Edit_SetText(GetDlgItem(hDlg, IDC_PP_COST), message);
+							ShowWindow(GetDlgItem(hDlg, IDC_PP_COST), SW_SHOWNORMAL);
+						}
 							break;
 #if 0
 						case GMsg_UsePPoint::BYPASS_SPHERE: // sphere
@@ -5574,6 +5601,7 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 						}
 						else if (pp.cursel == GMsg_UsePPoint::GAIN_XP)
 						{
+							pp.sub_cursel++;
 						}
 
 						gs->UsePPoints(pp.cursel, pp.sub_cursel, pp.art_id, pp.skill);

@@ -235,7 +235,8 @@ bool cItem::RightClick(void)
 		for (int i=0; i<this->NumFunctions(); i++)
 			if (this->ItemFunction(i) == LyraItem::SCROLL_FUNCTION)
 				is_scroll = true;
-		if (!is_scroll)
+
+		if ((!is_scroll) || ((lmitem.Charges() >= INFINITE_CHARGES - 1) && (status == ITEM_UNOWNED)))
 			gs->SendItemDescripRequest(lmitem.Header());
 	}
 

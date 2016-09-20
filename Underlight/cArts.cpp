@@ -200,7 +200,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x3F28, // Power Token 
 0x6D27, // Show Gratitude 
 0x8E44, // Quest 
-0xB230, // Bequeath 
+0xB220, // Bequeath 
 0xC88A, // Radiant Blaze 
 0xF445, // Poison Cloud 
 0x106E, // Break Covenant 
@@ -243,6 +243,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x5D3E, // Chaotic Vortex 
 0x7EE1, // Chaos Well 
 0xA08F, // Rally 
+0xC767, // Channel
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -354,7 +355,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_POWER_TOKEN,					Stats::DREAMSOUL,	10,  0, 0,	10, -1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SHOW_GRATITUDE,				Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
 {IDS_QUEST,							Stats::NO_STAT,		0,   0, 0,	3, -1, SANCT|NEIGH|MAKE_ITEM},
-{IDS_BEQUEATH,						Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
+{IDS_BEQUEATH,						Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEIGH},
 {IDS_RADIANT_BLAZE,					Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_POISON_CLOUD,					Stats::DREAMSOUL,	20, 10,15,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_BREAK_COVENANT,				Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
@@ -396,7 +397,8 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN|NEIGH},
 {IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
 {IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT|MAKE_ITEM|LEARN},
-{IDS_RALLY,							Stats::WILLPOWER,	60, 30, 0,  5,   4, SANCT|NEIGH|FOCUS},
+{IDS_RALLY,							Stats::WILLPOWER,	60, 30, 0,  5,  -1, SANCT|NEIGH|FOCUS},
+{IDS_CHANNEL,                       Stats::DREAMSOUL,   40, 35, 25, 3,  -1, SANCT|NEIGH|LEARN}
 };
 
 
@@ -1191,6 +1193,7 @@ void cArts::ApplyArt(void)
     case Arts::CHAOTIC_VORTEX: method = &cArts::ChaoticVortex; break;
 	case Arts::CHAOS_WELL: method = &cArts::EssenceContainer; break;
 	case Arts::RALLY: method = &cArts::StartRally; break;
+	case Arts::CHANNEL: method = &cArts::StartChannel; break;
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
 	}
@@ -1880,15 +1883,23 @@ void cArts::Know(void)
 	display->DisplayMessage (message, false);
 	this->ArtFinished(true);
 	cDS->PlaySound(LyraSound::KNOW, player->x, player->y, true);
+
 #ifndef AGENT
-	// look for room-specific description
-	for (int i=0;i<NUM_KNOW_STRINGS;i++)
-		if ((know_strings[i].level == level->ID()) && (know_strings[i].room == player->Room()))
-		{
-			LoadString (hInstance, know_strings[i].string, disp_message, sizeof(disp_message));
-			display->DisplayMessage (disp_message, false);
-		}
-#endif
+	if ((options.network) && gs && (gs->LoggedIntoLevel()))
+	{ // Logged in, get server database room description
+		gs->GetRoomDescrip(level->ID(), player->Room());
+	}
+	else
+	{	// network disabled or in training area, check for client-coded descriptions
+		for (int i = 0; i < NUM_KNOW_STRINGS; i++)
+			if ((know_strings[i].level == level->ID()) && (know_strings[i].room == player->Room()))
+			{
+				LoadString(hInstance, know_strings[i].string, disp_message, sizeof(disp_message));
+				display->DisplayMessage(disp_message, false);
+			}
+	}
+#endif // NOT AGENT
+
 	return;
 }
 
@@ -3252,6 +3263,80 @@ void cArts::EndSenseDreamers(void *value)
 ////////////////////////////////////////////////////////////////
 // *** Arts that require selecting a neighbor ***
 ////////////////////////////////////////////////////////////////
+void cArts::StartChannel()
+{
+    if(gs->Party()->Members() < 1 && !player->IsChannelling())
+    {
+        LoadString(hInstance, IDS_PARTY_NOTMEMBER, message, sizeof(message));
+        display->DisplayMessage(message);
+        this->ArtFinished(false);
+        return;
+    }
+    
+    if(arts->ExpireChannel())
+    {
+        this->ArtFinished(true);
+    }
+    else
+    {
+    	this->WaitForSelection(&cArts::EndChannel, Arts::CHANNEL);
+	    this->CaptureCP(NEIGHBORS_TAB, Arts::CHANNEL);
+	    return;
+    }
+}
+
+bool cArts::ExpireChannel()
+{
+    if(player->IsChannelling())
+    {
+        gs->SendPlayerMessage(0, RMsg_PlayerMsg::CHANNEL,
+		    0, 0);
+        LoadString(hInstance, IDS_CHANNEL_EXPIRED, message, sizeof(message));
+        display->DisplayMessage(message);
+        player->SetChannelTarget(0);
+        return true;
+    }
+    
+    return false;
+}
+
+bool cArts::SetChannel(lyra_id_t nid)
+{
+    cNeighbor* n = actors->LookUpNeighbor(nid);
+    
+    if(!n || !gs->Party()->IsInParty(nid))
+	{
+        LoadString(hInstance, IDS_CHANNEL_NOPARTY, message, sizeof(message));
+        display->DisplayMessage(message);
+        return false;
+	}
+    else
+    {
+        gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::CHANNEL,
+		    player->Skill(Arts::CHANNEL), 0);
+        LoadString(hInstance, IDS_CHANNEL_CREATE, disp_message, sizeof(disp_message));
+        _stprintf(message, disp_message, n->Name());
+        display->DisplayMessage(message);
+        player->SetChannelTarget(nid);
+        return true;
+    }
+}
+
+void cArts::EndChannel()
+{
+	cNeighbor *n;
+	if (((n = cp->SelectedNeighbor()) != NO_ACTOR) && options.network &&
+		gs->Party() && (n->ID() != Lyra::ID_UNKNOWN))
+	{
+        this->ArtFinished(arts->SetChannel(n->ID()));
+        return;
+    }            
+    else
+    {
+        this->ArtFinished(false);
+        return;
+    }
+}
 
 //////////////////////////////////////////////////////////////////
 // Join Party
@@ -4807,6 +4892,8 @@ void cArts::EndGrantXP(void *value)
 		negative = true;
 		amount = -amount;
 	}
+	if (amount > 99999)
+		amount = 100000;
 
 	int k,c;
 	k = amount/1000;
@@ -5250,6 +5337,12 @@ void cArts::EndGrantRPXP(void *value)
 		this->ArtFinished(false);
 		return;
 	}
+
+	if (amount > 99999)
+		amount = 100000;
+	if (amount < -99999)
+		amount = -100000;
+
 	int k,c;
 	k = amount/1000;
 	amount = amount%1000;
@@ -5262,7 +5355,9 @@ void cArts::EndGrantRPXP(void *value)
 		return;
 	}
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::GRANT_RP_XP, k, c);
-	this->DisplayUsedOnOther(n,Arts::GRANT_RP_XP );
+	//this->DisplayUsedOnOther(n,Arts::GRANT_RP_XP );
+	_stprintf(disp_message, "You have anonymously granted %i RP XP to %s", ((k * 1000) + (c * 100)), n->Name());
+	display->DisplayMessage(disp_message);
 	this->ArtFinished(true);
 	return;
 }
@@ -5382,37 +5477,53 @@ void cArts::EndSummon(void)
 
 void cArts::StartRally(void)
 {
-	for (int i=0; i<num_no_rally_levels; i++) 
-		if (no_rally_levels[i] == level->ID()){ // Cannot use Rally in levels with sphere/house locks
-			LoadString (hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
-			display->DisplayMessage (disp_message);
+	for (int i = 0; i < num_no_rally_levels; i++) {
+		if (no_rally_levels[i] == level->ID()) { // Cannot use Rally in levels with sphere/house locks
+			LoadString(hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
 			this->ArtFinished(false);
 			return;
 		}
+	}
+
 	if (gs->Party()->Members() < 1){ // Must be in a party to use Rally
 		LoadString (hInstance, IDS_RALLY_NOPARTY, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
+
+	int p_sector = FindSector(player->x, player->y, 0, false);
+	if ((p_sector == DEAD_SECTOR) ||  // Cannot Rally if stuck inside a wall, outside of a valid room (climbing area), or space is too small to stand.
+	  (level->Sectors[p_sector]->room == 0) ||
+	  (level->Sectors[p_sector]->CeilHt(player->x,player->y) - level->Sectors[p_sector]->FloorHt(player->x, player->y) <= player->physht))
+	{
+		LoadString(hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	this->WaitForSelection(&cArts::EndRally, Arts::RALLY);
 	this->CaptureCP(NEIGHBORS_TAB, Arts::RALLY);
 	return;
 }
 
-void cArts::ApplyRally(lyra_id_t caster_id)
+void cArts::ApplyRally(lyra_id_t caster_id, int dest_x, int dest_y)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	if (n == NO_ACTOR)
 		return;
-	rally_id = caster_id;
+	rally_x = dest_x;
+	rally_y = dest_y;
+	ushort dest_room = level->Rooms[level->Sectors[FindSector(rally_x, rally_y, 0, true)]->room].id;
 	this->DisplayUsedByOther(n,Arts::RALLY);
 	if (player->flags & ACTOR_SOULSPHERE)
 		return;
 	if (!acceptrejectdlg)
 		{
 			LoadString (hInstance, IDS_QUERY_RALLY, disp_message, sizeof(disp_message));
-				_stprintf(message, disp_message, level->RoomName(n->Room()), n->Name());
+				_stprintf(message, disp_message, level->RoomName(dest_room), n->Name());
 			HWND hDlg = CreateLyraDialog(hInstance, (IDD_ACCEPTREJECT),
 							cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
 			acceptreject_callback = (&cArts::GotRallied);
@@ -5424,16 +5535,22 @@ void cArts::ApplyRally(lyra_id_t caster_id)
 
 void cArts::GotRallied(void *value)
 {
-	if (player->flags & ACTOR_SOULSPHERE)
-		return;
 	int success = *((int*)value);
-	if (success){
-		player->EvokedFX().Activate(Arts::RALLY, false);
-		cNeighbor *n = this->LookUpNeighbor(rally_id);
-		player->EvokedFX().Activate(Arts::RALLY, false);
-		player->Teleport (n->x, n->y, n->angle, NO_LEVEL);
+	if (player->flags & ACTOR_SOULSPHERE) {
+		LoadString(hInstance, IDS_RALLY_NO_SS, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 	}
-	rally_id = 0;
+	else if (success) {
+		if (player->Room() != level->Rooms[level->Sectors[FindSector(rally_x, rally_y, 0, true)]->room].id) {
+			LoadString(hInstance, IDS_RALLY_PREEMOTE, message, sizeof(message));
+			gs->Talk(message, RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN);
+		}
+		player->Teleport(rally_x, rally_y, 0, NO_LEVEL);
+		player->EvokedFX().Activate(Arts::RALLY, false);
+	}
+    
+    // clear rally info on server in ALL CASES.
+	gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
 	return;
 }
 
@@ -5450,7 +5567,7 @@ void cArts::EndRally(void)
 	if (!gs->Party()->IsInParty(n->ID())){ //target must be in player's party
 		LoadString (hInstance, IDS_RALLY_NOTMEMBER, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, n->Name());
-		display->DisplayMessage(disp_message);
+		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
 	}
@@ -5462,7 +5579,9 @@ void cArts::EndRally(void)
 		return;
 	}
 */
-	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::RALLY, 0, 0);
+	short dest_x = (short)(player->x);
+	short dest_y = (short)(player->y);
+	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::RALLY, dest_x, dest_y);
 	this->DisplayUsedOnOther(n, Arts::RALLY);
 
 	this->ArtFinished(true);
@@ -5737,7 +5856,7 @@ void cArts::EndEmpathy(void* value)
 		return;
 	}
 	int amount = _ttoi(message);
-	if ((amount < 100) || (amount > 10000) || (amount*2 > player->XP()))
+	if ((amount < 100) || (amount > 50000) || (amount*2 > player->XP()))
 	{
 		LoadString (hInstance, IDS_BEQUEATH_LIMITS, message, sizeof(message));
 		display->DisplayMessage(message);
@@ -5760,7 +5879,7 @@ void cArts::EndEmpathy(void* value)
 	} 
 
 
-
+	/* Removed Bequeath PT Requirement 6/27/16 - AMR
 	cItem* power_tokens[Lyra::INVENTORY_MAX];
 	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
 	
@@ -5775,7 +5894,7 @@ void cArts::EndEmpathy(void* value)
 	}
 
 	power_tokens[0]->Destroy();
-	
+	*/
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::EMPATHY, k, c);
 
 	this->ArtFinished(true);
@@ -7362,6 +7481,23 @@ cItem* cArts::HasQuestCodex(lyra_id_t neighbor_id, lyra_id_t art_id)
 	return quest_codex;
 }
 
+bool cArts::IsSharesFocus(lyra_id_t target_focus_id)
+{
+	if (player->Avatar().Focus() == target_focus_id) {
+		return true;
+	}
+	switch (target_focus_id)
+	{
+		case Arts::GATEKEEPER: return player->Skill(Arts::GATEKEEPER);
+		case Arts::DREAMSEER: return player->Skill(Arts::DREAMSEER);
+		case Arts::SOULMASTER: return player->Skill(Arts::SOULMASTER);
+		case Arts::FATESENDER: return player->Skill(Arts::FATESENDER);
+		default: return false;
+	}
+	// default to not the same focus
+	return false;
+}
+
 
 void cArts::EndTrain(void)
 {
@@ -7421,7 +7557,7 @@ void cArts::EndTrain(void)
 
 	}
 #ifndef GAMEMASTER	//GMs SHOULD be allowed to train arts even if not within their primary focus
-	else if (art_info[art_id].restricted() && (player->Avatar().Focus() != n->Avatar().Focus()))
+	else if (art_info[art_id].restricted() && !this->IsSharesFocus(n->Avatar().Focus()))
 	{
 		LoadString (hInstance, IDS_TRAIN_OTHER_FAILED, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, n->Name(), this->Descrip(art_id));
