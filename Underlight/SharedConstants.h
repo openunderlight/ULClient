@@ -633,7 +633,8 @@ struct LyraPalette {
 	enum palette_ids {
 		NONE	= -1,
 		BANNER_PALETTE = 255,
-		FX_PALETTE     = 1020
+		FX_PALETTE     = 1020,
+		HALO_PALETTE = 1015
 	};
 };
 

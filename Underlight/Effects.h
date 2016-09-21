@@ -25,6 +25,7 @@ const int MAGIC_AGENT_PALETTE_2 = 1018;
 const int MAGIC_FX_PALETTE = 1020;
 const int MAGIC_AVATAR_PALETTE_1 = 1022;
 const int MAGIC_AVATAR_PALETTE_2 = 1023;
+const int MAGIC_HALO_PALETTE = 1015;
 
 ///////////////////////////////////////////////////////////////////
 // Structures
