@@ -697,8 +697,8 @@ int pp;
 					else if (avatar.Dreamstrike())
 						halo_color = 6;
 					// Teacher is third priority
-					//else if (avatar.Teacher())
-						//halo_color = min(avatar.Focus() - 1, NUM_HALO_COLORS - 2); // teacher's focus stat
+					else if (avatar.Teacher())
+						halo_color = min(avatar.Focus() - 1, NUM_HALO_COLORS - 2); // teacher's focus stat
 					// Default to apprentice, if exists
 					else //(avatar.Apprentice())
 						halo_color = 5;
