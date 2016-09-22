@@ -86,9 +86,12 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 	selected_function = inventory_flags = 0;
 	max_sort_index++;
 	sort_index = max_sort_index;
-
+	
+	// GMs are always draggable!
+#if ! (defined (UL_DEBUG) || defined (GAMEMASTER))
 	if (lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP))
 		draggable = false;
+#endif
 
 	if (palette == MAGIC_AVATAR_PALETTE_1)
 		num_color_regions = 2;

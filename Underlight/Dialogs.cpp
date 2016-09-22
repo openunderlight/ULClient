@@ -1900,6 +1900,20 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			case IDC_ITEM_USE_PT:
 				usePowerToken = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_USE_PT));
 				gotUsePt = true;
+				break;
+
+			case IDC_ITEM_NOPICKUP:
+			{
+				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
+				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), disable);
+				break;
+			}
+			case IDC_ITEM_ARTIFACT:
+			{
+				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT));
+				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
+				break;
+			}
 
 			case IDC_TYPE_COMBO:
 							if (HIWORD(wParam) == LBN_SELCHANGE || gotUsePt)
@@ -3245,99 +3259,6 @@ BOOL CALLBACK ChooseGuildDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM 
 	return FALSE;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-// Summon Dialog
-//
-// Breaking this from Enter Value Dialog since this will eventually be expanded beyond the capability of that dialog
-
-BOOL CALLBACK SummonDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
-{
-	static bool art_callback;
-	static dlg_callback_t callback;
-
-
-	if (HBRUSH brush = SetControlColors(hDlg, Message, wParam, lParam))
-		return (LRESULT)brush;
-
-	switch (Message)
-	{
-	case WM_GETDLGCODE:
-		return DLGC_WANTMESSAGE;
-
-	case WM_DESTROY:
-		entervaluedlg = false;
-		break;
-
-	case WM_INITDIALOG:
-		SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
-		Edit_SetText(GetDlgItem(hDlg, IDC_VALUE), message);
-		//LoadString(hInstance, IDS_TELEPORT_DLG_MSG, message, sizeof(message));
-		strcpy(message, "Enter Teleport Coordinates (x; y; level)");
-		SetWindowText(GetDlgItem(hDlg, IDC_VALUE_PROMPT), message);
-		callback = NULL;
-		art_callback = false;
-		entervaluedlg = true;
-		SetFocus(GetDlgItem(hDlg, IDC_VALUE));
-		return TRUE;
-
-	case WM_PAINT:
-		if (TileBackground(hDlg))
-			return (LRESULT)0;
-		break;
-
-	case WM_KEYUP:
-		switch (LOWORD(wParam))
-		{
-		case VK_RETURN:
-			PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_OK, 0);
-			return TRUE;
-		case VK_ESCAPE:
-			PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_CANCEL, 0);
-			return TRUE;
-		}
-		break;
-
-	case WM_SET_ART_CALLBACK: // called by art waiting for callback
-		art_callback = true;
-#ifdef AGENT // always reject
-		PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_CANCEL, 0);
-#endif
-		return TRUE;
-
-	case WM_SET_CALLBACK: // waiting for callback
-		callback = (dlg_callback_t)lParam;
-#ifdef AGENT // always reject
-		PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_CANCEL, 0);
-#endif
-		return TRUE;
-
-
-	case WM_COMMAND:
-		switch (LOWORD(wParam))
-		{
-		case IDC_OK:
-			GetDlgItemText(hDlg, IDC_VALUE, message, sizeof(message));
-			if (art_callback)
-				(arts->*(entervalue_callback))(message);
-			else if (callback)
-				callback(message);
-			DestroyWindow(hDlg);
-			return TRUE;
-
-		case IDC_CANCEL:
-			if (art_callback)
-				arts->CancelArt();
-			else if (callback)
-				callback(NULL);
-			DestroyWindow(hDlg);
-			return FALSE;
-
-		default:
-			break;
-		}
-	}
-	return FALSE;
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Enter Value Dialog
