@@ -2946,6 +2946,7 @@
 #define IDS_POR_SYM 4407
 #define IDS_OOSM_SYM 4408
 #define IDS_BANISH 4409
+#define IDS_SCROLL_POLE 4410
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

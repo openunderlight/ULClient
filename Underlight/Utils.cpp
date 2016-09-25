@@ -988,6 +988,7 @@ talisman_name_t talisman_names[] =
 	{false,IDS_FLAG_OOSM , 71},
 	{false,IDS_FLAG_POR , 72},
 	{false,IDS_FLAG_UOC , 73},
+	{false,IDS_SCROLL_POLE, 74},
 	{false,IDS_CREST_AOE , 77},
 	{false,IDS_CREST_HC , 78},
 	{false,IDS_CREST_UOC , 79},
