@@ -5456,7 +5456,7 @@ void cArts::MidSummon(void)
 	return;
 }
 
-void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int level)
+void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int lvl)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::SUMMON);
@@ -5466,7 +5466,7 @@ void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int level)
 
     player->EvokedFX().Activate(Arts::SUMMON, false);
 	// use the supplied coordinates
-	player->Teleport(x, y, 0, level);
+	player->Teleport(x, y, 0, lvl);
 
 	return;
 }
