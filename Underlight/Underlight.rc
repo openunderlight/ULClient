@@ -224,6 +224,7 @@ BEGIN
     CONTROL         "Use PT",IDC_ITEM_USE_PT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,313,13,44,10
     CONTROL         "Tab1",IDC_FUNCTION_TAB,"SysTabControl32",0x0,195,0,110,15
     LTEXT           "",IDC_FORGE_TEXT,1,58,135,41
+    CONTROL         "NoPickup",IDC_ITEM_NOPICKUP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,308,13,44,10
 END
 
 IDD_KEYBOARD_CONFIG DIALOGEX 0, 0, 409, 100
@@ -1525,6 +1526,94 @@ BEGIN
     IDS_LOGIN_ALREADYIN     "That character, or another character linked to the same billing account, is already logged in - please try again in 5 minutes. If you still can't log in after 15 minutes, please email accounts@underlight.com."
     IDS_SOUND_FAILED_INIT   "Failed to initialize Sound, trying again...\n"
     IDS_LOGIN_GAMEFULL      "We're sorry, but the game is currently full - please try again later!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DOORBELL_ALERT      "%s has entered the house plane at %s\n"
+    IDS_TORCH               "TORCH"
+    IDS_LUMITWIST           "LUMITWIST"
+    IDS_RAIN                "RAIN"
+    IDS_HELI                "HELI"
+    IDS_STATUE_1            "STATUE_1"
+    IDS_STATUE_2            "STATUE_2"
+    IDS_FEM_STATUE_1        "FEM_STATUE_1"
+    IDS_FEM_STATUE_2        "FEM_STATUE_2"
+    IDS_FEM_STATUE_3        "FEM_STATUE_3"
+    IDS_FEM_STATUE_4        "FEM_STATUE_4"
+    IDS_ST_L                "ST_L"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ST_I                "ST_I"
+    IDS_ST_W                "ST_W"
+    IDS_WEP_A               "WEP_A"
+    IDS_DRIP                "DRIP"
+    IDS_FI_SM               "FI_SM"
+    IDS_FI_MD               "FI_MD"
+    IDS_TORCH_1             "TORCH_1"
+    IDS_TORCH_2             "TORCH_2"
+    IDS_EYES_1              "EYES_1"
+    IDS_EYES_2              "EYES_2"
+    IDS_W_HOLE              "W_HOLE"
+    IDS_S_ALT2              "S_ALT2"
+    IDS_ALTAR1              "ALTAR1"
+    IDS_DTORCH              "DTORCH"
+    IDS_LIGHTNING           "LIGHTNING"
+    IDS_LIGHTNING_SM        "LIGHTNING_SM"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_AOE_ORNAMENT        "AOE_ORNAMENT"
+    IDS_TELESCOPE           "TELESCOPE"
+    IDS_VINE1               "VINE1"
+    IDS_VINE2               "VINE2"
+    IDS_VINE3               "VINE3"
+    IDS_VINE4               "VINE4"
+    IDS_DOL_CL_BNR          "DOL_CL_BNR"
+    IDS_DOL_FL_BNR          "DOL_FL_BNR"
+    IDS_HC_CL_BNR           "HC_CL_BNR"
+    IDS_HC_CL_PCE           "HC_CL_PCE"
+    IDS_HC_CL_SYM           "HC_CL_SYM"
+    IDS_HC_FL_BNR           "HC_FL_BNR"
+    IDS_HC_RAIL             "HC_RAIL"
+    IDS_HC_TETS             "HC_TETS"
+    IDS_TREE_HAND           "TREE_HAND"
+    IDS_TREE_MILO           "TREE_MILO"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_RVINE1              "RVINE1"
+    IDS_RVINE2              "RVINE2"
+    IDS_DOL_CHAN            "DOL_CHAN"
+    IDS_DOL_DECO            "DOL_DECO"
+    IDS_TOMBSTONE           "TOMBSTONE"
+    IDS_COPPER_STATUE       "COPPER_STATUE"
+    IDS_AOE_FLAG            "AOE_FLAG"
+    IDS_DOL_FLAG            "DOL_FLAG"
+    IDS_GOE_FLAG            "GOE_FLAG"
+    IDS_HC_FLAG             "HC_FLAG"
+    IDS_KOES_FLAG           "KOES_FLAG"
+    IDS_OOSM_FLAG           "OOSM_FLAG"
+    IDS_POR_FLAG            "POR_FLAG"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_UOC_FLAG            "UOC_FLAG"
+    IDS_AOE_SYM             "AOE_SYM"
+    IDS_HC_SYM              "HC_SYM"
+    IDS_UOC_SYM             "UOC_SYM"
+    IDS_DOL_SYM             "DOL_SYM"
+    IDS_GOE_SYM             "GOE_SYM"
+    IDS_KOES_SYM            "KOES_SYM"
+    IDS_POR_SYM             "POR_SYM"
+    IDS_OOSM_SYM            "OOSM_SYM"
+    IDS_BANISH              "BANISH"
+    IDS_SCROLL_POLE         "SCROLL_POLE"
 END
 
 STRINGTABLE
@@ -4274,23 +4363,21 @@ BEGIN
     IDS_SELF_DEMOTE         "Are you sure you really want to demote yourself %s %s?"
     IDS_MALE_REVENANT       "Revenant"
     IDS_FEMALE_REVENANT     "Revenant"
-    IDS_RALLY_PREEMOTE      "has been rallied away by another dreamer"
-    IDS_LOGIN_COOLOFF       "You must wait 60 minutes between logins of different player characters."
+    IDS_LOGIN_COOLOFF       "You must wait 15 minutes between logins of different player characters."
     IDS_LOGIN_PMARE_LOCK    "Game Masters have temporarily disabled Player Mares due to an in-game event.  Please log in with your regular character and try again later."
+    IDS_RECEIVE_CHANNEL     "Energy from %s begins coursing through you."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_RECEIVE_CHANNEL     "Energy from %s begins coursing through you."
     IDS_RECEIVE_CHANNELKILL "%s channels more energy to you."
     IDS_CHANNEL_NOPARTY     "You can only channel energy to those in party with you."
     IDS_CHANNEL_EXPIRED     "Channel has expired."
     IDS_CHANNEL_CREATE      "You begin channelling energy to %s."
     IDS_CHANNEL             "Channel"
-    IDS_SHOW_IN_PARTY_CHANNEL 
-                            "%s (Channel receiver) is in your party"
-    IDS_CHANNEL_CLOSED      "%s is no longer channelling energy to you."                            
-    IDS_DOORBELL_ALERT      "%s has entered the house plane at %s\n"
+    IDS_SHOW_IN_PARTY_CHANNEL "%s (Channel receiver) is in your party"
+    IDS_CHANNEL_CLOSED      "%s is no longer channelling energy to you."
+    IDS_RALLY_PREEMOTE      "has been rallied away by another dreamer"
 END
 
 STRINGTABLE

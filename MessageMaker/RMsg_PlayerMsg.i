@@ -36,6 +36,11 @@ INLINE int RMsg_PlayerMsg::State2() const
   return data_.state2;
 }
 
+INLINE int RMsg_PlayerMsg::State3() const
+{
+	return data_.state3;
+}
+
 INLINE void RMsg_PlayerMsg::SetSenderID(lyra_id_t playerid)
 {
   data_.senderid = playerid;
@@ -59,4 +64,9 @@ INLINE void RMsg_PlayerMsg::SetState1(int byte1)
 INLINE void RMsg_PlayerMsg::SetState2(int byte2)
 {
   data_.state2 = byte2;
+}
+
+INLINE void RMsg_PlayerMsg::SetState3(int byte3) 
+{
+	data_.state3 = byte3;
 }

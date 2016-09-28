@@ -297,8 +297,9 @@ public:
 	void ApplySoulShield(int skill, lyra_id_t caster_id);
 	void EndSoulShield(void);
 	void StartSummon(void);
-	void ApplySummon(lyra_id_t caster_id);
-	void EndSummon(void);
+	void ApplySummon(lyra_id_t caster_id, int x, int y, int lvl);
+	void MidSummon(void);
+	void EndSummon(void *value);
 	void StartSuspend(void);
 	void MidSuspend(void);
 	void ApplySuspend(int num_days, lyra_id_t caster_id);

@@ -52,6 +52,7 @@ _CrtMemState extern memstuff;
 // Constants 
 
 const unsigned int MS_PER_TICK = 53; // ms per IBM PC clock tick 
+const unsigned int TALISMAN_INDEX_CUTOFF = 250; // anything above this incurs a linear search
 
 // Return a Reg key indexed by charater name
 TCHAR* RegPlayerKey(bool fBase /* = false */)
@@ -987,6 +988,7 @@ talisman_name_t talisman_names[] =
 	{false,IDS_FLAG_OOSM , 71},
 	{false,IDS_FLAG_POR , 72},
 	{false,IDS_FLAG_UOC , 73},
+	{false,IDS_SCROLL_POLE, 74},
 	{false,IDS_CREST_AOE , 77},
 	{false,IDS_CREST_HC , 78},
 	{false,IDS_CREST_UOC , 79},
@@ -1005,6 +1007,80 @@ talisman_name_t talisman_names[] =
 	{false,IDS_CTF_CYAN , 95},
 	{false,IDS_CTF_CHALK , 96},
 	{false,IDS_CTF_JADE , 97},
+	{ false, IDS_TORCH, 794 },
+	{ false, IDS_LUMITWIST, 802 },
+	{ false, IDS_RAIN, 805 },
+	{ false, IDS_HELI, 811 },
+	{ false, IDS_STATUE_1, 822 },
+	{ false, IDS_STATUE_2, 823 },
+	{ false, IDS_FEM_STATUE_1, 824 },
+	{ false, IDS_FEM_STATUE_2, 825 },
+	{ false, IDS_FEM_STATUE_3, 826 },
+	{ false, IDS_FEM_STATUE_4, 827 },
+	{ false, IDS_ST_L, 830 },
+	{ false, IDS_ST_I, 831 },
+	{ false, IDS_ST_W, 832 },
+	{ false, IDS_WEP_A, 833 },
+	{ false, IDS_DRIP, 834 },
+	{ false, IDS_FI_SM, 857 },
+	{ false, IDS_FI_MD, 863 },
+	{ false, IDS_FIRE, 874 },
+	{ false, IDS_TORCH_1, 885 },
+	{ false, IDS_TORCH_2, 896 },
+	{ false, IDS_EYES_1, 903 },
+	{ false, IDS_EYES_2, 912 },
+	{ false, IDS_W_HOLE, 921 },
+	{ false, IDS_S_ALT2, 930 },
+	{ false, IDS_ALTAR1, 937 },
+	{ false, IDS_DTORCH, 938 },
+	{ false, IDS_LIGHTNING, 947 },
+	{ false, IDS_LIGHTNING_SM, 951 },
+	{ false, IDS_AOE_ORNAMENT, 957 },
+	{ false, IDS_TELESCOPE, 958 },
+	{ false, IDS_VINE1, 959 },
+	{ false, IDS_VINE2, 960 },
+	{ false, IDS_VINE3, 961 },
+	{ false, IDS_VINE4, 962 },
+	{ false, IDS_DOL_CL_BNR, 963 },
+	{ false, IDS_DOL_FL_BNR, 964 },
+	{ false, IDS_HC_CL_BNR, 965 },
+	{ false, IDS_HC_CL_PCE, 966 },
+	{ false, IDS_HC_CL_SYM, 967 },
+	{ false, IDS_HC_FL_BNR, 968 },
+	{ false, IDS_HC_RAIL, 969 },
+	{ false, IDS_HC_TETS, 970 },
+	{ false, IDS_TREE_HAND, 971 },
+	{ false, IDS_TREE_MILO, 972 },
+	{ false, IDS_RVINE1, 973 },
+	{ false, IDS_RVINE2, 974 },
+	{ false, IDS_TORCH, 975 },
+	{ false, IDS_DOL_CHAN, 980 },
+	{ false, IDS_DOL_DECO, 981 },
+	{ false, IDS_TORCH, 982 },
+	{ false, IDS_TOMBSTONE, 987 },
+	{ false, IDS_COPPER_STATUE, 988 },
+	{ false, IDS_COPPER_STATUE, 989 },
+	{ false, IDS_AOE_FLAG, 990 },
+	{ false, IDS_DOL_FLAG, 991 },
+	{ false, IDS_GOE_FLAG, 992 },
+	{ false, IDS_HC_FLAG, 993 },
+	{ false, IDS_KOES_FLAG, 994 },
+	{ false, IDS_OOSM_FLAG, 995 },
+	{ false, IDS_POR_FLAG, 996 },
+	{ false, IDS_UOC_FLAG, 997 },
+	{ false, IDS_AOE_SYM, 998 },
+	{ false, IDS_HC_SYM, 999 },
+	{ false, IDS_UOC_SYM, 1000 },
+	{ false, IDS_DOL_SYM, 1001 },
+	{ false, IDS_GOE_SYM, 1002 },
+	{ false, IDS_KOES_SYM, 1003 },
+	{ false, IDS_POR_SYM, 1004 },
+	{ false, IDS_OOSM_SYM, 1005 },
+	{ false, IDS_BANISH, 1006 },
+	{ false, IDS_DIAMOND, 1007 },
+	{ false, IDS_INVIS, 1008 },
+	{ false, IDS_PEARL, 1009 },
+	{ false, IDS_STAR, 1010 },
 
 /*	
 	{false,_T("dol_flag") , 63},
@@ -1135,7 +1211,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_CURSED;
 	related_art[i] = Arts::CURSE;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
-	default_duration[i] = 13; // 1 min
+	default_duration[i] = 23; // 10 min
 	harmful[i] = true;
 
 	i = LyraEffect::PLAYER_BLIND;

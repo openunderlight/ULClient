@@ -156,12 +156,6 @@ bool cActor::SetBitmapInfo(realmid_t effect_id)
 	switch (type)
 	{
 		case ITEM:
-			if ((effect_id < 0) || (effect_id > 255))
-			{
-				LoadString(hInstance, IDS_ILLEGAL_ITEM_BITMAP, message, sizeof(message));
-				_stprintf(errbuf, message, effect_id);
-				WARN(errbuf);
-			}
 			break;
 		case MISSILE:
 			if ((effect_id < 0) || (effect_id > 255))
@@ -642,5 +636,6 @@ bool cArtFX::Update()
 	}
 	return false;
 }
+
 
 
