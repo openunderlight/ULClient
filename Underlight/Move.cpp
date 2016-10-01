@@ -1796,7 +1796,18 @@ static int PlayerTripLine(linedef *aLine)
 	}
 
 	if ( aLine->TripFlags & TRIP_TELEPORT )
-	{	// make sure this teleportal is not locked
+	{
+		// Is this portal perma warded? Do not allow access to non-gms.
+#ifndef GAMEMASTER
+		if (IsPortalLocked(aLine))
+		{
+			strcpy(disp_message, "That portal is currently inaccessible.");
+			//LoadString(hInstance, IDS_NO_TELEPORTAL, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			return 0;
+		}
+#endif
+		// make sure this teleportal is not locked
 		// since we can only do one item iteration at a time, we
 		// make a list of all the amulet keys we have, and then
 		// check them against the wards
@@ -1836,7 +1847,7 @@ static int PlayerTripLine(linedef *aLine)
 						//if (actors->ValidItem(amulets[i]))
 						// amulets[i]->DrainCharge();
 					}
-				if (ward.strength < 100 && !has_proper_amulet && player->flags & ACTOR_BLENDED)
+				if (!has_proper_amulet && player->flags & ACTOR_BLENDED)
 				{ // player is blended and the ward is blendable, so kill the blending but pass the ward
 					has_proper_amulet = true;
 					player->RemoveTimedEffect(LyraEffect::PLAYER_BLENDED);
@@ -1895,6 +1906,26 @@ static int PlayerTripLine(linedef *aLine)
 	return(0);
 }
 
+bool IsPortalLocked(linedef *aLine)
+{
+	// check if there's a permaward on the portal
+	cItem *item;
+	const void* state;
+	lyra_item_ward_t ward;
+	bool isLocked = false;
+	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+		if ((item->ItemFunction(0) == LyraItem::WARD_FUNCTION) && (aLine == ((linedef*)item->Extra())))
+		{
+			state = item->Lmitem().StateField(0);
+			memcpy(&ward, state, sizeof(ward));
+
+			if (ward.strength >= 100) isLocked = true;
+		}
+
+	actors->IterateItems(DONE);
+
+	return isLocked;
+}
 
 bool CanPassPortal(int lock, int guild_id, bool rendering)
 { // this code also used by buildview to decide whether or not to animate portals

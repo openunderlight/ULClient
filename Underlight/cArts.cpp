@@ -1619,8 +1619,13 @@ void cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 
 		if ((item->ItemFunction(0) == LyraItem::WARD_FUNCTION) && (line == ((linedef*)item->Extra())))
 		{
+			lyra_item_ward_t ward;
+			memcpy(&ward, item->Lmitem().StateField(0), sizeof(ward));
 			actors->IterateItems(DONE);
-			LoadString(hInstance, IDS_ALREADY_WARDED, disp_message, sizeof(disp_message));
+			if (ward.strength >= 100)
+				LoadString(hInstance, IDS_CANT_WARD_IMPASSABLE, disp_message, sizeof(disp_message));
+			else
+				LoadString(hInstance, IDS_ALREADY_WARDED, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
 			this->ArtFinished(false);
 			return;
@@ -1692,8 +1697,8 @@ void cArts::Lock(void)
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_NOREAP);
 	
-	//header.SetGraphic(LyraBitmap::META_ESSENCE); 
-	header.SetGraphic(LyraBitmap::WARD);
+	header.SetGraphic(LyraBitmap::INVIS_ITEM);
+	//header.SetGraphic(LyraBitmap::WARD);
 	header.SetColor1(0); header.SetColor2(0);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
 
@@ -1805,8 +1810,8 @@ void cArts::Shatter(void)
 	if (item->NoReap())
 	{
 #ifndef GAMEMASTER
-		//LoadString(hInstance, IDS_NO_WARD, disp_message, sizeof(disp_message));
-		strcpy(disp_message, "That ward cannot be shattered.");
+		LoadString(hInstance, IDS_NO_WARD, disp_message, sizeof(disp_message));
+		//strcpy(disp_message, "That ward cannot be shattered.");
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
