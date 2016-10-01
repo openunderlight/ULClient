@@ -3084,24 +3084,16 @@ void cArts::GuildHouse(void)
 	LoadString (hInstance, IDS_USE_GUILD_HOUSE, message, sizeof(message));
 	display->DisplayMessage(message);
 
-	switch (player->FocusStat())
-	{
-		case Stats::WILLPOWER:
-			player->Teleport(-850,-3556,0,14);
-			break;
-
-		case Stats::INSIGHT:
-			player->Teleport(-10566,4336,0,3);
-			break;
-
-		case Stats::RESILIENCE:
-			player->Teleport(8177,8235,0,7);
-			break;
-
-		case Stats::LUCIDITY:
-			player->Teleport(-1738,-1548,0,29);
-			break;
-	}
+	// What if there are multiple focal stats?
+	if (player->Skill(Arts::GATEKEEPER) > 0)
+		player->Teleport(-850, -3556, 0, 14);
+	else if (player->Skill(Arts::DREAMSEER) > 0)
+		player->Teleport(-10566, 4336, 0, 3);
+	else if (player->Skill(Arts::SOULMASTER) > 0)
+		player->Teleport(8177, 8235, 0, 7);
+	else if (player->Skill(Arts::FATESENDER) > 0)
+		player->Teleport(-1738, -1548, 0, 29);
+	
 	this->ArtFinished(true);
 	return;
 }
