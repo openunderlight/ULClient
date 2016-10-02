@@ -229,7 +229,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xA5E2, // Passlock 
 0xCAFE, // Heal 
 0xED56, // Sanctify 
-0x1282, // Lock 
+0x164D, // Lock/Disable Portal
 0x3614, // Key 
 0x586F, // Break Lock 
 0x8380, // Repair 
@@ -384,7 +384,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_PASSLOCK,						Stats::INSIGHT,		50, 30, 6,	5, 	-1, SANCT|FOCUS},
 {IDS_HEAL, 							Stats::RESILIENCE,	10, 5,  0,	1, 	-1, SANCT},
 {IDS_SANCTIFY, 						Stats::WILLPOWER,	15, 5,  13, 2, 	-1, SANCT},
-{IDS_LOCK, 							Stats::WILLPOWER,	20, 20, 0,	5, 	-1, MAKE_ITEM|FOCUS},
+{IDS_DISABLE_PORTAL, 				Stats::WILLPOWER,	20, 20, 0,	5, 	-1, MAKE_ITEM|FOCUS},
 {IDS_KEY,							Stats::WILLPOWER,	20, 1,  0,	2, 	-1, SANCT|MAKE_ITEM|FOCUS},
 {IDS_BREAK_LOCK, 					Stats::WILLPOWER,	40, 40, 0,	8, 	-1, SANCT|FOCUS},
 {IDS_REPAIR, 						Stats::RESILIENCE,	15, 10, 0,	4, 	-1, SANCT|NEED_ITEM},
@@ -746,6 +746,10 @@ bool cArts::CanUseArt(int art_id, bool bypass)
 	if (checksum1 != checksum2)
 	//if (0) // checksums disabled temporarily
 	{ // Cheating Bastard!!!!	
+#ifdef UL_DEBUG
+		_stprintf(message, "New checksum: %d, Old checksum: %d", checksum1, checksum2);
+		display->DisplayMessage(message);
+#endif
 		LoadString (hInstance, IDS_DETECTED_CHEATER, message, sizeof(message));
 		display->DisplayMessage(message);
 		player->SetCurrStat(Stats::DREAMSOUL, 0, SET_ABSOLUTE, player->ID());
@@ -1586,7 +1590,7 @@ void cArts::EssenceContainer(void)
 	this->ArtFinished(true);
 }
 
-void cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
+bool cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 {
 	LmItem info;
 	cItem *item;
@@ -1599,16 +1603,14 @@ void cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 	{	// no teleportal nearby
 		LoadString(hInstance, IDS_NO_TELEPORTAL, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
-		this->ArtFinished(false);
-		return;
+		return false;
 	}
 
 	if ((line->flags & LINE_NO_WARD) || (level->Rooms[player->Room()].flags & ROOM_NOREAP))
 	{	// can't ward this teleportal; in no reap areas, wards would last forever!
 		LoadString(hInstance, IDS_NO_WARDING, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
-		this->ArtFinished(false);
-		return;
+		return false;
 	}
 
 	// see if the room is full of items or there's already ward on the teleportal
@@ -1627,8 +1629,7 @@ void cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 			else
 				LoadString(hInstance, IDS_ALREADY_WARDED, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
-			this->ArtFinished(false);
-			return;
+			return false;
 		}
 	}
 	actors->IterateItems(DONE);
@@ -1637,8 +1638,7 @@ void cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 	{
 		LoadString(hInstance, IDS_MAX_ROOMITEMS, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
-		this->ArtFinished(false);
-		return;
+		return false;
 	}
 
 	// see if we can pass this teleportal
@@ -1648,8 +1648,7 @@ void cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 	{
 		LoadString(hInstance, IDS_CANT_WARD_IMPASSABLE, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
-		this->ArtFinished(false);
-		return;
+		return false;
 	}
 
 	// uncomment to prevent warding of trip_cross teleportals
@@ -1674,14 +1673,11 @@ void cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 	item = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
 	if (item == NO_ITEM)
 	{
-		this->ArtFinished(false);
-		return;
+		return false;
 	}
 	item->SetMarkedForDrop();
-	cDS->PlaySound(LyraSound::WARD, player->x, player->y, true);
 
-	this->ArtFinished(true);
-	return;
+	return true;
 }
 
 void cArts::Lock(void)
@@ -1689,7 +1685,7 @@ void cArts::Lock(void)
 #ifndef GAMEMASTER
 	LoadString(hInstance, IDS_GM_ONLY, disp_message, sizeof(disp_message));
 	display->DisplayMessage(disp_message);
-	this->ArtFinished(true);
+	this->ArtFinished(false);
 #endif
 	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
 	LmItemHdr header;
@@ -1705,7 +1701,7 @@ void cArts::Lock(void)
 	// Set strength to a high level to mark it as unable to blend/shatter
 	ward.strength = 1000;
 
-	this->PlaceLock(ward, header);
+	this->ArtFinished(this->PlaceLock(ward, header));
 }
 
 //////////////////////////////////////////////////////////////////
@@ -1724,7 +1720,12 @@ void cArts::Ward(void)
 
 	ward.strength = player->Skill(art_in_use);
 
-	this->PlaceLock(ward, header);
+	bool success = this->PlaceLock(ward, header);
+
+	if (success)
+		cDS->PlaySound(LyraSound::WARD, player->x, player->y, true);
+
+	this->ArtFinished(success);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -1807,7 +1808,9 @@ void cArts::Shatter(void)
 		return;
 	}
 
-	if (item->NoReap())
+	bool noreap = item->NoReap();
+
+	if (noreap)
 	{
 #ifndef GAMEMASTER
 		LoadString(hInstance, IDS_NO_WARD, disp_message, sizeof(disp_message));
@@ -1823,7 +1826,10 @@ void cArts::Shatter(void)
 	
 	LoadString (hInstance, IDS_WARD_SHATTERED, disp_message, sizeof(disp_message));
 	display->DisplayMessage(disp_message, false);
-	cDS->PlaySound(LyraSound::SHATTER, player->x, player->y, true);
+
+	// Only play the sound if we're shattering a normal ward
+	if (!noreap)
+		cDS->PlaySound(LyraSound::SHATTER, player->x, player->y, true);
 	this->ArtFinished(true);
 	return;
 }

@@ -481,7 +481,7 @@ public:
 
 
 private:
-	void PlaceLock(lyra_item_ward_t ward, LmItemHdr header);
+	bool PlaceLock(lyra_item_ward_t ward, LmItemHdr header);
 	void WaitForSelection(art_method_t callback, lyra_id_t art_id); // to start waiting for a click
 	void AddDummyNeighbor(void); // to allow selection of player as a target
 	void RemoveDummyNeighbor(void);

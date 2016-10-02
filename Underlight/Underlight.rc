@@ -4072,7 +4072,7 @@ BEGIN
     IDS_PASSLOCK            "Passlock"
     IDS_HEAL                "Heal"
     IDS_SANCTIFY            "Sanctify"
-    IDS_LOCK                "Lock"
+    IDS_DISABLE_PORTAL      "Disable Portal"
 END
 
 STRINGTABLE
