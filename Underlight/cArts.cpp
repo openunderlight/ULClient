@@ -7185,6 +7185,18 @@ void cArts::EndCleanseMare(void)
 
 void cArts::StartCorruptEssence(void)
 {
+
+	if (!player->IsInitiate(Guild::NO_GUILD) &&
+		!player->IsKnight(Guild::NO_GUILD) &&
+		!player->IsRuler(Guild::NO_GUILD))
+	{
+		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		display->DisplayMessage(message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	this->WaitForSelection(&cArts::EndCorruptEssence, Arts::CORRUPT_ESSENCE);
 	this->CaptureCP(INVENTORY_TAB, Arts::CORRUPT_ESSENCE);
 	return;
@@ -7207,17 +7219,6 @@ void cArts::EndCorruptEssence(void)
 		this->ArtFinished(false);
 		return;
 	}
-
-	// only works for KOES
-
-	if (!(player->GuildRank(Guild::SHADOW) >= Guild::INITIATE))
-	{
-		LoadString (hInstance, IDS_MUST_BE_KOES, message, sizeof(message));
-		display->DisplayMessage(message);
-		this->ArtFinished(false);
-		return;
-	}
-
 
 	// check that the item has dreamer essence
 	for (int i=0; i<essence_item->NumFunctions(); i++)
@@ -7323,6 +7324,18 @@ void cArts::EndDestroyItem(void)
 
 void cArts::StartSacrifice(void)
 {
+
+	if (!player->IsInitiate(Guild::NO_GUILD) &&
+		!player->IsKnight(Guild::NO_GUILD) &&
+		!player->IsRuler(Guild::NO_GUILD))
+	{
+		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		display->DisplayMessage(message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	this->WaitForSelection(&cArts::EndSacrifice, Arts::SACRIFICE);
 	this->CaptureCP(INVENTORY_TAB, Arts::SACRIFICE);
 	return;
@@ -7342,16 +7355,6 @@ void cArts::EndSacrifice(void)
 	if ((chakram_item == NO_ACTOR) || !(actors->ValidItem(chakram_item)))
 	{
 		this->DisplayItemBailed(Arts::SACRIFICE);
-		this->ArtFinished(false);
-		return;
-	}
-
-	// only works for AOE
-
-	if (!(player->GuildRank(Guild::ECLIPSE) >= Guild::INITIATE))
-	{
-		LoadString (hInstance, IDS_MUST_BE_AOE, message, sizeof(message));
-		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
 	}
