@@ -6571,18 +6571,6 @@ void cArts::EndCupSummons(void)
 {
 	cNeighbor *n = cp->SelectedNeighbor();
 
-	cItem* power_tokens[Lyra::INVENTORY_MAX];
-	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
-
-	if (num_tokens < CUP_SUMMONS_POWER_TOKENS)
-	{
-		LoadString (hInstance, IDS_NEED_POWER_TOKEN, message, sizeof(message));
-		_stprintf(disp_message, message, arts->Descrip(Arts::CUP_SUMMONS));
-		display->DisplayMessage(disp_message); 
-		this->ArtFinished(false);
-		return;
-	}
-
 	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
 	{
 		this->DisplayNeighborBailed(Arts::CUP_SUMMONS);
@@ -6613,10 +6601,6 @@ void cArts::EndCupSummons(void)
 		this->ArtFinished(false);
 		return;
 	}
-
-
-	for (int i=0; i<CUP_SUMMONS_POWER_TOKENS; i++)
-		power_tokens[i]->Destroy();
 
 	if (n->ID() == player->ID())
 	{
