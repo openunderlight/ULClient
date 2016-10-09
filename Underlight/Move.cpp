@@ -1833,7 +1833,18 @@ static int PlayerTripLine(linedef *aLine)
 				for (i=0; i<num_amulets; i++)
 					if (amulet_keys[i] == ward.player_id())
 					{
-						has_proper_amulet = true;
+						// only allow a "key" to bypass a permaward
+						if (perma_warded)
+						{
+							memcpy(&amulet, amulets[i]->Lmitem().StateField(0), sizeof(amulet));
+							// Only allow a "Key" to pass a permaward
+							if (amulet.IsKey())
+								has_proper_amulet = true;
+						}
+						// Only allow a regular amulet to pass a regular ward
+						else if (!amulet.IsKey())
+							has_proper_amulet = true;
+						
 						// uncomment to give amulets charges
 						//if (actors->ValidItem(amulets[i]))
 						// amulets[i]->DrainCharge();

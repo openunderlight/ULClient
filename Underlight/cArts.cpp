@@ -1185,7 +1185,7 @@ void cArts::ApplyArt(void)
 		case Arts::HEAL: method = &cArts::StartRestore; break;
 		case Arts::SANCTIFY: method = &cArts::StartResistCurse; break;
 		case Arts::LOCK: method = &cArts::Lock; break;
-		case Arts::KEY: method = &cArts::Amulet; break;
+		case Arts::KEY: method = &cArts::Key; break;
 		case Arts::BREAK_LOCK: method = &cArts::Shatter; break;
 		case Arts::REPAIR: method = &cArts::StartReweave; break;
 		case Arts::REMOVE_CURSE: method = &cArts::StartPurify; break;
@@ -1728,44 +1728,78 @@ void cArts::Ward(void)
 	this->ArtFinished(success);
 }
 
+void cArts::Key(void)
+{
+	TCHAR name[LmItem::NAME_LENGTH];
+	// r->ErrorInfo()->RIf name is longer than ten, truncate it on the amulet name
+	TCHAR myname[20];
+	_stprintf(myname, player->Name());
+	if (_tcslen(myname) < 13)
+	{
+		//LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
+		_stprintf(name, "Key of %s", myname);
+	}
+	else {
+		int i;
+		TCHAR myname13[13];
+		for (i = 0; i<13; i++)
+			myname13[i] = myname[i];
+		_stprintf(&myname13[12], _T("\0"));
+		//LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
+		_stprintf(name, "Key of %s", myname13);
+	}
+
+	// Set strength to 100 to mark this as a key instead of an amulet
+	this->CreatePass(name, 100);
+}
+
 //////////////////////////////////////////////////////////////////
 // Amulet
-
 void cArts::Amulet(void)
 {
 	TCHAR name[LmItem::NAME_LENGTH];
+	// r->ErrorInfo()->RIf name is longer than ten, truncate it on the amulet name
+	TCHAR myname[20];
+	_stprintf(myname, player->Name());
+	if (_tcslen(myname) < 10)
+	{
+		LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
+		_stprintf(name, message, myname);
+	}
+	else {
+		int i;
+		TCHAR myname10[10];
+		for (i = 0; i<10; i++)
+			myname10[i] = myname[i];
+		_stprintf(&myname10[9], _T("\0"));
+		LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
+		_stprintf(name, message, myname10);
+	}
+
+	int item_strength = (unsigned char)player->Skill(art_in_use);
+
+	// Make sure a normal amulet never exceeds 99
+	if (item_strength > 99) item_strength = 99;
+
+	this->CreatePass(name, item_strength);
+}
+
+void cArts::CreatePass(const TCHAR* pass_name, int pass_strength)
+{
 	LmItem info;
 	LmItemHdr header;
-	lyra_item_amulet_t amulet = {LyraItem::AMULET_FUNCTION, 0, 0};
+	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
 
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_CHANGE_CHARGES);
 	header.SetGraphic(LyraBitmap::AMULET);
 	header.SetColor1(0); header.SetColor2(0);
-	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AMULET_FUNCTION),0,0));
+	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AMULET_FUNCTION), 0, 0));
 
-	amulet.strength = (unsigned char)player->Skill(art_in_use);
+	amulet.strength = pass_strength;
 	amulet.player_id = player->ID();
 
-	// r->ErrorInfo()->RIf name is longer than ten, truncate it on the amulet name
-	TCHAR myname[20];
-_stprintf(myname, player->Name());
-	if (_tcslen(myname) < 10) 
-	{
-	LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
-	_stprintf(name, message, myname);
-	}
-	else {
-		int i;
-		TCHAR myname10[10];
-		for (i=0;i<10;i++)
-			myname10[i]=myname[i];
-	_stprintf(&myname10[9], _T("\0"));
-	LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
-	_stprintf(name, message, myname10);
-	}
-
-	info.Init(header, name, 0, 0, 0);
+	info.Init(header, pass_name, 0, 0, 0);
 	info.SetStateField(0, &amulet, sizeof(amulet));
 	info.SetCharges(player->Skill(art_in_use));
 	cItem* item = CreateItem(player->x, player->y, player->angle, info, 0, false);
