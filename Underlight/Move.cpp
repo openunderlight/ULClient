@@ -1797,16 +1797,6 @@ static int PlayerTripLine(linedef *aLine)
 
 	if ( aLine->TripFlags & TRIP_TELEPORT )
 	{
-		// Is this portal perma warded? Do not allow access to non-gms.
-#ifndef GAMEMASTER
-		if (IsPortalLocked(aLine))
-		{
-			strcpy(disp_message, "That portal is currently inaccessible.");
-			//LoadString(hInstance, IDS_NO_TELEPORTAL, disp_message, sizeof(disp_message));
-			display->DisplayMessage(disp_message);
-			return 0;
-		}
-#endif
 		// make sure this teleportal is not locked
 		// since we can only do one item iteration at a time, we
 		// make a list of all the amulet keys we have, and then
@@ -1818,6 +1808,7 @@ static int PlayerTripLine(linedef *aLine)
 		cItem *amulets[Lyra::INVENTORY_MAX];
 		int num_amulets = 0;
 		const void* state;
+		bool perma_warded = IsPortalLocked(aLine);
 
 		for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
 			if ((item->BitmapID() == LyraBitmap::AMULET) && (item->Status() == ITEM_OWNED))
@@ -1848,13 +1839,26 @@ static int PlayerTripLine(linedef *aLine)
 						// amulets[i]->DrainCharge();
 					}
 				if (!has_proper_amulet && player->flags & ACTOR_BLENDED)
-				{ // player is blended and the ward is blendable, so kill the blending but pass the ward
-					has_proper_amulet = true;
-					player->RemoveTimedEffect(LyraEffect::PLAYER_BLENDED);
+				{ 
+#ifndef GAMEMASTER
+					if (!perma_warded)
+					{
+#endif
+						// player is blended and the ward is blendable, so kill the blending but pass the ward
+						has_proper_amulet = true;
+						player->RemoveTimedEffect(LyraEffect::PLAYER_BLENDED);
+#ifndef GAMEMASTER
+					}
+#endif
 				}
 				if (!has_proper_amulet)
 				{
-					LoadString (hInstance, IDS_TELEPORTAL_WARDED, disp_message, 256);
+					// add permanent message
+					if (perma_warded) 
+						strcpy(disp_message, "That portal is currently inaccessible.");
+					else
+						LoadString (hInstance, IDS_TELEPORTAL_WARDED, disp_message, 256);
+
 					display->DisplayMessage (disp_message);
 					actors->IterateItems(DONE);
 					return 0;
