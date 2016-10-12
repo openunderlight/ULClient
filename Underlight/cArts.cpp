@@ -1686,6 +1686,7 @@ void cArts::Lock(void)
 	LoadString(hInstance, IDS_GM_ONLY, disp_message, sizeof(disp_message));
 	display->DisplayMessage(disp_message);
 	this->ArtFinished(false);
+	return;
 #endif
 	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
 	LmItemHdr header;
