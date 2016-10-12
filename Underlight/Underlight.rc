@@ -4072,7 +4072,7 @@ BEGIN
     IDS_PASSLOCK            "Passlock"
     IDS_HEAL                "Heal"
     IDS_SANCTIFY            "Sanctify"
-    IDS_LOCK                "Lock"
+    IDS_DISABLE_PORTAL      "Disable Portal"
 END
 
 STRINGTABLE
@@ -4384,6 +4384,11 @@ STRINGTABLE
 BEGIN
     IDS_ERR_READ_ROOM_DESC_MSG 
                             "Error reading room description message from server!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_NOACCESS_PORTAL     "That portal is currently inaccessible."
 END
 
 #endif    // English (United States) resources
