@@ -2512,11 +2512,7 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 	{ // go to new level, if it's reasonable
 		if (!level->IsValidLevel(level_id))
 		{
-#ifndef CHINESE
-			LoadString(hInstance, IDS_BAD_TPORT2, temp_message, sizeof(temp_message));
-			_stprintf(message, temp_message, level_id);
-			GAME_ERROR(message);
-#endif
+			player->Teleport(LastX(), LastY(), 0, LastLevel());
 			return false;
 		}
 
@@ -2541,13 +2537,7 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 	int new_sector = FindSector(x, y, 0, true);
 	if (new_sector == DEAD_SECTOR)
 	{
-
-#ifndef CHINESE
-
-		LoadString(hInstance, IDS_BAD_TPORT1, temp_message, sizeof(temp_message));
-		_stprintf(message, temp_message, level_id);
-		GAME_ERROR(message);
-#endif
+		player->Teleport(LastX(), LastY(), 0, LastLevel());
 		return false;
 	}
 
