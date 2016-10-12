@@ -1849,7 +1849,6 @@ void cArts::Shatter(void)
 	{
 #ifndef GAMEMASTER
 		LoadString(hInstance, IDS_NO_WARD, disp_message, sizeof(disp_message));
-		//strcpy(disp_message, "That ward cannot be shattered.");
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
