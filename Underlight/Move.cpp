@@ -1865,8 +1865,8 @@ static int PlayerTripLine(linedef *aLine)
 				if (!has_proper_amulet)
 				{
 					// add permanent message
-					if (perma_warded) 
-						strcpy(disp_message, "That portal is currently inaccessible.");
+					if (perma_warded)
+						LoadString(hInstance, IDS_NOACCESS_PORTAL, disp_message, 256);
 					else
 						LoadString (hInstance, IDS_TELEPORTAL_WARDED, disp_message, 256);
 

@@ -4386,6 +4386,11 @@ BEGIN
                             "Error reading room description message from server!"
 END
 
+STRINGTABLE
+BEGIN
+    IDS_NOACCESS_PORTAL     "That portal is currently inaccessible."
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
