@@ -3084,16 +3084,54 @@ void cArts::GuildHouse(void)
 	LoadString (hInstance, IDS_USE_GUILD_HOUSE, message, sizeof(message));
 	display->DisplayMessage(message);
 
-	// What if there are multiple focal stats?
+	int focal_arts = 0;
+	int focus;
+
+	// check for each focus statu to determine the location necessary
 	if (player->Skill(Arts::GATEKEEPER) > 0)
-		player->Teleport(-850, -3556, 0, 14);
-	else if (player->Skill(Arts::DREAMSEER) > 0)
-		player->Teleport(-10566, 4336, 0, 3);
-	else if (player->Skill(Arts::SOULMASTER) > 0)
-		player->Teleport(8177, 8235, 0, 7);
-	else if (player->Skill(Arts::FATESENDER) > 0)
-		player->Teleport(-1738, -1548, 0, 29);
+	{
+		focal_arts++;
+		focus = Stats::WILLPOWER;
+	}
+		
+	if (player->Skill(Arts::DREAMSEER) > 0)
+	{
+		focal_arts++;
+		focus = Stats::INSIGHT;
+	}
+		
+	if (player->Skill(Arts::SOULMASTER) > 0)
+	{
+		focal_arts++;
+		focus = Stats::RESILIENCE;
+	}
 	
+	if (player->Skill(Arts::FATESENDER) > 0)
+	{
+		focal_arts++;
+		focus = Stats::LUCIDITY;
+	}
+	
+	// We have multiple focal arts, use the player's focus stat to determine their guild house
+	if (focal_arts != 1)
+		focus = player->FocusStat();
+	
+	switch (focus)
+	{
+		case Stats::WILLPOWER: 
+			player->Teleport(-850, -3556, 0, 14); // gk
+			break;
+		case Stats::INSIGHT:
+			player->Teleport(-10566, 4336, 0, 3); // ds
+			break;
+		case Stats::RESILIENCE:
+			player->Teleport(8177, 8235, 0, 7); // sm
+			break;
+		case Stats::LUCIDITY:
+			player->Teleport(-1738, -1548, 0, 29); // fs
+			break;
+	}
+
 	this->ArtFinished(true);
 	return;
 }
