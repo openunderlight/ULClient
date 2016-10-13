@@ -7541,6 +7541,22 @@ void cArts::ApplyTrain(int art_id, int success, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_TRAIN_SUCCEEDED, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, n->Name(), this->Descrip(art_id), player->Skill(art_id));
 		LmAvatar avatar = player->Avatar();
+		if (art_id == Arts::QUEST)
+		{
+			avatar.SetApprentice(1);
+			player->SetAvatar(avatar, true);
+		}
+		if (art_id == Arts::TRAIN)
+		{
+			avatar.SetApprentice(0);
+			avatar.SetTeacher(1);
+			player->SetAvatar(avatar, true);
+		}
+		if (art_id == Arts::TRAIN_SELF)
+		{
+			avatar.SetMasterTeacher(1);
+			player->SetAvatar(avatar, true);
+		}
 		if (art_id == Arts::DREAMSMITH_MARK) 
 		{
 			avatar.SetDreamSmith(1);
@@ -7767,7 +7783,16 @@ void cArts::ApplyUnTrain(int art_id, lyra_id_t caster_id)
 		gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
 
 		LmAvatar avatar = player->Avatar();
-		if ((art_id == Arts::DREAMSTRIKE) || 
+		if (art_id == Arts::TRAIN)
+		{
+			if (player->Skill(Arts::QUEST)>0) 
+				avatar.SetApprentice(1);
+		}
+
+		if ((art_id == Arts::TRAIN_SELF) ||
+			(art_id == Arts::TRAIN) ||
+			(art_id == Arts::QUEST) ||
+			(art_id == Arts::DREAMSTRIKE) || 
 			(art_id == Arts::WORDSMITH_MARK) ||
 			(art_id == Arts::DREAMSMITH_MARK))
 		{	// this will reset the fields properly
