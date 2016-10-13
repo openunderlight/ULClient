@@ -483,14 +483,14 @@ static void InsertSector(int addsector)
 			if ((line->TripFlags & TRIP_TELEPORT) && options.network)
 			{
 				int guild_id = GetTripGuild(line->flags);
-				if (CanPassPortal(line->trip3, guild_id, true))
-					AnimateLineBitmap(line);
+				if (CanPassPortal(line->trip3, guild_id, true) && !IsPortalLocked(line))
+						AnimateLineBitmap(line);
 			}
 			else if ((line->TripFlags & TRIP_LEVELCHANGE) && options.network)
 			{
 				int guild_id = GetTripGuild(line->flags);
 				unsigned char lock = (line->trip4>>8);
-				if (CanPassPortal(lock, guild_id, true))
+				if (CanPassPortal(lock, guild_id, true) && !IsPortalLocked(line))
 					AnimateLineBitmap(line);
 			}
 			else

@@ -2138,12 +2138,12 @@ BEGIN
     IDS_TRAIN_HOUSES_COVENANT 
                             "Enter the City of Dreams in the chambers of the Union of the Covenant.\n"
     IDS_TRAIN_HOUSES_RADIANCE 
-                            "Enter the City of Dreams in the chambers of the Protectors of the Radiance.\n"
+                            "Enter the City of Dreams in the chambers of the Peace Corpse.\n"
     IDS_TRAIN_HOUSES_CALENTURE 
                             "Enter the City of Dreams in the chambers of House Calenture.\n"
     IDS_TRAIN_HOUSES_ENTRANCED 
                             "Enter the City of Dreams in the chambers of the Gathering of the Entranced.\n"
-    IDS_TRAIN_HOUSES_LIGHT  "Enter the City of Dreams in the chambers of the Dreamers of Light.\n"
+    IDS_TRAIN_HOUSES_LIGHT  "Enter the City of Dreams in the chambers of the Order of Light.\n"
 END
 
 STRINGTABLE
@@ -2831,14 +2831,14 @@ BEGIN
     IDS_AOE                 "Alliance of the Eclipse"
     IDS_KOES                "Keepers of Eternal Shadow"
     IDS_UOC                 "Union of the Covenant"
-    IDS_POR                 "Protectors of the Radiance"
+    IDS_POR                 "Peace Corpse"
 END
 
 STRINGTABLE
 BEGIN
     IDS_HC                  "House Calenture"
     IDS_GOE                 "Gathering of the Entranced"
-    IDS_DOL                 "Dreamers of Light"
+    IDS_DOL                 "Order of Light"
     IDS_ANY_HOUSE           "any house"
     IDS_NONE                "None"
     IDS_GOAL                "goal"
@@ -2924,10 +2924,10 @@ BEGIN
     IDS_AOE_MEMBER_TOKEN    "Alliance of the Eclipse Membership Token"
     IDS_KOES_MEMBER_TOKEN   "Keepers of Eternal Shadow Membership Token"
     IDS_UOC_MEMBER_TOKEN    "Union of the Covenant Membership Token"
-    IDS_POR_MEMBER_TOKEN    "Protectors of the Radiance Membership Token"
+    IDS_POR_MEMBER_TOKEN    "Peace Corpse Membership Token"
     IDS_HC_MEMBER_TOKEN     "House Calenture Membership Token"
     IDS_GOE_MEMBER_TOKEN    "Gathering of the Entranced Membership Token"
-    IDS_DOL_MEMBER_TOKEN    "Dreamers of Light Membership Token"
+    IDS_DOL_MEMBER_TOKEN    "Order of Light Membership Token"
     IDS_CLEANSED_NIGHTMARE_TOKEN "Cleansed Nightmare Token"
 END
 
@@ -3929,7 +3929,7 @@ STRINGTABLE
 BEGIN
     IDS_KNOW0629            "The turf here is lush and springy, suggestive of marshy conditions. A cool breeze carries the scent of exotic flowers and the cries of birds. A crystalline stream forms a path leading to the Alliance of the Eclipse."
     IDS_KNOW0528            "A wasteland of stone and sand stretches before you. The air is dry and hot. Ancient mounds, worn by time, dot the landscape. A carefully fitted stone path meanders among the natural splendors on its way to the Union of the Covenant."
-    IDS_KNOW0401            "Massive rock walls rise up to delineate a path along an escarpment. Strong winds gust from time to time, pushing at you with a strong force. The footpath up the mountain is worn from countless travelers' steps on its way to the Dreamers of Light."
+    IDS_KNOW0401            "Massive rock walls rise up to delineate a path along an escarpment. Strong winds gust from time to time, pushing at you with a strong force. The footpath up the mountain is worn from countless travelers' steps on its way to the Order of Light."
     IDS_KNOW2005            "A radiant sense of peace and warmth pervades the atmosphere here, the gentle colors are pleasing to the eye. The hand-woven tapestries that hang from the ceiling are of exceptional quality and show a master artist's touch."
     IDS_NO_ARTS_DOCA_PIT    "No Arts can be evoked in this room."
     IDS_KNOW0326            "Graceful arches coax your gaze up to the stars of a pastel sky. A warm, gentle breeze carries the scent of flowers and waterfalls gently through the grasses. A pathway of polished stone leads onward to the Gathering of the Entranced."
@@ -4072,7 +4072,7 @@ BEGIN
     IDS_PASSLOCK            "Passlock"
     IDS_HEAL                "Heal"
     IDS_SANCTIFY            "Sanctify"
-    IDS_LOCK                "Lock"
+    IDS_DISABLE_PORTAL      "Disable Portal"
 END
 
 STRINGTABLE
@@ -4384,6 +4384,11 @@ STRINGTABLE
 BEGIN
     IDS_ERR_READ_ROOM_DESC_MSG 
                             "Error reading room description message from server!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_NOACCESS_PORTAL     "That portal is currently inaccessible."
 END
 
 #endif    // English (United States) resources
