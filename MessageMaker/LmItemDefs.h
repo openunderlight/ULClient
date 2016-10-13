@@ -248,6 +248,9 @@ struct lyra_item_amulet_t {  // 8 bytes
   unsigned char strength;    // skill of caster
   short unused;
   unsigned int	player_id;	 // id of caster
+  inline bool IsKey() {
+	  return strength > 99;
+  }
   // conversion methods
   inline void hton() {
     HTONL(player_id);

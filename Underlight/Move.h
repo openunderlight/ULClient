@@ -179,6 +179,7 @@ void MoveActor(cActor *movactor, long angle, float distance, int move_type = MOV
 int FindIntersectAngle(cActor *a, linedef *line);
 linedef* FindTeleportal(cActor *actor);
 linedef *FindLDef(short from, short to);
+bool IsPortalLocked(linedef *aLine);
 bool CanPassPortal(int lock, int guild_id, bool rendering = false);
 int  FindSector(float  x, float  y, int oldsector, bool set_sector_anywhere);
 float fdist(float x1,float  y1,float  x2,float y2);
