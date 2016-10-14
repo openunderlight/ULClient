@@ -1004,6 +1004,7 @@ void cItem::Drop(float drop_x, float drop_y, int drop_angle)
 	if (temporary)
 	{ // temporary items are destroyed on a drop
 		lmitem.SetCharges(0);
+		cp->SetUpdateInvCount(true);
 		return;
 	}
 	if (status == ITEM_DROPPING)
