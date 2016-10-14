@@ -1780,22 +1780,13 @@ short cPlayer::CurrentAvatarType(void)
 void cPlayer::SetGuildRank(int guild_id, int value)
 {
 	guild_ranks[guild_id].rank = value;
-	if (avatar.GuildID() == guild_id)
+	if (avatar.GuildID() == guild_id && value == 0)
 	{
 		LmAvatar new_avatar = avatar;
-		// demoted
-		if (value == 0)
-		{
-			new_avatar.SetGuildRank(0);
-			new_avatar.SetGuildID(Guild::NO_GUILD);
-			new_avatar.SetShowGuild(Patches::DONT_SHOW);
-		}
-		else
-		{
-			// automatically update the visible crest
-			new_avatar.SetGuildRank(value);
-		}
-
+		new_avatar.SetGuildRank(0);
+		new_avatar.SetGuildID(Guild::NO_GUILD);
+		new_avatar.SetShowGuild(Patches::DONT_SHOW);
+	
 		this->SetAvatar(new_avatar, true);
 	}
 	return;
