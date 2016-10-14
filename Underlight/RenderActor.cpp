@@ -694,7 +694,7 @@ int pp;
 					if (avatar.NPSymbol())
 						halo_color = 4;
 					// DreamerStriker is second priority
-					else if (avatar.Dreamstrike())
+					else if (avatar.Dreamstrike() && avatar.AccountType() == avatar.ACCT_ADMIN)
 						halo_color = 6;
 					// Teacher is third priority
 					else if (avatar.Teacher())
@@ -744,7 +744,7 @@ int pp;
 					if (avatar.NPSymbol())
 						halo_color = 4;
 					// DreamerStriker is second priority
-					else if (avatar.Dreamstrike())
+					else if (avatar.Dreamstrike() && avatar.AccountType() == avatar.ACCT_ADMIN)
 						halo_color = 6;
 					else
 						halo_color      = min(avatar.Focus()-1, NUM_HALO_COLORS-1); // teacher's focus stat
