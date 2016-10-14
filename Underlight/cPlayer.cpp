@@ -695,14 +695,17 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_CURSE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		//  Curse and Protection offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration*3;
+		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration;
 		return false;
 		}
 		// Implementing Curse Effect
 		// I also added some debugging checks for this
 		// Fixing Curse effect to Balthiir's specs
 		// Make sure that this strength computation is in the release
-		int new_strength = (duration/15000) + 6;	
+		// I recalculated the strength of curse and made it a buildable effect - Ajax
+		int new_strength = (duration/20000)+1;		
+		new_strength = new_strength + curse_strength;
+
 		if (new_strength>50) new_strength = 50;
 		// Note that these messages are now debug ONLY
 #ifdef UL_DEBUG
@@ -774,7 +777,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 	case LyraEffect::PLAYER_TRANSFORMED: {
 		LmAvatar new_avatar;
 		//new_avatar.Init((player->Skill(Arts::NIGHTMARE_FORM)/20 + 1), 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-		new_avatar.Init(Avatars::EMPHANT, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		new_avatar.Init(Avatars::EMPHANT, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		this->SetTransformedAvatar(new_avatar);
 										 } break;
 	case LyraEffect::PLAYER_RETURN: {
@@ -1486,7 +1489,7 @@ void cPlayer::InitAvatar(void)
 	else
 		sex = Avatars::MALE;
 #endif
-	avatar.Init(sex, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+	avatar.Init(sex, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 }
 
 bool cPlayer::IsMare(void)
@@ -1528,6 +1531,10 @@ void cPlayer::SetAvatar(LmAvatar new_avatar, bool update_server)
 		if (new_avatar.Teacher() && !this->IsTeacher()) // 		this->Skill(Arts::TRAIN))
 			new_avatar.SetTeacher(0);
 
+		// Reset halo if the player if a) had halo off, b) no art of quest
+		if (new_avatar.Apprentice() && !this->IsApprentice())
+			new_avatar.SetApprentice(0);
+
 		// Reset double halo if not a master teacher
 		if (new_avatar.MasterTeacher() && (0 == this->Skill(Arts::TRAIN_SELF)))
 			new_avatar.SetMasterTeacher(0);
@@ -1558,6 +1565,7 @@ void cPlayer::SetAvatar(LmAvatar new_avatar, bool update_server)
 	int focus = avatar.Focus();
 	int mt = avatar.MasterTeacher();
 	int teach = avatar.Teacher();
+	int apprent = avatar.Apprentice();
 	int g = avatar.ShowGuild();
 	int gid = avatar.GuildID();
 	int gr = avatar.GuildRank();
@@ -2504,11 +2512,7 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 	{ // go to new level, if it's reasonable
 		if (!level->IsValidLevel(level_id))
 		{
-#ifndef CHINESE
-			LoadString(hInstance, IDS_BAD_TPORT2, temp_message, sizeof(temp_message));
-			_stprintf(message, temp_message, level_id);
-			GAME_ERROR(message);
-#endif
+			player->Teleport(LastX(), LastY(), 0, LastLevel());
 			return false;
 		}
 
@@ -2533,13 +2537,7 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 	int new_sector = FindSector(x, y, 0, true);
 	if (new_sector == DEAD_SECTOR)
 	{
-
-#ifndef CHINESE
-
-		LoadString(hInstance, IDS_BAD_TPORT1, temp_message, sizeof(temp_message));
-		_stprintf(message, temp_message, level_id);
-		GAME_ERROR(message);
-#endif
+		player->Teleport(LastX(), LastY(), 0, LastLevel());
 		return false;
 	}
 

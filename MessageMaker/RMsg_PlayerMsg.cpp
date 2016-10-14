@@ -52,7 +52,7 @@ RMsg_PlayerMsg::~RMsg_PlayerMsg()
 // Init
 ////
 
-void RMsg_PlayerMsg::Init(lyra_id_t send_id, lyra_id_t recv_id, int mtype, int state1, int state2)
+void RMsg_PlayerMsg::Init(lyra_id_t send_id, lyra_id_t recv_id, int mtype, int state1, int state2, int state3)
 
 {
   SetSenderID(send_id);
@@ -60,6 +60,7 @@ void RMsg_PlayerMsg::Init(lyra_id_t send_id, lyra_id_t recv_id, int mtype, int s
   SetMsgType(mtype);
   SetState1(state1);
   SetState2(state2);
+  SetState3(state3);
 }
 
 ////
@@ -73,6 +74,7 @@ void RMsg_PlayerMsg::hton()
   HTONS(data_.mtype);
   HTONS(data_.state1);
   HTONS(data_.state2);
+  HTONS(data_.state3);
   // no conversion: state1, state2
 }
 
@@ -87,7 +89,8 @@ void RMsg_PlayerMsg::ntoh()
   NTOHS(data_.mtype);
   NTOHS(data_.state1);
   NTOHS(data_.state2);
-  // no conversion: state1, state2
+  NTOHS(data_.state3);
+  // no conversion: state1, state2, state3
 }
 
 ////
@@ -100,8 +103,8 @@ void RMsg_PlayerMsg::Dump(FILE* f, int indent) const
   INDENT(indent, f);
  _ftprintf(f, _T("<RMsg_PlayerMsg[%p,%d]: "), this, sizeof(RMsg_PlayerMsg));
   if (ByteOrder() == ByteOrder::HOST) {
-   _ftprintf(f, _T("sender=%u receiver=%u mtype=%d state=(%d,%d)>\n"),
-	    SenderID(), ReceiverID(), MsgType(), State1(), State2());
+   _ftprintf(f, _T("sender=%u receiver=%u mtype=%d state=(%d,%d,%d)>\n"),
+	    SenderID(), ReceiverID(), MsgType(), State1(), State2(), State3());
   }
   else {
    _ftprintf(f, _T("(network order)>\n"));

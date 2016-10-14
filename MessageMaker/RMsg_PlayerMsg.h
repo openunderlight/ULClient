@@ -148,7 +148,7 @@ public:
   RMsg_PlayerMsg();
   ~RMsg_PlayerMsg();
 
-  void Init(lyra_id_t send_id, lyra_id_t recv_id, int mtype, int state1 = 0, int state2 = 0);
+  void Init(lyra_id_t send_id, lyra_id_t recv_id, int mtype, int state1 = 0, int state2 = 0, int state3 = 0);
 
   // standard public methods
   void Dump(FILE* f, int indent = 0) const;
@@ -159,6 +159,7 @@ public:
   int MsgType() const;
   int State1() const;
   int State2() const;
+  int State3() const;
 
   static int ArtType(int msgtype);
 
@@ -168,6 +169,7 @@ public:
   void SetMsgType(int message_type);
   void SetState1(int byte1);
   void SetState2(int byte2);
+  void SetState3(int byte3);
 
 private:
 
@@ -182,7 +184,7 @@ private:
     short mtype;
     short state1;
     short state2;
-    short _unused;
+    short state3;
   } data_;
 
 };

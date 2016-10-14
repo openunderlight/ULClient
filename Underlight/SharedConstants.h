@@ -365,6 +365,7 @@ struct LyraBitmap {
 
 		// missiles
 		DREAMBLADE_MISSILE = 40,
+		INVIS_ITEM = DREAMBLADE_MISSILE,
 		MINIMUM_MISSILE_BITMAP = DREAMBLADE_MISSILE,
 		MARE_MELEE_MISSILE = 41,
 		PUSH_MISSILE = MARE_MELEE_MISSILE, // dummy bitmap
@@ -633,7 +634,8 @@ struct LyraPalette {
 	enum palette_ids {
 		NONE	= -1,
 		BANNER_PALETTE = 255,
-		FX_PALETTE     = 1020
+		FX_PALETTE     = 1020,
+		HALO_PALETTE = 1015
 	};
 };
 

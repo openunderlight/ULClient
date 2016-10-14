@@ -262,6 +262,7 @@ class cPlayer : public cActor
 	  inline bool Waving(void) { return waving; }; 
 	  inline lyra_id_t LastLeaderID(void) { return last_party_leader;};
 	  inline bool IsTeacher(void) { return Skill(Arts::TRAIN) || Skill(Arts::LEVELTRAIN);};
+	  inline bool IsApprentice(void) { return !IsTeacher() && Skill(Arts::QUEST); };
 	  inline bool IsDreamSmith(void) { return Skill(Arts::DREAMSMITH_MARK);}; 
 	  inline bool IsWordSmith(void) { return Skill(Arts::WORDSMITH_MARK);}; 
 	  inline bool IsDreamstriker(void) { return Skill(Arts::DREAMSTRIKE);}; 

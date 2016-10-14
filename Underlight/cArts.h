@@ -116,7 +116,9 @@ public:
 	void ApplyWeapon(void); 
 	void NotImplemented(void); // place holder
 	void Meditate(void);
+	void Lock(void);
 	void Ward(void);
+	void Key(void);
 	void Amulet(void);
 	void Shatter(void);
 	void Know(void);
@@ -296,8 +298,9 @@ public:
 	void ApplySoulShield(int skill, lyra_id_t caster_id);
 	void EndSoulShield(void);
 	void StartSummon(void);
-	void ApplySummon(lyra_id_t caster_id);
-	void EndSummon(void);
+	void ApplySummon(lyra_id_t caster_id, int x, int y, int lvl);
+	void MidSummon(void);
+	void EndSummon(void *value);
 	void StartSuspend(void);
 	void MidSuspend(void);
 	void ApplySuspend(int num_days, lyra_id_t caster_id);
@@ -479,6 +482,8 @@ public:
 
 
 private:
+	void CreatePass(const TCHAR* name, int strength);
+	bool PlaceLock(lyra_item_ward_t ward, LmItemHdr header);
 	void WaitForSelection(art_method_t callback, lyra_id_t art_id); // to start waiting for a click
 	void AddDummyNeighbor(void); // to allow selection of player as a target
 	void RemoveDummyNeighbor(void);
@@ -498,6 +503,7 @@ private:
 	int CountDemotionTokens(lyra_id_t guild_id, cItem** tokens, cNeighbor* n);
 	cItem* FindPrime(lyra_id_t guild_id, int min_charges);
 	cItem* HasQuestCodex(lyra_id_t neighbor_id, lyra_id_t art_id);
+	bool IsSharesFocus(lyra_id_t target_focus_id);
 
 
 	// copy constructor and assignment operator are
