@@ -4296,7 +4296,7 @@ void SetAvatarValues(HWND hDlg)
 	ListBox_SetCurSel(GetDlgItem(hDlg, IDC_REGION3), player->Avatar().Color3());
 	ListBox_SetCurSel(GetDlgItem(hDlg, IDC_REGION4), player->Avatar().Color4());
 
-	if (player->Avatar().Teacher())
+	if (player->Avatar().Teacher() || player->Avatar().Apprentice())
 		Button_SetCheck(GetDlgItem(hDlg, IDC_SHIELD),1);
 	else
 		Button_SetCheck(GetDlgItem(hDlg, IDC_SHIELD),0);
@@ -4433,7 +4433,7 @@ BOOL CALLBACK AvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 				}
 			}
 
-			if (! player->IsTeacher())
+			if (!player->IsTeacher() && !player->IsApprentice())
 				ShowWindow(GetDlgItem(hDlg, IDC_SHIELD), SW_HIDE);			
 
 			old_avatar = curr_avatar = player->Avatar();
@@ -4489,14 +4489,28 @@ BOOL CALLBACK AvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 					curr_avatar.SetColor4(ListBox_GetCurSel(GetDlgItem(hDlg, IDC_REGION4)));
 
 					// Set teacher display
-					if (Button_GetCheck(GetDlgItem(hDlg, IDC_SHIELD)) && player->IsTeacher())
+					if (Button_GetCheck(GetDlgItem(hDlg, IDC_SHIELD)))
 					{
-						curr_avatar.SetTeacher(1);
-						if (0 < player->Skill(Arts::TRAIN_SELF))
-							curr_avatar.SetMasterTeacher(1);
+						if (player->IsTeacher()) {
+							curr_avatar.SetTeacher(1);
+							curr_avatar.SetApprentice(0);
+
+							if (0 < player->Skill(Arts::TRAIN_SELF))
+								curr_avatar.SetMasterTeacher(1);
+						}
+						else if (player->IsApprentice()) {
+							curr_avatar.SetApprentice(1);
+						}
+						else
+						{
+							curr_avatar.SetApprentice(0);
+							curr_avatar.SetTeacher(0);
+							curr_avatar.SetMasterTeacher(0);
+						}
 					}
 					else
 					{
+						curr_avatar.SetApprentice(0);
 						curr_avatar.SetTeacher(0);
 						curr_avatar.SetMasterTeacher(0);
 					}

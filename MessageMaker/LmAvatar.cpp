@@ -31,7 +31,7 @@ const LmAvatar LmAvatar::DEFAULT_INSTANCE;
 
 LmAvatar::LmAvatar()
 {
-	Init(Avatars::MALE, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+	Init(Avatars::MALE, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 }
 
 ////
@@ -48,7 +48,7 @@ void LmAvatar::Init(unsigned int avatar_type, unsigned int color0,
 			unsigned int show_lyran, unsigned int dreamsmith,
 			unsigned int hidden, unsigned int extra_damage,
 			unsigned int wordsmith, unsigned int dreamstrike,
-			unsigned int focus, unsigned int np_symbol
+			unsigned int focus, unsigned int np_symbol, unsigned int apprentice
 			)
 {
   SetAvatarType(avatar_type);
@@ -74,6 +74,7 @@ void LmAvatar::Init(unsigned int avatar_type, unsigned int color0,
   SetDreamstrike(dreamstrike);
   SetFocus(focus);
   SetNPSymbol(np_symbol);
+  SetApprentice(apprentice);
 }
 
 void LmAvatar::Init(const lyra_avatar_t& avatar)
@@ -139,13 +140,13 @@ void LmAvatar::UnParse(TCHAR* str, int /* strlen */) const
 void LmAvatar::Dump(FILE* f, int indent) const
 {
   INDENT(indent, f);
- _ftprintf(f, _T("<LmAvatar[%p,%d]: av=[%u:%u] bm=%u colors=(%u,%u,%u,%u,%u) guild_id=%u guild_rank=%u show_guild=%u head=%u sphere=%u show_sphere=%u teacher=%u master teacher=%u show lyran=%u dreamsmith=%u acct_type=%u hidden=%u extra_damage=%u wordsmith=%u dreamstrike=%u focus=%u np_symbol=%u>\n"),
+ _ftprintf(f, _T("<LmAvatar[%p,%d]: av=[%u:%u] bm=%u colors=(%u,%u,%u,%u,%u) guild_id=%u guild_rank=%u show_guild=%u head=%u sphere=%u show_sphere=%u teacher=%u master teacher=%u show lyran=%u dreamsmith=%u acct_type=%u hidden=%u extra_damage=%u wordsmith=%u dreamstrike=%u focus=%u np_symbol=%u apprentice=%u>\n"),
 	  this, sizeof(LmAvatar),
 	  Avatar1(), Avatar2(), AvatarType(), Color0(), Color1(), Color2(), 
 	  Color3(), Color4(), GuildID(), GuildRank(), ShowGuild(), Head(), 
 	  Sphere(), ShowSphere(), Teacher(), MasterTeacher(), ShowLyran(), 
 	  DreamSmith(), AccountType(), Hidden(), ExtraDamage(), WordSmith(), 
-	  Dreamstrike(), Focus(), NPSymbol());
+	  Dreamstrike(), Focus(), NPSymbol(), Apprentice());
 }
 #endif /* USE_DEBUG */
 
