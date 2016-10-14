@@ -7767,6 +7767,13 @@ void cArts::MidUnTrain(void)
 
 void cArts::ApplyUnTrain(int art_id, lyra_id_t caster_id)
 {
+	// handle untraining yourself
+	if (caster_id == player->ID())
+	{
+		player->SetSkill(art_id, 0, SET_ABSOLUTE, caster_id, true);
+		return;
+	}
+
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	if (n == NO_ACTOR)
 		return;
@@ -9889,8 +9896,10 @@ void cArts::ResponseAscend(int guild_id, int success)
 		// AUTO-UNTRAIN GUARDIAN ONLY ARTS - 6/14/14 AMR
 		if (!player->IsKnight(Guild::NO_GUILD))
 		{ // If no longer a Guardian in any house, remove guardian arts
-			player->SetSkill(Arts::CUP_SUMMONS, 0, SET_ABSOLUTE, player->ID(), true);
-			player->SetSkill(Arts::ASCEND, 0, SET_ABSOLUTE, player->ID(), true);
+			gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::UNTRAIN, Arts::CUP_SUMMONS, 0);
+			gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::UNTRAIN, Arts::ASCEND, 0);
+			//player->SetSkill(Arts::CUP_SUMMONS, 0, SET_ABSOLUTE, player->ID(), true);
+			//player->SetSkill(Arts::ASCEND, 0, SET_ABSOLUTE, player->ID(), true);
 		}
 		
 		// AUTO-TRAIN RULER ARTS - 6/14/14 AMR
