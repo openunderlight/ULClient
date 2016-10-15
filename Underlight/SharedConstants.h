@@ -829,7 +829,7 @@ const int num_no_dreamstrike_levels =
   sizeof(no_dreamstrike_levels) / sizeof(int);
 
 const int no_rally_levels[] = 
-{1, 17, 18, 21, 22, 23, 24, 25, 26, 41, 43, 46, 47};
+{1, 46, 47};
 
 const int num_no_rally_levels =
   sizeof(no_rally_levels) / sizeof(int);

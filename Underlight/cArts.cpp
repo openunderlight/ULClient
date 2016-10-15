@@ -247,7 +247,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x3066, // Misdirection 
 0x5D3E, // Chaotic Vortex 
 0x7EE1, // Chaos Well 
-0xA08F, // Rally 
+0xA329, // Rally 
 0xC767, // Channel
 };
 
@@ -402,7 +402,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN|NEIGH},
 {IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
 {IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT|MAKE_ITEM|LEARN},
-{IDS_RALLY,							Stats::WILLPOWER,	60, 30, 0,  5,  -1, SANCT|NEIGH|FOCUS},
+{IDS_RALLY,							Stats::DREAMSOUL,	30, 30, 0,  5,  -1, SANCT|NEIGH},
 {IDS_CHANNEL,                       Stats::DREAMSOUL,   40, 35, 25, 3,  -1, SANCT|NEIGH|LEARN}
 };
 
@@ -5643,6 +5643,15 @@ void cArts::EndSummon(void *value)
 
 void cArts::StartRally(void)
 {
+	if ((!player->IsRuler(Guild::NO_GUILD)) && (!player->IsKnight(Guild::NO_GUILD)))
+	{
+		LoadString(hInstance, IDS_MUST_BE_KNIGHT, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, this->Descrip(Arts::RALLY));
+		display->DisplayMessage(message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	for (int i = 0; i < num_no_rally_levels; i++) {
 		if (no_rally_levels[i] == level->ID()) { // Cannot use Rally in levels with sphere/house locks
 			LoadString(hInstance, IDS_NO_RALLY_LEVEL, disp_message, sizeof(disp_message));
