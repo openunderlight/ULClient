@@ -296,6 +296,9 @@ void cParty::MemberEnter(const RmRemotePlayer& buddy)
 			n->Lock(); //rs->LockNeighbor(index);
 			break;
 		}
+	
+	if(!player->IsChannelling() && player->LastChannelTarget() == buddy.PlayerID())
+		arts->SetChannel(buddy.PlayerID());
 
 	this->CheckInvariants(__LINE__);
 	return;
@@ -319,7 +322,7 @@ void cParty::MemberExit(realmid_t playerID, int status)
 	n = actors->LookUpNeighbor(playerID);
 
 	if (player->IsChannelling() && playerID == player->ChannelTarget())
-		arts->ExpireChannel();
+		arts->ExpireChannel(false);
 
 	if (n == NO_ACTOR)
 		LoadString(hInstance, IDS_JP4, name, sizeof(name));
@@ -358,7 +361,7 @@ void cParty::MemberExit(realmid_t playerID, int status)
 				if (status == RMsg_Party::LEAVE_NORMAL && !dissolving)
 					player->SetLastLeaderID(Lyra::ID_UNKNOWN);
 				leader = Lyra::ID_UNKNOWN;
-				this->DissolveParty();
+				this->DissolveParty(false);
 			}
 			else if (!party_members && (leader == player->ID()))
 				leader = Lyra::ID_UNKNOWN;
@@ -546,7 +549,7 @@ void cParty::LeaveParty(void)
 	else
 	{
 		player->SetLastLeaderID(Lyra::ID_UNKNOWN);
-		this->DissolveParty();
+		this->DissolveParty(true);
 		gs->LeaveParty(player->ID());
 	}
 	this->CheckInvariants(__LINE__);
@@ -554,14 +557,14 @@ void cParty::LeaveParty(void)
 }
 
 // Party has been disbanded. 
-void cParty::DissolveParty(void)
+void cParty::DissolveParty(bool userInitiated)
 {
 	int i;
 
 	dissolving = true;
 
 	if (player->IsChannelling())
-		arts->ExpireChannel();
+		arts->ExpireChannel(userInitiated);
 
 	for (i = 0; i<(Lyra::MAX_PARTYSIZE - 1); i++)
 		if (members[i] != Lyra::ID_UNKNOWN)

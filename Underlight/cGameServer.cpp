@@ -4762,7 +4762,7 @@ void cGameServer::LevelLogout(int how)
 	{
 		if (party->RequestOutstanding() != Lyra::ID_UNKNOWN)
 			party->RejectRequest();
-		party->DissolveParty();
+		party->DissolveParty(false);
 		delete party; party = NULL;
 	}
 
@@ -4841,7 +4841,7 @@ void cGameServer::Logout(int how, bool final_logout)
 	{
 		if (party->RequestOutstanding() != Lyra::ID_UNKNOWN)
 			party->RejectRequest();
-		party->DissolveParty();
+		party->DissolveParty(false);
 		delete party; party = NULL;
 	}
 

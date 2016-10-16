@@ -142,7 +142,7 @@ void cPlayer::InitPlayer(void)
 	next_nightmare_check = LyraTime() + NIGHTMARE_CHECK_INTERVAL;
 	next_poison = next_bleed = next_trail = 0;
 	free_moves = 5;
-	channelTarget = 0;
+	channelTarget = lastChannelTarget = 0;
 	step_frame = avatar_poses[WALKING].start_frame;
 	checksum_incorrect = last_loc_valid = false;
 	item_flags_sorting_changed = false;
