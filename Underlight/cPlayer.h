@@ -162,7 +162,8 @@ class cPlayer : public cActor
 
 		float tportx, tporty; // for retrying failed teleports
 		int tport_angle, tport_level, tport_sound;
-        lyra_id_t channelTarget;
+    lyra_id_t channelTarget;
+		lyra_id_t lastChannelTarget;
         
    public:
       cPlayer(short viewport_height);
@@ -213,6 +214,7 @@ class cPlayer : public cActor
 	  inline bool FreeMoves(void) { return free_moves != 0; };
 	  inline bool IsChannelling(void) { return channelTarget != 0 && channelTarget != playerID; };
 	  inline lyra_id_t ChannelTarget(void) { return channelTarget; };
+	  inline lyra_id_t LastChannelTarget(void) { return lastChannelTarget; };
 	  inline int FocusStat(void) { return focus_stat; };
 	  inline int SelectedStat(void) { return selected_stat; };
 	  int Skill(int art_id);
@@ -302,6 +304,7 @@ class cPlayer : public cActor
 	  void RemoveTimedEffect(int effect);
 	  inline void SetInjured(bool value) { injured = value; };
 	  inline void SetChannelTarget(lyra_id_t value) { channelTarget = value; };
+		inline void SetLastChannelTarget(lyra_id_t value) { lastChannelTarget = value; };
 	  inline void SetTeleporting(bool value) { teleporting = value; };
 	  inline void SetFreeMoves(int value) { free_moves = value; };
 	  inline void SetSkillNeedsUpdate(int art_id, bool value) { skills[art_id].needs_update = value; };

@@ -3413,7 +3413,7 @@ void cArts::StartChannel()
         return;
     }
     
-    if(arts->ExpireChannel())
+    if(arts->ExpireChannel(true))
     {
         this->ArtFinished(true);
     }
@@ -3425,7 +3425,7 @@ void cArts::StartChannel()
     }
 }
 
-bool cArts::ExpireChannel()
+bool cArts::ExpireChannel(bool userInitiated)
 {
     if(player->IsChannelling())
     {
@@ -3433,6 +3433,12 @@ bool cArts::ExpireChannel()
 		    0, 0);
         LoadString(hInstance, IDS_CHANNEL_EXPIRED, message, sizeof(message));
         display->DisplayMessage(message);
+				lyra_id_t lastChannel = player->ChannelTarget();
+				if (userInitiated)
+					lastChannel = 0;
+				else if(lastChannel != 0)
+					player->SetLastChannelTarget(lastChannel);
+				
         player->SetChannelTarget(0);
         return true;
     }
@@ -3458,6 +3464,7 @@ bool cArts::SetChannel(lyra_id_t nid)
         _stprintf(message, disp_message, n->Name());
         display->DisplayMessage(message);
         player->SetChannelTarget(nid);
+				player->SetLastChannelTarget(0);
         return true;
     }
 }
