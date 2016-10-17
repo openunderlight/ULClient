@@ -659,16 +659,20 @@ int pp;
 		}
 		break;
 		case 6: // halo
-			if ( avatar.Teacher())
+			
+			if ( avatar.Teacher() || avatar.Apprentice())
 			{
-				const int NUM_HALO_COLORS = 5;
+				const int NUM_HALO_COLORS = 8;
 				static short halo_colors[NUM_HALO_COLORS][2] =
 				{
-					{2,0}, //	WILLPOWER, Yellow
-					{6,0}, //	INSIGHT, Blue
-					{3,0}, //	RESILIENCE, Green
-					{1,0},  //	LUCIDITY, Red
-					{7,0}  //	BLACK, NP Symbol
+					{ 1,1 },  //  0 - WILLPOWER, Yellow
+					{ 3,3 },  //  1 - INSIGHT, Blue
+					{ 2,2 },  //  2 - RESILIENCE, Green
+					{ 0,0 },  //  3 - LUCIDITY, Red
+					{ 4,0 },  //  4 - GMMT, Skittles
+					{ 5,5 },  //  5 - APPRENTICE, Chalk
+					{ 6,6 },  //  6 - DREAMSTRIKE, Blood
+					{ 7,7 }   //  7 - EVIL, Abyss
 				};
 
 				patch_point *halo_pos = points+PP_HEAD;
@@ -683,10 +687,22 @@ int pp;
 					patch.row			= halo_pos->row - 6;
 					patch.col			= halo_pos->col - float2int(bitmap_center/patch.resolution);
 					patch.bitmap		= halo_bitmap;
-					patch.palette_id	= LyraPalette::FX_PALETTE;
-					int halo_color      = min(avatar.Focus()-1, NUM_HALO_COLORS-1); // teacher's focus stat
+					patch.palette_id = LyraPalette::HALO_PALETTE;
+					int halo_color;
+
+					// NPSymbol takes priority
 					if (avatar.NPSymbol())
 						halo_color = 4;
+					// DreamerStriker is second priority
+					else if (avatar.Dreamstrike())
+						halo_color = 6;
+					// Teacher is third priority
+					else if (avatar.Teacher())
+						halo_color = min(avatar.Focus() - 1, NUM_HALO_COLORS - 2); // teacher's focus stat
+					// Default to apprentice, if exists
+					else //(avatar.Apprentice())
+						halo_color = 5;
+
 					patch.color_table	= &halo_colors[halo_color][0];
 					patch_visible		= true;
 				}
@@ -696,14 +712,17 @@ int pp;
 			case 7: // double halo
 			if ( avatar.MasterTeacher() ) // master teacher
 			{
-				const int NUM_HALO_COLORS = 5;
+				const int NUM_HALO_COLORS = 8;
 				static short halo_colors[NUM_HALO_COLORS][2] =
 				{
-					{2,0}, //	WILLPOWER, Yellow
-					{6,0}, //	INSIGHT, Blue
-					{3,0}, //	RESILIENCE, Green
-					{1,0},  //	LUCIDITY, Red
-					{7,0}  //	BLACK, NP Symbol
+					{ 1,1 },  //  0 - WILLPOWER, Yellow
+					{ 3,3 },  //  1 - INSIGHT, Blue
+					{ 2,2 },  //  2 - RESILIENCE, Green
+					{ 0,0 },  //  3 - LUCIDITY, Red
+					{ 4,0 },  //  4 - GMMT, Skittles
+					{ 5,5 },  //  5 - APPRENTICE, Chalk
+					{ 6,6 },  //  6 - DREAMSTRIKE, Blood
+					{ 7,7 }   //  7 - EVIL, Abyss
 				};
 
 				patch_point *halo_pos = points+PP_HEAD;
@@ -718,10 +737,18 @@ int pp;
 					patch.row			= halo_pos->row - 6;
 					patch.col			= halo_pos->col - float2int(bitmap_center/patch.resolution);
 					patch.bitmap		= halo_bitmap;
-					patch.palette_id	= LyraPalette::FX_PALETTE;
-					int halo_color      = min(avatar.Focus()-1, NUM_HALO_COLORS-1); // teacher's focus stat
+					patch.palette_id	= LyraPalette::HALO_PALETTE;
+					int halo_color;
+
+					// NPSymbol takes priority
 					if (avatar.NPSymbol())
 						halo_color = 4;
+					// DreamerStriker is second priority
+					else if (avatar.Dreamstrike())
+						halo_color = 6;
+					else
+						halo_color      = min(avatar.Focus()-1, NUM_HALO_COLORS-1); // teacher's focus stat
+
 					patch.color_table	= &halo_colors[halo_color][0];
 					patch_visible		= true;
 				}

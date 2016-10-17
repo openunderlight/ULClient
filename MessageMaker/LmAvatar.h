@@ -51,7 +51,8 @@ public:
 	WORDSMITH_WIDTH = 1,
 	DREAMSTRIKE_WIDTH = 1,
 	NP_SYMBOL_WIDTH = 1,
-    UNUSED2_WIDTH = 5,
+	APPRENTICE_WIDTH=1,
+    UNUSED2_WIDTH = 4,
     
     // starting positions for avatar1
     AVATAR_START = 0,
@@ -79,6 +80,7 @@ public:
 	WORDSMITH_START = (EXTRA_DAMAGE_START + EXTRA_DAMAGE_WIDTH),
 	DREAMSTRIKE_START = (WORDSMITH_START + WORDSMITH_WIDTH),
 	NP_SYMBOL_START = (DREAMSTRIKE_START + DREAMSTRIKE_WIDTH),
+	APPRENTICE_START = (NP_SYMBOL_START + NP_SYMBOL_WIDTH),
 
 	// account types for use by client
 	ACCT_DREAMER = 0,
@@ -105,7 +107,7 @@ public:
 		unsigned int show_lyran, unsigned int dreamsmith, 
 		unsigned int hidden, unsigned int extra_damage, 
 		unsigned int wordsmith, unsigned int dreamstrike,
-		unsigned int focus, unsigned int np_symbol);
+		unsigned int focus, unsigned int np_symbol, unsigned int apprentice);
   void Init(int avatar1, int avatar2);
   void Init(const lyra_avatar_t& avatar);
 
@@ -146,6 +148,7 @@ public:
   unsigned int WordSmith() const;
   unsigned int Dreamstrike() const;
   unsigned int NPSymbol() const;
+  unsigned int Apprentice() const;
 
   // mutators for bitfields
   void SetAvatarType(unsigned int type);
@@ -171,6 +174,7 @@ public:
   void SetWordSmith(unsigned int wordsmith);
   void SetDreamstrike(unsigned int dreamstrike);
   void SetNPSymbol(unsigned int np_symbol);
+  void SetApprentice(unsigned int apprentice);
 
   // read from string, write to string
   int Parse(const TCHAR* str);
@@ -210,6 +214,7 @@ inline int operator==(const LmAvatar& a1, const LmAvatar& a2)
 	  (a1.ShowSphere() == a2.ShowSphere()) &&
 	  (a1.Sphere() == a2.Sphere()) &&
 	  (a1.Teacher() == a2.Teacher()) &&
+	  (a1.Apprentice() == a2.Apprentice()) &&
 	  (a1.MasterTeacher() == a2.MasterTeacher()) &&
 	  (a1.ShowLyran() == a2.ShowLyran()) &&
 	  (a1.DreamSmith() == a2.DreamSmith()) &&

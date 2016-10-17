@@ -155,7 +155,7 @@ extern char agent_gs_ip_address[16];
 int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x001A970A << 2);  // for pmare game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1D22B3B2 << 2);
 #else
-int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031EFE3 << 2);  // for game.cli
+int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031EF63 << 2);  // for game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1DCF4AD3 << 2);
 #endif // #ifdef PMARE
 #else
@@ -2339,6 +2339,7 @@ void cGameServer::HandleMessage(void)
 				}
 				break;
 			} 
+			
 			bool art_reflected = false;
 			if (player->flags & ACTOR_REFLECT) {
 				
@@ -2613,11 +2614,10 @@ void cGameServer::HandleMessage(void)
 					arts->ApplyBoot(player_msg.SenderID());
 					break;
 
-				case RMsg_PlayerMsg::SUMMON:
-					arts->ApplySummon(player_msg.SenderID());
+				case RMsg_PlayerMsg::SUMMON:	// x, y, level
+					arts->ApplySummon(player_msg.SenderID(), player_msg.State1(), player_msg.State2(), player_msg.State3());
 					break;
-
-
+					
 				case RMsg_PlayerMsg::UNTRAIN:
 					arts->ApplyUnTrain(player_msg.State1(), player_msg.SenderID());
 					break;
@@ -4330,7 +4330,7 @@ void cGameServer::AcceptPartyQuery(realmid_t playerID)
 }
 
 // Send a message to another player
-void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2)
+void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2, short param3)
 {
 	RMsg_PlayerMsg player_msg;
 	cNeighbor * n;
@@ -4349,10 +4349,9 @@ void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, sh
 		actors->IterateNeighbors(DONE);
 	}
 
-	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2);
+	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2, param3);
 	sendbuf.ReadMessage(player_msg);
 	send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
-
 	return;
 }
 
@@ -4807,7 +4806,6 @@ void cGameServer::Logout(int how, bool final_logout)
 	cItem *item;
 	GMsg_Logout logout_msg;
 #ifndef AGENT
-	//this->LeaveParty(player->ID());
 	this->UpdateServer();
 #endif
 

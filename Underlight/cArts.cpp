@@ -91,6 +91,11 @@ const int CHANCE_SKILL_INCREASE = 15; // % chance of skill increase
 const int CASTING_TIME_MULTIPLIER = 150; // milliseconds per unit of casting time
 const int MIN_DS_SOULEVOKE = 10;
 
+// last summon coords
+float last_summon_x = -7839;
+float last_summon_y = 12457;
+int last_summon_level = 43;
+
 unsigned long art_chksum[NUM_ARTS] =
 {
 0x0970, // Join Party 
@@ -224,7 +229,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xA5E2, // Passlock 
 0xCAFE, // Heal 
 0xED56, // Sanctify 
-0x1282, // Lock 
+0x164D, // Lock/Disable Portal
 0x3614, // Key 
 0x586F, // Break Lock 
 0x8380, // Repair 
@@ -379,7 +384,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_PASSLOCK,						Stats::INSIGHT,		50, 30, 6,	5, 	-1, SANCT|FOCUS},
 {IDS_HEAL, 							Stats::RESILIENCE,	10, 5,  0,	1, 	-1, SANCT},
 {IDS_SANCTIFY, 						Stats::WILLPOWER,	15, 5,  13, 2, 	-1, SANCT},
-{IDS_LOCK, 							Stats::WILLPOWER,	20, 20, 0,	5, 	-1, MAKE_ITEM|FOCUS},
+{IDS_DISABLE_PORTAL, 				Stats::WILLPOWER,	20, 20, 0,	5, 	-1, MAKE_ITEM|FOCUS},
 {IDS_KEY,							Stats::WILLPOWER,	20, 1,  0,	2, 	-1, SANCT|MAKE_ITEM|FOCUS},
 {IDS_BREAK_LOCK, 					Stats::WILLPOWER,	40, 40, 0,	8, 	-1, SANCT|FOCUS},
 {IDS_REPAIR, 						Stats::RESILIENCE,	15, 10, 0,	4, 	-1, SANCT|NEED_ITEM},
@@ -741,6 +746,10 @@ bool cArts::CanUseArt(int art_id, bool bypass)
 	if (checksum1 != checksum2)
 	//if (0) // checksums disabled temporarily
 	{ // Cheating Bastard!!!!	
+#ifdef UL_DEBUG
+		_stprintf(message, "New checksum: %d, Old checksum: %d", checksum1, checksum2);
+		display->DisplayMessage(message);
+#endif
 		LoadString (hInstance, IDS_DETECTED_CHEATER, message, sizeof(message));
 		display->DisplayMessage(message);
 		player->SetCurrStat(Stats::DREAMSOUL, 0, SET_ABSOLUTE, player->ID());
@@ -1175,8 +1184,8 @@ void cArts::ApplyArt(void)
 		case Arts::PASSLOCK: method = &cArts::Blend; break;
 		case Arts::HEAL: method = &cArts::StartRestore; break;
 		case Arts::SANCTIFY: method = &cArts::StartResistCurse; break;
-		case Arts::LOCK: method = &cArts::Ward; break;
-		case Arts::KEY: method = &cArts::Amulet; break;
+		case Arts::LOCK: method = &cArts::Lock; break;
+		case Arts::KEY: method = &cArts::Key; break;
 		case Arts::BREAK_LOCK: method = &cArts::Shatter; break;
 		case Arts::REPAIR: method = &cArts::StartReweave; break;
 		case Arts::REMOVE_CURSE: method = &cArts::StartPurify; break;
@@ -1581,33 +1590,27 @@ void cArts::EssenceContainer(void)
 	this->ArtFinished(true);
 }
 
-//////////////////////////////////////////////////////////////////
-// Ward
-
-void cArts::Ward(void)
+bool cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 {
 	LmItem info;
-	LmItemHdr header;
 	cItem *item;
-	lyra_item_ward_t ward = {LyraItem::WARD_FUNCTION, 0, 0, 0, 0};
+
 	int items_in_room = 0;
 
 	linedef *line; line = FindTeleportal(player);
 
 	if (line == NULL)
 	{	// no teleportal nearby
-		LoadString (hInstance, IDS_NO_TELEPORTAL, disp_message, sizeof(disp_message));
+		LoadString(hInstance, IDS_NO_TELEPORTAL, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
-		this->ArtFinished(false);
-		return;
+		return false;
 	}
 
 	if ((line->flags & LINE_NO_WARD) || (level->Rooms[player->Room()].flags & ROOM_NOREAP))
 	{	// can't ward this teleportal; in no reap areas, wards would last forever!
-		LoadString (hInstance, IDS_NO_WARDING, disp_message, sizeof(disp_message));
+		LoadString(hInstance, IDS_NO_WARDING, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
-		this->ArtFinished(false);
-		return;
+		return false;
 	}
 
 	// see if the room is full of items or there's already ward on the teleportal
@@ -1618,21 +1621,24 @@ void cArts::Ward(void)
 
 		if ((item->ItemFunction(0) == LyraItem::WARD_FUNCTION) && (line == ((linedef*)item->Extra())))
 		{
+			lyra_item_ward_t ward;
+			memcpy(&ward, item->Lmitem().StateField(0), sizeof(ward));
 			actors->IterateItems(DONE);
-			LoadString (hInstance, IDS_ALREADY_WARDED, disp_message, sizeof(disp_message));
+			if (ward.strength >= 100)
+				LoadString(hInstance, IDS_CANT_WARD_IMPASSABLE, disp_message, sizeof(disp_message));
+			else
+				LoadString(hInstance, IDS_ALREADY_WARDED, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
-			this->ArtFinished(false);
-			return;
+			return false;
 		}
 	}
 	actors->IterateItems(DONE);
 
 	if (items_in_room >= Lyra::MAX_ROOMITEMS)
 	{
-		LoadString (hInstance, IDS_MAX_ROOMITEMS, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
-		this->ArtFinished(false);
-		return;
+		LoadString(hInstance, IDS_MAX_ROOMITEMS, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		return false;
 	}
 
 	// see if we can pass this teleportal
@@ -1640,28 +1646,21 @@ void cArts::Ward(void)
 	int guild_id = GetTripGuild(line->flags);
 	if (!CanPassPortal(line->trip3, guild_id, true))
 	{
-		LoadString (hInstance, IDS_CANT_WARD_IMPASSABLE, disp_message, sizeof(disp_message));
+		LoadString(hInstance, IDS_CANT_WARD_IMPASSABLE, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
-		this->ArtFinished(false);
-		return;
+		return false;
 	}
 
 	// uncomment to prevent warding of trip_cross teleportals
-// if (!(line->flags & TRIP_ACTIVATE))
-// {
-// 	LoadString (hInstance, IDS_WARD_TRIP_ONLY, disp_message, sizeof(disp_message));
-// 	display->DisplayMessage(disp_message);
-// 	this->ArtFinished(false);
-// 	return;
-// }
+	// if (!(line->flags & TRIP_ACTIVATE))
+	// {
+	// 	LoadString (hInstance, IDS_WARD_TRIP_ONLY, disp_message, sizeof(disp_message));
+	// 	display->DisplayMessage(disp_message);
+	// 	this->ArtFinished(false);
+	// 	return;
+	// }
 
-	header.Init(0, 0);
-	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP );
-	header.SetGraphic(LyraBitmap::WARD);
-	header.SetColor1(0); header.SetColor2(0);
-	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
-
-	ward.strength = player->Skill(art_in_use);
+	// common ward attributes
 	ward.from_vert = (short)line->from;
 	ward.to_vert = (short)line->to;
 	ward.set_player_id(player->ID());
@@ -1670,58 +1669,138 @@ void cArts::Ward(void)
 	info.Init(header, message, 0, 0, 0);
 	info.SetStateField(0, &ward, sizeof(ward));
 	info.SetCharges(1);
-	int ttl = 120*((player->SkillSphere(art_in_use))+1);
+	int ttl = 120 * (player->SkillSphere(Arts::WARD) + 1);
 	item = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
 	if (item == NO_ITEM)
 	{
-		this->ArtFinished(false);
-		return;
+		return false;
 	}
 	item->SetMarkedForDrop();
-	cDS->PlaySound(LyraSound::WARD, player->x, player->y, true);
 
-	this->ArtFinished(true);
+	return true;
+}
+
+void cArts::Lock(void)
+{
+#ifndef GAMEMASTER
+	LoadString(hInstance, IDS_GM_ONLY, disp_message, sizeof(disp_message));
+	display->DisplayMessage(disp_message);
+	this->ArtFinished(false);
 	return;
+#endif
+	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
+	LmItemHdr header;
+
+	header.Init(0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_NOREAP);
+	
+	header.SetGraphic(LyraBitmap::INVIS_ITEM);
+	//header.SetGraphic(LyraBitmap::WARD);
+	header.SetColor1(0); header.SetColor2(0);
+	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
+
+	// Set strength to a high level to mark it as unable to blend/shatter
+	ward.strength = 1000;
+
+	this->ArtFinished(this->PlaceLock(ward, header));
+}
+
+//////////////////////////////////////////////////////////////////
+// Ward
+
+void cArts::Ward(void)
+{
+	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
+	LmItemHdr header;
+
+	header.Init(0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.SetGraphic(LyraBitmap::WARD);
+	header.SetColor1(0); header.SetColor2(0);
+	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
+
+	ward.strength = player->Skill(art_in_use);
+
+	bool success = this->PlaceLock(ward, header);
+
+	if (success)
+		cDS->PlaySound(LyraSound::WARD, player->x, player->y, true);
+
+	this->ArtFinished(success);
+}
+
+void cArts::Key(void)
+{
+	TCHAR name[LmItem::NAME_LENGTH];
+	// r->ErrorInfo()->RIf name is longer than ten, truncate it on the amulet name
+	TCHAR myname[20];
+	_stprintf(myname, player->Name());
+	if (_tcslen(myname) < 13)
+	{
+		//LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
+		_stprintf(name, "Key of %s", myname);
+	}
+	else {
+		int i;
+		TCHAR myname13[13];
+		for (i = 0; i<13; i++)
+			myname13[i] = myname[i];
+		_stprintf(&myname13[12], _T("\0"));
+		//LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
+		_stprintf(name, "Key of %s", myname13);
+	}
+
+	// Set strength to 100 to mark this as a key instead of an amulet
+	this->CreatePass(name, 100);
 }
 
 //////////////////////////////////////////////////////////////////
 // Amulet
-
 void cArts::Amulet(void)
 {
 	TCHAR name[LmItem::NAME_LENGTH];
+	// r->ErrorInfo()->RIf name is longer than ten, truncate it on the amulet name
+	TCHAR myname[20];
+	_stprintf(myname, player->Name());
+	if (_tcslen(myname) < 10)
+	{
+		LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
+		_stprintf(name, message, myname);
+	}
+	else {
+		int i;
+		TCHAR myname10[10];
+		for (i = 0; i<10; i++)
+			myname10[i] = myname[i];
+		_stprintf(&myname10[9], _T("\0"));
+		LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
+		_stprintf(name, message, myname10);
+	}
+
+	int item_strength = (unsigned char)player->Skill(art_in_use);
+
+	// Make sure a normal amulet never exceeds 99
+	if (item_strength > 99) item_strength = 99;
+
+	this->CreatePass(name, item_strength);
+}
+
+void cArts::CreatePass(const TCHAR* pass_name, int pass_strength)
+{
 	LmItem info;
 	LmItemHdr header;
-	lyra_item_amulet_t amulet = {LyraItem::AMULET_FUNCTION, 0, 0};
+	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
 
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_CHANGE_CHARGES);
 	header.SetGraphic(LyraBitmap::AMULET);
 	header.SetColor1(0); header.SetColor2(0);
-	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AMULET_FUNCTION),0,0));
+	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AMULET_FUNCTION), 0, 0));
 
-	amulet.strength = (unsigned char)player->Skill(art_in_use);
+	amulet.strength = pass_strength;
 	amulet.player_id = player->ID();
 
-	// r->ErrorInfo()->RIf name is longer than ten, truncate it on the amulet name
-	TCHAR myname[20];
-_stprintf(myname, player->Name());
-	if (_tcslen(myname) < 10) 
-	{
-	LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
-	_stprintf(name, message, myname);
-	}
-	else {
-		int i;
-		TCHAR myname10[10];
-		for (i=0;i<10;i++)
-			myname10[i]=myname[i];
-	_stprintf(&myname10[9], _T("\0"));
-	LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
-	_stprintf(name, message, myname10);
-	}
-
-	info.Init(header, name, 0, 0, 0);
+	info.Init(header, pass_name, 0, 0, 0);
 	info.SetStateField(0, &amulet, sizeof(amulet));
 	info.SetCharges(player->Skill(art_in_use));
 	cItem* item = CreateItem(player->x, player->y, player->angle, info, 0, false);
@@ -1749,22 +1828,42 @@ void cArts::Shatter(void)
 	{	// see if there's a ward on the teleportal
 		for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
 			if ((item->ItemFunction(0) == LyraItem::WARD_FUNCTION) && (line == ((linedef*)item->Extra())))
+			{
+				memcpy(&ward, item->Lmitem().StateField(0), sizeof(ward));
 				break;
+			}
 		actors->IterateItems(DONE);
 	}
 
 	if ((line == NULL) || (item == NO_ACTOR))
 	{
-		LoadString (hInstance, IDS_NO_WARD, disp_message, sizeof(disp_message));
+		LoadString(hInstance, IDS_NO_WARD, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
+
+	bool noreap = item->NoReap();
+
+	if (noreap)
+	{
+#ifndef GAMEMASTER
+		LoadString(hInstance, IDS_NO_WARD, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+#endif
+	}
+
 	if (!item->Destroy())
 		item->SetTerminate();
+	
 	LoadString (hInstance, IDS_WARD_SHATTERED, disp_message, sizeof(disp_message));
 	display->DisplayMessage(disp_message, false);
-	cDS->PlaySound(LyraSound::SHATTER, player->x, player->y, true);
+
+	// Only play the sound if we're shattering a normal ward
+	if (!noreap)
+		cDS->PlaySound(LyraSound::SHATTER, player->x, player->y, true);
 	this->ArtFinished(true);
 	return;
 }
@@ -3079,24 +3178,54 @@ void cArts::GuildHouse(void)
 	LoadString (hInstance, IDS_USE_GUILD_HOUSE, message, sizeof(message));
 	display->DisplayMessage(message);
 
-	switch (player->FocusStat())
+	int focal_arts = 0;
+	int focus;
+
+	// check for each focus statu to determine the location necessary
+	if (player->Skill(Arts::GATEKEEPER) > 0)
 	{
-		case Stats::WILLPOWER:
-			player->Teleport(-850,-3556,0,14);
+		focal_arts++;
+		focus = Stats::WILLPOWER;
+	}
+		
+	if (player->Skill(Arts::DREAMSEER) > 0)
+	{
+		focal_arts++;
+		focus = Stats::INSIGHT;
+	}
+		
+	if (player->Skill(Arts::SOULMASTER) > 0)
+	{
+		focal_arts++;
+		focus = Stats::RESILIENCE;
+	}
+	
+	if (player->Skill(Arts::FATESENDER) > 0)
+	{
+		focal_arts++;
+		focus = Stats::LUCIDITY;
+	}
+	
+	// We have multiple focal arts, use the player's focus stat to determine their guild house
+	if (focal_arts != 1)
+		focus = player->FocusStat();
+	
+	switch (focus)
+	{
+		case Stats::WILLPOWER: 
+			player->Teleport(-850, -3556, 0, 14); // gk
 			break;
-
 		case Stats::INSIGHT:
-			player->Teleport(-10566,4336,0,3);
+			player->Teleport(-10566, 4336, 0, 3); // ds
 			break;
-
 		case Stats::RESILIENCE:
-			player->Teleport(8177,8235,0,7);
+			player->Teleport(8177, 8235, 0, 7); // sm
 			break;
-
 		case Stats::LUCIDITY:
-			player->Teleport(-1738,-1548,0,29);
+			player->Teleport(-1738, -1548, 0, 29); // fs
 			break;
 	}
+
 	this->ArtFinished(true);
 	return;
 }
@@ -5422,7 +5551,7 @@ void cArts::EndSoulShield(void)
 void cArts::StartSummon(void)
 {
 #ifdef GAMEMASTER
-	this->WaitForSelection(&cArts::EndSummon, Arts::SUMMON);
+	this->WaitForSelection(&cArts::MidSummon, Arts::SUMMON);
 	this->AddDummyNeighbor();
 	this->CaptureCP(NEIGHBORS_TAB, Arts::SUMMON);
 #else
@@ -5433,7 +5562,25 @@ void cArts::StartSummon(void)
 	return;
 }
 
-void cArts::ApplySummon(lyra_id_t caster_id)
+void cArts::MidSummon(void)
+{
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+	entervaluedlg = true;
+	_stprintf(message, _T("%d;%d;%d"), (int)last_summon_x, (int)last_summon_y, last_summon_level);
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)SummonDlgProc);
+	entervalue_callback = (&cArts::EndSummon);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	this->WaitForDialog(hDlg, Arts::SUMMON);
+
+	return;
+}
+
+void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int lvl)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::SUMMON);
@@ -5442,34 +5589,53 @@ void cArts::ApplySummon(lyra_id_t caster_id)
 		return;
 
     player->EvokedFX().Activate(Arts::SUMMON, false);
-
-	player->Teleport (-7839,12457,-90,43 );	// Unknown
+	// use the supplied coordinates
+	player->Teleport(x, y, 0, lvl);
 
 	return;
 }
 
-void cArts::EndSummon(void)
+void cArts::EndSummon(void *value)
 {
+
+	if (!value)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
 	cNeighbor *n = cp->SelectedNeighbor();
 
+	float x, y; int level_id;
 	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
 	{
 		this->DisplayNeighborBailed(Arts::SUMMON);
 		this->ArtFinished(false);
 		return;
-	} else if (n->ID() == player->ID())
-	{
-		player->Teleport (-7839,12457,-90,43);	// Unknown
 	}
+	// parse the message into appropriate coordinates
+	else if (_stscanf(message, _T("%f;%f;%d"), &x, &y, &level_id) == 3)
+	{
+		last_summon_x = x;
+		last_summon_y = y;
+		last_summon_level = level_id;
+		if (n->ID() == player->ID())
+		{
+			this->ApplySummon(player->ID(), x, y, level_id);
+		}
+		else
+		{
+			gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::SUMMON, x, y, level_id);
+			this->DisplayUsedOnOther(n, Arts::SUMMON);
+		}
 
+		this->ArtFinished(true);
+		return;
+	}
 	else
 	{
-		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::SUMMON, player->Skill(Arts::SUMMON), 0);
-		this->DisplayUsedOnOther(n, Arts::SUMMON);
+		this->ArtFinished(false);
 	}
-
-	this->ArtFinished(true);
-	return;
 }
 
 //////////////////////////////////////////////////////////////////
@@ -7143,6 +7309,18 @@ void cArts::EndCleanseMare(void)
 
 void cArts::StartCorruptEssence(void)
 {
+
+	if (!player->IsInitiate(Guild::NO_GUILD) &&
+		!player->IsKnight(Guild::NO_GUILD) &&
+		!player->IsRuler(Guild::NO_GUILD))
+	{
+		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		display->DisplayMessage(message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	this->WaitForSelection(&cArts::EndCorruptEssence, Arts::CORRUPT_ESSENCE);
 	this->CaptureCP(INVENTORY_TAB, Arts::CORRUPT_ESSENCE);
 	return;
@@ -7165,17 +7343,6 @@ void cArts::EndCorruptEssence(void)
 		this->ArtFinished(false);
 		return;
 	}
-
-	// only works for KOES
-
-	if (!(player->GuildRank(Guild::SHADOW) >= Guild::INITIATE))
-	{
-		LoadString (hInstance, IDS_MUST_BE_KOES, message, sizeof(message));
-		display->DisplayMessage(message);
-		this->ArtFinished(false);
-		return;
-	}
-
 
 	// check that the item has dreamer essence
 	for (int i=0; i<essence_item->NumFunctions(); i++)
@@ -7281,6 +7448,18 @@ void cArts::EndDestroyItem(void)
 
 void cArts::StartSacrifice(void)
 {
+
+	if (!player->IsInitiate(Guild::NO_GUILD) &&
+		!player->IsKnight(Guild::NO_GUILD) &&
+		!player->IsRuler(Guild::NO_GUILD))
+	{
+		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		display->DisplayMessage(message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	this->WaitForSelection(&cArts::EndSacrifice, Arts::SACRIFICE);
 	this->CaptureCP(INVENTORY_TAB, Arts::SACRIFICE);
 	return;
@@ -7300,16 +7479,6 @@ void cArts::EndSacrifice(void)
 	if ((chakram_item == NO_ACTOR) || !(actors->ValidItem(chakram_item)))
 	{
 		this->DisplayItemBailed(Arts::SACRIFICE);
-		this->ArtFinished(false);
-		return;
-	}
-
-	// only works for AOE
-
-	if (!(player->GuildRank(Guild::ECLIPSE) >= Guild::INITIATE))
-	{
-		LoadString (hInstance, IDS_MUST_BE_AOE, message, sizeof(message));
-		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
 	}
@@ -7405,6 +7574,22 @@ void cArts::ApplyTrain(int art_id, int success, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_TRAIN_SUCCEEDED, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, n->Name(), this->Descrip(art_id), player->Skill(art_id));
 		LmAvatar avatar = player->Avatar();
+		if (art_id == Arts::QUEST)
+		{
+			avatar.SetApprentice(1);
+			player->SetAvatar(avatar, true);
+		}
+		if (art_id == Arts::TRAIN)
+		{
+			avatar.SetApprentice(0);
+			avatar.SetTeacher(1);
+			player->SetAvatar(avatar, true);
+		}
+		if (art_id == Arts::TRAIN_SELF)
+		{
+			avatar.SetMasterTeacher(1);
+			player->SetAvatar(avatar, true);
+		}
 		if (art_id == Arts::DREAMSMITH_MARK) 
 		{
 			avatar.SetDreamSmith(1);
@@ -7631,7 +7816,16 @@ void cArts::ApplyUnTrain(int art_id, lyra_id_t caster_id)
 		gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
 
 		LmAvatar avatar = player->Avatar();
-		if ((art_id == Arts::DREAMSTRIKE) || 
+		if (art_id == Arts::TRAIN)
+		{
+			if (player->Skill(Arts::QUEST)>0) 
+				avatar.SetApprentice(1);
+		}
+
+		if ((art_id == Arts::TRAIN_SELF) ||
+			(art_id == Arts::TRAIN) ||
+			(art_id == Arts::QUEST) ||
+			(art_id == Arts::DREAMSTRIKE) || 
 			(art_id == Arts::WORDSMITH_MARK) ||
 			(art_id == Arts::DREAMSMITH_MARK))
 		{	// this will reset the fields properly

@@ -429,7 +429,7 @@ cControlPanel::cControlPanel(void)
 		invcountPos[cDD->Res()].width, invcountPos[cDD->Res()].height,
 		hwnd_tab,
 		NULL, hInstance, NULL);
-	SendMessage(hwnd_invcounter, WM_SETFONT, WPARAM(display_font[cDD->Res()]), 0);
+	SendMessage(hwnd_invcounter, WM_SETFONT, WPARAM(bold_font[cDD->Res()]), 0);
 	
 
 

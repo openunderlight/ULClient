@@ -241,6 +241,11 @@ INLINE unsigned int LmAvatar::NPSymbol() const
   return avatar_.avatar2.GetBits(NP_SYMBOL_START, NP_SYMBOL_WIDTH);
 }
 
+INLINE unsigned int LmAvatar::Apprentice() const
+{
+  return avatar_.avatar2.GetBits(APPRENTICE_START, APPRENTICE_WIDTH);
+}
+
 
 INLINE unsigned int LmAvatar::AccountType() const
 {
@@ -360,6 +365,11 @@ INLINE void LmAvatar::SetDreamstrike(unsigned int dreamstrike)
 INLINE void LmAvatar::SetNPSymbol(unsigned int np_symbol)
 {
   avatar_.avatar2.SetBits(NP_SYMBOL_START, NP_SYMBOL_WIDTH, np_symbol);
+}
+
+INLINE void LmAvatar::SetApprentice(unsigned int apprentice)
+{
+  avatar_.avatar2.SetBits(APPRENTICE_START, APPRENTICE_WIDTH, apprentice);
 }
 
 INLINE void LmAvatar::SetAccountType(unsigned int acct_type)
