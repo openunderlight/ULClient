@@ -1536,6 +1536,17 @@ void cArts::NotImplemented(void)
 	return;
 }
 
+// Add new arts if they're not yet learned. Primarily used for house arts
+void cArts::AddIfUnlearned(int art_id)
+{
+	if (player->Skill(art_id)<1) {
+		player->SetSkill(art_id, 1, SET_ABSOLUTE, player->ID(), true);
+		LoadString(hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, this->Descrip(art_id));
+		display->DisplayMessage(message);
+	}
+}
+
 ////////////////////////////////////////////////////////////////
 // *** Arts that require no selection ***
 ////////////////////////////////////////////////////////////////
@@ -6695,18 +6706,6 @@ void cArts::EndCupSummons(void)
 {
 	cNeighbor *n = cp->SelectedNeighbor();
 
-	cItem* power_tokens[Lyra::INVENTORY_MAX];
-	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
-
-	if (num_tokens < CUP_SUMMONS_POWER_TOKENS)
-	{
-		LoadString (hInstance, IDS_NEED_POWER_TOKEN, message, sizeof(message));
-		_stprintf(disp_message, message, arts->Descrip(Arts::CUP_SUMMONS));
-		display->DisplayMessage(disp_message); 
-		this->ArtFinished(false);
-		return;
-	}
-
 	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
 	{
 		this->DisplayNeighborBailed(Arts::CUP_SUMMONS);
@@ -6737,10 +6736,6 @@ void cArts::EndCupSummons(void)
 		this->ArtFinished(false);
 		return;
 	}
-
-
-	for (int i=0; i<CUP_SUMMONS_POWER_TOKENS; i++)
-		power_tokens[i]->Destroy();
 
 	if (n->ID() == player->ID())
 	{
@@ -7799,6 +7794,13 @@ void cArts::MidUnTrain(void)
 
 void cArts::ApplyUnTrain(int art_id, lyra_id_t caster_id)
 {
+	// handle untraining yourself
+	if (caster_id == player->ID())
+	{
+		player->SetSkill(art_id, 0, SET_ABSOLUTE, caster_id, true);
+		return;
+	}
+
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	if (n == NO_ACTOR)
 		return;
@@ -8623,22 +8625,7 @@ void cArts::GotInitiated(void *value)
 		player->SetGuildRank(initiate_gid, Guild::INITIATE);
 		player->SetGuildXPPool(initiate_gid, 0);
 
-		// AUTO TRAIN INITIATE ARTS - 6/14/14 AMR
-		for (int art=0; art<NUM_ARTS; ++art) {
-			switch (art) {
-			case Arts::HOUSE_MEMBERS:
-			case Arts::DEMOTE:
-				if (player->Skill(art)<1){
-					player->SetSkill(art, 1, SET_ABSOLUTE, player->ID(), true);
-					LoadString (hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));
-						_stprintf(message, disp_message, this->Descrip(art));
-					display->DisplayMessage (message);
-				}
-				continue;
-			default:
-				continue;
-			}
-		}
+		this->HandleHouseAutoLearns(Guild::INITIATE);
 	}
 	else
 	{
@@ -8758,6 +8745,35 @@ void cArts::EndInitiate(void *value)
 	return;
 }
 
+void cArts::HandleHouseAutoLearns(int rank)
+{
+	switch (rank)
+	{
+	case Guild::RULER:
+		// guardian to ruler
+		this->AddIfUnlearned(Arts::EXPEL);
+		this->AddIfUnlearned(Arts::KNIGHT);
+		this->AddIfUnlearned(Arts::CREATE_ID_TOKEN);
+	case Guild::KNIGHT:
+		// initiate to guardian; ruler to guardian
+		this->AddIfUnlearned(Arts::INITIATE);
+		this->AddIfUnlearned(Arts::SUPPORT_DEMOTION);
+		this->AddIfUnlearned(Arts::SUPPORT_ASCENSION);
+		this->AddIfUnlearned(Arts::POWER_TOKEN);
+		this->AddIfUnlearned(Arts::EMPATHY);
+		this->AddIfUnlearned(Arts::CUP_SUMMONS);
+		this->AddIfUnlearned(Arts::ASCEND);
+	case Guild::INITIATE:
+		// none to initiate; guardian to initiate
+		this->AddIfUnlearned(Arts::HOUSE_MEMBERS);
+		this->AddIfUnlearned(Arts::DEMOTE);
+		break;
+	default:
+		// do nothing
+		return;
+	}
+}
+
 //////////////////////////////////////////////////////////////////
 // Knight
 
@@ -8797,31 +8813,7 @@ _stprintf(message, disp_message, player->Name());
 	if (success)
 	{
 		player->SetGuildRank(guild_id, Guild::KNIGHT);
-
-		// AUTO-TRAIN GUARDIAN ARTS - 6/14/14 AMR
-		for (int art=0; art<NUM_ARTS; ++art) {
-			switch (art) {
-				case Arts::HOUSE_MEMBERS:
-				case Arts::INITIATE:
-				case Arts::DEMOTE:
-				case Arts::SUPPORT_DEMOTION:
-				case Arts::SUPPORT_ASCENSION:
-				case Arts::CUP_SUMMONS:
-				case Arts::ASCEND:
-				case Arts::POWER_TOKEN:
-				case Arts::EMPATHY:
-					if (player->Skill(art)<1){
-						player->SetSkill(art, 1, SET_ABSOLUTE, player->ID(), true);
-						LoadString (hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));
-							_stprintf(message, disp_message, this->Descrip(art));
-						display->DisplayMessage (message);
-					}
-					continue;
-				default:
-					continue;
-			}
-		}
-
+		this->HandleHouseAutoLearns(Guild::KNIGHT);
 
 		LoadString (hInstance, IDS_KNIGHT_SUCCEEDED, disp_message, sizeof(disp_message));
 	}
@@ -9930,35 +9922,13 @@ void cArts::ResponseAscend(int guild_id, int success)
 		// AUTO-UNTRAIN GUARDIAN ONLY ARTS - 6/14/14 AMR
 		if (!player->IsKnight(Guild::NO_GUILD))
 		{ // If no longer a Guardian in any house, remove guardian arts
-			player->SetSkill(Arts::CUP_SUMMONS, 0, SET_ABSOLUTE, player->ID(), true);
-			player->SetSkill(Arts::ASCEND, 0, SET_ABSOLUTE, player->ID(), true);
+			gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::UNTRAIN, Arts::CUP_SUMMONS, 0);
+			gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::UNTRAIN, Arts::ASCEND, 0);
+			//player->SetSkill(Arts::CUP_SUMMONS, 0, SET_ABSOLUTE, player->ID(), true);
+			//player->SetSkill(Arts::ASCEND, 0, SET_ABSOLUTE, player->ID(), true);
 		}
 		
-		// AUTO-TRAIN RULER ARTS - 6/14/14 AMR
-
-		for (int art=0; art<NUM_ARTS; ++art) {
-			switch (art) {
-				case Arts::HOUSE_MEMBERS:
-				case Arts::INITIATE:
-				case Arts::SUPPORT_DEMOTION:
-				case Arts::SUPPORT_ASCENSION:
-				case Arts::DEMOTE:
-				case Arts::POWER_TOKEN:
-				case Arts::EXPEL:
-				case Arts::KNIGHT:
-				case Arts::CREATE_ID_TOKEN:
-					if (player->Skill(art)<1) {
-						player->SetSkill(art, 1, SET_ABSOLUTE, player->ID(), true);
-						LoadString (hInstance, IDS_LEARNED_HOUSE_ART, disp_message, sizeof(disp_message));
-							_stprintf(message, disp_message, this->Descrip(art));
-						display->DisplayMessage (message);
-					}
-					continue;
-				default:
-					continue;
-			}
-		}
-
+		this->HandleHouseAutoLearns(Guild::RULER);
 
 		LoadString (hInstance, IDS_ASCEND_SUCCEEDED, disp_message, sizeof(disp_message));
 	_stprintf(message, disp_message, GuildName(guild_id));
@@ -10215,7 +10185,9 @@ void cArts::ApplyDemote(int guild_id)
 
 	if (guild_rank >= Guild::INITIATE)
 	{ // decrement rank on client
-		player->SetGuildRank(guild_id, guild_rank - 1);
+		int new_rank = guild_rank - 1;
+		player->SetGuildRank(guild_id, new_rank);
+		this->HandleHouseAutoLearns(new_rank);
 
 		LoadString (hInstance, IDS_DEMOTED, disp_message, sizeof(disp_message));
 		if (guild_rank > Guild::INITIATE)
