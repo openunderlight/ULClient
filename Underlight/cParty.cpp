@@ -322,7 +322,7 @@ void cParty::MemberExit(realmid_t playerID, int status)
 	n = actors->LookUpNeighbor(playerID);
 
 	if (player->IsChannelling() && playerID == player->ChannelTarget())
-		arts->ExpireChannel(false);
+		arts->ExpireChannel(status == RMsg_Party::LEAVE_NORMAL);
 
 	if (n == NO_ACTOR)
 		LoadString(hInstance, IDS_JP4, name, sizeof(name));
