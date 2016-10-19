@@ -110,7 +110,10 @@ struct options_t {
 	BOOL tcp_only; // use TCP only - for firewall/NAT/ICS/etc.
 
 	int resolution; // 640 = 640x480, 800 = 800x600, 1024 = 1024x768
+
+#ifdef UL_DEV
 	int dev_server; // 1, 2
+#endif
 
 	TCHAR gamed_URL[64]; // URL of game server pointer
 	TCHAR patch_URL[64]; // URL of patch file

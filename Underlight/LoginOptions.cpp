@@ -483,8 +483,10 @@ void __cdecl SaveOutOfGameRegistryOptionValues(HKEY reg_key)
 		(unsigned char *)&(options.restart_last_location), sizeof(options.restart_last_location));
 	RegSetValueEx(reg_key, _T("resolution"), 0, REG_DWORD,  
 		(unsigned char *)&(options.resolution), sizeof(options.resolution));
+#ifdef UL_DEV
 	RegSetValueEx(reg_key, _T("dev_server"), 0, REG_DWORD,
 		(unsigned char *)&(options.dev_server), sizeof(options.dev_server));
+#endif
 	RegSetValueEx(reg_key, _T("rogerwilco"), 0, REG_DWORD,  
 		(unsigned char *)&(options.rw), sizeof(options.rw));
 	RegSetValueEx(reg_key, _T("network"), 0, REG_DWORD,  
@@ -609,11 +611,13 @@ void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.resolution = 640;
 
+#ifdef UL_DEV
 	size = sizeof(options.dev_server);
 	keyresult = RegQueryValueEx(reg_key, _T("dev_server"), NULL, &reg_type,
 		(unsigned char*) &(options.dev_server), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.dev_server = 1;
+#endif
 
 	size = sizeof(options.network);
 	keyresult = RegQueryValueEx(reg_key, _T("network"), NULL, &reg_type,
