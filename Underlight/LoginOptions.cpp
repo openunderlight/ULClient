@@ -141,9 +141,12 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 
 #ifdef UL_DEV
 			ShowWindow(GetDlgItem(hDlg, IDC_DEV_SERVER1),SW_SHOW);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER1), 1);
-
 			ShowWindow(GetDlgItem(hDlg, IDC_DEV_SERVER2),SW_SHOW);
+
+			if (options.dev_server == 1)
+				Button_SetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER1), 1);
+			else if (options.dev_server == 2)
+				Button_SetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER2), 1);
 #endif // UL_DEV
 
 			TCHAR huge_text[4096];
@@ -266,6 +269,13 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 					options.resolution = 1024;
 				else
 					options.resolution = 640;
+
+#ifdef UL_DEV
+				if (Button_GetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER1)))
+					options.dev_server = 1;
+				else if (Button_GetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER2)))
+					options.dev_server = 2;
+#endif
 
 #ifdef PMARE
 				int pmare_avatar_type = 3 + ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PMARE_LIST));
@@ -473,6 +483,10 @@ void __cdecl SaveOutOfGameRegistryOptionValues(HKEY reg_key)
 		(unsigned char *)&(options.restart_last_location), sizeof(options.restart_last_location));
 	RegSetValueEx(reg_key, _T("resolution"), 0, REG_DWORD,  
 		(unsigned char *)&(options.resolution), sizeof(options.resolution));
+#ifdef UL_DEV
+	RegSetValueEx(reg_key, _T("dev_server"), 0, REG_DWORD,
+		(unsigned char *)&(options.dev_server), sizeof(options.dev_server));
+#endif
 	RegSetValueEx(reg_key, _T("rogerwilco"), 0, REG_DWORD,  
 		(unsigned char *)&(options.rw), sizeof(options.rw));
 	RegSetValueEx(reg_key, _T("network"), 0, REG_DWORD,  
@@ -596,6 +610,14 @@ void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 		(unsigned char *)&(options.resolution), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.resolution = 640;
+
+#ifdef UL_DEV
+	size = sizeof(options.dev_server);
+	keyresult = RegQueryValueEx(reg_key, _T("dev_server"), NULL, &reg_type,
+		(unsigned char*) &(options.dev_server), &size);
+	if ((keyresult != ERROR_SUCCESS) || force)
+		options.dev_server = 1;
+#endif
 
 	size = sizeof(options.network);
 	keyresult = RegQueryValueEx(reg_key, _T("network"), NULL, &reg_type,
