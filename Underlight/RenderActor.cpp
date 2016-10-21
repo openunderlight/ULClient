@@ -671,7 +671,7 @@ int pp;
 					{ 0,0 },  //  3 - LUCIDITY, Red
 					{ 4,0 },  //  4 - GMMT, Skittles
 					{ 5,5 },  //  5 - APPRENTICE, Chalk
-					{ 6,6 },  //  6 - DREAMSTRIKE, Blood
+					{ 6,7 },  //  6 - DREAMSTRIKE, Blood
 					{ 7,7 }   //  7 - EVIL, Abyss
 				};
 
@@ -690,12 +690,16 @@ int pp;
 					patch.palette_id = LyraPalette::HALO_PALETTE;
 					int halo_color;
 
-					// NPSymbol takes priority
-					if (avatar.NPSymbol())
+					// GM DreamerStrike Master
+					if (avatar.Dreamstrike()
+						&& avatar.NPSymbol()
+						//&& avatar.AccountType() == avatar.ACCT_ADMIN
+						) {
+							halo_color = 7;
+					}
+					// NPSymbol for GMMT
+					else if (avatar.NPSymbol())
 						halo_color = 4;
-					// DreamerStriker is second priority
-					else if (avatar.Dreamstrike() && avatar.AccountType() == avatar.ACCT_ADMIN)
-						halo_color = 6;
 					// Teacher is third priority
 					else if (avatar.Teacher())
 						halo_color = min(avatar.Focus() - 1, NUM_HALO_COLORS - 2); // teacher's focus stat
@@ -732,23 +736,31 @@ int pp;
 											((cNeighbor *)actor)->HaloBitmap() : LyraBitmap::AVATAR_HALO;
 
 					int bitmap_center =	effects->EffectBitmap(halo_bitmap)->h/2;
-
-					patch.resolution	= 4.0f;
-					patch.row			= halo_pos->row - 6;
-					patch.col			= halo_pos->col - float2int(bitmap_center/patch.resolution);
-					patch.bitmap		= halo_bitmap;
-					patch.palette_id	= LyraPalette::HALO_PALETTE;
 					int halo_color;
 
-					// NPSymbol takes priority
-					if (avatar.NPSymbol())
-						halo_color = 4;
-					// DreamerStriker is second priority
-					else if (avatar.Dreamstrike() && avatar.AccountType() == avatar.ACCT_ADMIN)
+					// GM DreamerStrike Master
+					if (avatar.Dreamstrike()
+						&& avatar.NPSymbol()
+						//&& avatar.AccountType() == avatar.ACCT_ADMIN
+						) 
+					{
+						patch.resolution = 3.0f;
 						halo_color = 6;
-					else
-						halo_color      = min(avatar.Focus()-1, NUM_HALO_COLORS-1); // teacher's focus stat
+					}
+					// NPSymbol takes priority					
+					else if (avatar.NPSymbol()) {
+						patch.resolution = 4.0f;
+						halo_color = 4;
+					}
+					else {
+						patch.resolution = 4.0f;
+						halo_color = min(avatar.Focus() - 1, NUM_HALO_COLORS - 1); // teacher's focus stat
+					}
 
+					patch.row = halo_pos->row - 6;
+					patch.col = halo_pos->col - float2int(bitmap_center / patch.resolution);
+					patch.bitmap = halo_bitmap;
+					patch.palette_id = LyraPalette::HALO_PALETTE;
 					patch.color_table	= &halo_colors[halo_color][0];
 					patch_visible		= true;
 				}
