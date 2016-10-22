@@ -1896,11 +1896,6 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 		case WM_COMMAND:
 			switch (LOWORD(wParam))
 			{
-			
-			case IDC_ITEM_USE_PT:
-				usePowerToken = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_USE_PT));
-				gotUsePt = true;
-				break;
 
 			case IDC_ITEM_NOPICKUP:
 			{
@@ -1915,6 +1910,11 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 				break;
 			}
 
+			case IDC_ITEM_USE_PT:
+			{
+				usePowerToken = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_USE_PT));
+				gotUsePt = true; 
+			}
 			case IDC_TYPE_COMBO:
 							if (HIWORD(wParam) == LBN_SELCHANGE || gotUsePt)
 					{
