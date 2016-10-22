@@ -1899,21 +1899,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			
 			case IDC_ITEM_USE_PT:
 				usePowerToken = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_USE_PT));
-				gotUsePt = true;
-				break;
-
-			case IDC_ITEM_NOPICKUP:
-			{
-				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
-				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), disable);
-				break;
-			}
-			case IDC_ITEM_ARTIFACT:
-			{
-				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT));
-				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
-				break;
-			}
+				gotUsePt = true;	
 
 			case IDC_TYPE_COMBO:
 							if (HIWORD(wParam) == LBN_SELCHANGE || gotUsePt)
@@ -1965,6 +1951,20 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						}
 						  }
 						  break;
+
+
+			case IDC_ITEM_NOPICKUP:
+			{
+				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
+				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), disable);
+				break;
+			}
+			case IDC_ITEM_ARTIFACT:
+			{
+				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT));
+				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
+				break;
+			}
 
 			case IDC_ITEMHELP:
 			{
