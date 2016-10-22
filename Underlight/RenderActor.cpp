@@ -671,7 +671,7 @@ int pp;
 					{ 0,0 },  //  3 - LUCIDITY, Red
 					{ 4,0 },  //  4 - GMMT, Skittles
 					{ 5,5 },  //  5 - APPRENTICE, Chalk
-					{ 6,7 },  //  6 - DREAMSTRIKE, Blood
+					{ 6,6 },  //  6 - DREAMSTRIKE, Blood
 					{ 7,7 }   //  7 - EVIL, Abyss
 				};
 
