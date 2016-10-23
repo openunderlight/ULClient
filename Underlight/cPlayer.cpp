@@ -675,7 +675,7 @@ DWORD cPlayer::CalculateBreakthrough(int base_modifier, DWORD duration, lyra_id_
 	else
 		modifier += base_modifier + ((fs_level+1) / 100.0);
 
-#ifdef UL_DEV
+#ifdef UL_DEBUG
 	strcpy(disp_message, "Breakthrough modifier: %f");
 	_stprintf(message, disp_message, modifier);
 	display->DisplayMessage(message, false);
