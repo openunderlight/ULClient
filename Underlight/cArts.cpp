@@ -845,7 +845,8 @@ bool cArts::CanUseArt(int art_id, bool bypass)
 		return false;
 	}
 
-	if (art_in_use != Arts::NONE)
+	// Do not allow multiple arts to be evoked at once, which includes using a PP
+	if (art_in_use != Arts::NONE || (useppointdlg && !bypass))
 	{
 		LoadString (hInstance, IDS_ART_IN_USE, message, sizeof(message));
 		display->DisplayMessage(message);
