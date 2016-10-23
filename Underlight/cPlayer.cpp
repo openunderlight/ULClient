@@ -659,6 +659,30 @@ void cPlayer::PerformedAction(void)
 	return;
 }
 
+DWORD cPlayer::CalculateBreakthrough(int base_modifier, DWORD duration, lyra_id_t caster_id)
+{
+	cPlayer* caster;
+	if (caster_id == player->ID())
+		caster = player;
+	else 
+		caster = (cPlayer*)arts->LookUpNeighbor(caster_id);
+
+	float modifier;
+	int fs_level = caster->Skill(Arts::FATESENDER);
+
+	if (fs_level == 0)
+		modifier = base_modifier;
+	else
+		modifier += base_modifier + ((fs_level+1) / 100.0);
+
+#ifdef UL_DEV
+	strcpy(disp_message, "Breakthrough modifier: %f");
+	_stprintf(message, disp_message, modifier);
+	display->DisplayMessage(message, false);
+#endif
+
+	return duration*modifier;
+}
 
 // set up, or extend, a time-based effect; returns true if
 // applied, or false if rejected for whatever reason
@@ -695,7 +719,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_CURSE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		//  Curse and Protection offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration;
+		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE] -= CalculateBreakthrough(1, duration, caster_id);
 		return false;
 		}
 		// Implementing Curse Effect
@@ -730,7 +754,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_PARALYZE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Paralyze and Free Action now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration*3; // new code
+		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(3, duration, caster_id);
 		return false;
 									  }
 		// If actually paralyzed, cancel any current evoke.
@@ -743,7 +767,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_STAGGER_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Stagger and Free Action now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration*3; // new code
+		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(3, duration, caster_id);
 		return false;
 								  }} break;
 	case LyraEffect::PLAYER_FEAR:{
@@ -752,7 +776,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_FEAR_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Fear and Resist Fear now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR]-=duration*3;
+		timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR] -= CalculateBreakthrough(3, duration, caster_id);
 		return false;
 								 }} break;
 	case LyraEffect::PLAYER_BLIND:{
@@ -763,7 +787,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_BLIND_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Blind and Vision now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE]-=duration*3;
+		timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE] -= CalculateBreakthrough(3, duration, caster_id);
 		return false;
 								  }} break;
 //  Players must know how to Recall, Transform, etc. in case talisman causes effect
@@ -834,7 +858,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		if (this->flags & ACTOR_PROT_CURSE) {
 			LoadString (hInstance, IDS_PLAYER_BLEED_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
-			timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration*3;
+			timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE] -= CalculateBreakthrough(3, duration, caster_id);
 			return false;
 		}
 		if (caster_id != player->ID())

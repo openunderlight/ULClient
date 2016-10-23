@@ -341,6 +341,7 @@ class cPlayer : public cActor
 
    protected:
 	  void CheckStatus(void); // expire special timed effects, heal, etc.
+	  DWORD CalculateBreakthrough(int base_modifier, DWORD duration, lyra_id_t caster_id);
 
 	// copy constructor and assignment operator are
 	// private and undefined -> errors if used
