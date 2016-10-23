@@ -141,7 +141,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x2191, // Dreamblade 
 0x48FC, // Trail 
 0x6C9B, // Scare 
-0x90F5, // Stagger 
+0x90E9, // Stagger 
 0xB40F, // Deafen 
 0xDAC5, // Blind 
 0xFC86, // Darkness 
@@ -296,7 +296,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_DREAMBLADE, 			Stats::INSIGHT,		0,  5,  23, 1, 	-1, SANCT|MAKE_ITEM|FOCUS},
 {IDS_TRAIL,					Stats::LUCIDITY,	0,  2,  25, 1, 	-1, SANCT|LEARN},
 {IDS_SCARE,					Stats::LUCIDITY,	10, 5,  4,	2, 	2, NEIGH|LEARN},
-{IDS_STAGGER, 				Stats::LUCIDITY,	40, 10, 3,	2, 	3, NEIGH|FOCUS|LEARN},
+{IDS_STAGGER, 				Stats::LUCIDITY,	20, 10, 3,	2, 	3, NEIGH|FOCUS|LEARN},
 {IDS_DEAFEN,				Stats::LUCIDITY,	5,  15, 4,	2, 	2, NEIGH|LEARN},
 {IDS_BLIND,					Stats::LUCIDITY,	45, 15, 3,	3, 	3, NEIGH|FOCUS|LEARN},
 {IDS_DARKNESS_ART_NAME,		Stats::LUCIDITY,	50, 25, 4,	5, 	3, NEIGH|FOCUS|LEARN},
