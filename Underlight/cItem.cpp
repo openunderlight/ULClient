@@ -474,6 +474,11 @@ int cItem::ItemFunction(int slot)
 	return (*((unsigned char*)state));
 }
 
+bool cItem::NoPickup(void)
+{
+    return (lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP));
+}
+
 // can the item be lost on dissolution?
 bool cItem::Losable(void)
 {

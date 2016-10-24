@@ -122,6 +122,7 @@ typedef void (*YESNOCALLBACK)(void *value);
 static void LiftCallback(void *value);
 static void DropCallback(void *value);
 static void JunkCallback(void *value);
+static void LiftItems(void *value);
 static void DoOnConfirm(UINT uID, YESNOCALLBACK lpDialogFunc);
 static void DoOnConfirm(TCHAR* pMsg, YESNOCALLBACK lpDialogFunc);
 
@@ -1766,24 +1767,29 @@ static void LiftCallback(void *value)
 {
 	int Affirmative = *((int*)value);
 	if (Affirmative)
+		DoOnConfirm(_T("Lift NoPickup Items too?"), LiftItems);
+}
+
+static void LiftItems(void* value)
+{
+	int Affirmative = *((int*)value);
+	for (cItem *item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
 	{
-		for (cItem *item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
-		{
-			if (cp->InventoryFull())
-			{ // carrying too much stuff
-				LoadString (hInstance, IDS_ITEM_TOOMUCH, disp_message, sizeof(disp_message));
-				display->DisplayMessage (disp_message);
-				break;
-			}
-
-			if (item == NO_ITEM || (item->Status() == ITEM_OWNED) || 
-				(item->ItemFunction(0)==LyraItem::WARD_FUNCTION))
-				continue;
-
-			item->Get();
+		if (cp->InventoryFull())
+		{ // carrying too much stuff
+			LoadString(hInstance, IDS_ITEM_TOOMUCH, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			break;
 		}
-		actors->IterateItems(DONE);
+
+		if (item == NO_ITEM || (item->Status() == ITEM_OWNED) ||
+			(item->ItemFunction(0) == LyraItem::WARD_FUNCTION) ||
+			(!Affirmative && item->NoPickup()))
+			continue;
+
+		item->Get();
 	}
+	actors->IterateItems(DONE);
 }
 
 static void DropCallback(void *value)
