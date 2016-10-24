@@ -650,7 +650,7 @@ void cItem::Use(void)
 			lyra_item_effect_player_t effectplayer;
 			memcpy(&effectplayer, state, sizeof(effectplayer));
 			drain_charge = true;
-			player->SetTimedEffect(effectplayer.effect, CalculateDuration(effectplayer.duration), player->ID());
+			player->SetTimedEffect(effectplayer.effect, CalculateDuration(effectplayer.duration), player->ID(), EffectOrigin::USE_ITEM);
 		}
 			break;
 		case LyraItem::META_ESSENCE_FUNCTION:

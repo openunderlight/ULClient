@@ -1565,7 +1565,7 @@ void cArts::ApplyWeapon(void)
 void cArts::Meditate(void)
 {
 	int duration = this->Duration(Arts::MEDITATION, player->Skill(Arts::MEDITATION));
-	if (player->SetTimedEffect(LyraEffect::PLAYER_MEDITATING, duration, player->ID()))
+	if (player->SetTimedEffect(LyraEffect::PLAYER_MEDITATING, duration, player->ID(), EffectOrigin::ART_EVOKE))
 			cDS->PlaySound(LyraSound::MEDITATION, player->x, player->y, true);
 	this->ArtFinished(true);
 	return;
@@ -1885,7 +1885,7 @@ void cArts::Shatter(void)
 void cArts::Blend(void)
 {
 	int duration = this->Duration(art_in_use, player->Skill(art_in_use));
-	if (player->SetTimedEffect(LyraEffect::PLAYER_BLENDED, duration, player->ID()))
+	if (player->SetTimedEffect(LyraEffect::PLAYER_BLENDED, duration, player->ID(), EffectOrigin::ART_EVOKE))
 			cDS->PlaySound(LyraSound::BLEND, player->x, player->y, true);
 	this->ArtFinished(true);
 	return;
@@ -2019,7 +2019,7 @@ void cArts::Know(void)
 void cArts::Chamele(void)
 {
 	int duration = this->Duration(Arts::CHAMELE, player->Skill(Arts::CHAMELE));
-	if (player->SetTimedEffect(LyraEffect::PLAYER_CHAMELED, duration, player->ID()))
+	if (player->SetTimedEffect(LyraEffect::PLAYER_CHAMELED, duration, player->ID(), EffectOrigin::ART_EVOKE))
 		cDS->PlaySound(LyraSound::CHAMELE, player->x, player->y, true);
 	this->ArtFinished(true);
 	return;
@@ -2031,7 +2031,7 @@ void cArts::Chamele(void)
 void cArts::Invisibility(void)
 {
 	int duration = this->Duration(Arts::INVISIBILITY, player->Skill(Arts::INVISIBILITY));
-	if (player->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, duration, player->ID()))
+	if (player->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, duration, player->ID(), EffectOrigin::ART_EVOKE))
 		cDS->PlaySound(LyraSound::CHAMELE, player->x, player->y, true);
 	this->ArtFinished(true);
 	return;
@@ -2210,7 +2210,7 @@ void cArts::Trail(void)
 	else
 	{
 		int duration = this->Duration(Arts::TRAIL, player->Skill(Arts::TRAIL));
-		player->SetTimedEffect(LyraEffect::PLAYER_TRAIL, duration, player->ID());
+		player->SetTimedEffect(LyraEffect::PLAYER_TRAIL, duration, player->ID(), EffectOrigin::ART_EVOKE);
 		cDS->PlaySound(LyraSound::TRAIL, player->x, player->y, true);
 		this->ArtFinished(true);
 	}
@@ -2255,7 +2255,7 @@ void cArts::SoulEvoke()
 	}
 	// Cause permanent dreamsoul loss!
 	gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::SOULEVOKE, 0, 0);	
-	player->SetTimedEffect(LyraEffect::PLAYER_SOULEVOKE, duration, player->ID());
+	player->SetTimedEffect(LyraEffect::PLAYER_SOULEVOKE, duration, player->ID(), EffectOrigin::ART_EVOKE);
 	this->ArtFinished(true);
 	return;
 }
@@ -2266,7 +2266,7 @@ void cArts::SoulEvoke()
 void cArts::NightmareForm(void)
 {
 	int duration = this->Duration(Arts::NIGHTMARE_FORM, player->Skill(Arts::NIGHTMARE_FORM));
-	player->SetTimedEffect(LyraEffect::PLAYER_TRANSFORMED, duration, player->ID());
+	player->SetTimedEffect(LyraEffect::PLAYER_TRANSFORMED, duration, player->ID(), EffectOrigin::ART_EVOKE);
 	// r->ErrorInfo()->RMoved this code into cPlayer so NMF can occur through talismans
 //	LmAvatar new_avatar;
 	//new_avatar.Init((player->Skill(Arts::NIGHTMARE_FORM)/20 + 1), 0, 0, 0, 0, 0, Guild::NO_GUILD, 0);
@@ -2282,7 +2282,7 @@ void cArts::NightmareForm(void)
 void cArts::Recall(void)
 {
 	int duration = this->Duration(art_in_use, player->Skill(art_in_use));
-	player->SetTimedEffect(LyraEffect::PLAYER_RECALL, duration, player->ID());
+	player->SetTimedEffect(LyraEffect::PLAYER_RECALL, duration, player->ID(), EffectOrigin::ART_EVOKE);
 	// r->ErrorInfo()->RMoved this code into cPlayer so Recall can occur through talismans
 //	player->SetRecall(player->x, player->y, player->angle, level->ID());
 //	gs->SendPlayerMessage(0, RMsg_PlayerMsg::RECALL, 0, 0);
@@ -2308,7 +2308,7 @@ void cArts::Return(void)
 //	else
 //	{ // 1st activation - mark location
 		int duration = this->Duration(Arts::RETURN, player->Skill(Arts::RETURN));
-		player->SetTimedEffect(LyraEffect::PLAYER_RETURN, duration, player->ID());
+		player->SetTimedEffect(LyraEffect::PLAYER_RETURN, duration, player->ID(), EffectOrigin::ART_EVOKE);
 //		 player->SetReturn(player->x, player->y, player->angle, level->ID());
 //		gs->SendPlayerMessage(0, RMsg_PlayerMsg::RETURN, 0, 0);
 //	}
@@ -2324,7 +2324,7 @@ void cArts::Reflect(void)
 {
 
 	int duration = this->Duration(Arts::REFLECT, player->Skill(Arts::REFLECT));
-	player->SetTimedEffect(LyraEffect::PLAYER_REFLECT, duration, player->ID());
+	player->SetTimedEffect(LyraEffect::PLAYER_REFLECT, duration, player->ID(), EffectOrigin::ART_EVOKE);
 
 	cDS->PlaySound(LyraSound::REFLECT, player->x, player->y, true);
 	this->ArtFinished(true);
@@ -2586,14 +2586,10 @@ void cArts::ApplyChaoticVortex (int skill, lyra_id_t caster_id)
 	  cNeighbor *n = this->LookUpNeighbor(caster_id);
 	  this->DisplayUsedByOther(n, Arts::CHAOTIC_VORTEX);
 	  int duration = this->Duration(Arts::CHAOTIC_VORTEX, skill);
-	  player->SetTimedEffect(LyraEffect::PLAYER_SPIN, duration, caster_id);
+	  player->SetTimedEffect(LyraEffect::PLAYER_SPIN, duration, caster_id, EffectOrigin::ART_EVOKE);
   }
 	return;
 }
-
-
-
-
 
 //////////////////////////////////////////////////////////////////
 // Razorwind
@@ -2627,7 +2623,7 @@ void cArts::ApplyRazorwind(int skill, lyra_id_t caster_id)
 		this->DamagePlayer(damage, caster_id);
 		//player->SetCurrStat(Stats::DREAMSOUL, -damage, SET_RELATIVE, caster_id);
 		int duration = this->Duration(Arts::RAZORWIND, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_BLEED, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_BLEED, duration, caster_id, EffectOrigin::ART_EVOKE);
 	}
 	return;
 }
@@ -2667,7 +2663,7 @@ void cArts::ApplyDarkness(int skill, lyra_id_t caster_id)
 			display->DisplayMessage(message, false);
 		}
 		int duration = this->Duration(Arts::DARKNESS, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_BLIND, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_BLIND, duration, caster_id, EffectOrigin::ART_EVOKE);
 	}
 	return;
 }
@@ -2707,7 +2703,7 @@ void cArts::ApplyEarthquake(int skill, lyra_id_t caster_id)
 			display->DisplayMessage(message, false);
 		}
 		int duration = this->Duration(Arts::EARTHQUAKE, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_DRUNK, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_DRUNK, duration, caster_id, EffectOrigin::MASS_EVOKE);
 	}
 	return;
 }
@@ -2746,7 +2742,7 @@ void cArts::ApplyHypnoticWeave(int skill, lyra_id_t caster_id)
 			display->DisplayMessage(message, false);
 		}
 		int duration = this->Duration(Arts::HYPNOTIC_WEAVE, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_PARALYZED, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_PARALYZED, duration, caster_id, EffectOrigin::MASS_EVOKE);
 	}
 	return;
 }
@@ -2798,7 +2794,7 @@ void cArts::ApplyTerror(int skill, lyra_id_t caster_id)
 			display->DisplayMessage(message, false);
 		}
 		int duration = this->Duration(Arts::TERROR, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_FEAR, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_FEAR, duration, caster_id, EffectOrigin::MASS_EVOKE);
 	}
 	return;
 }
@@ -3050,7 +3046,7 @@ void cArts::ApplyRadiantBlaze(int skill, lyra_id_t caster_id)
 		int damage = 1 + (rand()%6);
 		this->DamagePlayer(damage, caster_id);
 		int duration = this->Duration(Arts::RADIANT_BLAZE, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_BLIND, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_BLIND, duration, caster_id, EffectOrigin::MASS_EVOKE);
 	}
 	return;
 
@@ -3113,7 +3109,7 @@ void cArts::ApplyPoisonCloud(int skill, lyra_id_t caster_id)
 		int damage = 1 + (rand()%6);
 		this->DamagePlayer(damage, caster_id);
 		int duration = this->Duration(Arts::POISON_CLOUD, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_POISONED, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_POISONED, duration, caster_id, EffectOrigin::MASS_EVOKE);
 	}
 	return;
 
@@ -3176,7 +3172,7 @@ void cArts::ApplyDazzle(int skill, lyra_id_t caster_id)
 		int damage = 1 + (rand()%6);
 		this->DamagePlayer(damage, caster_id);
 		int duration = this->Duration(Arts::DAZZLE, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_DRUNK, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_DRUNK, duration, caster_id, EffectOrigin::MASS_EVOKE);
 	}
 	return;
 }
@@ -3537,7 +3533,7 @@ void cArts::ApplyResistFear(int skill, lyra_id_t caster_id)
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::RESIST_FEAR);
 	int duration = this->Duration(Arts::RESIST_FEAR, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, duration, caster_id);
+	player->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, duration, caster_id, EffectOrigin::ART_EVOKE);
 	return;
 }
 
@@ -3580,7 +3576,7 @@ void cArts::ApplyResistCurse(int art_id, int skill, lyra_id_t caster_id)
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, art_id);
 	int duration = this->Duration(art_id, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_PROT_CURSE, duration, caster_id);
+	player->SetTimedEffect(LyraEffect::PLAYER_PROT_CURSE, duration, caster_id, EffectOrigin::ART_EVOKE);
 	return;
 }
 
@@ -3625,7 +3621,7 @@ void cArts::ApplyResistParalysis(int skill, lyra_id_t caster_id)
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::FREE_ACTION);
 	int duration = this->Duration(Arts::FREE_ACTION, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, duration, caster_id);
+	player->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, duration, caster_id, EffectOrigin::ART_EVOKE);
 
 	return;
 }
@@ -3724,7 +3720,7 @@ void cArts::ApplyVision(int skill, lyra_id_t caster_id)
 
 	this->DisplayUsedByOther(n, Arts::VISION);
 	int duration = this->Duration(Arts::VISION, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, duration, caster_id);
+	player->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, duration, caster_id, EffectOrigin::ART_EVOKE);
 	return;
 }
 
@@ -4122,7 +4118,7 @@ void cArts::ApplyScare(int skill, lyra_id_t caster_id)
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::SCARE);
 	int duration = this->Duration(Arts::SCARE, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_FEAR, duration, caster_id);
+	player->SetTimedEffect(LyraEffect::PLAYER_FEAR, duration, caster_id, EffectOrigin::ART_EVOKE);
 	return;
 }
 
@@ -4158,7 +4154,7 @@ void cArts::ApplyCurse(int skill, lyra_id_t caster_id)
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::CURSE);
 	int duration = this->Duration(Arts::CURSE, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_CURSED, duration, caster_id);
+	player->SetTimedEffect(LyraEffect::PLAYER_CURSED, duration, caster_id, EffectOrigin::ART_EVOKE);
 	return;
 }
 
@@ -4198,7 +4194,7 @@ void cArts::ApplyParalyze(int art_id, int skill, lyra_id_t caster_id)
 	int duration = this->Duration(art_id, skill);
 	// Z2 Change: Balthiir requested this change to paralyze duration
 	duration += 1000; // r->ErrorInfo()->RHack to make Para duration 2 seconds + 1 second/plat
-	player->SetTimedEffect(LyraEffect::PLAYER_PARALYZED, duration, caster_id);
+	player->SetTimedEffect(LyraEffect::PLAYER_PARALYZED, duration, caster_id, EffectOrigin::ART_EVOKE);
 	return;
 }
 
@@ -4239,7 +4235,7 @@ void cArts::ApplyStagger(int skill, lyra_id_t caster_id)
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::STAGGER);
 	int duration = this->Duration(Arts::STAGGER, skill);
-	if (player->SetTimedEffect(LyraEffect::PLAYER_DRUNK, duration, caster_id))
+	if (player->SetTimedEffect(LyraEffect::PLAYER_DRUNK, duration, caster_id, EffectOrigin::ART_EVOKE))
 		cDS->PlaySound(LyraSound::STAGGER);
 	return;
 }
@@ -4286,7 +4282,7 @@ void cArts::ApplyDeafen(int skill, lyra_id_t caster_id, bool roar)
 		this->DisplayUsedByOther(n, Arts::DEAFEN);
 
 	int duration = this->Duration(Arts::DEAFEN, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_DEAF, duration, caster_id);
+	player->SetTimedEffect(LyraEffect::PLAYER_DEAF, duration, caster_id, EffectOrigin::ART_EVOKE);
 	return;
 }
 
@@ -4322,7 +4318,7 @@ void cArts::ApplyBlind(int skill, lyra_id_t caster_id)
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::BLIND);
 	int duration = this->Duration(Arts::BLIND, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_BLIND, duration, caster_id);
+	player->SetTimedEffect(LyraEffect::PLAYER_BLIND, duration, caster_id, EffectOrigin::ART_EVOKE);
 	return;
 }
 
@@ -4362,7 +4358,7 @@ void cArts::ApplyPoison(int skill, lyra_id_t caster_id)
 	int duration = this->Duration(Arts::POISON, skill);
 	//if (player->poison_strength < skill)
 	//	player->poison_strength = skill;
-	player->SetTimedEffect(LyraEffect::PLAYER_POISONED, duration, caster_id);
+	player->SetTimedEffect(LyraEffect::PLAYER_POISONED, duration, caster_id, EffectOrigin::ART_EVOKE);
 	return;
 }
 
@@ -5367,7 +5363,7 @@ void cArts::ApplyMindBlank(int skill, lyra_id_t caster_id)
     player->EvokedFX().Activate(Arts::MIND_BLANK, false);
 
 	int duration = this->Duration(Arts::MIND_BLANK, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_MIND_BLANKED, duration, player->ID());
+	player->SetTimedEffect(LyraEffect::PLAYER_MIND_BLANKED, duration, player->ID(), EffectOrigin::ART_EVOKE);
 	return;
 }
 
@@ -5532,7 +5528,7 @@ void cArts::ApplySoulShield(int skill, lyra_id_t caster_id)
     player->EvokedFX().Activate(Arts::SOUL_SHIELD, false);
 
 	int duration = this->Duration(Arts::SOUL_SHIELD, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_SOUL_SHIELD, duration, player->ID());
+	player->SetTimedEffect(LyraEffect::PLAYER_SOUL_SHIELD, duration, player->ID(), EffectOrigin::ART_EVOKE);
 
 
 	return;
@@ -6203,7 +6199,7 @@ void cArts::ApplyBreakCovenant(int skill, lyra_id_t caster_id)
 			this->DamagePlayer(damage, caster_id);
 		}
 		int duration = this->Duration(Arts::BREAK_COVENANT, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_NO_PARTY, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_NO_PARTY, duration, caster_id, EffectOrigin::ART_EVOKE);
 	}
 	return;
 }
@@ -6278,7 +6274,7 @@ void cArts::ApplyPeaceAura(int skill, lyra_id_t caster_id)
 	this->DisplayUsedByOther(n, Arts::PEACE_AURA);
 
 	int duration = this->Duration(Arts::PEACE_AURA, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_PEACE_AURA, duration, caster_id);
+	player->SetTimedEffect(LyraEffect::PLAYER_PEACE_AURA, duration, caster_id, EffectOrigin::ART_EVOKE);
 	
 /*	else
 	{
@@ -6367,11 +6363,11 @@ void cArts::ApplySableShield(int skill, lyra_id_t caster_id)
 	if (player->GuildRank(Guild::MOON) >= Guild::INITIATE)
 	{	// only works on OSM
 		int duration = this->Duration(Arts::SABLE_SHIELD, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, duration, caster_id);
-		player->SetTimedEffect(LyraEffect::PLAYER_PROT_CURSE, duration, caster_id);
-		player->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, duration, caster_id);
-		player->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, duration, caster_id);
-		player->SetTimedEffect(LyraEffect::PLAYER_NO_POISON, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, duration, caster_id, EffectOrigin::MASS_EVOKE);
+		player->SetTimedEffect(LyraEffect::PLAYER_PROT_CURSE, duration, caster_id, EffectOrigin::MASS_EVOKE);
+		player->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, duration, caster_id, EffectOrigin::MASS_EVOKE);
+		player->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, duration, caster_id, EffectOrigin::MASS_EVOKE);
+		player->SetTimedEffect(LyraEffect::PLAYER_NO_POISON, duration, caster_id, EffectOrigin::MASS_EVOKE);
 	}
 	else
 	{
@@ -6451,7 +6447,7 @@ void cArts::ApplyEntrancement(int skill, lyra_id_t caster_id)
 	if (player->GuildRank(Guild::ENTRANCED) >= Guild::INITIATE)
 	{	// only works on  GOE 
 		int duration = this->Duration(Arts::ENTRANCEMENT, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_REGENERATING, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_REGENERATING, duration, caster_id, EffectOrigin::ART_EVOKE);
 	}
 	else
 	{
@@ -6533,7 +6529,7 @@ void cArts::ApplyShadowStep(int skill, lyra_id_t caster_id)
 	if (player->GuildRank(Guild::SHADOW) >= Guild::INITIATE)
 	{	// only works on KOES
 		int duration = this->Duration(Arts::SHADOW_STEP, skill);
-		player->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, duration, caster_id);
+		player->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, duration, caster_id, EffectOrigin::ART_EVOKE);
 	}
 	else
 	{

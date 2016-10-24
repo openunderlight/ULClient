@@ -243,14 +243,14 @@ void cMissile::StrikeActor(cActor* actor)
 		//if ((effect == LyraEffect::PLAYER_POISONED) && (player->poison_strength < MinModifierSkill(damage_type))) {
 		//		player->poison_strength = MinModifierSkill(damage_type);
 		//}
-		player->SetTimedEffect(effect, CalculateDuration(timed_effects->default_duration[effect]), owner_id);
+		player->SetTimedEffect(effect, CalculateDuration(timed_effects->default_duration[effect]), owner_id, EffectOrigin::MISSILE);
 	}
 #else
 	if (actor->IsPlayer() && (owner != player)  && effect) {
 		//if ((effect == LyraEffect::PLAYER_POISONED) && (player->poison_strength < MinModifierSkill(damage_type))) {
 		//		player->poison_strength = MinModifierSkill(damage_type);
 		//}
-		player->SetTimedEffect(effect, CalculateDuration(timed_effects->default_duration[effect]), owner_id);
+		player->SetTimedEffect(effect, CalculateDuration(timed_effects->default_duration[effect]), owner_id, EffectOrigin::MISSILE);
 	}
 #endif
 	if ((actor->IsPlayer()) && (owner == player) && returning)

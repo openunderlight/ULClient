@@ -300,7 +300,7 @@ class cPlayer : public cActor
 	  void SetTransformedAvatar(LmAvatar new_avatar);
 	  void SetFocusStat(int stat) { focus_stat = stat; };
 	  void SetSelectedStat(int stat) { selected_stat = stat; };
-	  bool SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id);
+	  bool SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, int effect_origin);
 	  void RemoveTimedEffect(int effect);
 	  inline void SetInjured(bool value) { injured = value; };
 	  inline void SetChannelTarget(lyra_id_t value) { channelTarget = value; };
@@ -341,7 +341,7 @@ class cPlayer : public cActor
 
    protected:
 	  void CheckStatus(void); // expire special timed effects, heal, etc.
-	  DWORD CalculateBreakthrough(int base_modifier, DWORD duration, lyra_id_t caster_id);
+	  DWORD CalculateBreakthrough(int base_modifier, DWORD duration, lyra_id_t caster_id, int effect_origin);
 
 	// copy constructor and assignment operator are
 	// private and undefined -> errors if used

@@ -38,6 +38,16 @@ const int AGOKNIGHT_DAMAGE = 60;
 const int SHAMBLIX_DAMAGE = 60;
 const int HORRON_DAMAGE = 38;
 
+struct EffectOrigin {
+	enum {
+		UNDEFINED = -1,
+		KEYBOARD = 0,
+		MISSILE,
+		ART_EVOKE,
+		MASS_EVOKE,
+		USE_ITEM
+	};
+};
 
 struct Stats {
 	enum {
