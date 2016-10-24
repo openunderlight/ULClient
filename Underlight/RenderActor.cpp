@@ -692,10 +692,11 @@ int pp;
 
 					// GM DreamerStrike Master
 					if (avatar.Dreamstrike()
+						&& avatar.NPSymbol()
 						&& avatar.AccountType() == avatar.ACCT_ADMIN
 						) 
 					{
-							halo_color = 6;
+							halo_color = 7;
 					}
 					// NPSymbol for GMMT
 					else if (avatar.NPSymbol())
@@ -740,6 +741,7 @@ int pp;
 
 					// GM DreamerStrike Master
 					if (avatar.Dreamstrike()
+						&& avatar.NPSymbol()
 						&& avatar.AccountType() == avatar.ACCT_ADMIN
 						) 
 					{
