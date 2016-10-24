@@ -1896,11 +1896,25 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 		case WM_COMMAND:
 			switch (LOWORD(wParam))
 			{
-			
-			case IDC_ITEM_USE_PT:
-				usePowerToken = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_USE_PT));
-				gotUsePt = true;	
 
+			case IDC_ITEM_NOPICKUP:
+			{
+				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
+				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), disable);
+				break;
+			}
+			case IDC_ITEM_ARTIFACT:
+			{
+				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT));
+				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
+				break;
+			}
+
+			case IDC_ITEM_USE_PT:
+			{
+				usePowerToken = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_USE_PT));
+				gotUsePt = true; 
+			}
 			case IDC_TYPE_COMBO:
 							if (HIWORD(wParam) == LBN_SELCHANGE || gotUsePt)
 					{
@@ -1951,20 +1965,6 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						}
 						  }
 						  break;
-
-
-			case IDC_ITEM_NOPICKUP:
-			{
-				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
-				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), disable);
-				break;
-			}
-			case IDC_ITEM_ARTIFACT:
-			{
-				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT));
-				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
-				break;
-			}
 
 			case IDC_ITEMHELP:
 			{
@@ -4534,7 +4534,8 @@ BOOL CALLBACK AvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 
 					// set sphere color (dreamstrike status)
 					if (((Button_GetCheck(GetDlgItem(hDlg, IDC_FRONT_SPHERE))) ||
-						(Button_GetCheck(GetDlgItem(hDlg, IDC_BACK_SPHERE)))) &&
+						(Button_GetCheck(GetDlgItem(hDlg, IDC_BACK_SPHERE))) ||
+						(Button_GetCheck(GetDlgItem(hDlg, IDC_SHIELD)))) &&
 						player->Skill(Arts::DREAMSTRIKE))
 						curr_avatar.SetDreamstrike(1);
 					else
