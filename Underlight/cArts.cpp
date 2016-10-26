@@ -7910,6 +7910,8 @@ void cArts::EndSupportTraining(void)
 {
 	cNeighbor *n = cp->SelectedNeighbor();
 	lyra_id_t art_id = cp->SelectedArt();
+	quest_item = NO_ITEM;
+
 	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
 	{
 		this->DisplayNeighborBailed(Arts::SUPPORT_TRAINING);
@@ -7932,12 +7934,20 @@ void cArts::EndSupportTraining(void)
 		return;
 	}
 
+	if ((quest_item = HasQuestCodex(n->ID(), Arts::SUPPORT_TRAINING)) == NO_ITEM)
+	{
+		strcpy(disp_message, "In order to Support Train, you must have in your pack a Quest item (created by the Quest Art), assigned to Support Train, and made specifically for that Dreamer.");
+		//LoadString(hInstance, IDS_NEED_QUEST_ITEM, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	switch (art_id) {
 		case Arts::NONE:
 		case Arts::FORGE_TALISMAN:
 		case Arts::TRAIN:
 		case Arts::LEVELTRAIN:
-		case Arts::SUPPORT_TRAINING:
 		case Arts::SUPPORT_SPHERING:
 		case Arts::TRAIN_SELF:
 		LoadString (hInstance, IDS_NO_SELF_TRAIN, disp_message, sizeof(disp_message));
@@ -7981,8 +7991,14 @@ _stprintf(message, _T("%s-%s"), arts->Descrip(art_id), n->Name());
 	}
 
 	LoadString (hInstance, IDS_SUPPORT_TRAIN_TOKEN, disp_message, sizeof(disp_message));
-_stprintf(message, disp_message, n->Name(), arts->Descrip(art_id));
+	_stprintf(message, disp_message, n->Name(), arts->Descrip(art_id));
 	display->DisplayMessage (message);
+
+	// Destroy the quest codex
+	if (actors->ValidItem(quest_item))
+		quest_item->Destroy();
+
+	quest_item = NULL;
 
 	this->ArtFinished(true);
 	return;
