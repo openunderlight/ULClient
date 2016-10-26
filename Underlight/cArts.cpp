@@ -7844,6 +7844,7 @@ void cArts::ApplyUnTrain(int art_id, lyra_id_t caster_id)
 		if ((art_id == Arts::TRAIN_SELF) ||
 			(art_id == Arts::TRAIN) ||
 			(art_id == Arts::QUEST) ||
+			(art_id == Arts::NP_SYMBOL) || 
 			(art_id == Arts::DREAMSTRIKE) || 
 			(art_id == Arts::WORDSMITH_MARK) ||
 			(art_id == Arts::DREAMSMITH_MARK))
