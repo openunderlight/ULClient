@@ -6839,7 +6839,9 @@ void cArts::EndTrainSelf(void)
 	int skill_sphere = (int)((player->Skill(art_id)+1)/10);
 	int num_tokens_required;
 
-	if (skill_sphere <= 3)
+	if (skill_sphere <= 1)
+		num_tokens_required = 2;
+	else if (skill_sphere <= 3)
 		num_tokens_required = 3;
 	else if (skill_sphere <= 6)
 		num_tokens_required = 4;
