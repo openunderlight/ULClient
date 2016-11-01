@@ -1650,39 +1650,39 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			// colors for List 1 are focus stat specific
 			for (i=0; i<NUM_ACTOR_COLORS; i++)
 			{
-				ListBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO2), ColorName(i));
-				ListBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO2), i, i);
+				ComboBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO2), ColorName(i));
+				ComboBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO2), i, i);
 			}
 
-			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO2), 0);
+			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO2), 0);
 
 			for (i=1; i <= NumTalismans(); i++)
 			{
 				if (TalismanForgable(i))
 				{
-					int index = ListBox_AddString(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO),  TalismanNameAt(i));
-					ListBox_SetItemData(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO),index, TalismanBitmapAt(i));
+					int index = ComboBox_AddString(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO),  TalismanNameAt(i));
+					ComboBox_SetItemData(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO),index, TalismanBitmapAt(i));
 				}
 			}
 #ifdef GAMEMASTER
 			// default to star for GMs
-			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 63);
+			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 63);
 #else		// default to talis for players
-			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 1);
+			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 1);
 #endif
 			
 			ShowWindow(GetDlgItem(hDlg, IDC_ITEM_USE_PT), SW_HIDE);
 			LoadString(hInstance, IDS_SELECT_FUNCTION, message, sizeof(message));
 
-			ListBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), message);
-			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO), 0);
+			ComboBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), message);
+			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO), 0);
 
 			ShowWindow(GetDlgItem(hDlg, IDC_PROPERTY1), SW_HIDE);
 			ShowWindow(GetDlgItem(hDlg, IDC_PROPERTY2), SW_HIDE);
 			ShowWindow(GetDlgItem(hDlg, IDC_PROPERTY3), SW_HIDE);
 			ShowWindow(GetDlgItem(hDlg, IDC_PROPERTY4), SW_HIDE);
 			ShowWindow(GetDlgItem(hDlg, IDC_PROPERTY5), SW_HIDE);
-      ShowWindow(GetDlgItem(hDlg, IDC_ANY_CHARGES), SW_HIDE);
+			ShowWindow(GetDlgItem(hDlg, IDC_ANY_CHARGES), SW_HIDE);
 
 			return TRUE;
 			}
@@ -1703,8 +1703,8 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			TCHAR buffer[64];
 			if (NO_ITEM != quest) 
 			{
-				ListBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1), quest->Color1());
-				ListBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO2), quest->Color2());
+				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1), quest->Color1());
+				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO2), quest->Color2());
 				_stprintf(buffer, _T("%d"), quest->Charges());
 				Edit_SetText(GetDlgItem(hDlg, IDC_CHARGES), buffer);					
 			}
@@ -1721,10 +1721,10 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 				case CreateItem::QUEST_ITEM: {
 					opened_by = CreateItem::QUEST_ITEM;
 
-					ListBox_DeleteString(GetDlgItem(hDlg, IDC_TYPE_COMBO), 0);
+					ComboBox_DeleteString(GetDlgItem(hDlg, IDC_TYPE_COMBO), 0);
 					LoadString(hInstance, IDS_ANY_FUNCTION, message, sizeof(message));
-					ListBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), message);
-					ListBox_SetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO), 0);
+					ComboBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), message);
+					ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO), 0);
 
 					LoadString(hInstance, IDS_QUEST_FORGE_TEXT, message, sizeof(message));
 					Edit_SetText(GetDlgItem(hDlg, IDC_FORGE_TEXT), message);
@@ -1738,21 +1738,21 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 
 					for (i=0; i<NUM_ACTOR_COLORS; i++)
 					{ 
-						ListBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ColorName(i));
-						ListBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), i, i);
+						ComboBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ColorName(i));
+						ComboBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), i, i);
 
 					}
 
 					// now add the extra "Any Color" labels
 
 					LoadString(hInstance, IDS_ANY_COLOR, message, sizeof(message));
-					ListBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO1), message);
-					ListBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ANY_COLOR, NUM_ACTOR_COLORS);
-					ListBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO2), message);
-					ListBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO2), ANY_COLOR, NUM_ACTOR_COLORS);
+					ComboBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO1), message);
+					ComboBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ANY_COLOR, NUM_ACTOR_COLORS);
+					ComboBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO2), message);
+					ComboBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO2), ANY_COLOR, NUM_ACTOR_COLORS);
 					
-					ListBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ANY_COLOR);// rand()%NUM_ACTOR_COLORS);
-					ListBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO2), ANY_COLOR); //rand()%NUM_ACTOR_COLORS);
+					ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ANY_COLOR);// rand()%NUM_ACTOR_COLORS);
+					ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO2), ANY_COLOR); //rand()%NUM_ACTOR_COLORS);
 
 					tab_item.mask = TCIF_TEXT;
 					LoadString (hInstance, IDS_ITEM_FUNCTION, disp_message, sizeof(disp_message));
@@ -1761,8 +1761,8 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					for (int i = 1; i < LyraItem::NumItemFunctions(); i++)
 						if (LyraItem::FunctionCreateByForge(i))
 						{
-							ListBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), LyraItem::FunctionName(i));
-							ListBox_SetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), (ListBox_GetCount(GetDlgItem(hDlg, IDC_TYPE_COMBO))-1), i);
+							ComboBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), LyraItem::FunctionName(i));
+							ComboBox_SetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), (ComboBox_GetCount(GetDlgItem(hDlg, IDC_TYPE_COMBO))-1), i);
 						}
 
 					LoadString (hInstance, IDS_1, message, sizeof(message));
@@ -1775,12 +1775,12 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					ShowWindow (GetDlgItem(hDlg, IDC_NAME_HEADER), SW_HIDE);
 					ShowWindow (GetDlgItem(hDlg, IDC_FORGE_STATIC), SW_HIDE);
 					ShowWindow (GetDlgItem(hDlg, IDC_QUEST_STATIC), SW_SHOW);
-			    ShowWindow(GetDlgItem(hDlg, IDC_ANY_CHARGES), SW_SHOW);
+					ShowWindow(GetDlgItem(hDlg, IDC_ANY_CHARGES), SW_SHOW);
 				
 					LoadString (hInstance, IDS_ANY_GRAPHIC, message, sizeof(message));
-					int index = ListBox_AddString(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO),  message);
-					ListBox_SetItemData(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), index, LyraBitmap::NONE);
-					ListBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), index); 
+					int index = ComboBox_AddString(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO),  message);
+					ComboBox_SetItemData(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), index, LyraBitmap::NONE);
+					ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), index); 
 					}
 					break; 
 
@@ -1791,11 +1791,11 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 
 					for (i=0; i<NUM_ACTOR_COLORS; i++)
 					{ // gm's can choose from all colors
-						ListBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ColorName(i));
-						ListBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), i, i);
+						ComboBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ColorName(i));
+						ComboBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), i, i);
 					}
 
-					ListBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1), 0);
+					ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1), 0);
 					
 
 					tab_item.mask = TCIF_TEXT;
@@ -1819,8 +1819,8 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					for (i = 1; i < LyraItem::NumItemFunctions(); i++) // skip 0 ('none')
 						if (LyraItem::FunctionCreateByGM(i))
 						{
-							ListBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), LyraItem::FunctionName(i));
-							ListBox_SetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), (ListBox_GetCount(GetDlgItem(hDlg, IDC_TYPE_COMBO))-1), i);
+							ComboBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), LyraItem::FunctionName(i));
+							ComboBox_SetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), (ComboBox_GetCount(GetDlgItem(hDlg, IDC_TYPE_COMBO))-1), i);
 						}
 					ShowWindow (GetDlgItem(hDlg, IDC_FORGE_STATIC), SW_SHOW);
 					ShowWindow (GetDlgItem(hDlg, IDC_QUEST_STATIC), SW_HIDE);
@@ -1847,11 +1847,11 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					j=0;
 					for (i=player->FocusStat()-1; i<NUM_ACTOR_COLORS; i+=4)
 					{ 
-						ListBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ColorName(i));
-						ListBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), j, i);
+						ComboBox_AddString(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ColorName(i));
+						ComboBox_SetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), j, i);
 						j++;
 					}
-					ListBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1), 0);
+					ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1), 0);
 
 					tab_item.mask = TCIF_TEXT;
 					LoadString (hInstance, IDS_ITEM_FUNCTION, disp_message, sizeof(disp_message));
@@ -1861,8 +1861,8 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					for (int i = 1; i < LyraItem::NumItemFunctions(); i++)
 						if (LyraItem::FunctionCreateByForge(i))
 						{
-							ListBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), LyraItem::FunctionName(i));
-							ListBox_SetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), (ListBox_GetCount(GetDlgItem(hDlg, IDC_TYPE_COMBO))-1), i);
+							ComboBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), LyraItem::FunctionName(i));
+							ComboBox_SetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), (ComboBox_GetCount(GetDlgItem(hDlg, IDC_TYPE_COMBO))-1), i);
 						}
 
 					_stprintf(message, _T("%d"), arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN), usePowerToken > 0));
@@ -1916,10 +1916,10 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 				gotUsePt = true; 
 			}
 			case IDC_TYPE_COMBO:
-							if (HIWORD(wParam) == LBN_SELCHANGE || gotUsePt)
+					if (HIWORD(wParam) == LBN_SELCHANGE || gotUsePt)
 					{
-						int curr_selection = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
-						int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), curr_selection);
+						int curr_selection = ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
+						int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), curr_selection);
 
 						for (int i = 0; i < LyraItem::MAX_FIELDS_PER_FUNCTION - 1; i++)
 						{
@@ -1943,7 +1943,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							ShowWindow(GetDlgItem(hDlg, property_fields[i]), SW_SHOWNORMAL);
 
 							// Load drop-down boxes with appropriate values
-							ListBox_ResetContent(GetDlgItem(hDlg, property_fields[i]));
+							ComboBox_ResetContent(GetDlgItem(hDlg, property_fields[i]));
 							//if (LyraItem::EntryTranslation(curr_effect, i) == 0)
 								//ComboBox_LimitText(GetDlgItem(hDlg, property_fields[i]),PROPERTY_FIELD_LENGTH);
 							//else
@@ -1956,11 +1956,11 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 									if ((opened_by != CreateItem::FORGE_ITEM) || (CanPlayerForgeValue(LyraItem::EntryTranslation(curr_effect, i), j, usePowerToken > 0)))
 									{
 										TranslateValue(LyraItem::EntryTranslation(curr_effect, i), j);
-										SendMessage((GetDlgItem(hDlg, property_fields[i])), LB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
-										ListBox_SetItemData(GetDlgItem(hDlg, property_fields[i]), (ListBox_GetCount(GetDlgItem(hDlg, property_fields[i]))-1), j);
+										SendMessage((GetDlgItem(hDlg, property_fields[i])), CB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
+										ComboBox_SetItemData(GetDlgItem(hDlg, property_fields[i]), (ComboBox_GetCount(GetDlgItem(hDlg, property_fields[i]))-1), j);
 									}
 								}
-								ListBox_SetCurSel(GetDlgItem(hDlg,property_fields[i]),0);
+								ComboBox_SetCurSel(GetDlgItem(hDlg,property_fields[i]),0);
 							}
 						}
 						  }
@@ -2013,18 +2013,18 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						bool effect_error = false;
 
 						// Make sure last set of effect data has been saved to the struct...
-						if (ListBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)) != LB_ERR)
+						if (ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)) != LB_ERR)
 						{	// save only if there is a selected effect
 							int current_tab = TabCtrl_GetCurSel(GetDlgItem(hDlg, IDC_FUNCTION_TAB));
 
 							item_effect[current_tab].effect_type =
-								ListBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
+								ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
 
-							int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[current_tab].effect_type);
+							int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[current_tab].effect_type);
 
 							for (int i = 0; i < LyraItem::FunctionEntries(curr_effect); i++)
 							{
-								if (ListBox_GetCount(GetDlgItem(hDlg, property_fields[i])) == 0)
+								if (ComboBox_GetCount(GetDlgItem(hDlg, property_fields[i])) == 0)
 								{
 									GetWindowText(GetDlgItem(hDlg, property_fields[i]),
 										item_effect_string[current_tab].property[i], PROPERTY_FIELD_LENGTH);
@@ -2037,9 +2037,9 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								else
 								{
 									item_effect[current_tab].property[i] =
-										ListBox_GetCurSel(GetDlgItem(hDlg, property_fields[i]));
+										ComboBox_GetCurSel(GetDlgItem(hDlg, property_fields[i]));
 									item_effect[current_tab].property_value[i] =
-										ListBox_GetItemData(GetDlgItem(hDlg, property_fields[i]), item_effect[current_tab].property[i]);
+										ComboBox_GetItemData(GetDlgItem(hDlg, property_fields[i]), item_effect[current_tab].property[i]);
 								}
 							}
 						}
@@ -2076,7 +2076,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						// TCN_SELCHANGING because MS sucks.
 						for (int i = 0; i < 3; i++)
 						{
-							int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i].effect_type);
+							int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i].effect_type);
 							for (int j = 0; j < LyraItem::FunctionEntries(curr_effect); j++)
 							{
 								if (item_effect[i].property_value[j] < LyraItem::EntryMinValue(curr_effect, j))
@@ -2108,7 +2108,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							sorting = false;
 							for (int i = 0; i < 2; i++)
 							{
-								int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i].effect_type);
+								int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i].effect_type);
 								bool teleporter = (curr_effect == LyraItem::TELEPORTER_FUNCTION);
 								if (teleporter && (numcharges > 1))
 								{
@@ -2118,7 +2118,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 									return FALSE;
 								}
 
-								int next_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i+1].effect_type);
+								int next_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i+1].effect_type);
 								if (LyraItem::FunctionSize(curr_effect) <
 									LyraItem::FunctionSize(next_effect))
 								{
@@ -2173,12 +2173,12 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						}
 
 						// Get the item graphic
-						curr_selection = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO));
+						curr_selection = ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO));
 
-						int graphic = ListBox_GetItemData(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), curr_selection);
+						int graphic = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), curr_selection);
 
 						// if meta essence, hard set graphic
-						if (ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[0].effect_type)
+						if (ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[0].effect_type)
 							== LyraItem::META_ESSENCE_FUNCTION)
 							header.SetGraphic(LyraBitmap::META_ESSENCE);
 						else if (graphic == LyraBitmap::NONE)
@@ -2189,8 +2189,8 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							header.SetGraphic(graphic);
 
 						// Get the item colors
-						int color1 = ListBox_GetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ListBox_GetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1)));
-						int color2 = ListBox_GetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO2), ListBox_GetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO2)));
+						int color1 = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1)));
+						int color2 = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO2), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO2)));
 
 						header.SetColor1(color1);
 						header.SetColor2(color2);
@@ -2199,7 +2199,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						int item_format_sum = 0;
 						for (i = 0; i < 3; i++)
 						{
-							int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i].effect_type);
+							int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i].effect_type);
 							if (item_effect[i].effect_type != LyraItem::NO_FUNCTION)
 							{
 								item_format[i] = LyraItem::FunctionSize(curr_effect);
@@ -2231,7 +2231,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 
 						for (i = 0; i < 3; i++)
 						{
-							int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i].effect_type);
+							int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i].effect_type);
 							if (item_format[i] != 0)
 							{
 								num_effects_mapped++;
@@ -2273,7 +2273,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 
 							offset = 0;
 
-							int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i].effect_type);
+							int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[i].effect_type);
 							created_item = (char *)malloc(LyraItem::FunctionSize(curr_effect));
 							memcpy (created_item+offset, &(curr_effect), 1);
 							offset += 1;
@@ -2367,8 +2367,6 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								arts->EndForgeTalisman(&i, usePowerToken > 0);
 							else if (opened_by == CreateItem::QUEST_ITEM)
 							{
-								//int color1 = ListBox_GetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ListBox_GetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1)));
-								//int color2 = ListBox_GetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO2), ListBox_GetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO2)));
 								postquest->EndPost(item, color1, color2, graphic);
 							}
 						}
@@ -2413,8 +2411,8 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					TCHAR* stopstring;
 
 					int current_tab = TabCtrl_GetCurSel(GetDlgItem(hDlg, IDC_FUNCTION_TAB));
-					if ((ListBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)) == LB_ERR) ||
-						(ListBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)) == LyraItem::NO_FUNCTION))
+					if ((ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)) == LB_ERR) ||
+						(ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)) == LyraItem::NO_FUNCTION))
 					{	// save only if there is a selected effect
 						item_effect[current_tab].effect_type = LyraItem::NO_FUNCTION;
 						return FALSE;
@@ -2422,13 +2420,13 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					}
 
 					item_effect[current_tab].effect_type =
-						ListBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
+						ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
 
-					int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[current_tab].effect_type);
+					int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[current_tab].effect_type);
 
 					for (int i = 0; i < LyraItem::FunctionEntries(curr_effect); i++)
 					{
-						if (ListBox_GetCount(GetDlgItem(hDlg, property_fields[i])) == 0)
+						if (ComboBox_GetCount(GetDlgItem(hDlg, property_fields[i])) == 0)
 						{
 							GetWindowText(GetDlgItem(hDlg, property_fields[i]),
 								item_effect_string[current_tab].property[i], PROPERTY_FIELD_LENGTH);
@@ -2441,9 +2439,9 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						else
 						{
 							item_effect[current_tab].property[i] =
-								ListBox_GetCurSel(GetDlgItem(hDlg, property_fields[i]));
+								ComboBox_GetCurSel(GetDlgItem(hDlg, property_fields[i]));
 							item_effect[current_tab].property_value[i] =
-								ListBox_GetItemData(GetDlgItem(hDlg, property_fields[i]), item_effect[current_tab].property[i]);
+								ComboBox_GetItemData(GetDlgItem(hDlg, property_fields[i]), item_effect[current_tab].property[i]);
 						}
 					}
 
@@ -2458,14 +2456,14 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 
 					// set the effect type
 					if (item_effect[current_tab].effect_type != LyraItem::NO_FUNCTION)
-						ListBox_SetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO),
+						ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO),
 							item_effect[current_tab].effect_type);
 					else
-						ListBox_SetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO), -1);
+						ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO), -1);
 
 
-					int curr_selection = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
-					int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), curr_selection);
+					int curr_selection = ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
+					int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), curr_selection);
 
 					for (int i = 0; i < LyraItem::MAX_FIELDS_PER_FUNCTION; i++)
 					{
@@ -2482,7 +2480,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							ShowWindow(GetDlgItem(hDlg, property_fields[i]), SW_SHOWNORMAL);
 
 							// Load drop-down boxes with appropriate values
-							ListBox_ResetContent(GetDlgItem(hDlg, property_fields[i]));
+							ComboBox_ResetContent(GetDlgItem(hDlg, property_fields[i]));
 							//if (LyraItem::EntryTranslation(curr_effect, i) == 0)
 								//ListBox_LimitText(GetDlgItem(hDlg, property_fields[i]),PROPERTY_FIELD_LENGTH);
 							//else
@@ -2495,8 +2493,8 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 									if ((opened_by != CreateItem::FORGE_ITEM) || (CanPlayerForgeValue(LyraItem::EntryTranslation(curr_effect, i), j, usePowerToken > 0)))
 									{
 										TranslateValue(LyraItem::EntryTranslation(curr_effect, i), j);
-										SendMessage((GetDlgItem(hDlg, property_fields[i])), LB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
-										ListBox_SetItemData(GetDlgItem(hDlg, property_fields[i]), (ListBox_GetCount(GetDlgItem(hDlg, property_fields[i]))-1), j);
+										SendMessage((GetDlgItem(hDlg, property_fields[i])), CB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
+										ComboBox_SetItemData(GetDlgItem(hDlg, property_fields[i]), (ComboBox_GetCount(GetDlgItem(hDlg, property_fields[i]))-1), j);
 									}
 								}
 							}
@@ -2504,21 +2502,21 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 
 					if (item_effect[current_tab].effect_type != LyraItem::NO_FUNCTION)
 					{ // new tab already has data associated, load it
-						int curr_effect = ListBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[current_tab].effect_type);
+						int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[current_tab].effect_type);
 						for (int i = 0; i < LyraItem::FunctionEntries(curr_effect); i++)
 						{
-							if (ListBox_GetCount(GetDlgItem(hDlg, property_fields[i])) == 0)
+							if (ComboBox_GetCount(GetDlgItem(hDlg, property_fields[i])) == 0)
 								SetWindowText(GetDlgItem(hDlg, property_fields[i]),
 									item_effect_string[current_tab].property[i]);
 							else
-								ListBox_SetCurSel(GetDlgItem(hDlg, property_fields[i]),
+								ComboBox_SetCurSel(GetDlgItem(hDlg, property_fields[i]),
 									item_effect[current_tab].property[i]);
 						}
 					}
 					else
 					{ // no data for this tab yet, set empty fields
 						for (int i = 0; i < LyraItem::MAX_FIELDS_PER_FUNCTION; i++)
-							ListBox_SetCurSel(GetDlgItem(hDlg, property_fields[i]), -1);
+							ComboBox_SetCurSel(GetDlgItem(hDlg, property_fields[i]), -1);
 					}
 
 				}
@@ -4259,7 +4257,7 @@ BOOL CALLBACK WriteScrollDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM 
 						{
 							int color1 = ListBox_GetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO1), ListBox_GetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO1)));
 							int color2 = ListBox_GetItemData(GetDlgItem(hDlg, IDC_COLOR_COMBO2), ListBox_GetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO2)));
-							int graphic = ListBox_GetItemData(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), ListBox_GetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO)));
+							int graphic = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO)));
 							postquest->EndPost(&scroll_type, color1, color2, graphic);
 						}
 						else
