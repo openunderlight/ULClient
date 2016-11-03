@@ -1113,14 +1113,14 @@ talisman_name_t talisman_names[] =
 	{BY_GM, IDS_OOSM_FLAG, 995 },
 	{BY_GM, IDS_POR_FLAG, 996 },
 	{BY_GM, IDS_UOC_FLAG, 997 },
-	{BY_AOE, IDS_AOE_SYM, 998 },
-	{BY_HC, IDS_HC_SYM, 999 },
-	{BY_UOC, IDS_UOC_SYM, 1000 },
-	{BY_DOL, IDS_DOL_SYM, 1001 },
-	{BY_GOE, IDS_GOE_SYM, 1002 },
-	{BY_KOES, IDS_KOES_SYM, 1003 },
-	{BY_POR, IDS_POR_SYM, 1004 },
-	{BY_OSM, IDS_OOSM_SYM, 1005 },
+	{BY_GM, IDS_AOE_SYM, 998 },
+	{BY_GM, IDS_HC_SYM, 999 },
+	{BY_GM, IDS_UOC_SYM, 1000 },
+	{BY_GM, IDS_DOL_SYM, 1001 },
+	{BY_GM, IDS_GOE_SYM, 1002 },
+	{BY_GM, IDS_KOES_SYM, 1003 },
+	{BY_GM, IDS_POR_SYM, 1004 },
+	{BY_GM, IDS_OOSM_SYM, 1005 },
 };
 
 unsigned int NumTalismans(void)
