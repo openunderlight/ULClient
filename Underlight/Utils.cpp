@@ -925,10 +925,18 @@ TCHAR *DreamweaponName(int color)
 }
 
 // Forge Item Flags
-const int BY_GM		= 0x001;
-const int BY_PLAYER = 0x002; 		
-const int BY_DSMITH = 0x004;
-const int BY_WSMITH = 0x008;
+const int BY_GM		= 1;
+const int BY_PLAYER = 2;
+const int BY_DSMITH = 4;
+const int BY_WSMITH = 8;
+const int BY_DOL	= 16;
+const int BY_UOC	= 32;
+const int BY_HC		= 64;
+const int BY_AOE	= 128;
+const int BY_GOE	= 256;
+const int BY_POR	= 512;
+const int BY_KOES	= 1024;
+const int BY_OSM	= 2048;
 
 struct talisman_name_t
 {
@@ -937,9 +945,33 @@ struct talisman_name_t
 	int		bitmap_id;
 
 public:
-	bool forgable_by_reg_player() { return  (forge_flags & BY_PLAYER) == BY_PLAYER; }
-	bool forgable_by_dreamsmith() { return  (forgable_by_reg_player() || (forge_flags & BY_DSMITH) == BY_DSMITH); }
-	bool forgable_by_wordsmith() { return  (forgable_by_reg_player() || (forge_flags & BY_WSMITH) == BY_WSMITH); }
+	bool forgable()
+	{
+		if (forge_flags & BY_PLAYER)
+			return true;
+		if (forge_flags & BY_DSMITH)
+			return player->Skill(Arts::DREAMSMITH_MARK) > 0;
+		if (forge_flags & BY_WSMITH)
+			return player->Skill(Arts::WORDSMITH_MARK) > 0;
+		if (forge_flags & BY_OSM) 
+			return player->IsInGuild(Guild::MOON);
+		if (forge_flags & BY_AOE)
+			return player->IsInGuild(Guild::ECLIPSE);
+		if (forge_flags & BY_KOES)
+			return player->IsInGuild(Guild::SHADOW);
+		if (forge_flags & BY_UOC)
+			return player->IsInGuild(Guild::COVENANT);
+		if (forge_flags & BY_POR)
+			return player->IsInGuild(Guild::RADIANCE);
+		if (forge_flags & BY_HC)
+			return player->IsInGuild(Guild::CALENTURE);
+		if (forge_flags & BY_GOE)
+			return player->IsInGuild(Guild::ENTRANCED);
+		if (forge_flags & BY_DOL) 
+			return player->IsInGuild(Guild::LIGHT);
+
+		return false;
+	}
 };
 
 talisman_name_t talisman_names[] =
@@ -1001,14 +1033,14 @@ talisman_name_t talisman_names[] =
 	{BY_GM, IDS_FLAG_POR , 72},
 	{BY_GM, IDS_FLAG_UOC , 73},
 	{BY_WSMITH, IDS_SCROLL_POLE, 74},
-	{BY_GM, IDS_CREST_AOE , 77},
-	{BY_GM, IDS_CREST_HC , 78},
-	{BY_GM, IDS_CREST_UOC , 79},
-	{BY_GM, IDS_CREST_DOL , 80},
-	{BY_GM, IDS_CREST_GOE , 81},
-	{BY_GM, IDS_CREST_KOES , 82},
-	{BY_GM, IDS_CREST_POR , 83},
-	{BY_GM, IDS_CREST_OOSM , 84},
+	{BY_AOE, IDS_CREST_AOE , 77},
+	{BY_HC, IDS_CREST_HC , 78},
+	{BY_UOC, IDS_CREST_UOC , 79},
+	{BY_DOL, IDS_CREST_DOL , 80},
+	{BY_GOE, IDS_CREST_GOE , 81},
+	{BY_KOES, IDS_CREST_KOES , 82},
+	{BY_POR, IDS_CREST_POR , 83},
+	{BY_OSM, IDS_CREST_OOSM , 84},
 	{BY_GM, IDS_BANISHMENT , 88},
 	{BY_GM, IDS_DIAMOND , 89},
 	{BY_GM, IDS_INVIS , 90},
@@ -1081,14 +1113,14 @@ talisman_name_t talisman_names[] =
 	{BY_GM, IDS_OOSM_FLAG, 995 },
 	{BY_GM, IDS_POR_FLAG, 996 },
 	{BY_GM, IDS_UOC_FLAG, 997 },
-	{BY_GM, IDS_AOE_SYM, 998 },
-	{BY_GM, IDS_HC_SYM, 999 },
-	{BY_GM, IDS_UOC_SYM, 1000 },
-	{BY_GM, IDS_DOL_SYM, 1001 },
-	{BY_GM, IDS_GOE_SYM, 1002 },
-	{BY_GM, IDS_KOES_SYM, 1003 },
-	{BY_GM, IDS_POR_SYM, 1004 },
-	{BY_GM, IDS_OOSM_SYM, 1005 },
+	{BY_AOE, IDS_AOE_SYM, 998 },
+	{BY_HC, IDS_HC_SYM, 999 },
+	{BY_UOC, IDS_UOC_SYM, 1000 },
+	{BY_DOL, IDS_DOL_SYM, 1001 },
+	{BY_GOE, IDS_GOE_SYM, 1002 },
+	{BY_KOES, IDS_KOES_SYM, 1003 },
+	{BY_POR, IDS_POR_SYM, 1004 },
+	{BY_OSM, IDS_OOSM_SYM, 1005 },
 	{BY_GM, IDS_BANISH, 1006 },
 	{BY_GM, IDS_DIAMOND, 1007 },
 	{BY_GM, IDS_INVIS, 1008 },
@@ -1138,14 +1170,7 @@ bool TalismanForgable(unsigned int index)
 #ifdef GAMEMASTER
 		return true;
 #else
-		if ((player->Skill(Arts::DREAMSMITH_MARK) > 0) && (player->Skill(Arts::WORDSMITH_MARK) > 0))
-			return talisman_names[index].forgable_by_dreamsmith() || talisman_names[index].forgable_by_wordsmith();
-		else if ((player->Skill(Arts::DREAMSMITH_MARK) > 0))
-			return talisman_names[index].forgable_by_dreamsmith();
-		else if ((player->Skill(Arts::WORDSMITH_MARK) > 0))
-			return talisman_names[index].forgable_by_wordsmith();
-		else
-			return talisman_names[index].forgable_by_reg_player();
+		return talisman_names[index].forgable();
 #endif
 }
 
