@@ -1121,11 +1121,6 @@ talisman_name_t talisman_names[] =
 	{BY_KOES, IDS_KOES_SYM, 1003 },
 	{BY_POR, IDS_POR_SYM, 1004 },
 	{BY_OSM, IDS_OOSM_SYM, 1005 },
-	{BY_GM, IDS_BANISH, 1006 },
-	{BY_GM, IDS_DIAMOND, 1007 },
-	{BY_GM, IDS_INVIS, 1008 },
-	{BY_GM, IDS_PEARL, 1009 },
-	{BY_GM, IDS_STAR, 1010 },
 };
 
 unsigned int NumTalismans(void)
