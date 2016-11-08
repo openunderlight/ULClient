@@ -155,7 +155,7 @@ extern char agent_gs_ip_address[16];
 int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x001A970A << 2);  // for pmare game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1D22B3B2 << 2);
 #else
-int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031EF63 << 2);  // for game.cli
+int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031EDE3 << 2);  // for game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1DCF4AD3 << 2);
 #endif // #ifdef PMARE
 #else
@@ -4763,7 +4763,7 @@ void cGameServer::LevelLogout(int how)
 	{
 		if (party->RequestOutstanding() != Lyra::ID_UNKNOWN)
 			party->RejectRequest();
-		party->DissolveParty();
+		party->DissolveParty(false);
 		delete party; party = NULL;
 	}
 
@@ -4842,7 +4842,7 @@ void cGameServer::Logout(int how, bool final_logout)
 	{
 		if (party->RequestOutstanding() != Lyra::ID_UNKNOWN)
 			party->RejectRequest();
-		party->DissolveParty();
+		party->DissolveParty(false);
 		delete party; party = NULL;
 	}
 

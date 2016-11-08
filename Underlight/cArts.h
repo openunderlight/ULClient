@@ -190,7 +190,7 @@ public:
 
 	// arts that require selecting a neighbor
 	void StartChannel(void);
-	bool ExpireChannel(void);
+	bool ExpireChannel(bool userInitiated);
 	bool SetChannel(lyra_id_t nid);
 	void EndChannel(void);
 	void StartJoin(void);
@@ -496,6 +496,8 @@ private:
 	void DisplayArtBailed(lyra_id_t art_id);
 	void DrainStat(lyra_id_t art_id);
 	void ArtFinished(bool drain, bool allow_skill_increase = true);
+	void AddIfUnlearned(int art_id);
+	void HandleHouseAutoLearns(int rank);
 
 	// helper methods that go through a player's inventory
 	int CountTrainSphereTokens(lyra_id_t art_id, lyra_id_t target_id, cItem** tokens, bool unique = true);

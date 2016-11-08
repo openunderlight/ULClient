@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <atlimpl.cpp>
 #include "Realm.h"
 
 extern TCHAR agent_working_directory[_MAX_PATH];

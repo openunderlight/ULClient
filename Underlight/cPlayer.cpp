@@ -142,7 +142,7 @@ void cPlayer::InitPlayer(void)
 	next_nightmare_check = LyraTime() + NIGHTMARE_CHECK_INTERVAL;
 	next_poison = next_bleed = next_trail = 0;
 	free_moves = 5;
-	channelTarget = 0;
+	channelTarget = lastChannelTarget = 0;
 	step_frame = avatar_poses[WALKING].start_frame;
 	checksum_incorrect = last_loc_valid = false;
 	item_flags_sorting_changed = false;
@@ -1805,12 +1805,13 @@ short cPlayer::CurrentAvatarType(void)
 void cPlayer::SetGuildRank(int guild_id, int value)
 {
 	guild_ranks[guild_id].rank = value;
-	if ((value == 0) && (avatar.GuildID() == guild_id))
-	{	
+	if (avatar.GuildID() == guild_id && value == 0)
+	{
 		LmAvatar new_avatar = avatar;
 		new_avatar.SetGuildRank(0);
 		new_avatar.SetGuildID(Guild::NO_GUILD);
 		new_avatar.SetShowGuild(Patches::DONT_SHOW);
+	
 		this->SetAvatar(new_avatar, true);
 	}
 	return;

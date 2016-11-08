@@ -105,6 +105,7 @@ class cItem : public cActor
 	  bool DrainMetaEssence(int amount);
 	  void ApplyGratitude(cNeighbor* n);
 	  bool SurviveLevelChange(void);
+	  bool NoPickup(void);
 
 	  // selectors
 	  inline LmItemHdr& ID(void) { return lmitem.Header(); };

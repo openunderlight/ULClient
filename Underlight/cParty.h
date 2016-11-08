@@ -69,7 +69,7 @@ class cParty
 	  void JoinParty(lyra_id_t playerID, TCHAR *name, bool automatic = false); // we want to join this guy's party
 
 	  void LeaveParty(void); // bail from party
-	  void DissolveParty(void); // party has broken up
+	  void DissolveParty(bool userInitiated); // party has broken up
 
 	  bool IsInParty(lyra_id_t player_id);
 	  bool SetChanneller(realmid_t playerID, bool set = true);
