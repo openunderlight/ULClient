@@ -745,14 +745,25 @@ void cItem::Use(void)
 				}
 				if ((item->Status() == ITEM_OWNED) && (item->ItemFunction(0) == LyraItem::ESSENCE_FUNCTION))
 				{ // it's essence - add to meta if it's not a user
+					int avail_space = nexus.strength_cap - nexus.strength;
 					state = item->Lmitem().StateField(0);
 					memcpy(&essence, state, sizeof(essence));
-					if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE &&
-						essence.strength <= 1) // prevent strength > 1 from being absorbed by nexus
-					{ // add strength to meta talisman
-						nexus.strength += essence.strength;
+					if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE)
+					{ 
+						// add strength to meta talisman
+						if (avail_space > essence.strength) {
+							// meta talisman can take the entire essence
+							nexus.strength += essence.strength;
+							item->Lmitem().SetCharges(0);
+						}
+						else {
+							// partial use of essence
+							nexus.strength += avail_space;
+							essence.strength -= avail_space;
+							item->Lmitem().SetStateField(0, &essence, sizeof(essence));
+							needsUpdate = true;
+						}
 						nexus.essences++;
-						item->Lmitem().SetCharges(0);
 						drains = true;
 					}
 				}
