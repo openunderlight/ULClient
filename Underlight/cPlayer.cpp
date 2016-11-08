@@ -811,7 +811,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 
 #ifdef GAMEMASTER
 			// give GMs a 10 point boost to reflect strength
-			reflect_strength = new_strength + 10;
+			reflect_strength =+ 10;
 #endif
 
 #ifdef UL_DEBUG
