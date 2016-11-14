@@ -2729,7 +2729,6 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 				RECT cpr;
 				GetWindowRect(cp->Hwnd_CP(), &cpr);
 				if (cpr.top != mainPos[cDD->Res()].y) {
-					display->DisplayMessage("Moving CP to proper alignment\n", false);
 					MoveWindow(cp->Hwnd_CP(), mainPos[cDD->Res()].x, mainPos[cDD->Res()].y, mainPos[cDD->Res()].width, mainPos[cDD->Res()].height, true);
 				}
 			}
