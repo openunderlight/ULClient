@@ -1909,7 +1909,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
 				break;
 			}
-
+			// NOTE -- ORDER MATTERS -- Do not add a break here
 			case IDC_ITEM_USE_PT:
 			{
 				usePowerToken = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_USE_PT));
