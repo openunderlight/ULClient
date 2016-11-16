@@ -2552,14 +2552,15 @@ void cArts::ChaoticVortex (void)
   lyra_item_essence_t essence;
   bool hasEssence = false;
   cItem* item;
-  for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
-		if ((item->Status() == ITEM_OWNED) && (item->ItemFunction(0) == LyraItem::ESSENCE_FUNCTION))
-    {
+  for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT)) {
+	if ((item->Status() == ITEM_OWNED) && (item->ItemFunction(0) == LyraItem::ESSENCE_FUNCTION)) {
       memcpy (&essence, item->Lmitem ().StateField (0), sizeof (essence));
-      if ((essence.mare_type < Avatars::MIN_NIGHTMARE_TYPE) && (essence.strength > 0))
+      if ((essence.mare_type < Avatars::MIN_NIGHTMARE_TYPE) && (essence.strength > 0)) {
         hasEssence = true;
         break;
+      }
     }
+  }
   
   if (hasEssence) {
     item->Destroy ();
@@ -6837,9 +6838,16 @@ void cArts::EndTrainSelf(void)
 	}
 
 	int skill_sphere = (int)((player->Skill(art_id)+1)/10);
-	int num_tokens_required = skill_sphere;
-	if (num_tokens_required < 3)
+	int num_tokens_required;
+
+	if (skill_sphere <= 1)
+		num_tokens_required = 2;
+	else if (skill_sphere <= 3)
 		num_tokens_required = 3;
+	else if (skill_sphere <= 6)
+		num_tokens_required = 4;
+	else
+		num_tokens_required = 5;
 
 	switch (art_id) {
 		case Arts::NONE:
@@ -7844,6 +7852,7 @@ void cArts::ApplyUnTrain(int art_id, lyra_id_t caster_id)
 		if ((art_id == Arts::TRAIN_SELF) ||
 			(art_id == Arts::TRAIN) ||
 			(art_id == Arts::QUEST) ||
+			(art_id == Arts::NP_SYMBOL) || 
 			(art_id == Arts::DREAMSTRIKE) || 
 			(art_id == Arts::WORDSMITH_MARK) ||
 			(art_id == Arts::DREAMSMITH_MARK))
@@ -7909,6 +7918,8 @@ void cArts::EndSupportTraining(void)
 {
 	cNeighbor *n = cp->SelectedNeighbor();
 	lyra_id_t art_id = cp->SelectedArt();
+	quest_item = NO_ITEM;
+
 	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
 	{
 		this->DisplayNeighborBailed(Arts::SUPPORT_TRAINING);
@@ -7931,12 +7942,20 @@ void cArts::EndSupportTraining(void)
 		return;
 	}
 
+	if ((quest_item = HasQuestCodex(n->ID(), Arts::SUPPORT_TRAINING)) == NO_ITEM)
+	{
+		strcpy(disp_message, "In order to Support Train, you must have in your pack a Quest item (created by the Quest Art), assigned to Support Train, and made specifically for that Dreamer.");
+		//LoadString(hInstance, IDS_NEED_QUEST_ITEM, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	switch (art_id) {
 		case Arts::NONE:
 		case Arts::FORGE_TALISMAN:
 		case Arts::TRAIN:
 		case Arts::LEVELTRAIN:
-		case Arts::SUPPORT_TRAINING:
 		case Arts::SUPPORT_SPHERING:
 		case Arts::TRAIN_SELF:
 		LoadString (hInstance, IDS_NO_SELF_TRAIN, disp_message, sizeof(disp_message));
@@ -7980,8 +7999,14 @@ _stprintf(message, _T("%s-%s"), arts->Descrip(art_id), n->Name());
 	}
 
 	LoadString (hInstance, IDS_SUPPORT_TRAIN_TOKEN, disp_message, sizeof(disp_message));
-_stprintf(message, disp_message, n->Name(), arts->Descrip(art_id));
+	_stprintf(message, disp_message, n->Name(), arts->Descrip(art_id));
 	display->DisplayMessage (message);
+
+	// Destroy the quest codex
+	if (actors->ValidItem(quest_item))
+		quest_item->Destroy();
+
+	quest_item = NULL;
 
 	this->ArtFinished(true);
 	return;
