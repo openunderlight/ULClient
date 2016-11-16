@@ -2552,14 +2552,15 @@ void cArts::ChaoticVortex (void)
   lyra_item_essence_t essence;
   bool hasEssence = false;
   cItem* item;
-  for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
-		if ((item->Status() == ITEM_OWNED) && (item->ItemFunction(0) == LyraItem::ESSENCE_FUNCTION))
-    {
+  for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT)) {
+	if ((item->Status() == ITEM_OWNED) && (item->ItemFunction(0) == LyraItem::ESSENCE_FUNCTION)) {
       memcpy (&essence, item->Lmitem ().StateField (0), sizeof (essence));
-      if ((essence.mare_type < Avatars::MIN_NIGHTMARE_TYPE) && (essence.strength > 0))
+      if ((essence.mare_type < Avatars::MIN_NIGHTMARE_TYPE) && (essence.strength > 0)) {
         hasEssence = true;
         break;
+      }
     }
+  }
   
   if (hasEssence) {
     item->Destroy ();
