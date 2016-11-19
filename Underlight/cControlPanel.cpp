@@ -2505,7 +2505,14 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 				{
 					LoadString (hInstance, IDS_NO_PP_USE, disp_message, sizeof(disp_message));
 					display->DisplayMessage(disp_message);
-				} else if (!pp.in_use)
+				}
+				// Don't initiate the dialog if we're evoking an art
+				else if (arts->CurrentArt() != Arts::NONE)
+				{
+					LoadString(hInstance, IDS_ART_IN_USE, disp_message, sizeof(disp_message));
+					display->DisplayMessage(disp_message);
+				}
+				else if (!pp.in_use)
 				{
 					pp.in_use = true;
 					CreateLyraDialog(hInstance, IDD_USE_PPOINT, 
@@ -2722,7 +2729,6 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 				RECT cpr;
 				GetWindowRect(cp->Hwnd_CP(), &cpr);
 				if (cpr.top != mainPos[cDD->Res()].y) {
-					display->DisplayMessage("Moving CP to proper alignment\n", false);
 					MoveWindow(cp->Hwnd_CP(), mainPos[cDD->Res()].x, mainPos[cDD->Res()].y, mainPos[cDD->Res()].width, mainPos[cDD->Res()].height, true);
 				}
 			}

@@ -150,6 +150,7 @@ void cPlayer::InitPlayer(void)
 	curse_strength = 0; // no curse on new player
 	blast_chance = 0; // no chance Ago will return Blast to start
 	poison_strength = 0;
+	reflect_strength = 0;
  	last_poisoner = last_bleeder = Lyra::ID_UNKNOWN;
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
@@ -824,13 +825,30 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 			this->SetReturn(this->x, this->y, this->angle, level->ID());
 			gs->SendPlayerMessage(0, RMsg_PlayerMsg::RETURN, 0, 0);
 		}
-									} break;
+	} break;
 	case LyraEffect::PLAYER_REFLECT: {
 		if (this->flags & ACTOR_REFLECT) { // 2nd activation - reflect
 			this->RemoveTimedEffect(LyraEffect::PLAYER_REFLECT);
 			return(true);
 		}
-									 } break;
+		else {
+			// 5-50% chance (starts at 5%, increases 5% per plateau)
+			int new_strength = duration / 6000;
+			if (new_strength>50) new_strength = 50;
+
+			reflect_strength = new_strength;
+
+#ifdef GAMEMASTER
+			// give GMs a 10 point boost to reflect strength
+			reflect_strength =+ 10;
+#endif
+
+#ifdef UL_DEBUG
+			_stprintf(message, "Used reflect of strength %d from duration of %d (debug MSG Only)", reflect_strength, duration);
+			display->DisplayMessage(message, false);
+#endif
+		}
+	} break;
 	case LyraEffect::PLAYER_SOULEVOKE: {
 		if (!(player->flags & ACTOR_SOULSPHERE))	
 		{
@@ -1002,7 +1020,7 @@ void cPlayer::RemoveTimedEffect(int effect)
 		cDS->StopSound(LyraSound::DEAFEN_LOOP);
 	else if (effect == LyraEffect::PLAYER_MIND_BLANKED)
 	{
-		if (options.network && gs) 
+		if (options.network && gs)
 		{
 			gs->SendPlayerMessage(0, RMsg_PlayerMsg::MIND_BLANK, 0, 0);
 		}
@@ -1017,6 +1035,8 @@ void cPlayer::RemoveTimedEffect(int effect)
 	else if (effect == LyraEffect::PLAYER_BLEED) {
 		last_bleeder = Lyra::ID_UNKNOWN;
 	}
+	else if (effect == LyraEffect::PLAYER_REFLECT)
+		reflect_strength = 0;
 
 	return;
 };
