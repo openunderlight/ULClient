@@ -2342,8 +2342,8 @@ void cGameServer::HandleMessage(void)
 			
 			bool art_reflected = false;
 			if (player->flags & ACTOR_REFLECT) {
-				// 25% chance of success plus 5% per plateau
-				if (rand()%100 <= (25 + 5*(player->SkillSphere(Arts::REFLECT))))
+				
+				if (rand()%100 <= player->reflect_strength)
 					art_reflected = true;
 				if (art_reflected){
 						cNeighbor *n = actors->LookUpNeighbor(player_msg.SenderID());
@@ -2367,6 +2367,7 @@ void cGameServer::HandleMessage(void)
 					break;
 				case RMsg_PlayerMsg::SCAN:
 					art_id = Arts::SCAN;
+					break;
 				case RMsg_PlayerMsg::IDENTIFY_CURSE:
 					art_id = Arts::IDENTIFY_CURSE;
 					cDS->PlaySound(LyraSound::ID_CURSE, player->x, player->y, true);
