@@ -1464,6 +1464,15 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 	if ((stat == Stats::DREAMSOUL) && (how == SET_RELATIVE) && (value <0) &&
 	  (origin_id != playerID))
 	{
+		int new_damage = (int)(amount*((100 - this->SkillSphere(Arts::SOULMASTER)) / 100.0));
+
+#ifdef UL_DEV
+		if (new_damage != amount) {
+			_stprintf(temp_message, "Initial damage of %d but only %d was applied due to your soulmasterism", amount, new_damage);
+			display->DisplayMessage(temp_message);
+		}
+#endif
+		amount = new_damage;
 
 		if (this->ActiveShieldValid())
 			amount = active_shield->AbsorbDamage(amount);
