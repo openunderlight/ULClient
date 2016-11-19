@@ -151,6 +151,7 @@ void cPlayer::InitPlayer(void)
 	blast_chance = 0; // no chance Ago will return Blast to start
 	poison_strength = 0;
 	reflect_strength = 0;
+	burn_strength = 0;
  	last_poisoner = last_bleeder = Lyra::ID_UNKNOWN;
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
@@ -658,6 +659,55 @@ void cPlayer::PerformedAction(void)
 	showing_map = false;
 
 	return;
+}
+
+void cPlayer::ApplyBurn(int pmsg, int art_level, int fs_plat, lyra_id_t caster_id)
+{
+	
+	if (fs_plat <= 0) return;
+
+	int burn_duration_mod = 0;
+	bool mass_art = false;
+	switch (pmsg)
+	{
+		case RMsg_PlayerMsg::DARKNESS:
+		case RMsg_PlayerMsg::HYPNOTIC_WEAVE:
+		case RMsg_PlayerMsg::FIRESTORM:
+		case RMsg_PlayerMsg::RAZORWIND:
+		case RMsg_PlayerMsg::TEMPEST:
+		{
+			mass_art = true;
+		}
+		case RMsg_PlayerMsg::BLIND:
+		case RMsg_PlayerMsg::DEAFEN:
+		case RMsg_PlayerMsg::PARALYZE:
+		case RMsg_PlayerMsg::STAGGER:
+		{
+			burn_duration_mod = art_level / 10;
+			break;
+		}
+	}
+
+	if (burn_duration_mod > 0)
+	{
+		int duration = 3000;
+		int origin;
+		if (mass_art)
+		{
+			// mass evokes get a small drop in effective duration
+			origin = EffectOrigin::MASS_EVOKE;
+			duration += burn_duration_mod * 500;
+		}
+		else
+		{
+			origin = EffectOrigin::ART_EVOKE;
+			duration += burn_duration_mod * 1000;
+		}
+
+		// burn strength is equal to the focal plat level
+		burn_strength = fs_plat;
+		player->SetTimedEffect(LyraEffect::PLAYER_BURN, duration, caster_id, origin);
+	}
 }
 
 DWORD cPlayer::CalculateBreakthrough(DWORD duration, int effect_origin)

@@ -2455,7 +2455,7 @@ bool cArts::ReflectableArt(int art_id)
 void cArts::Firestorm(void)
 {	// blast away...
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::FIRESTORM,
-			player->Skill(Arts::FIRESTORM), 0);
+			player->Skill(Arts::FIRESTORM), 0, player->SkillSphere(Arts::FATESENDER));
 	this->ApplyFirestorm(player->Skill(Arts::FIRESTORM), player->ID());
 	this->ArtFinished(true);
 	return;
@@ -2489,7 +2489,7 @@ void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 void cArts::Tempest (void)
 {
   gs->SendPlayerMessage (0, RMsg_PlayerMsg::TEMPEST,
-    player->Skill (Arts::TEMPEST), player->angle/4);
+    player->Skill (Arts::TEMPEST), player->angle/4, player->SkillSphere(Arts::FATESENDER));
   this->ApplyTempest (player->Skill (Arts::TEMPEST), player->angle/4, player->ID ());
   this->ArtFinished (true);
   return;
@@ -2599,7 +2599,7 @@ void cArts::ApplyChaoticVortex (int skill, lyra_id_t caster_id)
 void cArts::Razorwind(void)
 {
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::RAZORWIND,
-			player->Skill(Arts::RAZORWIND), 0);
+			player->Skill(Arts::RAZORWIND), 0, player->SkillSphere(Arts::FATESENDER));
 	this->ApplyRazorwind(player->Skill(Arts::RAZORWIND), player->ID());
 	this->ArtFinished(true);
 	return;
@@ -2636,7 +2636,7 @@ void cArts::ApplyRazorwind(int skill, lyra_id_t caster_id)
 void cArts::Darkness(void)
 {
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::DARKNESS,
-			player->Skill(Arts::DARKNESS), 0);
+			player->Skill(Arts::DARKNESS), 0, player->SkillSphere(Arts::FATESENDER));
 	this->ApplyDarkness(player->Skill(Arts::DARKNESS), player->ID());
 	this->ArtFinished(true);
 	return;
@@ -2715,7 +2715,7 @@ void cArts::ApplyEarthquake(int skill, lyra_id_t caster_id)
 void cArts::HypnoticWeave(void)
 {
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::HYPNOTIC_WEAVE,
-			player->Skill(Arts::HYPNOTIC_WEAVE), 0);
+			player->Skill(Arts::HYPNOTIC_WEAVE), 0, player->SkillSphere(Arts::FATESENDER));
 	this->ApplyHypnoticWeave(player->Skill(Arts::HYPNOTIC_WEAVE), player->ID());
 	this->ArtFinished(true);
 	return;
@@ -2755,7 +2755,7 @@ void cArts::ApplyHypnoticWeave(int skill, lyra_id_t caster_id)
 void cArts::Terror(void)
 {
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::TERROR, 
-		player->Skill(Arts::TERROR), 0);
+		player->Skill(Arts::TERROR), 0, player->SkillSphere(Arts::FATESENDER));
 	this->ApplyTerror(player->Skill(Arts::TERROR), player->ID());
 	this->ArtFinished(true);
 	return;
@@ -4134,7 +4134,7 @@ void cArts::EndScare(void)
 		return;
 	}
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::SCARE,
-		player->Skill(Arts::SCARE), 0);
+		player->Skill(Arts::SCARE), 0, player->SkillSphere(Arts::FATESENDER));
 	this->DisplayUsedOnOther(n, Arts::SCARE);
 	this->ArtFinished(true);
 	return;
@@ -4214,7 +4214,7 @@ void cArts::EndParalyze(void)
 		return;
 	}
 	gs->SendPlayerMessage(n->ID(), playermsg_type,
-		player->Skill(art_in_use), 0);
+		player->Skill(art_in_use), 0, player->SkillSphere(Arts::FATESENDER));
 	this->DisplayUsedOnOther(n, art_in_use);
 	cDS->PlaySound(LyraSound::PARALYZE, player->x, player->y, true);
 	this->ArtFinished(true);
@@ -4253,7 +4253,7 @@ void cArts::EndStagger(void)
 		return;
 	}
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::STAGGER,
-		player->Skill(Arts::STAGGER), 0);
+		player->Skill(Arts::STAGGER), 0, player->SkillSphere(Arts::FATESENDER));
 	this->DisplayUsedOnOther(n, Arts::STAGGER);
 	cDS->PlaySound(LyraSound::STAGGER, player->x, player->y, true);
 	this->ArtFinished(true);
@@ -4298,7 +4298,7 @@ void cArts::EndDeafen(void)
 		return;
 	}
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::DEAFEN,
-		player->Skill(Arts::DEAFEN), 0);
+		player->Skill(Arts::DEAFEN), 0, player->SkillSphere(Arts::FATESENDER));
 	this->DisplayUsedOnOther(n, Arts::DEAFEN);
 	this->ArtFinished(true);
 	return;
@@ -4335,7 +4335,7 @@ void cArts::EndBlind(void)
 		return;
 	}
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::BLIND,
-		player->Skill(Arts::BLIND), 0);
+		player->Skill(Arts::BLIND), 0, player->SkillSphere(Arts::FATESENDER));
 	this->DisplayUsedOnOther(n, Arts::BLIND);
 	this->ArtFinished(true);
 	return;

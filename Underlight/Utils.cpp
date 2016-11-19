@@ -1502,7 +1502,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_SPIN; 
 	related_art[i] = Arts::CHAOTIC_VORTEX;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
-	default_duration[i] = 3; // 15 sec
+	default_duration[i] = 3; // 3 sec
 	harmful[i] = true;
 
   i = LyraEffect::PLAYER_BLEED;
@@ -1516,6 +1516,21 @@ cTimedEffects::cTimedEffects(void)
 	related_art[i] = Arts::RAZORWIND;
 	LoadString(hInstance, IDS_BLEED, name[i], sizeof(name[i]));
 	default_duration[i] = 7; // 15 seconds
+	harmful[i] = true;
+
+	// TODO HANDLE STRINGS
+	i = LyraEffect::PLAYER_BURN;
+	//LoadString(hInstance, IDS_PLAYER_BLEED_ON, disp_message, sizeof(disp_message));
+	start_descrip[i] = _tcsdup("Started burning...");
+	//LoadString(hInstance, IDS_PLAYER_BLEED_MORE, disp_message, sizeof(disp_message));
+	more_descrip[i] = _tcsdup("Burning more...");
+	//LoadString(hInstance, IDS_PLAYER_BLEED_OFF, disp_message, sizeof(disp_message));
+	expire_descrip[i] = _tcsdup("No longer burning...");
+	actor_flag[i] = ACTOR_BURN;
+	related_art[i] = Arts::FATESENDER;
+	//LoadString(hInstance, IDS_BLEED, name[i], sizeof(name[i]));
+	strcpy(name[i], "Burn");
+	default_duration[i] = 3; // 3 secs
 	harmful[i] = true;
 
 	return;

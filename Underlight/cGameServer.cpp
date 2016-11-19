@@ -2339,6 +2339,9 @@ void cGameServer::HandleMessage(void)
 				}
 				break;
 			} 
+
+			// apply burn effect for appropriate messages - state1 is art plat, state3 is focal art plat
+			player->ApplyBurn(player_msg.MsgType(), player_msg.State1(), player_msg.State3(), player_msg.SenderID());
 			
 			bool art_reflected = false;
 			if (player->flags & ACTOR_REFLECT) {
