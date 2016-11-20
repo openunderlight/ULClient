@@ -2885,8 +2885,7 @@
 #define IDS_PLAYER_CRIPPLE_OFF			4331
 #define IDS_AVATAR_SHIELD				4332
 #define IDS_PLAYER_SHIELD_ON			4333
-#define IDS_PLAYER_SHIELD_MORE			4334
-#define	IDS_PLAYER_SHIELD_OFF			4335
+#define	IDS_PLAYER_SHIELD_OFF			4334
 #define IDS_DOORBELL_ALERT              4340
 #define IDS_TORCH                       4341
 #define IDS_LUMITWIST                   4342

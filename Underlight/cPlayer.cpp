@@ -1000,7 +1000,8 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		timed_effects->expires[effect] += (int)(duration/2);
 		if (timed_effects->more_descrip[effect])
 			display->DisplayMessage(timed_effects->more_descrip[effect] );
-		else
+		// don't display additional shield messages
+		else if (effect != LyraEffect::PLAYER_SHIELD)
 		{
 			LoadString (hInstance, IDS_DURATION_EXTENDED, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, timed_effects->name[effect]);

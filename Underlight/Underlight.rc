@@ -4384,7 +4384,6 @@ BEGIN
     IDS_PLAYER_CRIPPLE_OFF  "Your cripple has expired.\n"
     IDS_AVATAR_SHIELD       "Resilience Shield"
     IDS_PLAYER_SHIELD_ON    "A shield of Resilience has surrounded you.\n"
-    IDS_PLAYER_SHIELD_MORE  "Your shield of Resilience strengthens.\n"
     IDS_PLAYER_SHIELD_OFF   "Your shield of Resilience has expired.\n"
 END
 

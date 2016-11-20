@@ -1534,8 +1534,6 @@ cTimedEffects::cTimedEffects(void)
 	i = LyraEffect::PLAYER_SHIELD;
 	LoadString(hInstance, IDS_PLAYER_SHIELD_ON, disp_message, sizeof(disp_message));
 	start_descrip[i] = _tcsdup(disp_message);
-	LoadString(hInstance, IDS_PLAYER_SHIELD_MORE, disp_message, sizeof(disp_message));
-	more_descrip[i] = _tcsdup(disp_message);
 	LoadString(hInstance, IDS_PLAYER_SHIELD_OFF, disp_message, sizeof(disp_message));
 	expire_descrip[i] = _tcsdup(disp_message);
 	actor_flag[i] = ACTOR_SHIELD;
