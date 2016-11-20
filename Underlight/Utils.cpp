@@ -1521,8 +1521,6 @@ cTimedEffects::cTimedEffects(void)
 	i = LyraEffect::PLAYER_CRIPPLE;
 	LoadString(hInstance, IDS_PLAYER_CRIPPLE_ON, disp_message, sizeof(disp_message));
 	start_descrip[i] = _tcsdup(disp_message);
-	LoadString(hInstance, IDS_PLAYER_CRIPPLE_MORE, disp_message, sizeof(disp_message));
-	more_descrip[i] = _tcsdup(disp_message);
 	LoadString(hInstance, IDS_PLAYER_CRIPPLE_OFF, disp_message, sizeof(disp_message));
 	expire_descrip[i] = _tcsdup(disp_message);
 	actor_flag[i] = ACTOR_CRIPPLE;
