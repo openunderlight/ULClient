@@ -667,9 +667,11 @@ void cPlayer::ApplyAvatarArmor(int art_level, int sm_plat, lyra_id_t caster_id)
 	// no armor for non-soulmaster initiated evokes
 	if (sm_plat <= 0) return;
 
-	cNeighbor *n = arts->LookUpNeighbor(caster_id);
-	// no armor if we're in the wrong room
-	if (n->Room() != this->Room()) return;
+	// no armor buff if we're not in the same room as the caster
+	if (this->ID() != caster_id) {
+		cNeighbor *n = arts->LookUpNeighbor(caster_id);
+		if (n->Room() != this->Room()) return;
+	}
 
 	int duration = 3000 + ((art_level / 10) * 1000);
 	

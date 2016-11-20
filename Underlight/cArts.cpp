@@ -3904,6 +3904,7 @@ void cArts::EndRestore(void)
 	}
 	else if (n->ID() == player->ID()) {
 		cDS->PlaySound(LyraSound::RESTORE, player->x, player->y, true);
+		player->ApplyAvatarArmor(player->Skill(art_in_use), player->SkillSphere(Arts::SOULMASTER), player->ID());
 		this->ApplyRestore(art_in_use, player->Skill(art_in_use), player->ID());
 	}
 	else
