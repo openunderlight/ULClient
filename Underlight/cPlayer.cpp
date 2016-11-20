@@ -151,7 +151,7 @@ void cPlayer::InitPlayer(void)
 	blast_chance = 0; // no chance Ago will return Blast to start
 	poison_strength = 0;
 	reflect_strength = 0;
-	burn_strength = 0;
+	cripple_strength = 0;
  	last_poisoner = last_bleeder = Lyra::ID_UNKNOWN;
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
@@ -661,12 +661,11 @@ void cPlayer::PerformedAction(void)
 	return;
 }
 
-void cPlayer::ApplyBurn(int pmsg, int art_level, int fs_plat, lyra_id_t caster_id)
+void cPlayer::ApplyCrippleEffect(int pmsg, int art_level, int fs_plat, lyra_id_t caster_id)
 {
-	
 	if (fs_plat <= 0) return;
 
-	int burn_duration_mod = 0;
+	int duration_mod = 0;
 	bool mass_art = false;
 	switch (pmsg)
 	{
@@ -681,14 +680,15 @@ void cPlayer::ApplyBurn(int pmsg, int art_level, int fs_plat, lyra_id_t caster_i
 		case RMsg_PlayerMsg::BLIND:
 		case RMsg_PlayerMsg::DEAFEN:
 		case RMsg_PlayerMsg::PARALYZE:
+		case RMsg_PlayerMsg::SCARE:
 		case RMsg_PlayerMsg::STAGGER:
 		{
-			burn_duration_mod = art_level / 10;
+			duration_mod = art_level / 10;
 			break;
 		}
 	}
 
-	if (burn_duration_mod > 0)
+	if (duration_mod > 0)
 	{
 		int duration = 3000;
 		int origin;
@@ -696,17 +696,17 @@ void cPlayer::ApplyBurn(int pmsg, int art_level, int fs_plat, lyra_id_t caster_i
 		{
 			// mass evokes get a small drop in effective duration
 			origin = EffectOrigin::MASS_EVOKE;
-			duration += burn_duration_mod * 500;
+			duration += duration_mod * 500;
 		}
 		else
 		{
 			origin = EffectOrigin::ART_EVOKE;
-			duration += burn_duration_mod * 1000;
+			duration += duration_mod * 1000;
 		}
 
-		// burn strength is equal to the focal plat level
-		burn_strength = fs_plat;
-		player->SetTimedEffect(LyraEffect::PLAYER_BURN, duration, caster_id, origin);
+		// effect strength is equal to the focal plat level
+		cripple_strength = fs_plat;
+		player->SetTimedEffect(LyraEffect::PLAYER_CRIPPLE, duration, caster_id, origin);
 	}
 }
 
@@ -1448,15 +1448,31 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 		return stats[stat].current;
 #endif
 
-	if ((player->flags & ACTOR_PEACE_AURA) && 
-		(stat == Stats::DREAMSOUL) &&
+	if ((stat == Stats::DREAMSOUL) &&
 		(origin_id != this->ID()) &&
 		(how == SET_RELATIVE) &&
 		(value < 0))
 	{
-		LoadString (hInstance, IDS_PEACE_AURA, disp_message, sizeof(disp_message));
-		display->DisplayMessage(disp_message);
-		return stats[stat].current;
+		// handle peace aura
+		if (player->flags & ACTOR_PEACE_AURA)
+		{
+			LoadString(hInstance, IDS_PEACE_AURA, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			return stats[stat].current;
+		}
+		// handle burn effect
+		else if (player->flags & ACTOR_CRIPPLE && cripple_strength > 0)
+		{
+			int new_damage = (int)(amount*((100 + cripple_strength) / 100.0));
+
+#ifdef UL_DEV
+			if (new_damage != amount) {
+				_stprintf(temp_message, "Initial damage of %d but %d was applied due to being tiny tim", amount, new_damage);
+				display->DisplayMessage(temp_message);
+			}
+#endif
+			amount = new_damage;
+		}
 	}
 
 

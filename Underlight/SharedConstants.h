@@ -694,7 +694,7 @@ struct LyraEffect {
 
 	MAX_ITEM_EFFECT = PLAYER_SPIN,
 	// Non-forgable effects
-	PLAYER_BURN
+	PLAYER_CRIPPLE
 	};
 };
 

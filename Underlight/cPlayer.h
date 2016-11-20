@@ -178,7 +178,7 @@ class cPlayer : public cActor
 	  int blast_chance; // Blast Chance tracks the chance an Ago will reciprocate your Blast
 	  int poison_strength;
 	  int reflect_strength;
-	  int burn_strength;
+	  int cripple_strength;
 	  
 	  // Selection Functions
 	  virtual TCHAR* Name(void);
@@ -303,7 +303,7 @@ class cPlayer : public cActor
 	  void SetFocusStat(int stat) { focus_stat = stat; };
 	  void SetSelectedStat(int stat) { selected_stat = stat; };
 	  bool SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, int effect_origin);
-	  void ApplyBurn(int pmsg, int art_level, int fs_plat, lyra_id_t caster_id);
+	  void ApplyCrippleEffect(int pmsg, int art_level, int fs_plat, lyra_id_t caster_id);
 	  void RemoveTimedEffect(int effect);
 	  inline void SetInjured(bool value) { injured = value; };
 	  inline void SetChannelTarget(lyra_id_t value) { channelTarget = value; };

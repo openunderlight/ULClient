@@ -4378,6 +4378,10 @@ BEGIN
     IDS_SHOW_IN_PARTY_CHANNEL "%s (Channel receiver) is in your party"
     IDS_CHANNEL_CLOSED      "%s is no longer channelling energy to you."
     IDS_RALLY_PREEMOTE      "has been rallied away by another dreamer"
+    IDS_CRIPPLE             "Cripple"
+    IDS_PLAYER_CRIPPLE_ON   "You have been crippled!\n"
+    IDS_PLAYER_CRIPPLE_MORE "The duration of your Cripple has been extended...\n"
+    IDS_PLAYER_CRIPPLE_OFF  "Your cripple has expired.\n"
 END
 
 STRINGTABLE

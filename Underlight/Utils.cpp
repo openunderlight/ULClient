@@ -1518,18 +1518,16 @@ cTimedEffects::cTimedEffects(void)
 	default_duration[i] = 7; // 15 seconds
 	harmful[i] = true;
 
-	// TODO HANDLE STRINGS
-	i = LyraEffect::PLAYER_BURN;
-	//LoadString(hInstance, IDS_PLAYER_BLEED_ON, disp_message, sizeof(disp_message));
-	start_descrip[i] = _tcsdup("Started burning...");
-	//LoadString(hInstance, IDS_PLAYER_BLEED_MORE, disp_message, sizeof(disp_message));
-	more_descrip[i] = _tcsdup("Burning more...");
-	//LoadString(hInstance, IDS_PLAYER_BLEED_OFF, disp_message, sizeof(disp_message));
-	expire_descrip[i] = _tcsdup("No longer burning...");
-	actor_flag[i] = ACTOR_BURN;
+	i = LyraEffect::PLAYER_CRIPPLE;
+	LoadString(hInstance, IDS_PLAYER_CRIPPLE_ON, disp_message, sizeof(disp_message));
+	start_descrip[i] = _tcsdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_CRIPPLE_MORE, disp_message, sizeof(disp_message));
+	more_descrip[i] = _tcsdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_CRIPPLE_OFF, disp_message, sizeof(disp_message));
+	expire_descrip[i] = _tcsdup(disp_message);
+	actor_flag[i] = ACTOR_CRIPPLE;
 	related_art[i] = Arts::FATESENDER;
-	//LoadString(hInstance, IDS_BLEED, name[i], sizeof(name[i]));
-	strcpy(name[i], "Burn");
+	LoadString(hInstance, IDS_CRIPPLE, name[i], sizeof(name[i]));
 	default_duration[i] = 3; // 3 secs
 	harmful[i] = true;
 
