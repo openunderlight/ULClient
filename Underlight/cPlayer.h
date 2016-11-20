@@ -179,6 +179,7 @@ class cPlayer : public cActor
 	  int poison_strength;
 	  int reflect_strength;
 	  int cripple_strength;
+	  int avatar_armor_strength;
 	  
 	  // Selection Functions
 	  virtual TCHAR* Name(void);
@@ -303,6 +304,7 @@ class cPlayer : public cActor
 	  void SetFocusStat(int stat) { focus_stat = stat; };
 	  void SetSelectedStat(int stat) { selected_stat = stat; };
 	  bool SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, int effect_origin);
+	  void ApplyAvatarArmor(int art_level, int sm_plat, lyra_id_t caster_id);
 	  void ApplyCrippleEffect(int pmsg, int art_level, int fs_plat, lyra_id_t caster_id);
 	  void RemoveTimedEffect(int effect);
 	  inline void SetInjured(bool value) { injured = value; };

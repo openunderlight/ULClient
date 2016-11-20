@@ -3910,7 +3910,7 @@ void cArts::EndRestore(void)
 	{
 		cDS->PlaySound(LyraSound::RESTORE, player->x, player->y, true);
 		gs->SendPlayerMessage(n->ID(), playermsg_type,
-			player->Skill(art_in_use), 0);
+			player->Skill(art_in_use), 0, player->SkillSphere(Arts::SOULMASTER));
 	}
 	this->DisplayUsedOnOther(n, art_in_use);
 	this->ArtFinished(true);

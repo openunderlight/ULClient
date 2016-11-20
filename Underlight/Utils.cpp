@@ -1531,6 +1531,19 @@ cTimedEffects::cTimedEffects(void)
 	default_duration[i] = 3; // 3 secs
 	harmful[i] = true;
 
+	i = LyraEffect::PLAYER_SHIELD;
+	LoadString(hInstance, IDS_PLAYER_SHIELD_ON, disp_message, sizeof(disp_message));
+	start_descrip[i] = _tcsdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_SHIELD_MORE, disp_message, sizeof(disp_message));
+	more_descrip[i] = _tcsdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_SHIELD_OFF, disp_message, sizeof(disp_message));
+	expire_descrip[i] = _tcsdup(disp_message);
+	actor_flag[i] = ACTOR_SHIELD;
+	related_art[i] = Arts::SOULMASTER;
+	LoadString(hInstance, IDS_AVATAR_SHIELD, name[i], sizeof(name[i]));
+	default_duration[i] = 3; // 3 secs
+	harmful[i] = false;
+
 	return;
 }
 

@@ -11,7 +11,7 @@
 // NOTE: keep consistent with Visual Effects.ASC!
 
  
-const int NUM_TIMED_EFFECTS = 31; // add one for NONE
+const int NUM_TIMED_EFFECTS = 32; // add one for NONE
 const int NUM_ARTS = 147;
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
@@ -694,7 +694,8 @@ struct LyraEffect {
 
 	MAX_ITEM_EFFECT = PLAYER_SPIN,
 	// Non-forgable effects
-	PLAYER_CRIPPLE
+	PLAYER_CRIPPLE,
+	PLAYER_SHIELD
 	};
 };
 

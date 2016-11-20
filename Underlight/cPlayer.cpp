@@ -152,6 +152,7 @@ void cPlayer::InitPlayer(void)
 	poison_strength = 0;
 	reflect_strength = 0;
 	cripple_strength = 0;
+	avatar_armor_strength = 0;
  	last_poisoner = last_bleeder = Lyra::ID_UNKNOWN;
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
@@ -661,8 +662,27 @@ void cPlayer::PerformedAction(void)
 	return;
 }
 
+void cPlayer::ApplyAvatarArmor(int art_level, int sm_plat, lyra_id_t caster_id)
+{
+	// no armor for non-soulmaster initiated evokes
+	if (sm_plat <= 0) return;
+
+	cNeighbor *n = arts->LookUpNeighbor(caster_id);
+	// no armor if we're in the wrong room
+	if (n->Room() != this->Room()) return;
+
+	int duration = 3000 + ((art_level / 10) * 1000);
+	
+	// only modify the shield strength if it's better
+	if (sm_plat > avatar_armor_strength)
+		avatar_armor_strength = sm_plat;
+
+	player->SetTimedEffect(LyraEffect::PLAYER_SHIELD, duration, caster_id, EffectOrigin::ART_EVOKE);
+}
+
 void cPlayer::ApplyCrippleEffect(int pmsg, int art_level, int fs_plat, lyra_id_t caster_id)
 {
+	// only fatesenders can cripple
 	if (fs_plat <= 0) return;
 
 	int duration_mod = 0;
@@ -705,7 +725,9 @@ void cPlayer::ApplyCrippleEffect(int pmsg, int art_level, int fs_plat, lyra_id_t
 		}
 
 		// effect strength is equal to the focal plat level
-		cripple_strength = fs_plat;
+		if (fs_plat > cripple_strength)
+			cripple_strength = fs_plat;
+
 		player->SetTimedEffect(LyraEffect::PLAYER_CRIPPLE, duration, caster_id, origin);
 	}
 }
@@ -1087,6 +1109,10 @@ void cPlayer::RemoveTimedEffect(int effect)
 	}
 	else if (effect == LyraEffect::PLAYER_REFLECT)
 		reflect_strength = 0;
+	else if (effect == LyraEffect::PLAYER_CRIPPLE)
+		cripple_strength = 0;
+	else if (effect == LyraEffect::PLAYER_SHIELD)
+		avatar_armor_strength = 0;
 
 	return;
 };
@@ -1480,15 +1506,17 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 	if ((stat == Stats::DREAMSOUL) && (how == SET_RELATIVE) && (value <0) &&
 	  (origin_id != playerID))
 	{
-		int new_damage = (int)(amount*((100 - this->SkillSphere(Arts::SOULMASTER)) / 100.0));
+		if (avatar_armor_strength > 0) {
+			int new_damage = (int)(amount*((100 - avatar_armor_strength) / 100.0));
 
 #ifdef UL_DEV
-		if (new_damage != amount) {
-			_stprintf(temp_message, "Initial damage of %d but only %d was applied due to your soulmasterism", amount, new_damage);
-			display->DisplayMessage(temp_message);
-		}
+			if (new_damage != amount) {
+				_stprintf(temp_message, "Initial damage of %d but only %d was applied due to your Avatar Armor", amount, new_damage);
+				display->DisplayMessage(temp_message);
+			}
 #endif
-		amount = new_damage;
+			amount = new_damage;
+		}
 
 		if (this->ActiveShieldValid())
 			amount = active_shield->AbsorbDamage(amount);

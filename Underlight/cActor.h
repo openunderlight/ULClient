@@ -95,10 +95,8 @@ const unsigned __int64  ACTOR_SOULEVOKE		  = 0x0000000080000000;
 const unsigned __int64  ACTOR_NO_POISON		  = 0x000000000000000100000000;
 const unsigned __int64  ACTOR_SPIN			  = 0x000000000000000200000000;
 const unsigned __int64  ACTOR_BLEED			  = 0x000000000000000400000000;
-const unsigned __int64	ACTOR_CRIPPLE			  = 0x000000000000000800000000;
-
-
-
+const unsigned __int64	ACTOR_CRIPPLE		  = 0x000000000000000800000000;
+const unsigned __int64	ACTOR_SHIELD		  = 0x000000000000001000000000;
 
 //////////////////////////////////////////////////////////////////
 // Class Definition
