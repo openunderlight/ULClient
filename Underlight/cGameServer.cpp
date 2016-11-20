@@ -2510,6 +2510,7 @@ void cGameServer::HandleMessage(void)
 					break;
 				case RMsg_PlayerMsg::HEALING_AURA:
 					arts->ApplyHealingAura(player_msg.State1(), player_msg.SenderID());
+					player->ApplyAvatarArmor(player_msg.State1(), player_msg.State3(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::RESTORE:  // skill, not used
 					arts->ApplyRestore(Arts::RESTORE, player_msg.State1(), player_msg.SenderID());
