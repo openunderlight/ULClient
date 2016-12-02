@@ -177,6 +177,7 @@ class cPlayer : public cActor
 	  int curse_strength; // Curse Strength public field keeps track of art failure rate
 	  int blast_chance; // Blast Chance tracks the chance an Ago will reciprocate your Blast
 	  int poison_strength;
+	  int reflect_strength;
 	  
 	  // Selection Functions
 	  virtual TCHAR* Name(void);
@@ -243,8 +244,9 @@ class cPlayer : public cActor
 	  bool IsPMare (void); 
 	  bool IsDreamerAccount (void);
 
-	  unsigned char GuildFlags (int rank);
+	  unsigned char GuildFlags (int rank);	  
 	  inline int GuildRank(int guild_id) { return guild_ranks[guild_id].rank; };
+	  inline bool IsInGuild(int guild_id) { return GuildRank(guild_id) >= Guild::INITIATE; };
 	  inline int GuildXPPool(int guild_id) { return guild_ranks[guild_id].xp_award_pool; };
 	  inline int CurrStat(int stat) { return stats[stat].current; }; 
 	  inline int MaxStat(int stat) { return stats[stat].max; };
