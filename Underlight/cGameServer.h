@@ -178,7 +178,9 @@ class cGameServer
 	  // item methods
 	  bool GetItem(cItem *item);
 	  bool CreateItem(cItem *item, int ttl = GMsg_PutItem::DEFAULT_TTL, TCHAR *description = NULL);
+#ifdef GAMEMASTER
 	  void DuplicateItem(cItem *orig_item);
+#endif
 	  bool DropItem(cItem *item);
 	  bool DestroyItem(cItem *item);
 	  bool GiveItem(cItem *item, cNeighbor *n);
@@ -262,7 +264,9 @@ class cGameServer
 	  bool MPGPLogTime(int sleep_interval);
 
    private:
+#ifdef GAMEMASTER
 	  void FinalizeItemDuplicate(cItem *orig_item, TCHAR* description);
+#endif
 	  void InitUDPSocket(void);
 	  void FillInPlayerPosition(LmPeerUpdate *update, int trigger = TRIGGER_TIMER);
 

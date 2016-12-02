@@ -907,6 +907,7 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		}
 		return true;
 	case VK_F3:
+#ifdef GAMEMASTER
 		if (options.network)
 		{
 			cItem *selected_item = cp->SelectedItem();
@@ -917,6 +918,7 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			gs->DuplicateItem(selected_item);
 			return true;
 		}
+#endif
 		return false;
 	case VK_F4:
 		agentbox->Show();

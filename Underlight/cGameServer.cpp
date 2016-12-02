@@ -1630,6 +1630,7 @@ void cGameServer::HandleMessage(void)
 				}
 			}
 #ifndef PMARE 
+#ifdef GAMEMASTER
 			if (item_to_dupe != NULL)// && descrip_msg.Serial() == item_to_dupe->ID().ItemID()) 
 			{
 				strcpy(message, descrip_msg.Description());
@@ -1638,9 +1639,12 @@ void cGameServer::HandleMessage(void)
 			}
 			else 
 			{
+#endif // GAMEMASTER
 				// Pmares don't see item descriptions
 				display->DisplayMessage(message);
+#ifdef GAMEMASTER
 			}
+#endif 
 #endif
 		}
 		break;
@@ -3669,6 +3673,7 @@ bool cGameServer::CreateItem(cItem *item, int ttl, TCHAR *description)
 
 }
 
+#ifdef GAMEMASTER
 void cGameServer::DuplicateItem(cItem *orig_item)
 {
 	// request the description if there is one
@@ -3755,6 +3760,7 @@ void cGameServer::FinalizeItemDuplicate(cItem *orig_item, TCHAR* description)
 		false, ttl);
 	CreateItem(new_item, ttl, description);
 }
+#endif
 
 // returns false & displays a message if we're not logged in
 // drop item where the player is.
