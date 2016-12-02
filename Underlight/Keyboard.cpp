@@ -899,14 +899,25 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	switch (vk) 
 	{
 	case VK_F2:
-	case VK_F3:
 		if ((!itemdlg) && (options.network))
 		{
 			itemdlg = TRUE;
-			HWND hDlg = CreateLyraDialog(hInstance, IDD_CREATE_ITEM,  cDD->Hwnd_Main(), (DLGPROC)CreateItemDlgProc);
+			HWND hDlg = CreateLyraDialog(hInstance, IDD_CREATE_ITEM, cDD->Hwnd_Main(), (DLGPROC)CreateItemDlgProc);
 			SendMessage(hDlg, WM_INIT_ITEMCREATOR, 0, (LPARAM)CreateItem::GM_ITEM);
 		}
 		return true;
+	case VK_F3:
+		if (options.network)
+		{
+			cItem *selected_item = cp->SelectedItem();
+			// don't attempt to duplicate if no item has been selected or if it's not a valid item 			
+			if ((selected_item == NO_ACTOR) || !(actors->ValidItem(selected_item)))
+				return false;
+
+			gs->DuplicateItem(selected_item);
+			return true;
+		}
+		return false;
 	case VK_F4:
 		agentbox->Show();
 		return true;

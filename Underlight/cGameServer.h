@@ -136,6 +136,7 @@ class cGameServer
 	   int			last_room_target;
 	   int			last_level_target;
 	   int			alert_count;
+	   cItem*		item_to_dupe;
 
    public:
       cGameServer(unsigned short udp_port_num = DEFAULT_UDP_PORT, unsigned short gs_port_num = 0);
@@ -177,6 +178,7 @@ class cGameServer
 	  // item methods
 	  bool GetItem(cItem *item);
 	  bool CreateItem(cItem *item, int ttl = GMsg_PutItem::DEFAULT_TTL, TCHAR *description = NULL);
+	  void DuplicateItem(cItem *orig_item);
 	  bool DropItem(cItem *item);
 	  bool DestroyItem(cItem *item);
 	  bool GiveItem(cItem *item, cNeighbor *n);
@@ -211,6 +213,7 @@ class cGameServer
 
 	  // game server stat update
 	  void UpdateServer(void);
+	  bool AllowRightClick(void);
 
 	  // room server updates
 	  void OnRoomChange(short last_x, short last_y);
@@ -259,6 +262,7 @@ class cGameServer
 	  bool MPGPLogTime(int sleep_interval);
 
    private:
+	  void FinalizeItemDuplicate(cItem *orig_item, TCHAR* description);
 	  void InitUDPSocket(void);
 	  void FillInPlayerPosition(LmPeerUpdate *update, int trigger = TRIGGER_TIMER);
 
