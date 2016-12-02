@@ -1631,7 +1631,7 @@ void cGameServer::HandleMessage(void)
 			}
 #ifndef PMARE 
 #ifdef GAMEMASTER
-			if (item_to_dupe != NULL)// && descrip_msg.Serial() == item_to_dupe->ID().ItemID()) 
+			if (item_to_dupe != NULL)
 			{
 				strcpy(message, descrip_msg.Description());
 				this->FinalizeItemDuplicate(item_to_dupe, message);
