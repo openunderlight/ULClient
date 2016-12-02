@@ -86,6 +86,8 @@ const DWORD				ROOM_CHANGE_THRESHHOLD = 2000;
 const int				ALERT_TABLE_SIZE = 10;
 const int				ALERT_MSG_INTERVAL = 600000; // 10 minutes
 
+
+
 alert_t newly_alert[ALERT_TABLE_SIZE];
 
 // live server
@@ -241,7 +243,8 @@ cGameServer::cGameServer(unsigned short udp_port_num, unsigned short gs_port_num
 	num_packets_in = num_packets_out = 0;
 	begin_time = LyraTime();
 	last_update.SetFlags(0);
-	last_room_target = last_level_target = -1;
+	last_room_target = last_level_target;
+	item_to_dupe = NULL;
 	displayed_item_use_message = false;
 	alert_count = 0;
 	for (int i = 0; i < ALERT_TABLE_SIZE; i++) {
@@ -1606,6 +1609,7 @@ void cGameServer::HandleMessage(void)
 				GAME_ERROR(IDS_ERR_READ_ITEM_DESC_MSG); 
 				return; 
 			}
+
 			if (0 == _tcscmp(descrip_msg.Creator(), NOT_A_SCROLL))
 			{ // it's an item with a description
 				LoadString (hInstance, IDS_ITEM_DESCRIP, disp_message, sizeof(message));
@@ -1625,8 +1629,22 @@ void cGameServer::HandleMessage(void)
 					_stprintf(message, disp_message, descrip_msg.Creator(), descrip_msg.Description());
 				}
 			}
-#ifndef PMARE // Pmares don't see item descriptions
-			display->DisplayMessage(message);
+#ifndef PMARE 
+#ifdef GAMEMASTER
+			if (item_to_dupe != NULL)
+			{
+				strcpy(message, descrip_msg.Description());
+				this->FinalizeItemDuplicate(item_to_dupe, message);
+				item_to_dupe = NULL;
+			}
+			else 
+			{
+#endif // GAMEMASTER
+				// Pmares don't see item descriptions
+				display->DisplayMessage(message);
+#ifdef GAMEMASTER
+			}
+#endif 
 #endif
 		}
 		break;
@@ -3660,7 +3678,94 @@ bool cGameServer::CreateItem(cItem *item, int ttl, TCHAR *description)
 
 }
 
+#ifdef GAMEMASTER
+void cGameServer::DuplicateItem(cItem *orig_item)
+{
+	// request the description if there is one
+	if (orig_item->Lmitem().Flags() & LyraItem::FLAG_HASDESCRIPTION)
+	{
+		item_to_dupe = orig_item;
+		this->SendItemDescripRequest(orig_item->ID());
+	}
+	else 
+	{
+		// just finalize the duplication if there is no description
+		this->FinalizeItemDuplicate(orig_item, NULL);
+	}
+}
 
+void cGameServer::FinalizeItemDuplicate(cItem *orig_item, TCHAR* description)
+{
+	// One more sanity check
+	if ((orig_item == NO_ACTOR) || !(actors->ValidItem(orig_item))) 				
+		return; 
+
+	cItem *new_item;
+	LmItem info;
+	LmItemHdr header;
+
+	header.Init(0, 0);
+	header.SetFlags(orig_item->Lmitem().Header().Flags());
+	header.SetGraphic(orig_item->Lmitem().Header().Graphic());
+	header.SetColor1(orig_item->Lmitem().Header().Color1());
+	header.SetColor2(orig_item->Lmitem().Header().Color2());
+	header.SetStateFormat(orig_item->Lmitem().Header().StateFormat());
+
+	const void *state = orig_item->Lmitem().StateField(0);
+	info.Init(header, orig_item->Name(), 0, 0, 0);
+
+	// handle the item function
+	switch (orig_item->ItemFunction(0))
+	{
+		case LyraItem::NOTHING_FUNCTION:
+		{
+			lyra_item_nothing_t do_nothing;
+			memcpy(&do_nothing, state, sizeof(do_nothing));
+			info.SetStateField(0, &do_nothing, sizeof(do_nothing));
+			break;
+		}
+		case LyraItem::CHANGE_STAT_FUNCTION:
+		{
+			lyra_item_change_stat_t change_stat;
+			memcpy(&change_stat, state, sizeof(lyra_item_change_stat_t));
+			info.SetStateField(0, &change_stat, sizeof(change_stat));
+			break;
+		}
+		case LyraItem::MISSILE_FUNCTION:
+		{
+			lyra_item_missile_t missile;
+			memcpy(&missile, state, sizeof(lyra_item_missile_t));
+			info.SetStateField(0, &missile, sizeof(missile));
+			break;
+		}
+		case LyraItem::EFFECT_PLAYER_FUNCTION:
+		{
+			lyra_item_effect_player_t effect_player;
+			memcpy(&effect_player, state, sizeof(lyra_item_effect_player_t));
+			info.SetStateField(0, &effect_player, sizeof(effect_player));
+			break;
+		}
+		case LyraItem::ARMOR_FUNCTION:
+		{
+			lyra_item_armor_t armor;
+			memcpy(&armor, state, sizeof(lyra_item_armor_t));
+			info.SetStateField(0, &armor, sizeof(armor));
+			break;
+		}
+		default:
+			display->DisplayMessage("Cannot duplicate selected item function");
+			return;
+	}
+
+	// set charges
+	info.SetCharges(orig_item->Lmitem().Charges());
+	int ttl = GMsg_PutItem::DEFAULT_TTL;
+	
+	new_item = new cItem(player->x, player->y, player->angle, info, ITEM_CREATING, 0,
+		false, ttl);
+	CreateItem(new_item, ttl, description);
+}
+#endif
 
 // returns false & displays a message if we're not logged in
 // drop item where the player is.
@@ -4653,6 +4758,11 @@ void cGameServer::PingServer(void)
 	sendbuf.ReadMessage(ping_msg);
 	send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
 	ping_time = LyraTime();
+}
+
+bool cGameServer::AllowRightClick(void)
+{
+	return item_to_dupe == NULL;
 }
 
 void cGameServer::SendItemDescripRequest(LmItemHdr& itemheader)

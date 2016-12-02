@@ -924,189 +924,203 @@ TCHAR *DreamweaponName(int color)
 
 }
 
+// Forge Item Flags
+const int BY_GM		= 1;
+const int BY_PLAYER = 2;
+const int BY_DSMITH = 4;
+const int BY_WSMITH = 8;
+const int BY_DOL	= 16;
+const int BY_UOC	= 32;
+const int BY_HC		= 64;
+const int BY_AOE	= 128;
+const int BY_GOE	= 256;
+const int BY_POR	= 512;
+const int BY_KOES	= 1024;
+const int BY_OSM	= 2048;
+
 struct talisman_name_t
 {
-	bool    forgable;
+	unsigned forge_flags;
 	UINT	name; // string table pointer
 	int		bitmap_id;
+
+public:
+	bool forgable()
+	{
+		if (forge_flags & BY_PLAYER)
+			return true;
+		if (forge_flags & BY_DSMITH)
+			return player->Skill(Arts::DREAMSMITH_MARK) > 0;
+		if (forge_flags & BY_WSMITH)
+			return player->Skill(Arts::WORDSMITH_MARK) > 0;
+		if (forge_flags & BY_OSM) 
+			return player->IsInGuild(Guild::MOON);
+		if (forge_flags & BY_AOE)
+			return player->IsInGuild(Guild::ECLIPSE);
+		if (forge_flags & BY_KOES)
+			return player->IsInGuild(Guild::SHADOW);
+		if (forge_flags & BY_UOC)
+			return player->IsInGuild(Guild::COVENANT);
+		if (forge_flags & BY_POR)
+			return player->IsInGuild(Guild::RADIANCE);
+		if (forge_flags & BY_HC)
+			return player->IsInGuild(Guild::CALENTURE);
+		if (forge_flags & BY_GOE)
+			return player->IsInGuild(Guild::ENTRANCED);
+		if (forge_flags & BY_DOL) 
+			return player->IsInGuild(Guild::LIGHT);
+
+		return false;
+	}
 };
 
 talisman_name_t talisman_names[] =
 {
-	{false,IDS_UNKNOWN, LyraBitmap::NONE},
-	{false,IDS_BLADE, LyraBitmap::DREAMBLADE},
-	{false,IDS_WARD, LyraBitmap::WARD},
-	{false,IDS_WARD_PASS_AMULET, LyraBitmap::AMULET},
-	{false,IDS_EMPH_ESS_TALISMAN, LyraBitmap::EMPHANT_ESSENCE},
-	{false,IDS_BOG_ESS_TALISMAN, LyraBitmap::BOGROM_ESSENCE},
-	{false,IDS_AGO_ESS_TALISMAN, LyraBitmap::AGOKNIGHT_ESSENCE},
-	{false,IDS_SHAM_ESS_TALISMAN, LyraBitmap::SHAMBLIX_ESSENCE},
-	{false,IDS_MALE_AV_ESS_TOKEN, LyraBitmap::M_AVATAR_ESSENCE},
-	{false,IDS_FEMALE_AVT_ESS_TOKEN, LyraBitmap::F_AVATAR_ESSENCE},
-	{false,IDS_ASCENSION_TOKEN, LyraBitmap::GUILD_ASCENSION_TOKEN},
-	{false,IDS_DEMOTE_TOKEN, LyraBitmap::GUILD_DEMOTION_TOKEN},
-	{false,IDS_OOSM_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE},
-	{false,IDS_AOE_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 1},
-	{false,IDS_KOES_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 2},
-	{false,IDS_UOC_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 3},
-	{false,IDS_POR_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 4},
-	{false,IDS_HC_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 5},
-	{false,IDS_GOE_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 6},
-	{false,IDS_DOL_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 7},
-	{false,IDS_CLEANSED_NIGHTMARE_TOKEN, LyraBitmap::CLEANSED_MARE},
-	{false,IDS_BANISHED_NIGHTMARE_TOKEN, LyraBitmap::BANISHED_MARE},
-	{false,IDS_IMPRISONED_NIGHTMARE_TOKEN, LyraBitmap::ENSLAVED_MARE},
-	{false,IDS_GUILD_ESS_TALISMAN, LyraBitmap::META_ESSENCE},
-	{false,IDS_SOUL_ESS_TALISMAN, LyraBitmap::SOUL_ESSENCE},
-	{true,IDS_CODEX, LyraBitmap::TALISMAN0}, // RRR was Artifax
-	{true,IDS_ELEMEN, LyraBitmap::TALISMAN1}, 
-	{true,IDS_CHARM, LyraBitmap::TALISMAN2}, 
-	{true,IDS_CHAKRAM, LyraBitmap::TALISMAN3}, 
-	{true,IDS_ALTEROR, LyraBitmap::TALISMAN4}, 
-	{true,IDS_SHIELD, LyraBitmap::TALISMAN5}, 
-	{true,IDS_TALIS, LyraBitmap::TALISMAN6}, 
-	{true,IDS_COMPENDIUM, LyraBitmap::TALISMAN7}, // RRR was Artifax
-	{true,IDS_ARTIFAX, LyraBitmap::TALISMAN8}, 
-	{true, IDS_SCROLL, LyraBitmap::SCROLL},
-	{true, IDS_FLOWER, LyraBitmap::FLOWER},
-	{false, IDS_CHAOS_WELL, LyraBitmap::BOX},
-	{true, IDS_STAFF, LyraBitmap::STAFF},
-	{true, IDS_GIFT, LyraBitmap::GIFT},
-	{true, IDS_RING, LyraBitmap::RING},
-	{true, IDS_EGG, LyraBitmap::EGG},
-	{true, IDS_FEATHER, LyraBitmap::FEATHER},
-	{false,IDS_CODEX,   LyraBitmap::CODEX},
+	// { forgable, string table link, bitmap reference }
+	{BY_GM, IDS_UNKNOWN, LyraBitmap::NONE},
+	{BY_DSMITH, IDS_BLADE, LyraBitmap::DREAMBLADE},
+	{BY_GM, IDS_WARD, LyraBitmap::WARD},
+	{BY_GM, IDS_WARD_PASS_AMULET, LyraBitmap::AMULET},
+	{BY_GM, IDS_EMPH_ESS_TALISMAN, LyraBitmap::EMPHANT_ESSENCE},
+	{BY_GM, IDS_BOG_ESS_TALISMAN, LyraBitmap::BOGROM_ESSENCE},
+	{BY_GM, IDS_AGO_ESS_TALISMAN, LyraBitmap::AGOKNIGHT_ESSENCE},
+	{BY_GM, IDS_SHAM_ESS_TALISMAN, LyraBitmap::SHAMBLIX_ESSENCE},
+	{BY_GM, IDS_MALE_AV_ESS_TOKEN, LyraBitmap::M_AVATAR_ESSENCE},
+	{BY_GM, IDS_FEMALE_AVT_ESS_TOKEN, LyraBitmap::F_AVATAR_ESSENCE},
+	{BY_GM, IDS_ASCENSION_TOKEN, LyraBitmap::GUILD_ASCENSION_TOKEN},
+	{BY_GM, IDS_DEMOTE_TOKEN, LyraBitmap::GUILD_DEMOTION_TOKEN},
+	{BY_GM, IDS_OOSM_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE},
+	{BY_GM, IDS_AOE_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 1},
+	{BY_GM, IDS_KOES_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 2},
+	{BY_GM, IDS_UOC_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 3},
+	{BY_GM, IDS_POR_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 4},
+	{BY_GM, IDS_HC_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 5},
+	{BY_GM, IDS_GOE_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 6},
+	{BY_GM, IDS_DOL_MEMBER_TOKEN, LyraBitmap::GUILD_MEMBER_TOKEN_BASE + 7},
+	{BY_GM, IDS_CLEANSED_NIGHTMARE_TOKEN, LyraBitmap::CLEANSED_MARE},
+	{BY_GM, IDS_BANISHED_NIGHTMARE_TOKEN, LyraBitmap::BANISHED_MARE},
+	{BY_GM, IDS_IMPRISONED_NIGHTMARE_TOKEN, LyraBitmap::ENSLAVED_MARE},
+	{BY_GM, IDS_GUILD_ESS_TALISMAN, LyraBitmap::META_ESSENCE},
+	{BY_GM, IDS_SOUL_ESS_TALISMAN, LyraBitmap::SOUL_ESSENCE},
+	{BY_PLAYER, IDS_CODEX, LyraBitmap::TALISMAN0}, // RRR was Artifax
+	{BY_PLAYER, IDS_ELEMEN, LyraBitmap::TALISMAN1},
+	{BY_PLAYER, IDS_CHARM, LyraBitmap::TALISMAN2},
+	{BY_PLAYER, IDS_CHAKRAM, LyraBitmap::TALISMAN3},
+	{BY_PLAYER, IDS_ALTEROR, LyraBitmap::TALISMAN4},
+	{BY_PLAYER, IDS_SHIELD, LyraBitmap::TALISMAN5},
+	{BY_PLAYER, IDS_TALIS, LyraBitmap::TALISMAN6},
+	{BY_PLAYER, IDS_COMPENDIUM, LyraBitmap::TALISMAN7}, // RRR was Artifax
+	{BY_PLAYER, IDS_ARTIFAX, LyraBitmap::TALISMAN8},
+	{BY_PLAYER, IDS_SCROLL, LyraBitmap::SCROLL},
+	{BY_PLAYER, IDS_FLOWER, LyraBitmap::FLOWER},
+	{BY_GM, IDS_CHAOS_WELL, LyraBitmap::BOX},
+	{BY_PLAYER, IDS_STAFF, LyraBitmap::STAFF},
+	{BY_PLAYER, IDS_GIFT, LyraBitmap::GIFT},
+	{BY_PLAYER, IDS_RING, LyraBitmap::RING},
+	{BY_PLAYER, IDS_EGG, LyraBitmap::EGG},
+	{BY_PLAYER, IDS_FEATHER, LyraBitmap::FEATHER},
+	{BY_GM, IDS_CODEX, LyraBitmap::CODEX},
 
-	/// RRR Names Clarified
-	{false,IDS_FLAG_DOL , 63},
-	{false,IDS_FLAG_HC , 64},
-	{false,IDS_FLAG_AOE , 65},
-	{false,IDS_FLAG_DOL2 , 67},
-	{false,IDS_FLAG_GOE , 68},
-	{false,IDS_FLAG_HC2 , 69},
-	{false,IDS_FLAG_KOES , 70},
-	{false,IDS_FLAG_OOSM , 71},
-	{false,IDS_FLAG_POR , 72},
-	{false,IDS_FLAG_UOC , 73},
-	{false,IDS_SCROLL_POLE, 74},
-	{false,IDS_CREST_AOE , 77},
-	{false,IDS_CREST_HC , 78},
-	{false,IDS_CREST_UOC , 79},
-	{false,IDS_CREST_DOL , 80},
-	{false,IDS_CREST_GOE , 81},
-	{false,IDS_CREST_KOES , 82},
-	{false,IDS_CREST_POR , 83},
-	{false,IDS_CREST_OOSM , 84},
-	{false,IDS_BANISHMENT , 88},
-	{false,IDS_DIAMOND , 89},
-	{false,IDS_INVIS , 90},
-	{false,IDS_PEARL , 91},
-	{false,IDS_STAR , 92},
-	{false,IDS_CTF_PLUM , 93},
-	{false,IDS_CTF_BLOOD , 94},
-	{false,IDS_CTF_CYAN , 95},
-	{false,IDS_CTF_CHALK , 96},
-	{false,IDS_CTF_JADE , 97},
-	{ false, IDS_TORCH, 794 },
-	{ false, IDS_LUMITWIST, 802 },
-	{ false, IDS_RAIN, 805 },
-	{ false, IDS_HELI, 811 },
-	{ false, IDS_STATUE_1, 822 },
-	{ false, IDS_STATUE_2, 823 },
-	{ false, IDS_FEM_STATUE_1, 824 },
-	{ false, IDS_FEM_STATUE_2, 825 },
-	{ false, IDS_FEM_STATUE_3, 826 },
-	{ false, IDS_FEM_STATUE_4, 827 },
-	{ false, IDS_ST_L, 830 },
-	{ false, IDS_ST_I, 831 },
-	{ false, IDS_ST_W, 832 },
-	{ false, IDS_WEP_A, 833 },
-	{ false, IDS_DRIP, 834 },
-	{ false, IDS_FI_SM, 857 },
-	{ false, IDS_FI_MD, 863 },
-	{ false, IDS_FIRE, 874 },
-	{ false, IDS_TORCH_1, 885 },
-	{ false, IDS_TORCH_2, 896 },
-	{ false, IDS_EYES_1, 903 },
-	{ false, IDS_EYES_2, 912 },
-	{ false, IDS_W_HOLE, 921 },
-	{ false, IDS_S_ALT2, 930 },
-	{ false, IDS_ALTAR1, 937 },
-	{ false, IDS_DTORCH, 938 },
-	{ false, IDS_LIGHTNING, 947 },
-	{ false, IDS_LIGHTNING_SM, 951 },
-	{ false, IDS_AOE_ORNAMENT, 957 },
-	{ false, IDS_TELESCOPE, 958 },
-	{ false, IDS_VINE1, 959 },
-	{ false, IDS_VINE2, 960 },
-	{ false, IDS_VINE3, 961 },
-	{ false, IDS_VINE4, 962 },
-	{ false, IDS_DOL_CL_BNR, 963 },
-	{ false, IDS_DOL_FL_BNR, 964 },
-	{ false, IDS_HC_CL_BNR, 965 },
-	{ false, IDS_HC_CL_PCE, 966 },
-	{ false, IDS_HC_CL_SYM, 967 },
-	{ false, IDS_HC_FL_BNR, 968 },
-	{ false, IDS_HC_RAIL, 969 },
-	{ false, IDS_HC_TETS, 970 },
-	{ false, IDS_TREE_HAND, 971 },
-	{ false, IDS_TREE_MILO, 972 },
-	{ false, IDS_RVINE1, 973 },
-	{ false, IDS_RVINE2, 974 },
-	{ false, IDS_TORCH, 975 },
-	{ false, IDS_DOL_CHAN, 980 },
-	{ false, IDS_DOL_DECO, 981 },
-	{ false, IDS_TORCH, 982 },
-	{ false, IDS_TOMBSTONE, 987 },
-	{ false, IDS_COPPER_STATUE, 988 },
-	{ false, IDS_COPPER_STATUE, 989 },
-	{ false, IDS_AOE_FLAG, 990 },
-	{ false, IDS_DOL_FLAG, 991 },
-	{ false, IDS_GOE_FLAG, 992 },
-	{ false, IDS_HC_FLAG, 993 },
-	{ false, IDS_KOES_FLAG, 994 },
-	{ false, IDS_OOSM_FLAG, 995 },
-	{ false, IDS_POR_FLAG, 996 },
-	{ false, IDS_UOC_FLAG, 997 },
-	{ false, IDS_AOE_SYM, 998 },
-	{ false, IDS_HC_SYM, 999 },
-	{ false, IDS_UOC_SYM, 1000 },
-	{ false, IDS_DOL_SYM, 1001 },
-	{ false, IDS_GOE_SYM, 1002 },
-	{ false, IDS_KOES_SYM, 1003 },
-	{ false, IDS_POR_SYM, 1004 },
-	{ false, IDS_OOSM_SYM, 1005 },
-	{ false, IDS_BANISH, 1006 },
-	{ false, IDS_DIAMOND, 1007 },
-	{ false, IDS_INVIS, 1008 },
-	{ false, IDS_PEARL, 1009 },
-	{ false, IDS_STAR, 1010 },
-
-/*	
-	{false,_T("dol_flag") , 63},
-	{false,_T("hc_flag") , 64},
-	{false,_T("aoeflag") , 65},
-	{false,_T("dolflag") , 67},
-	{false,_T("geflag") , 68},
-	{false,_T("hcflag") , 69},
-	{false,_T("kesflag") , 70},
-	{false,_T("osmflag") , 71},
-	{false,_T("ptrflag") , 72},
-	{false,_T("ucflag") , 73},
-	{false,_T("alliance") , 77},
-	{false,_T("calenture") , 78},
-	{false,_T("covenant") , 79},
-	{false,_T("dreamers") , 80},
-	{false,_T("gathering") , 81},
-	{false,_T("keepers") , 82},
-	{false,_T("protectors") , 83},
-	{false,_T("sable_moon") , 84},
-	{false,_T("banish") , 88},
-	{false,_T("diamond") , 89},
-	{false,_T("invis") , 90},
-	{false,_T("pearl") , 91},
-	{false,_T("star") , 92},
-*/
+	// { forgable, string table link, bitmap reference }
+	{BY_GM, IDS_FLAG_DOL , 63},
+	{BY_GM, IDS_FLAG_HC , 64},
+	{BY_GM, IDS_FLAG_AOE , 65},
+	{BY_GM, IDS_FLAG_DOL2 , 67},
+	{BY_GM, IDS_FLAG_GOE , 68},
+	{BY_GM, IDS_FLAG_HC2 , 69},
+	{BY_GM, IDS_FLAG_KOES , 70},
+	{BY_GM, IDS_FLAG_OOSM , 71},
+	{BY_GM, IDS_FLAG_POR , 72},
+	{BY_GM, IDS_FLAG_UOC , 73},
+	{BY_WSMITH, IDS_SCROLL_POLE, 74},
+	{ BY_AOE,IDS_CREST_AOE , 77 },
+	{ BY_HC,IDS_CREST_HC , 78 },
+	{ BY_UOC,IDS_CREST_UOC , 79 },
+	{ BY_DOL,IDS_CREST_DOL , 80 },
+	{ BY_GOE,IDS_CREST_GOE , 81 },
+	{ BY_KOES,IDS_CREST_KOES , 82 },
+	{ BY_POR,IDS_CREST_POR , 83 },
+	{ BY_OSM,IDS_CREST_OOSM , 84 },
+	{BY_GM, IDS_BANISHMENT , 88},
+	{BY_GM, IDS_DIAMOND , 89},
+	{BY_GM, IDS_INVIS , 90},
+	{BY_DSMITH, IDS_PEARL , 91},
+	{BY_DSMITH, IDS_STAR , 92},
+	{BY_GM, IDS_CTF_PLUM , 93},
+	{BY_GM, IDS_CTF_BLOOD , 94},
+	{BY_GM, IDS_CTF_CYAN , 95},
+	{BY_GM, IDS_CTF_CHALK , 96},
+	{BY_GM, IDS_CTF_JADE , 97},
+	// { forgable, string table link, bitmap reference }
+	{BY_GM, IDS_TORCH, 794 },
+	{BY_GM, IDS_LUMITWIST, 802 },
+	{BY_GM, IDS_RAIN, 805 },
+	{BY_GM, IDS_HELI, 811 },
+	{BY_GM, IDS_STATUE_1, 822 },
+	{BY_GM, IDS_STATUE_2, 823 },
+	{BY_GM, IDS_FEM_STATUE_1, 824 },
+	{BY_GM, IDS_FEM_STATUE_2, 825 },
+	{BY_GM, IDS_FEM_STATUE_3, 826 },
+	{BY_GM, IDS_FEM_STATUE_4, 827 },
+	{BY_GM, IDS_ST_L, 830 },
+	{BY_GM, IDS_ST_I, 831 },
+	{BY_GM, IDS_ST_W, 832 },
+	{BY_GM, IDS_WEP_A, 833 },
+	{BY_GM, IDS_DRIP, 834 },
+	{BY_GM, IDS_FI_SM, 857 },
+	{BY_GM, IDS_FI_MD, 863 },
+	{BY_GM, IDS_FIRE, 874 },
+	{BY_GM, IDS_TORCH_1, 885 },
+	{BY_GM, IDS_TORCH_2, 896 },
+	{BY_GM, IDS_EYES_1, 903 },
+	{BY_GM, IDS_EYES_2, 912 },
+	{BY_GM, IDS_W_HOLE, 921 },
+	{BY_GM, IDS_S_ALT2, 930 },
+	{BY_GM, IDS_ALTAR1, 937 },
+	{BY_GM, IDS_DTORCH, 938 },
+	{BY_GM, IDS_LIGHTNING, 947 },
+	{BY_GM, IDS_LIGHTNING_SM, 951 },
+	{BY_GM, IDS_AOE_ORNAMENT, 957 },
+	{BY_GM, IDS_TELESCOPE, 958 },
+	{BY_GM, IDS_VINE1, 959 },
+	{BY_GM, IDS_VINE2, 960 },
+	{BY_GM, IDS_VINE3, 961 },
+	{BY_GM, IDS_VINE4, 962 },
+	{BY_GM, IDS_DOL_CL_BNR, 963 },
+	{BY_GM, IDS_DOL_FL_BNR, 964 },
+	{BY_GM, IDS_HC_CL_BNR, 965 },
+	{BY_GM, IDS_HC_CL_PCE, 966 },
+	{BY_GM, IDS_HC_CL_SYM, 967 },
+	{BY_GM, IDS_HC_FL_BNR, 968 },
+	{BY_GM, IDS_HC_RAIL, 969 },
+	{BY_GM, IDS_HC_TETS, 970 },
+	{BY_GM, IDS_TREE_HAND, 971 },
+	{BY_GM, IDS_TREE_MILO, 972 },
+	{BY_GM, IDS_RVINE1, 973 },
+	{BY_GM, IDS_RVINE2, 974 },
+	{BY_GM, IDS_TORCH, 975 },
+	{BY_GM, IDS_DOL_CHAN, 980 },
+	{BY_GM, IDS_DOL_DECO, 981 },
+	{BY_GM, IDS_TORCH, 982 },
+	{BY_GM, IDS_TOMBSTONE, 987 },
+	{BY_GM, IDS_COPPER_STATUE, 988 },
+	{BY_GM, IDS_COPPER_STATUE, 989 },
+	{BY_GM, IDS_AOE_FLAG, 990 },
+	{BY_GM, IDS_DOL_FLAG, 991 },
+	{BY_GM, IDS_GOE_FLAG, 992 },
+	{BY_GM, IDS_HC_FLAG, 993 },
+	{BY_GM, IDS_KOES_FLAG, 994 },
+	{BY_GM, IDS_OOSM_FLAG, 995 },
+	{BY_GM, IDS_POR_FLAG, 996 },
+	{BY_GM, IDS_UOC_FLAG, 997 },
+	{BY_GM, IDS_AOE_SYM, 998 },
+	{BY_GM, IDS_HC_SYM, 999 },
+	{BY_GM, IDS_UOC_SYM, 1000 },
+	{BY_GM, IDS_DOL_SYM, 1001 },
+	{BY_GM, IDS_GOE_SYM, 1002 },
+	{BY_GM, IDS_KOES_SYM, 1003 },
+	{BY_GM, IDS_POR_SYM, 1004 },
+	{BY_GM, IDS_OOSM_SYM, 1005 },
 };
 
 unsigned int NumTalismans(void)
@@ -1149,9 +1163,9 @@ bool TalismanForgable(unsigned int index)
 		return false;
 	else
 #ifdef GAMEMASTER
-	return true;
+		return true;
 #else
-	return talisman_names[index].forgable;
+		return talisman_names[index].forgable();
 #endif
 }
 

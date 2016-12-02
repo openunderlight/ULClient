@@ -246,8 +246,9 @@ class cPlayer : public cActor
 	  bool IsPMare (void); 
 	  bool IsDreamerAccount (void);
 
-	  unsigned char GuildFlags (int rank);
+	  unsigned char GuildFlags (int rank);	  
 	  inline int GuildRank(int guild_id) { return guild_ranks[guild_id].rank; };
+	  inline bool IsInGuild(int guild_id) { return GuildRank(guild_id) >= Guild::INITIATE; };
 	  inline int GuildXPPool(int guild_id) { return guild_ranks[guild_id].xp_award_pool; };
 	  inline int CurrStat(int stat) { return stats[stat].current; }; 
 	  inline int MaxStat(int stat) { return stats[stat].max; };
