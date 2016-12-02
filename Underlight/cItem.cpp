@@ -233,6 +233,9 @@ bool cItem::LeftClick(void)
 // identify Item
 bool cItem::RightClick(void)
 {
+	// Check if we're allowed to right click
+	if (!gs->AllowRightClick()) return false;
+
 	TCHAR buffer[64];
 
 	if (lmitem.Header().Flags() & LyraItem::FLAG_HASDESCRIPTION)
