@@ -658,8 +658,8 @@ void cArts::BeginArt(int art_id, bool bypass)
 
 	player->PerformedAction();
 
-	if (player->flags & ACTOR_TRANSFORMED)
-	{ // no arts use in nightmare form
+	if (player->flags & ACTOR_TRANSFORMED && art_id != Arts::NIGHTMARE_FORM)
+	{ // no arts use in nightmare form except for nightmare form
 		player->NightmareAttack();
 		return;
 	}

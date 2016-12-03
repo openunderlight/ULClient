@@ -879,11 +879,17 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		display->DisplayMessage(disp_message, false);
 									} break;
 	case LyraEffect::PLAYER_TRANSFORMED: {
-		LmAvatar new_avatar;
-		//new_avatar.Init((player->Skill(Arts::NIGHTMARE_FORM)/20 + 1), 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-		new_avatar.Init(Avatars::EMPHANT, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-		this->SetTransformedAvatar(new_avatar);
-										 } break;
+		if (this->flags & ACTOR_TRANSFORMED) { // 2nd activation - remove
+			this->RemoveTimedEffect(LyraEffect::PLAYER_TRANSFORMED);
+			return false;
+		}
+		else {
+			LmAvatar new_avatar;
+			//new_avatar.Init((player->Skill(Arts::NIGHTMARE_FORM)/20 + 1), 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+			new_avatar.Init(Avatars::EMPHANT, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+			this->SetTransformedAvatar(new_avatar);
+		}
+	} break;
 	case LyraEffect::PLAYER_RETURN: {
 		if (this->flags & ACTOR_RETURN) { // 2nd activation - return
 			if (this->Teleport(this->ReturnX(), this->ReturnY(), this->ReturnAngle(), this->ReturnLevel())) {
