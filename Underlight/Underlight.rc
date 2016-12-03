@@ -4378,6 +4378,12 @@ BEGIN
     IDS_SHOW_IN_PARTY_CHANNEL "%s (Channel receiver) is in your party"
     IDS_CHANNEL_CLOSED      "%s is no longer channelling energy to you."
     IDS_RALLY_PREEMOTE      "has been rallied away by another dreamer"
+    IDS_CRIPPLE             "Hinder"
+    IDS_PLAYER_CRIPPLE_ON   "You have become more susceptible to damage!\n"
+    IDS_PLAYER_CRIPPLE_OFF  "You are no longer susceptible to damage.\n"
+    IDS_AVATAR_SHIELD       "Energy Shield"
+    IDS_PLAYER_SHIELD_ON    "A shield of energy has surrounded you.\n"
+    IDS_PLAYER_SHIELD_OFF   "Your shield of energy has expired.\n"
 END
 
 STRINGTABLE

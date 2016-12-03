@@ -571,21 +571,23 @@ void cItem::Use(void)
 			lyra_item_change_stat_t changestat;
 			memcpy(&changestat, state, sizeof(changestat));
 			drain_charge = true;
-			if (((player->CurrStat(changestat.stat) == player->MaxStat(changestat.stat)) && (changestat.modifier >= 0)) ||
-				((player->CurrStat(changestat.stat) == Stats::STAT_MIN) && (changestat.modifier <= 0)))
+			int modifier = CalculateModifier(changestat.modifier) + player->SkillSphere(Arts::DREAMSEER);
+
+			if (((player->CurrStat(changestat.stat) == player->MaxStat(changestat.stat)) && (modifier >= 0)) ||
+				((player->CurrStat(changestat.stat) == Stats::STAT_MIN) && (modifier <= 0)))
 			{
 				LoadString (hInstance, IDS_NOTHING_HAPPENS, disp_message, sizeof(disp_message));
 				display->DisplayMessage (disp_message);
 			}
-			else if (changestat.modifier > 0)
+			else if (modifier > 0)
 			{
-				player->SetCurrStat(changestat.stat, CalculateModifier(changestat.modifier), SET_RELATIVE, player->ID());
+				player->SetCurrStat(changestat.stat, modifier, SET_RELATIVE, player->ID());
 				LoadString (hInstance, IDS_ITEM_FEELREFRESHED, disp_message, sizeof(disp_message));
 				display->DisplayMessage (disp_message);
 			}
 			else
 			{
-				player->SetCurrStat(changestat.stat, (CalculateModifier(changestat.modifier)), SET_RELATIVE, player->ID());
+				player->SetCurrStat(changestat.stat, modifier, SET_RELATIVE, player->ID());
 				LoadString (hInstance, IDS_ITEM_FEELDRAINED, disp_message, sizeof(disp_message));
 				display->DisplayMessage (disp_message);
 			}
@@ -658,7 +660,7 @@ void cItem::Use(void)
 			lyra_item_effect_player_t effectplayer;
 			memcpy(&effectplayer, state, sizeof(effectplayer));
 			drain_charge = true;
-			player->SetTimedEffect(effectplayer.effect, CalculateDuration(effectplayer.duration), player->ID());
+			player->SetTimedEffect(effectplayer.effect, CalculateDuration(effectplayer.duration), player->ID(), EffectOrigin::USE_ITEM);
 		}
 			break;
 		case LyraItem::META_ESSENCE_FUNCTION:

@@ -11,7 +11,7 @@
 // NOTE: keep consistent with Visual Effects.ASC!
 
  
-const int NUM_TIMED_EFFECTS = 30; // add one for NONE
+const int NUM_TIMED_EFFECTS = 32; // add one for NONE
 const int NUM_ARTS = 147;
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
@@ -38,6 +38,16 @@ const int AGOKNIGHT_DAMAGE = 60;
 const int SHAMBLIX_DAMAGE = 60;
 const int HORRON_DAMAGE = 38;
 
+struct EffectOrigin {
+	enum {
+		UNDEFINED = -1,
+		KEYBOARD = 0,
+		MISSILE,
+		ART_EVOKE,
+		MASS_EVOKE,
+		USE_ITEM
+	};
+};
 
 struct Stats {
 	enum {
@@ -680,9 +690,12 @@ struct LyraEffect {
 	PLAYER_PEACE_AURA,
 	PLAYER_NO_PARTY,
 	PLAYER_NO_POISON,
-  PLAYER_SPIN,
+	PLAYER_SPIN,
 
-	MAX_ITEM_EFFECT = PLAYER_SPIN
+	MAX_ITEM_EFFECT = PLAYER_SPIN,
+	// Non-forgable effects
+	PLAYER_CRIPPLE,
+	PLAYER_SHIELD
 	};
 };
 

@@ -151,6 +151,8 @@ void cPlayer::InitPlayer(void)
 	blast_chance = 0; // no chance Ago will return Blast to start
 	poison_strength = 0;
 	reflect_strength = 0;
+	cripple_strength = 0;
+	avatar_armor_strength = 0;
  	last_poisoner = last_bleeder = Lyra::ID_UNKNOWN;
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
@@ -660,10 +662,111 @@ void cPlayer::PerformedAction(void)
 	return;
 }
 
+void cPlayer::ApplyAvatarArmor(int art_level, int sm_plat, lyra_id_t caster_id)
+{
+	// no armor for non-soulmaster initiated evokes
+	if (sm_plat <= 0) return;
+
+	// no armor buff if we're not in the same room as the caster
+	if (this->ID() != caster_id) {
+		cNeighbor *n = arts->LookUpNeighbor(caster_id);
+		if (n->Room() != this->Room()) return;
+	}
+
+	int duration = 3000 + ((art_level / 10) * 1000);
+	
+	// only modify the shield strength if it's better
+	if (sm_plat > avatar_armor_strength)
+		avatar_armor_strength = sm_plat;
+
+	player->SetTimedEffect(LyraEffect::PLAYER_SHIELD, duration, caster_id, EffectOrigin::ART_EVOKE);
+}
+
+void cPlayer::ApplyCrippleEffect(int pmsg, int art_level, int fs_plat, lyra_id_t caster_id)
+{
+	// only fatesenders can cripple
+	if (fs_plat <= 0) return;
+
+	int duration_mod = 0;
+	bool mass_art = false;
+	switch (pmsg)
+	{
+		case RMsg_PlayerMsg::DARKNESS:
+		case RMsg_PlayerMsg::HYPNOTIC_WEAVE:
+		case RMsg_PlayerMsg::FIRESTORM:
+		case RMsg_PlayerMsg::RAZORWIND:
+		case RMsg_PlayerMsg::TEMPEST:
+		{
+			mass_art = true;
+		}
+		case RMsg_PlayerMsg::BLIND:
+		case RMsg_PlayerMsg::DEAFEN:
+		case RMsg_PlayerMsg::PARALYZE:
+		case RMsg_PlayerMsg::SCARE:
+		case RMsg_PlayerMsg::STAGGER:
+		{
+			duration_mod = art_level / 10;
+			break;
+		}
+	}
+
+	if (duration_mod > 0)
+	{
+		int duration = 3000;
+		int origin;
+		if (mass_art)
+		{
+			// mass evokes get a small drop in effective duration
+			origin = EffectOrigin::MASS_EVOKE;
+			duration += duration_mod * 500;
+		}
+		else
+		{
+			origin = EffectOrigin::ART_EVOKE;
+			duration += duration_mod * 1000;
+		}
+
+		// effect strength is equal to the focal plat level
+		if (fs_plat > cripple_strength)
+			cripple_strength = fs_plat;
+
+		player->SetTimedEffect(LyraEffect::PLAYER_CRIPPLE, duration, caster_id, origin);
+	}
+}
+
+DWORD cPlayer::CalculateBreakthrough(DWORD duration, int effect_origin)
+{
+	int modifier;
+
+	switch (effect_origin)
+	{
+		case EffectOrigin::ART_EVOKE:
+			modifier = 4;
+			break;
+		case EffectOrigin::MISSILE:
+			modifier = 3;
+			break;
+		case EffectOrigin::MASS_EVOKE:
+			modifier = 2;
+			break;
+		default:
+			modifier = 1;
+	}
+
+	DWORD breakthrough_amt = duration*modifier;
+
+#ifdef UL_DEV
+	strcpy(disp_message, "Breaking through %ld seconds of your effect from a duration of %ld seconds and an origin modifier of %d.");
+	_stprintf(message, disp_message, (breakthrough_amt / 1000), (duration / 1000), modifier);
+	display->DisplayMessage(message, false);
+#endif
+
+	return breakthrough_amt;
+}
 
 // set up, or extend, a time-based effect; returns true if
 // applied, or false if rejected for whatever reason
-bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
+bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, int effect_origin)
 {
 	if (duration <= 0)
 		return false;
@@ -696,7 +799,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_CURSE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		//  Curse and Protection offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration;
+		timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE] -= CalculateBreakthrough(duration, effect_origin);
 		return false;
 		}
 		// Implementing Curse Effect
@@ -731,7 +834,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_PARALYZE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Paralyze and Free Action now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration*3; // new code
+		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(duration, effect_origin);
 		return false;
 									  }
 		// If actually paralyzed, cancel any current evoke.
@@ -744,7 +847,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_STAGGER_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Stagger and Free Action now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS]-=duration*3; // new code
+		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(duration, effect_origin);
 		return false;
 								  }} break;
 	case LyraEffect::PLAYER_FEAR:{
@@ -753,7 +856,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_FEAR_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Fear and Resist Fear now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR]-=duration*3;
+		timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR] -= CalculateBreakthrough(duration, effect_origin);
 		return false;
 								 }} break;
 	case LyraEffect::PLAYER_BLIND:{
@@ -764,7 +867,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		LoadString (hInstance, IDS_PLAYER_BLIND_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		// Blind and Vision now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE]-=duration*3;
+		timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE] -= CalculateBreakthrough(duration, effect_origin);
 		return false;
 								  }} break;
 //  Players must know how to Recall, Transform, etc. in case talisman causes effect
@@ -858,7 +961,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		if (this->flags & ACTOR_PROT_CURSE) {
 			LoadString (hInstance, IDS_PLAYER_BLEED_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
-			timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE]-=duration*3;
+			timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE] -= CalculateBreakthrough(duration, effect_origin);
 			return false;
 		}
 		if (caster_id != player->ID())
@@ -905,7 +1008,8 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id)
 		timed_effects->expires[effect] += (int)(duration/2);
 		if (timed_effects->more_descrip[effect])
 			display->DisplayMessage(timed_effects->more_descrip[effect] );
-		else
+		// don't display additional shield messages
+		else if (effect != LyraEffect::PLAYER_SHIELD)
 		{
 			LoadString (hInstance, IDS_DURATION_EXTENDED, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, timed_effects->name[effect]);
@@ -1014,6 +1118,10 @@ void cPlayer::RemoveTimedEffect(int effect)
 	}
 	else if (effect == LyraEffect::PLAYER_REFLECT)
 		reflect_strength = 0;
+	else if (effect == LyraEffect::PLAYER_CRIPPLE)
+		cripple_strength = 0;
+	else if (effect == LyraEffect::PLAYER_SHIELD)
+		avatar_armor_strength = 0;
 
 	return;
 };
@@ -1375,15 +1483,31 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 		return stats[stat].current;
 #endif
 
-	if ((player->flags & ACTOR_PEACE_AURA) && 
-		(stat == Stats::DREAMSOUL) &&
+	if ((stat == Stats::DREAMSOUL) &&
 		(origin_id != this->ID()) &&
 		(how == SET_RELATIVE) &&
 		(value < 0))
 	{
-		LoadString (hInstance, IDS_PEACE_AURA, disp_message, sizeof(disp_message));
-		display->DisplayMessage(disp_message);
-		return stats[stat].current;
+		// handle peace aura
+		if (player->flags & ACTOR_PEACE_AURA)
+		{
+			LoadString(hInstance, IDS_PEACE_AURA, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			return stats[stat].current;
+		}
+		// handle burn effect
+		else if (player->flags & ACTOR_CRIPPLE && cripple_strength > 0)
+		{
+			int new_damage = (int)(amount*((100 + cripple_strength) / 100.0));
+
+#ifdef UL_DEV
+			if (new_damage != amount) {
+				_stprintf(temp_message, "Initial damage of %d but %d was applied due to being tiny tim", amount, new_damage);
+				display->DisplayMessage(temp_message);
+			}
+#endif
+			amount = new_damage;
+		}
 	}
 
 
@@ -1391,6 +1515,17 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 	if ((stat == Stats::DREAMSOUL) && (how == SET_RELATIVE) && (value <0) &&
 	  (origin_id != playerID))
 	{
+		if (avatar_armor_strength > 0) {
+			int new_damage = (int)(amount*((100 - avatar_armor_strength) / 100.0));
+
+#ifdef UL_DEV
+			if (new_damage != amount) {
+				_stprintf(temp_message, "Initial damage of %d but only %d was applied due to your Avatar Armor", amount, new_damage);
+				display->DisplayMessage(temp_message);
+			}
+#endif
+			amount = new_damage;
+		}
 
 		if (this->ActiveShieldValid())
 			amount = active_shield->AbsorbDamage(amount);
@@ -1738,12 +1873,12 @@ int mare_avatar = this->CurrentAvatarType();
 		case Avatars::BOGROM:	// 4-7 damage, melee
 #ifdef AGENT // special power for agents 
 			if ((rand()%1000) == 0) // invis instead
-				this->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, 10000, player->ID());
+				this->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, 10000, player->ID(), , EffectOrigin::ART_EVOKE);
 			else
 #else
 #ifdef PMARE //special power for pmares
 			if ((rand()%100) == 0) // invis instead
-				this->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, 10000, player->ID());
+				this->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, 10000, player->ID(), EffectOrigin::ART_EVOKE);
 #endif
 #endif
 				return gs->PlayerAttack(LyraBitmap::MARE_MELEE_MISSILE, MELEE_VELOCITY, LyraEffect::NONE, BOGROM_DAMAGE);

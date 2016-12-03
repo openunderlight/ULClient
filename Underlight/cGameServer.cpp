@@ -2357,6 +2357,9 @@ void cGameServer::HandleMessage(void)
 				}
 				break;
 			} 
+
+			// apply burn effect for appropriate messages - state1 is art plat, state3 is focal art plat
+			player->ApplyCrippleEffect(player_msg.MsgType(), player_msg.State1(), player_msg.State3(), player_msg.SenderID());
 			
 			bool art_reflected = false;
 			if (player->flags & ACTOR_REFLECT) {
@@ -2525,9 +2528,11 @@ void cGameServer::HandleMessage(void)
 					break;
 				case RMsg_PlayerMsg::HEALING_AURA:
 					arts->ApplyHealingAura(player_msg.State1(), player_msg.SenderID());
+					player->ApplyAvatarArmor(player_msg.State1(), player_msg.State3(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::RESTORE:  // skill, not used
 					arts->ApplyRestore(Arts::RESTORE, player_msg.State1(), player_msg.SenderID());
+					player->ApplyAvatarArmor(player_msg.State1(), player_msg.State3(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::PURIFY:		 // skill, not used
 					arts->ApplyPurify(Arts::PURIFY, player_msg.State1(), player_msg.SenderID());
@@ -4214,6 +4219,9 @@ void cGameServer::OnRoomChange(short last_x, short last_y)
 		LoadString (hInstance, IDS_SANCTUARY_HURTS, message, sizeof(message));
 		display->DisplayMessage(message);
 	}
+
+	// remove the avatar shield upon room change
+	player->RemoveTimedEffect(LyraEffect::PLAYER_SHIELD);
 
 	SetLoggedIntoRoom(false);
 	room_change_time = LyraTime();

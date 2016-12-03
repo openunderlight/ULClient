@@ -619,8 +619,8 @@ bool HandleGMFullMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 		{
 			tempavatar.SetHidden(1);
 			player->SetAvatar(tempavatar, true);
-			player->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, INT_MAX, player->ID());
-			player->SetTimedEffect(LyraEffect::PLAYER_MIND_BLANKED, INT_MAX, player->ID());
+			player->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, INT_MAX, player->ID(), EffectOrigin::KEYBOARD);
+			player->SetTimedEffect(LyraEffect::PLAYER_MIND_BLANKED, INT_MAX, player->ID(), EffectOrigin::KEYBOARD);
 			LoadString (hInstance, IDS_HIDDEN_TOGGLE, disp_message, sizeof(disp_message));
 			_stprintf(message, disp_message, "On");
 		}
@@ -883,7 +883,7 @@ bool HandleGMFullMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 				display->DisplayMessage(disp_message, false);
 			} else 
 			{
-				player->SetTimedEffect(ACTOR_EFFECT, 10000000, player->ID());	
+				player->SetTimedEffect(ACTOR_EFFECT, 10000000, player->ID(), EffectOrigin::KEYBOARD);
 				options.num_gm_effects++;
 			}
 		}

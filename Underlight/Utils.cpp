@@ -1516,7 +1516,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_SPIN; 
 	related_art[i] = Arts::CHAOTIC_VORTEX;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
-	default_duration[i] = 3; // 15 sec
+	default_duration[i] = 3; // 3 sec
 	harmful[i] = true;
 
   i = LyraEffect::PLAYER_BLEED;
@@ -1531,6 +1531,28 @@ cTimedEffects::cTimedEffects(void)
 	LoadString(hInstance, IDS_BLEED, name[i], sizeof(name[i]));
 	default_duration[i] = 7; // 15 seconds
 	harmful[i] = true;
+
+	i = LyraEffect::PLAYER_CRIPPLE;
+	LoadString(hInstance, IDS_PLAYER_CRIPPLE_ON, disp_message, sizeof(disp_message));
+	start_descrip[i] = _tcsdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_CRIPPLE_OFF, disp_message, sizeof(disp_message));
+	expire_descrip[i] = _tcsdup(disp_message);
+	actor_flag[i] = ACTOR_CRIPPLE;
+	related_art[i] = Arts::FATESENDER;
+	LoadString(hInstance, IDS_CRIPPLE, name[i], sizeof(name[i]));
+	default_duration[i] = 3; // 3 secs
+	harmful[i] = true;
+
+	i = LyraEffect::PLAYER_SHIELD;
+	LoadString(hInstance, IDS_PLAYER_SHIELD_ON, disp_message, sizeof(disp_message));
+	start_descrip[i] = _tcsdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_SHIELD_OFF, disp_message, sizeof(disp_message));
+	expire_descrip[i] = _tcsdup(disp_message);
+	actor_flag[i] = ACTOR_SHIELD;
+	related_art[i] = Arts::SOULMASTER;
+	LoadString(hInstance, IDS_AVATAR_SHIELD, name[i], sizeof(name[i]));
+	default_duration[i] = 3; // 3 secs
+	harmful[i] = false;
 
 	return;
 }

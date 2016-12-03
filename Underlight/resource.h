@@ -2879,6 +2879,12 @@
 #define IDS_SHOW_IN_PARTY_CHANNEL       4325
 #define IDS_CHANNEL_CLOSED              4326
 #define IDS_RALLY_PREEMOTE              4327
+#define IDS_CRIPPLE						4328
+#define IDS_PLAYER_CRIPPLE_ON			4329
+#define IDS_PLAYER_CRIPPLE_OFF			4330
+#define IDS_AVATAR_SHIELD				4331
+#define IDS_PLAYER_SHIELD_ON			4332
+#define	IDS_PLAYER_SHIELD_OFF			4333
 #define IDS_DOORBELL_ALERT              4340
 #define IDS_TORCH                       4341
 #define IDS_LUMITWIST                   4342
