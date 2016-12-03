@@ -3752,6 +3752,27 @@ void cGameServer::FinalizeItemDuplicate(cItem *orig_item, TCHAR* description)
 			info.SetStateField(0, &armor, sizeof(armor));
 			break;
 		}
+		case LyraItem::AMULET_FUNCTION:
+		{
+			lyra_item_amulet_t amulet;
+			memcpy(&amulet, state, sizeof(lyra_item_amulet_t));
+			info.SetStateField(0, &amulet, sizeof(amulet));
+			break;
+		}
+		case LyraItem::ESSENCE_FUNCTION:
+		{
+			lyra_item_essence_t essence;
+			memcpy(&essence, state, sizeof(lyra_item_essence_t));
+			info.SetStateField(0, &essence, sizeof(essence));
+			break;
+		}
+		case LyraItem::SUPPORT_FUNCTION:
+		{
+			lyra_item_support_t support;
+			memcpy(&support, state, sizeof(lyra_item_support_t));
+			info.SetStateField(0, &support, sizeof(support));
+			break;
+		}
 		default:
 			display->DisplayMessage("Cannot duplicate selected item function");
 			return;
