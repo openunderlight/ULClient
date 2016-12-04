@@ -571,7 +571,20 @@ void cItem::Use(void)
 			lyra_item_change_stat_t changestat;
 			memcpy(&changestat, state, sizeof(changestat));
 			drain_charge = true;
-			int modifier = CalculateModifier(changestat.modifier) + player->SkillSphere(Arts::DREAMSEER);
+
+			// 1 -> ds plat level
+			int ds_mod = 0; 
+			int ds_plat = player->SkillSphere(Arts::DREAMSEER);
+
+			if (ds_plat > 0) {
+				ds_mod = (rand() % ds_plat) + 1;
+#ifdef UL_DEV
+				_stprintf(message, "Adding additional %d points to the elemen usage due to your ties to Insight", ds_mod);
+				display->DisplayMessage(message);
+#endif
+			}
+
+			int modifier = CalculateModifier(changestat.modifier) + ds_mod;
 
 			if (((player->CurrStat(changestat.stat) == player->MaxStat(changestat.stat)) && (modifier >= 0)) ||
 				((player->CurrStat(changestat.stat) == Stats::STAT_MIN) && (modifier <= 0)))
