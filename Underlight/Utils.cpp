@@ -1225,7 +1225,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_CURSED;
 	related_art[i] = Arts::CURSE;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
-	default_duration[i] = 23; // 10 min
+	default_duration[i] = 13; // 1 min
 	harmful[i] = true;
 
 	i = LyraEffect::PLAYER_BLIND;
