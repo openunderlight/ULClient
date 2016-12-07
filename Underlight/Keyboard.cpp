@@ -899,14 +899,6 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	switch (vk) 
 	{
 	case VK_F2:
-		if ((!itemdlg) && (options.network))
-		{
-			itemdlg = TRUE;
-			HWND hDlg = CreateLyraDialog(hInstance, IDD_CREATE_ITEM, cDD->Hwnd_Main(), (DLGPROC)CreateItemDlgProc);
-			SendMessage(hDlg, WM_INIT_ITEMCREATOR, 0, (LPARAM)CreateItem::GM_ITEM);
-		}
-		return true;
-	case VK_F3:
 #ifdef GAMEMASTER
 		if (options.network)
 		{
@@ -920,6 +912,14 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		}
 #endif
 		return false;
+	case VK_F3:
+		if ((!itemdlg) && (options.network))
+		{
+			itemdlg = TRUE;
+			HWND hDlg = CreateLyraDialog(hInstance, IDD_CREATE_ITEM, cDD->Hwnd_Main(), (DLGPROC)CreateItemDlgProc);
+			SendMessage(hDlg, WM_INIT_ITEMCREATOR, 0, (LPARAM)CreateItem::GM_ITEM);
+		}
+		return true;
 	case VK_F4:
 		agentbox->Show();
 		return true;

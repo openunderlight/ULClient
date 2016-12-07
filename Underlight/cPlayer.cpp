@@ -812,14 +812,14 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 
 		if (new_strength>50) new_strength = 50;
 		// Note that these messages are now debug ONLY
-#ifdef UL_DEBUG
+#ifdef UL_DEV
 		LoadString (hInstance, IDS_CURSE_CHANGE, disp_message, sizeof(disp_message));
 	_stprintf(message, disp_message, new_strength, curse_strength);
 		display->DisplayMessage(message, false);
 #endif
 		if (new_strength>curse_strength) {
 			curse_strength = new_strength;
-#ifdef UL_DEBUG
+#ifdef UL_DEV
 			LoadString (hInstance, IDS_CURSE_STRONGER, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, curse_strength);
 			display->DisplayMessage(message, false);
