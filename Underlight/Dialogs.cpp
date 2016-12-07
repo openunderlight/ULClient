@@ -122,6 +122,8 @@ static HWND hwnd_locateavatar = NULL;
 static HWND hwnd_ignorelist = NULL;
 static HWND hwnd_avatar = NULL;
 
+static char windowsVersion[50];
+
 //////////////////////////////////////////////////////////////////
 // Constants
 
@@ -136,7 +138,28 @@ HWND TopMost(void)
 	return HWND_TOPMOST;
 }
 
+void getWindowsVersion(char * ver) {
+	DWORD dwVersion = 0;
+	DWORD dwMajorVersion = 0;
+	DWORD dwMinorVersion = 0;
+	DWORD dwBuild = 0;
 
+	dwVersion = GetVersion();
+
+	// Get the Windows version
+
+	dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
+	dwMinorVersion = (DWORD)(HIBYTE(LOWORD(dwVersion)));
+
+	// Get the build number
+
+	if (dwVersion < 0x80000000)
+		dwBuild = (DWORD)(HIWORD(dwVersion));
+
+	sprintf(ver, "Platform: %d.%d (%d)", dwMajorVersion, dwMinorVersion, dwBuild);
+
+	return;
+}
 
 void CALLBACK AcceptRejectTimerCallback (HWND hWindow, UINT uMSG, UINT idEvent, DWORD dwTime)
 {	// auto-reject on timeout
@@ -721,8 +744,12 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 					else if (Button_GetCheck(GetDlgItem(hDlg, IDC_SPECIAL_TALK)))
 					{
 						target = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_SPECIAL_TALKLIST));
-						if (target == 0) // bug report
-							gs->Talk(sentence,RMsg_Speech::REPORT_BUG, Lyra::ID_UNKNOWN, true);
+						if (target == 0) { // bug report
+							getWindowsVersion(windowsVersion);
+							strcat(sentence, "\n");
+							strcat(sentence, windowsVersion);
+							gs->Talk(sentence, RMsg_Speech::REPORT_BUG, Lyra::ID_UNKNOWN, true);
+						}
 						else if (target == 1) // cheat report
 							gs->Talk(sentence,RMsg_Speech::REPORT_CHEAT ,Lyra::ID_UNKNOWN, true);
 						else if (target == 2) // role playing report
