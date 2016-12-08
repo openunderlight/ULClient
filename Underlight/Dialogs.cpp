@@ -1665,10 +1665,10 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 				}
 			}
 #ifdef GAMEMASTER
-			// default to star for GMs
+			// default to invis for GMs
 			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 63);
-#else		// default to talis for players
-			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 1);
+#else		// default to first item in list
+			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 0);
 #endif
 			
 			ShowWindow(GetDlgItem(hDlg, IDC_ITEM_USE_PT), SW_HIDE);
