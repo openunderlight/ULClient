@@ -1692,10 +1692,10 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 				}
 			}
 #ifdef GAMEMASTER
-			// default to star for GMs
-			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 63);
-#else		// default to talis for players
-			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 1);
+			// default to invis for GMs
+			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 29);
+#else		// default to first item in list
+			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 0);
 #endif
 			
 			ShowWindow(GetDlgItem(hDlg, IDC_ITEM_USE_PT), SW_HIDE);
@@ -1976,6 +1976,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							//else
 							if (LyraItem::EntryTranslation(curr_effect, i) != 0)
 							{
+								int successCnt = 0;
 								int num_trans = NumberTranslations(LyraItem::EntryTranslation(curr_effect, i));
 								int start_at = LyraItem::EntryMinValue(curr_effect, i);
 								for (int j = start_at; j < start_at + num_trans; j++)
@@ -1985,9 +1986,16 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 										TranslateValue(LyraItem::EntryTranslation(curr_effect, i), j);
 										SendMessage((GetDlgItem(hDlg, property_fields[i])), CB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
 										ComboBox_SetItemData(GetDlgItem(hDlg, property_fields[i]), (ComboBox_GetCount(GetDlgItem(hDlg, property_fields[i]))-1), j);
+										successCnt++;
 									}
 								}
-								ComboBox_SetCurSel(GetDlgItem(hDlg,property_fields[i]),0);
+
+								int defaultIdx = 0;
+								if (LyraItem::EntryTranslation(curr_effect, i) == LyraItem::TRANSLATION_MODIFIER)
+								{
+									defaultIdx = successCnt / 2;
+								}
+								ComboBox_SetCurSel(GetDlgItem(hDlg, property_fields[i]), defaultIdx);
 							}
 						}
 						  }
