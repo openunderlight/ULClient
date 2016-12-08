@@ -1949,6 +1949,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							//else
 							if (LyraItem::EntryTranslation(curr_effect, i) != 0)
 							{
+								int successCnt = 0;
 								int num_trans = NumberTranslations(LyraItem::EntryTranslation(curr_effect, i));
 								int start_at = LyraItem::EntryMinValue(curr_effect, i);
 								for (int j = start_at; j < start_at + num_trans; j++)
@@ -1958,9 +1959,16 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 										TranslateValue(LyraItem::EntryTranslation(curr_effect, i), j);
 										SendMessage((GetDlgItem(hDlg, property_fields[i])), CB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
 										ComboBox_SetItemData(GetDlgItem(hDlg, property_fields[i]), (ComboBox_GetCount(GetDlgItem(hDlg, property_fields[i]))-1), j);
+										successCnt++;
 									}
 								}
-								ComboBox_SetCurSel(GetDlgItem(hDlg,property_fields[i]),0);
+
+								int defaultIdx = 0;
+								if (LyraItem::EntryTranslation(curr_effect, i) == LyraItem::TRANSLATION_MODIFIER)
+								{
+									defaultIdx = successCnt / 2;
+								}
+								ComboBox_SetCurSel(GetDlgItem(hDlg, property_fields[i]), defaultIdx);
 							}
 						}
 						  }
