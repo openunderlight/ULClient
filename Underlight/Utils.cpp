@@ -937,6 +937,10 @@ const int BY_GOE	= 256;
 const int BY_POR	= 512;
 const int BY_KOES	= 1024;
 const int BY_OSM	= 2048;
+const int BY_GK		= 4096;
+const int BY_DS		= 8192;
+const int BY_SM		= 16384;
+const int BY_FS		= 32768;
 
 struct talisman_name_t
 {
@@ -969,6 +973,15 @@ public:
 			return player->IsInGuild(Guild::ENTRANCED);
 		if (forge_flags & BY_DOL) 
 			return player->IsInGuild(Guild::LIGHT);
+		if (forge_flags & BY_GK)
+			return player->Skill(Arts::GATEKEEPER) > 0;
+		if (forge_flags & BY_DS)
+			return player->Skill(Arts::DREAMSEER) > 0;
+		if (forge_flags & BY_SM)
+			return player->Skill(Arts::SOULMASTER) > 0;
+		if (forge_flags & BY_FS)
+			return player->Skill(Arts::FATESENDER) > 0;
+
 
 		return false;
 	}
@@ -979,7 +992,7 @@ talisman_name_t talisman_names[] =
 	// { forgable, string table link, bitmap reference }
 	{BY_GM, IDS_UNKNOWN, LyraBitmap::NONE},
 	{BY_DSMITH, IDS_BLADE, LyraBitmap::DREAMBLADE},
-	{BY_GM, IDS_WARD, LyraBitmap::WARD},
+	{BY_GK, IDS_WARD, LyraBitmap::WARD},
 	{BY_GM, IDS_WARD_PASS_AMULET, LyraBitmap::AMULET},
 	{BY_GM, IDS_EMPH_ESS_TALISMAN, LyraBitmap::EMPHANT_ESSENCE},
 	{BY_GM, IDS_BOG_ESS_TALISMAN, LyraBitmap::BOGROM_ESSENCE},
