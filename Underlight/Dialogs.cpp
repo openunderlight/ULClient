@@ -1666,7 +1666,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			}
 #ifdef GAMEMASTER
 			// default to invis for GMs
-			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 63);
+			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 29);
 #else		// default to first item in list
 			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), 0);
 #endif
