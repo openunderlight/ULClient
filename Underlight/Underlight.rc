@@ -1613,7 +1613,7 @@ BEGIN
     IDS_POR_SYM             "POR_SYM"
     IDS_OOSM_SYM            "OOSM_SYM"
     IDS_BANISH              "BANISH"
-    IDS_SCROLL_POLE         "SCROLL_POLE"
+    IDS_SCROLL_POLE         "Banner"
 END
 
 STRINGTABLE
