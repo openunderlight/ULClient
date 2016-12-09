@@ -289,7 +289,18 @@ void cMissile::StrikeActor(cActor* actor)
 	{
 		damage = CalculateModifier(damage_type);
 		if (owner->IsNeighbor())
-			damage += ((cNeighbor*)owner)->Avatar().ExtraDamage();
+		{
+			int extra_dmg = ((cNeighbor*)owner)->Avatar().ExtraDamage();
+			
+			if (extra_dmg > 0) {
+				if (extra_dmg > 9) extra_dmg = 9;
+#ifdef UL_DEV
+				_stprintf(message, "An extra %d damage is being applied due to %s's damage bonus", extra_dmg, ((cNeighbor*)owner)->Name());
+				display->DisplayMessage(message);
+#endif
+				damage += extra_dmg;
+			}
+		}
 	}
 	else
 		damage = 0; 
