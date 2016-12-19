@@ -1873,7 +1873,7 @@ int mare_avatar = this->CurrentAvatarType();
 		case Avatars::BOGROM:	// 4-7 damage, melee
 #ifdef AGENT // special power for agents 
 			if ((rand()%1000) == 0) // invis instead
-				this->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, 10000, player->ID(), , EffectOrigin::ART_EVOKE);
+				this->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, 10000, player->ID(), EffectOrigin::ART_EVOKE);
 			else
 #else
 #ifdef PMARE //special power for pmares

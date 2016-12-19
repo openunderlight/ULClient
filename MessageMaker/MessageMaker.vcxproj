@@ -98,6 +98,7 @@
     <Lib>
       <OutputFile>.\Release\MessageMaker.lib</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Lib>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
