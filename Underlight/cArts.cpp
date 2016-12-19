@@ -6834,17 +6834,7 @@ void cArts::EndTrainSelf(void)
 		return;
 	}
 
-	int skill_sphere = (int)((player->Skill(art_id)+1)/10);
-	int num_tokens_required;
-
-	if (skill_sphere <= 1)
-		num_tokens_required = 2;
-	else if (skill_sphere <= 3)
-		num_tokens_required = 3;
-	else if (skill_sphere <= 6)
-		num_tokens_required = 4;
-	else
-		num_tokens_required = 5;
+	int num_tokens_required = CalculatePlateauTokensRequired(art_id);
 
 	switch (art_id) {
 		case Arts::NONE:
@@ -6877,6 +6867,29 @@ void cArts::EndTrainSelf(void)
 	this->ArtFinished(true);
 }
 
+// helper method
+int cArts::CalculatePlateauTokensRequired(int art_id)
+{
+	int num_tokens_required;
+	int skill_sphere = (int)((player->Skill(art_id) + 1) / 10);
+
+	if (skill_sphere <= 1)
+		num_tokens_required = 2;
+	else if (skill_sphere <= 3)
+		num_tokens_required = 3;
+	else if (skill_sphere <= 6)
+		num_tokens_required = 4;
+	else
+		num_tokens_required = 5;
+
+#ifdef UL_DEV
+	_stprintf(disp_message, "DEBUG MSG: %d tokens are required for skill of %d!", num_tokens_required, skill_sphere);
+	display->DisplayMessage(disp_message);
+#endif
+
+	return num_tokens_required;
+}
+
 // helper method 
 int cArts::CountTrainSphereTokens(lyra_id_t art_id, lyra_id_t target_id, cItem** tokens, 
 								  bool unique)
@@ -6897,18 +6910,6 @@ int cArts::CountTrainSphereTokens(lyra_id_t art_id, lyra_id_t target_id, cItem**
 			if ((support[num_tokens].target_id() != target_id) ||
 				(support[num_tokens].art_id != art_id))
 				continue;
-
-			//if (art_id == SPHERE_TOKEN_ART_ID)
-			//{/ // sphere ascension; check vs sphere level
-				//if (support[num_tokens].art_level < level_needed)
-					//continue; // level check eliminated
-			//} 
-			//else // training art; check vs art level
-//			if (art_id != SPHERE_TOKEN_ART_ID)
-	//		{
-	//			if (((int)(support[num_tokens].art_level/10) < (int)(level_needed/10)))
-	//				continue;
-//			} // level check eliminated.
 
 			duplicate = false;
 			int i = 0;
@@ -6933,11 +6934,7 @@ void cArts::ResponseTrainSelf(int art_id, int success)
 	int i, num_tokens = 0;
 	cItem* tokens[Lyra::INVENTORY_MAX]; // holds token pointers
 
-	int skill_sphere = (int)(player->Skill(art_id)/10);
-	int num_tokens_required = 3 + skill_sphere - 2;
-	if (num_tokens_required < 3)
-		num_tokens_required = 3;
-
+	int num_tokens_required = CalculatePlateauTokensRequired(art_id);	
 
 	if (success)
 	{	// success!!!
