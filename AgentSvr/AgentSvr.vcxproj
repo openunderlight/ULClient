@@ -224,7 +224,7 @@
       <AdditionalDependencies>libcmt.lib;../MessageMaker/Release/MessageMaker.lib;oldnames.lib;winmm.lib;ws2_32.lib;odbc32.lib;odbccp32.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\lyra\dev\AgentSvr.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <ProgramDatabaseFile>.\Release/AgentSvr.pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
       <MapFileName>.\Release/AgentSvr.map</MapFileName>
