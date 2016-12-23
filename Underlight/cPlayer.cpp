@@ -708,6 +708,7 @@ void cPlayer::ApplyCrippleEffect(int pmsg, int art_level, int fs_plat, lyra_id_t
 			duration_mod = art_level / 10;
 			break;
 		}
+		default: return;
 	}
 
 	if (duration_mod > 0)
@@ -2705,6 +2706,9 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 	{
 		if (options.network)
 			gs->LevelLogin();
+		
+		// remove the avatar shield upon level change
+		player->RemoveTimedEffect(LyraEffect::PLAYER_SHIELD);
 	}
 	else
 	{
@@ -2712,6 +2716,9 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 		{
 			this->MarkLastLocation();
 			gs->OnRoomChange((short)old_x, short(old_y));
+
+			// remove the avatar shield upon room change
+			player->RemoveTimedEffect(LyraEffect::PLAYER_SHIELD);
 		}
 	}
 
