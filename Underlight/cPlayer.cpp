@@ -1495,19 +1495,6 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 			display->DisplayMessage(disp_message);
 			return stats[stat].current;
 		}
-		// handle burn effect
-		else if (player->flags & ACTOR_CRIPPLE && cripple_strength > 0)
-		{
-			int new_damage = (int)(amount*((100 + cripple_strength) / 100.0));
-
-#ifdef UL_DEV
-			if (new_damage != amount) {
-				_stprintf(temp_message, "Initial damage of %d but %d was applied due to being tiny tim", amount, new_damage);
-				display->DisplayMessage(temp_message);
-			}
-#endif
-			amount = new_damage;
-		}
 	}
 
 
