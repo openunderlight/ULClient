@@ -619,8 +619,8 @@ bool HandleGMFullMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 		{
 			tempavatar.SetHidden(1);
 			player->SetAvatar(tempavatar, true);
-			player->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, INT_MAX, player->ID());
-			player->SetTimedEffect(LyraEffect::PLAYER_MIND_BLANKED, INT_MAX, player->ID());
+			player->SetTimedEffect(LyraEffect::PLAYER_INVISIBLE, INT_MAX, player->ID(), EffectOrigin::KEYBOARD);
+			player->SetTimedEffect(LyraEffect::PLAYER_MIND_BLANKED, INT_MAX, player->ID(), EffectOrigin::KEYBOARD);
 			LoadString (hInstance, IDS_HIDDEN_TOGGLE, disp_message, sizeof(disp_message));
 			_stprintf(message, disp_message, "On");
 		}
@@ -883,7 +883,7 @@ bool HandleGMFullMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 				display->DisplayMessage(disp_message, false);
 			} else 
 			{
-				player->SetTimedEffect(ACTOR_EFFECT, 10000000, player->ID());	
+				player->SetTimedEffect(ACTOR_EFFECT, 10000000, player->ID(), EffectOrigin::KEYBOARD);
 				options.num_gm_effects++;
 			}
 		}
@@ -899,11 +899,24 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	switch (vk) 
 	{
 	case VK_F2:
+#ifdef GAMEMASTER
+		if (options.network)
+		{
+			cItem *selected_item = cp->SelectedItem();
+			// don't attempt to duplicate if no item has been selected or if it's not a valid item 			
+			if ((selected_item == NO_ACTOR) || !(actors->ValidItem(selected_item)))
+				return false;
+
+			gs->DuplicateItem(selected_item);
+			return true;
+		}
+#endif
+		return false;
 	case VK_F3:
 		if ((!itemdlg) && (options.network))
 		{
 			itemdlg = TRUE;
-			HWND hDlg = CreateLyraDialog(hInstance, IDD_CREATE_ITEM,  cDD->Hwnd_Main(), (DLGPROC)CreateItemDlgProc);
+			HWND hDlg = CreateLyraDialog(hInstance, IDD_CREATE_ITEM, cDD->Hwnd_Main(), (DLGPROC)CreateItemDlgProc);
 			SendMessage(hDlg, WM_INIT_ITEMCREATOR, 0, (LPARAM)CreateItem::GM_ITEM);
 		}
 		return true;

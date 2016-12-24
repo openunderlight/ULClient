@@ -246,8 +246,8 @@ void cAI::SetAgentStats(void)
 			min_distance = 120;	//120.0f;
 			melee_only = false;
 			speed = SHAMBLE_SPEED;
-			this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 10000000, this->ID());
-			this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 10000000, this->ID());
+			this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 10000000, this->ID(), EffectOrigin::ART_EVOKE);
+			this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 10000000, this->ID(), EffectOrigin::ART_EVOKE);
 			flags = flags | ACTOR_REFLECT | ACTOR_DETECT_INVIS;
 			break;
 		case Avatars::EMPHANT:
@@ -269,10 +269,10 @@ void cAI::SetAgentStats(void)
 			speed = WALK_SPEED;
 			if (rand()%2)
 			{
-				this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, rand(), this->ID());
+				this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, rand(), this->ID(), EffectOrigin::ART_EVOKE);
 				flags = flags | ACTOR_DETECT_INVIS;
 			}
-			this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 28800000, this->ID());
+			this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 28800000, this->ID(), EffectOrigin::ART_EVOKE);
 			flags = flags | ACTOR_DETECT_INVIS;
 			break;
 		case Avatars::SHAMBLIX:
@@ -282,7 +282,7 @@ void cAI::SetAgentStats(void)
 			speed = RUN_SPEED;
 			if (rand()%7 == 0)
 			{
-				this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 10000000, this->ID());
+				this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 10000000, this->ID(), EffectOrigin::ART_EVOKE);
 				flags = flags | ACTOR_DETECT_INVIS;
 			}
 			break;
@@ -293,7 +293,7 @@ void cAI::SetAgentStats(void)
 			speed = RUN_SPEED;
 			if (rand()%5 == 0)
 			{
-				this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 10000000, this->ID());
+				this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 10000000, this->ID(), EffectOrigin::ART_EVOKE);
 				flags = flags | ACTOR_DETECT_INVIS;
 			}
 			break;
@@ -958,7 +958,7 @@ bool cAI::HasBeenStruck(int view)
 		//if (!struck_before && (rand()%15 == 0)) 
 		if (rand()%15 == 0)
 		{
-			this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 10000000, player->ID());
+			this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 10000000, player->ID(), EffectOrigin::ART_EVOKE);
 		}
 		else if (this->last_target == Lyra::ID_UNKNOWN)
 		// We've been hit, we have no target, and we didn't get vision
