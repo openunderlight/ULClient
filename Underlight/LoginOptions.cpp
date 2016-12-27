@@ -147,12 +147,10 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			if (options.dev_server == 1)
 			{
 				Button_SetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER1), 1);
-				//ShowWindow(GetDlgItem(hDlg, IDC_CUSTOM_IP), SW_HIDE);
 			}
 			else if (options.dev_server == 2)
 			{
 				Button_SetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER2), 1);
-				//ShowWindow(GetDlgItem(hDlg, IDC_CUSTOM_IP), SW_HIDE);
 			}
 			else if (options.dev_server == 3)
 			{
