@@ -74,6 +74,7 @@
 #define IDC_AVATAR_1                    1012
 #define IDC_AVATAR_2                    1013
 #define IDC_AVATAR_3                    1014
+#define IDC_CUSTOM_IP                   1015
 #define IDC_AVATAR                      1020
 #define IDC_AVATARHEAD                  1020
 #define IDC_JOINPARTY                   1021
@@ -381,6 +382,8 @@
 #define IDC_TCP_ONLY                    1441
 #define IDC_DEV_SERVER2                 1442
 #define IDS_DEV_GAME_SERVER_IP2         1443
+#define IDC_CUSTOM_DEV_SERVER           1444
+#define IDS_CUSTOM_IP_DEFAULT           1445
 #define IDC_OK                          1800
 #define IDC_CANCEL                      1801
 #define IDC_FIREWALL_FAQ                1801
@@ -2879,12 +2882,12 @@
 #define IDS_SHOW_IN_PARTY_CHANNEL       4325
 #define IDS_CHANNEL_CLOSED              4326
 #define IDS_RALLY_PREEMOTE              4327
-#define IDS_CRIPPLE						4328
-#define IDS_PLAYER_CRIPPLE_ON			4329
-#define IDS_PLAYER_CRIPPLE_OFF			4330
-#define IDS_AVATAR_SHIELD				4331
-#define IDS_PLAYER_SHIELD_ON			4332
-#define	IDS_PLAYER_SHIELD_OFF			4333
+#define IDS_CRIPPLE                     4328
+#define IDS_PLAYER_CRIPPLE_ON           4329
+#define IDS_PLAYER_CRIPPLE_OFF          4330
+#define IDS_AVATAR_SHIELD               4331
+#define IDS_PLAYER_SHIELD_ON            4332
+#define IDS_PLAYER_SHIELD_OFF           4333
 #define IDS_DOORBELL_ALERT              4340
 #define IDS_TORCH                       4341
 #define IDS_LUMITWIST                   4342
