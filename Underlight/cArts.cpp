@@ -6070,25 +6070,19 @@ void cArts::EndEmpathy(void* value)
 		this->DisplayNeighborBailed(Arts::EMPATHY);
 		this->ArtFinished(false);
 		return;
-	} 
+	}
 
-
-	/* Removed Bequeath PT Requirement 6/27/16 - AMR
-	cItem* power_tokens[Lyra::INVENTORY_MAX];
-	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
-	
-	if (0 == num_tokens)
+#ifndef GAMEMASTER
+	// non-gamemasters are not allowed to bequeath mares
+	if (n->IsMonster())
 	{
-		LoadString (hInstance, IDS_NEED_POWER_TOKEN, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, arts->Descrip(Arts::EMPATHY));
-		display->DisplayMessage (message);
-
+		LoadString(hInstance, IDS_NO_XP_MONSTER, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
-
-	power_tokens[0]->Destroy();
-	*/
+#endif
+	
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::EMPATHY, k, c);
 
 	this->ArtFinished(true);

@@ -4395,6 +4395,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_NOACCESS_PORTAL     "That portal is currently inaccessible."
+    IDS_NO_XP_MONSTER       "You can't use Bequeath on Nightmares!"
 END
 
 #endif    // English (United States) resources
