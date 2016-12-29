@@ -2811,6 +2811,8 @@ void cArts::HealingAura(void)
 		gs->SendPlayerMessage(0, RMsg_PlayerMsg::HEALING_AURA,
 			player->Skill(Arts::HEALING_AURA), 0);
 	this->ApplyHealingAura(player->Skill(Arts::HEALING_AURA), player->ID());
+	// give evoker avatar armor
+	player->ApplyAvatarArmor(player->Skill(Arts::HEALING_AURA), player->SkillSphere(Arts::SOULMASTER), player->ID());
 	this->ArtFinished(true);
 	return;
 }

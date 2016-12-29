@@ -292,6 +292,20 @@ void cMissile::StrikeActor(cActor* actor)
 		{
 			int extra_dmg = ((cNeighbor*)owner)->Avatar().ExtraDamage();
 			
+			if (player->flags & ACTOR_CRIPPLE && player->cripple_strength > 0)
+			{
+				// Increase damage by 3/4 of the cripple strength
+				int new_damage = (int)(round(damage+(.75 * player->cripple_strength)));
+
+#ifdef UL_DEV
+				if (new_damage != damage) {
+					_stprintf(temp_message, "Initial damage of %d but %d was applied due to being tiny tim", damage, new_damage);
+					display->DisplayMessage(temp_message);
+				}
+#endif
+				damage = new_damage;
+			}
+
 			if (extra_dmg > 0) {
 				if (extra_dmg > 9) extra_dmg = 9;
 #ifdef UL_DEV
