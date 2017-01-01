@@ -233,6 +233,9 @@ bool cItem::LeftClick(void)
 // identify Item
 bool cItem::RightClick(void)
 {
+	// Check if we're allowed to right click
+	if (!gs->AllowRightClick()) return false;
+
 	TCHAR buffer[64];
 
 	if (lmitem.Header().Flags() & LyraItem::FLAG_HASDESCRIPTION)
@@ -568,21 +571,36 @@ void cItem::Use(void)
 			lyra_item_change_stat_t changestat;
 			memcpy(&changestat, state, sizeof(changestat));
 			drain_charge = true;
-			if (((player->CurrStat(changestat.stat) == player->MaxStat(changestat.stat)) && (changestat.modifier >= 0)) ||
-				((player->CurrStat(changestat.stat) == Stats::STAT_MIN) && (changestat.modifier <= 0)))
+
+			// 1 -> ds plat level
+			int ds_mod = 0; 
+			int ds_plat = player->SkillSphere(Arts::DREAMSEER);
+
+			if (ds_plat > 0) {
+				ds_mod = (rand() % ds_plat) + 1;
+#ifdef UL_DEV
+				_stprintf(message, "Adding additional %d points to the elemen usage due to your ties to Insight", ds_mod);
+				display->DisplayMessage(message);
+#endif
+			}
+
+			int modifier = CalculateModifier(changestat.modifier) + ds_mod;
+
+			if (((player->CurrStat(changestat.stat) == player->MaxStat(changestat.stat)) && (modifier >= 0)) ||
+				((player->CurrStat(changestat.stat) == Stats::STAT_MIN) && (modifier <= 0)))
 			{
 				LoadString (hInstance, IDS_NOTHING_HAPPENS, disp_message, sizeof(disp_message));
 				display->DisplayMessage (disp_message);
 			}
-			else if (changestat.modifier > 0)
+			else if (modifier > 0)
 			{
-				player->SetCurrStat(changestat.stat, CalculateModifier(changestat.modifier), SET_RELATIVE, player->ID());
+				player->SetCurrStat(changestat.stat, modifier, SET_RELATIVE, player->ID());
 				LoadString (hInstance, IDS_ITEM_FEELREFRESHED, disp_message, sizeof(disp_message));
 				display->DisplayMessage (disp_message);
 			}
 			else
 			{
-				player->SetCurrStat(changestat.stat, (CalculateModifier(changestat.modifier)), SET_RELATIVE, player->ID());
+				player->SetCurrStat(changestat.stat, modifier, SET_RELATIVE, player->ID());
 				LoadString (hInstance, IDS_ITEM_FEELDRAINED, disp_message, sizeof(disp_message));
 				display->DisplayMessage (disp_message);
 			}
@@ -655,7 +673,7 @@ void cItem::Use(void)
 			lyra_item_effect_player_t effectplayer;
 			memcpy(&effectplayer, state, sizeof(effectplayer));
 			drain_charge = true;
-			player->SetTimedEffect(effectplayer.effect, CalculateDuration(effectplayer.duration), player->ID());
+			player->SetTimedEffect(effectplayer.effect, CalculateDuration(effectplayer.duration), player->ID(), EffectOrigin::USE_ITEM);
 		}
 			break;
 		case LyraItem::META_ESSENCE_FUNCTION:

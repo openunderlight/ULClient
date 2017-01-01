@@ -178,6 +178,8 @@ class cPlayer : public cActor
 	  int blast_chance; // Blast Chance tracks the chance an Ago will reciprocate your Blast
 	  int poison_strength;
 	  int reflect_strength;
+	  int cripple_strength;
+	  int avatar_armor_strength;
 	  
 	  // Selection Functions
 	  virtual TCHAR* Name(void);
@@ -244,8 +246,9 @@ class cPlayer : public cActor
 	  bool IsPMare (void); 
 	  bool IsDreamerAccount (void);
 
-	  unsigned char GuildFlags (int rank);
+	  unsigned char GuildFlags (int rank);	  
 	  inline int GuildRank(int guild_id) { return guild_ranks[guild_id].rank; };
+	  inline bool IsInGuild(int guild_id) { return GuildRank(guild_id) >= Guild::INITIATE; };
 	  inline int GuildXPPool(int guild_id) { return guild_ranks[guild_id].xp_award_pool; };
 	  inline int CurrStat(int stat) { return stats[stat].current; }; 
 	  inline int MaxStat(int stat) { return stats[stat].max; };
@@ -301,7 +304,9 @@ class cPlayer : public cActor
 	  void SetTransformedAvatar(LmAvatar new_avatar);
 	  void SetFocusStat(int stat) { focus_stat = stat; };
 	  void SetSelectedStat(int stat) { selected_stat = stat; };
-	  bool SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id);
+	  bool SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, int effect_origin);
+	  void ApplyAvatarArmor(int art_level, int sm_plat, lyra_id_t caster_id);
+	  void ApplyCrippleEffect(int pmsg, int art_level, int fs_plat, lyra_id_t caster_id);
 	  void RemoveTimedEffect(int effect);
 	  inline void SetInjured(bool value) { injured = value; };
 	  inline void SetChannelTarget(lyra_id_t value) { channelTarget = value; };
@@ -342,6 +347,7 @@ class cPlayer : public cActor
 
    protected:
 	  void CheckStatus(void); // expire special timed effects, heal, etc.
+	  DWORD CalculateBreakthrough(DWORD duration, int effect_origin);
 
 	// copy constructor and assignment operator are
 	// private and undefined -> errors if used

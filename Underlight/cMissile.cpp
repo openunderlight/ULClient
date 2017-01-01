@@ -243,14 +243,14 @@ void cMissile::StrikeActor(cActor* actor)
 		//if ((effect == LyraEffect::PLAYER_POISONED) && (player->poison_strength < MinModifierSkill(damage_type))) {
 		//		player->poison_strength = MinModifierSkill(damage_type);
 		//}
-		player->SetTimedEffect(effect, CalculateDuration(timed_effects->default_duration[effect]), owner_id);
+		player->SetTimedEffect(effect, CalculateDuration(timed_effects->default_duration[effect]), owner_id, EffectOrigin::MISSILE);
 	}
 #else
 	if (actor->IsPlayer() && (owner != player)  && effect) {
 		//if ((effect == LyraEffect::PLAYER_POISONED) && (player->poison_strength < MinModifierSkill(damage_type))) {
 		//		player->poison_strength = MinModifierSkill(damage_type);
 		//}
-		player->SetTimedEffect(effect, CalculateDuration(timed_effects->default_duration[effect]), owner_id);
+		player->SetTimedEffect(effect, CalculateDuration(timed_effects->default_duration[effect]), owner_id, EffectOrigin::MISSILE);
 	}
 #endif
 	if ((actor->IsPlayer()) && (owner == player) && returning)
@@ -289,7 +289,32 @@ void cMissile::StrikeActor(cActor* actor)
 	{
 		damage = CalculateModifier(damage_type);
 		if (owner->IsNeighbor())
-			damage += ((cNeighbor*)owner)->Avatar().ExtraDamage();
+		{
+			int extra_dmg = ((cNeighbor*)owner)->Avatar().ExtraDamage();
+			
+			if (player->flags & ACTOR_CRIPPLE && player->cripple_strength > 0)
+			{
+				// Increase damage by 3/4 of the cripple strength
+				int new_damage = (int)(round(damage+(.75 * player->cripple_strength)));
+
+#ifdef UL_DEV
+				if (new_damage != damage) {
+					_stprintf(temp_message, "Initial damage of %d but %d was applied due to being tiny tim", damage, new_damage);
+					display->DisplayMessage(temp_message);
+				}
+#endif
+				damage = new_damage;
+			}
+
+			if (extra_dmg > 0) {
+				if (extra_dmg > 9) extra_dmg = 9;
+#ifdef UL_DEV
+				_stprintf(message, "An extra %d damage is being applied due to %s's damage bonus", extra_dmg, ((cNeighbor*)owner)->Name());
+				display->DisplayMessage(message);
+#endif
+				damage += extra_dmg;
+			}
+		}
 	}
 	else
 		damage = 0; 
