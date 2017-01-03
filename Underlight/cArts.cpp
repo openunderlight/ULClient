@@ -5588,6 +5588,17 @@ void cArts::MidSummon(void)
 		this->ArtFinished(false);
 		return;
 	}
+
+	cNeighbor *n = cp->SelectedNeighbor();
+
+	if (n->IsAgentAccount())
+	{
+		_stprintf(disp_message, "You are not able to use Summon on %s.", n->Name());
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	entervaluedlg = true;
 	_stprintf(message, _T("%d;%d;%d"), (int)last_summon_x, (int)last_summon_y, last_summon_level);
 	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
@@ -5601,6 +5612,11 @@ void cArts::MidSummon(void)
 
 void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int lvl)
 {
+#ifdef AGENT
+	// Agents cannot be summoned
+	return;
+#endif
+
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::SUMMON);
 
