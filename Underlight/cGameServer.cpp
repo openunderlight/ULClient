@@ -4240,10 +4240,7 @@ void cGameServer::OnRoomChange(short last_x, short last_y)
 		LoadString (hInstance, IDS_SANCTUARY_HURTS, message, sizeof(message));
 		display->DisplayMessage(message);
 	}
-
-	// remove the avatar shield upon room change
-	player->RemoveTimedEffect(LyraEffect::PLAYER_SHIELD);
-
+	
 	SetLoggedIntoRoom(false);
 	room_change_time = LyraTime();
 	got_peer_updates = false;

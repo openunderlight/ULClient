@@ -2957,6 +2957,7 @@
 #define IDS_BANISH                      4409
 #define IDS_SCROLL_POLE                 4410
 #define IDS_NOACCESS_PORTAL             4450
+#define IDS_NO_XP_MONSTER               4451
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
