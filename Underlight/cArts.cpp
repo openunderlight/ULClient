@@ -2811,6 +2811,8 @@ void cArts::HealingAura(void)
 		gs->SendPlayerMessage(0, RMsg_PlayerMsg::HEALING_AURA,
 			player->Skill(Arts::HEALING_AURA), 0);
 	this->ApplyHealingAura(player->Skill(Arts::HEALING_AURA), player->ID());
+	// give evoker avatar armor
+	player->ApplyAvatarArmor(player->Skill(Arts::HEALING_AURA), player->SkillSphere(Arts::SOULMASTER), player->ID());
 	this->ArtFinished(true);
 	return;
 }
@@ -5586,6 +5588,17 @@ void cArts::MidSummon(void)
 		this->ArtFinished(false);
 		return;
 	}
+
+	cNeighbor *n = cp->SelectedNeighbor();
+
+	if (n->IsAgentAccount())
+	{
+		_stprintf(disp_message, "You are not able to use Summon on %s.", n->Name());
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	entervaluedlg = true;
 	_stprintf(message, _T("%d;%d;%d"), (int)last_summon_x, (int)last_summon_y, last_summon_level);
 	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
@@ -5599,6 +5612,11 @@ void cArts::MidSummon(void)
 
 void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int lvl)
 {
+#ifdef AGENT
+	// Agents cannot be summoned
+	return;
+#endif
+
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::SUMMON);
 
@@ -6068,25 +6086,19 @@ void cArts::EndEmpathy(void* value)
 		this->DisplayNeighborBailed(Arts::EMPATHY);
 		this->ArtFinished(false);
 		return;
-	} 
+	}
 
-
-	/* Removed Bequeath PT Requirement 6/27/16 - AMR
-	cItem* power_tokens[Lyra::INVENTORY_MAX];
-	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
-	
-	if (0 == num_tokens)
+#ifndef GAMEMASTER
+	// non-gamemasters are not allowed to bequeath mares
+	if (n->IsMonster())
 	{
-		LoadString (hInstance, IDS_NEED_POWER_TOKEN, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, arts->Descrip(Arts::EMPATHY));
-		display->DisplayMessage (message);
-
+		LoadString(hInstance, IDS_NO_XP_MONSTER, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
-
-	power_tokens[0]->Destroy();
-	*/
+#endif
+	
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::EMPATHY, k, c);
 
 	this->ArtFinished(true);
@@ -6834,17 +6846,7 @@ void cArts::EndTrainSelf(void)
 		return;
 	}
 
-	int skill_sphere = (int)((player->Skill(art_id)+1)/10);
-	int num_tokens_required;
-
-	if (skill_sphere <= 1)
-		num_tokens_required = 2;
-	else if (skill_sphere <= 3)
-		num_tokens_required = 3;
-	else if (skill_sphere <= 6)
-		num_tokens_required = 4;
-	else
-		num_tokens_required = 5;
+	int num_tokens_required = CalculatePlateauTokensRequired(art_id);
 
 	switch (art_id) {
 		case Arts::NONE:
@@ -6877,6 +6879,29 @@ void cArts::EndTrainSelf(void)
 	this->ArtFinished(true);
 }
 
+// helper method
+int cArts::CalculatePlateauTokensRequired(int art_id)
+{
+	int num_tokens_required;
+	int skill_sphere = (int)((player->Skill(art_id) + 1) / 10);
+
+	if (skill_sphere <= 1)
+		num_tokens_required = 2;
+	else if (skill_sphere <= 3)
+		num_tokens_required = 3;
+	else if (skill_sphere <= 6)
+		num_tokens_required = 4;
+	else
+		num_tokens_required = 5;
+
+#ifdef UL_DEV
+	_stprintf(disp_message, "DEBUG MSG: %d tokens are required for skill of %d!", num_tokens_required, skill_sphere);
+	display->DisplayMessage(disp_message);
+#endif
+
+	return num_tokens_required;
+}
+
 // helper method 
 int cArts::CountTrainSphereTokens(lyra_id_t art_id, lyra_id_t target_id, cItem** tokens, 
 								  bool unique)
@@ -6897,18 +6922,6 @@ int cArts::CountTrainSphereTokens(lyra_id_t art_id, lyra_id_t target_id, cItem**
 			if ((support[num_tokens].target_id() != target_id) ||
 				(support[num_tokens].art_id != art_id))
 				continue;
-
-			//if (art_id == SPHERE_TOKEN_ART_ID)
-			//{/ // sphere ascension; check vs sphere level
-				//if (support[num_tokens].art_level < level_needed)
-					//continue; // level check eliminated
-			//} 
-			//else // training art; check vs art level
-//			if (art_id != SPHERE_TOKEN_ART_ID)
-	//		{
-	//			if (((int)(support[num_tokens].art_level/10) < (int)(level_needed/10)))
-	//				continue;
-//			} // level check eliminated.
 
 			duplicate = false;
 			int i = 0;
@@ -6933,11 +6946,7 @@ void cArts::ResponseTrainSelf(int art_id, int success)
 	int i, num_tokens = 0;
 	cItem* tokens[Lyra::INVENTORY_MAX]; // holds token pointers
 
-	int skill_sphere = (int)(player->Skill(art_id)/10);
-	int num_tokens_required = 3 + skill_sphere - 2;
-	if (num_tokens_required < 3)
-		num_tokens_required = 3;
-
+	int num_tokens_required = CalculatePlateauTokensRequired(art_id);	
 
 	if (success)
 	{	// success!!!
