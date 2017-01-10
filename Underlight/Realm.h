@@ -43,7 +43,11 @@ extern int tlsTiming;
 
 #define NAME _T("Underlight")
 #define TITLE _T("Underlight")
+#ifdef UL_DEV
+#define REGISTRY_DATA_KEY _T("Software\\Lyra\\Underlight\\Dev")
+#else
 #define REGISTRY_DATA_KEY _T("Software\\Lyra\\Underlight\\1.0")
+#endif
 #define AGENT_REGISTRY_KEY _T("Software\\Lyra\\AgentController\\1.0")
 
 struct timing_t
