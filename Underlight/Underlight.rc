@@ -2409,7 +2409,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_HYPNOTIC            "Your hypnotic gaze paralyzes everyone!\n"
-    IDS_RUN_TERROR          "All present run in flee in terror!\n"
+    IDS_RUN_TERROR          "All present flee in terror!\n"
     IDS_ROOM_DARKNESS       "Darkness envelopes the room!\n"
     IDS_GM_ART_LIMIT        "You may only have %d special powers active at a time\n"
     IDS_AGOKNIGHT_ROAR      "You unleash a deafening roar!"
