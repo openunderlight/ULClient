@@ -371,8 +371,11 @@ void cMissile::StrikeActor(cActor* actor)
 						damage = 0;
 #endif
 					break;
-				case Avatars::HORRON: // only hit from directly behind
-					if (view != 0)
+				case Avatars::HORRON: 
+					// side back shots to a horron do 50% damage
+					if (view == 1 || view == 5)
+						damage = damage*.50;
+					else if (view != 0) // only hit from directly behind for full damage
 #ifdef PMARE
 						// pmares don't get invulnerability, only 87% shield
 						damage = damage*.13;
