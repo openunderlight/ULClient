@@ -7341,7 +7341,7 @@ void cArts::StartCorruptEssence(void)
 		!player->IsRuler(Guild::NO_GUILD))
 	{
 		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		_stprintf(message, disp_message, this->Descrip(Arts::CORRUPT_ESSENCE));
 		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
@@ -7480,7 +7480,7 @@ void cArts::StartSacrifice(void)
 		!player->IsRuler(Guild::NO_GUILD))
 	{
 		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		_stprintf(message, disp_message, this->Descrip(Arts::SACRIFICE));
 		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
