@@ -1544,7 +1544,7 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 #ifdef PMARE // pmare bogroms get an additional 30% shield
 		if (this->GetMonsterType() == Avatars::BOGROM)
 			amount = amount*.70;
-		else // other pmares get a 15% shield
+		else if (this->GetMonsterType() != Avatars::AGOKNIGHT) // other pmares get a 15% shield
 			amount = amount*.85;
 #endif
 		if (amount)
