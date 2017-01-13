@@ -2463,6 +2463,18 @@ void cArts::Firestorm(void)
 
 void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 {
+
+#ifdef PMARE
+	// give pmares a 10% chance of absorbing the firestorm and shooting it back
+	if (rand() % 10 == 0)
+	{
+		_stprintf(message, "redirects the %s back throughout the room.", player->Name(), this->Descrip(Arts::FIRESTORM));
+		gs->Talk(message, RMsg_Speech::EMOTE, caster_id);
+		gs->SendPlayerMessage(0, RMsg_PlayerMsg::FIRESTORM, skill, 0, 0);
+		return;
+	}
+#endif
+
 	player->EvokedFX().Activate(Arts::FIRESTORM, false);
 	cDS->PlaySound(LyraSound::FIRESTORM);
 	if ((caster_id == player->ID()) || (gs && gs->Party() && gs->Party()->IsInParty(caster_id)))
