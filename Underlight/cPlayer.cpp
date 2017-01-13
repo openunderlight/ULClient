@@ -973,7 +973,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 								   } break;
 
 	case LyraEffect::PLAYER_POISONED: {
-		if ((flags & ACTOR_NO_POISON) || (player->IsPMare()) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
+		if (flags & ACTOR_NO_POISON)
 		{
 			LoadString (hInstance, IDS_PLAYER_POISON_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
@@ -981,18 +981,21 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		}
 
 		if (caster_id != player->ID())
-
 			last_poisoner = caster_id;
 
-		int new_strength = (duration/60000) + 1;	
+		// pmares and dark mares can only be affected w/ a 1 strength poison
+		if (duration > 60000 && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
+		{ 
+			duration = 60000;
+		}
 
-		if (new_strength>10) new_strength = 10;
+		int new_strength = (duration / 60000) + 1;
+		if (new_strength > 10) new_strength = 10;
 
-		if (new_strength>poison_strength)
-
-		poison_strength = new_strength;
-
-		} break;
+		if (new_strength > poison_strength)
+			poison_strength = new_strength;
+	} 
+	break;
   case LyraEffect::PLAYER_SPIN:
     {
     break;
@@ -1004,11 +1007,17 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 
 
 	if (flags & timed_effects->actor_flag[effect])
-	{	// extend duration of existing effect
-		//if (timed_effects->harmful[effect]) // 1/4 duration extension
-		//	timed_effects->expires[effect] += (int)(duration/4);
-		//else								// 1/2 duration extension
-		timed_effects->expires[effect] += (int)(duration/2);
+	{	
+		if (effect == LyraEffect::PLAYER_POISONED && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
+		{
+			// can't exceed duration of poison for pmares and dmares
+			timed_effects->expires[effect] = duration;
+		}
+		else
+		{
+			// regular effects increase by half the standard rate
+			timed_effects->expires[effect] += (int)(duration / 2);
+		}
 		if (timed_effects->more_descrip[effect])
 			display->DisplayMessage(timed_effects->more_descrip[effect] );
 		// don't display additional shield messages
