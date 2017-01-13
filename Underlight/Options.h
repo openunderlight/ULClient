@@ -112,7 +112,8 @@ struct options_t {
 	int resolution; // 640 = 640x480, 800 = 800x600, 1024 = 1024x768
 
 #ifdef UL_DEV
-	int dev_server; // 1, 2
+	int dev_server; // 1, 2, 3
+	char custom_ip[64] = "127.0.0.1"; // IP of Custom Server
 #endif
 
 	TCHAR gamed_URL[64]; // URL of game server pointer

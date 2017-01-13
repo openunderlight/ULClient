@@ -442,7 +442,7 @@ bool __cdecl Init_Game(void)
 	leveleditor = (bool)_tcslen(argv);
 	//MessageBox(NULL, argv, "Args", MB_OK);
 	if (leveleditor)
-		_stscanf(argv, _T("%*s %d %d %d %d %d\n"),gamefile, &start_level_id);
+		_stscanf(argv, _T("%s %d %d %d %d %d\n"),gamefile, &start_level_id);
 #endif
 
 #endif

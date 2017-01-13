@@ -2811,6 +2811,8 @@ void cArts::HealingAura(void)
 		gs->SendPlayerMessage(0, RMsg_PlayerMsg::HEALING_AURA,
 			player->Skill(Arts::HEALING_AURA), 0);
 	this->ApplyHealingAura(player->Skill(Arts::HEALING_AURA), player->ID());
+	// give evoker avatar armor
+	player->ApplyAvatarArmor(player->Skill(Arts::HEALING_AURA), player->SkillSphere(Arts::SOULMASTER), player->ID());
 	this->ArtFinished(true);
 	return;
 }
@@ -5586,6 +5588,17 @@ void cArts::MidSummon(void)
 		this->ArtFinished(false);
 		return;
 	}
+
+	cNeighbor *n = cp->SelectedNeighbor();
+
+	if (n->IsAgentAccount())
+	{
+		_stprintf(disp_message, "You are not able to use Summon on %s.", n->Name());
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	entervaluedlg = true;
 	_stprintf(message, _T("%d;%d;%d"), (int)last_summon_x, (int)last_summon_y, last_summon_level);
 	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
@@ -5599,6 +5612,11 @@ void cArts::MidSummon(void)
 
 void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int lvl)
 {
+#ifdef AGENT
+	// Agents cannot be summoned
+	return;
+#endif
+
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::SUMMON);
 
@@ -6068,25 +6086,19 @@ void cArts::EndEmpathy(void* value)
 		this->DisplayNeighborBailed(Arts::EMPATHY);
 		this->ArtFinished(false);
 		return;
-	} 
+	}
 
-
-	/* Removed Bequeath PT Requirement 6/27/16 - AMR
-	cItem* power_tokens[Lyra::INVENTORY_MAX];
-	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
-	
-	if (0 == num_tokens)
+#ifndef GAMEMASTER
+	// non-gamemasters are not allowed to bequeath mares
+	if (n->IsMonster())
 	{
-		LoadString (hInstance, IDS_NEED_POWER_TOKEN, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, arts->Descrip(Arts::EMPATHY));
-		display->DisplayMessage (message);
-
+		LoadString(hInstance, IDS_NO_XP_MONSTER, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
-
-	power_tokens[0]->Destroy();
-	*/
+#endif
+	
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::EMPATHY, k, c);
 
 	this->ArtFinished(true);

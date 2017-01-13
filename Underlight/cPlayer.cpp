@@ -674,10 +674,12 @@ void cPlayer::ApplyAvatarArmor(int art_level, int sm_plat, lyra_id_t caster_id)
 	}
 
 	int duration = 3000 + ((art_level / 10) * 1000);
+	// the avatar armor has a base of 3%
+	int new_armor_strength = sm_plat + 3;
 	
 	// only modify the shield strength if it's better
-	if (sm_plat > avatar_armor_strength)
-		avatar_armor_strength = sm_plat;
+	if (new_armor_strength > avatar_armor_strength)
+		avatar_armor_strength = new_armor_strength;
 
 	player->SetTimedEffect(LyraEffect::PLAYER_SHIELD, duration, caster_id, EffectOrigin::ART_EVOKE);
 }
@@ -708,6 +710,7 @@ void cPlayer::ApplyCrippleEffect(int pmsg, int art_level, int fs_plat, lyra_id_t
 			duration_mod = art_level / 10;
 			break;
 		}
+		default: return;
 	}
 
 	if (duration_mod > 0)
@@ -1495,21 +1498,7 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 			display->DisplayMessage(disp_message);
 			return stats[stat].current;
 		}
-		// handle burn effect
-		else if (player->flags & ACTOR_CRIPPLE && cripple_strength > 0)
-		{
-			int new_damage = (int)(amount*((100 + cripple_strength) / 100.0));
-
-#ifdef UL_DEV
-			if (new_damage != amount) {
-				_stprintf(temp_message, "Initial damage of %d but %d was applied due to being tiny tim", amount, new_damage);
-				display->DisplayMessage(temp_message);
-			}
-#endif
-			amount = new_damage;
-		}
 	}
-
 
 	// check for armor on dreamsoul drains
 	if ((stat == Stats::DREAMSOUL) && (how == SET_RELATIVE) && (value <0) &&
@@ -1524,6 +1513,16 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 				display->DisplayMessage(temp_message);
 			}
 #endif
+			// 10% chance for an attack stronger than 3 dreamsoul to break your shield
+			if (amount < -3 && rand() % 10 == 0)
+			{
+#ifdef UL_DEV
+				_stprintf(temp_message, "Oh snap! That mofo broke your shield, yo!");
+				display->DisplayMessage(temp_message);
+#endif
+				this->RemoveTimedEffect(LyraEffect::PLAYER_SHIELD);
+			}
+			
 			amount = new_damage;
 		}
 
@@ -2718,6 +2717,9 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 	{
 		if (options.network)
 			gs->LevelLogin();
+		
+		// remove the avatar shield upon level change
+		player->RemoveTimedEffect(LyraEffect::PLAYER_SHIELD);
 	}
 	else
 	{
@@ -2725,6 +2727,9 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 		{
 			this->MarkLastLocation();
 			gs->OnRoomChange((short)old_x, short(old_y));
+
+			// remove the avatar shield upon room change
+			player->RemoveTimedEffect(LyraEffect::PLAYER_SHIELD);
 		}
 	}
 

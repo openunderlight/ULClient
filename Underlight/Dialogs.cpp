@@ -5475,7 +5475,6 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 							LoadString (hInstance, IDS_CANT_GET_XP, message, sizeof(message));
 							pp.cost = 0;
 						} else {
-							int xp_gain = LmStats::XPPPCost(player->XP());
 							int curr_orbit = player->Orbit();
 							int curr_xp = player->XP();
 							int max_xp = 0;
@@ -5487,16 +5486,23 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 							ShowWindow(GetDlgItem(hDlg, IDC_PP_SUBSEL), SW_SHOWNORMAL);
 							LoadString(hInstance, IDS_GAIN_XP, message, sizeof(message));
 
+							int xp_gain = 0;
+							int total_xp_gain = 0;
+							int prev_xp;
 							for (int i = 1; i <= player->PPoints(); i++)
 							{	
-								if (max_xp <= curr_xp + (i*xp_gain)) {
-									_stprintf(disp_message, "%d", max_xp - curr_xp);
+								xp_gain = LmStats::XPPPCost(curr_xp+total_xp_gain);
+								prev_xp = curr_xp + total_xp_gain;
+								if (max_xp <= (prev_xp + xp_gain)) {
+									_stprintf(disp_message, "%d", (max_xp - curr_xp));
 									ComboBox_AddString(GetDlgItem(hDlg, IDC_PP_SUBSEL), disp_message);
 									break;
 								} else {
-									_stprintf(disp_message, "%d", i*xp_gain);
+									total_xp_gain = total_xp_gain + xp_gain;
+
+									_stprintf(disp_message, "%d", total_xp_gain);
 									ComboBox_AddString(GetDlgItem(hDlg, IDC_PP_SUBSEL), disp_message);
-								}
+								}								
 							}
 						}
 						

@@ -142,11 +142,24 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 #ifdef UL_DEV
 			ShowWindow(GetDlgItem(hDlg, IDC_DEV_SERVER1),SW_SHOW);
 			ShowWindow(GetDlgItem(hDlg, IDC_DEV_SERVER2),SW_SHOW);
-
+			ShowWindow(GetDlgItem(hDlg, IDC_CUSTOM_DEV_SERVER), SW_SHOW);
+			
 			if (options.dev_server == 1)
+			{
 				Button_SetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER1), 1);
+			}
 			else if (options.dev_server == 2)
+			{
 				Button_SetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER2), 1);
+			}
+			else if (options.dev_server == 3)
+			{
+				Button_SetCheck(GetDlgItem(hDlg, IDC_CUSTOM_DEV_SERVER), 1);
+				ShowWindow(GetDlgItem(hDlg, IDC_CUSTOM_IP), SW_SHOW);
+			}
+
+			_stprintf(message, _T("%s"), options.custom_ip);
+			Edit_SetText(GetDlgItem(hDlg, IDC_CUSTOM_IP), message);
 #endif // UL_DEV
 
 			TCHAR huge_text[4096];
@@ -235,6 +248,13 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			case IDC_LAUNCH_OPTIONS:
 				DialogBox(hInstance, MAKEINTRESOURCE(IDD_LAUNCH_OPTIONS), NULL, (DLGPROC)LaunchOptionsDlgProc);
 				return TRUE;
+			case IDC_DEV_SERVER1:
+			case IDC_DEV_SERVER2:
+				ShowWindow(GetDlgItem(hDlg, IDC_CUSTOM_IP), SW_HIDE);
+				return TRUE;
+			case IDC_CUSTOM_DEV_SERVER:
+				ShowWindow(GetDlgItem(hDlg, IDC_CUSTOM_IP), SW_SHOW);
+				return TRUE;
 			case IDC_OK:
 				{
 #ifdef UNICODE
@@ -275,6 +295,11 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 					options.dev_server = 1;
 				else if (Button_GetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER2)))
 					options.dev_server = 2;
+				else if (Button_GetCheck(GetDlgItem(hDlg, IDC_CUSTOM_DEV_SERVER)))
+				{
+					options.dev_server = 3;
+					GetWindowText(GetDlgItem(hDlg, IDC_CUSTOM_IP), options.custom_ip, sizeof(options.custom_ip));
+				}
 #endif
 
 #ifdef PMARE
@@ -307,13 +332,14 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 				if (Button_GetCheck(GetDlgItem(hDlg, IDC_LIVE_SERVER)))
 				{
 					LoadString(hInstance, IDS_LIVE_PATCH_FILE_URL, options.patch_URL, sizeof(options.patch_URL));
-//					LoadString(hInstance, IDS_LIVE_GAMED_URL, options.gamed_URL, ) ;
-					LoadString(hInstance, IDS_LIVE_GAME_SERVER_IP, options.game_server, sizeof(options.game_server)) ;
+					//					LoadString(hInstance, IDS_LIVE_GAMED_URL, options.gamed_URL, ) ;
+					LoadString(hInstance, IDS_LIVE_GAME_SERVER_IP, options.game_server, sizeof(options.game_server));
 				}
 				else if (Button_GetCheck(GetDlgItem(hDlg, IDC_DEV_SERVER2)))
 					//GetWindowText(GetDlgItem(hDlg, IDC_IP_ADDRESS), options.game_server, sizeof(options.game_server));
-					LoadString(hInstance, IDS_DEV_GAME_SERVER_IP2, options.game_server, sizeof(options.game_server)) ;
-
+					LoadString(hInstance, IDS_DEV_GAME_SERVER_IP2, options.game_server, sizeof(options.game_server));
+				else if (Button_GetCheck(GetDlgItem(hDlg, IDC_CUSTOM_DEV_SERVER)))
+					memcpy(options.game_server,options.custom_ip, sizeof(options.custom_ip));
 #else
 //				LoadString(hInstance,options.gamed_URL, LIVE_GAMED_URL);
 //#define MANACCOM
@@ -486,6 +512,8 @@ void __cdecl SaveOutOfGameRegistryOptionValues(HKEY reg_key)
 #ifdef UL_DEV
 	RegSetValueEx(reg_key, _T("dev_server"), 0, REG_DWORD,
 		(unsigned char *)&(options.dev_server), sizeof(options.dev_server));
+	RegSetValueEx(reg_key, _T("custom_server_ip"), 0, REG_SZ,
+		(unsigned char *) &(options.custom_ip), sizeof(options.custom_ip));
 #endif
 	RegSetValueEx(reg_key, _T("rogerwilco"), 0, REG_DWORD,  
 		(unsigned char *)&(options.rw), sizeof(options.rw));
@@ -616,7 +644,13 @@ void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 	keyresult = RegQueryValueEx(reg_key, _T("dev_server"), NULL, &reg_type,
 		(unsigned char*) &(options.dev_server), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
-		options.dev_server = 1;
+		options.dev_server = 1;	
+
+	size = sizeof(options.custom_ip);
+	keyresult = RegQueryValueEx(reg_key, _T("custom_server_ip"), NULL, &reg_type,
+		(unsigned char *)options.custom_ip, &size);
+	if ((keyresult != ERROR_SUCCESS) || force)
+		LoadString(hInstance, IDS_CUSTOM_IP_DEFAULT, options.custom_ip, sizeof(options.custom_ip));
 #endif
 
 	size = sizeof(options.network);
