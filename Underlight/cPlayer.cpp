@@ -1906,6 +1906,12 @@ int mare_avatar = this->CurrentAvatarType();
 			break;
 
 		case Avatars::SHAMBLIX: 
+#ifdef PMARE
+			if (rand() % 100 == 0) {
+				// 1-50 damage, paralysis fireballs
+				return gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE, -5, LyraEffect::PLAYER_PARALYZED, SHAMBLIX_DAMAGE_XTR);
+			}
+#endif
 			// 10-30 damage, paralysis fireballs
 			return gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE, 3, LyraEffect::PLAYER_PARALYZED, SHAMBLIX_DAMAGE);
 
@@ -1932,6 +1938,12 @@ int mare_avatar = this->CurrentAvatarType();
 					break;
 				}
 
+			}
+#endif
+#ifdef PMARE
+			if (rand() % 100 == 0) {
+				// 35 damage, blind fireballs
+				return gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE, -7, LyraEffect::PLAYER_BLIND, HORRON_DAMAGE_XTR);
 			}
 #endif
 			return gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE, -5, LyraEffect::PLAYER_BLIND, HORRON_DAMAGE);
