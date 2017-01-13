@@ -365,8 +365,8 @@ void cMissile::StrikeActor(cActor* actor)
 				case Avatars::SHAMBLIX: // only hit from rear
 					if ((view > 1) && (view < 5))
 #ifdef PMARE
-						// pmares don't get invulnerability, only 70% shield
-						damage = damage*.30;
+						// pmares don't get invulnerability, only 75% shield
+						damage = damage*.25;
 #else
 						damage = 0;
 #endif
@@ -375,7 +375,7 @@ void cMissile::StrikeActor(cActor* actor)
 					if (view != 0)
 #ifdef PMARE
 						// pmares don't get invulnerability, only 87% shield
-						damage = damage*.30;
+						damage = damage*.13;
 #else
 						damage = 0;
 #endif
