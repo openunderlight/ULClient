@@ -81,7 +81,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 
 			if (options.resolution == 800)
 				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES800), 1);
-			else if (options.resolution == 1024)
+			else
 				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES1024), 1);
 
 			Button_SetCheck(GetDlgItem(hDlg, IDC_RESTART_LOCATION),  options.restart_last_location);
