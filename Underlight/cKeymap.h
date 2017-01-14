@@ -179,11 +179,11 @@ const int MAPPING_NOT_FOUND = -1;
 const int default_num_keys = 57;
 const keymap_t default_keymap[default_num_keys] = 
 {
-	{'1', LyraKeyboard::SET_ITEM_EFFECT_0, Arts::NONE},
+	{'1', LyraKeyboard::ART, Arts::SENSE_DREAMERS},
 	{'2', LyraKeyboard::SET_ITEM_EFFECT_1, Arts::NONE},
 	{'3', LyraKeyboard::SET_ITEM_EFFECT_2, Arts::NONE},
 	{'I', LyraKeyboard::TOGGLE_NAMES, Arts::NONE},
-	{'D', LyraKeyboard::DROP_ITEM, Arts::NONE},
+	{'D', LyraKeyboard::SIDESTEP_RIGHT, Arts::NONE},
 	{'E', LyraKeyboard::EMOTE, Arts::NONE},
 	{'G', LyraKeyboard::OPEN_GOAL_BOOK, Arts::NONE},
 	{'L', LyraKeyboard::LEAVE_PARTY, Arts::NONE},
@@ -192,7 +192,7 @@ const keymap_t default_keymap[default_num_keys] =
 	{',', LyraKeyboard::SHOW_NEXT, Arts::NONE},
 	{'.', LyraKeyboard::SHOW_PREV, Arts::NONE},
 	{'R', LyraKeyboard::RESET_EYELEVEL, Arts::NONE},
-	{'S', LyraKeyboard::TOGGLE_SOUND, Arts::NONE},
+	{'A', LyraKeyboard::TOGGLE_SOUND, Arts::NONE},
 	{'T', LyraKeyboard::TALK, Arts::NONE},
 	{222, LyraKeyboard::TALK, Arts::NONE}, // (apostrophe)
 	{'W', LyraKeyboard::WHO_NEARBY, Arts::NONE},
@@ -213,7 +213,7 @@ const keymap_t default_keymap[default_num_keys] =
 	{VK_MBUTTON, LyraKeyboard::MOUSE_LOOK, Arts::NONE},
 	{VK_RBUTTON, LyraKeyboard::JUMP, Arts::NONE},
 	{0xdc, LyraKeyboard::MOUSE_LOOK, Arts::NONE}, // (backslash)
-	{'A', LyraKeyboard::AVATAR_CUSTOMIZATION, Arts::NONE},
+	{'S', LyraKeyboard::SIDESTEP_LEFT, Arts::NONE},
 	{'K', LyraKeyboard::SHOW_RANKS, Arts::NONE},
 	{VK_PRIOR, LyraKeyboard::SCROLL_UP, Arts::NONE},
 	{VK_NEXT, LyraKeyboard::SCROLL_DOWN, Arts::NONE},
@@ -221,7 +221,7 @@ const keymap_t default_keymap[default_num_keys] =
 	{VK_MULTIPLY, LyraKeyboard::PICK_NEIGHBORS, Arts::NONE},
 	{VK_SUBTRACT, LyraKeyboard::PICK_ARTS, Arts::NONE},
 	{VK_ADD, LyraKeyboard::SELECT_FROM_LIST, Arts::NONE},
-	{'F', LyraKeyboard::SHOW_FOCUS, Arts::NONE},
+	{'F', LyraKeyboard::ART, Arts::FLAME},
 	{'H', LyraKeyboard::WAVE, Arts::NONE},
 	{'O', LyraKeyboard::SHOW_SHIELD, Arts::NONE},
 	{'P', LyraKeyboard::ART, Arts::JOIN_PARTY},
@@ -229,7 +229,7 @@ const keymap_t default_keymap[default_num_keys] =
 	{'Y', LyraKeyboard::ART, Arts::MEDITATION},
 	{'U', LyraKeyboard::ART, Arts::TRAIL},
 	{'V', LyraKeyboard::ART, Arts::GIVE},
-	{'B', LyraKeyboard::ART, Arts::LOCATE_AVATAR},
+	{'B', LyraKeyboard::ART, Arts::BLADE},
 	{0xbf, LyraKeyboard::ART, Arts::KNOW}, // (is also the ? key!)
 	{'Z', LyraKeyboard::SHOW_LEARNABLE_ARTS, Arts::NONE},
 	{0xc0, LyraKeyboard::TOGGLE_AUTORUN, Arts::NONE}, // Jared 2-26-00

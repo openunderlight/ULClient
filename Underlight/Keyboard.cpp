@@ -1569,7 +1569,34 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		break;
 	case LyraKeyboard::ART:
 		cp->SetUsing(true);
-		arts->BeginArt(keymap->FindArt(vk));
+
+		if (keymap->FindArt(vk) == Arts::BLADE)
+		{
+			if (player->Skill(Arts::GATESMASHER) > 0)
+				arts->BeginArt(Arts::GATESMASHER);
+			else if (player->Skill(Arts::DREAMBLADE) > 0)
+				arts->BeginArt(Arts::DREAMBLADE);
+			else if (player->Skill(Arts::FATESLAYER) > 0)
+				arts->BeginArt(Arts::FATESLAYER);
+			else if (player->Skill(Arts::SOULREAPER) > 0)
+				arts->BeginArt(Arts::SOULREAPER);
+		}
+		else if (keymap->FindArt(vk) == Arts::FLAME)
+		{
+			if (player->Skill(Arts::FLAMESHAFT) > 0)
+				arts->BeginArt(Arts::FLAMESHAFT);
+			else if (player->Skill(Arts::TRANCEFLAME) > 0)
+				arts->BeginArt(Arts::TRANCEFLAME);
+			else if (player->Skill(Arts::FLAMERUIN) > 0)
+				arts->BeginArt(Arts::FLAMERUIN);
+			else if (player->Skill(Arts::FLAMESEAR) > 0)
+				arts->BeginArt(Arts::FLAMESEAR);
+		}		
+		else
+		{
+			arts->BeginArt(keymap->FindArt(vk));
+		}
+		
 		cp->SetUsing(false);
 		break;
 	case LyraKeyboard::MOUSE_LOOK:
