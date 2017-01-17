@@ -2347,7 +2347,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_PMARE_AGOKNIGHT     "Agoknight (Medium): 2 PMare credits per 15 minutes"
-    IDS_PMARE_SHAMBLIX      "Shamblix (Most Powerful): 3 PMare credits per 15 minutes"
+    IDS_PMARE_SHAMBLIX      "Shamblix (Powerful): 3 PMare credits per 15 minutes"
     IDS_AGREEMENT_TEXT6     "Please note that any advance in XP and  power you achieve is kept for at most 48 hours.  If you log out and then log in again within 48 hours, you have the option of resuming your previous session, with the same avatar, credit rate, and XP total. You will only be able to play for the time available in PMare credits on your account. \n\nNote that KoiWare can not provide refunds or reimbursements of any sort for player nightmare sessions. By clicking 'I Accept' and entering the game you are agreeing to the above terms.\r\n\r\n"
     IDS_AGREEMENT_TEXT7     "You will deduct %1.2f PMare Credits from your KoiWare account for every 15 minutes of play during your session.  The number of minutes for all your logins for each starting nightmare type are summed to determine the total deduction, with a 15 minute session minimum per starting nightmare type. This ensures that you will not be deducted extra due to inadvertant logouts (storms). For example, you could log in as a Bogrom and play for 10 minutes and evolve into an Agoknight, then later that day ""resume session"" and play for 5 more minutes, and you would be charged only for one 15 minute Bogrom session.  Session minutes are summed nightly at 1:00AM PST. By clicking 'Accept', you are agreeing to this deduction.\r\n\r\n"
     IDS_PMARE_DISSOLVED_BY_SELF 
@@ -4399,6 +4399,7 @@ STRINGTABLE
 BEGIN
     IDS_NOACCESS_PORTAL     "That portal is currently inaccessible."
     IDS_NO_XP_MONSTER       "You can't use Bequeath on Nightmares!"
+    IDS_PMARE_HORRON        "Horron (Most Powerful): 4 PMare credits per 15 minutes"
 END
 
 #endif    // English (United States) resources

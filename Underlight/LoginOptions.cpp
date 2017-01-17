@@ -179,6 +179,8 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), message);
 			LoadString (hInstance, IDS_PMARE_SHAMBLIX, message, sizeof(message));
 			ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), message);
+			LoadString(hInstance, IDS_PMARE_HORRON, message, sizeof(message));
+			ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), message);
 
 			// get time in seconds to determine if session can be resume
 			SYSTEMTIME cur_time; 
@@ -197,7 +199,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 				price = price/100;
 				_stprintf(disp_message, message, price);
 				ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), disp_message);
-				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_PMARE_LIST), 3); // Default to resume session
+				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_PMARE_LIST), 4); // Default to resume session
 			}
 			else {
 				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_PMARE_LIST), 0); // Default to weakest option
@@ -304,8 +306,8 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 
 #ifdef PMARE
 				int pmare_avatar_type = 3 + ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PMARE_LIST));
-				// if pmare_avatar_type > Shamblix, it means resume previous session
-				if (pmare_avatar_type <= Avatars::SHAMBLIX) {
+				// if pmare_avatar_type > Horron, it means resume previous session
+				if (pmare_avatar_type <= Avatars::HORRON) {
 					options.pmare_type = pmare_avatar_type;
 					options.pmare_price = (int)((pmare_info[options.pmare_type - 3].charge)*100 + .1);
 					options.pmare_start_type = pmare_avatar_type;
