@@ -612,9 +612,9 @@ bool cNeighbor::RightClick(void)
 		else // Dreamers in nightmare form are neither male or female
 		_stprintf(message,disp_message,"a Dreamer");
 #else
-
+	
 	// can only see the focus of a normal dreamer
-	if (this->GetAccountType() == LmAvatar::ACCT_DREAMER)
+	if (this->SphereID() < 1)
 		_stprintf(message, "That's %s (%s)", name, player->StatName(this->Avatar().Focus()));
 	else
 		_stprintf(message, disp_message,name);
