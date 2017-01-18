@@ -605,15 +605,34 @@ bool HandleGMFullMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 			display->DisplayMessage(message, false);
 			return true;
 		}
+
+		// no invisibility for dark mares
+		if (player->IsMare())
+		{
+#ifdef UL_DEBUG
+			LoadString(hInstance, IDS_DM_INVIS_SUGGESTION, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message, false);
+#else
+			LoadString(hInstance, IDS_NO_DM_INVIS, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message, false);
+			return true;
+#endif
+		}
+
 		LmAvatar tempavatar = player->Avatar();
 		if (tempavatar.Hidden())
 		{
-			tempavatar.SetHidden(0);
-			player->SetAvatar(tempavatar, true);
-			player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
-			player->RemoveTimedEffect(LyraEffect::PLAYER_MIND_BLANKED);
-			LoadString (hInstance, IDS_HIDDEN_TOGGLE, disp_message, sizeof(disp_message));
-			_stprintf(message, disp_message, "Off");
+			//tempavatar.SetHidden(0);
+			//player->SetAvatar(tempavatar, true);
+			//player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
+			//player->RemoveTimedEffect(LyraEffect::PLAYER_MIND_BLANKED);
+			//LoadString (hInstance, IDS_HIDDEN_TOGGLE, disp_message, sizeof(disp_message));
+			//_stprintf(message, disp_message, "Off");
+			LoadString(hInstance, IDS_ONCE_HIDDEN_ALWAYS_HIDDEN, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message, false);
+
+			LoadString(hInstance, IDS_HIDDEN_TOGGLE, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, "On");
 		}
 		else
 		{
@@ -1343,7 +1362,6 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	//	player->Teleport (6958, 7522, 979, 46);	// Cup Arena
 
 	//	player->Teleport (6426,2534,0, 46);	// DocA
-
 
 		if (player->flags & ACTOR_SOULSPHERE)
 		{

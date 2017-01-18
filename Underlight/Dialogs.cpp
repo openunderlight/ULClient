@@ -503,6 +503,13 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 				ShowWindow(GetDlgItem(hDlg, IDC_REPORT), SW_HIDE);
 			}
 
+			LmAvatar tempavatar = player->Avatar();
+			if (tempavatar.Hidden()) {
+				ShowWindow(GetDlgItem(hDlg, IDC_TALK), SW_HIDE);
+				ShowWindow(GetDlgItem(hDlg, IDC_SHOUT), SW_HIDE);
+				ShowWindow(GetDlgItem(hDlg, IDC_EMOTE), SW_HIDE);
+			}
+
 #ifdef GAMEMASTER
 			ShowWindow(GetDlgItem(hDlg,IDC_RAW_EMOTE), SW_SHOW);
 //#else
