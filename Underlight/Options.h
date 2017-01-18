@@ -90,7 +90,7 @@ struct options_t {
 	bool debug_state_mode;
 
 	other_t bungholes[MAX_IGNORELIST]; // ignore list members
-	BOOL exclusive; // exclusive mode ('95 only)
+	BOOL exclusive = TRUE; // exclusive mode ('95 only)
 	BOOL autoreject; // always reject all parties
 	BOOL autorejoin; // always rejoin last party leader
 	BOOL footsteps;  // play footstep sounds
