@@ -131,6 +131,24 @@ static void DoOnConfirm(TCHAR* pMsg, YESNOCALLBACK lpDialogFunc);
 
 static HWND hDlg;
 
+// Disables options for GM invisible avatars
+#ifdef GAMEMASTER
+void DisableTalkDialogOptionsForInvisAvatar(HWND hWindow) {
+	LmAvatar tempavatar = player->Avatar();
+	if (tempavatar.Hidden()) {
+		Button_SetCheck(GetDlgItem(hWindow, IDC_RAW_EMOTE), 1);
+
+		Button_SetCheck(GetDlgItem(hWindow, IDC_EMOTE), 0);
+		Button_SetCheck(GetDlgItem(hWindow, IDC_TALK), 0);
+		Button_SetCheck(GetDlgItem(hWindow, IDC_SHOUT), 0);
+
+		ShowWindow(GetDlgItem(hWindow, IDC_TALK), SW_HIDE);
+		ShowWindow(GetDlgItem(hWindow, IDC_SHOUT), SW_HIDE);
+		ShowWindow(GetDlgItem(hWindow, IDC_EMOTE), SW_HIDE);
+	}
+}
+#endif
+
 // returns true if it handles a debugging key
 bool HandleLyraDebugKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 {
@@ -1118,7 +1136,7 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	if (!fDown && (keyboard[Keystates::ALT] == 1) && 
 		HandleGMMetaKey(hWnd, vk, fDown, cRepeat, flags))
 		return;
-	
+
 #endif
 	
 	if (!fDown) 
@@ -1382,10 +1400,18 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		if (!talkdlg)
 		{
 			talkdlg = TRUE;
+
+
 			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
 				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_EMOTE), 1);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
+
+				Button_SetCheck(GetDlgItem(hDlg, IDC_EMOTE), 1);
+				Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
+
+#ifdef GAMEMASTER
+			DisableTalkDialogOptionsForInvisAvatar(hDlg);
+#endif
+
 		}
 #endif
 		break;
@@ -1470,6 +1496,10 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			talkdlg = TRUE;
 			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
 				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
+
+#ifdef GAMEMASTER
+			DisableTalkDialogOptionsForInvisAvatar(hDlg);
+#endif
 		}
 #endif
 		break;
