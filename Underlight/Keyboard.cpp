@@ -543,6 +543,10 @@ bool HandlePlayerMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
 				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);		 // open talk dialog
 			SendMessage(GetDlgItem(hDlg,IDC_SPEECH),WM_SYSKEYUP,vk,0); // tell it which macro key was used
+
+#ifdef GAMEMASTER
+			DisableTalkDialogOptionsForInvisAvatar(hDlg);
+#endif
 			return true;
 		}
 #endif
@@ -1019,8 +1023,8 @@ bool HandleGMMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			talkdlg = TRUE;
 			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
 				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_RAW_EMOTE), 1);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
+			
+			DisableTalkDialogOptionsForInvisAvatar(hDlg);
 		}
 		return true;
 
