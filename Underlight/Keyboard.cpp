@@ -131,24 +131,6 @@ static void DoOnConfirm(TCHAR* pMsg, YESNOCALLBACK lpDialogFunc);
 
 static HWND hDlg;
 
-// Disables options for GM invisible avatars
-#ifdef GAMEMASTER
-void DisableTalkDialogOptionsForInvisAvatar(HWND hWindow) {
-	LmAvatar tempavatar = player->Avatar();
-	if (tempavatar.Hidden()) {
-		Button_SetCheck(GetDlgItem(hWindow, IDC_RAW_EMOTE), 1);
-
-		Button_SetCheck(GetDlgItem(hWindow, IDC_EMOTE), 0);
-		Button_SetCheck(GetDlgItem(hWindow, IDC_TALK), 0);
-		Button_SetCheck(GetDlgItem(hWindow, IDC_SHOUT), 0);
-
-		ShowWindow(GetDlgItem(hWindow, IDC_TALK), SW_HIDE);
-		ShowWindow(GetDlgItem(hWindow, IDC_SHOUT), SW_HIDE);
-		ShowWindow(GetDlgItem(hWindow, IDC_EMOTE), SW_HIDE);
-	}
-}
-#endif
-
 // returns true if it handles a debugging key
 bool HandleLyraDebugKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 {
