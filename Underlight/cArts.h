@@ -301,6 +301,7 @@ public:
 	void ApplySummon(lyra_id_t caster_id, int x, int y, int lvl);
 	void MidSummon(void);
 	void EndSummon(void *value);
+	void EndLock(void *lock_id);
 	void StartSuspend(void);
 	void MidSuspend(void);
 	void ApplySuspend(int num_days, lyra_id_t caster_id);

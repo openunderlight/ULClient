@@ -1675,7 +1675,6 @@ bool cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 	// common ward attributes
 	ward.from_vert = (short)line->from;
 	ward.to_vert = (short)line->to;
-	ward.set_player_id(player->ID());
 
 	LoadString(hInstance, IDS_WARD, message, sizeof(message));
 	info.Init(header, message, 0, 0, 0);
@@ -1700,12 +1699,39 @@ void cArts::Lock(void)
 	this->ArtFinished(false);
 	return;
 #endif
+	
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	entervaluedlg = true;
+	_stprintf(message, "Enter the Lock ID (%d is your player ID)", player->ID());
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
+	entervalue_callback = (&cArts::EndLock);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	this->WaitForDialog(hDlg, Arts::LOCK);
+
+	return;
+
+}
+
+void cArts::EndLock(void *value)
+{
+	if (!value)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
 	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
 	LmItemHdr header;
 
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_NOREAP);
-	
+
 	header.SetGraphic(LyraBitmap::INVIS_ITEM);
 	//header.SetGraphic(LyraBitmap::WARD);
 	header.SetColor1(0); header.SetColor2(0);
@@ -1713,6 +1739,11 @@ void cArts::Lock(void)
 
 	// Set strength to a high level to mark it as unable to blend/shatter
 	ward.strength = 1000;
+
+	int lock_id;
+	_stscanf(message, _T("%d"), &lock_id);
+
+	ward.set_player_id(lock_id);
 
 	this->ArtFinished(this->PlaceLock(ward, header));
 }
@@ -1732,6 +1763,7 @@ void cArts::Ward(void)
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
 
 	ward.strength = player->Skill(art_in_use);
+	ward.set_player_id(player->ID());
 
 	bool success = this->PlaceLock(ward, header);
 
