@@ -1741,9 +1741,16 @@ void cArts::EndLock(void *value)
 	ward.strength = 1000;
 
 	int lock_id;
-	_stscanf(message, _T("%d"), &lock_id);
-
-	ward.set_player_id(lock_id);
+	
+	// set the player id
+	if (_stscanf(message, _T("%d"), &lock_id) != 1)
+	{
+		ward.set_player_id(player->ID());
+	}
+	else
+	{
+		ward.set_player_id(lock_id);
+	}
 
 	this->ArtFinished(this->PlaceLock(ward, header));
 }
