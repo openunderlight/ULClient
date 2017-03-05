@@ -55,6 +55,8 @@ bool TileBackground(HWND hWnd, int which_bitmap=0);
 
 HBRUSH SetControlColors(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam, bool goalposting=false);
 
+void DisableTalkDialogOptionsForInvisAvatar(HWND hWindow);
+
 // MFC helpers
 void Draw3DRect(HDC dc, RECT* lpRect, COLORREF clrTopLeft, COLORREF clrBottomRight);
 void Draw3DRect(HDC dc, int x, int y, int cx, int cy, COLORREF clrTopLeft, COLORREF clrBottomRight);

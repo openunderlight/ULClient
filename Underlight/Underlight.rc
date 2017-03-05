@@ -2844,6 +2844,7 @@ BEGIN
     IDS_INITIATE            "Initiate"
     IDS_MISSION             "mission"
     IDS_GUARDIAN            "Guardian"
+    IDS_NO_DM_INVIS         "You cannot use invisibility as a dark mare\n"
     IDS_RULER               "Ruler"
     IDS_CHALK               "Chalk"
     IDS_BLOOD               "Blood"
@@ -2874,6 +2875,7 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_DM_INVIS_SUGGESTION "You shouldn't use invisibility as a dark mare\n"
     IDS_LIGHT_RED           "Light Red"
     IDS_CHARCOAL            "Charcoal"
     IDS_IVORY               "Ivory"
@@ -3821,6 +3823,7 @@ STRINGTABLE
 BEGIN
     IDS_DEV_GAME_SERVER_IP2 "dev2.koiware.com"
     IDS_CUSTOM_IP_DEFAULT   "127.0.0.1"
+    IDS_ONCE_HIDDEN_ALWAYS_HIDDEN "\nOnce you go INVIS, you cannot go back!\n"
 END
 
 STRINGTABLE
