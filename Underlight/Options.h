@@ -90,7 +90,7 @@ struct options_t {
 	bool debug_state_mode;
 
 	other_t bungholes[MAX_IGNORELIST]; // ignore list members
-	BOOL exclusive; // exclusive mode ('95 only)
+	BOOL exclusive = TRUE; // exclusive mode ('95 only)
 	BOOL autoreject; // always reject all parties
 	BOOL autorejoin; // always rejoin last party leader
 	BOOL footsteps;  // play footstep sounds
@@ -112,7 +112,8 @@ struct options_t {
 	int resolution; // 640 = 640x480, 800 = 800x600, 1024 = 1024x768
 
 #ifdef UL_DEV
-	int dev_server; // 1, 2
+	int dev_server; // 1, 2, 3
+	char custom_ip[64] = "127.0.0.1"; // IP of Custom Server
 #endif
 
 	TCHAR gamed_URL[64]; // URL of game server pointer

@@ -502,10 +502,10 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 				ShowWindow(GetDlgItem(hDlg, IDC_SPECIAL_TALKLIST), SW_HIDE);
 				ShowWindow(GetDlgItem(hDlg, IDC_REPORT), SW_HIDE);
 			}
-
 #ifdef GAMEMASTER
 			ShowWindow(GetDlgItem(hDlg,IDC_RAW_EMOTE), SW_SHOW);
-//#else
+
+			//#else
 //			if (level->ID() == 20) // no whispers in Thresh
 //				ShowWindow(GetDlgItem(hDlg, IDC_WHISPER), SW_HIDE);
 #endif
@@ -541,7 +541,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 			SendMessage(hwnd_speech, WM_PASSPROC, 0, (LPARAM) lpfn_speech );
 			SendMessage(hwnd_speech, WM_PARENT, 0, (LPARAM) hwnd_talk );
 
-			Button_SetCheck(GetDlgItem(hDlg, IDC_TALK),1);
+			Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 1);
 
 			SetFocus(hwnd_speech);
 			SetWindowPos(hDlg, HWND_TOPMOST, cDD->DlgPosX(hDlg)+15, cDD->ViewY()+2, 0, 0, SWP_NOSIZE);

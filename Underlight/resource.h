@@ -74,6 +74,7 @@
 #define IDC_AVATAR_1                    1012
 #define IDC_AVATAR_2                    1013
 #define IDC_AVATAR_3                    1014
+#define IDC_CUSTOM_IP                   1015
 #define IDC_AVATAR                      1020
 #define IDC_AVATARHEAD                  1020
 #define IDC_JOINPARTY                   1021
@@ -381,6 +382,9 @@
 #define IDC_TCP_ONLY                    1441
 #define IDC_DEV_SERVER2                 1442
 #define IDS_DEV_GAME_SERVER_IP2         1443
+#define IDC_CUSTOM_DEV_SERVER           1444
+#define IDS_CUSTOM_IP_DEFAULT           1445
+#define IDS_ONCE_HIDDEN_ALWAYS_HIDDEN   1446
 #define IDC_OK                          1800
 #define IDC_CANCEL                      1801
 #define IDC_FIREWALL_FAQ                1801
@@ -1552,6 +1556,7 @@
 #define IDC_F4                          3016
 #define IDS_GUARDIAN                    3016
 #define IDC_F5                          3017
+#define IDS_NO_DM_INVIS                 3017
 #define IDC_F6                          3018
 #define IDS_RULER                       3018
 #define IDC_F7                          3019
@@ -1597,6 +1602,7 @@
 #define IDC_DELETE                      3039
 #define IDS_SNOW                        3039
 #define IDC_END                         3040
+#define IDS_DM_INVIS_SUGGESTION         3040
 #define IDC_PAGEDOWN                    3041
 #define IDS_LIGHT_RED                   3041
 #define IDC_CAPLOCK                     3042
