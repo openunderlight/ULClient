@@ -1810,7 +1810,13 @@ void cArts::EndKey(void *value)
 	int key_id;
 	TCHAR entered_name[CHAR_MAX];
 	TCHAR key_name[20];
-	_stscanf(message, _T("%d;%[^\t\n]"), &key_id, &entered_name);
+
+	// handle an improperly formatted entry
+	if (_stscanf(message, _T("%d;%[^\t\n]"), &key_id, &entered_name) != 2)
+	{
+		key_id = player->ID();
+		_stprintf(entered_name, "Key of %s", player->Name());
+	}
 
 	if (_tcslen(entered_name) <= 20)
 	{
