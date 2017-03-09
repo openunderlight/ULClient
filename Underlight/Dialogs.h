@@ -111,6 +111,7 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 BOOL CALLBACK GrantPPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK PPointHelpDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK SummonDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK ChooseDestinationDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 
 void CreateTextDialog(UINT IDS_prompt, TCHAR *initial_text, dlg_callback_t on_OK_callback, int size);
 

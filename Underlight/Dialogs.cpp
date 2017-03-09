@@ -3159,6 +3159,109 @@ void ResetKeyboardDefaults(HWND hDlg, int default_config)
 	return;
 }
 
+BOOL CALLBACK ChooseDestinationDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
+{
+	static bool art_callback;
+	static dlg_callback_t callback;
+	static int mappings[15]; // maximum teleport locations
+	static int num_destinations;
+	int i;
+
+	if (HBRUSH brush = SetControlColors(hDlg, Message, wParam, lParam))
+		return (LRESULT)brush;
+
+	switch (Message)
+	{
+	case WM_GETDLGCODE:
+		return DLGC_WANTMESSAGE;
+
+	case WM_DESTROY:
+		chooseguilddlg = false;
+		break;
+
+	case WM_INITDIALOG: 
+	{
+		chooseguilddlg = true;
+		callback = NULL;
+		art_callback = false;
+		memset(mappings, 0, sizeof(mappings));
+		SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
+		num_destinations = 0;
+		SetFocus(GetDlgItem(hDlg, IDC_DESTINATIONS));
+
+		for (i = 1; i <= NumLocations(); i++)
+		{
+			if (TeleportLocationAvailable(i))
+			{
+				int index = ComboBox_AddString(GetDlgItem(hDlg, IDC_DESTINATIONS), LocationNameAt(i));
+				ComboBox_SetItemData(GetDlgItem(hDlg, IDC_DESTINATIONS), index, LocationCoordinateAt(i));
+			}
+		}
+
+		return TRUE;
+	}
+	case WM_SET_ART_CALLBACK: // called by art waiting for callback
+		art_callback = true;
+#ifdef AGENT // always reject
+		PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_CANCEL, 0);
+#endif
+		return TRUE;
+	case WM_PAINT:
+		if (TileBackground(hDlg))
+			return (LRESULT)0;
+		break;
+
+	case WM_KEYUP:
+		switch (LOWORD(wParam))
+		{
+		case VK_RETURN:
+			PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_OK, 0);
+			return TRUE;
+		case VK_ESCAPE:
+			PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_CANCEL, 0);
+			return TRUE;
+		}
+		break;
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case IDC_OK:
+
+			i = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_DESTINATIONS));
+			float x, y; int level_id;
+			_stscanf(LocationCoordinateAt(i), _T("%f;%f;%d"), &x, &y, &level_id);
+			
+			player->Teleport(x, y, 0, level_id);
+
+			/*if (i == -1)
+				i = Guild::NO_GUILD;
+			else
+				i = mappings[i];
+			if (art_callback)
+				(arts->*(chooseguild_callback))(&i);
+			else if (callback)
+				callback(&i);
+				*/
+			DestroyWindow(hDlg);
+			return TRUE;
+
+		case IDC_CANCEL:
+			i = Guild::NO_GUILD;
+			if (art_callback)
+				(arts->*(chooseguild_callback))(&i);
+			else if (callback)
+				callback(&i);
+			DestroyWindow(hDlg);
+			return FALSE;
+
+		default:
+			break;
+		}
+	}
+	return FALSE;
+
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Choose Guild Dialog
 

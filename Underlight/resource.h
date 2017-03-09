@@ -62,6 +62,7 @@
 #define IDD_PARTICLES                   195
 #define IDD_GRANT_PPOINT                196
 #define IDD_USE_PPOINT                  197
+#define IDD_CHOOSE_DESTINATION          202
 #define IDS_PROPERTIES                  1000
 #define IDC_USERNAME                    1004
 #define IDC_EMAIL                       1005
@@ -202,6 +203,7 @@
 #define IDC_MOUSETEXT                   1233
 #define IDC_GUILDS                      1234
 #define IDC_GUILD_QUERY                 1235
+#define IDC_DESTINATIONS				1236
 #define IDC_VALUE_PROMPT                1238
 #define IDC_CHECK1                      1243
 #define IDC_RESTART_LOCATION            1243
@@ -2970,9 +2972,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        202
+#define _APS_NEXT_RESOURCE_VALUE        203
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1444
+#define _APS_NEXT_CONTROL_VALUE         1445
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -3186,10 +3186,27 @@ void cArts::ApplyDazzle(int skill, lyra_id_t caster_id)
 
 void cArts::GuildHouse(void)
 {  
-	LoadString (hInstance, IDS_USE_GUILD_HOUSE, message, sizeof(message));
-	display->DisplayMessage(message);
+	if (chooseguilddlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+	chooseguilddlg = true;
+	/*HWND hDlg = CreateLyraDialog(hInstance, IDD_CHOOSE_GUILD,
+		cDD->Hwnd_Main(), (DLGPROC)ChooseGuildDlgProc);
+	chooseguild_callback = (&cArts::EndFreesoulBlade);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
+	*/
 
-	int focal_arts = 0;
+	HWND hDlg = CreateLyraDialog(hInstance, IDD_CHOOSE_GUILD,
+		cDD->Hwnd_Main(), (DLGPROC)ChooseGuildDlgProc);
+	chooseguild_callback = (&cArts::EndSummon);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
+	this->WaitForDialog(hDlg, Arts::GUILDHOUSE);
+
+	/*int focal_arts = 0;
 	int focus;
 
 	// check for each focus statu to determine the location necessary
@@ -3235,7 +3252,7 @@ void cArts::GuildHouse(void)
 		case Stats::LUCIDITY:
 			player->Teleport(-1738, -1548, 0, 29); // fs
 			break;
-	}
+	}*/
 
 	this->ArtFinished(true);
 	return;

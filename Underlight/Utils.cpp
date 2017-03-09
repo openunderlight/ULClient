@@ -942,6 +942,92 @@ const int BY_DS		= 8192;
 const int BY_SM		= 16384;
 const int BY_FS		= 32768;
 
+bool eligibleForFlag(unsigned flag)
+{
+	if (flag & BY_PLAYER)
+		return true;
+	if (flag & BY_SM)
+		return player->Skill(Arts::SOULMASTER) > 1;
+	if (flag & BY_FS)
+		return player->Skill(Arts::FATESENDER) > 1;
+	if (flag & BY_GK)
+		return player->Skill(Arts::GATEKEEPER) > 1;
+	if (flag & BY_DS)
+		return player->Skill(Arts::DREAMSEER) > 1;
+	if (flag & BY_DSMITH)
+		return player->Skill(Arts::DREAMSMITH_MARK) > 0;
+	if (flag & BY_WSMITH)
+		return player->Skill(Arts::WORDSMITH_MARK) > 0;
+	if (flag & BY_OSM)
+		return player->IsInGuild(Guild::MOON);
+	if (flag & BY_AOE)
+		return player->IsInGuild(Guild::ECLIPSE);
+	if (flag & BY_KOES)
+		return player->IsInGuild(Guild::SHADOW);
+	if (flag & BY_UOC)
+		return player->IsInGuild(Guild::COVENANT);
+	if (flag & BY_POR)
+		return player->IsInGuild(Guild::RADIANCE);
+	if (flag & BY_HC)
+		return player->IsInGuild(Guild::CALENTURE);
+	if (flag & BY_GOE)
+		return player->IsInGuild(Guild::ENTRANCED);
+	if (flag & BY_DOL)
+		return player->IsInGuild(Guild::LIGHT);
+
+	return false;
+}
+
+struct teleport_locale_t
+{
+	unsigned location_flags;
+	const char* description;
+	const char* coordinates;
+
+	public:
+		bool available()
+		{
+			return eligibleForFlag(location_flags);
+		}
+};
+
+teleport_locale_t teleport_locations[] =
+{
+	{BY_PLAYER, "The Nexus", ""},
+	{BY_FS, "Fatesender Guildhall", "-1738;-1548;29"},
+	{ BY_SM, "Soulmaster Guildhall", "8177;8235;7" },
+	{ BY_GK, "Gatekeeper Guildhall", "-850;-3556;14" },
+	{ BY_DS, "DreamSeer Guildhall", "-10566;4336;3" }
+};
+
+unsigned int NumLocations(void)
+{
+	return  sizeof(teleport_locations) / sizeof(teleport_locale_t);
+}
+
+const char *LocationNameAt(unsigned int index)
+{
+	return teleport_locations[index].description;
+}
+
+
+const char *LocationCoordinateAt(unsigned int index)
+{	
+	return teleport_locations[0].coordinates;
+}
+
+bool TeleportLocationAvailable(unsigned int index)
+{
+	if (index >= NumLocations())
+		return false;
+	else
+#ifdef GAMEMASTER
+		return true;
+#else
+		return teleport_locations[index].available();
+#endif
+}
+
 struct talisman_name_t
 {
 	unsigned forge_flags;
@@ -951,7 +1037,8 @@ struct talisman_name_t
 public:
 	bool forgable()
 	{
-		if (forge_flags & BY_PLAYER)
+		return eligibleForFlag(forge_flags);
+		/*if (forge_flags & BY_PLAYER)
 			return true;
 		if (forge_flags & BY_DSMITH)
 			return player->Skill(Arts::DREAMSMITH_MARK) > 0;
@@ -982,8 +1069,7 @@ public:
 		if (forge_flags & BY_FS)
 			return player->Skill(Arts::FATESENDER) > 0;
 
-
-		return false;
+		return false;*/
 	}
 };
 
@@ -1626,9 +1712,9 @@ int __cdecl OutOfMemory(size_t size)
 
 // note: update these yearly!
 const int DT_START_MONTH = 3; // 2017
-const int DT_END_MONTH = 11; // 2016
+const int DT_END_MONTH = 11; // 2017
 const int DT_START_DAY = 12; // 2017
-const int DT_END_DAY = 6; // 2016
+const int DT_END_DAY = 5; // 2017
 const int DT_START_HOUR = 2;
 const int DT_END_HOUR = 2;
 
