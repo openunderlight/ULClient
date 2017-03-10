@@ -7737,10 +7737,10 @@ void cArts::EndTrain(void)
 		return;
 	}
 #ifndef GAMEMASTER //
-	else if ((art_id == Arts::TRAIN) ||
-		     (art_id == Arts::LEVELTRAIN) ||
+	else if ((art_id == Arts::TRAIN && n->Avatar().Teacher() == 0) || // only GMs can teach Train to Learn
+			 (art_id == Arts::LEVELTRAIN) ||
 			 (art_id == Arts::DREAMSTRIKE) || 
-		     (art_id ==Arts::SUPPORT_SPHERING) ||
+		     (art_id == Arts::SUPPORT_SPHERING) ||
              (art_id == Arts::SUPPORT_TRAINING) ||
 			 (art_id == Arts::GUILDHOUSE) || 
 			 (art_id == Arts::TEHTHUS_OBLIVION) ||
@@ -7750,6 +7750,13 @@ void cArts::EndTrain(void)
 			 (art_id == Arts::CUP_SUMMONS))
 	{
 		LoadString (hInstance, IDS_GM_ONLY_TRAIN, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+	else if ((art_id == Arts::TRAIN || art_id == Arts::QUEST) && player->Skill(Arts::TRAIN_SELF) < 1)
+	{
+		_stprintf(disp_message, "Only Master Teachers and Elders are permitted to teach %s!", this->Descrip(art_id));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
@@ -7778,10 +7785,10 @@ void cArts::EndTrain(void)
 	}
 #endif
 	else
-	{ 
+	{
 		// skill is set at the lower of either teaching or the skill itself
 		int skill = player->Skill(Arts::TRAIN);
-		if (player->Skill(art_id)<skill)
+		if (player->Skill(art_id) < skill)
 			skill = player->Skill(art_id);
 		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::TRAIN, art_id, skill);
 		this->ArtFinished(true);
