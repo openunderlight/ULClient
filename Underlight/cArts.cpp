@@ -1576,8 +1576,8 @@ void cArts::Meditate(void)
 // Chaos Well
 void cArts::EssenceContainer(void)
 {
-	int capacity = 20 * ((player->Skill(Arts::CHAOS_WELL) / 10) + 1);
-	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity, capacity };
+	int capacity = 20 * ((player->SkillSphere(Arts::CHAOS_WELL)) + 1);
+	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity*2, capacity };
 	LmItem info;
 	LmItemHdr header;
 	cItem *item;
@@ -7341,7 +7341,7 @@ void cArts::StartCorruptEssence(void)
 		!player->IsRuler(Guild::NO_GUILD))
 	{
 		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		_stprintf(message, disp_message, this->Descrip(Arts::CORRUPT_ESSENCE));
 		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
@@ -7480,7 +7480,7 @@ void cArts::StartSacrifice(void)
 		!player->IsRuler(Guild::NO_GUILD))
 	{
 		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		_stprintf(message, disp_message, this->Descrip(Arts::SACRIFICE));
 		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;

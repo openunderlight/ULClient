@@ -39,9 +39,8 @@ BEGIN
     PUSHBUTTON      "Underlight Wiki",IDC_MANUAL,118,232,69,14
     PUSHBUTTON      "Donate",IDC_BILLING,220,232,69,14
     PUSHBUTTON      "Quit",IDC_CANCEL,322,232,69,14
-    CONTROL         "640x480 (fastest)",IDC_GRAPHIC_RES640,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,81,76,65,9
-    CONTROL         "800x600",IDC_GRAPHIC_RES800,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,149,76,40,9
-    CONTROL         "1024x768 (best quality)",IDC_GRAPHIC_RES1024,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,191,76,110,9
+    CONTROL         "800x600",IDC_GRAPHIC_RES800,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,143,76,40,9
+    CONTROL         "1024x768 (recommended)",IDC_GRAPHIC_RES1024,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,191,76,110,9
     CONTROL         "Dev 1",IDC_DEV_SERVER1,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,25,89,39,10
     CONTROL         "Dev 2",IDC_DEV_SERVER2,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,65,90,40,10
     CONTROL         "Custom",IDC_CUSTOM_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,104,90,43,10
@@ -49,11 +48,10 @@ BEGIN
     CONTROL         "Live",IDC_LIVE_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,13,89,25,10
     CONTROL         "Debug Server:",IDC_DEBUG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,202,90,56,10
     CONTROL         "Networking:",IDC_NETWORK,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,261,90,46,10
-    CONTROL         "Exclusive Mode:",IDC_EXCLUSIVE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,10,75,10
-    CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,20,75,10
-    CONTROL         "Start with Training:",IDC_TRAINING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,30,75,10
-    CONTROL         "Add Extra Scroll:",IDC_EXTRA_SCROLL,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,40,75,10
-    CONTROL         "TCP Only",IDC_TCP_ONLY,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,50,75,8
+    CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,13,75,10
+    CONTROL         "Start with Training:",IDC_TRAINING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,24,75,10
+    CONTROL         "Add Extra Scroll:",IDC_EXTRA_SCROLL,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,34,75,10
+    CONTROL         "TCP Only",IDC_TCP_ONLY,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,45,75,8
     EDITTEXT        IDC_BIND_TCP,374,60,24,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_BIND_UDP,374,72,24,12,ES_AUTOHSCROLL
     PUSHBUTTON      "Explain Launch Options",IDC_LAUNCH_OPTIONS,320,86,81,11
@@ -645,19 +643,18 @@ BEGIN
     LISTBOX         IDC_PMARE_SPEECH_MAREN,302,48,10,9,LBS_NOINTEGRALHEIGHT | NOT WS_VISIBLE | WS_TABSTOP
 END
 
-IDD_LAUNCH_OPTIONS DIALOG 0, 0, 426, 240
+IDD_LAUNCH_OPTIONS DIALOGEX 0, 0, 426, 240
 STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Explanation of Underlight Launch Options "
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     DEFPUSHBUTTON   "Return to Login Screen",IDC_OK,100,221,92,16
     PUSHBUTTON      "Read Firewall FAQ",IDC_FIREWALL_FAQ,211,221,92,16
-    LTEXT           "Exclusive mode help goes here",IDC_EXCLUSIVE_MODE,2,3,421,49
-    LTEXT           "Sound Enabled Help goes here",IDC_SOUND_ENABLED,2,58,421,36
-    LTEXT           "Start with training help goes here",IDC_START_TRAINING,2,100,421,14
-    LTEXT           "Extra scroll help goes here",IDC_EXTRA_SCROLL_TEXT,2,120,421,20
-    LTEXT           "Local binding option text goes here",IDC_BIND_TEXT,2,173,421,42
-    LTEXT           "UDP Proxy text goes here",IDC_UDP_PROXY_TEXT,2,146,421,21
+    LTEXT           "Sound Enabled Help goes here",IDC_SOUND_ENABLED,2,0,421,36
+    LTEXT           "Start with training help goes here",IDC_START_TRAINING,2,41,421,25
+    LTEXT           "Extra scroll help goes here",IDC_EXTRA_SCROLL_TEXT,2,78,421,35
+    LTEXT           "Local binding option text goes here",IDC_BIND_TEXT,2,161,421,42
+    LTEXT           "UDP Proxy text goes here",IDC_UDP_PROXY_TEXT,2,127,421,21
 END
 
 IDD_QUEST_HELP DIALOGEX 0, 0, 328, 289
@@ -2411,7 +2408,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_HYPNOTIC            "Your hypnotic gaze paralyzes everyone!\n"
-    IDS_RUN_TERROR          "All present run in flee in terror!\n"
+    IDS_RUN_TERROR          "All present flee in terror!\n"
     IDS_ROOM_DARKNESS       "Darkness envelopes the room!\n"
     IDS_GM_ART_LIMIT        "You may only have %d special powers active at a time\n"
     IDS_AGOKNIGHT_ROAR      "You unleash a deafening roar!"
@@ -2847,6 +2844,7 @@ BEGIN
     IDS_INITIATE            "Initiate"
     IDS_MISSION             "mission"
     IDS_GUARDIAN            "Guardian"
+    IDS_NO_DM_INVIS         "You cannot use invisibility as a dark mare\n"
     IDS_RULER               "Ruler"
     IDS_CHALK               "Chalk"
     IDS_BLOOD               "Blood"
@@ -2877,6 +2875,7 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_DM_INVIS_SUGGESTION "You shouldn't use invisibility as a dark mare\n"
     IDS_LIGHT_RED           "Light Red"
     IDS_CHARCOAL            "Charcoal"
     IDS_IVORY               "Ivory"
@@ -3824,6 +3823,7 @@ STRINGTABLE
 BEGIN
     IDS_DEV_GAME_SERVER_IP2 "dev2.koiware.com"
     IDS_CUSTOM_IP_DEFAULT   "127.0.0.1"
+    IDS_ONCE_HIDDEN_ALWAYS_HIDDEN "\nOnce you go INVIS, you cannot go back!\n"
 END
 
 STRINGTABLE
