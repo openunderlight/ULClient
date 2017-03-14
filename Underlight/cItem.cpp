@@ -772,6 +772,8 @@ void cItem::Use(void)
 						if (avail_space > essence.strength) {
 							// meta talisman can take the entire essence
 							nexus.strength += essence.strength;
+							// only increase essences if it's entirely absorbed
+							nexus.essences++;
 							item->Lmitem().SetCharges(0);
 						}
 						else {
@@ -781,7 +783,6 @@ void cItem::Use(void)
 							item->Lmitem().SetStateField(0, &essence, sizeof(essence));
 							needsUpdate = true;
 						}
-						nexus.essences++;
 						drains = true;
 					}
 				}
