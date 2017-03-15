@@ -989,6 +989,7 @@ struct teleport_locale_t
 	unsigned location_flags;
 	const char* description;
 	const char* coordinates;
+	int level_id;
 
 	public:
 		bool available()
@@ -999,13 +1000,13 @@ struct teleport_locale_t
 
 teleport_locale_t teleport_locations[] =
 {
-	{BY_PLAYER, "The Nexus", "6378;-2411;45"},
-	{BY_FS, "Fatesender Guildhall", "-1738;-1548;29"},
-	{ BY_SM, "Soulmaster Guildhall", "8177;8235;7" },
-	{ BY_GK, "Gatekeeper Guildhall", "-850;-3556;14" },
-	{ BY_DS, "DreamSeer Guildhall", "-10566;4336;3" },
-	{ BY_MT, "Library Main Hall", "415;-20;41"},
-	{ BY_HALO, "Teaching Guild", "417;2746;47"}
+	{BY_PLAYER, "The Nexus", "6378;-2411", 45},
+	{BY_FS, "Fatesender Guildhall", "-1738;-1548",29},
+	{ BY_SM, "Soulmaster Guildhall", "8177;8235", 7 },
+	{ BY_GK, "Gatekeeper Guildhall", "-850;-3556", 14 },
+	{ BY_DS, "DreamSeer Guildhall", "-10566;4336", 3 },
+	{ BY_MT, "Library Main Hall", "415;-20", 41},
+	{ BY_HALO, "Teaching Guild", "417;2746", 47}
 };
 
 unsigned int NumLocations(void)
@@ -1021,7 +1022,8 @@ const char *LocationNameAt(unsigned int index)
 
 const char *LocationCoordinateAt(unsigned int index)
 {	
-	return teleport_locations[index].coordinates;
+	_stprintf(temp_message, "%s;%d", teleport_locations[index].coordinates, teleport_locations[index].level_id);
+	return temp_message;
 }
 
 bool TeleportLocationAvailable(unsigned int index)
@@ -1032,7 +1034,8 @@ bool TeleportLocationAvailable(unsigned int index)
 #ifdef GAMEMASTER
 		return true;
 #else
-		return teleport_locations[index].available();
+		// only let players teleport if the location is available to them AND it's a different level
+		return teleport_locations[index].available() && level->ID() != teleport_locations[index].level_id;
 #endif
 }
 
