@@ -3163,8 +3163,6 @@ BOOL CALLBACK ChooseDestinationDlgProc(HWND hDlg, UINT Message, WPARAM wParam, L
 {
 	static bool art_callback;
 	static dlg_callback_t callback;
-	static int mappings[15]; // maximum teleport locations
-	static int num_destinations;
 	int i;
 
 	if (HBRUSH brush = SetControlColors(hDlg, Message, wParam, lParam))
@@ -3184,19 +3182,19 @@ BOOL CALLBACK ChooseDestinationDlgProc(HWND hDlg, UINT Message, WPARAM wParam, L
 		chooseguilddlg = true;
 		callback = NULL;
 		art_callback = false;
-		memset(mappings, 0, sizeof(mappings));
 		SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
-		num_destinations = 0;
 		SetFocus(GetDlgItem(hDlg, IDC_DESTINATIONS));
 
-		for (i = 1; i <= NumLocations(); i++)
+		for (i = 0; i <= NumLocations(); i++)
 		{
 			if (TeleportLocationAvailable(i))
 			{
 				int index = ComboBox_AddString(GetDlgItem(hDlg, IDC_DESTINATIONS), LocationNameAt(i));
-				ComboBox_SetItemData(GetDlgItem(hDlg, IDC_DESTINATIONS), index, LocationCoordinateAt(i));
+				ComboBox_SetItemData(GetDlgItem(hDlg, IDC_DESTINATIONS), index, i);
 			}
 		}
+
+		ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_DESTINATIONS), 0);
 
 		return TRUE;
 	}
@@ -3227,21 +3225,14 @@ BOOL CALLBACK ChooseDestinationDlgProc(HWND hDlg, UINT Message, WPARAM wParam, L
 		{
 		case IDC_OK:
 
-			i = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_DESTINATIONS));
-			float x, y; int level_id;
-			_stscanf(LocationCoordinateAt(i), _T("%f;%f;%d"), &x, &y, &level_id);
-			
-			player->Teleport(x, y, 0, level_id);
+			i = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_DESTINATIONS), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_DESTINATIONS)));
+			strcpy(message, LocationCoordinateAt(i));
 
-			/*if (i == -1)
-				i = Guild::NO_GUILD;
-			else
-				i = mappings[i];
 			if (art_callback)
-				(arts->*(chooseguild_callback))(&i);
+				(arts->*(chooseguild_callback))(message);
 			else if (callback)
-				callback(&i);
-				*/
+				callback(message);
+
 			DestroyWindow(hDlg);
 			return TRUE;
 

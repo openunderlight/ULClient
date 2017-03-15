@@ -941,6 +941,8 @@ const int BY_GK		= 4096;
 const int BY_DS		= 8192;
 const int BY_SM		= 16384;
 const int BY_FS		= 32768;
+const int BY_MT		= 65536;
+const int BY_HALO	= 131072;
 
 bool eligibleForFlag(unsigned flag)
 {
@@ -958,6 +960,10 @@ bool eligibleForFlag(unsigned flag)
 		return player->Skill(Arts::DREAMSMITH_MARK) > 0;
 	if (flag & BY_WSMITH)
 		return player->Skill(Arts::WORDSMITH_MARK) > 0;
+	if (flag & BY_MT)
+		return player->Skill(Arts::TRAIN_SELF) > 0;
+	if (flag & BY_HALO)
+		return player->Skill(Arts::TRAIN) > 0;
 	if (flag & BY_OSM)
 		return player->IsInGuild(Guild::MOON);
 	if (flag & BY_AOE)
@@ -993,11 +999,13 @@ struct teleport_locale_t
 
 teleport_locale_t teleport_locations[] =
 {
-	{BY_PLAYER, "The Nexus", ""},
+	{BY_PLAYER, "The Nexus", "6378;-2411;45"},
 	{BY_FS, "Fatesender Guildhall", "-1738;-1548;29"},
 	{ BY_SM, "Soulmaster Guildhall", "8177;8235;7" },
 	{ BY_GK, "Gatekeeper Guildhall", "-850;-3556;14" },
-	{ BY_DS, "DreamSeer Guildhall", "-10566;4336;3" }
+	{ BY_DS, "DreamSeer Guildhall", "-10566;4336;3" },
+	{ BY_MT, "Library Main Hall", "415;-20;41"},
+	{ BY_HALO, "Teaching Guild", "417;2746;47"}
 };
 
 unsigned int NumLocations(void)
@@ -1013,7 +1021,7 @@ const char *LocationNameAt(unsigned int index)
 
 const char *LocationCoordinateAt(unsigned int index)
 {	
-	return teleport_locations[0].coordinates;
+	return teleport_locations[index].coordinates;
 }
 
 bool TeleportLocationAvailable(unsigned int index)

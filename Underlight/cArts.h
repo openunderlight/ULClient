@@ -178,7 +178,8 @@ public:
 	void EndBreakCovenant(void);
 	void Dazzle(void);
 	void ApplyDazzle(int skill, lyra_id_t caster_id);
-	void GuildHouse(void);
+	void StartPlayerTeleport(void);
+	void EndPlayerTeleport(void *value);
 	void TehthusOblivion(void);
   void Tempest (void);
   void ApplyTempest (int skill, int angle, lyra_id_t caster_id);
