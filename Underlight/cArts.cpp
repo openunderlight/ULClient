@@ -214,7 +214,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x8684, // Entrancement 
 0xA2E4, // Shadow Step 
 0xC950, // Dazzle 
-0xFD03, // Guild House 
+0xFC56, // Guild House 
 0x131D, // Corrupt Essence 
 0x3E30, // Tehthu's Oblivion 
 0x58A2, // Chaos Purge 
@@ -369,7 +369,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_ENTRANCEMENT,					Stats::DREAMSOUL,	20, 10,13,	5,  -1, NEED_ITEM|SANCT},
 {IDS_SHADOW_STEP,					Stats::DREAMSOUL,	20, 10,10,	5,  -1, NEED_ITEM|SANCT},
 {IDS_DAZZLE,						Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
-{IDS_GUILD_HOUSE,					Stats::NO_STAT	,	50,  0, 0,  13, -1, SANCT},
+{IDS_TRANSLOCATE,					Stats::NO_STAT	,	30,  0, 0,  10, -1, SANCT},
 {IDS_CORRUPT_ESSENCE,				Stats::RESILIENCE,	10,  5, 0,  1,  -1, NEED_ITEM|SANCT|MAKE_ITEM},
 {IDS_TEHTHUS_OBLIVION,				Stats::DREAMSOUL,	10, 10, 0,  5,  -1, NEED_ITEM|SANCT},
 {IDS_CHAOS_PURGE_ART_NAME,			Stats::DREAMSOUL,	 0, 20, 0,  5,  -1, NEIGH},

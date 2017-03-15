@@ -1886,7 +1886,7 @@
 #define IDS_NO_JP                       3263
 #define IDS_PA_NO_ARTS                  3264
 #define IDS_USE_GUILD_HOUSE             3266
-#define IDS_GUILD_HOUSE                 3267
+#define IDS_TRANSLOCATE                 3267
 #define IDS_CANT_BE_MEMBER_APPLY        3268
 #define IDS_TRAIN_BELIEF_MOON           3269
 #define IDS_TRAIN_BELIEF_ECLIPSE        3270

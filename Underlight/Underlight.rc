@@ -3165,7 +3165,7 @@ STRINGTABLE
 BEGIN
     IDS_PA_NO_ARTS          "You can not make aggressive acts while shielded by your Peace Aura\n"
     IDS_USE_GUILD_HOUSE     "You concentrate for a moment and move to your Focus Guild Room "
-    IDS_GUILD_HOUSE         "Guild House"
+    IDS_TRANSLOCATE         "Translocate"
     IDS_CANT_BE_MEMBER_APPLY 
                             "The evocation of %s does not affect you, because you are a member of %s"
     IDS_TRAIN_BELIEF_MOON   "The Order of the Sable Moon is a Spiritual Freesoul Imprisoning house. They are the Spiritual center of the Freesoul faith. They study the dream and the Nightmares within it in order to discover a way to rid the dream of the menace. They Imprison the nightmare essences within their ""Relic of the Order""."
