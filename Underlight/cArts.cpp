@@ -7725,7 +7725,6 @@ void cArts::EndTrain(void)
 			 (art_id == Arts::DREAMSTRIKE) || 
 		     (art_id ==Arts::SUPPORT_SPHERING) ||
              (art_id == Arts::SUPPORT_TRAINING) ||
-			 (art_id == Arts::GUILDHOUSE) || 
 			 (art_id == Arts::TEHTHUS_OBLIVION) ||
 			 (art_id == Arts::CHAOS_PURGE) ||
 			 (art_id == Arts::FREESOUL_BLADE) ||
