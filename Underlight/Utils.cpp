@@ -941,8 +941,8 @@ const int BY_GK		= 4096;
 const int BY_DS		= 8192;
 const int BY_SM		= 16384;
 const int BY_FS		= 32768;
-const int BY_MT		= 65536;
-const int BY_HALO	= 131072;
+const int BY_HALO	= 65536;
+const int BY_MT		= 131072;
 
 bool eligibleForFlag(unsigned flag)
 {
@@ -1005,8 +1005,16 @@ teleport_locale_t teleport_locations[] =
 	{ BY_SM, "Soulmaster Guildhall", "8177;8235", 7 },
 	{ BY_GK, "Gatekeeper Guildhall", "-850;-3556", 14 },
 	{ BY_DS, "DreamSeer Guildhall", "-10566;4336", 3 },
-	{ BY_MT, "Library Main Hall", "415;-20", 41},
-	{ BY_HALO, "Teaching Guild", "417;2746", 47}
+	{ BY_HALO, "Library Main Hall", "415;-20", 41},
+	{ BY_MT, "Teaching Guild", "417;2746", 47},
+	{ BY_DOL, "Order of Light", "-3452;-3398", 18 },
+	{ BY_UOC, "Union of the Covenant", "-4927;-10515", 26 },
+	{ BY_AOE, "Alliance of the Eclipse", "-6983;-14141", 22 },
+	{ BY_OSM, "Order of the Sable Moon", "-3030;-963", 25 },
+	{ BY_HC, "House Calenture", "-2252;-5480", 17 },
+	{ BY_POR, "Peace Corpse", "762;-13361", 21 },
+	{ BY_KOES, "Keepers of the Eternal Shadow", "2583;-14543", 24 },
+	{ BY_GOE, "Gathering of the Entranced", "3833;-16439", 23 }
 };
 
 unsigned int NumLocations(void)
