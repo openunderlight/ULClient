@@ -441,6 +441,10 @@ void cMissile::StrikeActor(cActor* actor)
 					display->DisplayMessage (message);
 				}
 			}
+			// Cancel the guildhouse evoke if the player is struck by a missile
+			if (arts->CurrentArt() == Arts::GUILDHOUSE)
+				arts->CancelArt();
+
 			player->SetInjured(true);
 			player->SetCurrStat(Stats::DREAMSOUL, -damage, SET_RELATIVE, owner_id);
 			//_tprintf("took %d damage!\n",damage);
