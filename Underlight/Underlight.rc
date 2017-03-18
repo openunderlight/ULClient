@@ -4399,7 +4399,6 @@ STRINGTABLE
 BEGIN
     IDS_NOACCESS_PORTAL     "That portal is currently inaccessible."
     IDS_NO_XP_MONSTER       "You can't use Bequeath on Nightmares!"
-    IDS_PMARE_HORRON        "Horron (Most Powerful): 4 PMare credits per 15 minutes"
 END
 
 #endif    // English (United States) resources
