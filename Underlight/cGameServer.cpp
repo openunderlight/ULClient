@@ -1022,6 +1022,10 @@ void cGameServer::HandleMessage(void)
 		if (auto_level_login)
 			this->LevelLogin();
 
+#ifdef PMARE
+		player->PMareSpawning();
+#endif
+
 		break;
 
 		case GMsg::CHANGESTAT: // change a stat

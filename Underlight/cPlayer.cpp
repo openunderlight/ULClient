@@ -2190,9 +2190,25 @@ void cPlayer::ReformAvatar(void)
 	cDS->PlaySound(LyraSound::HOLYLIGHT, x, y, true);
 	if (flags & ACTOR_SOULEVOKE)
 		this->RemoveTimedEffect(LyraEffect::PLAYER_SOULEVOKE);
+
+#ifdef PMARE
+	this->PMareSpawning();
+#endif
+
 	return;
 }
 
+#ifdef PMARE
+// Pmares get some temporary defensive abilities
+void cPlayer::PMareSpawning(void)
+{
+	this->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, 3600000, playerID, EffectOrigin::ART_EVOKE);
+	this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 3600000, playerID, EffectOrigin::ART_EVOKE);
+	this->SetTimedEffect(LyraEffect::PLAYER_REGENERATING, 3600000, playerID, EffectOrigin::ART_EVOKE);
+	this->SetTimedEffect(LyraEffect::PLAYER_NO_POISON, 3600000, playerID, EffectOrigin::ART_EVOKE);
+	this->SetTimedEffect(LyraEffect::PLAYER_TRAIL, 3600000, playerID, EffectOrigin::ART_EVOKE);
+}
+#endif
 
 // Player has just suffered an "avatar death"
 // origin_id is the player id of whomever caused the little death
