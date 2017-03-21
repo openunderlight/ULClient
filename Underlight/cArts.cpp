@@ -7610,6 +7610,11 @@ void cArts::ApplyTrain(int art_id, int success, lyra_id_t caster_id)
 			avatar.SetApprentice(0);
 			avatar.SetTeacher(1);
 			player->SetAvatar(avatar, true);
+
+			// Auto learn bequeath, support train, and support sphere
+			this->AddIfUnlearned(Arts::EMPATHY);
+			this->AddIfUnlearned(Arts::SUPPORT_TRAINING);
+			this->AddIfUnlearned(Arts::SUPPORT_SPHERING);
 		}
 		if (art_id == Arts::TRAIN_SELF)
 		{
