@@ -1675,7 +1675,6 @@ bool cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 	// common ward attributes
 	ward.from_vert = (short)line->from;
 	ward.to_vert = (short)line->to;
-	ward.set_player_id(player->ID());
 
 	LoadString(hInstance, IDS_WARD, message, sizeof(message));
 	info.Init(header, message, 0, 0, 0);
@@ -1700,12 +1699,39 @@ void cArts::Lock(void)
 	this->ArtFinished(false);
 	return;
 #endif
+	
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	entervaluedlg = true;
+	_stprintf(message, "Enter the Lock ID (%d is your player ID)", player->ID());
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
+	entervalue_callback = (&cArts::EndLock);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	this->WaitForDialog(hDlg, Arts::LOCK);
+
+	return;
+
+}
+
+void cArts::EndLock(void *value)
+{
+	if (!value)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
 	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
 	LmItemHdr header;
 
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_NOREAP);
-	
+
 	header.SetGraphic(LyraBitmap::INVIS_ITEM);
 	//header.SetGraphic(LyraBitmap::WARD);
 	header.SetColor1(0); header.SetColor2(0);
@@ -1713,6 +1739,18 @@ void cArts::Lock(void)
 
 	// Set strength to a high level to mark it as unable to blend/shatter
 	ward.strength = 1000;
+
+	int lock_id;
+	
+	// set the player id
+	if (_stscanf(message, _T("%d"), &lock_id) != 1)
+	{
+		ward.set_player_id(player->ID());
+	}
+	else
+	{
+		ward.set_player_id(lock_id);
+	}
 
 	this->ArtFinished(this->PlaceLock(ward, header));
 }
@@ -1732,6 +1770,7 @@ void cArts::Ward(void)
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
 
 	ward.strength = player->Skill(art_in_use);
+	ward.set_player_id(player->ID());
 
 	bool success = this->PlaceLock(ward, header);
 
@@ -1743,27 +1782,66 @@ void cArts::Ward(void)
 
 void cArts::Key(void)
 {
-	TCHAR name[LmItem::NAME_LENGTH];
-	// r->ErrorInfo()->RIf name is longer than ten, truncate it on the amulet name
-	TCHAR myname[20];
-	_stprintf(myname, player->Name());
-	if (_tcslen(myname) < 13)
+#ifndef GAMEMASTER
+	LoadString(hInstance, IDS_GM_ONLY, disp_message, sizeof(disp_message));
+	display->DisplayMessage(disp_message);
+	this->ArtFinished(false);
+	return;
+#endif
+
+	if (entervaluedlg)
 	{
-		//LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
-		_stprintf(name, "Key of %s", myname);
-	}
-	else {
-		int i;
-		TCHAR myname13[13];
-		for (i = 0; i<13; i++)
-			myname13[i] = myname[i];
-		_stprintf(&myname13[12], _T("\0"));
-		//LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
-		_stprintf(name, "Key of %s", myname13);
+		this->ArtFinished(false);
+		return;
 	}
 
+	entervaluedlg = true;
+	_stprintf(message, "Key ID;Key Name (%d;Key of %s)", player->ID(), player->Name());
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
+	entervalue_callback = (&cArts::EndKey);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	this->WaitForDialog(hDlg, Arts::KEY);
+
+	return;
+}
+
+void cArts::EndKey(void *value)
+{
+	if (!value)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	int key_id;
+	TCHAR entered_name[CHAR_MAX];
+	TCHAR key_name[20];
+
+	// handle an improperly formatted entry
+	if (_stscanf(message, _T("%d;%[^\t\n]"), &key_id, &entered_name) != 2)
+	{
+		key_id = player->ID();
+		_stprintf(entered_name, "Key of %s", player->Name());
+	}
+
+	if (_tcslen(entered_name) <= 20)
+	{
+		strcpy(key_name, entered_name);
+	}
+	else {
+		for (int i = 0; i<20; i++)
+			key_name[i] = entered_name[i];
+		_stprintf(&key_name[19], _T("\0"));
+	}
+
+	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
+	amulet.strength = 100;
 	// Set strength to 100 to mark this as a key instead of an amulet
-	this->CreatePass(name, 100);
+	amulet.player_id = key_id;
+
+	this->CreatePass(key_name, amulet);
+
 }
 
 //////////////////////////////////////////////////////////////////
@@ -1794,23 +1872,22 @@ void cArts::Amulet(void)
 	// Make sure a normal amulet never exceeds 99
 	if (item_strength > 99) item_strength = 99;
 
-	this->CreatePass(name, item_strength);
+	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
+	amulet.strength = item_strength;
+	amulet.player_id = player->ID();
+	
+	this->CreatePass(name, amulet);
 }
 
-void cArts::CreatePass(const TCHAR* pass_name, int pass_strength)
+void cArts::CreatePass(const TCHAR* pass_name, lyra_item_amulet_t amulet)
 {
 	LmItem info;
 	LmItemHdr header;
-	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
-
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_CHANGE_CHARGES);
 	header.SetGraphic(LyraBitmap::AMULET);
 	header.SetColor1(0); header.SetColor2(0);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AMULET_FUNCTION), 0, 0));
-
-	amulet.strength = pass_strength;
-	amulet.player_id = player->ID();
 
 	info.Init(header, pass_name, 0, 0, 0);
 	info.SetStateField(0, &amulet, sizeof(amulet));

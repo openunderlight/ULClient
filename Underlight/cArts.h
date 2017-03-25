@@ -302,6 +302,8 @@ public:
 	void ApplySummon(lyra_id_t caster_id, int x, int y, int lvl);
 	void MidSummon(void);
 	void EndSummon(void *value);
+	void EndLock(void *value);
+	void EndKey(void *value);
 	void StartSuspend(void);
 	void MidSuspend(void);
 	void ApplySuspend(int num_days, lyra_id_t caster_id);
@@ -483,7 +485,7 @@ public:
 
 
 private:
-	void CreatePass(const TCHAR* name, int strength);
+	void CreatePass(const TCHAR* name, lyra_item_amulet_t amulet);
 	bool PlaceLock(lyra_item_ward_t ward, LmItemHdr header);
 	void WaitForSelection(art_method_t callback, lyra_id_t art_id); // to start waiting for a click
 	void AddDummyNeighbor(void); // to allow selection of player as a target
