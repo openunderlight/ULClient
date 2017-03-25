@@ -205,7 +205,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x3F28, // Power Token 
 0x6D27, // Show Gratitude 
 0x8E44, // Quest 
-0xB220, // Bequeath 
+0xB282, // Bequeath 
 0xC88A, // Radiant Blaze 
 0xF445, // Poison Cloud 
 0x106E, // Break Covenant 
@@ -360,7 +360,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_POWER_TOKEN,					Stats::DREAMSOUL,	10,  0, 0,	10, -1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SHOW_GRATITUDE,				Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
 {IDS_QUEST,							Stats::NO_STAT,		0,   0, 0,	3, -1, SANCT|NEIGH|MAKE_ITEM},
-{IDS_BEQUEATH,						Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEIGH},
+{IDS_BEQUEATH,						Stats::NO_STAT,		30,  0, 0,	10, -1, SANCT|NEIGH|LEARN},
 {IDS_RADIANT_BLAZE,					Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_POISON_CLOUD,					Stats::DREAMSOUL,	20, 10,15,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_BREAK_COVENANT,				Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
@@ -7610,6 +7610,11 @@ void cArts::ApplyTrain(int art_id, int success, lyra_id_t caster_id)
 			avatar.SetApprentice(0);
 			avatar.SetTeacher(1);
 			player->SetAvatar(avatar, true);
+
+			// Auto learn bequeath, support train, and support sphere
+			this->AddIfUnlearned(Arts::EMPATHY);
+			this->AddIfUnlearned(Arts::SUPPORT_TRAINING);
+			this->AddIfUnlearned(Arts::SUPPORT_SPHERING);
 		}
 		if (art_id == Arts::TRAIN_SELF)
 		{
