@@ -98,6 +98,11 @@ void Scream(int avatar_type, cActor* actor, bool propagate = false);
 
 bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2);
 
+unsigned int NumLocations(void);
+const char *LocationNameAt(unsigned int index);
+const char *LocationCoordinateAt(unsigned int index);
+bool TeleportLocationAvailable(unsigned int index);
+
 TCHAR *TalismanName(int bitmap_id);
 unsigned int NumTalismans(void);
 

@@ -214,7 +214,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x8684, // Entrancement 
 0xA2E4, // Shadow Step 
 0xC950, // Dazzle 
-0xFD03, // Guild House 
+0xF4E2, // Translocate
 0x131D, // Corrupt Essence 
 0x3E30, // Tehthu's Oblivion 
 0x58A2, // Chaos Purge 
@@ -369,7 +369,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_ENTRANCEMENT,					Stats::DREAMSOUL,	20, 10,13,	5,  -1, NEED_ITEM|SANCT},
 {IDS_SHADOW_STEP,					Stats::DREAMSOUL,	20, 10,10,	5,  -1, NEED_ITEM|SANCT},
 {IDS_DAZZLE,						Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
-{IDS_GUILD_HOUSE,					Stats::NO_STAT	,	50,  0, 0,  13, -1, SANCT},
+{IDS_TRANSLOCATE,					Stats::DREAMSOUL,	30, 20, 0,  10, -1, SANCT|LEARN},
 {IDS_CORRUPT_ESSENCE,				Stats::RESILIENCE,	10,  5, 0,  1,  -1, NEED_ITEM|SANCT|MAKE_ITEM},
 {IDS_TEHTHUS_OBLIVION,				Stats::DREAMSOUL,	10, 10, 0,  5,  -1, NEED_ITEM|SANCT},
 {IDS_CHAOS_PURGE_ART_NAME,			Stats::DREAMSOUL,	 0, 20, 0,  5,  -1, NEIGH},
@@ -1170,7 +1170,7 @@ void cArts::ApplyArt(void)
 		case Arts::ENTRANCEMENT: method = &cArts::StartEntrancement; break;
 		case Arts::SHADOW_STEP: method = &cArts::StartShadowStep; break;
 		case Arts::DAZZLE: method = &cArts::Dazzle; break;
-		case Arts::GUILDHOUSE: method = &cArts::GuildHouse; break;
+		case Arts::GUILDHOUSE: method = &cArts::StartPlayerTeleport; break;
 		case Arts::CORRUPT_ESSENCE: method = &cArts::StartCorruptEssence; break;
 		case Arts::TEHTHUS_OBLIVION: method = &cArts::TehthusOblivion; break;
 		case Arts::CHAOS_PURGE: method = &cArts::StartChaosPurge; break;
@@ -3184,60 +3184,43 @@ void cArts::ApplyDazzle(int skill, lyra_id_t caster_id)
 //////////////////////////////////////////////////////////////////
 // Guild House
 
-void cArts::GuildHouse(void)
+void cArts::StartPlayerTeleport(void)
 {  
-	LoadString (hInstance, IDS_USE_GUILD_HOUSE, message, sizeof(message));
-	display->DisplayMessage(message);
-
-	int focal_arts = 0;
-	int focus;
-
-	// check for each focus statu to determine the location necessary
-	if (player->Skill(Arts::GATEKEEPER) > 0)
+	if (chooseguilddlg)
 	{
-		focal_arts++;
-		focus = Stats::WILLPOWER;
+		this->ArtFinished(false);
+		return;
 	}
+	
+	HWND hDlg = CreateLyraDialog(hInstance, IDD_CHOOSE_DESTINATION,
+		cDD->Hwnd_Main(), (DLGPROC)ChooseDestinationDlgProc);
+	chooseguild_callback = (&cArts::EndPlayerTeleport);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	//SendMessage(hDlg, WM_ADD_DESTINATIONS, 0, 0);
+	this->WaitForDialog(hDlg, Arts::GUILDHOUSE);
 		
-	if (player->Skill(Arts::DREAMSEER) > 0)
+	return;
+}
+
+void cArts::EndPlayerTeleport(void *value)
+{
+	if (!value)
 	{
-		focal_arts++;
-		focus = Stats::INSIGHT;
-	}
-		
-	if (player->Skill(Arts::SOULMASTER) > 0)
-	{
-		focal_arts++;
-		focus = Stats::RESILIENCE;
-	}
-	
-	if (player->Skill(Arts::FATESENDER) > 0)
-	{
-		focal_arts++;
-		focus = Stats::LUCIDITY;
-	}
-	
-	// We have multiple focal arts, use the player's focus stat to determine their guild house
-	if (focal_arts != 1)
-		focus = player->FocusStat();
-	
-	switch (focus)
-	{
-		case Stats::WILLPOWER: 
-			player->Teleport(-850, -3556, 0, 14); // gk
-			break;
-		case Stats::INSIGHT:
-			player->Teleport(-10566, 4336, 0, 3); // ds
-			break;
-		case Stats::RESILIENCE:
-			player->Teleport(8177, 8235, 0, 7); // sm
-			break;
-		case Stats::LUCIDITY:
-			player->Teleport(-1738, -1548, 0, 29); // fs
-			break;
+		this->ArtFinished(false);
+		return;
 	}
 
-	this->ArtFinished(true);
+	float x, y; int level_id;
+	if (_stscanf(message, _T("%f;%f;%d"), &x, &y, &level_id) == 3)
+	{
+		player->Teleport(x, y, 0, level_id);
+		this->ArtFinished(true);
+	}
+	else
+	{
+		this->ArtFinished(false);
+	}
+
 	return;
 }
 
@@ -7747,7 +7730,6 @@ void cArts::EndTrain(void)
 			 (art_id == Arts::DREAMSTRIKE) || 
 		     (art_id ==Arts::SUPPORT_SPHERING) ||
              (art_id == Arts::SUPPORT_TRAINING) ||
-			 (art_id == Arts::GUILDHOUSE) || 
 			 (art_id == Arts::TEHTHUS_OBLIVION) ||
 			 (art_id == Arts::CHAOS_PURGE) ||
 			 (art_id == Arts::FREESOUL_BLADE) ||
