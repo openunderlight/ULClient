@@ -4914,6 +4914,8 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 		if (player->flags & timed_effects->actor_flag[i])
 			num_effects_active++;
 
+	// pmares can only have 1 effect abjured at a time
+#ifndef PMARE
 	// if no active effects, do nothing
 	while (1)
 	{ // determine # of effects abjured
@@ -4924,6 +4926,7 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 		num_effects_to_abjure++;
 	}
 
+#endif
 
 	while (num_effects_active && num_effects_to_abjure)
 	{
