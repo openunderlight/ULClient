@@ -205,7 +205,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x3F28, // Power Token 
 0x6D27, // Show Gratitude 
 0x8E44, // Quest 
-0xB220, // Bequeath 
+0xB282, // Bequeath 
 0xC88A, // Radiant Blaze 
 0xF445, // Poison Cloud 
 0x106E, // Break Covenant 
@@ -214,7 +214,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x8684, // Entrancement 
 0xA2E4, // Shadow Step 
 0xC950, // Dazzle 
-0xFD03, // Guild House 
+0xF4E2, // Translocate
 0x131D, // Corrupt Essence 
 0x3E30, // Tehthu's Oblivion 
 0x58A2, // Chaos Purge 
@@ -360,7 +360,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_POWER_TOKEN,					Stats::DREAMSOUL,	10,  0, 0,	10, -1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SHOW_GRATITUDE,				Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
 {IDS_QUEST,							Stats::NO_STAT,		0,   0, 0,	3, -1, SANCT|NEIGH|MAKE_ITEM},
-{IDS_BEQUEATH,						Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEIGH},
+{IDS_BEQUEATH,						Stats::NO_STAT,		30,  0, 0,	10, -1, SANCT|NEIGH|LEARN},
 {IDS_RADIANT_BLAZE,					Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_POISON_CLOUD,					Stats::DREAMSOUL,	20, 10,15,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_BREAK_COVENANT,				Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
@@ -369,7 +369,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_ENTRANCEMENT,					Stats::DREAMSOUL,	20, 10,13,	5,  -1, NEED_ITEM|SANCT},
 {IDS_SHADOW_STEP,					Stats::DREAMSOUL,	20, 10,10,	5,  -1, NEED_ITEM|SANCT},
 {IDS_DAZZLE,						Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
-{IDS_GUILD_HOUSE,					Stats::NO_STAT	,	50,  0, 0,  13, -1, SANCT},
+{IDS_TRANSLOCATE,					Stats::DREAMSOUL,	30, 20, 0,  10, -1, SANCT|LEARN},
 {IDS_CORRUPT_ESSENCE,				Stats::RESILIENCE,	10,  5, 0,  1,  -1, NEED_ITEM|SANCT|MAKE_ITEM},
 {IDS_TEHTHUS_OBLIVION,				Stats::DREAMSOUL,	10, 10, 0,  5,  -1, NEED_ITEM|SANCT},
 {IDS_CHAOS_PURGE_ART_NAME,			Stats::DREAMSOUL,	 0, 20, 0,  5,  -1, NEIGH},
@@ -1170,7 +1170,7 @@ void cArts::ApplyArt(void)
 		case Arts::ENTRANCEMENT: method = &cArts::StartEntrancement; break;
 		case Arts::SHADOW_STEP: method = &cArts::StartShadowStep; break;
 		case Arts::DAZZLE: method = &cArts::Dazzle; break;
-		case Arts::GUILDHOUSE: method = &cArts::GuildHouse; break;
+		case Arts::GUILDHOUSE: method = &cArts::StartPlayerTeleport; break;
 		case Arts::CORRUPT_ESSENCE: method = &cArts::StartCorruptEssence; break;
 		case Arts::TEHTHUS_OBLIVION: method = &cArts::TehthusOblivion; break;
 		case Arts::CHAOS_PURGE: method = &cArts::StartChaosPurge; break;
@@ -1576,8 +1576,8 @@ void cArts::Meditate(void)
 // Chaos Well
 void cArts::EssenceContainer(void)
 {
-	int capacity = 20 * ((player->Skill(Arts::CHAOS_WELL) / 10) + 1);
-	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity, capacity };
+	int capacity = 20 * ((player->SkillSphere(Arts::CHAOS_WELL)) + 1);
+	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity*2, capacity };
 	LmItem info;
 	LmItemHdr header;
 	cItem *item;
@@ -1675,7 +1675,6 @@ bool cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 	// common ward attributes
 	ward.from_vert = (short)line->from;
 	ward.to_vert = (short)line->to;
-	ward.set_player_id(player->ID());
 
 	LoadString(hInstance, IDS_WARD, message, sizeof(message));
 	info.Init(header, message, 0, 0, 0);
@@ -1700,12 +1699,39 @@ void cArts::Lock(void)
 	this->ArtFinished(false);
 	return;
 #endif
+	
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	entervaluedlg = true;
+	_stprintf(message, "Enter the Lock ID (%d is your player ID)", player->ID());
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
+	entervalue_callback = (&cArts::EndLock);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	this->WaitForDialog(hDlg, Arts::LOCK);
+
+	return;
+
+}
+
+void cArts::EndLock(void *value)
+{
+	if (!value)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
 	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
 	LmItemHdr header;
 
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_NOREAP);
-	
+
 	header.SetGraphic(LyraBitmap::INVIS_ITEM);
 	//header.SetGraphic(LyraBitmap::WARD);
 	header.SetColor1(0); header.SetColor2(0);
@@ -1713,6 +1739,18 @@ void cArts::Lock(void)
 
 	// Set strength to a high level to mark it as unable to blend/shatter
 	ward.strength = 1000;
+
+	int lock_id;
+	
+	// set the player id
+	if (_stscanf(message, _T("%d"), &lock_id) != 1)
+	{
+		ward.set_player_id(player->ID());
+	}
+	else
+	{
+		ward.set_player_id(lock_id);
+	}
 
 	this->ArtFinished(this->PlaceLock(ward, header));
 }
@@ -1732,6 +1770,7 @@ void cArts::Ward(void)
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
 
 	ward.strength = player->Skill(art_in_use);
+	ward.set_player_id(player->ID());
 
 	bool success = this->PlaceLock(ward, header);
 
@@ -1743,27 +1782,66 @@ void cArts::Ward(void)
 
 void cArts::Key(void)
 {
-	TCHAR name[LmItem::NAME_LENGTH];
-	// r->ErrorInfo()->RIf name is longer than ten, truncate it on the amulet name
-	TCHAR myname[20];
-	_stprintf(myname, player->Name());
-	if (_tcslen(myname) < 13)
+#ifndef GAMEMASTER
+	LoadString(hInstance, IDS_GM_ONLY, disp_message, sizeof(disp_message));
+	display->DisplayMessage(disp_message);
+	this->ArtFinished(false);
+	return;
+#endif
+
+	if (entervaluedlg)
 	{
-		//LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
-		_stprintf(name, "Key of %s", myname);
-	}
-	else {
-		int i;
-		TCHAR myname13[13];
-		for (i = 0; i<13; i++)
-			myname13[i] = myname[i];
-		_stprintf(&myname13[12], _T("\0"));
-		//LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
-		_stprintf(name, "Key of %s", myname13);
+		this->ArtFinished(false);
+		return;
 	}
 
+	entervaluedlg = true;
+	_stprintf(message, "Key ID;Key Name (%d;Key of %s)", player->ID(), player->Name());
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
+	entervalue_callback = (&cArts::EndKey);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	this->WaitForDialog(hDlg, Arts::KEY);
+
+	return;
+}
+
+void cArts::EndKey(void *value)
+{
+	if (!value)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	int key_id;
+	TCHAR entered_name[CHAR_MAX];
+	TCHAR key_name[20];
+
+	// handle an improperly formatted entry
+	if (_stscanf(message, _T("%d;%[^\t\n]"), &key_id, &entered_name) != 2)
+	{
+		key_id = player->ID();
+		_stprintf(entered_name, "Key of %s", player->Name());
+	}
+
+	if (_tcslen(entered_name) <= 20)
+	{
+		strcpy(key_name, entered_name);
+	}
+	else {
+		for (int i = 0; i<20; i++)
+			key_name[i] = entered_name[i];
+		_stprintf(&key_name[19], _T("\0"));
+	}
+
+	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
+	amulet.strength = 100;
 	// Set strength to 100 to mark this as a key instead of an amulet
-	this->CreatePass(name, 100);
+	amulet.player_id = key_id;
+
+	this->CreatePass(key_name, amulet);
+
 }
 
 //////////////////////////////////////////////////////////////////
@@ -1794,23 +1872,22 @@ void cArts::Amulet(void)
 	// Make sure a normal amulet never exceeds 99
 	if (item_strength > 99) item_strength = 99;
 
-	this->CreatePass(name, item_strength);
+	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
+	amulet.strength = item_strength;
+	amulet.player_id = player->ID();
+	
+	this->CreatePass(name, amulet);
 }
 
-void cArts::CreatePass(const TCHAR* pass_name, int pass_strength)
+void cArts::CreatePass(const TCHAR* pass_name, lyra_item_amulet_t amulet)
 {
 	LmItem info;
 	LmItemHdr header;
-	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
-
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_CHANGE_CHARGES);
 	header.SetGraphic(LyraBitmap::AMULET);
 	header.SetColor1(0); header.SetColor2(0);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AMULET_FUNCTION), 0, 0));
-
-	amulet.strength = pass_strength;
-	amulet.player_id = player->ID();
 
 	info.Init(header, pass_name, 0, 0, 0);
 	info.SetStateField(0, &amulet, sizeof(amulet));
@@ -3196,60 +3273,43 @@ void cArts::ApplyDazzle(int skill, lyra_id_t caster_id)
 //////////////////////////////////////////////////////////////////
 // Guild House
 
-void cArts::GuildHouse(void)
+void cArts::StartPlayerTeleport(void)
 {  
-	LoadString (hInstance, IDS_USE_GUILD_HOUSE, message, sizeof(message));
-	display->DisplayMessage(message);
-
-	int focal_arts = 0;
-	int focus;
-
-	// check for each focus statu to determine the location necessary
-	if (player->Skill(Arts::GATEKEEPER) > 0)
+	if (chooseguilddlg)
 	{
-		focal_arts++;
-		focus = Stats::WILLPOWER;
+		this->ArtFinished(false);
+		return;
 	}
+	
+	HWND hDlg = CreateLyraDialog(hInstance, IDD_CHOOSE_DESTINATION,
+		cDD->Hwnd_Main(), (DLGPROC)ChooseDestinationDlgProc);
+	chooseguild_callback = (&cArts::EndPlayerTeleport);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	//SendMessage(hDlg, WM_ADD_DESTINATIONS, 0, 0);
+	this->WaitForDialog(hDlg, Arts::GUILDHOUSE);
 		
-	if (player->Skill(Arts::DREAMSEER) > 0)
+	return;
+}
+
+void cArts::EndPlayerTeleport(void *value)
+{
+	if (!value)
 	{
-		focal_arts++;
-		focus = Stats::INSIGHT;
-	}
-		
-	if (player->Skill(Arts::SOULMASTER) > 0)
-	{
-		focal_arts++;
-		focus = Stats::RESILIENCE;
-	}
-	
-	if (player->Skill(Arts::FATESENDER) > 0)
-	{
-		focal_arts++;
-		focus = Stats::LUCIDITY;
-	}
-	
-	// We have multiple focal arts, use the player's focus stat to determine their guild house
-	if (focal_arts != 1)
-		focus = player->FocusStat();
-	
-	switch (focus)
-	{
-		case Stats::WILLPOWER: 
-			player->Teleport(-850, -3556, 0, 14); // gk
-			break;
-		case Stats::INSIGHT:
-			player->Teleport(-10566, 4336, 0, 3); // ds
-			break;
-		case Stats::RESILIENCE:
-			player->Teleport(8177, 8235, 0, 7); // sm
-			break;
-		case Stats::LUCIDITY:
-			player->Teleport(-1738, -1548, 0, 29); // fs
-			break;
+		this->ArtFinished(false);
+		return;
 	}
 
-	this->ArtFinished(true);
+	float x, y; int level_id;
+	if (_stscanf(message, _T("%f;%f;%d"), &x, &y, &level_id) == 3)
+	{
+		player->Teleport(x, y, 0, level_id);
+		this->ArtFinished(true);
+	}
+	else
+	{
+		this->ArtFinished(false);
+	}
+
 	return;
 }
 
@@ -7353,7 +7413,7 @@ void cArts::StartCorruptEssence(void)
 		!player->IsRuler(Guild::NO_GUILD))
 	{
 		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		_stprintf(message, disp_message, this->Descrip(Arts::CORRUPT_ESSENCE));
 		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
@@ -7492,7 +7552,7 @@ void cArts::StartSacrifice(void)
 		!player->IsRuler(Guild::NO_GUILD))
 	{
 		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		_stprintf(message, disp_message, this->Descrip(Arts::SACRIFICE));
 		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
@@ -7622,6 +7682,11 @@ void cArts::ApplyTrain(int art_id, int success, lyra_id_t caster_id)
 			avatar.SetApprentice(0);
 			avatar.SetTeacher(1);
 			player->SetAvatar(avatar, true);
+
+			// Auto learn bequeath, support train, and support sphere
+			this->AddIfUnlearned(Arts::EMPATHY);
+			this->AddIfUnlearned(Arts::SUPPORT_TRAINING);
+			this->AddIfUnlearned(Arts::SUPPORT_SPHERING);
 		}
 		if (art_id == Arts::TRAIN_SELF)
 		{
@@ -7749,12 +7814,11 @@ void cArts::EndTrain(void)
 		return;
 	}
 #ifndef GAMEMASTER //
-	else if ((art_id == Arts::TRAIN) ||
-		     (art_id == Arts::LEVELTRAIN) ||
+	else if ((art_id == Arts::TRAIN && n->Avatar().Teacher() == 0) || // only GMs can teach Train to Learn
+			 (art_id == Arts::LEVELTRAIN) ||
 			 (art_id == Arts::DREAMSTRIKE) || 
-		     (art_id ==Arts::SUPPORT_SPHERING) ||
+		     (art_id == Arts::SUPPORT_SPHERING) ||
              (art_id == Arts::SUPPORT_TRAINING) ||
-			 (art_id == Arts::GUILDHOUSE) || 
 			 (art_id == Arts::TEHTHUS_OBLIVION) ||
 			 (art_id == Arts::CHAOS_PURGE) ||
 			 (art_id == Arts::FREESOUL_BLADE) ||
@@ -7762,6 +7826,13 @@ void cArts::EndTrain(void)
 			 (art_id == Arts::CUP_SUMMONS))
 	{
 		LoadString (hInstance, IDS_GM_ONLY_TRAIN, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+	else if ((art_id == Arts::TRAIN || art_id == Arts::QUEST) && player->Skill(Arts::TRAIN_SELF) < 1)
+	{
+		_stprintf(disp_message, "Only Master Teachers and Elders are permitted to teach %s!", this->Descrip(art_id));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
@@ -7790,10 +7861,10 @@ void cArts::EndTrain(void)
 	}
 #endif
 	else
-	{ 
+	{
 		// skill is set at the lower of either teaching or the skill itself
 		int skill = player->Skill(Arts::TRAIN);
-		if (player->Skill(art_id)<skill)
+		if (player->Skill(art_id) < skill)
 			skill = player->Skill(art_id);
 		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::TRAIN, art_id, skill);
 		this->ArtFinished(true);

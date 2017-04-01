@@ -79,11 +79,9 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			_stprintf(message, _T("%d"), options.bind_local_udp);
 			Edit_SetText(GetDlgItem(hDlg, IDC_BIND_UDP), message);
 
-			if (options.resolution == 640)
-				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES640), 1);
-			else if (options.resolution == 800)
+			if (options.resolution == 800)
 				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES800), 1);
-			else if (options.resolution == 1024)
+			else
 				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES1024), 1);
 
 			Button_SetCheck(GetDlgItem(hDlg, IDC_RESTART_LOCATION),  options.restart_last_location);
@@ -111,9 +109,9 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			EnableWindow(GetDlgItem(hDlg, IDC_ROGERWILCO), false);
 			EnableWindow(GetDlgItem(hDlg, IDC_ENABLE_RW), false);
 #else
-			Button_SetCheck(GetDlgItem(hDlg, IDC_ENABLE_RW),  options.rw);			Button_SetCheck(GetDlgItem(hDlg, IDC_SOUND),  options.sound);
+			Button_SetCheck(GetDlgItem(hDlg, IDC_ENABLE_RW),  options.rw);			
+			Button_SetCheck(GetDlgItem(hDlg, IDC_SOUND),  options.sound);
 #endif
-			Button_SetCheck(GetDlgItem(hDlg, IDC_EXCLUSIVE), options.exclusive);
 #ifdef PMARE
 			Button_SetCheck(GetDlgItem(hDlg, IDC_TRAINING), false);
 			ShowWindow(GetDlgItem(hDlg, IDC_TRAINING), SW_HIDE);
@@ -267,7 +265,6 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 
 				options.sound			= Button_GetCheck(GetDlgItem(hDlg, IDC_SOUND));
 				options.rw				= Button_GetCheck(GetDlgItem(hDlg, IDC_ENABLE_RW));
-				options.exclusive		= Button_GetCheck(GetDlgItem(hDlg, IDC_EXCLUSIVE)); 
 				options.welcome_ai		= Button_GetCheck(GetDlgItem(hDlg, IDC_TRAINING)); 
 				options.extra_scroll	= Button_GetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL)); 
 				options.tcp_only		= Button_GetCheck(GetDlgItem(hDlg, IDC_TCP_ONLY)); 
@@ -523,8 +520,6 @@ void __cdecl SaveOutOfGameRegistryOptionValues(HKEY reg_key)
 		(unsigned char *)&(options.debug), sizeof(options.debug));
 	RegSetValueEx(reg_key, _T("gameserver"), 0, REG_SZ,  //ROUND_ROBIN 
 		(unsigned char *)options.game_server, sizeof(options.game_server));
-	RegSetValueEx(reg_key, _T("exclusive"), 0, REG_DWORD,  
-		(unsigned char *)&(options.exclusive), sizeof(options.exclusive));
 	RegSetValueEx(reg_key, _T("pmare_session_start"), 0, REG_BINARY,  
 		(unsigned char *)&(options.pmare_session_start), sizeof(options.pmare_session_start));
 
@@ -559,7 +554,7 @@ void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 		_tcscpy(legacy_password, _T(""));
 
 	// now read the list of stored usernames and passwords
-
+	BOOL subsquent_login = FALSE;
 	TCHAR buffer[64];
 	for (int i=0; i<MAX_STORED_ACCOUNTS; i++) {
 		_stprintf(buffer, _T("username_%d"), i);
@@ -573,6 +568,8 @@ void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 			else
 				_tcscpy(options.username[i], _T(""));
 		}
+		else 
+			subsquent_login = TRUE;
 
 		_stprintf(buffer, _T("password_%d"), i);
 		size = Lyra::PASSWORD_MAX;
@@ -602,6 +599,8 @@ void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 	size = sizeof(options.extra_scroll);
 	keyresult = RegQueryValueEx(reg_key, _T("extra_scroll"), NULL, &reg_type,
 		(unsigned char *)&(options.extra_scroll), &size);
+	if ((keyresult != ERROR_SUCCESS) || force)
+		options.extra_scroll = TRUE;
 
 	size = sizeof(options.tcp_only);
 	keyresult = RegQueryValueEx(reg_key, _T("tcp_only"), NULL, &reg_type,
@@ -637,7 +636,7 @@ void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 	keyresult = RegQueryValueEx(reg_key, _T("resolution"), NULL, &reg_type,
 		(unsigned char *)&(options.resolution), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
-		options.resolution = 640;
+		options.resolution = 1024;
 
 #ifdef UL_DEV
 	size = sizeof(options.dev_server);
@@ -680,19 +679,17 @@ void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 	keyresult = RegQueryValueEx(reg_key, _T("gameserver"), NULL, &reg_type,
 		(unsigned char *)options.game_server, &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
-		LoadString(hInstance, IDS_LIVE_GAME_SERVER_IP, options.game_server, sizeof(options.game_server)) ;
-
-	size = sizeof(options.exclusive);
-	keyresult = RegQueryValueEx(reg_key, _T("exclusive"), NULL, &reg_type,
-		(unsigned char *)&(options.exclusive), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.exclusive = TRUE;
+		LoadString(hInstance, IDS_LIVE_GAME_SERVER_IP, options.game_server, sizeof(options.game_server));
 
 	size = sizeof(options.welcome_ai);
 	keyresult = RegQueryValueEx(reg_key, _T("welcome_ai"), NULL, &reg_type,
 		(unsigned char *)&(options.welcome_ai), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.welcome_ai = TRUE;
+
+	// turn off welcome_ai when this isn't the first login
+	if (subsquent_login)
+		options.welcome_ai = FALSE;
 
 #ifdef AGENT
 	options.welcome_ai = FALSE;
