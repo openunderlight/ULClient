@@ -1023,7 +1023,7 @@ void cGameServer::HandleMessage(void)
 			this->LevelLogin();
 
 #ifdef PMARE
-		player->PMareSpawning();
+		player->HandlePmareDefense(true);
 #endif
 
 		break;

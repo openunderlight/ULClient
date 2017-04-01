@@ -336,7 +336,7 @@ class cPlayer : public cActor
 
 	  // Other
 	  void ResetEyeHeight(void);
-	  void PMareSpawning(void);
+	  void HandlePmareDefense(bool add_all);
 	  virtual void Dissolve(lyra_id_t origin_id, int talisman_strength = 1); // player has suffered avatar death
 	  inline bool SurviveLevelChange(void) { return TRUE;};
 	  int  IconBitmap(void); // overloaded for avatar display

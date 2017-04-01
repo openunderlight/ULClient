@@ -1817,6 +1817,11 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 	}
 #endif
 
+#ifdef PMARE
+	if (rand() % 20 == 0)
+		this->HandlePmareDefense(false);
+#endif
+
 int mare_avatar = this->CurrentAvatarType();
 
 #ifdef AGENT
@@ -2192,7 +2197,7 @@ void cPlayer::ReformAvatar(void)
 		this->RemoveTimedEffect(LyraEffect::PLAYER_SOULEVOKE);
 
 #ifdef PMARE
-	this->PMareSpawning();
+	this->HandlePmareDefense(true);
 #endif
 
 	return;
@@ -2200,13 +2205,39 @@ void cPlayer::ReformAvatar(void)
 
 #ifdef PMARE
 // Pmares get some temporary defensive abilities
-void cPlayer::PMareSpawning(void)
+void cPlayer::HandlePmareDefense(bool add_all)
 {
-	this->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, 3600000, playerID, EffectOrigin::ART_EVOKE);
-	this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 3600000, playerID, EffectOrigin::ART_EVOKE);
-	this->SetTimedEffect(LyraEffect::PLAYER_REGENERATING, 3600000, playerID, EffectOrigin::ART_EVOKE);
-	this->SetTimedEffect(LyraEffect::PLAYER_NO_POISON, 3600000, playerID, EffectOrigin::ART_EVOKE);
-	this->SetTimedEffect(LyraEffect::PLAYER_TRAIL, 3600000, playerID, EffectOrigin::ART_EVOKE);
+	bool added_art = false;
+
+	if (!(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_FEAR]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+	
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REFLECT]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REGENERATING]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_REGENERATING, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_NO_POISON]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_NO_POISON, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_TRAIL]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_TRAIL, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}			
 }
 #endif
 
