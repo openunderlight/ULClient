@@ -1011,7 +1011,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		if (effect == LyraEffect::PLAYER_POISONED && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
 		{
 			// can't exceed duration of poison for pmares and dmares
-			timed_effects->expires[effect] = duration;
+			timed_effects->expires[effect] = LyraTime() + duration;
 		}
 		else
 		{
