@@ -113,7 +113,7 @@ unsigned long art_chksum[NUM_ARTS] =
 #ifndef PMARE
 0xBABF, // Shatter 
 #else
-0xB5C0, // Shatter - pmare 
+0xB46A, // Shatter - pmare 
 #endif
 0xDEFA, // Return 
 0x00E9, // Know 
@@ -268,7 +268,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 #ifndef PMARE
 {IDS_SHATTER, 				Stats::WILLPOWER,	40, 40, 0,	8, 	4, SANCT|FOCUS|LEARN},
 #else
-{IDS_SHATTER, 				Stats::DREAMSOUL,	0, 15, 0,	8, 	4, SANCT|LEARN},
+{IDS_SHATTER, 				Stats::DREAMSOUL,	0, 5, 0,	2, 	4, SANCT|LEARN},
 #endif
 {IDS_RETURN,				Stats::WILLPOWER, 50, 20, 23,   2,  2, SANCT|FOCUS|LEARN},
 {IDS_KNOW, 					Stats::INSIGHT,		0,  0,  0,	1, 	-1, SANCT|LEARN},
