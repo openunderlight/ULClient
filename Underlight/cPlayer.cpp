@@ -2368,9 +2368,12 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 		blast_chance = 0; // reset Ago's Blast Chance on collapse
 	}
 #else 
-// if player mare = 200+
 #ifdef PMARE
+		// if player mare = 200+
 		j = 150 + this->AvatarType();
+
+		// End the pmare session 5 minutes earlier for each time it is collapsed
+		options.pmare_logout_time = options.pmare_logout_time - 5 * 60000; 
 #else 
 #ifdef GAMEMASTER // nightmare possession, dark mare orbit = 200 + nightmare index
 		if ((avatar.AvatarType() >= Avatars::MIN_NIGHTMARE_TYPE) &&
