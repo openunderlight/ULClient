@@ -1157,10 +1157,17 @@ void cPlayer::CheckStatus(void)
 		value = this->AvatarType();
 #else 
 #ifdef PMARE // regen fast if boggo or ago
-		if (this->AvatarType() <= Avatars::AGOKNIGHT)
-			value = this->AvatarType();
-		else
-			value = 1;
+		switch (this->AvatarType())
+		{
+			case Avatars::BOGROM:
+				value = 4;
+				break;
+			case Avatars::AGOKNIGHT:
+				value = 3;
+				break;
+			default:
+				value = 1;
+		}
 #else  // dreamers regen slowly
 		if (flags & ACTOR_MEDITATING)
 			 value = 2 + (player->Skill(Arts::MEDITATION) / 10);
