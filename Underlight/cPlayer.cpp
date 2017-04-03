@@ -1184,7 +1184,12 @@ void cPlayer::CheckStatus(void)
 			(level->Rooms[this->Room()].flags & ROOM_SANCTUARY))
 		{ // all mares get thrashed in sanct
 			value = (avatar.AvatarType() -Avatars::MIN_NIGHTMARE_TYPE + 1)*-5;
-			this->SetCurrStat(Stats::DREAMSOUL, value, SET_RELATIVE, playerID);
+			lyra_id_t attacker = playerID;
+
+			if (last_attacker_id != Lyra::ID_UNKNOWN)
+				attacker = last_attacker_id;
+
+			this->SetCurrStat(Stats::DREAMSOUL, value, SET_RELATIVE, attacker);
 			LoadString (hInstance, IDS_SANCTUARY_HURTS, message, sizeof(message));
 			display->DisplayMessage(message);
 
@@ -2273,6 +2278,7 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 	collapses[next_collapse_index].collapser_id = origin_id;
 	collapses[next_collapse_index].time = collapse_time; 
 
+	this->SetLastAttackerID(Lyra::ID_UNKNOWN);
 	this->PerformedAction(); // wrecks evoking, etc.
 
 	n = actors->LookUpNeighbor(origin_id);
