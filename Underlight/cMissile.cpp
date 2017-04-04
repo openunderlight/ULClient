@@ -377,8 +377,8 @@ void cMissile::StrikeActor(cActor* actor)
 						damage = damage*.50;
 					else if (view != 0) // only hit from directly behind for full damage
 #ifdef PMARE
-						// pmares don't get invulnerability, only 87% shield
-						damage = damage*.13;
+						// pmares don't get invulnerability, only 80% shield
+						damage = damage*.20;
 #else
 						damage = 0;
 #endif
