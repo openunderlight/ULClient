@@ -830,49 +830,60 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		} break;
 								   }
 	case LyraEffect::PLAYER_PARALYZED:{
-#ifndef PMARE // pmares get permanent free action
 		if (flags & ACTOR_FREE_ACTION)
-#endif
 		{
-		LoadString (hInstance, IDS_PLAYER_PARALYZE_DEFLECT, disp_message, sizeof(disp_message));
-		display->DisplayMessage(disp_message);
-		// Paralyze and Free Action now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(duration, effect_origin);
-		return false;
-									  }
+			LoadString(hInstance, IDS_PLAYER_PARALYZE_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			// Paralyze and Free Action now offset and partially cancel
+			timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(duration, effect_origin);
+			return false;
+		}
+
+#ifdef PMARE
+		if (effect_origin == EffectOrigin::ART_EVOKE || (rand() % 2 == 0))
+		{
+			// Give the pmare FA and Reflect if they are paralyzed 
+			this->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, 3600000, playerID, EffectOrigin::ART_EVOKE);
+			
+			if (!(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REFLECT]))
+			{
+				this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 3600000, playerID, EffectOrigin::ART_EVOKE);
+			}
+		}
+#endif
+
 		// If actually paralyzed, cancel any current evoke.
-									  arts->CancelArt();} break;
+		arts->CancelArt();
+	} 
+	break;
 	case LyraEffect::PLAYER_DRUNK:{
-#ifndef PMARE // pmares get permanent free action
 		if (flags & ACTOR_FREE_ACTION)
-#endif
 		{
-		LoadString (hInstance, IDS_PLAYER_STAGGER_DEFLECT, disp_message, sizeof(disp_message));
-		display->DisplayMessage(disp_message);
-		// Stagger and Free Action now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(duration, effect_origin);
-		return false;
-								  }} break;
+			LoadString (hInstance, IDS_PLAYER_STAGGER_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			// Stagger and Free Action now offset and partially cancel
+			timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(duration, effect_origin);
+			return false;
+		  }} break;
 	case LyraEffect::PLAYER_FEAR:{
 		if (flags & ACTOR_PROT_FEAR)
 		{
-		LoadString (hInstance, IDS_PLAYER_FEAR_DEFLECT, disp_message, sizeof(disp_message));
-		display->DisplayMessage(disp_message);
-		// Fear and Resist Fear now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR] -= CalculateBreakthrough(duration, effect_origin);
-		return false;
-								 }} break;
+			LoadString (hInstance, IDS_PLAYER_FEAR_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			// Fear and Resist Fear now offset and partially cancel
+			timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR] -= CalculateBreakthrough(duration, effect_origin);
+			return false;
+		}} break;
 	case LyraEffect::PLAYER_BLIND:{
-#ifndef PMARE // pmares get permanent vision
 		if (flags & ACTOR_DETECT_INVIS)
-#endif
 		{
-		LoadString (hInstance, IDS_PLAYER_BLIND_DEFLECT, disp_message, sizeof(disp_message));
-		display->DisplayMessage(disp_message);
-		// Blind and Vision now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE] -= CalculateBreakthrough(duration, effect_origin);
-		return false;
-								  }} break;
+			LoadString (hInstance, IDS_PLAYER_BLIND_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			// Blind and Vision now offset and partially cancel
+			timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE] -= CalculateBreakthrough(duration, effect_origin);
+			return false;
+		}} 
+		break;
 //  Players must know how to Recall, Transform, etc. in case talisman causes effect
 // Recommend moving this back to cArts and calling it from here
 	case LyraEffect::PLAYER_RECALL: {
@@ -2221,12 +2232,18 @@ void cPlayer::HandlePmareDefense(bool add_all)
 {
 	bool added_art = false;
 
-	if (!(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_FEAR]))
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_PARALYSIS]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, 3600000, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
-	
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_DETECT_INVISIBLE]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REFLECT]))
 	{
 		this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 3600000, playerID, EffectOrigin::ART_EVOKE);
@@ -2236,6 +2253,12 @@ void cPlayer::HandlePmareDefense(bool add_all)
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REGENERATING]))
 	{
 		this->SetTimedEffect(LyraEffect::PLAYER_REGENERATING, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_FEAR]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, 3600000, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
 
