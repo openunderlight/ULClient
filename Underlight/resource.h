@@ -62,6 +62,7 @@
 #define IDD_PARTICLES                   195
 #define IDD_GRANT_PPOINT                196
 #define IDD_USE_PPOINT                  197
+#define IDD_CHOOSE_DESTINATION          202
 #define IDS_PROPERTIES                  1000
 #define IDC_USERNAME                    1004
 #define IDC_EMAIL                       1005
@@ -202,6 +203,7 @@
 #define IDC_MOUSETEXT                   1233
 #define IDC_GUILDS                      1234
 #define IDC_GUILD_QUERY                 1235
+#define IDC_DESTINATIONS                1236
 #define IDC_VALUE_PROMPT                1238
 #define IDC_CHECK1                      1243
 #define IDC_RESTART_LOCATION            1243
@@ -384,6 +386,8 @@
 #define IDS_DEV_GAME_SERVER_IP2         1443
 #define IDC_CUSTOM_DEV_SERVER           1444
 #define IDS_CUSTOM_IP_DEFAULT           1445
+#define IDC_CHOOSE_DESTINATION          1445
+#define IDC_STATIC_CHOOSE_DESTINATION   1445
 #define IDS_ONCE_HIDDEN_ALWAYS_HIDDEN   1446
 #define IDC_OK                          1800
 #define IDC_CANCEL                      1801
@@ -1882,7 +1886,7 @@
 #define IDS_NO_JP                       3263
 #define IDS_PA_NO_ARTS                  3264
 #define IDS_USE_GUILD_HOUSE             3266
-#define IDS_GUILD_HOUSE                 3267
+#define IDS_TRANSLOCATE                 3267
 #define IDS_CANT_BE_MEMBER_APPLY        3268
 #define IDS_TRAIN_BELIEF_MOON           3269
 #define IDS_TRAIN_BELIEF_ECLIPSE        3270
@@ -2970,9 +2974,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        202
+#define _APS_NEXT_RESOURCE_VALUE        203
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1444
+#define _APS_NEXT_CONTROL_VALUE         1446
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

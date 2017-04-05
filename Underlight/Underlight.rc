@@ -350,6 +350,17 @@ BEGIN
     PUSHBUTTON      "Mouse Layout",IDC_MOUSELAYOUT,146,2,66,13
 END
 
+IDD_CHOOSE_DESTINATION DIALOGEX 0, 0, 203, 91
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+EXSTYLE WS_EX_STATICEDGE
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "OK",IDC_OK,148,25,33,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Cancel",IDC_CANCEL,148,45,34,14,NOT WS_TABSTOP
+    COMBOBOX        IDC_DESTINATIONS,4,25,135,116,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Please select a location",IDC_STATIC_CHOOSE_DESTINATION,11,3,115,10
+END
+
 IDD_CHOOSE_GUILD DIALOGEX 0, 0, 190, 91
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_STATICEDGE
@@ -977,6 +988,11 @@ BEGIN
         RIGHTMARGIN, 401
         TOPMARGIN, 3
         BOTTOMMARGIN, 94
+    END
+
+    IDD_CHOOSE_DESTINATION, DIALOG
+    BEGIN
+        RIGHTMARGIN, 190
     END
 
     IDD_CHOOSE_GUILD, DIALOG
@@ -3150,7 +3166,7 @@ STRINGTABLE
 BEGIN
     IDS_PA_NO_ARTS          "You can not make aggressive acts while shielded by your Peace Aura\n"
     IDS_USE_GUILD_HOUSE     "You concentrate for a moment and move to your Focus Guild Room "
-    IDS_GUILD_HOUSE         "Guild House"
+    IDS_TRANSLOCATE         "Translocate"
     IDS_CANT_BE_MEMBER_APPLY 
                             "The evocation of %s does not affect you, because you are a member of %s"
     IDS_TRAIN_BELIEF_MOON   "The Order of the Sable Moon is a Spiritual Freesoul Imprisoning house. They are the Spiritual center of the Freesoul faith. They study the dream and the Nightmares within it in order to discover a way to rid the dream of the menace. They Imprison the nightmare essences within their ""Relic of the Order""."
@@ -4316,7 +4332,7 @@ BEGIN
     IDS_PP_PMARE_TIME_SEL   "# PMare credits:"
     IDS_CUPSUMMONS_ATTEMPT  "%s has invited you to the Dreamer's Cup Arena! You will teleport there now if you accept."
     IDS_KNOW3931            "Upon entry, this expansive circular room has an inviting atmosphere. A cluster of mounted flames form the illusion of orbiting the elegant chandelier, which dangles from the middle of the tall concave ceiling. Its teardrop crystals reflect the lit candles, casting a glow of illumination across the golden, ornate interior. The hard, polished floor has a spiral design that starts from the center of the room and expands outward. Off to one side, a harp and other musical instruments can be seen. Heavy maroon curtains are draped around ancient murals, as if in presentation. Ground torches gleam near the painted walls, staving off the creeping shadows."
-    IDS_LEARNED_HOUSE_ART   "You have learned %s as a result of your new house rank!"
+    IDS_LEARNED_HOUSE_ART   "You have learned %s as a result of your new rank!"
     IDS_KNOW3221            "Intense waves of steam and humidity mix with a faint scent of sulfur through the cavernous room. Condensation drips down the roots gripping the cool stone walls into the warm, bubbling water below."
     IDS_SCROLL              "Scroll"
     IDS_FLOWER              "Flower"
