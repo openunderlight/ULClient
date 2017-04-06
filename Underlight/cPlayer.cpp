@@ -2088,11 +2088,6 @@ int cPlayer::SetSkill(int art_id, int value, int how, lyra_id_t origin_id, bool 
 	if (skills[art_id].skill > Stats::SKILL_MAX)
 		skills[art_id].skill = Stats::SKILL_MAX;
 
-#ifdef PMARE
-	if (skills[art_id].skill > 1)
-		skills[art_id].skill = 1;
-#endif
-
 	skills[art_id].checksum = (skills[art_id].skill) ^ MAGIC_XOR_VAR;
 
 	if (cp)
@@ -2715,6 +2710,23 @@ int cPlayer::Skill(int art_id)
 		return pp.skill;
 #if defined (UL_DEBUG) || defined (GAMEMASTER) // no sphere restrictions in debug builds
 	return skills[art_id].skill;
+#elif PMARE
+
+	if (orbit < 15)
+		return min(skills[art_id].skill, 30);
+	else if (orbit < 25)
+		return min(skills[art_id].skill, 40);
+	else if (orbit < 35)
+		return min(skills[art_id].skill, 50);
+	else if (orbit < 45)
+		return min(skills[art_id].skill, 60);
+	else if (orbit < 50)
+		return min(skills[art_id].skill, 70);
+	else if (orbit < 55)
+		return min(skills[art_id].skill, 80);
+	else if (orbit >= 55)
+		return min(skills[art_id].skill, 90);
+
 #else // otherwise, skill is limited by orbit, unless it is blade or flame,
 	  // where lowering the skill level would cause a server error,
 	  // or a focus skill, where the player couldn't use items in inventory

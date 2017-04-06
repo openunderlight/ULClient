@@ -113,7 +113,7 @@ unsigned long art_chksum[NUM_ARTS] =
 #ifndef PMARE
 0xBABF, // Shatter 
 #else
-0xB46A, // Shatter - pmare 
+0xB56A, // Shatter - pmare 
 #endif
 0xDEFA, // Return 
 0x00E9, // Know 
@@ -122,17 +122,31 @@ unsigned long art_chksum[NUM_ARTS] =
 0x6B91, // Identify Curse 
 0x9125, // Chamele 
 0xB581, // Vision 
+#ifndef PMARE
 0xDDA6, // Blast 
+#else
+0xDDDB, // Blast -- pmare
+#endif
 0x0106, // Blend 
 0x263E, // Forge Talisman 
 0x4937, // Recharge 
+#ifndef PMARE
 0x6C73, // Restore 
+#else
+0x6C69, // Restore - pmare
+#endif
 0x919D, // Reweave 
 0xB501, // Purify 
 0xDFAC, // Drain Self 
-0x0281, // Abjure 
+#ifndef PMARE
+0x0281, // Abjure
 0x274B, // Poison 
 0x4A46, // Antidote 
+#else
+0x2DB, // Abjure - pmare
+0x2768, // Poison - pmare
+0x4A6B, // Antidote - pmare 
+#endif
 0x6C08, // Curse 
 0x953C, // Drain Essence 
 0xB0F4, // Banish Nightmare 
@@ -144,9 +158,17 @@ unsigned long art_chksum[NUM_ARTS] =
 0x90E9, // Stagger 
 0xB40F, // Deafen 
 0xDAC5, // Blind 
+#ifndef PMARE
 0xFC86, // Darkness 
+#else
+0xFC50, // Darkness - pmare
+#endif
 0x20A3, // Paralyze 
+#ifndef PMARE
 0x4B10, // Firestorm 
+#else
+0x4B82, // Firestorm pmare
+#endif
 0x6ED5, // Razorwind 
 0x8E9A, // Recall 
 0xB0A3, // Push 
@@ -181,10 +203,18 @@ unsigned long art_chksum[NUM_ARTS] =
 0xDB0B, // Awaken 
 0xFF24, // UnTrain 
 0x21A8, // Grant RP XP 
+#ifndef PMARE
 0x3BDB, // Dreamquake 
+#else
+0x3B70, // Dreamquake -- pmare
+#endif
 0x6222, // Hypnotic Weave 
 0x8E57, // Vampiric Draw 
+#ifndef PMARE
 0xADC8, // Terror 
+#else
+0xADD5, // Terror -- pmare
+#endif
 0xD7EE, // Healing Aura 
 0xFF5F, // Telepathy 
 0x24FE, // Dreamsmith Mark 
@@ -242,7 +272,11 @@ unsigned long art_chksum[NUM_ARTS] =
 0x8544, // Merge Talisman 
 0xA9D8, // NP Symbol 
 0xCC58, // Sense Datoken 
+#ifndef PMARE
 0xED06, // Tempest 
+#else
+0xED7B, // Tempest -- pmare
+#endif
 0x123A, // Kinesis 
 0x3066, // Misdirection 
 0x5D3E, // Chaotic Vortex 
@@ -268,7 +302,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 #ifndef PMARE
 {IDS_SHATTER, 				Stats::WILLPOWER,	40, 40, 0,	8, 	4, SANCT|FOCUS|LEARN},
 #else
-{IDS_SHATTER, 				Stats::DREAMSOUL,	0, 5, 0,	2, 	4, SANCT|LEARN},
+{IDS_SHATTER, 				Stats::WILLPOWER,	0, 5, 0,	2, 	4, SANCT|LEARN},
 #endif
 {IDS_RETURN,				Stats::WILLPOWER, 50, 20, 23,   2,  2, SANCT|FOCUS|LEARN},
 {IDS_KNOW, 					Stats::INSIGHT,		0,  0,  0,	1, 	-1, SANCT|LEARN},
@@ -277,17 +311,32 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_ID_CURSE,				Stats::INSIGHT,		20, 2,  0,	1, 	1, SANCT|NEIGH|LEARN},
 {IDS_CHAMELE, 				Stats::INSIGHT,		20, 20, 16, 5, 	2, SANCT|FOCUS|LEARN},
 {IDS_VISION,				Stats::INSIGHT,		20, 5,  13, 2, 	2, SANCT|FOCUS|LEARN},
+#ifndef PMARE
 {IDS_BLAST,					Stats::INSIGHT,		30, 2,  0,	1, 	2, NEIGH|FOCUS|LEARN},
+#else
+{ IDS_BLAST,				Stats::INSIGHT,		0, 5,  0,	1, 	2, NEIGH | FOCUS | LEARN },
+#endif 
 {IDS_BLEND,					Stats::INSIGHT,		50, 30, 6,	5, 	3, SANCT|FOCUS|LEARN},
 {IDS_FORGE,					Stats::DREAMSOUL,	50, 50, 0,	8, 	-1, SANCT|MAKE_ITEM|LEARN},
 {IDS_RECHARGE,				Stats::INSIGHT,		40, 15, 0,	8, 	2, SANCT|FOCUS|LEARN|NEED_ITEM},
+#ifndef PMARE
 {IDS_RESTORE, 				Stats::RESILIENCE,	10, 5,  0,	1, 	1, SANCT|LEARN},
+#else
+{ IDS_RESTORE, 				Stats::RESILIENCE,	0, 5,  0,	1, 	1, SANCT | LEARN },
+#endif
 {IDS_REWEAVE, 				Stats::RESILIENCE,	15, 10, 0,	4, 	1, SANCT|NEED_ITEM|LEARN},
 {IDS_PURIFY,				Stats::RESILIENCE,	5,  15, 0,	2, 	1, SANCT|LEARN},
 {IDS_DRAIN_SELF, 			Stats::RESILIENCE,	20, 5,  0,	2, 	2, SANCT|NEIGH|FOCUS|LEARN},
+#ifndef PMARE
 {IDS_ABJURE,				Stats::RESILIENCE,	50, 30, 0,	3, 	4, FOCUS|LEARN},
 {IDS_POISON,				Stats::RESILIENCE,	30, 15, 13, 3, 	2, NEIGH|FOCUS|LEARN},
 {IDS_ANTIDOTE,				Stats::RESILIENCE,	30, 10, 0,	2, 	3, SANCT|FOCUS|LEARN},
+#else
+{ IDS_ABJURE,				Stats::RESILIENCE,	0, 50, 0,	3, 	4, FOCUS | LEARN },
+{ IDS_POISON,				Stats::RESILIENCE,	0, 10, 13, 3, 	2, NEIGH | FOCUS | LEARN },
+{ IDS_ANTIDOTE,				Stats::RESILIENCE,	0, 5, 0,	2, 	3, SANCT | FOCUS | LEARN },
+
+#endif
 {IDS_CURSE,					Stats::RESILIENCE,	40, 10, 13, 3, 	3, NEIGH|FOCUS|LEARN},
 {IDS_DRAIN_ESSENCE,			Stats::RESILIENCE,	0,  0,  0,	1, 	1, SANCT|NEED_ITEM|LEARN},
 {IDS_BANISH_MARE,			Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
@@ -299,9 +348,17 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_STAGGER, 				Stats::LUCIDITY,	20, 10, 3,	2, 	3, NEIGH|FOCUS|LEARN},
 {IDS_DEAFEN,				Stats::LUCIDITY,	5,  15, 4,	2, 	2, NEIGH|LEARN},
 {IDS_BLIND,					Stats::LUCIDITY,	45, 15, 3,	3, 	3, NEIGH|FOCUS|LEARN},
+#ifndef PMARE
 {IDS_DARKNESS_ART_NAME,		Stats::LUCIDITY,	50, 25, 4,	5, 	3, NEIGH|FOCUS|LEARN},
+#else
+{ IDS_DARKNESS_ART_NAME,	Stats::LUCIDITY,	0, 25, 4,	3, 	3, NEIGH | FOCUS | LEARN },
+#endif
 {IDS_PARALYZE,				Stats::LUCIDITY,	30, 20, 2,	3, 	3, NEIGH|FOCUS|LEARN},  
+#ifndef PMARE
 {IDS_FIRESTORM,				Stats::LUCIDITY,	50, 25, 0,	7, 	3, FOCUS|LEARN},
+#else
+{ IDS_FIRESTORM,			Stats::LUCIDITY,	0, 25, 0,	3, 	3, FOCUS | LEARN },
+#endif
 {IDS_RAZORWIND,				Stats::LUCIDITY,	70, 40, 6,	9, 	4, FOCUS|LEARN},
 {IDS_RECALL_ART_NAME,		Stats::DREAMSOUL,	25, 1,  25, 1, 	1, SANCT|LEARN},
 {IDS_PUSH, 					Stats::DREAMSOUL,	0,  0,  0,	1, 	1, NEIGH|LEARN},
@@ -336,10 +393,18 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_AWAKEN,				Stats::NO_STAT, 	0,	0,	0,	0,	-1, SANCT|NEIGH},		// gm only
 {IDS_UNTRAIN_ART_NAME, 		Stats::NO_STAT, 	0,	0,	0,	2,	-1, SANCT|NEIGH},		// gm only
 {IDS_GRANT_RP_XP, 			Stats::NO_STAT, 	0,	0,	0,	0,	-1, SANCT|NEIGH},
+#ifndef PMARE
 {IDS_DREAMQUAKE,			Stats::WILLPOWER,	60, 40, 4,	7,	3, FOCUS|LEARN}, 
+#else
+{ IDS_DREAMQUAKE,			Stats::WILLPOWER,	0, 25, 4,	1,	3, FOCUS | LEARN },
+#endif
 {IDS_HYPNOTIC_WEAVE_ART_NAME,		Stats::LUCIDITY,	60, 40, 4,	7,	4, FOCUS|LEARN},
 {IDS_VAMPRIC_DRAW,					Stats::RESILIENCE,	60, 5,	0,	5,	3, FOCUS|LEARN|NEIGH|NEED_ITEM},
+#ifndef PMARE
 {IDS_TERROR_ART_NAME,				Stats::LUCIDITY,	60, 40, 4,	1,	3, FOCUS|LEARN},
+#else
+{ IDS_TERROR_ART_NAME,				Stats::LUCIDITY,	0, 25, 4,	1,	3, FOCUS | LEARN },
+#endif
 {IDS_HEAL_AURA,						Stats::RESILIENCE,	60, 40, 0,	7, 	-1, FOCUS|NEIGH|SANCT|LEARN},
 {IDS_TELEPATHY,						Stats::NO_STAT,		75, 0,  0,	0, 	-1, SANCT|NEIGH},	// roger wilco voice
 {IDS_DREAMSMITH_MARK_ART_NAME, 		Stats::NO_STAT,		50, 0,  0,	1, 	-1, SANCT},
@@ -397,7 +462,11 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_MERGE_TALISMAN,				Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS},
 {IDS_NP_SYMBOL_ART_NAME, 			Stats::NO_STAT,		10,  0, 0,	2, 	-1, SANCT},
 {IDS_LOCATE_MARES,					Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT|LEARN},
+#ifndef PMARE
 {IDS_TEMPEST,				        Stats::LUCIDITY,	60, 40, 0,	7, 	-1, FOCUS|LEARN},
+#else
+{ IDS_TEMPEST,				        Stats::LUCIDITY,	0, 25, 0,	3, 	-1, FOCUS | LEARN },
+#endif
 {IDS_KINESIS, 						Stats::WILLPOWER,	30, 5,  0,	1, 	-1, FOCUS|LEARN|NEIGH},
 {IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN|NEIGH},
 {IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
@@ -746,13 +815,13 @@ bool cArts::CanUseArt(int art_id, bool bypass)
 	if (checksum1 != checksum2)
 	//if (0) // checksums disabled temporarily
 	{ // Cheating Bastard!!!!	
-#ifdef UL_DEBUG
+//#ifdef UL_DEBUG
 		_stprintf(message, "New checksum: %d, Old checksum: %d", checksum1, checksum2);
 		display->DisplayMessage(message);
-#endif
+//#endif
 		LoadString (hInstance, IDS_DETECTED_CHEATER, message, sizeof(message));
 		display->DisplayMessage(message);
-		player->SetCurrStat(Stats::DREAMSOUL, 0, SET_ABSOLUTE, player->ID());
+	//	player->SetCurrStat(Stats::DREAMSOUL, 0, SET_ABSOLUTE, player->ID());
 		return false;
 	}
 		
