@@ -2143,7 +2143,10 @@ int cPlayer::SetXP(int value, bool initializing)
 
 #ifdef PMARE
 		if (old_orbit != orbit)
+		{
 			cp->UpdateStats();
+			cp->SetupArts();
+		}
 #else
 
 		if (old_orbit < orbit)
@@ -2726,6 +2729,8 @@ int cPlayer::Skill(int art_id)
 		return min(skills[art_id].skill, 80);
 	else if (orbit >= 55)
 		return min(skills[art_id].skill, 90);
+
+	return min(skills[art_id].skill, orbit);
 
 #else // otherwise, skill is limited by orbit, unless it is blade or flame,
 	  // where lowering the skill level would cause a server error,
