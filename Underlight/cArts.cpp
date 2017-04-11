@@ -8229,12 +8229,12 @@ void cArts::EndQuest(void *value)
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SCROLL_FUNCTION),0,0));
 
 	if (scroll_type->num_charges == 254)
-		flags = LyraItem::FLAG_IMMUTABLE | LyraItem::FLAG_HASDESCRIPTION;
+		flags = LyraItem::FLAG_IMMUTABLE | LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_SENDSTATE;
 	else
-		flags = LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION;
+		flags = LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_SENDSTATE;
 
 	if (scroll_type->artifact)
-		flags = flags | LyraItem::FLAG_NOREAP | LyraItem::FLAG_ALWAYS_DROP;
+		flags = flags | LyraItem::FLAG_NOREAP | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_SENDSTATE;
 
 	header.SetFlags(flags);
 
@@ -10647,12 +10647,12 @@ void cArts::EndWriteScroll(void *value)
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SCROLL_FUNCTION),0,0));
 
 	if (scroll_type->num_charges == 254)
-		flags = LyraItem::FLAG_IMMUTABLE | LyraItem::FLAG_HASDESCRIPTION;
+		flags = LyraItem::FLAG_IMMUTABLE | LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_SENDSTATE;
 	else
-		flags = LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION;
+		flags = LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_SENDSTATE;
 
 	if (scroll_type->artifact)
-		flags = flags | LyraItem::FLAG_NOREAP | LyraItem::FLAG_ALWAYS_DROP;
+		flags = flags | LyraItem::FLAG_NOREAP | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_SENDSTATE;
 
 	header.SetFlags(flags);
 
