@@ -482,11 +482,9 @@ bool cActor::Render(void)
 		//if  (((cNeighbor*)this)->Avatar().Hidden())
 //			return false;
 	//}
-#ifndef PMARE // pmares get permanent vision
 	else if (((flags & ACTOR_INVISIBLE) || (flags & ACTOR_CHAMELED)) &&
 		(player) && !(player->flags & ACTOR_DETECT_INVIS))
 		return false;
-#endif
 	else
 		return true;
 }

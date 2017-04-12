@@ -830,49 +830,60 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		} break;
 								   }
 	case LyraEffect::PLAYER_PARALYZED:{
-#ifndef PMARE // pmares get permanent free action
 		if (flags & ACTOR_FREE_ACTION)
-#endif
 		{
-		LoadString (hInstance, IDS_PLAYER_PARALYZE_DEFLECT, disp_message, sizeof(disp_message));
-		display->DisplayMessage(disp_message);
-		// Paralyze and Free Action now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(duration, effect_origin);
-		return false;
-									  }
+			LoadString(hInstance, IDS_PLAYER_PARALYZE_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			// Paralyze and Free Action now offset and partially cancel
+			timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(duration, effect_origin);
+			return false;
+		}
+
+#ifdef PMARE
+		if (effect_origin == EffectOrigin::ART_EVOKE || (rand() % 2 == 0))
+		{
+			// Give the pmare FA and Reflect if they are paralyzed 
+			this->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, 3600000, playerID, EffectOrigin::ART_EVOKE);
+			
+			if (!(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REFLECT]))
+			{
+				this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 3600000, playerID, EffectOrigin::ART_EVOKE);
+			}
+		}
+#endif
+
 		// If actually paralyzed, cancel any current evoke.
-									  arts->CancelArt();} break;
+		arts->CancelArt();
+	} 
+	break;
 	case LyraEffect::PLAYER_DRUNK:{
-#ifndef PMARE // pmares get permanent free action
 		if (flags & ACTOR_FREE_ACTION)
-#endif
 		{
-		LoadString (hInstance, IDS_PLAYER_STAGGER_DEFLECT, disp_message, sizeof(disp_message));
-		display->DisplayMessage(disp_message);
-		// Stagger and Free Action now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(duration, effect_origin);
-		return false;
-								  }} break;
+			LoadString (hInstance, IDS_PLAYER_STAGGER_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			// Stagger and Free Action now offset and partially cancel
+			timed_effects->expires[LyraEffect::PLAYER_PROT_PARALYSIS] -= CalculateBreakthrough(duration, effect_origin);
+			return false;
+		  }} break;
 	case LyraEffect::PLAYER_FEAR:{
 		if (flags & ACTOR_PROT_FEAR)
 		{
-		LoadString (hInstance, IDS_PLAYER_FEAR_DEFLECT, disp_message, sizeof(disp_message));
-		display->DisplayMessage(disp_message);
-		// Fear and Resist Fear now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR] -= CalculateBreakthrough(duration, effect_origin);
-		return false;
-								 }} break;
+			LoadString (hInstance, IDS_PLAYER_FEAR_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			// Fear and Resist Fear now offset and partially cancel
+			timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR] -= CalculateBreakthrough(duration, effect_origin);
+			return false;
+		}} break;
 	case LyraEffect::PLAYER_BLIND:{
-#ifndef PMARE // pmares get permanent vision
 		if (flags & ACTOR_DETECT_INVIS)
-#endif
 		{
-		LoadString (hInstance, IDS_PLAYER_BLIND_DEFLECT, disp_message, sizeof(disp_message));
-		display->DisplayMessage(disp_message);
-		// Blind and Vision now offset and partially cancel
-		timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE] -= CalculateBreakthrough(duration, effect_origin);
-		return false;
-								  }} break;
+			LoadString (hInstance, IDS_PLAYER_BLIND_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			// Blind and Vision now offset and partially cancel
+			timed_effects->expires[LyraEffect::PLAYER_DETECT_INVISIBLE] -= CalculateBreakthrough(duration, effect_origin);
+			return false;
+		}} 
+		break;
 //  Players must know how to Recall, Transform, etc. in case talisman causes effect
 // Recommend moving this back to cArts and calling it from here
 	case LyraEffect::PLAYER_RECALL: {
@@ -973,7 +984,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 								   } break;
 
 	case LyraEffect::PLAYER_POISONED: {
-		if ((flags & ACTOR_NO_POISON) || (player->IsPMare()) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
+		if (flags & ACTOR_NO_POISON)
 		{
 			LoadString (hInstance, IDS_PLAYER_POISON_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
@@ -981,18 +992,21 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		}
 
 		if (caster_id != player->ID())
-
 			last_poisoner = caster_id;
 
-		int new_strength = (duration/60000) + 1;	
+		// pmares and dark mares can only be affected w/ a 1 strength poison
+		if (duration > 60000 && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
+		{ 
+			duration = 60000;
+		}
 
-		if (new_strength>10) new_strength = 10;
+		int new_strength = (duration / 60000) + 1;
+		if (new_strength > 10) new_strength = 10;
 
-		if (new_strength>poison_strength)
-
-		poison_strength = new_strength;
-
-		} break;
+		if (new_strength > poison_strength)
+			poison_strength = new_strength;
+	} 
+	break;
   case LyraEffect::PLAYER_SPIN:
     {
     break;
@@ -1004,11 +1018,17 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 
 
 	if (flags & timed_effects->actor_flag[effect])
-	{	// extend duration of existing effect
-		//if (timed_effects->harmful[effect]) // 1/4 duration extension
-		//	timed_effects->expires[effect] += (int)(duration/4);
-		//else								// 1/2 duration extension
-		timed_effects->expires[effect] += (int)(duration/2);
+	{	
+		if (effect == LyraEffect::PLAYER_POISONED && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
+		{
+			// can't exceed duration of poison for pmares and dmares
+			timed_effects->expires[effect] = LyraTime() + duration;
+		}
+		else
+		{
+			// regular effects increase by half the standard rate
+			timed_effects->expires[effect] += (int)(duration / 2);
+		}
 		if (timed_effects->more_descrip[effect])
 			display->DisplayMessage(timed_effects->more_descrip[effect] );
 		// don't display additional shield messages
@@ -1148,10 +1168,17 @@ void cPlayer::CheckStatus(void)
 		value = this->AvatarType();
 #else 
 #ifdef PMARE // regen fast if boggo or ago
-		if (this->AvatarType() <= Avatars::AGOKNIGHT)
-			value = this->AvatarType();
-		else
-			value = 1;
+		switch (this->AvatarType())
+		{
+			case Avatars::BOGROM:
+				value = 4;
+				break;
+			case Avatars::AGOKNIGHT:
+				value = 3;
+				break;
+			default:
+				value = 1;
+		}
 #else  // dreamers regen slowly
 		if (flags & ACTOR_MEDITATING)
 			 value = 2 + (player->Skill(Arts::MEDITATION) / 10);
@@ -1168,7 +1195,12 @@ void cPlayer::CheckStatus(void)
 			(level->Rooms[this->Room()].flags & ROOM_SANCTUARY))
 		{ // all mares get thrashed in sanct
 			value = (avatar.AvatarType() -Avatars::MIN_NIGHTMARE_TYPE + 1)*-5;
-			this->SetCurrStat(Stats::DREAMSOUL, value, SET_RELATIVE, playerID);
+			lyra_id_t attacker = playerID;
+
+			if (last_attacker_id != Lyra::ID_UNKNOWN)
+				attacker = last_attacker_id;
+
+			this->SetCurrStat(Stats::DREAMSOUL, value, SET_RELATIVE, attacker);
 			LoadString (hInstance, IDS_SANCTUARY_HURTS, message, sizeof(message));
 			display->DisplayMessage(message);
 
@@ -1535,6 +1567,8 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 #ifdef PMARE // pmare bogroms get an additional 30% shield
 		if (this->GetMonsterType() == Avatars::BOGROM)
 			amount = amount*.70;
+		else if (this->GetMonsterType() != Avatars::AGOKNIGHT) // other pmares get a 15% shield
+			amount = amount*.85;
 #endif
 		if (amount)
 			this->SetHit(true);
@@ -1806,6 +1840,11 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 	}
 #endif
 
+#ifdef PMARE
+	if (rand() % 20 == 0)
+		this->HandlePmareDefense(false);
+#endif
+
 int mare_avatar = this->CurrentAvatarType();
 
 #ifdef AGENT
@@ -1897,6 +1936,13 @@ int mare_avatar = this->CurrentAvatarType();
 			break;
 
 		case Avatars::SHAMBLIX: 
+#ifdef PMARE
+			// 15% chance 
+			if (rand() % 20 < 3) {
+				// 1-50 damage, paralysis fireballs
+				return gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE, -5, LyraEffect::PLAYER_PARALYZED, SHAMBLIX_DAMAGE_XTR);
+			}
+#endif
 			// 10-30 damage, paralysis fireballs
 			return gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE, 3, LyraEffect::PLAYER_PARALYZED, SHAMBLIX_DAMAGE);
 
@@ -1923,6 +1969,13 @@ int mare_avatar = this->CurrentAvatarType();
 					break;
 				}
 
+			}
+#endif
+#ifdef PMARE
+			// 15% chance 
+			if (rand() % 20 < 3 ) {
+				// 35 damage, blind fireballs
+				return gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE, -7, LyraEffect::PLAYER_BLIND, HORRON_DAMAGE_XTR);
 			}
 #endif
 			return gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE, -5, LyraEffect::PLAYER_BLIND, HORRON_DAMAGE);
@@ -2035,11 +2088,6 @@ int cPlayer::SetSkill(int art_id, int value, int how, lyra_id_t origin_id, bool 
 	if (skills[art_id].skill > Stats::SKILL_MAX)
 		skills[art_id].skill = Stats::SKILL_MAX;
 
-#ifdef PMARE
-	if (skills[art_id].skill > 1)
-		skills[art_id].skill = 1;
-#endif
-
 	skills[art_id].checksum = (skills[art_id].skill) ^ MAGIC_XOR_VAR;
 
 	if (cp)
@@ -2095,7 +2143,10 @@ int cPlayer::SetXP(int value, bool initializing)
 
 #ifdef PMARE
 		if (old_orbit != orbit)
+		{
 			cp->UpdateStats();
+			cp->SetupArts();
+		}
 #else
 
 		if (old_orbit < orbit)
@@ -2165,9 +2216,63 @@ void cPlayer::ReformAvatar(void)
 	cDS->PlaySound(LyraSound::HOLYLIGHT, x, y, true);
 	if (flags & ACTOR_SOULEVOKE)
 		this->RemoveTimedEffect(LyraEffect::PLAYER_SOULEVOKE);
+
+#ifdef PMARE
+	this->HandlePmareDefense(true);
+#endif
+
 	return;
 }
 
+#ifdef PMARE
+// Pmares get some temporary defensive abilities
+void cPlayer::HandlePmareDefense(bool add_all)
+{
+	bool added_art = false;
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_PARALYSIS]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_DETECT_INVISIBLE]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REFLECT]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REGENERATING]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_REGENERATING, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_FEAR]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_NO_POISON]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_NO_POISON, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_TRAIL]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_TRAIL, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}			
+}
+#endif
 
 // Player has just suffered an "avatar death"
 // origin_id is the player id of whomever caused the little death
@@ -2194,6 +2299,7 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 	collapses[next_collapse_index].collapser_id = origin_id;
 	collapses[next_collapse_index].time = collapse_time; 
 
+	this->SetLastAttackerID(Lyra::ID_UNKNOWN);
 	this->PerformedAction(); // wrecks evoking, etc.
 
 	n = actors->LookUpNeighbor(origin_id);
@@ -2296,9 +2402,12 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 		blast_chance = 0; // reset Ago's Blast Chance on collapse
 	}
 #else 
-// if player mare = 200+
 #ifdef PMARE
+		// if player mare = 200+
 		j = 150 + this->AvatarType();
+
+		// End the pmare session 5 minutes earlier for each time it is collapsed
+		options.pmare_logout_time = options.pmare_logout_time - 5 * 60000; 
 #else 
 #ifdef GAMEMASTER // nightmare possession, dark mare orbit = 200 + nightmare index
 		if ((avatar.AvatarType() >= Avatars::MIN_NIGHTMARE_TYPE) &&
@@ -2604,6 +2713,25 @@ int cPlayer::Skill(int art_id)
 		return pp.skill;
 #if defined (UL_DEBUG) || defined (GAMEMASTER) // no sphere restrictions in debug builds
 	return skills[art_id].skill;
+#elif PMARE
+
+	if (orbit < 15)
+		return min(skills[art_id].skill, 30);
+	else if (orbit < 25)
+		return min(skills[art_id].skill, 40);
+	else if (orbit < 35)
+		return min(skills[art_id].skill, 50);
+	else if (orbit < 45)
+		return min(skills[art_id].skill, 60);
+	else if (orbit < 50)
+		return min(skills[art_id].skill, 70);
+	else if (orbit < 55)
+		return min(skills[art_id].skill, 80);
+	else if (orbit >= 55)
+		return min(skills[art_id].skill, 90);
+
+	return min(skills[art_id].skill, orbit);
+
 #else // otherwise, skill is limited by orbit, unless it is blade or flame,
 	  // where lowering the skill level would cause a server error,
 	  // or a focus skill, where the player couldn't use items in inventory

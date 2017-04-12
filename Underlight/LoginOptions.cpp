@@ -301,7 +301,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 
 #ifdef PMARE
 				int pmare_avatar_type = 3 + ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PMARE_LIST));
-				// if pmare_avatar_type > Shamblix, it means resume previous session
+				// if pmare_avatar_type > Horron, it means resume previous session
 				if (pmare_avatar_type <= Avatars::SHAMBLIX) {
 					options.pmare_type = pmare_avatar_type;
 					options.pmare_price = (int)((pmare_info[options.pmare_type - 3].charge)*100 + .1);

@@ -1022,6 +1022,10 @@ void cGameServer::HandleMessage(void)
 		if (auto_level_login)
 			this->LevelLogin();
 
+#ifdef PMARE
+		player->HandlePmareDefense(true);
+#endif
+
 		break;
 
 		case GMsg::CHANGESTAT: // change a stat
@@ -2133,7 +2137,7 @@ void cGameServer::HandleMessage(void)
 								}
 
 							// don't display emotes from invisible players unless we have vision
-#if (!(defined GAMEMASTER) && !(defined PMARE)) // GMs and PMares see all
+#ifndef GAMEMASTER // GMs and PMares see all
 							if ((speech_msg.SpeechType() == RMsg_Speech::EMOTE) && (n->flags & ACTOR_INVISIBLE) && 
 								!(player->flags & ACTOR_DETECT_INVIS))
 								break; 
