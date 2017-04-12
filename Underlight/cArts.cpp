@@ -815,13 +815,13 @@ bool cArts::CanUseArt(int art_id, bool bypass)
 	if (checksum1 != checksum2)
 	//if (0) // checksums disabled temporarily
 	{ // Cheating Bastard!!!!	
-//#ifdef UL_DEBUG
+#ifdef UL_DEBUG
 		_stprintf(message, "New checksum: %d, Old checksum: %d", checksum1, checksum2);
 		display->DisplayMessage(message);
-//#endif
+#endif
 		LoadString (hInstance, IDS_DETECTED_CHEATER, message, sizeof(message));
 		display->DisplayMessage(message);
-	//	player->SetCurrStat(Stats::DREAMSOUL, 0, SET_ABSOLUTE, player->ID());
+		player->SetCurrStat(Stats::DREAMSOUL, 0, SET_ABSOLUTE, player->ID());
 		return false;
 	}
 		
