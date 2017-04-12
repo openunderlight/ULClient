@@ -464,6 +464,7 @@ public:
 	void StartSummonPrime(void);
 	void ApplySummonPrime(int guild_id, int success);
 	void EndSummonPrime(void* value);
+	void UsePowerTokens(cItem** tokens, int charges_to_use);
 	int CountPowerTokens(cItem** tokens, lyra_id_t guild_id = Guild::NO_GUILD);
 
 	// pseudo arts that need to use cArts methods 
