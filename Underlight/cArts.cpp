@@ -9251,92 +9251,94 @@ void cArts::StartPowerToken(void)
 		this->ArtFinished(false);
 		return;
 	}
-
-	if (player->NumGuilds(Guild::RULER_PENDING) == 1)
-	{ // only one choice, skip straight to end
-		int value = GuildID(player->GuildFlags(Guild::RULER_PENDING));
-		this->EndPowerToken(&value);
+	
+	// build the power token dialog
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
 		return;
 	}
-	else
-	{
-		if (chooseguilddlg)
-		{
-			this->ArtFinished(false);
-			return;
-		}
-		chooseguilddlg = true;
-		HWND hDlg = CreateLyraDialog(hInstance, IDD_CHOOSE_GUILD,
-			cDD->Hwnd_Main(), (DLGPROC)ChooseGuildDlgProc);
-		chooseguild_callback = (&cArts::EndPowerToken);
-		SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
-		SendMessage(hDlg, WM_ADD_INITIATES, 0, 0);
-		SendMessage(hDlg, WM_ADD_KNIGHTS, 0, 0);
-		SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
-		this->WaitForDialog(hDlg, Arts::POWER_TOKEN);
-	}
+	entervaluedlg = true;
+	HWND hDlg = CreateLyraDialog(hInstance, IDD_POWER_TOKEN,
+		cDD->Hwnd_Main(), (DLGPROC)PowerTokenDlgProc);
+	entervalue_callback = (&cArts::EndPowerToken);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	SendMessage(hDlg, WM_ADD_INITIATES, 0, 0);
+	SendMessage(hDlg, WM_ADD_KNIGHTS, 0, 0);
+	SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
+	this->WaitForDialog(hDlg, Arts::POWER_TOKEN);
+	
 	return;
 }
 
 
 void cArts::EndPowerToken(void *value)
 {
-	int guild_id = *((int*)value);
-	int num_charges = player->SkillSphere(Arts::POWER_TOKEN) + 1;
-	int cost = Arts::POWER_TOKEN_DRAIN * num_charges;
+	int guild_id, num_charges=-1;
 
-	if (guild_id == Guild::NO_GUILD)
+	if (_stscanf(message, _T("%d;%d"), &guild_id, &num_charges) == 2)
 	{
-		this->CancelArt();
-		return;
+		//int guild_id = *((int*)value);
+		//int num_charges = player->SkillSphere(Arts::POWER_TOKEN) + 1;
+		int cost = Arts::POWER_TOKEN_DRAIN * num_charges;
+
+		if (guild_id == Guild::NO_GUILD)
+		{
+			this->CancelArt();
+			return;
+		}
+		else
+		{	// any prime will do
+			cItem* prime = FindPrime(Guild::NO_GUILD, cost);
+			if (prime == NO_ITEM)
+			{
+				LoadString(hInstance, IDS_NEED_PRIME_PT, disp_message, sizeof(disp_message));
+				_stprintf(message, disp_message, GuildName(guild_id), GuildName(guild_id), cost);
+				display->DisplayMessage(message);
+				this->ArtFinished(false);
+			}
+			else
+			{	// create power token item here!	
+				LmItem info;
+				LmItemHdr header;
+				cItem *power_token;
+				lyra_item_support_t support = { LyraItem::SUPPORT_FUNCTION, 0, 0, 0 };
+
+				header.Init(0, 0);
+				header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
+				header.SetGraphic(LyraBitmap::SOUL_ESSENCE);
+				header.SetColor1(0); header.SetColor2(0);
+				header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SUPPORT_FUNCTION), 0, 0));
+
+				support.set_guild_token(guild_id, Tokens::POWER_TOKEN);
+				support.set_creator_id(player->ID());
+				/// ARGH - we need target ID!!!
+				support.set_target_id(0);
+
+				LoadString(hInstance, IDS_POWER_TOKEN_HOUSE, temp_message, sizeof(temp_message));
+				_stprintf(message, temp_message, GuildName(guild_id));
+				_tcsnccpy(disp_message, message, LmItem::NAME_LENGTH - 1);
+				disp_message[LmItem::NAME_LENGTH - 1] = '\0';
+
+				info.Init(header, disp_message, 0, 0, 0);
+				info.SetStateField(0, &support, sizeof(support));
+				info.SetCharges(num_charges);
+				int ttl = 120;
+				power_token = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
+
+				LoadString(hInstance, IDS_PT_CREATED, disp_message, sizeof(disp_message));
+				_stprintf(message, disp_message, GuildName(guild_id));
+				display->DisplayMessage(message);
+
+				prime->DrainMetaEssence(cost);
+
+				this->ArtFinished(true);
+			}
+		}
 	}
 	else
-	{	// any prime will do
-		cItem* prime = FindPrime(Guild::NO_GUILD, cost);
-		if (prime == NO_ITEM) 
-		{
-			LoadString (hInstance, IDS_NEED_PRIME_PT, disp_message, sizeof(disp_message));
-			_stprintf(message, disp_message, GuildName(guild_id), GuildName(guild_id), cost);
-			display->DisplayMessage(message);
-			this->ArtFinished(false);
-		} 
-		else 
-		{	// create power token item here!	
-			LmItem info;
-			LmItemHdr header;
-			cItem *power_token;
-			lyra_item_support_t support = {LyraItem::SUPPORT_FUNCTION, 0, 0, 0};
-			
-			header.Init(0, 0);
-			header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
-			header.SetGraphic(LyraBitmap::SOUL_ESSENCE);
-			header.SetColor1(0); header.SetColor2(0);
-			header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SUPPORT_FUNCTION), 0, 0));
-			
-			support.set_guild_token(guild_id, Tokens::POWER_TOKEN);
-			support.set_creator_id(player->ID());
-			/// ARGH - we need target ID!!!
-			support.set_target_id(0);
-			
-			LoadString(hInstance, IDS_POWER_TOKEN_HOUSE, temp_message, sizeof(temp_message));
-			_stprintf(message, temp_message, GuildName(guild_id));
-			_tcsnccpy(disp_message, message, LmItem::NAME_LENGTH-1);
-			disp_message[LmItem::NAME_LENGTH-1] = '\0';
-			
-			info.Init(header, disp_message, 0, 0, 0);
-			info.SetStateField(0, &support, sizeof(support));
-			info.SetCharges(num_charges);
-			int ttl = 120;
-			power_token = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
-			
-			LoadString (hInstance, IDS_PT_CREATED, disp_message, sizeof(disp_message));
-			_stprintf(message, disp_message, GuildName(guild_id));
-			display->DisplayMessage(message);
-
-			prime->DrainMetaEssence(cost);
-
-			this->ArtFinished(true);
-		}
+	{
+		this->ArtFinished(false);
 	}
 	return;
 }

@@ -3480,14 +3480,164 @@ BOOL CALLBACK SummonDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 	return FALSE;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Power Token Dialog
+
+// expects text to show in message; returns value in message,
+// or NULL if cancelled
+BOOL CALLBACK PowerTokenDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
+{
+	static bool art_callback;
+	static dlg_callback_t callback;
+
+	static int mappings[NUM_GUILDS]; // maps list box entries to guild flags
+	static int num_guilds;
+	int i, num_charges, skill = 0;
+
+	if (HBRUSH brush = SetControlColors(hDlg, Message, wParam, lParam))
+		return (LRESULT)brush;
+
+	switch(Message)
+	{
+		case WM_GETDLGCODE:
+			return DLGC_WANTMESSAGE;
+
+		case WM_DESTROY:
+			entervaluedlg = false;
+			break;
+
+		case WM_INITDIALOG:
+			memset(mappings, 0, sizeof(mappings));
+			num_guilds = 0;
+			
+			skill = player->SkillSphere(Arts::POWER_TOKEN);
+
+			for (i = skill+1; i>=1; i--)
+			{
+				_stprintf(temp_message, _T("%d"), i);
+				int index = ComboBox_AddString(GetDlgItem(hDlg, IDC_VALUE), temp_message);
+				ComboBox_SetItemData(GetDlgItem(hDlg, IDC_VALUE), index, i);
+			}
+
+			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_VALUE), 0);
+
+			SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
+			SetWindowText(GetDlgItem(hDlg, IDC_VALUE_PROMPT), message);
+			callback = NULL;
+			art_callback = false;
+			entervaluedlg = true;
+			
+			SetFocus(GetDlgItem(hDlg, IDC_GUILDS));
+			return TRUE;
+
+		case WM_PAINT:
+			if (TileBackground(hDlg))
+				return (LRESULT)0;
+			break;
+
+		case WM_KEYUP:
+			switch (LOWORD(wParam))
+			{
+				case VK_RETURN:
+					PostMessage(hDlg, WM_COMMAND, (WPARAM) IDC_OK, 0);
+					return TRUE;
+				case VK_ESCAPE:
+					PostMessage(hDlg, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
+					return TRUE;
+			}
+			break;
+
+		case WM_SET_ART_CALLBACK: // called by art waiting for callback
+			art_callback = true;
+#ifdef AGENT // always reject
+			PostMessage(hDlg, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
+#endif
+			return TRUE;
+
+		case WM_SET_CALLBACK: // waiting for callback
+			callback = (dlg_callback_t)lParam;
+#ifdef AGENT // always reject
+			PostMessage(hDlg, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
+#endif
+			return TRUE;
+		
+		case WM_ADD_INITIATES: // add guilds player is an initiate in
+			for (i = 0; i<NUM_GUILDS; i++)
+				if (player->GuildRank(i) == Guild::INITIATE)
+				{
+					mappings[num_guilds] = i;
+					num_guilds++;
+					ComboBox_AddString(GetDlgItem(hDlg, IDC_GUILDS), GuildName(i));
+				}
+			if (ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS)) == -1)
+				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GUILDS), 0);
+			break;
+
+		case WM_ADD_KNIGHTS: // add guilds player is a knight in
+			for (i = 0; i<NUM_GUILDS; i++)
+				if (player->GuildRank(i) == Guild::KNIGHT)
+				{
+					mappings[num_guilds] = i;
+					num_guilds++;
+					ComboBox_AddString(GetDlgItem(hDlg, IDC_GUILDS), GuildName(i));
+				}
+			if (ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS)) == -1)
+				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GUILDS), 0);
+			break;
+
+		case WM_ADD_RULERS: // add guilds player is a ruler in
+			for (i = 0; i<NUM_GUILDS; i++)
+				if (player->GuildRank(i) == Guild::RULER)
+				{
+					mappings[num_guilds] = i;
+					num_guilds++;
+					ComboBox_AddString(GetDlgItem(hDlg, IDC_GUILDS), GuildName(i));
+				}
+			if (ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS)) == -1)
+				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GUILDS), 0);
+			break;
+
+		case WM_COMMAND:
+			switch (LOWORD(wParam))
+			{
+				case IDC_OK:
+
+					i = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS));
+					num_charges = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_VALUE), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_VALUE)));
+					if (i == -1)
+						i = Guild::NO_GUILD;
+					else
+						i = mappings[i];
+					
+					_stprintf(message, _T("%d;%d"), i, num_charges);
+
+					if (art_callback)
+						(arts->*(entervalue_callback))(message);
+					else if (callback)
+						callback(message);
+					DestroyWindow(hDlg);
+					return TRUE;
+
+				case IDC_CANCEL:
+					if (art_callback)
+						arts->CancelArt();
+					else if (callback)
+						callback(NULL);
+					DestroyWindow(hDlg);
+					return FALSE;
+
+				default:
+					break;
+			}
+	}
+	return FALSE;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Enter Value Dialog
 
 // expects text to show in message; returns value in message,
 // or NULL if cancelled
-
-
 BOOL CALLBACK EnterValueDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 {
 	static bool art_callback;
