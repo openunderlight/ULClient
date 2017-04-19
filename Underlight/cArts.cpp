@@ -3449,11 +3449,14 @@ void cArts::StartForgeTalisman(void)
 {
 	if ((!itemdlg) && (options.network))
 	{
+		cItem* power_tokens[Lyra::INVENTORY_MAX];
+		int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
 		itemdlg = true;
 		HWND hDlg = CreateLyraDialog(hInstance, IDD_CREATE_ITEM,  cDD->Hwnd_Main(), (DLGPROC)CreateItemDlgProc);
 		this->WaitForDialog(hDlg, Arts::FORGE_TALISMAN);
 		SendMessage(hDlg, WM_INIT_ITEMCREATOR, 0, (LPARAM)CreateItem::FORGE_ITEM);
 		SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+		SendMessage(hDlg, WM_SET_USE_PT, 0, (LPARAM)num_tokens);
 	}
 	else
 		this->CancelArt();
@@ -3461,18 +3464,18 @@ void cArts::StartForgeTalisman(void)
 	return;
 }
 
-void cArts::EndForgeTalisman(void *value, bool usePT)
+void cArts::EndForgeTalisman(void *value, int ptCost)
 {
 	int success = *((int*)value);
 	if (success)
 	{
 		cDS->PlaySound(LyraSound::FORGE, player->x, player->y, true);
-		if (usePT)
+		if (ptCost > 0)
 		{
 			cItem* power_tokens[Lyra::INVENTORY_MAX];
 			int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
 			if (num_tokens)
-				this->UsePowerTokens(power_tokens, 1); // TODO change to use the proper amount of PTs
+				this->UsePowerTokens((cItem**)power_tokens, ptCost);
 			
 		}
 
@@ -6095,7 +6098,7 @@ void cArts::UsePowerTokens(cItem** tokens, int charges_to_use)
 	while (charges_expired < charges_to_use)
 	{
 		int cur_charges = tokens[token_idx]->Lmitem().Charges();
-		if (cur_charges <= charges_to_use)
+		if (cur_charges <= charges_to_use - charges_expired)
 		{
 			// use up the entire token
 			tokens[token_idx]->Destroy();
@@ -6108,7 +6111,10 @@ void cArts::UsePowerTokens(cItem** tokens, int charges_to_use)
 			tokens[token_idx]->DrainCharge();
 			charges_expired++;
 		}
-		token_idx++;
+
+		// Only move on if we wiped out the power token
+		if (tokens[token_idx]->Lmitem().Charges() == 0)
+			token_idx++;
 	}
 }
 
@@ -6143,19 +6149,6 @@ int cArts::CountPowerTokens(cItem** tokens, lyra_id_t guild_id)
 		}
 	actors->IterateItems(DONE);
 	return num_tokens;
-}
-
-// return the effective skill if we take power tokens into account
-int cArts::EffectiveForgeSkill(int player_skill, bool usePowerToken)
-{
-	int num_tokens = 0;
-	if (usePowerToken) {
-		cItem* power_tokens[Lyra::INVENTORY_MAX];
-		num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
-	}
-	if(!num_tokens)
-		return MAX(1,player_skill / 4);
-	return player_skill;
 }
 
 void cArts::StartEmpathy(void)

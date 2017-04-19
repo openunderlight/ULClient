@@ -523,14 +523,52 @@ void TranslateValue(int type, int value)
 	return;
 }
 
+int PowerTokenCostToForge(int type, int value)
+{
+	int skill_to_create;
+	int forge_skill = player->Skill(Arts::FORGE_TALISMAN);
+	switch (type)
+	{
+		case LyraItem::TRANSLATION_MODIFIER:
+			skill_to_create = modifier_types[value].min_skill_to_create;
+			break;
+		case LyraItem::TRANSLATION_DURATION:
+			skill_to_create = duration_types[value].min_skill_to_create;
+			break;
+		case LyraItem::TRANSLATION_EFFECT:
+			// increase cost if your art level is lower?
+			skill_to_create = 0;
+			break;
+		case LyraItem::TRANSLATION_ABSORPTION:
+		case LyraItem::TRANSLATION_DURABILITY:
+			skill_to_create = value;
+			break;
+		case LyraItem::TRANSLATION_POS_MODIFIER:
+			skill_to_create =  modifier_types[value].min_skill_to_create;
+			break;
+		default:
+			return 0;
+	}
+
+	// cover us just in case someone gains access to a level 100 Forge. 1000 PTs are unachievable (50*10=500)
+	if (skill_to_create == 100 || skill_to_create > forge_skill) return 1000;
+
+	// Takes the skill of the forger and the cost to forge into account for the amount of PTs it takes to make an item
+	return (100 - (forge_skill - skill_to_create)) / 10;
+}
+
 // returns true if the player has this value as an option for
 // translation type when using forge talisman; for example, a player
 // must have a certain skill to create weapons with high damage
 // categories, and must have access to the related arts to create
 // items that cause timed effects
-bool CanPlayerForgeValue(int type, int value, bool usePowerToken)
+bool CanPlayerForgeValue(int type, int value, int powerTokens)
 {
-	int forge_skill = arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN), usePowerToken);
+	int forge_skill = player->Skill(Arts::FORGE_TALISMAN);
+
+	// don't allow forging of things we don't have enough tokens to create
+	if (PowerTokenCostToForge(type, value) > powerTokens) return false;
+
 	switch (type)
 	{
 		case LyraItem::TRANSLATION_MODIFIER:

@@ -163,6 +163,7 @@
 #define IDC_NOVOTES                     1070
 #define IDC_ITEM_DESCRIP2               1070
 #define IDC_ITEM_USE_PT                 1070
+#define IDC_ITEM_REMAKE                 1070
 #define IDC_ITEM_COMBINE                1071
 #define IDC_PT_COST                     1072
 #define IDC_ITEM_FLAG1                  1074
