@@ -4437,6 +4437,7 @@ STRINGTABLE
 BEGIN
     IDS_NOACCESS_PORTAL     "That portal is currently inaccessible."
     IDS_NO_XP_MONSTER       "You can't use Bequeath on Nightmares!"
+    IDS_NOT_ENOUGH_PT       "You do not have enough Power Tokens to create that item!"
 END
 
 #endif    // English (United States) resources

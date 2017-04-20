@@ -2427,6 +2427,17 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							break;
 						}
 
+						_stprintf(temp_message, "Num Tokens: %d, PT Cost: %d", num_tokens_held, ptCost);
+						display->DisplayMessage(temp_message);
+
+						if ((CreateItem::FORGE_ITEM == called_by) && (num_tokens_held < ptCost))
+						{
+							LoadString(hInstance, IDS_NOT_ENOUGH_PT, message, sizeof(message));
+							CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
+								cDD->Hwnd_Main(), (DLGPROC)NonfatalErrorDlgProc);
+							break;
+						}
+
 						// Set the charges
 						info.SetCharges(numcharges);
 
