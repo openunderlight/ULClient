@@ -1623,7 +1623,10 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 	const int TAB_HEIGHT = 20;
 	const int TAB_WIDTH = 50;
 	static int num_tokens_held = 0;
-	static int combineItem = 0;
+	static bool combineItem = false;
+	static int curr_function = -1;
+	static int curr_translation = -1;
+	static int curr_value = -1;
 
 	// iteration facilitators
 	UINT property_tags[5] = {IDC_PROPERTY1_HEADER, IDC_PROPERTY2_HEADER,
@@ -1902,6 +1905,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					ShowWindow (GetDlgItem(hDlg, IDC_ITEM_DESCRIP), SW_SHOWNORMAL);
 					if (player->Skill(Arts::COMBINE) > 0)
 						ShowWindow(GetDlgItem(hDlg, IDC_ITEM_COMBINE), SW_SHOWNORMAL);
+					ShowWindow(GetDlgItem(hDlg, IDC_ITEM_REMAKE), SW_HIDE);
 					ShowWindow (GetDlgItem(hDlg, IDC_FORGE_STATIC), SW_SHOW);
 					ShowWindow (GetDlgItem(hDlg, IDC_QUEST_STATIC), SW_HIDE);
 					}
@@ -1950,21 +1954,27 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			case IDC_ITEM_COMBINE:
 			{
 				combineItem = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_COMBINE));
+
+				// refresh the pt cost
+				_stprintf(temp_message, _T("%d"), PowerTokenCostToForge(curr_translation, curr_value, combineItem));
+				ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
+				Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
+				ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
 				break;
 			}
 			case IDC_PROPERTY2:
 			{
 				if (HIWORD(wParam) == LBN_SELCHANGE)
 				{
-					int function_type = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
+					curr_function = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
 
-					if (function_type == LyraItem::CHANGE_STAT_FUNCTION || function_type == LyraItem::EFFECT_PLAYER_FUNCTION || function_type == LyraItem::ARMOR_FUNCTION)
+					if (curr_function == LyraItem::CHANGE_STAT_FUNCTION || curr_function == LyraItem::EFFECT_PLAYER_FUNCTION || curr_function == LyraItem::ARMOR_FUNCTION)
 					{
-						int translation = LyraItem::EntryTranslation(function_type, 1);
+						curr_translation = LyraItem::EntryTranslation(curr_function, 1);
 						// pull the value out of the item data for the field
-						int value = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_PROPERTY2), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PROPERTY2)));
+						curr_value = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_PROPERTY2), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PROPERTY2)));
 
-						_stprintf(temp_message, _T("%d"), PowerTokenCostToForge(translation, value));
+						_stprintf(temp_message, _T("%d"), PowerTokenCostToForge(curr_translation, curr_value, combineItem));
 						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
 						Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
 						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
@@ -1976,15 +1986,15 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			{
 				if (HIWORD(wParam) == LBN_SELCHANGE)
 				{
-					int function_type = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
+					curr_function = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
 					
-					if (function_type == LyraItem::MISSILE_FUNCTION)
+					if (curr_function == LyraItem::MISSILE_FUNCTION)
 					{
-						int translation = LyraItem::EntryTranslation(function_type, 2);
+						curr_translation = LyraItem::EntryTranslation(curr_function, 2);
 						// pull the value out of the item data for the field
-						int value = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_PROPERTY3), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PROPERTY3)));
+						curr_value = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_PROPERTY3), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PROPERTY3)));
 
-						_stprintf(temp_message, _T("%d"), PowerTokenCostToForge(translation, value));
+						_stprintf(temp_message, _T("%d"), PowerTokenCostToForge(curr_translation, curr_value, combineItem));
 						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
 						Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
 						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
@@ -2252,8 +2262,6 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							break;
 						}
 
-						Edit_GetText(GetDlgItem(hDlg, IDC_CHARGES), message, sizeof(message));
-						int charges = _ttoi(message);
 						int effect_max_charges;
 
 						//for (i = 0; i < 3; i++)
@@ -2271,19 +2279,23 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							}
 						//}
 
-						// allow double charges
-						if (combineItem != 0) {
-							effect_max_charges *= 2;
-						}
-
 						// Max charges is the lowest of the effect limit and the forge talisman skill level
 						if ((CreateItem::FORGE_ITEM == called_by) && 
-							(charges > min(effect_max_charges, player->Skill(Arts::FORGE_TALISMAN))))
+							(numcharges > min(effect_max_charges, player->Skill(Arts::FORGE_TALISMAN))))
 						{
 							LoadString (hInstance, IDS_BAD_CHARGES, message, sizeof(message));
 							CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
 								cDD->Hwnd_Main(), (DLGPROC)NonfatalErrorDlgProc);
 							break;
+						}
+
+						// double the charges after validation
+						if (combineItem) {
+							numcharges *= 2;
+
+							// make sure we don't exceed 100 charges
+							if (numcharges > 100)
+								numcharges = 100;
 						}
 
 						// Get the item graphic
@@ -2401,7 +2413,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								memcpy (created_item+offset, &(item_effect[i].property_value[j]), size);
 								offset += size;
 								
-								temp_cost = PowerTokenCostToForge(LyraItem::EntryTranslation(curr_effect, j), item_effect[i].property_value[j]);
+								temp_cost = PowerTokenCostToForge(LyraItem::EntryTranslation(curr_effect, j), item_effect[i].property_value[j], combineItem);
 								ptCost = MAX(ptCost, temp_cost);
 							}
 

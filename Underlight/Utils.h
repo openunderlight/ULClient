@@ -78,7 +78,7 @@ int CalculateModifierMax(int modifier);
 int CalculateModifierMin(int modifier);
 int CalculateDuration(int index);
 void TranslateValue(int type, int value);
-int PowerTokenCostToForge(int type, int value);
+int PowerTokenCostToForge(int type, int value, bool combineItem);
 bool CanPlayerForgeValue(int type, int value, int powerTokens);
 int	MinModifierSkill(int value);
 int NumberTranslations(int type);

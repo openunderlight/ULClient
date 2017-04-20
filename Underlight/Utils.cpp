@@ -523,14 +523,14 @@ void TranslateValue(int type, int value)
 	return;
 }
 
-int PowerTokenCostToForge(int type, int value)
+int PowerTokenCostToForge(int type, int value, bool combineItem = false)
 {
 	int skill_to_create;
 	int forge_skill = player->Skill(Arts::FORGE_TALISMAN);
 	switch (type)
 	{
 		case LyraItem::TRANSLATION_MODIFIER:
-			skill_to_create = modifier_types[value].min_skill_to_create;
+			skill_to_create = modifier_types[abs(value)].min_skill_to_create;
 			break;
 		case LyraItem::TRANSLATION_DURATION:
 			skill_to_create = duration_types[value].min_skill_to_create;
@@ -550,11 +550,22 @@ int PowerTokenCostToForge(int type, int value)
 			return 0;
 	}
 
+	// allow continued crafting at a fraction of your Forge Skill at no cost
+	if (skill_to_create < (forge_skill / 4))
+		return 0;
 	// cover us just in case someone gains access to a level 100 Forge. 1000 PTs are unachievable (50*10=500)
-	if (skill_to_create == 100 || skill_to_create > forge_skill) return 1000;
+	else if (skill_to_create == 100 || skill_to_create > forge_skill) 
+		return 1000;
+
+	int divisor = 10;
+
+	// double the cost by dividing by 5 instead of 10
+	if (combineItem) divisor /= 2;
+
+	return skill_to_create / divisor;
 
 	// Takes the skill of the forger and the cost to forge into account for the amount of PTs it takes to make an item
-	return (100 - (forge_skill - skill_to_create)) / 10;
+	//return (100 - (forge_skill - skill_to_create)) / divisor;
 }
 
 // returns true if the player has this value as an option for
