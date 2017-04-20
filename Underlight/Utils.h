@@ -81,6 +81,7 @@ void TranslateValue(int type, int value);
 int PowerTokenCostToForge(int type, int value, bool combineItem);
 bool CanPlayerForgeValue(int type, int value, int powerTokens);
 int	MinModifierSkill(int value);
+int MaxChargesForFunction(int function);
 int NumberTranslations(int type);
 TCHAR* GuildName(int guild_id);
 int GuildFlag(int guild_id);

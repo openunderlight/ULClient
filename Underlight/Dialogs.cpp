@@ -2262,22 +2262,11 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							break;
 						}
 
-						int effect_max_charges;
-
-						//for (i = 0; i < 3; i++)
-						//{
-							int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[0].effect_type);
+					
+						int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[0].effect_type);
 							
-							switch (curr_effect)
-							{
-								case LyraItem::MISSILE_FUNCTION: 
-									effect_max_charges = 50;
-									break;
-								case LyraItem::NO_FUNCTION:
-								default:
-									effect_max_charges = player->Skill(Arts::FORGE_TALISMAN);
-							}
-						//}
+						// maximum amount of charges for this function
+						int effect_max_charges = MaxChargesForFunction(curr_effect);
 
 						// Max charges is the lowest of the effect limit and the forge talisman skill level
 						if ((CreateItem::FORGE_ITEM == called_by) && 

@@ -637,6 +637,22 @@ int	MinModifierSkill(int value)
 	return modifier_types[value].min_skill_to_use;
 }
 
+int MaxChargesForFunction(int function)
+{
+	switch (function)
+	{
+		case LyraItem::MISSILE_FUNCTION:
+			return 50;
+		case LyraItem::EFFECT_PLAYER_FUNCTION:
+			return 25; 
+		case LyraItem::CHANGE_STAT_FUNCTION:
+			return 20;
+		case LyraItem::NO_FUNCTION:
+		default: 
+			return 100;
+	}
+}
+
 int NumberTranslations(int type)
 {
 	switch (type)
