@@ -3504,7 +3504,7 @@ BEGIN
     IDS_PROPERTY2           "Property %i of use %i cannot be greater than %i."
     IDS_TP                  "Teleporters may have only one charge."
     IDS_NO_EFFECT           "There must be a selected effect for Use 1."
-    IDS_BAD_CHARGES         "This item's charges cannot exceed your skill in Forge Talisman."
+    IDS_BAD_CHARGES         "This item's charges cannot exceed your skill in Forge Talisman or its natural charge limit."
     IDS_BAD_FORMAT          "Error determining header format type.\nYou may be using more than 11 bytes of state."
     IDS_STATE_ERR           "Couldn't set the state for use %i."
     IDS_UNNAMED             "unnamed"
