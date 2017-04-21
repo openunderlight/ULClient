@@ -39,9 +39,8 @@ BEGIN
     PUSHBUTTON      "Underlight Wiki",IDC_MANUAL,118,232,69,14
     PUSHBUTTON      "Donate",IDC_BILLING,220,232,69,14
     PUSHBUTTON      "Quit",IDC_CANCEL,322,232,69,14
-    CONTROL         "640x480 (fastest)",IDC_GRAPHIC_RES640,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,81,76,65,9
-    CONTROL         "800x600",IDC_GRAPHIC_RES800,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,149,76,40,9
-    CONTROL         "1024x768 (best quality)",IDC_GRAPHIC_RES1024,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,191,76,110,9
+    CONTROL         "800x600",IDC_GRAPHIC_RES800,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,143,76,40,9
+    CONTROL         "1024x768 (recommended)",IDC_GRAPHIC_RES1024,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,191,76,110,9
     CONTROL         "Dev 1",IDC_DEV_SERVER1,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,25,89,39,10
     CONTROL         "Dev 2",IDC_DEV_SERVER2,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,65,90,40,10
     CONTROL         "Custom",IDC_CUSTOM_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,104,90,43,10
@@ -49,11 +48,10 @@ BEGIN
     CONTROL         "Live",IDC_LIVE_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,13,89,25,10
     CONTROL         "Debug Server:",IDC_DEBUG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,202,90,56,10
     CONTROL         "Networking:",IDC_NETWORK,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,261,90,46,10
-    CONTROL         "Exclusive Mode:",IDC_EXCLUSIVE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,10,75,10
-    CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,20,75,10
-    CONTROL         "Start with Training:",IDC_TRAINING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,30,75,10
-    CONTROL         "Add Extra Scroll:",IDC_EXTRA_SCROLL,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,40,75,10
-    CONTROL         "TCP Only",IDC_TCP_ONLY,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,50,75,8
+    CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,13,75,10
+    CONTROL         "Start with Training:",IDC_TRAINING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,24,75,10
+    CONTROL         "Add Extra Scroll:",IDC_EXTRA_SCROLL,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,34,75,10
+    CONTROL         "TCP Only",IDC_TCP_ONLY,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,45,75,8
     EDITTEXT        IDC_BIND_TCP,374,60,24,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_BIND_UDP,374,72,24,12,ES_AUTOHSCROLL
     PUSHBUTTON      "Explain Launch Options",IDC_LAUNCH_OPTIONS,320,86,81,11
@@ -352,6 +350,17 @@ BEGIN
     PUSHBUTTON      "Mouse Layout",IDC_MOUSELAYOUT,146,2,66,13
 END
 
+IDD_CHOOSE_DESTINATION DIALOGEX 0, 0, 203, 91
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+EXSTYLE WS_EX_STATICEDGE
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "OK",IDC_OK,148,25,33,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Cancel",IDC_CANCEL,148,45,34,14,NOT WS_TABSTOP
+    COMBOBOX        IDC_DESTINATIONS,4,25,135,116,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Please select a location",IDC_STATIC_CHOOSE_DESTINATION,11,3,115,10
+END
+
 IDD_CHOOSE_GUILD DIALOGEX 0, 0, 190, 91
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_STATICEDGE
@@ -645,19 +654,18 @@ BEGIN
     LISTBOX         IDC_PMARE_SPEECH_MAREN,302,48,10,9,LBS_NOINTEGRALHEIGHT | NOT WS_VISIBLE | WS_TABSTOP
 END
 
-IDD_LAUNCH_OPTIONS DIALOG 0, 0, 426, 240
+IDD_LAUNCH_OPTIONS DIALOGEX 0, 0, 426, 240
 STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Explanation of Underlight Launch Options "
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     DEFPUSHBUTTON   "Return to Login Screen",IDC_OK,100,221,92,16
     PUSHBUTTON      "Read Firewall FAQ",IDC_FIREWALL_FAQ,211,221,92,16
-    LTEXT           "Exclusive mode help goes here",IDC_EXCLUSIVE_MODE,2,3,421,49
-    LTEXT           "Sound Enabled Help goes here",IDC_SOUND_ENABLED,2,58,421,36
-    LTEXT           "Start with training help goes here",IDC_START_TRAINING,2,100,421,14
-    LTEXT           "Extra scroll help goes here",IDC_EXTRA_SCROLL_TEXT,2,120,421,20
-    LTEXT           "Local binding option text goes here",IDC_BIND_TEXT,2,173,421,42
-    LTEXT           "UDP Proxy text goes here",IDC_UDP_PROXY_TEXT,2,146,421,21
+    LTEXT           "Sound Enabled Help goes here",IDC_SOUND_ENABLED,2,0,421,36
+    LTEXT           "Start with training help goes here",IDC_START_TRAINING,2,41,421,25
+    LTEXT           "Extra scroll help goes here",IDC_EXTRA_SCROLL_TEXT,2,78,421,35
+    LTEXT           "Local binding option text goes here",IDC_BIND_TEXT,2,161,421,42
+    LTEXT           "UDP Proxy text goes here",IDC_UDP_PROXY_TEXT,2,127,421,21
 END
 
 IDD_QUEST_HELP DIALOGEX 0, 0, 328, 289
@@ -980,6 +988,11 @@ BEGIN
         RIGHTMARGIN, 401
         TOPMARGIN, 3
         BOTTOMMARGIN, 94
+    END
+
+    IDD_CHOOSE_DESTINATION, DIALOG
+    BEGIN
+        RIGHTMARGIN, 190
     END
 
     IDD_CHOOSE_GUILD, DIALOG
@@ -2347,7 +2360,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_PMARE_AGOKNIGHT     "Agoknight (Medium): 2 PMare credits per 15 minutes"
-    IDS_PMARE_SHAMBLIX      "Shamblix (Most Powerful): 3 PMare credits per 15 minutes"
+    IDS_PMARE_SHAMBLIX      "Shamblix (Powerful): 3 PMare credits per 15 minutes"
     IDS_AGREEMENT_TEXT6     "Please note that any advance in XP and  power you achieve is kept for at most 48 hours.  If you log out and then log in again within 48 hours, you have the option of resuming your previous session, with the same avatar, credit rate, and XP total. You will only be able to play for the time available in PMare credits on your account. \n\nNote that KoiWare can not provide refunds or reimbursements of any sort for player nightmare sessions. By clicking 'I Accept' and entering the game you are agreeing to the above terms.\r\n\r\n"
     IDS_AGREEMENT_TEXT7     "You will deduct %1.2f PMare Credits from your KoiWare account for every 15 minutes of play during your session.  The number of minutes for all your logins for each starting nightmare type are summed to determine the total deduction, with a 15 minute session minimum per starting nightmare type. This ensures that you will not be deducted extra due to inadvertant logouts (storms). For example, you could log in as a Bogrom and play for 10 minutes and evolve into an Agoknight, then later that day ""resume session"" and play for 5 more minutes, and you would be charged only for one 15 minute Bogrom session.  Session minutes are summed nightly at 1:00AM PST. By clicking 'Accept', you are agreeing to this deduction.\r\n\r\n"
     IDS_PMARE_DISSOLVED_BY_SELF 
@@ -2411,7 +2424,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_HYPNOTIC            "Your hypnotic gaze paralyzes everyone!\n"
-    IDS_RUN_TERROR          "All present run in flee in terror!\n"
+    IDS_RUN_TERROR          "All present flee in terror!\n"
     IDS_ROOM_DARKNESS       "Darkness envelopes the room!\n"
     IDS_GM_ART_LIMIT        "You may only have %d special powers active at a time\n"
     IDS_AGOKNIGHT_ROAR      "You unleash a deafening roar!"
@@ -2847,6 +2860,7 @@ BEGIN
     IDS_INITIATE            "Initiate"
     IDS_MISSION             "mission"
     IDS_GUARDIAN            "Guardian"
+    IDS_NO_DM_INVIS         "You cannot use invisibility as a dark mare\n"
     IDS_RULER               "Ruler"
     IDS_CHALK               "Chalk"
     IDS_BLOOD               "Blood"
@@ -2877,6 +2891,7 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_DM_INVIS_SUGGESTION "You shouldn't use invisibility as a dark mare\n"
     IDS_LIGHT_RED           "Light Red"
     IDS_CHARCOAL            "Charcoal"
     IDS_IVORY               "Ivory"
@@ -3151,7 +3166,7 @@ STRINGTABLE
 BEGIN
     IDS_PA_NO_ARTS          "You can not make aggressive acts while shielded by your Peace Aura\n"
     IDS_USE_GUILD_HOUSE     "You concentrate for a moment and move to your Focus Guild Room "
-    IDS_GUILD_HOUSE         "Guild House"
+    IDS_TRANSLOCATE         "Translocate"
     IDS_CANT_BE_MEMBER_APPLY 
                             "The evocation of %s does not affect you, because you are a member of %s"
     IDS_TRAIN_BELIEF_MOON   "The Order of the Sable Moon is a Spiritual Freesoul Imprisoning house. They are the Spiritual center of the Freesoul faith. They study the dream and the Nightmares within it in order to discover a way to rid the dream of the menace. They Imprison the nightmare essences within their ""Relic of the Order""."
@@ -3824,6 +3839,7 @@ STRINGTABLE
 BEGIN
     IDS_DEV_GAME_SERVER_IP2 "dev2.koiware.com"
     IDS_CUSTOM_IP_DEFAULT   "127.0.0.1"
+    IDS_ONCE_HIDDEN_ALWAYS_HIDDEN "\nOnce you go INVIS, you cannot go back!\n"
 END
 
 STRINGTABLE
@@ -4316,7 +4332,7 @@ BEGIN
     IDS_PP_PMARE_TIME_SEL   "# PMare credits:"
     IDS_CUPSUMMONS_ATTEMPT  "%s has invited you to the Dreamer's Cup Arena! You will teleport there now if you accept."
     IDS_KNOW3931            "Upon entry, this expansive circular room has an inviting atmosphere. A cluster of mounted flames form the illusion of orbiting the elegant chandelier, which dangles from the middle of the tall concave ceiling. Its teardrop crystals reflect the lit candles, casting a glow of illumination across the golden, ornate interior. The hard, polished floor has a spiral design that starts from the center of the room and expands outward. Off to one side, a harp and other musical instruments can be seen. Heavy maroon curtains are draped around ancient murals, as if in presentation. Ground torches gleam near the painted walls, staving off the creeping shadows."
-    IDS_LEARNED_HOUSE_ART   "You have learned %s as a result of your new house rank!"
+    IDS_LEARNED_HOUSE_ART   "You have learned %s as a result of your new rank!"
     IDS_KNOW3221            "Intense waves of steam and humidity mix with a faint scent of sulfur through the cavernous room. Condensation drips down the roots gripping the cool stone walls into the warm, bubbling water below."
     IDS_SCROLL              "Scroll"
     IDS_FLOWER              "Flower"

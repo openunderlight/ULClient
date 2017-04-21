@@ -502,10 +502,10 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 				ShowWindow(GetDlgItem(hDlg, IDC_SPECIAL_TALKLIST), SW_HIDE);
 				ShowWindow(GetDlgItem(hDlg, IDC_REPORT), SW_HIDE);
 			}
-
 #ifdef GAMEMASTER
 			ShowWindow(GetDlgItem(hDlg,IDC_RAW_EMOTE), SW_SHOW);
-//#else
+
+			//#else
 //			if (level->ID() == 20) // no whispers in Thresh
 //				ShowWindow(GetDlgItem(hDlg, IDC_WHISPER), SW_HIDE);
 #endif
@@ -541,7 +541,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 			SendMessage(hwnd_speech, WM_PASSPROC, 0, (LPARAM) lpfn_speech );
 			SendMessage(hwnd_speech, WM_PARENT, 0, (LPARAM) hwnd_talk );
 
-			Button_SetCheck(GetDlgItem(hDlg, IDC_TALK),1);
+			Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 1);
 
 			SetFocus(hwnd_speech);
 			SetWindowPos(hDlg, HWND_TOPMOST, cDD->DlgPosX(hDlg)+15, cDD->ViewY()+2, 0, 0, SWP_NOSIZE);
@@ -3157,6 +3157,100 @@ void ResetKeyboardDefaults(HWND hDlg, int default_config)
 		Button_SetCheck(GetDlgItem(hDlg, button), TRUE);
 	}
 	return;
+}
+
+BOOL CALLBACK ChooseDestinationDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
+{
+	static bool art_callback;
+	static dlg_callback_t callback;
+	int i;
+
+	if (HBRUSH brush = SetControlColors(hDlg, Message, wParam, lParam))
+		return (LRESULT)brush;
+
+	switch (Message)
+	{
+	case WM_GETDLGCODE:
+		return DLGC_WANTMESSAGE;
+
+	case WM_DESTROY:
+		chooseguilddlg = false;
+		break;
+
+	case WM_INITDIALOG: 
+	{
+		chooseguilddlg = true;
+		callback = NULL;
+		art_callback = false;
+		SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
+		SetFocus(GetDlgItem(hDlg, IDC_DESTINATIONS));
+
+		for (i = 0; i <= NumLocations(); i++)
+		{
+			if (TeleportLocationAvailable(i))
+			{
+				int index = ComboBox_AddString(GetDlgItem(hDlg, IDC_DESTINATIONS), LocationNameAt(i));
+				ComboBox_SetItemData(GetDlgItem(hDlg, IDC_DESTINATIONS), index, i);
+			}
+		}
+
+		ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_DESTINATIONS), 0);
+
+		return TRUE;
+	}
+	case WM_SET_ART_CALLBACK: // called by art waiting for callback
+		art_callback = true;
+#ifdef AGENT // always reject
+		PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_CANCEL, 0);
+#endif
+		return TRUE;
+	case WM_PAINT:
+		if (TileBackground(hDlg))
+			return (LRESULT)0;
+		break;
+
+	case WM_KEYUP:
+		switch (LOWORD(wParam))
+		{
+		case VK_RETURN:
+			PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_OK, 0);
+			return TRUE;
+		case VK_ESCAPE:
+			PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_CANCEL, 0);
+			return TRUE;
+		}
+		break;
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case IDC_OK:
+
+			i = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_DESTINATIONS), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_DESTINATIONS)));
+			strcpy(message, LocationCoordinateAt(i));
+
+			if (art_callback)
+				(arts->*(chooseguild_callback))(message);
+			else if (callback)
+				callback(message);
+
+			DestroyWindow(hDlg);
+			return TRUE;
+
+		case IDC_CANCEL:
+			i = Guild::NO_GUILD;
+			if (art_callback)
+				(arts->*(chooseguild_callback))(&i);
+			else if (callback)
+				callback(&i);
+			DestroyWindow(hDlg);
+			return FALSE;
+
+		default:
+			break;
+		}
+	}
+	return FALSE;
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

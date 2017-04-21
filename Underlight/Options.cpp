@@ -66,7 +66,7 @@ const short max_turnrate = 20;
 const int default_speech_color = 3;
 const int default_message_color = 2;
 const int default_bg_color = 0;
-const float default_turnrate = 10.0f;
+const float default_turnrate = 13.0f;
 const int default_volume = 10;
 
 
@@ -549,7 +549,7 @@ void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
 		(unsigned char *)&(options.autorun), &size);
 	
 	if ((keyresult != ERROR_SUCCESS) || force)
-		options.autorun = FALSE;
+		options.autorun = TRUE;
 
 	size = sizeof(options.adult_filter);
 	keyresult = RegQueryValueEx(reg_key, _T("adult_filter"), NULL, &reg_type,

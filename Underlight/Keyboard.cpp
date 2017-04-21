@@ -525,6 +525,10 @@ bool HandlePlayerMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
 				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);		 // open talk dialog
 			SendMessage(GetDlgItem(hDlg,IDC_SPEECH),WM_SYSKEYUP,vk,0); // tell it which macro key was used
+
+#ifdef GAMEMASTER
+			DisableTalkDialogOptionsForInvisAvatar(hDlg);
+#endif
 			return true;
 		}
 #endif
@@ -605,15 +609,34 @@ bool HandleGMFullMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 			display->DisplayMessage(message, false);
 			return true;
 		}
+
+		// no invisibility for dark mares
+		if (player->IsMare())
+		{
+#ifdef UL_DEBUG
+			LoadString(hInstance, IDS_DM_INVIS_SUGGESTION, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message, false);
+#else
+			LoadString(hInstance, IDS_NO_DM_INVIS, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message, false);
+			return true;
+#endif
+		}
+
 		LmAvatar tempavatar = player->Avatar();
 		if (tempavatar.Hidden())
 		{
-			tempavatar.SetHidden(0);
-			player->SetAvatar(tempavatar, true);
-			player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
-			player->RemoveTimedEffect(LyraEffect::PLAYER_MIND_BLANKED);
-			LoadString (hInstance, IDS_HIDDEN_TOGGLE, disp_message, sizeof(disp_message));
-			_stprintf(message, disp_message, "Off");
+			//tempavatar.SetHidden(0);
+			//player->SetAvatar(tempavatar, true);
+			//player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
+			//player->RemoveTimedEffect(LyraEffect::PLAYER_MIND_BLANKED);
+			//LoadString (hInstance, IDS_HIDDEN_TOGGLE, disp_message, sizeof(disp_message));
+			//_stprintf(message, disp_message, "Off");
+			LoadString(hInstance, IDS_ONCE_HIDDEN_ALWAYS_HIDDEN, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message, false);
+
+			LoadString(hInstance, IDS_HIDDEN_TOGGLE, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, "On");
 		}
 		else
 		{
@@ -982,8 +1005,8 @@ bool HandleGMMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			talkdlg = TRUE;
 			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
 				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_RAW_EMOTE), 1);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
+			
+			DisableTalkDialogOptionsForInvisAvatar(hDlg);
 		}
 		return true;
 
@@ -1099,7 +1122,7 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	if (!fDown && (keyboard[Keystates::ALT] == 1) && 
 		HandleGMMetaKey(hWnd, vk, fDown, cRepeat, flags))
 		return;
-	
+
 #endif
 	
 	if (!fDown) 
@@ -1344,7 +1367,6 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 
 	//	player->Teleport (6426,2534,0, 46);	// DocA
 
-
 		if (player->flags & ACTOR_SOULSPHERE)
 		{
 			LoadString (hInstance, IDS_SOULSPHERE_NO_EMOTE, disp_message, sizeof(disp_message));
@@ -1364,10 +1386,18 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		if (!talkdlg)
 		{
 			talkdlg = TRUE;
+
+
 			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
 				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_EMOTE), 1);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
+
+				Button_SetCheck(GetDlgItem(hDlg, IDC_EMOTE), 1);
+				Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
+
+#ifdef GAMEMASTER
+			DisableTalkDialogOptionsForInvisAvatar(hDlg);
+#endif
+
 		}
 #endif
 		break;
@@ -1452,6 +1482,10 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			talkdlg = TRUE;
 			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
 				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
+
+#ifdef GAMEMASTER
+			DisableTalkDialogOptionsForInvisAvatar(hDlg);
+#endif
 		}
 #endif
 		break;

@@ -113,7 +113,7 @@ unsigned long art_chksum[NUM_ARTS] =
 #ifndef PMARE
 0xBABF, // Shatter 
 #else
-0xB5C0, // Shatter - pmare 
+0xB56A, // Shatter - pmare 
 #endif
 0xDEFA, // Return 
 0x00E9, // Know 
@@ -122,17 +122,31 @@ unsigned long art_chksum[NUM_ARTS] =
 0x6B91, // Identify Curse 
 0x9125, // Chamele 
 0xB581, // Vision 
+#ifndef PMARE
 0xDDA6, // Blast 
+#else
+0xDDDB, // Blast -- pmare
+#endif
 0x0106, // Blend 
 0x263E, // Forge Talisman 
 0x4937, // Recharge 
+#ifndef PMARE
 0x6C73, // Restore 
+#else
+0x6C69, // Restore - pmare
+#endif
 0x919D, // Reweave 
 0xB501, // Purify 
 0xDFAC, // Drain Self 
-0x0281, // Abjure 
+#ifndef PMARE
+0x0281, // Abjure
 0x274B, // Poison 
 0x4A46, // Antidote 
+#else
+0x2DB, // Abjure - pmare
+0x2768, // Poison - pmare
+0x4A6B, // Antidote - pmare 
+#endif
 0x6C08, // Curse 
 0x953C, // Drain Essence 
 0xB0F4, // Banish Nightmare 
@@ -144,9 +158,17 @@ unsigned long art_chksum[NUM_ARTS] =
 0x90E9, // Stagger 
 0xB40F, // Deafen 
 0xDAC5, // Blind 
+#ifndef PMARE
 0xFC86, // Darkness 
+#else
+0xFC50, // Darkness - pmare
+#endif
 0x20A3, // Paralyze 
+#ifndef PMARE
 0x4B10, // Firestorm 
+#else
+0x4B82, // Firestorm pmare
+#endif
 0x6ED5, // Razorwind 
 0x8E9A, // Recall 
 0xB0A3, // Push 
@@ -181,10 +203,18 @@ unsigned long art_chksum[NUM_ARTS] =
 0xDB0B, // Awaken 
 0xFF24, // UnTrain 
 0x21A8, // Grant RP XP 
+#ifndef PMARE
 0x3BDB, // Dreamquake 
+#else
+0x3B70, // Dreamquake -- pmare
+#endif
 0x6222, // Hypnotic Weave 
 0x8E57, // Vampiric Draw 
+#ifndef PMARE
 0xADC8, // Terror 
+#else
+0xADD5, // Terror -- pmare
+#endif
 0xD7EE, // Healing Aura 
 0xFF5F, // Telepathy 
 0x24FE, // Dreamsmith Mark 
@@ -205,7 +235,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x3F28, // Power Token 
 0x6D27, // Show Gratitude 
 0x8E44, // Quest 
-0xB220, // Bequeath 
+0xB282, // Bequeath 
 0xC88A, // Radiant Blaze 
 0xF445, // Poison Cloud 
 0x106E, // Break Covenant 
@@ -214,7 +244,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x8684, // Entrancement 
 0xA2E4, // Shadow Step 
 0xC950, // Dazzle 
-0xFD03, // Guild House 
+0xF4E2, // Translocate
 0x131D, // Corrupt Essence 
 0x3E30, // Tehthu's Oblivion 
 0x58A2, // Chaos Purge 
@@ -242,7 +272,11 @@ unsigned long art_chksum[NUM_ARTS] =
 0x8544, // Merge Talisman 
 0xA9D8, // NP Symbol 
 0xCC58, // Sense Datoken 
+#ifndef PMARE
 0xED06, // Tempest 
+#else
+0xED7B, // Tempest -- pmare
+#endif
 0x123A, // Kinesis 
 0x3066, // Misdirection 
 0x5D3E, // Chaotic Vortex 
@@ -268,7 +302,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 #ifndef PMARE
 {IDS_SHATTER, 				Stats::WILLPOWER,	40, 40, 0,	8, 	4, SANCT|FOCUS|LEARN},
 #else
-{IDS_SHATTER, 				Stats::DREAMSOUL,	0, 15, 0,	8, 	4, SANCT|LEARN},
+{IDS_SHATTER, 				Stats::WILLPOWER,	0, 5, 0,	2, 	4, SANCT|LEARN},
 #endif
 {IDS_RETURN,				Stats::WILLPOWER, 50, 20, 23,   2,  2, SANCT|FOCUS|LEARN},
 {IDS_KNOW, 					Stats::INSIGHT,		0,  0,  0,	1, 	-1, SANCT|LEARN},
@@ -277,17 +311,32 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_ID_CURSE,				Stats::INSIGHT,		20, 2,  0,	1, 	1, SANCT|NEIGH|LEARN},
 {IDS_CHAMELE, 				Stats::INSIGHT,		20, 20, 16, 5, 	2, SANCT|FOCUS|LEARN},
 {IDS_VISION,				Stats::INSIGHT,		20, 5,  13, 2, 	2, SANCT|FOCUS|LEARN},
+#ifndef PMARE
 {IDS_BLAST,					Stats::INSIGHT,		30, 2,  0,	1, 	2, NEIGH|FOCUS|LEARN},
+#else
+{ IDS_BLAST,				Stats::INSIGHT,		0, 5,  0,	1, 	2, NEIGH | FOCUS | LEARN },
+#endif 
 {IDS_BLEND,					Stats::INSIGHT,		50, 30, 6,	5, 	3, SANCT|FOCUS|LEARN},
 {IDS_FORGE,					Stats::DREAMSOUL,	50, 50, 0,	8, 	-1, SANCT|MAKE_ITEM|LEARN},
 {IDS_RECHARGE,				Stats::INSIGHT,		40, 15, 0,	8, 	2, SANCT|FOCUS|LEARN|NEED_ITEM},
+#ifndef PMARE
 {IDS_RESTORE, 				Stats::RESILIENCE,	10, 5,  0,	1, 	1, SANCT|LEARN},
+#else
+{ IDS_RESTORE, 				Stats::RESILIENCE,	0, 5,  0,	1, 	1, SANCT | LEARN },
+#endif
 {IDS_REWEAVE, 				Stats::RESILIENCE,	15, 10, 0,	4, 	1, SANCT|NEED_ITEM|LEARN},
 {IDS_PURIFY,				Stats::RESILIENCE,	5,  15, 0,	2, 	1, SANCT|LEARN},
 {IDS_DRAIN_SELF, 			Stats::RESILIENCE,	20, 5,  0,	2, 	2, SANCT|NEIGH|FOCUS|LEARN},
+#ifndef PMARE
 {IDS_ABJURE,				Stats::RESILIENCE,	50, 30, 0,	3, 	4, FOCUS|LEARN},
 {IDS_POISON,				Stats::RESILIENCE,	30, 15, 13, 3, 	2, NEIGH|FOCUS|LEARN},
 {IDS_ANTIDOTE,				Stats::RESILIENCE,	30, 10, 0,	2, 	3, SANCT|FOCUS|LEARN},
+#else
+{ IDS_ABJURE,				Stats::RESILIENCE,	0, 50, 0,	3, 	4, FOCUS | LEARN },
+{ IDS_POISON,				Stats::RESILIENCE,	0, 10, 13, 3, 	2, NEIGH | FOCUS | LEARN },
+{ IDS_ANTIDOTE,				Stats::RESILIENCE,	0, 5, 0,	2, 	3, SANCT | FOCUS | LEARN },
+
+#endif
 {IDS_CURSE,					Stats::RESILIENCE,	40, 10, 13, 3, 	3, NEIGH|FOCUS|LEARN},
 {IDS_DRAIN_ESSENCE,			Stats::RESILIENCE,	0,  0,  0,	1, 	1, SANCT|NEED_ITEM|LEARN},
 {IDS_BANISH_MARE,			Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
@@ -299,9 +348,17 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_STAGGER, 				Stats::LUCIDITY,	20, 10, 3,	2, 	3, NEIGH|FOCUS|LEARN},
 {IDS_DEAFEN,				Stats::LUCIDITY,	5,  15, 4,	2, 	2, NEIGH|LEARN},
 {IDS_BLIND,					Stats::LUCIDITY,	45, 15, 3,	3, 	3, NEIGH|FOCUS|LEARN},
+#ifndef PMARE
 {IDS_DARKNESS_ART_NAME,		Stats::LUCIDITY,	50, 25, 4,	5, 	3, NEIGH|FOCUS|LEARN},
+#else
+{ IDS_DARKNESS_ART_NAME,	Stats::LUCIDITY,	0, 25, 4,	3, 	3, NEIGH | FOCUS | LEARN },
+#endif
 {IDS_PARALYZE,				Stats::LUCIDITY,	30, 20, 2,	3, 	3, NEIGH|FOCUS|LEARN},  
+#ifndef PMARE
 {IDS_FIRESTORM,				Stats::LUCIDITY,	50, 25, 0,	7, 	3, FOCUS|LEARN},
+#else
+{ IDS_FIRESTORM,			Stats::LUCIDITY,	0, 25, 0,	3, 	3, FOCUS | LEARN },
+#endif
 {IDS_RAZORWIND,				Stats::LUCIDITY,	70, 40, 6,	9, 	4, FOCUS|LEARN},
 {IDS_RECALL_ART_NAME,		Stats::DREAMSOUL,	25, 1,  25, 1, 	1, SANCT|LEARN},
 {IDS_PUSH, 					Stats::DREAMSOUL,	0,  0,  0,	1, 	1, NEIGH|LEARN},
@@ -336,10 +393,18 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_AWAKEN,				Stats::NO_STAT, 	0,	0,	0,	0,	-1, SANCT|NEIGH},		// gm only
 {IDS_UNTRAIN_ART_NAME, 		Stats::NO_STAT, 	0,	0,	0,	2,	-1, SANCT|NEIGH},		// gm only
 {IDS_GRANT_RP_XP, 			Stats::NO_STAT, 	0,	0,	0,	0,	-1, SANCT|NEIGH},
+#ifndef PMARE
 {IDS_DREAMQUAKE,			Stats::WILLPOWER,	60, 40, 4,	7,	3, FOCUS|LEARN}, 
+#else
+{ IDS_DREAMQUAKE,			Stats::WILLPOWER,	0, 25, 4,	1,	3, FOCUS | LEARN },
+#endif
 {IDS_HYPNOTIC_WEAVE_ART_NAME,		Stats::LUCIDITY,	60, 40, 4,	7,	4, FOCUS|LEARN},
 {IDS_VAMPRIC_DRAW,					Stats::RESILIENCE,	60, 5,	0,	5,	3, FOCUS|LEARN|NEIGH|NEED_ITEM},
+#ifndef PMARE
 {IDS_TERROR_ART_NAME,				Stats::LUCIDITY,	60, 40, 4,	1,	3, FOCUS|LEARN},
+#else
+{ IDS_TERROR_ART_NAME,				Stats::LUCIDITY,	0, 25, 4,	1,	3, FOCUS | LEARN },
+#endif
 {IDS_HEAL_AURA,						Stats::RESILIENCE,	60, 40, 0,	7, 	-1, FOCUS|NEIGH|SANCT|LEARN},
 {IDS_TELEPATHY,						Stats::NO_STAT,		75, 0,  0,	0, 	-1, SANCT|NEIGH},	// roger wilco voice
 {IDS_DREAMSMITH_MARK_ART_NAME, 		Stats::NO_STAT,		50, 0,  0,	1, 	-1, SANCT},
@@ -360,7 +425,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_POWER_TOKEN,					Stats::DREAMSOUL,	10,  0, 0,	10, -1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SHOW_GRATITUDE,				Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
 {IDS_QUEST,							Stats::NO_STAT,		0,   0, 0,	3, -1, SANCT|NEIGH|MAKE_ITEM},
-{IDS_BEQUEATH,						Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEIGH},
+{IDS_BEQUEATH,						Stats::NO_STAT,		30,  0, 0,	10, -1, SANCT|NEIGH|LEARN},
 {IDS_RADIANT_BLAZE,					Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_POISON_CLOUD,					Stats::DREAMSOUL,	20, 10,15,	5,  -1, NEED_ITEM|NEIGH},
 {IDS_BREAK_COVENANT,				Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
@@ -369,7 +434,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_ENTRANCEMENT,					Stats::DREAMSOUL,	20, 10,13,	5,  -1, NEED_ITEM|SANCT},
 {IDS_SHADOW_STEP,					Stats::DREAMSOUL,	20, 10,10,	5,  -1, NEED_ITEM|SANCT},
 {IDS_DAZZLE,						Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
-{IDS_GUILD_HOUSE,					Stats::NO_STAT	,	50,  0, 0,  13, -1, SANCT},
+{IDS_TRANSLOCATE,					Stats::DREAMSOUL,	30, 20, 0,  10, -1, SANCT|LEARN},
 {IDS_CORRUPT_ESSENCE,				Stats::RESILIENCE,	10,  5, 0,  1,  -1, NEED_ITEM|SANCT|MAKE_ITEM},
 {IDS_TEHTHUS_OBLIVION,				Stats::DREAMSOUL,	10, 10, 0,  5,  -1, NEED_ITEM|SANCT},
 {IDS_CHAOS_PURGE_ART_NAME,			Stats::DREAMSOUL,	 0, 20, 0,  5,  -1, NEIGH},
@@ -397,7 +462,11 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_MERGE_TALISMAN,				Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS},
 {IDS_NP_SYMBOL_ART_NAME, 			Stats::NO_STAT,		10,  0, 0,	2, 	-1, SANCT},
 {IDS_LOCATE_MARES,					Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT|LEARN},
+#ifndef PMARE
 {IDS_TEMPEST,				        Stats::LUCIDITY,	60, 40, 0,	7, 	-1, FOCUS|LEARN},
+#else
+{ IDS_TEMPEST,				        Stats::LUCIDITY,	0, 25, 0,	3, 	-1, FOCUS | LEARN },
+#endif
 {IDS_KINESIS, 						Stats::WILLPOWER,	30, 5,  0,	1, 	-1, FOCUS|LEARN|NEIGH},
 {IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN|NEIGH},
 {IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
@@ -1170,7 +1239,7 @@ void cArts::ApplyArt(void)
 		case Arts::ENTRANCEMENT: method = &cArts::StartEntrancement; break;
 		case Arts::SHADOW_STEP: method = &cArts::StartShadowStep; break;
 		case Arts::DAZZLE: method = &cArts::Dazzle; break;
-		case Arts::GUILDHOUSE: method = &cArts::GuildHouse; break;
+		case Arts::GUILDHOUSE: method = &cArts::StartPlayerTeleport; break;
 		case Arts::CORRUPT_ESSENCE: method = &cArts::StartCorruptEssence; break;
 		case Arts::TEHTHUS_OBLIVION: method = &cArts::TehthusOblivion; break;
 		case Arts::CHAOS_PURGE: method = &cArts::StartChaosPurge; break;
@@ -1576,8 +1645,8 @@ void cArts::Meditate(void)
 // Chaos Well
 void cArts::EssenceContainer(void)
 {
-	int capacity = 20 * ((player->Skill(Arts::CHAOS_WELL) / 10) + 1);
-	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity, capacity };
+	int capacity = 20 * ((player->SkillSphere(Arts::CHAOS_WELL)) + 1);
+	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity*2, capacity };
 	LmItem info;
 	LmItemHdr header;
 	cItem *item;
@@ -1675,7 +1744,6 @@ bool cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 	// common ward attributes
 	ward.from_vert = (short)line->from;
 	ward.to_vert = (short)line->to;
-	ward.set_player_id(player->ID());
 
 	LoadString(hInstance, IDS_WARD, message, sizeof(message));
 	info.Init(header, message, 0, 0, 0);
@@ -1700,12 +1768,39 @@ void cArts::Lock(void)
 	this->ArtFinished(false);
 	return;
 #endif
+	
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	entervaluedlg = true;
+	_stprintf(message, "Enter the Lock ID (%d is your player ID)", player->ID());
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
+	entervalue_callback = (&cArts::EndLock);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	this->WaitForDialog(hDlg, Arts::LOCK);
+
+	return;
+
+}
+
+void cArts::EndLock(void *value)
+{
+	if (!value)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
 	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
 	LmItemHdr header;
 
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_NOREAP);
-	
+
 	header.SetGraphic(LyraBitmap::INVIS_ITEM);
 	//header.SetGraphic(LyraBitmap::WARD);
 	header.SetColor1(0); header.SetColor2(0);
@@ -1713,6 +1808,18 @@ void cArts::Lock(void)
 
 	// Set strength to a high level to mark it as unable to blend/shatter
 	ward.strength = 1000;
+
+	int lock_id;
+	
+	// set the player id
+	if (_stscanf(message, _T("%d"), &lock_id) != 1)
+	{
+		ward.set_player_id(player->ID());
+	}
+	else
+	{
+		ward.set_player_id(lock_id);
+	}
 
 	this->ArtFinished(this->PlaceLock(ward, header));
 }
@@ -1732,6 +1839,7 @@ void cArts::Ward(void)
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
 
 	ward.strength = player->Skill(art_in_use);
+	ward.set_player_id(player->ID());
 
 	bool success = this->PlaceLock(ward, header);
 
@@ -1743,27 +1851,66 @@ void cArts::Ward(void)
 
 void cArts::Key(void)
 {
-	TCHAR name[LmItem::NAME_LENGTH];
-	// r->ErrorInfo()->RIf name is longer than ten, truncate it on the amulet name
-	TCHAR myname[20];
-	_stprintf(myname, player->Name());
-	if (_tcslen(myname) < 13)
+#ifndef GAMEMASTER
+	LoadString(hInstance, IDS_GM_ONLY, disp_message, sizeof(disp_message));
+	display->DisplayMessage(disp_message);
+	this->ArtFinished(false);
+	return;
+#endif
+
+	if (entervaluedlg)
 	{
-		//LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
-		_stprintf(name, "Key of %s", myname);
-	}
-	else {
-		int i;
-		TCHAR myname13[13];
-		for (i = 0; i<13; i++)
-			myname13[i] = myname[i];
-		_stprintf(&myname13[12], _T("\0"));
-		//LoadString(hInstance, IDS_AMULET_OF, message, sizeof(message));
-		_stprintf(name, "Key of %s", myname13);
+		this->ArtFinished(false);
+		return;
 	}
 
+	entervaluedlg = true;
+	_stprintf(message, "Key ID;Key Name (%d;Key of %s)", player->ID(), player->Name());
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
+	entervalue_callback = (&cArts::EndKey);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	this->WaitForDialog(hDlg, Arts::KEY);
+
+	return;
+}
+
+void cArts::EndKey(void *value)
+{
+	if (!value)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	int key_id;
+	TCHAR entered_name[CHAR_MAX];
+	TCHAR key_name[20];
+
+	// handle an improperly formatted entry
+	if (_stscanf(message, _T("%d;%[^\t\n]"), &key_id, &entered_name) != 2)
+	{
+		key_id = player->ID();
+		_stprintf(entered_name, "Key of %s", player->Name());
+	}
+
+	if (_tcslen(entered_name) <= 20)
+	{
+		strcpy(key_name, entered_name);
+	}
+	else {
+		for (int i = 0; i<20; i++)
+			key_name[i] = entered_name[i];
+		_stprintf(&key_name[19], _T("\0"));
+	}
+
+	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
+	amulet.strength = 100;
 	// Set strength to 100 to mark this as a key instead of an amulet
-	this->CreatePass(name, 100);
+	amulet.player_id = key_id;
+
+	this->CreatePass(key_name, amulet);
+
 }
 
 //////////////////////////////////////////////////////////////////
@@ -1794,23 +1941,22 @@ void cArts::Amulet(void)
 	// Make sure a normal amulet never exceeds 99
 	if (item_strength > 99) item_strength = 99;
 
-	this->CreatePass(name, item_strength);
+	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
+	amulet.strength = item_strength;
+	amulet.player_id = player->ID();
+	
+	this->CreatePass(name, amulet);
 }
 
-void cArts::CreatePass(const TCHAR* pass_name, int pass_strength)
+void cArts::CreatePass(const TCHAR* pass_name, lyra_item_amulet_t amulet)
 {
 	LmItem info;
 	LmItemHdr header;
-	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
-
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_CHANGE_CHARGES);
 	header.SetGraphic(LyraBitmap::AMULET);
 	header.SetColor1(0); header.SetColor2(0);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AMULET_FUNCTION), 0, 0));
-
-	amulet.strength = pass_strength;
-	amulet.player_id = player->ID();
 
 	info.Init(header, pass_name, 0, 0, 0);
 	info.SetStateField(0, &amulet, sizeof(amulet));
@@ -2463,6 +2609,18 @@ void cArts::Firestorm(void)
 
 void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 {
+
+#ifdef PMARE
+	// give pmares a 10% chance of absorbing the firestorm and shooting it back
+	if (rand() % 10 == 0)
+	{
+		_stprintf(message, "redirects the %s back throughout the room.", this->Descrip(Arts::FIRESTORM));
+		gs->Talk(message, RMsg_Speech::EMOTE, caster_id);
+		gs->SendPlayerMessage(0, RMsg_PlayerMsg::FIRESTORM, skill, 0, 0);
+		return;
+	}
+#endif
+
 	player->EvokedFX().Activate(Arts::FIRESTORM, false);
 	cDS->PlaySound(LyraSound::FIRESTORM);
 	if ((caster_id == player->ID()) || (gs && gs->Party() && gs->Party()->IsInParty(caster_id)))
@@ -3184,60 +3342,43 @@ void cArts::ApplyDazzle(int skill, lyra_id_t caster_id)
 //////////////////////////////////////////////////////////////////
 // Guild House
 
-void cArts::GuildHouse(void)
+void cArts::StartPlayerTeleport(void)
 {  
-	LoadString (hInstance, IDS_USE_GUILD_HOUSE, message, sizeof(message));
-	display->DisplayMessage(message);
-
-	int focal_arts = 0;
-	int focus;
-
-	// check for each focus statu to determine the location necessary
-	if (player->Skill(Arts::GATEKEEPER) > 0)
+	if (chooseguilddlg)
 	{
-		focal_arts++;
-		focus = Stats::WILLPOWER;
+		this->ArtFinished(false);
+		return;
 	}
+	
+	HWND hDlg = CreateLyraDialog(hInstance, IDD_CHOOSE_DESTINATION,
+		cDD->Hwnd_Main(), (DLGPROC)ChooseDestinationDlgProc);
+	chooseguild_callback = (&cArts::EndPlayerTeleport);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	//SendMessage(hDlg, WM_ADD_DESTINATIONS, 0, 0);
+	this->WaitForDialog(hDlg, Arts::GUILDHOUSE);
 		
-	if (player->Skill(Arts::DREAMSEER) > 0)
+	return;
+}
+
+void cArts::EndPlayerTeleport(void *value)
+{
+	if (!value)
 	{
-		focal_arts++;
-		focus = Stats::INSIGHT;
-	}
-		
-	if (player->Skill(Arts::SOULMASTER) > 0)
-	{
-		focal_arts++;
-		focus = Stats::RESILIENCE;
-	}
-	
-	if (player->Skill(Arts::FATESENDER) > 0)
-	{
-		focal_arts++;
-		focus = Stats::LUCIDITY;
-	}
-	
-	// We have multiple focal arts, use the player's focus stat to determine their guild house
-	if (focal_arts != 1)
-		focus = player->FocusStat();
-	
-	switch (focus)
-	{
-		case Stats::WILLPOWER: 
-			player->Teleport(-850, -3556, 0, 14); // gk
-			break;
-		case Stats::INSIGHT:
-			player->Teleport(-10566, 4336, 0, 3); // ds
-			break;
-		case Stats::RESILIENCE:
-			player->Teleport(8177, 8235, 0, 7); // sm
-			break;
-		case Stats::LUCIDITY:
-			player->Teleport(-1738, -1548, 0, 29); // fs
-			break;
+		this->ArtFinished(false);
+		return;
 	}
 
-	this->ArtFinished(true);
+	float x, y; int level_id;
+	if (_stscanf(message, _T("%f;%f;%d"), &x, &y, &level_id) == 3)
+	{
+		player->Teleport(x, y, 0, level_id);
+		this->ArtFinished(true);
+	}
+	else
+	{
+		this->ArtFinished(false);
+	}
+
 	return;
 }
 
@@ -4842,6 +4983,8 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 		if (player->flags & timed_effects->actor_flag[i])
 			num_effects_active++;
 
+	// pmares can only have 1 effect abjured at a time
+#ifndef PMARE
 	// if no active effects, do nothing
 	while (1)
 	{ // determine # of effects abjured
@@ -4852,6 +4995,7 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 		num_effects_to_abjure++;
 	}
 
+#endif
 
 	while (num_effects_active && num_effects_to_abjure)
 	{
@@ -7341,7 +7485,7 @@ void cArts::StartCorruptEssence(void)
 		!player->IsRuler(Guild::NO_GUILD))
 	{
 		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		_stprintf(message, disp_message, this->Descrip(Arts::CORRUPT_ESSENCE));
 		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
@@ -7480,7 +7624,7 @@ void cArts::StartSacrifice(void)
 		!player->IsRuler(Guild::NO_GUILD))
 	{
 		LoadString(hInstance, IDS_MUST_BE_IN_HOUSE, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, this->Descrip(Arts::HOUSE_MEMBERS));
+		_stprintf(message, disp_message, this->Descrip(Arts::SACRIFICE));
 		display->DisplayMessage(message);
 		this->ArtFinished(false);
 		return;
@@ -7610,6 +7754,11 @@ void cArts::ApplyTrain(int art_id, int success, lyra_id_t caster_id)
 			avatar.SetApprentice(0);
 			avatar.SetTeacher(1);
 			player->SetAvatar(avatar, true);
+
+			// Auto learn bequeath, support train, and support sphere
+			this->AddIfUnlearned(Arts::EMPATHY);
+			this->AddIfUnlearned(Arts::SUPPORT_TRAINING);
+			this->AddIfUnlearned(Arts::SUPPORT_SPHERING);
 		}
 		if (art_id == Arts::TRAIN_SELF)
 		{
@@ -7737,12 +7886,11 @@ void cArts::EndTrain(void)
 		return;
 	}
 #ifndef GAMEMASTER //
-	else if ((art_id == Arts::TRAIN) ||
-		     (art_id == Arts::LEVELTRAIN) ||
+	else if ((art_id == Arts::TRAIN && n->Avatar().Teacher() == 0) || // only GMs can teach Train to Learn
+			 (art_id == Arts::LEVELTRAIN) ||
 			 (art_id == Arts::DREAMSTRIKE) || 
-		     (art_id ==Arts::SUPPORT_SPHERING) ||
+		     (art_id == Arts::SUPPORT_SPHERING) ||
              (art_id == Arts::SUPPORT_TRAINING) ||
-			 (art_id == Arts::GUILDHOUSE) || 
 			 (art_id == Arts::TEHTHUS_OBLIVION) ||
 			 (art_id == Arts::CHAOS_PURGE) ||
 			 (art_id == Arts::FREESOUL_BLADE) ||
@@ -7750,6 +7898,13 @@ void cArts::EndTrain(void)
 			 (art_id == Arts::CUP_SUMMONS))
 	{
 		LoadString (hInstance, IDS_GM_ONLY_TRAIN, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+	else if ((art_id == Arts::TRAIN || art_id == Arts::QUEST) && player->Skill(Arts::TRAIN_SELF) < 1)
+	{
+		_stprintf(disp_message, "Only Master Teachers and Elders are permitted to teach %s!", this->Descrip(art_id));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
@@ -7778,10 +7933,10 @@ void cArts::EndTrain(void)
 	}
 #endif
 	else
-	{ 
+	{
 		// skill is set at the lower of either teaching or the skill itself
 		int skill = player->Skill(Arts::TRAIN);
-		if (player->Skill(art_id)<skill)
+		if (player->Skill(art_id) < skill)
 			skill = player->Skill(art_id);
 		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::TRAIN, art_id, skill);
 		this->ArtFinished(true);
@@ -8074,12 +8229,12 @@ void cArts::EndQuest(void *value)
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SCROLL_FUNCTION),0,0));
 
 	if (scroll_type->num_charges == 254)
-		flags = LyraItem::FLAG_IMMUTABLE | LyraItem::FLAG_HASDESCRIPTION;
+		flags = LyraItem::FLAG_IMMUTABLE | LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_SENDSTATE;
 	else
-		flags = LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION;
+		flags = LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_SENDSTATE;
 
 	if (scroll_type->artifact)
-		flags = flags | LyraItem::FLAG_NOREAP | LyraItem::FLAG_ALWAYS_DROP;
+		flags = flags | LyraItem::FLAG_NOREAP | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_SENDSTATE;
 
 	header.SetFlags(flags);
 
@@ -10492,12 +10647,12 @@ void cArts::EndWriteScroll(void *value)
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SCROLL_FUNCTION),0,0));
 
 	if (scroll_type->num_charges == 254)
-		flags = LyraItem::FLAG_IMMUTABLE | LyraItem::FLAG_HASDESCRIPTION;
+		flags = LyraItem::FLAG_IMMUTABLE | LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_SENDSTATE;
 	else
-		flags = LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION;
+		flags = LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_SENDSTATE;
 
 	if (scroll_type->artifact)
-		flags = flags | LyraItem::FLAG_NOREAP | LyraItem::FLAG_ALWAYS_DROP;
+		flags = flags | LyraItem::FLAG_NOREAP | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_SENDSTATE;
 
 	header.SetFlags(flags);
 

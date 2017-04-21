@@ -36,7 +36,9 @@ const int EMPHANT_DAMAGE = 15;
 const int BOGROM_DAMAGE = 16;
 const int AGOKNIGHT_DAMAGE = 60;
 const int SHAMBLIX_DAMAGE = 60;
+const int SHAMBLIX_DAMAGE_XTR = 29;
 const int HORRON_DAMAGE = 38;
+const int HORRON_DAMAGE_XTR = 8;
 
 struct EffectOrigin {
 	enum {

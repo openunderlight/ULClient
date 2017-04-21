@@ -763,14 +763,26 @@ void cItem::Use(void)
 				}
 				if ((item->Status() == ITEM_OWNED) && (item->ItemFunction(0) == LyraItem::ESSENCE_FUNCTION))
 				{ // it's essence - add to meta if it's not a user
+					int avail_space = nexus.strength_cap - nexus.strength;
 					state = item->Lmitem().StateField(0);
 					memcpy(&essence, state, sizeof(essence));
-					if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE &&
-						essence.strength <= 1) // prevent strength > 1 from being absorbed by nexus
-					{ // add strength to meta talisman
-						nexus.strength += essence.strength;
-						nexus.essences++;
-						item->Lmitem().SetCharges(0);
+					if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE)
+					{ 
+						// add strength to meta talisman
+						if (avail_space > essence.strength) {
+							// meta talisman can take the entire essence
+							nexus.strength += essence.strength;
+							// only increase essences if it's entirely absorbed
+							nexus.essences++;
+							item->Lmitem().SetCharges(0);
+						}
+						else {
+							// partial use of essence
+							nexus.strength += avail_space;
+							essence.strength -= avail_space;
+							item->Lmitem().SetStateField(0, &essence, sizeof(essence));
+							needsUpdate = true;
+						}
 						drains = true;
 					}
 				}
@@ -1412,20 +1424,21 @@ bool cItem::Recharge(int plateaua)
 		}
 	}
 
-	if (new_charges >= limit)
+	int soft_limit = limit - 1;
+
+	// don't go up if we're already at the soft limit (1 less than the genned max)
+	if (lmitem.Charges() >= soft_limit)
 	{
-		new_charges=lmitem.Charges()+1;
-		if (new_charges >= limit)
-		{
-		//new_charges = limit - 1; -- changed so that forged items dont degenerate upon recharge
-		new_charges=lmitem.Charges();
-		LoadString (hInstance, IDS_TALISMAN_MAXCHARGE, disp_message, sizeof(disp_message));
-		}
-		else
-		{
-			LoadString (hInstance, IDS_TALISMAN_RECHARGED, disp_message, sizeof(disp_message));
-		}
+		new_charges = lmitem.Charges();
+		LoadString(hInstance, IDS_TALISMAN_MAXCHARGE, disp_message, sizeof(disp_message));
 	}
+	// check if we exceed the limit and set the charges to the soft limit if we do
+	else if (new_charges >= limit)
+	{
+		new_charges = soft_limit;
+		LoadString(hInstance, IDS_TALISMAN_RECHARGED, disp_message, sizeof(disp_message));
+	}
+	// successful normal recharge evoke 
 	else
 	{
 		LoadString (hInstance, IDS_TALISMAN_RECHARGED, disp_message, sizeof(disp_message));

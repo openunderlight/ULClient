@@ -2607,8 +2607,18 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 					talkdlg = TRUE;
 					HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK, 
 							 cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
+
+#ifdef GAMEMASTER
+					DisableTalkDialogOptionsForInvisAvatar(hDlg);
+					Button_SetCheck(GetDlgItem(hDlg, IDC_WHISPER), 1);
+					Button_SetCheck(GetDlgItem(hDlg, IDC_RAW_EMOTE), 0);
+#endif
+
 					Button_SetCheck(GetDlgItem(hDlg, IDC_WHISPER), 1);
 					Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
+
+
+
 					return (LRESULT)0;
 				}
 			}
