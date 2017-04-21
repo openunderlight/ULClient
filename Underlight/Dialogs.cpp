@@ -2427,9 +2427,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							break;
 						}
 
-						_stprintf(temp_message, "Num Tokens: %d, PT Cost: %d", num_tokens_held, ptCost);
-						display->DisplayMessage(temp_message);
-
+						// validate we can afford to create the item...the inclusion of combine makes things tricky to prevent up front
 						if ((CreateItem::FORGE_ITEM == called_by) && (num_tokens_held < ptCost))
 						{
 							LoadString(hInstance, IDS_NOT_ENOUGH_PT, message, sizeof(message));
