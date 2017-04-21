@@ -1902,6 +1902,8 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					_stprintf(message, _T("%d"), player->Skill(Arts::FORGE_TALISMAN));
 					//SendMessage(GetDlgItem(hDlg, IDC_CHARGES), EM_SETREADONLY, 1, 0);
 					
+					ShowWindow(GetDlgItem(hDlg, IDC_STATIC2), SW_SHOWNORMAL);
+					ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_SHOWNORMAL);
 					ShowWindow (GetDlgItem(hDlg, IDC_ITEM_DESCRIP), SW_SHOWNORMAL);
 					if (player->Skill(Arts::COMBINE) > 0)
 						ShowWindow(GetDlgItem(hDlg, IDC_ITEM_COMBINE), SW_SHOWNORMAL);
@@ -1964,7 +1966,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			}
 			case IDC_PROPERTY2:
 			{
-				if (HIWORD(wParam) == LBN_SELCHANGE)
+				if (HIWORD(wParam) == LBN_SELCHANGE && CreateItem::FORGE_ITEM == called_by)
 				{
 					curr_function = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
 
@@ -1984,7 +1986,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			}
 			case IDC_PROPERTY3:
 			{
-				if (HIWORD(wParam) == LBN_SELCHANGE)
+				if (HIWORD(wParam) == LBN_SELCHANGE && CreateItem::FORGE_ITEM == called_by)
 				{
 					curr_function = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
 					
@@ -2005,10 +2007,13 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			case IDC_TYPE_COMBO:
 					if (HIWORD(wParam) == LBN_SELCHANGE)
 					{
-						_stprintf(temp_message, _T("%d"), 0);
-						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
-						Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
-						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
+						if (CreateItem::FORGE_ITEM == called_by)
+						{
+							_stprintf(temp_message, _T("%d"), 0);
+							ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
+							Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
+							ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
+						}
 
 						int curr_selection = ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
 						int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), curr_selection);
@@ -2279,7 +2284,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						}
 
 						// double the charges after validation
-						if (combineItem) {
+						if (combineItem && CreateItem::FORGE_ITEM == called_by) {
 							numcharges *= 2;
 
 							// make sure we don't exceed 100 charges
