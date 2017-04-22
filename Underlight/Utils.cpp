@@ -557,12 +557,13 @@ int PowerTokenCostToForge(int type, int value, bool combineItem = false)
 	else if (skill_to_create == 100 || skill_to_create > forge_skill) 
 		return 1000;
 
-	int divisor = 10;
+	int pt_cost = skill_to_create / 10;
 
-	// double the cost by dividing by 5 instead of 10
-	if (combineItem) divisor /= 2;
+	// double the cost if we're combining
+	if (combineItem) 
+		pt_cost *= 2;
 
-	return skill_to_create / divisor;
+	return pt_cost;
 
 	// Takes the skill of the forger and the cost to forge into account for the amount of PTs it takes to make an item
 	//return (100 - (forge_skill - skill_to_create)) / divisor;
