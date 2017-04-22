@@ -564,9 +564,6 @@ int PowerTokenCostToForge(int type, int value, bool combineItem = false)
 		pt_cost *= 2;
 
 	return pt_cost;
-
-	// Takes the skill of the forger and the cost to forge into account for the amount of PTs it takes to make an item
-	//return (100 - (forge_skill - skill_to_create)) / divisor;
 }
 
 // returns true if the player has this value as an option for
