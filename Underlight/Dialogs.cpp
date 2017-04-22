@@ -1314,18 +1314,7 @@ BOOL CALLBACK MetaDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 				case IDC_EXIT:
 					DestroyWindow(hDlg);
           if (!exiting) {
-#if !defined (GAMEMASTER) && !defined (PMARE)
-            if (player->PPPool() > 0) {
-              LoadString (hInstance, IDS_STILL_PP, ::message, sizeof(message));
-	            HWND hDlgYN;
-	            hDlgYN = CreateLyraDialog(hInstance, IDD_WARNING_YESNO,
-				      cDD->Hwnd_Main(), (DLGPROC)WarningYesNoDlgProc);
-	            SendMessage(hDlgYN, WM_SET_CALLBACK, 0,	(LPARAM)ExitCallback);
-            } else
-              StartExit ();
-#else
-            StartExit ();
-#endif
+			StartExit ();
           }
 					return FALSE;
 				default:
