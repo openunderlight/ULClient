@@ -1198,6 +1198,10 @@ BEGIN
         LEFTMARGIN, 2
         BOTTOMMARGIN, 151
     END
+
+    IDD_USE_PPOINT, DIALOG
+    BEGIN
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -4415,6 +4419,8 @@ STRINGTABLE
 BEGIN
     IDS_NOACCESS_PORTAL     "That portal is currently inaccessible."
     IDS_NO_XP_MONSTER       "You can't use Bequeath on Nightmares!"
+    IDS_FOCAL_BLADE         "Focal Blade"
+    IDS_FOCAL_FLAME         "Focal Flame"
 END
 
 #endif    // English (United States) resources

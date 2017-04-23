@@ -273,9 +273,7 @@ struct Arts {
   CHAOTIC_VORTEX, // Chaotic Vortex
   CHAOS_WELL, // Essence Container
   RALLY, // Summon party member
-  CHANNEL,     
-	BLADE, //placeholder
-	FLAME, // placeholder
+  CHANNEL,
 	// END OF ARTS LIST - below are art-related constants
 
 	INITIATE_DRAIN = 100,   // amount of essences drained from prime to Initiate
