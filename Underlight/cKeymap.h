@@ -186,7 +186,7 @@ const keymap_t default_keymap[default_num_keys] =
 	{'D', LyraKeyboard::SIDESTEP_RIGHT, Arts::NONE},
 	{'E', LyraKeyboard::EMOTE, Arts::NONE},
 	{'G', LyraKeyboard::OPEN_GOAL_BOOK, Arts::NONE},
-	{'L', LyraKeyboard::LEAVE_PARTY, Arts::NONE},
+	{'L', LyraKeyboard::ART, Arts::LOCATE_AVATAR},
 	{'N', LyraKeyboard::SELECT_NEXT, Arts::NONE},
 	{'M', LyraKeyboard::SELECT_PREV, Arts::NONE},
 	{',', LyraKeyboard::SHOW_NEXT, Arts::NONE},
@@ -194,7 +194,7 @@ const keymap_t default_keymap[default_num_keys] =
 	{'R', LyraKeyboard::RESET_EYELEVEL, Arts::NONE},
 	{'A', LyraKeyboard::TOGGLE_SOUND, Arts::NONE},
 	{'T', LyraKeyboard::TALK, Arts::NONE},
-	{222, LyraKeyboard::TALK, Arts::NONE}, // (apostrophe)
+	{222, LyraKeyboard::LEAVE_PARTY, Arts::NONE}, // (apostrophe)
 	{'W', LyraKeyboard::WHO_NEARBY, Arts::NONE},
 	{'C', LyraKeyboard::ACTIVE_EFFECTS, Arts::NONE},
 	{'X', LyraKeyboard::SHOW_XP, Arts::NONE},
