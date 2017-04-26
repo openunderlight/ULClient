@@ -6097,30 +6097,33 @@ void cArts::UsePowerTokens(cItem** tokens, int charges_to_use)
 
 	while (charges_expired < charges_to_use)
 	{
-		int cur_charges = tokens[token_idx]->Lmitem().Charges();
+		int cur_charges = tokens[token_idx]->Lmitem().Charges();		
 		if (cur_charges <= charges_to_use - charges_expired)
 		{
 			// use up the entire token
-			tokens[token_idx]->Destroy();
 			charges_expired += cur_charges;
-			
+			tokens[token_idx]->Destroy();
+
+			// always move on since we destroyed the pt
+			token_idx++;
 		}
 		else
 		{
 			// use one charge
 			tokens[token_idx]->DrainCharge();
 			charges_expired++;
-		}
 
-		// Only move on if we wiped out the power token
-		if (tokens[token_idx]->Lmitem().Charges() == 0)
-			token_idx++;
+			// Only move on if we wiped out the power token
+			if (tokens[token_idx]->Lmitem().Charges() == 0)
+				token_idx++;
+		}
 	}
 }
 
 int cArts::CountPowerTokens(cItem** tokens, lyra_id_t guild_id)
 {
 	int num_tokens = 0;
+	int num_charges = 0;
 	lyra_item_support_t power_tokens[Lyra::INVENTORY_MAX];	// holds token info
 	const void* state;
 	cItem* item;
@@ -6144,11 +6147,12 @@ int cArts::CountPowerTokens(cItem** tokens, lyra_id_t guild_id)
 					continue;
 
 			tokens[num_tokens] = item;
-			num_tokens += item->Lmitem().Charges(); // valid token!!!
+			num_tokens++;
+			num_charges += item->Lmitem().Charges(); // valid token!!!
 			
 		}
 	actors->IterateItems(DONE);
-	return num_tokens;
+	return num_charges;
 }
 
 void cArts::StartEmpathy(void)
