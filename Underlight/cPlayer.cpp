@@ -1841,7 +1841,7 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 #endif
 
 #ifdef PMARE
-	if (rand() % 20 == 0)
+	if (rand() % 20 < 3)
 		this->HandlePmareDefense(false);
 #endif
 
