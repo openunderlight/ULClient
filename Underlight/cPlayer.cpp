@@ -1936,7 +1936,7 @@ int mare_avatar = this->CurrentAvatarType();
 			break;
 
 		case Avatars::SHAMBLIX: 
-#ifdef PMARE
+#if defined (AGENT) || defined (PMARE) || defined (GAMEMASTER)
 			// 15% chance 
 			if (rand() % 20 < 3) {
 				// 1-50 damage, paralysis fireballs
@@ -1971,7 +1971,7 @@ int mare_avatar = this->CurrentAvatarType();
 
 			}
 #endif
-#ifdef PMARE
+#if defined (AGENT) || defined (PMARE) || defined (GAMEMASTER)
 			// 15% chance 
 			if (rand() % 20 < 3 ) {
 				// 35 damage, blind fireballs
