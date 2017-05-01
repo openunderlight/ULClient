@@ -551,7 +551,7 @@ int PowerTokenCostToForge(int type, int value, bool combineItem = false)
 	}
 
 	// allow continued crafting at a fraction of your Forge Skill at no cost
-	if (skill_to_create < (forge_skill / 4))
+	if (skill_to_create < (forge_skill / 2))
 		return 0;
 	// cover us just in case someone gains access to a level 100 Forge. 1000 PTs are unachievable (50*10=500)
 	else if (skill_to_create == 100 || skill_to_create > forge_skill) 
