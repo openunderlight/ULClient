@@ -642,7 +642,7 @@ int MaxChargesForFunction(int function)
 		case LyraItem::MISSILE_FUNCTION:
 			return 50;
 		case LyraItem::EFFECT_PLAYER_FUNCTION:
-			return 25; 
+			return 40; 
 		case LyraItem::CHANGE_STAT_FUNCTION:
 			return 25;
 		case LyraItem::NO_FUNCTION:
