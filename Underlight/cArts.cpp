@@ -7814,6 +7814,104 @@ void cArts::ApplyTrain(int art_id, int success, lyra_id_t caster_id)
 	return;
 }
 
+bool IsFlameArt(lyra_id_t art_id)
+{
+	switch (art_id)
+	{
+		
+		return true;
+	default:
+		return false;
+	}
+}
+
+bool IsBladeArt(lyra_id_t art_id)
+{
+	switch (art_id)
+	{
+		case Arts::DREAMBLADE:
+		case Arts::GATESMASHER:
+		case Arts::FATESLAYER:
+		case Arts::SOULREAPER:
+			return true;
+		default:
+			return false;
+	}
+}
+
+// Returns the proper art id to pass to the server
+// Either returns the art_id passed in or the highest blade/flame art id the player possesses
+lyra_id_t NormalizedBladeFlameArtId(lyra_id_t art_id)
+{
+	// return the original art_id if they have the art they're training
+	if (player->Skill(art_id) > 0)
+		return art_id;
+	
+	int skill = 0;
+	int current_art = art_id;
+
+	switch (art_id)
+	{
+		// normalize blades
+		case Arts::DREAMBLADE:
+		case Arts::GATESMASHER:
+		case Arts::FATESLAYER:
+		case Arts::SOULREAPER:
+			if (player->Skill(Arts::DREAMBLADE) > skill)
+			{
+				current_art = Arts::DREAMBLADE;
+				skill = player->Skill(Arts::DREAMBLADE);
+			}
+			else if (player->Skill(Arts::GATESMASHER) > skill)
+			{
+				current_art = Arts::GATESMASHER;
+				skill = player->Skill(Arts::GATESMASHER);
+			}
+			else if (player->Skill(Arts::FATESLAYER) > skill)
+			{
+				current_art = Arts::FATESLAYER;
+				skill = player->Skill(Arts::FATESLAYER);
+			}
+			else if (player->Skill(Arts::SOULREAPER) > skill)
+			{
+				current_art = Arts::SOULREAPER;
+				skill = player->Skill(Arts::SOULREAPER);
+			}
+
+			return current_art;
+		// normalize flames
+		case Arts::TRANCEFLAME:
+		case Arts::FLAMESHAFT:
+		case Arts::FLAMERUIN:
+		case Arts::FLAMESEAR:
+			if (player->Skill(Arts::TRANCEFLAME) > skill)
+			{
+				current_art = Arts::TRANCEFLAME;
+				skill = player->Skill(Arts::TRANCEFLAME);
+			}
+			else if (player->Skill(Arts::FLAMESHAFT) > skill)
+			{
+				current_art = Arts::FLAMESHAFT;
+				skill = player->Skill(Arts::FLAMESHAFT);
+			}
+			else if (player->Skill(Arts::FLAMERUIN) > skill)
+			{
+				current_art = Arts::FLAMERUIN;
+				skill = player->Skill(Arts::FLAMERUIN);
+			}
+			else if (player->Skill(Arts::FLAMESEAR) > skill)
+			{
+				current_art = Arts::FLAMESEAR;
+				skill = player->Skill(Arts::FLAMESEAR);
+			}
+
+			return current_art;
+	}
+
+	// default to the art id passed in
+	return art_id;
+}
+
 cItem* cArts::HasQuestCodex(lyra_id_t neighbor_id, lyra_id_t art_id)
 {
 	const void* state;
@@ -7831,7 +7929,7 @@ cItem* cArts::HasQuestCodex(lyra_id_t neighbor_id, lyra_id_t art_id)
 			if (neighbor_id != scroll.targetid())
 				continue; 
 			// 1 is added to art ID to allow use of art 0
-			if (art_id != scroll.art_id -1)
+			if (art_id != NormalizedBladeFlameArtId(scroll.art_id - 1))
 				continue;
 			
 			quest_codex = item;
@@ -7841,12 +7939,12 @@ cItem* cArts::HasQuestCodex(lyra_id_t neighbor_id, lyra_id_t art_id)
 	return quest_codex;
 }
 
-bool cArts::IsSharesFocus(lyra_id_t target_focus_id)
+bool cArts::IsSharesFocus(lyra_id_t art_focus_id)
 {
-	if (player->Avatar().Focus() == target_focus_id) {
+	if (player->Avatar().Focus() == art_focus_id) {
 		return true;
 	}
-	switch (target_focus_id)
+	switch (art_focus_id)
 	{
 		case Arts::GATEKEEPER: return player->Skill(Arts::GATEKEEPER);
 		case Arts::DREAMSEER: return player->Skill(Arts::DREAMSEER);
@@ -7922,8 +8020,8 @@ void cArts::EndTrain(void)
 		return;
 
 	}
-#ifndef GAMEMASTER	//GMs SHOULD be allowed to train arts even if not within their primary focus
-	else if (art_info[art_id].restricted() && !this->IsSharesFocus(n->Avatar().Focus()))
+#ifndef GAMEMASTER	//GMs SHOULD be allowed to train arts even if not within their primary/secondary focus
+	else if (art_info[art_id].restricted() && !this->IsSharesFocus(art_info[art_id].stat))
 	{
 		LoadString (hInstance, IDS_TRAIN_OTHER_FAILED, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, n->Name(), this->Descrip(art_id));
