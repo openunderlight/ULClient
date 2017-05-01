@@ -2277,7 +2277,8 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						if ((CreateItem::FORGE_ITEM == called_by) && 
 							(numcharges > min(effect_max_charges, player->Skill(Arts::FORGE_TALISMAN))))
 						{
-							LoadString (hInstance, IDS_BAD_CHARGES, message, sizeof(message));
+							LoadString (hInstance, IDS_BAD_CHARGES, disp_message, sizeof(disp_message));
+							_stprintf(message, disp_message, effect_max_charges);
 							CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
 								cDD->Hwnd_Main(), (DLGPROC)NonfatalErrorDlgProc);
 							break;
