@@ -7814,31 +7814,6 @@ void cArts::ApplyTrain(int art_id, int success, lyra_id_t caster_id)
 	return;
 }
 
-bool IsFlameArt(lyra_id_t art_id)
-{
-	switch (art_id)
-	{
-		
-		return true;
-	default:
-		return false;
-	}
-}
-
-bool IsBladeArt(lyra_id_t art_id)
-{
-	switch (art_id)
-	{
-		case Arts::DREAMBLADE:
-		case Arts::GATESMASHER:
-		case Arts::FATESLAYER:
-		case Arts::SOULREAPER:
-			return true;
-		default:
-			return false;
-	}
-}
-
 // Returns the proper art id to pass to the server
 // Either returns the art_id passed in or the highest blade/flame art id the player possesses
 lyra_id_t NormalizedBladeFlameArtId(lyra_id_t art_id)
