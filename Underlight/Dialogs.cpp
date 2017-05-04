@@ -1964,39 +1964,27 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 				ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
 				break;
 			}
+			case IDC_PROPERTY1:
 			case IDC_PROPERTY2:
-			{
-				if (HIWORD(wParam) == LBN_SELCHANGE && CreateItem::FORGE_ITEM == called_by)
-				{
-					curr_function = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
-
-					if (curr_function == LyraItem::CHANGE_STAT_FUNCTION || curr_function == LyraItem::EFFECT_PLAYER_FUNCTION || curr_function == LyraItem::ARMOR_FUNCTION)
-					{
-						curr_translation = LyraItem::EntryTranslation(curr_function, 1);
-						// pull the value out of the item data for the field
-						curr_value = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_PROPERTY2), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PROPERTY2)));
-
-						_stprintf(temp_message, _T("%d"), PowerTokenCostToForge(curr_translation, curr_value, combineItem));
-						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
-						Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
-						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
-					}
-				}
-				break;
-			}
 			case IDC_PROPERTY3:
 			{
 				if (HIWORD(wParam) == LBN_SELCHANGE && CreateItem::FORGE_ITEM == called_by)
 				{
+					int temp_cost, ptCost = 0;
 					curr_function = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
-					
-					if (curr_function == LyraItem::MISSILE_FUNCTION)
-					{
-						curr_translation = LyraItem::EntryTranslation(curr_function, 2);
-						// pull the value out of the item data for the field
-						curr_value = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_PROPERTY3), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PROPERTY3)));
 
-						_stprintf(temp_message, _T("%d"), PowerTokenCostToForge(curr_translation, curr_value, combineItem));
+					// only count PT requirement for shields, elemens, alterors, and chakrams
+					if (curr_function == LyraItem::CHANGE_STAT_FUNCTION || curr_function == LyraItem::EFFECT_PLAYER_FUNCTION || 
+						curr_function == LyraItem::ARMOR_FUNCTION || curr_function == LyraItem::MISSILE_FUNCTION)
+					{
+						for (int j = 0; j < LyraItem::FunctionEntries(curr_function); j++)
+						{
+							curr_value = ComboBox_GetItemData(GetDlgItem(hDlg, property_fields[j]), ComboBox_GetCurSel(GetDlgItem(hDlg, property_fields[j])));
+							temp_cost = PowerTokenCostToForge(LyraItem::EntryTranslation(curr_function, j), curr_value, combineItem);
+							ptCost = MAX(ptCost, temp_cost);
+						}
+
+						_stprintf(temp_message, _T("%d"), ptCost);
 						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
 						Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
 						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
