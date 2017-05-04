@@ -2808,7 +2808,6 @@
 #define IDS_ITEM_QUEST                  4251
 #define IDS_SELFTRAIN_LOW_TRAIN         4251
 #define IDS_EXPLORATION_QUEST           4252
-#define IDS_STILL_PP                    4252
 #define IDS_ITEM_DELIVERY               4253
 #define IDS_LOCATE_MARES                4253
 #define IDS_POST_QUEST                  4254

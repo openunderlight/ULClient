@@ -4299,7 +4299,6 @@ BEGIN
     IDS_ARTS                "Arts"
     IDS_GENERAL             "General"
     IDS_SELFTRAIN_LOW_TRAIN "Your are not ready to self-train in the art yet. You must raise your skill in Train first."
-    IDS_STILL_PP            "Note that you have not yet used up your daily ability to reward others for notable displays of personality and creativity. \r\nDo you still wish to exit?"
     IDS_LOCATE_MARES        "Sense Datoken"
     IDS_NO_MARES            "There are no datoke currently dreaming."
     IDS_MARES               "You sense the following datoke: "
