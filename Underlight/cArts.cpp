@@ -2611,8 +2611,8 @@ void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 {
 
 #ifdef PMARE
-	// give pmares a 10% chance of absorbing the firestorm and shooting it back
-	if (rand() % 10 == 0)
+	// give pmares a 50% chance of absorbing the firestorm and shooting it back
+	if (rand() % 2 == 0)
 	{
 		_stprintf(message, "redirects the %s back throughout the room.", this->Descrip(Arts::FIRESTORM));
 		gs->Talk(message, RMsg_Speech::EMOTE, caster_id);
