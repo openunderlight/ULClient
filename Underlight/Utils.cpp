@@ -336,7 +336,7 @@ const duration_t duration_types[NUM_DURATIONS] =
     {600,     0,       100,         IDS_10_MIN },
     {900,     0,       100,         IDS_15_MIN },
     {1200,    0,       100,         IDS_20_MIN },
-    {1800,    0,       100,         IDS_30_MIN },
+    {1800,    0,       92,         IDS_30_MIN },
     {2700,    0,       100,         IDS_45_MIN },
     {3600,    0,       100,         IDS_1_HR     },
     {7200,    0,       100,         IDS_2_HR    },
@@ -361,21 +361,21 @@ const duration_t duration_types[NUM_DURATIONS] =
     {60,       240,     40,         IDS_1_TO_5_MIN        },
     {60,       540,     48,         IDS_1_TO_10_MIN      },
     {60,       840,     57,         IDS_1_TO_15_MIN      },
-    {60,       1740,    66,         IDS_1_TO_30_MIN      },
-    {60,       3540,    75,         IDS_1_TO_60_MIN      },
+    {60,       1740,    68,         IDS_1_TO_30_MIN      },
+    {60,       3540,    100,         IDS_1_TO_60_MIN      },
     {180,      180,     45,         IDS_3_TO_6_MIN       },
     {240,      300,     51,         IDS_4_TO_9_MIN       }, // 50
-    {300,      360,     54,         IDS_5_TO_10_MIN      },
-    {300,      600,     60,         IDS_5_TO_15_MIN      },
-    {600,      600,     63,         IDS_10_TO_20_MIN       },
-    {600,      1200,    69,         IDS_10_TO_30_MIN       },
-    {1200,     1200,    62,         IDS_20_TO_40_MIN        },
-    {600,      3000,    80,         IDS_10_TO_60_MIN        },
-    {1800,     1800,    84,         IDS_30_TO_60_MIN        },
-    {1800,     3600,    88,         IDS_30_TO_90_MIN        },
+    {300,      360,     60,         IDS_5_TO_10_MIN      },
+    {300,      600,     68,         IDS_5_TO_15_MIN      },
+    {600,      600,     76,         IDS_10_TO_20_MIN       },
+    {600,      1200,    84,         IDS_10_TO_30_MIN       },
+    {1200,     1200,    90,         IDS_20_TO_40_MIN        },
+    {600,      3000,    100,         IDS_10_TO_60_MIN        },
+    {1800,     1800,    99,         IDS_30_TO_60_MIN        },
+    {1800,     3600,    100,         IDS_30_TO_90_MIN        },
                            // variable - hours
-    {3600,     3600,    90,         IDS_1_TO_2_HR        },
-    {3600,     7200,    95,         IDS_1_TO_3_HR        }, // 60
+    {3600,     3600,    100,         IDS_1_TO_2_HR        },
+    {3600,     7200,    100,         IDS_1_TO_3_HR        }, // 60
            // gm only
     {14400,    0,      100,         IDS_4_HR      },
     {21600,    0,      100,         IDS_6_HR      },
@@ -523,14 +523,62 @@ void TranslateValue(int type, int value)
 	return;
 }
 
+int PowerTokenCostToForge(int type, int value, bool combineItem = false)
+{
+	int skill_to_create;
+	int forge_skill = player->Skill(Arts::FORGE_TALISMAN);
+	switch (type)
+	{
+		case LyraItem::TRANSLATION_MODIFIER:
+			skill_to_create = modifier_types[abs(value)].min_skill_to_create;
+			break;
+		case LyraItem::TRANSLATION_DURATION:
+			skill_to_create = duration_types[value].min_skill_to_create;
+			break;
+		case LyraItem::TRANSLATION_EFFECT:
+			// increase cost if your art level is lower?
+			skill_to_create = 0;
+			break;
+		case LyraItem::TRANSLATION_ABSORPTION:
+		case LyraItem::TRANSLATION_DURABILITY:
+			skill_to_create = value;
+			break;
+		case LyraItem::TRANSLATION_POS_MODIFIER:
+			skill_to_create =  modifier_types[value].min_skill_to_create;
+			break;
+		default:
+			return 0;
+	}
+	
+	// cover us just in case someone gains access to a level 100 Forge. 1000 PTs are unachievable (50*10=500)
+	if (skill_to_create == 100 || skill_to_create > forge_skill) 
+		return 1000;
+
+	int modified_create_skill = skill_to_create - (forge_skill / 2);
+	int pt_cost = 0;
+
+	if (modified_create_skill >= 0)
+		pt_cost = (modified_create_skill / 10) + 1;
+
+	// double the cost if we're combining
+	if (combineItem) 
+		pt_cost *= 2;
+
+	return pt_cost;
+}
+
 // returns true if the player has this value as an option for
 // translation type when using forge talisman; for example, a player
 // must have a certain skill to create weapons with high damage
 // categories, and must have access to the related arts to create
 // items that cause timed effects
-bool CanPlayerForgeValue(int type, int value, bool usePowerToken)
+bool CanPlayerForgeValue(int type, int value, int powerTokens)
 {
-	int forge_skill = arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN), usePowerToken);
+	int forge_skill = player->Skill(Arts::FORGE_TALISMAN);
+
+	// don't allow forging of things we don't have enough tokens to create
+	if (PowerTokenCostToForge(type, value) > powerTokens) return false;
+
 	switch (type)
 	{
 		case LyraItem::TRANSLATION_MODIFIER:
@@ -586,6 +634,22 @@ bool CanPlayerForgeValue(int type, int value, bool usePowerToken)
 int	MinModifierSkill(int value)
 {
 	return modifier_types[value].min_skill_to_use;
+}
+
+int MaxChargesForFunction(int function)
+{
+	switch (function)
+	{
+		case LyraItem::MISSILE_FUNCTION:
+			return 50;
+		case LyraItem::EFFECT_PLAYER_FUNCTION:
+			return 25; 
+		case LyraItem::CHANGE_STAT_FUNCTION:
+			return 25;
+		case LyraItem::NO_FUNCTION:
+		default: 
+			return 100;
+	}
 }
 
 int NumberTranslations(int type)

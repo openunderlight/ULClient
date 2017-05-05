@@ -63,6 +63,7 @@
 #define IDD_GRANT_PPOINT                196
 #define IDD_USE_PPOINT                  197
 #define IDD_CHOOSE_DESTINATION          202
+#define IDD_POWER_TOKEN                 203
 #define IDS_PROPERTIES                  1000
 #define IDC_USERNAME                    1004
 #define IDC_EMAIL                       1005
@@ -162,6 +163,9 @@
 #define IDC_NOVOTES                     1070
 #define IDC_ITEM_DESCRIP2               1070
 #define IDC_ITEM_USE_PT                 1070
+#define IDC_ITEM_REMAKE                 1070
+#define IDC_ITEM_COMBINE                1071
+#define IDC_PT_COST                     1072
 #define IDC_ITEM_FLAG1                  1074
 #define IDC_ITEM_FLAG2                  1075
 #define IDC_ITEM_FLAG3                  1076
@@ -411,6 +415,7 @@
 #define IDC_ITEMHELP                    1817
 #define IDC_STATIC_CHOOSE_GUILD         1822
 #define IDC_WATCH_LIST_ARROWS           1823
+#define IDC_STATIC_CHOOSE_GUILD2        1823
 #define IDC_DOOMLAYOUT                  1824
 #define IDC_MOUSELAYOUT                 1825
 #define IDC_ULT_FUNCTIONS               1826
@@ -2964,6 +2969,7 @@
 #define IDS_SCROLL_POLE                 4410
 #define IDS_NOACCESS_PORTAL             4450
 #define IDS_NO_XP_MONSTER               4451
+#define IDS_NOT_ENOUGH_PT               4452
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

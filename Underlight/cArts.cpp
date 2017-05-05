@@ -90,6 +90,7 @@ const int CHANCE_SKILL_INCREASE = 15; // % chance of skill increase
 
 const int CASTING_TIME_MULTIPLIER = 150; // milliseconds per unit of casting time
 const int MIN_DS_SOULEVOKE = 10;
+const int HOUSE_ART_PTS = 1;
 
 // last summon coords
 float last_summon_x = -7839;
@@ -3153,12 +3154,9 @@ void cArts::EndFindMares(void *value)
 
 //////////////////////////////////////////////////////////////////
 // Radiant Blaze
-
-const int RADIANT_BLAZE_POWER_TOKENS = 1;
 void cArts::RadiantBlaze(void)
 {
 	// only works for POR
-
 	if (!(player->GuildRank(Guild::RADIANCE) >= Guild::INITIATE))
 	{
 		LoadString (hInstance, IDS_MUST_BE_MEMBER, message, sizeof(message));
@@ -3171,10 +3169,10 @@ void cArts::RadiantBlaze(void)
 	cItem* power_tokens[Lyra::INVENTORY_MAX];
 	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::RADIANCE);
 
-	if (num_tokens < RADIANT_BLAZE_POWER_TOKENS)
+	if (num_tokens < HOUSE_ART_PTS)
 	{
 		LoadString (hInstance, IDS_MUST_HAVE_POWER_TOKENS, message, sizeof(message));
-		_stprintf(disp_message, message, RADIANT_BLAZE_POWER_TOKENS, GuildName(Guild::RADIANCE), arts->Descrip(Arts::RADIANT_BLAZE));
+		_stprintf(disp_message, message, HOUSE_ART_PTS, GuildName(Guild::RADIANCE), arts->Descrip(Arts::RADIANT_BLAZE));
 		display->DisplayMessage(disp_message); 
 		this->ArtFinished(false);
 		return;
@@ -3182,10 +3180,8 @@ void cArts::RadiantBlaze(void)
 	
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::RADIANT_BLAZE,
 			player->Skill(Arts::RADIANT_BLAZE), 0);
-	this->ApplyRadiantBlaze(player->Skill(Arts::RADIANT_BLAZE), player->ID());
-	
-	for (int i=0; i<RADIANT_BLAZE_POWER_TOKENS; i++)
-		power_tokens[i]->Destroy();
+	this->ApplyRadiantBlaze(player->Skill(Arts::RADIANT_BLAZE), player->ID());	
+	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
 
 	this->ArtFinished(true);
 	return;
@@ -3217,8 +3213,6 @@ void cArts::ApplyRadiantBlaze(int skill, lyra_id_t caster_id)
 
 //////////////////////////////////////////////////////////////////
 // Poison Cloud
-
-const int POISON_CLOUD_POWER_TOKENS = 1;
 void cArts::PoisonCloud(void)
 {
 	// only works for HC
@@ -3234,10 +3228,10 @@ void cArts::PoisonCloud(void)
 	cItem* power_tokens[Lyra::INVENTORY_MAX];
 	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::CALENTURE);
 
-	if (num_tokens < POISON_CLOUD_POWER_TOKENS)
+	if (num_tokens < HOUSE_ART_PTS)
 	{
 		LoadString (hInstance, IDS_MUST_HAVE_POWER_TOKENS, message, sizeof(message));
-		_stprintf(disp_message, message, POISON_CLOUD_POWER_TOKENS, GuildName(Guild::CALENTURE), arts->Descrip(Arts::POISON_CLOUD));
+		_stprintf(disp_message, message, HOUSE_ART_PTS, GuildName(Guild::CALENTURE), arts->Descrip(Arts::POISON_CLOUD));
 		display->DisplayMessage(disp_message); 
 		this->ArtFinished(false);
 		return;
@@ -3246,8 +3240,9 @@ void cArts::PoisonCloud(void)
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::POISON_CLOUD,
 			player->Skill(Arts::POISON_CLOUD), 0);
 	this->ApplyPoisonCloud(player->Skill(Arts::POISON_CLOUD), player->ID());
+	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
 	
-	for (int i=0; i<POISON_CLOUD_POWER_TOKENS; i++)
+	for (int i=0; i<HOUSE_ART_PTS; i++)
 		power_tokens[i]->Destroy();
 
 	this->ArtFinished(true);
@@ -3280,8 +3275,6 @@ void cArts::ApplyPoisonCloud(int skill, lyra_id_t caster_id)
 
 //////////////////////////////////////////////////////////////////
 // Dazzle
-
-const int DAZZLE_POWER_TOKENS = 1;
 void cArts::Dazzle(void)
 {
 	// only works for HC
@@ -3297,10 +3290,10 @@ void cArts::Dazzle(void)
 	cItem* power_tokens[Lyra::INVENTORY_MAX];
 	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::LIGHT);
 
-	if (num_tokens < DAZZLE_POWER_TOKENS)
+	if (num_tokens < HOUSE_ART_PTS)
 	{
 		LoadString (hInstance, IDS_MUST_HAVE_POWER_TOKENS, message, sizeof(message));
-		_stprintf(disp_message, message, DAZZLE_POWER_TOKENS, GuildName(Guild::LIGHT), arts->Descrip(Arts::DAZZLE));
+		_stprintf(disp_message, message, HOUSE_ART_PTS, GuildName(Guild::LIGHT), arts->Descrip(Arts::DAZZLE));
 		display->DisplayMessage(disp_message); 
 		this->ArtFinished(false);
 		return;
@@ -3310,8 +3303,7 @@ void cArts::Dazzle(void)
 			player->Skill(Arts::DAZZLE), 0);
 	this->ApplyDazzle(player->Skill(Arts::DAZZLE), player->ID());
 	
-	for (int i=0; i<DAZZLE_POWER_TOKENS; i++)
-		power_tokens[i]->Destroy();
+	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
 
 	this->ArtFinished(true);
 	return;
@@ -3457,11 +3449,14 @@ void cArts::StartForgeTalisman(void)
 {
 	if ((!itemdlg) && (options.network))
 	{
+		cItem* power_tokens[Lyra::INVENTORY_MAX];
+		int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
 		itemdlg = true;
 		HWND hDlg = CreateLyraDialog(hInstance, IDD_CREATE_ITEM,  cDD->Hwnd_Main(), (DLGPROC)CreateItemDlgProc);
 		this->WaitForDialog(hDlg, Arts::FORGE_TALISMAN);
 		SendMessage(hDlg, WM_INIT_ITEMCREATOR, 0, (LPARAM)CreateItem::FORGE_ITEM);
 		SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+		SendMessage(hDlg, WM_SET_USE_PT, 0, (LPARAM)num_tokens);
 	}
 	else
 		this->CancelArt();
@@ -3469,18 +3464,19 @@ void cArts::StartForgeTalisman(void)
 	return;
 }
 
-void cArts::EndForgeTalisman(void *value, bool usePT)
+void cArts::EndForgeTalisman(void *value, int ptCost)
 {
 	int success = *((int*)value);
 	if (success)
 	{
 		cDS->PlaySound(LyraSound::FORGE, player->x, player->y, true);
-		if (usePT)
+		if (ptCost > 0)
 		{
 			cItem* power_tokens[Lyra::INVENTORY_MAX];
 			int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
 			if (num_tokens)
-				power_tokens[0]->Destroy();
+				this->UsePowerTokens((cItem**)power_tokens, ptCost);
+			
 		}
 
 		this->ArtFinished(true);
@@ -6093,13 +6089,41 @@ void cArts::EndExpel(void)
 	return;
 }
 
-////////////////////////////////////////////////////////////////
-// Empathy
-
 // helper method 
+void cArts::UsePowerTokens(cItem** tokens, int charges_to_use)
+{
+	int charges_expired = 0;
+	int token_idx = 0;
+
+	while (charges_expired < charges_to_use)
+	{
+		int cur_charges = tokens[token_idx]->Lmitem().Charges();		
+		if (cur_charges <= charges_to_use - charges_expired)
+		{
+			// use up the entire token
+			charges_expired += cur_charges;
+			tokens[token_idx]->Destroy();
+
+			// always move on since we destroyed the pt
+			token_idx++;
+		}
+		else
+		{
+			// use one charge
+			tokens[token_idx]->DrainCharge();
+			charges_expired++;
+
+			// Only move on if we wiped out the power token
+			if (tokens[token_idx]->Lmitem().Charges() == 0)
+				token_idx++;
+		}
+	}
+}
+
 int cArts::CountPowerTokens(cItem** tokens, lyra_id_t guild_id)
 {
 	int num_tokens = 0;
+	int num_charges = 0;
 	lyra_item_support_t power_tokens[Lyra::INVENTORY_MAX];	// holds token info
 	const void* state;
 	cItem* item;
@@ -6123,24 +6147,12 @@ int cArts::CountPowerTokens(cItem** tokens, lyra_id_t guild_id)
 					continue;
 
 			tokens[num_tokens] = item;
-			num_tokens++; // valid token!!!
+			num_tokens++;
+			num_charges += item->Lmitem().Charges(); // valid token!!!
 			
 		}
 	actors->IterateItems(DONE);
-	return num_tokens;
-}
-
-// return the effective skill if we take power tokens into account
-int cArts::EffectiveForgeSkill(int player_skill, bool usePowerToken)
-{
-	int num_tokens = 0;
-	if (usePowerToken) {
-		cItem* power_tokens[Lyra::INVENTORY_MAX];
-		num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
-	}
-	if(!num_tokens)
-		return MAX(1,player_skill / 4);
-	return player_skill;
+	return num_charges;
 }
 
 void cArts::StartEmpathy(void)
@@ -6166,7 +6178,8 @@ void cArts::MidEmpathy(void)
 	this->WaitForDialog(hDlg, Arts::EMPATHY);
 }
 
-
+////////////////////////////////////////////////////////////////
+// Empathy
 void cArts::ApplyEmpathy(int success, lyra_id_t caster_id)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
@@ -6322,9 +6335,6 @@ void cArts::EndGrantPPoint(void* value)
 
 //////////////////////////////////////////////////////////////////
 // Break Covenant
-
-const int BREAK_COVENANT_POWER_TOKENS = 1;
-
 void cArts::StartBreakCovenant(void)
 {
 	this->WaitForSelection(&cArts::EndBreakCovenant, Arts::BREAK_COVENANT);
@@ -6386,10 +6396,10 @@ void cArts::EndBreakCovenant(void)
 	cItem* power_tokens[Lyra::INVENTORY_MAX];
 	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::COVENANT);
 
-	if (num_tokens < BREAK_COVENANT_POWER_TOKENS)
+	if (num_tokens < HOUSE_ART_PTS)
 	{
 		LoadString (hInstance, IDS_MUST_HAVE_POWER_TOKENS, message, sizeof(message));
-		_stprintf(disp_message, message, BREAK_COVENANT_POWER_TOKENS, GuildName(Guild::COVENANT), arts->Descrip(Arts::BREAK_COVENANT));
+		_stprintf(disp_message, message, HOUSE_ART_PTS, GuildName(Guild::COVENANT), arts->Descrip(Arts::BREAK_COVENANT));
 		display->DisplayMessage(disp_message); 
 		this->ArtFinished(false);
 		return;
@@ -6397,9 +6407,7 @@ void cArts::EndBreakCovenant(void)
 	
 	gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::BREAK_COVENANT,
 			player->Skill(Arts::BREAK_COVENANT), 0);
-	
-	for (int i=0; i<BREAK_COVENANT_POWER_TOKENS; i++)
-		power_tokens[i]->Destroy();
+	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
 
 	this->ArtFinished(true);
 	return;
@@ -6407,9 +6415,6 @@ void cArts::EndBreakCovenant(void)
 
 //////////////////////////////////////////////////////////////////
 // Peace Aura
-
-const int PEACE_AURA_POWER_TOKENS = 1;
-
 void cArts::StartPeaceAura(void)
 {
 	this->WaitForSelection(&cArts::EndPeaceAura, Arts::PEACE_AURA);
@@ -6468,10 +6473,10 @@ void cArts::EndPeaceAura(void)
 	cItem* power_tokens[Lyra::INVENTORY_MAX];
 	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::ECLIPSE);
 
-	if (num_tokens < PEACE_AURA_POWER_TOKENS)
+	if (num_tokens < HOUSE_ART_PTS)
 	{
 		LoadString (hInstance, IDS_MUST_HAVE_POWER_TOKENS, message, sizeof(message));
-		_stprintf(disp_message, message, PEACE_AURA_POWER_TOKENS, GuildName(Guild::ECLIPSE), arts->Descrip(Arts::PEACE_AURA));
+		_stprintf(disp_message, message, HOUSE_ART_PTS, GuildName(Guild::ECLIPSE), arts->Descrip(Arts::PEACE_AURA));
 		display->DisplayMessage(disp_message); 
 		this->ArtFinished(false);
 		return;
@@ -6490,8 +6495,7 @@ void cArts::EndPeaceAura(void)
 	else gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::PEACE_AURA,
 			player->Skill(Arts::PEACE_AURA), 0);
 	
-	for (int i=0; i<PEACE_AURA_POWER_TOKENS; i++)
-		power_tokens[i]->Destroy();
+	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
 
 	this->ArtFinished(true);
 	return;
@@ -6499,9 +6503,6 @@ void cArts::EndPeaceAura(void)
 
 //////////////////////////////////////////////////////////////////
 // Sable Shield
-
-const int SABLE_SHIELD_POWER_TOKENS = 1;
-
 void cArts::StartSableShield(void)
 {
 	this->WaitForSelection(&cArts::EndSableShield, Arts::SABLE_SHIELD);
@@ -6560,10 +6561,10 @@ void cArts::EndSableShield(void)
 	cItem* power_tokens[Lyra::INVENTORY_MAX];
 	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::MOON);
 
-	if (num_tokens < SABLE_SHIELD_POWER_TOKENS)
+	if (num_tokens < HOUSE_ART_PTS)
 	{
 		LoadString (hInstance, IDS_MUST_HAVE_POWER_TOKENS, message, sizeof(message));
-		_stprintf(disp_message, message, SABLE_SHIELD_POWER_TOKENS, GuildName(Guild::MOON), arts->Descrip(Arts::SABLE_SHIELD));
+		_stprintf(disp_message, message, HOUSE_ART_PTS, GuildName(Guild::MOON), arts->Descrip(Arts::SABLE_SHIELD));
 		display->DisplayMessage(disp_message); 
 		this->ArtFinished(false);
 		return;
@@ -6574,8 +6575,7 @@ void cArts::EndSableShield(void)
 	else gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::SABLE_SHIELD,
 			player->Skill(Arts::SABLE_SHIELD), 0);
 	
-	for (int i=0; i<SABLE_SHIELD_POWER_TOKENS; i++)
-		power_tokens[i]->Destroy();
+	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
 
 	this->ArtFinished(true);
 	return;
@@ -6583,9 +6583,6 @@ void cArts::EndSableShield(void)
 
 //////////////////////////////////////////////////////////////////
 // Entrancement
-
-const int ENTRANCEMENT_POWER_TOKENS = 1;
-
 void cArts::StartEntrancement(void)
 {
 	this->WaitForSelection(&cArts::EndEntrancement, Arts::ENTRANCEMENT);
@@ -6640,10 +6637,10 @@ void cArts::EndEntrancement(void)
 	cItem* power_tokens[Lyra::INVENTORY_MAX];
 	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::ENTRANCED);
 
-	if (num_tokens < ENTRANCEMENT_POWER_TOKENS)
+	if (num_tokens < HOUSE_ART_PTS)
 	{
 		LoadString (hInstance, IDS_MUST_HAVE_POWER_TOKENS, message, sizeof(message));
-		_stprintf(disp_message, message, ENTRANCEMENT_POWER_TOKENS, GuildName(Guild::ENTRANCED), arts->Descrip(Arts::ENTRANCEMENT));
+		_stprintf(disp_message, message, HOUSE_ART_PTS, GuildName(Guild::ENTRANCED), arts->Descrip(Arts::ENTRANCEMENT));
 		display->DisplayMessage(disp_message); 
 		this->ArtFinished(false);
 		return;
@@ -6655,8 +6652,7 @@ void cArts::EndEntrancement(void)
 		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::ENTRANCEMENT,
 			player->Skill(Arts::ENTRANCEMENT), 0);
 	
-	for (int i=0; i<ENTRANCEMENT_POWER_TOKENS; i++)
-		power_tokens[i]->Destroy();
+	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
 
 	this->ArtFinished(true);
 	return;
@@ -6665,9 +6661,6 @@ void cArts::EndEntrancement(void)
 
 //////////////////////////////////////////////////////////////////
 // Shadow Step
-
-const int SHADOW_STEP_POWER_TOKENS = 1;
-
 void cArts::StartShadowStep(void)
 {
 	this->WaitForSelection(&cArts::EndShadowStep, Arts::SHADOW_STEP);
@@ -6722,10 +6715,10 @@ void cArts::EndShadowStep(void)
 	cItem* power_tokens[Lyra::INVENTORY_MAX];
 	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::SHADOW);
 
-	if (num_tokens < SHADOW_STEP_POWER_TOKENS)
+	if (num_tokens < HOUSE_ART_PTS)
 	{
 		LoadString (hInstance, IDS_MUST_HAVE_POWER_TOKENS, message, sizeof(message));
-		_stprintf(disp_message, message, SHADOW_STEP_POWER_TOKENS, GuildName(Guild::SHADOW), arts->Descrip(Arts::SHADOW_STEP));
+		_stprintf(disp_message, message, HOUSE_ART_PTS, GuildName(Guild::SHADOW), arts->Descrip(Arts::SHADOW_STEP));
 		display->DisplayMessage(disp_message); 
 		this->ArtFinished(false);
 		return;
@@ -6737,9 +6730,7 @@ void cArts::EndShadowStep(void)
 		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::SHADOW_STEP,
 			player->Skill(Arts::SHADOW_STEP), 0);
 	
-	
-	for (int i=0; i<SHADOW_STEP_POWER_TOKENS; i++)
-		power_tokens[i]->Destroy();
+	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
 
 	this->ArtFinished(true);
 	return;
@@ -9341,90 +9332,94 @@ void cArts::StartPowerToken(void)
 		this->ArtFinished(false);
 		return;
 	}
-
-	if (player->NumGuilds(Guild::RULER_PENDING) == 1)
-	{ // only one choice, skip straight to end
-		int value = GuildID(player->GuildFlags(Guild::RULER_PENDING));
-		this->EndPowerToken(&value);
+	
+	// build the power token dialog
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
 		return;
 	}
-	else
-	{
-		if (chooseguilddlg)
-		{
-			this->ArtFinished(false);
-			return;
-		}
-		chooseguilddlg = true;
-		HWND hDlg = CreateLyraDialog(hInstance, IDD_CHOOSE_GUILD,
-			cDD->Hwnd_Main(), (DLGPROC)ChooseGuildDlgProc);
-		chooseguild_callback = (&cArts::EndPowerToken);
-		SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
-		SendMessage(hDlg, WM_ADD_INITIATES, 0, 0);
-		SendMessage(hDlg, WM_ADD_KNIGHTS, 0, 0);
-		SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
-		this->WaitForDialog(hDlg, Arts::POWER_TOKEN);
-	}
+	entervaluedlg = true;
+	HWND hDlg = CreateLyraDialog(hInstance, IDD_POWER_TOKEN,
+		cDD->Hwnd_Main(), (DLGPROC)PowerTokenDlgProc);
+	entervalue_callback = (&cArts::EndPowerToken);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	SendMessage(hDlg, WM_ADD_INITIATES, 0, 0);
+	SendMessage(hDlg, WM_ADD_KNIGHTS, 0, 0);
+	SendMessage(hDlg, WM_ADD_RULERS, 0, 0);
+	this->WaitForDialog(hDlg, Arts::POWER_TOKEN);
+	
 	return;
 }
 
 
 void cArts::EndPowerToken(void *value)
 {
-	int guild_id = *((int*)value);
+	int guild_id, num_charges=-1;
 
-	if (guild_id == Guild::NO_GUILD)
+	if (_stscanf(message, _T("%d;%d"), &guild_id, &num_charges) == 2)
 	{
-		this->CancelArt();
-		return;
+		//int guild_id = *((int*)value);
+		//int num_charges = player->SkillSphere(Arts::POWER_TOKEN) + 1;
+		int cost = Arts::POWER_TOKEN_DRAIN * num_charges;
+
+		if (guild_id == Guild::NO_GUILD)
+		{
+			this->CancelArt();
+			return;
+		}
+		else
+		{	// any prime will do
+			cItem* prime = FindPrime(Guild::NO_GUILD, cost);
+			if (prime == NO_ITEM)
+			{
+				LoadString(hInstance, IDS_NEED_PRIME_PT, disp_message, sizeof(disp_message));
+				_stprintf(message, disp_message, GuildName(guild_id), GuildName(guild_id), cost);
+				display->DisplayMessage(message);
+				this->ArtFinished(false);
+			}
+			else
+			{	// create power token item here!	
+				LmItem info;
+				LmItemHdr header;
+				cItem *power_token;
+				lyra_item_support_t support = { LyraItem::SUPPORT_FUNCTION, 0, 0, 0 };
+
+				header.Init(0, 0);
+				header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
+				header.SetGraphic(LyraBitmap::SOUL_ESSENCE);
+				header.SetColor1(0); header.SetColor2(0);
+				header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SUPPORT_FUNCTION), 0, 0));
+
+				support.set_guild_token(guild_id, Tokens::POWER_TOKEN);
+				support.set_creator_id(player->ID());
+				/// ARGH - we need target ID!!!
+				support.set_target_id(0);
+
+				LoadString(hInstance, IDS_POWER_TOKEN_HOUSE, temp_message, sizeof(temp_message));
+				_stprintf(message, temp_message, GuildName(guild_id));
+				_tcsnccpy(disp_message, message, LmItem::NAME_LENGTH - 1);
+				disp_message[LmItem::NAME_LENGTH - 1] = '\0';
+
+				info.Init(header, disp_message, 0, 0, 0);
+				info.SetStateField(0, &support, sizeof(support));
+				info.SetCharges(num_charges);
+				int ttl = 120;
+				power_token = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
+
+				LoadString(hInstance, IDS_PT_CREATED, disp_message, sizeof(disp_message));
+				_stprintf(message, disp_message, GuildName(guild_id));
+				display->DisplayMessage(message);
+
+				prime->DrainMetaEssence(cost);
+
+				this->ArtFinished(true);
+			}
+		}
 	}
 	else
-	{	// any prime will do
-		cItem* prime = FindPrime(Guild::NO_GUILD, Arts::POWER_TOKEN_DRAIN);
-		if (prime == NO_ITEM) 
-		{
-			LoadString (hInstance, IDS_NEED_PRIME_PT, disp_message, sizeof(disp_message));
-			_stprintf(message, disp_message, GuildName(guild_id), GuildName(guild_id), Arts::POWER_TOKEN_DRAIN);
-			display->DisplayMessage(message);
-			this->ArtFinished(false);
-		} 
-		else 
-		{	// create power token item here!	
-			LmItem info;
-			LmItemHdr header;
-			cItem *power_token;
-			lyra_item_support_t support = {LyraItem::SUPPORT_FUNCTION, 0, 0, 0};
-			
-			header.Init(0, 0);
-			header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
-			header.SetGraphic(LyraBitmap::SOUL_ESSENCE);
-			header.SetColor1(0); header.SetColor2(0);
-			header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SUPPORT_FUNCTION), 0, 0));
-			
-			support.set_guild_token(guild_id, Tokens::POWER_TOKEN);
-			support.set_creator_id(player->ID());
-			/// ARGH - we need target ID!!!
-			support.set_target_id(0);
-			
-			LoadString(hInstance, IDS_POWER_TOKEN_HOUSE, temp_message, sizeof(temp_message));
-			_stprintf(message, temp_message, GuildName(guild_id));
-			_tcsnccpy(disp_message, message, LmItem::NAME_LENGTH-1);
-			disp_message[LmItem::NAME_LENGTH-1] = '\0';
-			
-			info.Init(header, disp_message, 0, 0, 0);
-			info.SetStateField(0, &support, sizeof(support));
-			info.SetCharges(1);
-			int ttl = 120;
-			power_token = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
-			
-			LoadString (hInstance, IDS_PT_CREATED, disp_message, sizeof(disp_message));
-			_stprintf(message, disp_message, GuildName(guild_id));
-			display->DisplayMessage(message);
-
-			prime->DrainMetaEssence(Arts::POWER_TOKEN_DRAIN);
-
-			this->ArtFinished(true);
-		}
+	{
+		this->ArtFinished(false);
 	}
 	return;
 }
@@ -10483,8 +10478,7 @@ void cArts::EndSummonPrime(void *value)
 
 	gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::SUMMON_PRIME, guild_id, 0);
 
-	for (int i=0; i<SUMMON_PRIME_POWER_TOKENS; i++)
-		power_tokens[i]->Destroy();
+	this->UsePowerTokens(power_tokens, SUMMON_PRIME_POWER_TOKENS);
 
 	this->ArtFinished(true);
 }
