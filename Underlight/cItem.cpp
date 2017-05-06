@@ -1399,29 +1399,14 @@ bool cItem::Recharge(int plateaua)
 	// find and use lowest" recharge
 	for (i=0; i<this->NumFunctions(); i++)
 	{
-		switch (this->ItemFunction(i))
-		{
-			default:
-				limit = min(limit, RECHARGE_LIMIT);
-				break;
-			case LyraItem::NOTHING_FUNCTION: 	// misc
-				limit = min(limit, 200);
-				break;
-			case LyraItem::CHANGE_STAT_FUNCTION:	// elems
-				limit = min(limit, 20);
-				break;
-			case LyraItem::MISSILE_FUNCTION: 	// chakrams, charms (0 damage)
-				{
-					if (MissleDamage() == 0)
-						limit = min(limit, 100);// charms
-					else
-						limit = min(limit, 50); // chakrams
-					break;
-				}
-			case LyraItem::EFFECT_PLAYER_FUNCTION: // alteror
-				limit = min(limit, 25);
-				break;
-		}
+		int function = this->ItemFunction(i);
+
+		if (function == LyraItem::NOTHING_FUNCTION)
+			limit = min(limit, 200);
+		else if (function == LyraItem::MISSILE_FUNCTION && MissleDamage() == 0)
+			limit = min(limit, RECHARGE_LIMIT);// charms
+		else 
+			limit = min(limit, MaxChargesForFunction(function));
 	}
 
 	int soft_limit = limit - 1;

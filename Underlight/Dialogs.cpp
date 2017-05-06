@@ -1314,18 +1314,7 @@ BOOL CALLBACK MetaDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 				case IDC_EXIT:
 					DestroyWindow(hDlg);
           if (!exiting) {
-#if !defined (GAMEMASTER) && !defined (PMARE)
-            if (player->PPPool() > 0) {
-              LoadString (hInstance, IDS_STILL_PP, ::message, sizeof(message));
-	            HWND hDlgYN;
-	            hDlgYN = CreateLyraDialog(hInstance, IDD_WARNING_YESNO,
-				      cDD->Hwnd_Main(), (DLGPROC)WarningYesNoDlgProc);
-	            SendMessage(hDlgYN, WM_SET_CALLBACK, 0,	(LPARAM)ExitCallback);
-            } else
-              StartExit ();
-#else
-            StartExit ();
-#endif
+			StartExit ();
           }
 					return FALSE;
 				default:
@@ -1622,8 +1611,11 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 	TC_ITEM tab_item;
 	const int TAB_HEIGHT = 20;
 	const int TAB_WIDTH = 50;
-	static int usePowerToken = 0;
-	bool gotUsePt = false;
+	static int num_tokens_held = 0;
+	static bool combineItem = false;
+	static int curr_function = -1;
+	static int curr_translation = -1;
+	static int curr_value = -1;
 
 	// iteration facilitators
 	UINT property_tags[5] = {IDC_PROPERTY1_HEADER, IDC_PROPERTY2_HEADER,
@@ -1683,6 +1675,9 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 
 			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_COLOR_COMBO2), 0);
 
+			_stprintf(temp_message, _T("%d"), 0);
+			Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
+
 			for (i=1; i <= NumTalismans(); i++)
 			{
 				if (TalismanForgable(i))
@@ -1699,6 +1694,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 #endif
 			
 			ShowWindow(GetDlgItem(hDlg, IDC_ITEM_USE_PT), SW_HIDE);
+			ShowWindow(GetDlgItem(hDlg, IDC_ITEM_REMAKE), SW_HIDE);
 			LoadString(hInstance, IDS_SELECT_FUNCTION, message, sizeof(message));
 
 			ComboBox_AddString(GetDlgItem(hDlg, IDC_TYPE_COMBO), message);
@@ -1883,7 +1879,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					tab_item.mask = TCIF_TEXT;
 					LoadString (hInstance, IDS_ITEM_FUNCTION, disp_message, sizeof(disp_message));
 					tab_item.pszText = disp_message;
-					usePowerToken = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_USE_PT));
+					combineItem = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_COMBINE));
 					TabCtrl_InsertItem(GetDlgItem(hDlg, IDC_FUNCTION_TAB), 0, &tab_item);
 					for (int i = 1; i < LyraItem::NumItemFunctions(); i++)
 						if (LyraItem::FunctionCreateByForge(i))
@@ -1892,10 +1888,15 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							ComboBox_SetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), (ComboBox_GetCount(GetDlgItem(hDlg, IDC_TYPE_COMBO))-1), i);
 						}
 
-					_stprintf(message, _T("%d"), arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN), usePowerToken > 0));
+					_stprintf(message, _T("%d"), player->Skill(Arts::FORGE_TALISMAN));
 					//SendMessage(GetDlgItem(hDlg, IDC_CHARGES), EM_SETREADONLY, 1, 0);
 					
+					ShowWindow(GetDlgItem(hDlg, IDC_STATIC2), SW_SHOWNORMAL);
+					ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_SHOWNORMAL);
 					ShowWindow (GetDlgItem(hDlg, IDC_ITEM_DESCRIP), SW_SHOWNORMAL);
+					if (player->Skill(Arts::COMBINE) > 0)
+						ShowWindow(GetDlgItem(hDlg, IDC_ITEM_COMBINE), SW_SHOWNORMAL);
+					ShowWindow(GetDlgItem(hDlg, IDC_ITEM_REMAKE), SW_HIDE);
 					ShowWindow (GetDlgItem(hDlg, IDC_FORGE_STATIC), SW_SHOW);
 					ShowWindow (GetDlgItem(hDlg, IDC_QUEST_STATIC), SW_HIDE);
 					}
@@ -1920,6 +1921,10 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			art_callback = true;
 			break;
 
+		case WM_SET_USE_PT:
+			num_tokens_held = lParam;
+			break;
+			
 		case WM_COMMAND:
 			switch (LOWORD(wParam))
 			{
@@ -1936,15 +1941,57 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
 				break;
 			}
-			// NOTE -- ORDER MATTERS -- Do not add a break here
-			case IDC_ITEM_USE_PT:
+
+			case IDC_ITEM_COMBINE:
 			{
-				usePowerToken = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_USE_PT));
-				gotUsePt = true; 
+				combineItem = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_COMBINE));
+
+				// refresh the pt cost
+				_stprintf(temp_message, _T("%d"), PowerTokenCostToForge(curr_translation, curr_value, combineItem));
+				ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
+				Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
+				ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
+				break;
+			}
+			case IDC_PROPERTY1:
+			case IDC_PROPERTY2:
+			case IDC_PROPERTY3:
+			{
+				if (HIWORD(wParam) == LBN_SELCHANGE && CreateItem::FORGE_ITEM == called_by)
+				{
+					int temp_cost, ptCost = 0;
+					curr_function = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
+
+					// only count PT requirement for shields, elemens, alterors, and chakrams
+					if (curr_function == LyraItem::CHANGE_STAT_FUNCTION || curr_function == LyraItem::EFFECT_PLAYER_FUNCTION || 
+						curr_function == LyraItem::ARMOR_FUNCTION || curr_function == LyraItem::MISSILE_FUNCTION)
+					{
+						for (int j = 0; j < LyraItem::FunctionEntries(curr_function); j++)
+						{
+							curr_value = ComboBox_GetItemData(GetDlgItem(hDlg, property_fields[j]), ComboBox_GetCurSel(GetDlgItem(hDlg, property_fields[j])));
+							temp_cost = PowerTokenCostToForge(LyraItem::EntryTranslation(curr_function, j), curr_value, combineItem);
+							ptCost = MAX(ptCost, temp_cost);
+						}
+
+						_stprintf(temp_message, _T("%d"), ptCost);
+						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
+						Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
+						ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
+					}
+				}
+				break;
 			}
 			case IDC_TYPE_COMBO:
-					if (HIWORD(wParam) == LBN_SELCHANGE || gotUsePt)
+					if (HIWORD(wParam) == LBN_SELCHANGE)
 					{
+						if (CreateItem::FORGE_ITEM == called_by)
+						{
+							_stprintf(temp_message, _T("%d"), 0);
+							ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
+							Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
+							ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
+						}
+
 						int curr_selection = ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO));
 						int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), curr_selection);
 
@@ -1981,7 +2028,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								int start_at = LyraItem::EntryMinValue(curr_effect, i);
 								for (int j = start_at; j < start_at + num_trans; j++)
 								{
-									if ((opened_by != CreateItem::FORGE_ITEM) || (CanPlayerForgeValue(LyraItem::EntryTranslation(curr_effect, i), j, usePowerToken > 0)))
+									if ((opened_by != CreateItem::FORGE_ITEM) || (CanPlayerForgeValue(LyraItem::EntryTranslation(curr_effect, i), j, num_tokens_held)))
 									{
 										TranslateValue(LyraItem::EntryTranslation(curr_effect, i), j);
 										SendMessage((GetDlgItem(hDlg, property_fields[i])), CB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
@@ -2107,6 +2154,9 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							break;
 						}
 
+						int temp_cost = 0;
+						int ptCost = 0;
+
 						// Check for out-of-range values on all tabs.  Can't handle on
 						// TCN_SELCHANGING because MS sucks.
 						for (int i = 0; i < 3; i++)
@@ -2194,17 +2244,30 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							break;
 						}
 
-						Edit_GetText(GetDlgItem(hDlg, IDC_CHARGES), message, sizeof(message));
-						int charges = _ttoi(message);
+					
+						int curr_effect = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), item_effect[0].effect_type);
+							
+						// maximum amount of charges for this function
+						int effect_max_charges = MaxChargesForFunction(curr_effect);
 
-						if ((CreateItem::FORGE_ITEM == called_by) &&
-						//	(charges > arts->EffectiveForgeSkill(player->Skill(Arts::FORGE_TALISMAN))))
-							(charges > player->Skill(Arts::FORGE_TALISMAN)))
+						// Max charges is the lowest of the effect limit and the forge talisman skill level
+						if ((CreateItem::FORGE_ITEM == called_by) && 
+							(numcharges > min(effect_max_charges, player->Skill(Arts::FORGE_TALISMAN))))
 						{
-							LoadString (hInstance, IDS_BAD_CHARGES, message, sizeof(message));
+							LoadString (hInstance, IDS_BAD_CHARGES, disp_message, sizeof(disp_message));
+							_stprintf(message, disp_message, effect_max_charges);
 							CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
 								cDD->Hwnd_Main(), (DLGPROC)NonfatalErrorDlgProc);
 							break;
+						}
+
+						// double the charges after validation
+						if (combineItem && CreateItem::FORGE_ITEM == called_by) {
+							numcharges *= 2;
+
+							// make sure we don't exceed 100 charges
+							if (numcharges > 100)
+								numcharges = 100;
 						}
 
 						// Get the item graphic
@@ -2290,8 +2353,10 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								header.SetFlag(LyraItem::FLAG_CHANGE_CHARGES);
 						}
 
+#ifdef GAMEMASTER
 						// Grab the description flag
 						if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_DESCRIP)))
+#endif
 							header.SetFlag(LyraItem::FLAG_HASDESCRIPTION);
 
 						// Initialize the item state
@@ -2319,6 +2384,9 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								size = LyraItem::EntrySize(curr_effect, j);
 								memcpy (created_item+offset, &(item_effect[i].property_value[j]), size);
 								offset += size;
+								
+								temp_cost = PowerTokenCostToForge(LyraItem::EntryTranslation(curr_effect, j), item_effect[i].property_value[j], combineItem);
+								ptCost = MAX(ptCost, temp_cost);
 							}
 
 							int func_size = LyraItem::FunctionSize(curr_effect);
@@ -2337,6 +2405,15 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						{
 							LoadString (hInstance, IDS_STATE_ERR, disp_message, sizeof(disp_message));
 							_stprintf(message, disp_message, erritemnum);
+							CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
+								cDD->Hwnd_Main(), (DLGPROC)NonfatalErrorDlgProc);
+							break;
+						}
+
+						// validate we can afford to create the item...the inclusion of combine makes things tricky to prevent up front
+						if ((CreateItem::FORGE_ITEM == called_by) && (num_tokens_held < ptCost))
+						{
+							LoadString(hInstance, IDS_NOT_ENOUGH_PT, message, sizeof(message));
 							CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
 								cDD->Hwnd_Main(), (DLGPROC)NonfatalErrorDlgProc);
 							break;
@@ -2383,23 +2460,28 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						if (!(Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_DESCRIP))))
 						{
 							// do any post-dialog initialization for created item
-							
 							int status = ITEM_CREATING;
 							bool temp = false;
+							TCHAR descrip[ITEM_DESCRIP_LENGTH];
 							if (opened_by == CreateItem::QUEST_ITEM)
 							{
 								status = ITEM_DUMMY;
 								temp = true;
 							}
+							else  if (opened_by == CreateItem::FORGE_ITEM)
+							{
+								// Put who forged a regular item if they did not opt to provide a description
+								_stprintf(descrip, "Forged by %s", player->Name());
+							}
 							
 							cItem* item = CreateItem(player->x, player->y, player->angle, info, 0, 
-								temp, GMsg_PutItem::DEFAULT_TTL, NULL, status);
+								temp, GMsg_PutItem::DEFAULT_TTL, descrip, status);
 							if (item == NULL)
 								i = 0; // failure
 							else
 								i = 1;
 							if (art_callback)
-								arts->EndForgeTalisman(&i, usePowerToken > 0);
+								arts->EndForgeTalisman(&i, ptCost);
 							else if (opened_by == CreateItem::QUEST_ITEM)
 							{
 								postquest->EndPost(item, color1, color2, graphic);
@@ -2413,7 +2495,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 
 							SendMessage(hNextDlg, WM_SET_ITEM, 0, (LPARAM)(&info));
 							SendMessage(hNextDlg, WM_SET_SCROLL_FORGE_CALLBACK, 0, 0);
-							SendMessage(hNextDlg, WM_SET_USE_PT, 0, usePowerToken > 0);
+							SendMessage(hNextDlg, WM_SET_USE_PT, 0, ptCost);
 						}
 						DestroyWindow(hDlg);
 
@@ -2525,7 +2607,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								int start_at = LyraItem::EntryMinValue(curr_effect, i);
 								for (int j = start_at; j < start_at + num_trans; j++)
 								{
-									if ((opened_by != CreateItem::FORGE_ITEM) || (CanPlayerForgeValue(LyraItem::EntryTranslation(curr_effect, i), j, usePowerToken > 0)))
+									if ((opened_by != CreateItem::FORGE_ITEM) || (CanPlayerForgeValue(LyraItem::EntryTranslation(curr_effect, i), j, num_tokens_held)))
 									{
 										TranslateValue(LyraItem::EntryTranslation(curr_effect, i), j);
 										SendMessage((GetDlgItem(hDlg, property_fields[i])), CB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
@@ -3480,14 +3562,164 @@ BOOL CALLBACK SummonDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 	return FALSE;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Power Token Dialog
+
+// expects text to show in message; returns value in message,
+// or NULL if cancelled
+BOOL CALLBACK PowerTokenDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
+{
+	static bool art_callback;
+	static dlg_callback_t callback;
+
+	static int mappings[NUM_GUILDS]; // maps list box entries to guild flags
+	static int num_guilds;
+	int i, num_charges, skill = 0;
+
+	if (HBRUSH brush = SetControlColors(hDlg, Message, wParam, lParam))
+		return (LRESULT)brush;
+
+	switch(Message)
+	{
+		case WM_GETDLGCODE:
+			return DLGC_WANTMESSAGE;
+
+		case WM_DESTROY:
+			entervaluedlg = false;
+			break;
+
+		case WM_INITDIALOG:
+			memset(mappings, 0, sizeof(mappings));
+			num_guilds = 0;
+			
+			skill = player->SkillSphere(Arts::POWER_TOKEN);
+
+			for (i = skill+1; i>=1; i--)
+			{
+				_stprintf(temp_message, _T("%d"), i);
+				int index = ComboBox_AddString(GetDlgItem(hDlg, IDC_VALUE), temp_message);
+				ComboBox_SetItemData(GetDlgItem(hDlg, IDC_VALUE), index, i);
+			}
+
+			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_VALUE), 0);
+
+			SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
+			SetWindowText(GetDlgItem(hDlg, IDC_VALUE_PROMPT), message);
+			callback = NULL;
+			art_callback = false;
+			entervaluedlg = true;
+			
+			SetFocus(GetDlgItem(hDlg, IDC_GUILDS));
+			return TRUE;
+
+		case WM_PAINT:
+			if (TileBackground(hDlg))
+				return (LRESULT)0;
+			break;
+
+		case WM_KEYUP:
+			switch (LOWORD(wParam))
+			{
+				case VK_RETURN:
+					PostMessage(hDlg, WM_COMMAND, (WPARAM) IDC_OK, 0);
+					return TRUE;
+				case VK_ESCAPE:
+					PostMessage(hDlg, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
+					return TRUE;
+			}
+			break;
+
+		case WM_SET_ART_CALLBACK: // called by art waiting for callback
+			art_callback = true;
+#ifdef AGENT // always reject
+			PostMessage(hDlg, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
+#endif
+			return TRUE;
+
+		case WM_SET_CALLBACK: // waiting for callback
+			callback = (dlg_callback_t)lParam;
+#ifdef AGENT // always reject
+			PostMessage(hDlg, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
+#endif
+			return TRUE;
+		
+		case WM_ADD_INITIATES: // add guilds player is an initiate in
+			for (i = 0; i<NUM_GUILDS; i++)
+				if (player->GuildRank(i) == Guild::INITIATE)
+				{
+					mappings[num_guilds] = i;
+					num_guilds++;
+					ComboBox_AddString(GetDlgItem(hDlg, IDC_GUILDS), GuildName(i));
+				}
+			if (ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS)) == -1)
+				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GUILDS), 0);
+			break;
+
+		case WM_ADD_KNIGHTS: // add guilds player is a knight in
+			for (i = 0; i<NUM_GUILDS; i++)
+				if (player->GuildRank(i) == Guild::KNIGHT)
+				{
+					mappings[num_guilds] = i;
+					num_guilds++;
+					ComboBox_AddString(GetDlgItem(hDlg, IDC_GUILDS), GuildName(i));
+				}
+			if (ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS)) == -1)
+				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GUILDS), 0);
+			break;
+
+		case WM_ADD_RULERS: // add guilds player is a ruler in
+			for (i = 0; i<NUM_GUILDS; i++)
+				if (player->GuildRank(i) == Guild::RULER)
+				{
+					mappings[num_guilds] = i;
+					num_guilds++;
+					ComboBox_AddString(GetDlgItem(hDlg, IDC_GUILDS), GuildName(i));
+				}
+			if (ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS)) == -1)
+				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GUILDS), 0);
+			break;
+
+		case WM_COMMAND:
+			switch (LOWORD(wParam))
+			{
+				case IDC_OK:
+
+					i = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS));
+					num_charges = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_VALUE), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_VALUE)));
+					if (i == -1)
+						i = Guild::NO_GUILD;
+					else
+						i = mappings[i];
+					
+					_stprintf(message, _T("%d;%d"), i, num_charges);
+
+					if (art_callback)
+						(arts->*(entervalue_callback))(message);
+					else if (callback)
+						callback(message);
+					DestroyWindow(hDlg);
+					return TRUE;
+
+				case IDC_CANCEL:
+					if (art_callback)
+						arts->CancelArt();
+					else if (callback)
+						callback(NULL);
+					DestroyWindow(hDlg);
+					return FALSE;
+
+				default:
+					break;
+			}
+	}
+	return FALSE;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Enter Value Dialog
 
 // expects text to show in message; returns value in message,
 // or NULL if cancelled
-
-
 BOOL CALLBACK EnterValueDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 {
 	static bool art_callback;
@@ -4160,7 +4392,7 @@ BOOL CALLBACK WriteScrollDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM 
 	static LmItem associated_item;
 	static bool forge_callback;
 	static bool quest_callback;
-	static bool usePToken;
+	static int ptCost;
 	static bool questbuilder_callback;
 
 	if (HBRUSH brush = SetControlColors(hDlg, Message, wParam, lParam))
@@ -4190,7 +4422,7 @@ BOOL CALLBACK WriteScrollDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM 
 
 		case WM_SET_USE_PT:
 		{
-			usePToken = (bool)lParam;
+			ptCost = (int)lParam;
 			return TRUE;
 		}
 
@@ -4355,7 +4587,7 @@ BOOL CALLBACK WriteScrollDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM 
 						else
 							i = 1;
 						if (forge_callback)
-							arts->EndForgeTalisman(&i, usePToken);
+							arts->EndForgeTalisman(&i, ptCost);
 					}
 					else
 					{ // using the write scroll art

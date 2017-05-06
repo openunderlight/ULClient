@@ -48,6 +48,7 @@ const int ACCEPTREJECT_TIMER  =  WM_USER + DIALOG_MAGIC + 50;
 #define WM_SET_SCROLL_QUESTBUILDER_CALLBACK  DIALOG_MAGIC + WM_USER + 21
 #define WM_SET_USE_PT DIALOG_MAGIC + WM_USER + 22
 #define WM_ADD_DESTINATIONS + WM_USER + 23
+#define WM_POWER_TOKEN + WM_USER + 24
 
 //////////////////////////////////////////////////////////////////
 // New Types
@@ -97,6 +98,7 @@ BOOL CALLBACK MonsterAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARA
 BOOL CALLBACK FatalErrorDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK NonfatalErrorDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK AcceptRejectDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK PowerTokenDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK EnterValueDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK IgnoreListDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
