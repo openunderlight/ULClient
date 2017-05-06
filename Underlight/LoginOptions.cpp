@@ -43,7 +43,6 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 {
 	HKEY reg_key;
 	DWORD result;
-	BOOL tcp_checked = FALSE;
 
 	switch(Message)
 	{
