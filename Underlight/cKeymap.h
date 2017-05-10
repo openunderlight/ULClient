@@ -15,9 +15,9 @@
 const int NUMBER_MAPPABLE_FUNCTIONS = 70; // update with LyraKeyboard
 struct LyraKeyboard {
 	enum { 
-		SET_ITEM_EFFECT_0 = 0,
-		SET_ITEM_EFFECT_1,
-		SET_ITEM_EFFECT_2,
+		FOCAL_FLAME = 0,
+		FOCAL_BLADE,
+		RESERVED_11,
 		TOGGLE_NAMES,
 		DROP_ITEM,
 		EMOTE,
@@ -94,9 +94,9 @@ struct keymap_name_t
 
 const keymap_name_t keymap_names[NUMBER_MAPPABLE_FUNCTIONS] =
 {
-	{IDS_ITEM_FFX_1},
-	{IDS_ITEM_FFX_2},
-	{IDS_ITEM_FFX_3},
+	{ IDS_FOCAL_FLAME },
+	{ IDS_FOCAL_BLADE },
+	{IDS_RESERVED},
 	{IDS_TOGGLE_NAMES}, // pmares do not see nametags
 	{IDS_DROP_ITEM},
 	{IDS_PERFORM_ACTION},
@@ -179,22 +179,22 @@ const int MAPPING_NOT_FOUND = -1;
 const int default_num_keys = 57;
 const keymap_t default_keymap[default_num_keys] = 
 {
-	{'1', LyraKeyboard::SET_ITEM_EFFECT_0, Arts::NONE},
-	{'2', LyraKeyboard::SET_ITEM_EFFECT_1, Arts::NONE},
-	{'3', LyraKeyboard::SET_ITEM_EFFECT_2, Arts::NONE},
+	{'1', LyraKeyboard::ART, Arts::SENSE_DREAMERS},
+	{'2', LyraKeyboard::WAVE, Arts::NONE},
+	//{'3', LyraKeyboard::SET_ITEM_EFFECT_2, Arts::NONE},
 	{'I', LyraKeyboard::TOGGLE_NAMES, Arts::NONE},
-	{'D', LyraKeyboard::DROP_ITEM, Arts::NONE},
+	{'D', LyraKeyboard::SIDESTEP_RIGHT, Arts::NONE},
 	{'E', LyraKeyboard::EMOTE, Arts::NONE},
 	{'G', LyraKeyboard::OPEN_GOAL_BOOK, Arts::NONE},
-	{'L', LyraKeyboard::LEAVE_PARTY, Arts::NONE},
+	{'L', LyraKeyboard::ART, Arts::LOCATE_AVATAR},
 	{'N', LyraKeyboard::SELECT_NEXT, Arts::NONE},
 	{'M', LyraKeyboard::SELECT_PREV, Arts::NONE},
 	{',', LyraKeyboard::SHOW_NEXT, Arts::NONE},
 	{'.', LyraKeyboard::SHOW_PREV, Arts::NONE},
 	{'R', LyraKeyboard::RESET_EYELEVEL, Arts::NONE},
-	{'S', LyraKeyboard::TOGGLE_SOUND, Arts::NONE},
+	{'A', LyraKeyboard::TOGGLE_SOUND, Arts::NONE},
 	{'T', LyraKeyboard::TALK, Arts::NONE},
-	{222, LyraKeyboard::TALK, Arts::NONE}, // (apostrophe)
+	{222, LyraKeyboard::LEAVE_PARTY, Arts::NONE}, // (apostrophe)
 	{'W', LyraKeyboard::WHO_NEARBY, Arts::NONE},
 	{'C', LyraKeyboard::ACTIVE_EFFECTS, Arts::NONE},
 	{'X', LyraKeyboard::SHOW_XP, Arts::NONE},
@@ -206,14 +206,15 @@ const keymap_t default_keymap[default_num_keys] =
 	{VK_RIGHT, LyraKeyboard::TURN_RIGHT, Arts::NONE},
 	{VK_CONTROL, LyraKeyboard::USE, Arts::NONE},
 	{VK_SPACE, LyraKeyboard::TRIP, Arts::NONE},
-	{'J', LyraKeyboard::JUMP, Arts::NONE},
-	{VK_SHIFT, LyraKeyboard::RUN, Arts::NONE},
-	{VK_MENU, LyraKeyboard::STRAFE, Arts::NONE},
+	{ VK_SHIFT, LyraKeyboard::JUMP, Arts::NONE },
+	//{'J', LyraKeyboard::JUMP, Arts::NONE},
+	//{VK_SHIFT, LyraKeyboard::RUN, Arts::NONE},
+	{VK_MENU, LyraKeyboard::RUN, Arts::NONE},
 	{VK_LBUTTON, LyraKeyboard::USE, Arts::NONE},
 	{VK_MBUTTON, LyraKeyboard::MOUSE_LOOK, Arts::NONE},
 	{VK_RBUTTON, LyraKeyboard::JUMP, Arts::NONE},
 	{0xdc, LyraKeyboard::MOUSE_LOOK, Arts::NONE}, // (backslash)
-	{'A', LyraKeyboard::AVATAR_CUSTOMIZATION, Arts::NONE},
+	{'S', LyraKeyboard::SIDESTEP_LEFT, Arts::NONE},
 	{'K', LyraKeyboard::SHOW_RANKS, Arts::NONE},
 	{VK_PRIOR, LyraKeyboard::SCROLL_UP, Arts::NONE},
 	{VK_NEXT, LyraKeyboard::SCROLL_DOWN, Arts::NONE},
@@ -221,15 +222,15 @@ const keymap_t default_keymap[default_num_keys] =
 	{VK_MULTIPLY, LyraKeyboard::PICK_NEIGHBORS, Arts::NONE},
 	{VK_SUBTRACT, LyraKeyboard::PICK_ARTS, Arts::NONE},
 	{VK_ADD, LyraKeyboard::SELECT_FROM_LIST, Arts::NONE},
-	{'F', LyraKeyboard::SHOW_FOCUS, Arts::NONE},
-	{'H', LyraKeyboard::WAVE, Arts::NONE},
+	{'F', LyraKeyboard::FOCAL_FLAME, Arts::NONE},
+	//{'H', LyraKeyboard::WAVE, Arts::NONE},
 	{'O', LyraKeyboard::SHOW_SHIELD, Arts::NONE},
 	{'P', LyraKeyboard::ART, Arts::JOIN_PARTY},
 	{'Q', LyraKeyboard::ART, Arts::RANDOM},
 	{'Y', LyraKeyboard::ART, Arts::MEDITATION},
 	{'U', LyraKeyboard::ART, Arts::TRAIL},
 	{'V', LyraKeyboard::ART, Arts::GIVE},
-	{'B', LyraKeyboard::ART, Arts::LOCATE_AVATAR},
+	{'B', LyraKeyboard::FOCAL_BLADE, Arts::NONE},
 	{0xbf, LyraKeyboard::ART, Arts::KNOW}, // (is also the ? key!)
 	{'Z', LyraKeyboard::SHOW_LEARNABLE_ARTS, Arts::NONE},
 	{0xc0, LyraKeyboard::TOGGLE_AUTORUN, Arts::NONE}, // Jared 2-26-00
@@ -242,9 +243,9 @@ const keymap_t default_keymap[default_num_keys] =
 const int mousemove_default_num_keys = 60;
 const keymap_t mousemove_default_keymap[mousemove_default_num_keys] = 
 {
-	{'1', LyraKeyboard::SET_ITEM_EFFECT_0, Arts::NONE},
-	{'2', LyraKeyboard::SET_ITEM_EFFECT_1, Arts::NONE},
-	{'3', LyraKeyboard::SET_ITEM_EFFECT_2, Arts::NONE},
+	{ '1', LyraKeyboard::ART, Arts::SENSE_DREAMERS },
+	{ '2', LyraKeyboard::WAVE, Arts::NONE },
+	//{'3', LyraKeyboard::SET_ITEM_EFFECT_2, Arts::NONE},
 	{'A', LyraKeyboard::SIDESTEP_LEFT, Arts::NONE},
 	{'D', LyraKeyboard::SIDESTEP_RIGHT, Arts::NONE},
 	{'W', LyraKeyboard::MOVE_FORWARD, Arts::NONE},

@@ -1310,33 +1310,7 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		SaveInGameRegistryOptionValues();
 #endif
 		break;
-	case LyraKeyboard::SET_ITEM_EFFECT_0:
-		if (cp->SelectedItem() != NO_ITEM)
-		{
-			cp->SelectedItem()->SetSelectedFunction(0);
-			LoadString (hInstance, IDS_FUNCTION_SELECTED, disp_message, sizeof(disp_message));
-			_stprintf(message, disp_message, 1, cp->SelectedItem()->Name());
-			display->DisplayMessage (message, false);
-		}
-		break;
-	case LyraKeyboard::SET_ITEM_EFFECT_1:
-		if (cp->SelectedItem() != NO_ITEM)
-		{
-			cp->SelectedItem()->SetSelectedFunction(1);
-			LoadString (hInstance, IDS_FUNCTION_SELECTED, disp_message, sizeof(disp_message));
-			_stprintf(message, disp_message, 2, cp->SelectedItem()->Name());
-			display->DisplayMessage (message, false);
-		}
-		break;
-	case LyraKeyboard::SET_ITEM_EFFECT_2:
-		if (cp->SelectedItem() != NO_ITEM)
-		{
-			cp->SelectedItem()->SetSelectedFunction(2);
-			LoadString (hInstance, IDS_FUNCTION_SELECTED, disp_message, sizeof(disp_message));
-			_stprintf(message, disp_message, 3, cp->SelectedItem()->Name());
-			display->DisplayMessage (message, false);
-		}
-		break;
+	
 	case LyraKeyboard::DROP_ITEM:
 		SendMessage(cp->Hwnd_CP(), WM_COMMAND, 0, (LPARAM)cp->Hwnd_Drop());
 		break;
@@ -1573,6 +1547,32 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			((cp->Mode() == ARTS_TAB) && (cp->SelectedArt() != Arts::NONE)))
 			cp->SetSelectionMade(true);
 		break;
+	case LyraKeyboard::FOCAL_FLAME:
+	{
+		if (player->Skill(Arts::FLAMESHAFT) > 0)
+			arts->BeginArt(Arts::FLAMESHAFT);
+		else if (player->Skill(Arts::TRANCEFLAME) > 0)
+			arts->BeginArt(Arts::TRANCEFLAME);
+		else if (player->Skill(Arts::FLAMERUIN) > 0)
+			arts->BeginArt(Arts::FLAMERUIN);
+		else if (player->Skill(Arts::FLAMESEAR) > 0)
+			arts->BeginArt(Arts::FLAMESEAR);
+		
+		break;
+	}
+	case LyraKeyboard::FOCAL_BLADE:
+	{
+		if (player->Skill(Arts::GATESMASHER) > 0)
+			arts->BeginArt(Arts::GATESMASHER);
+		else if (player->Skill(Arts::DREAMBLADE) > 0)
+			arts->BeginArt(Arts::DREAMBLADE);
+		else if (player->Skill(Arts::FATESLAYER) > 0)
+			arts->BeginArt(Arts::FATESLAYER);
+		else if (player->Skill(Arts::SOULREAPER) > 0)
+			arts->BeginArt(Arts::SOULREAPER);
+
+		break;
+	}
 	case LyraKeyboard::AVATAR_CUSTOMIZATION:
 		if (player->flags & ACTOR_SOULSPHERE)
 		{
@@ -1603,7 +1603,9 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		break;
 	case LyraKeyboard::ART:
 		cp->SetUsing(true);
+
 		arts->BeginArt(keymap->FindArt(vk));
+		
 		cp->SetUsing(false);
 		break;
 	case LyraKeyboard::MOUSE_LOOK:
