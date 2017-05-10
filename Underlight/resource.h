@@ -385,7 +385,6 @@
 #define IDC_BPP_32                      1435
 #define IDC_BPP_GP                      1437
 #define IDC_SERVER_GP                   1438
-#define IDC_TCP_ONLY                    1441
 #define IDC_DEV_SERVER2                 1442
 #define IDS_DEV_GAME_SERVER_IP2         1443
 #define IDC_CUSTOM_DEV_SERVER           1444
