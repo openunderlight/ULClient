@@ -2637,10 +2637,11 @@ void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 #endif
 
 #ifdef PMARE
+	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	// give pmares a 50% chance of absorbing the firestorm and shooting it back
 	if (rand() % 2 == 0)
 	{
-		_stprintf(message, "redirects the %s back throughout the room.", this->Descrip(Arts::FIRESTORM));
+		_stprintf(message, "absorbs the %s and redirects it throughout the room.", this->Descrip(Arts::FIRESTORM));
 		gs->Talk(message, RMsg_Speech::EMOTE, caster_id);
 		gs->SendPlayerMessage(0, RMsg_PlayerMsg::FIRESTORM, skill, 0, 0);
 		return;
