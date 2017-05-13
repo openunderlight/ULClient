@@ -2641,9 +2641,13 @@ void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 	// give pmares a 50% chance of absorbing the firestorm and shooting it back
 	if (rand() % 2 == 0)
 	{
-		_stprintf(message, "absorbs the %s and redirects it throughout the room.", this->Descrip(Arts::FIRESTORM));
-		gs->Talk(message, RMsg_Speech::EMOTE, caster_id);
-		gs->SendPlayerMessage(0, RMsg_PlayerMsg::FIRESTORM, skill, 0, 0);
+		// only send the firestorm back out if it didn't come from a mare, otherwise just eat it
+		if (!n->IsMonster())
+		{
+			_stprintf(message, "absorbs the %s and redirects it throughout the room.", this->Descrip(Arts::FIRESTORM));
+			gs->Talk(message, RMsg_Speech::EMOTE, caster_id);
+			gs->SendPlayerMessage(0, RMsg_PlayerMsg::FIRESTORM, skill, 0, 0);
+		}
 		return;
 	}
 #endif
