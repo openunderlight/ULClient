@@ -748,7 +748,19 @@ void cArts::BeginArt(int art_id, bool bypass)
 
 	art_in_use = art_id;
 	int duration = art_info[art_id].casting_time*CASTING_TIME_MULTIPLIER;
-	art_completion_time = LyraTime() + duration*(10 - player->SkillSphere(art_id));
+	int modified_duration;
+
+	// handle specific art evoke speed modifications here
+	switch (art_id)
+	{
+		case Arts::GUILDHOUSE:
+			modified_duration = duration*(10 - (player->SkillSphere(art_id)/2));
+			break;
+		default:
+			modified_duration = duration*(10 - player->SkillSphere(art_id));
+	}
+
+	art_completion_time = LyraTime() + modified_duration;
 
 	if (duration)
 	{	// no begin message for instantaneous arts
