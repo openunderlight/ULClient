@@ -2642,7 +2642,7 @@ void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 		if (rand() % 2 == 0)
 		{
 			// only send the firestorm back out if it didn't come from a mare, otherwise just eat it
-			if (!n->IsMonster())
+			if (n != NO_ACTOR && !n->IsMonster())
 			{
 				_stprintf(message, "absorbs the %s and redirects it throughout the room.", this->Descrip(Arts::FIRESTORM));
 				gs->Talk(message, RMsg_Speech::EMOTE, caster_id);
