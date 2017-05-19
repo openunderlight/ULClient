@@ -2633,23 +2633,23 @@ void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 	else // damage...
 	{
 #ifdef AGENT // Inform agents when they've been struck. Copied from cMissile
-    	((cAI*)player)->HasBeenStruck();
+		((cAI*)player)->HasBeenStruck();
 #endif
 
 #ifdef PMARE
-	    cNeighbor *n = this->LookUpNeighbor(caster_id);
-	    // give pmares a 50% chance of absorbing the firestorm and shooting it back
-	    if (rand() % 2 == 0)
-	    {
-		    // only send the firestorm back out if it didn't come from a mare, otherwise just eat it
-		    if (!n->IsMonster())
-		    {
-			    _stprintf(message, "absorbs the %s and redirects it throughout the room.", this->Descrip(Arts::FIRESTORM));
-    			gs->Talk(message, RMsg_Speech::EMOTE, caster_id);
-	    		gs->SendPlayerMessage(0, RMsg_PlayerMsg::FIRESTORM, skill, 0, 0);
-		    }
-		    return;
-	    }
+		cNeighbor *n = this->LookUpNeighbor(caster_id);
+		// give pmares a 50% chance of absorbing the firestorm and shooting it back
+		if (rand() % 2 == 0)
+		{
+			// only send the firestorm back out if it didn't come from a mare, otherwise just eat it
+			if (!n->IsMonster())
+			{
+				_stprintf(message, "absorbs the %s and redirects it throughout the room.", this->Descrip(Arts::FIRESTORM));
+				gs->Talk(message, RMsg_Speech::EMOTE, caster_id);
+				gs->SendPlayerMessage(0, RMsg_PlayerMsg::FIRESTORM, skill, 0, 0);
+			}
+			return;
+		}
 #endif
 		LoadString (hInstance, IDS_AREA_EFFECT, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, this->Descrip(Arts::FIRESTORM));
