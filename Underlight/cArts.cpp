@@ -754,7 +754,7 @@ void cArts::BeginArt(int art_id, bool bypass)
 	switch (art_id)
 	{
 		case Arts::GUILDHOUSE:
-			modified_duration = duration*(10 - (2*player->SkillSphere(art_id)/3));
+			modified_duration = duration*(10 - (player->SkillSphere(art_id) * 2/3));
 			break;
 		default:
 			modified_duration = duration*(10 - player->SkillSphere(art_id));
