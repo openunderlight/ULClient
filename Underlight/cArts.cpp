@@ -748,7 +748,19 @@ void cArts::BeginArt(int art_id, bool bypass)
 
 	art_in_use = art_id;
 	int duration = art_info[art_id].casting_time*CASTING_TIME_MULTIPLIER;
-	art_completion_time = LyraTime() + duration*(10 - player->SkillSphere(art_id));
+	int modified_duration;
+
+	// handle specific art evoke speed modifications here
+	switch (art_id)
+	{
+		case Arts::GUILDHOUSE:
+			modified_duration = duration*(10 - (player->SkillSphere(art_id) * 2/3));
+			break;
+		default:
+			modified_duration = duration*(10 - player->SkillSphere(art_id));
+	}
+
+	art_completion_time = LyraTime() + modified_duration;
 
 	if (duration)
 	{	// no begin message for instantaneous arts
@@ -2610,18 +2622,6 @@ void cArts::Firestorm(void)
 
 void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 {
-
-#ifdef PMARE
-	// give pmares a 50% chance of absorbing the firestorm and shooting it back
-	if (rand() % 2 == 0)
-	{
-		_stprintf(message, "redirects the %s back throughout the room.", this->Descrip(Arts::FIRESTORM));
-		gs->Talk(message, RMsg_Speech::EMOTE, caster_id);
-		gs->SendPlayerMessage(0, RMsg_PlayerMsg::FIRESTORM, skill, 0, 0);
-		return;
-	}
-#endif
-
 	player->EvokedFX().Activate(Arts::FIRESTORM, false);
 	cDS->PlaySound(LyraSound::FIRESTORM);
 	if ((caster_id == player->ID()) || (gs && gs->Party() && gs->Party()->IsInParty(caster_id)))
@@ -2633,7 +2633,23 @@ void cArts::ApplyFirestorm(int skill, lyra_id_t caster_id)
 	else // damage...
 	{
 #ifdef AGENT // Inform agents when they've been struck. Copied from cMissile
-	((cAI*)player)->HasBeenStruck();
+		((cAI*)player)->HasBeenStruck();
+#endif
+
+#ifdef PMARE
+		cNeighbor *n = this->LookUpNeighbor(caster_id);
+		// give pmares a 50% chance of absorbing the firestorm and shooting it back
+		if (rand() % 2 == 0)
+		{
+			// only send the firestorm back out if it didn't come from a mare, otherwise just eat it
+			if (n != NO_ACTOR && !n->IsMonster())
+			{
+				_stprintf(message, "absorbs the %s and redirects it throughout the room.", this->Descrip(Arts::FIRESTORM));
+				gs->Talk(message, RMsg_Speech::EMOTE, caster_id);
+				gs->SendPlayerMessage(0, RMsg_PlayerMsg::FIRESTORM, skill, 0, 0);
+			}
+			return;
+		}
 #endif
 		LoadString (hInstance, IDS_AREA_EFFECT, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, this->Descrip(Arts::FIRESTORM));

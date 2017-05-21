@@ -2202,6 +2202,10 @@ void cPlayer::ReformAvatar(void)
 	display->DisplayMessage (disp_message, false);
 #if defined (AGENT) || defined (PMARE)
 	this->SetCurrStat(Stats::DREAMSOUL, stats[Stats::DREAMSOUL].max, SET_ABSOLUTE, playerID);
+	this->SetCurrStat(Stats::WILLPOWER, stats[Stats::WILLPOWER].max, SET_ABSOLUTE, playerID);
+	this->SetCurrStat(Stats::RESILIENCE, stats[Stats::RESILIENCE].max, SET_ABSOLUTE, playerID);
+	this->SetCurrStat(Stats::INSIGHT, stats[Stats::INSIGHT].max, SET_ABSOLUTE, playerID);
+	this->SetCurrStat(Stats::LUCIDITY, stats[Stats::LUCIDITY].max, SET_ABSOLUTE, playerID);
 #else
 	if (this->CurrStat(Stats::DREAMSOUL) < 1)
 		this->SetCurrStat(Stats::DREAMSOUL, 1, SET_ABSOLUTE, playerID);
