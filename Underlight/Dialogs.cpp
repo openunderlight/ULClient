@@ -1941,39 +1941,24 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
 				break;
 			}
-			// TODO -- Need to investigate how to remove duplicated code...this sucks but can't think of a clean, efficient way to do it atm
 			case IDC_ITEM_COMBINE:
-			{
-				combineItem = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_COMBINE));
-
-				// refresh the pt cost
-				int temp_cost, ptCost = 0;
-				curr_function = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
-
-				// only count PT requirement for shields, elemens, alterors, and chakrams
-				if (curr_function == LyraItem::CHANGE_STAT_FUNCTION || curr_function == LyraItem::EFFECT_PLAYER_FUNCTION ||
-					curr_function == LyraItem::ARMOR_FUNCTION || curr_function == LyraItem::MISSILE_FUNCTION)
-				{
-					for (int j = 0; j < LyraItem::FunctionEntries(curr_function); j++)
-					{
-						curr_value = ComboBox_GetItemData(GetDlgItem(hDlg, property_fields[j]), ComboBox_GetCurSel(GetDlgItem(hDlg, property_fields[j])));
-						temp_cost = PowerTokenCostToForge(LyraItem::EntryTranslation(curr_function, j), curr_value, combineItem);
-						ptCost = MAX(ptCost, temp_cost);
-					}
-
-					_stprintf(temp_message, _T("%d"), ptCost);
-					ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
-					Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
-					ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
-				}
-				break;
-			}
-			// Note -- keep in sync with the COMBINE code above until we can fix
 			case IDC_PROPERTY1:
 			case IDC_PROPERTY2:
 			case IDC_PROPERTY3:
 			{
-				if (HIWORD(wParam) == LBN_SELCHANGE && CreateItem::FORGE_ITEM == called_by)
+				bool updatePtCost = false;
+
+				if (LOWORD(wParam) == IDC_ITEM_COMBINE)
+				{
+					combineItem = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_COMBINE));
+					updatePtCost = true;
+				}
+				else if (HIWORD(wParam) == LBN_SELCHANGE && CreateItem::FORGE_ITEM == called_by)
+				{
+					updatePtCost = true;
+				}
+
+				if (updatePtCost) 
 				{
 					int temp_cost, ptCost = 0;
 					curr_function = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
