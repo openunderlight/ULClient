@@ -62,6 +62,8 @@
 #define IDD_PARTICLES                   195
 #define IDD_GRANT_PPOINT                196
 #define IDD_USE_PPOINT                  197
+#define IDD_CHOOSE_DESTINATION          202
+#define IDD_POWER_TOKEN                 203
 #define IDS_PROPERTIES                  1000
 #define IDC_USERNAME                    1004
 #define IDC_EMAIL                       1005
@@ -161,6 +163,9 @@
 #define IDC_NOVOTES                     1070
 #define IDC_ITEM_DESCRIP2               1070
 #define IDC_ITEM_USE_PT                 1070
+#define IDC_ITEM_REMAKE                 1070
+#define IDC_ITEM_COMBINE                1071
+#define IDC_PT_COST                     1072
 #define IDC_ITEM_FLAG1                  1074
 #define IDC_ITEM_FLAG2                  1075
 #define IDC_ITEM_FLAG3                  1076
@@ -202,6 +207,7 @@
 #define IDC_MOUSETEXT                   1233
 #define IDC_GUILDS                      1234
 #define IDC_GUILD_QUERY                 1235
+#define IDC_DESTINATIONS                1236
 #define IDC_VALUE_PROMPT                1238
 #define IDC_CHECK1                      1243
 #define IDC_RESTART_LOCATION            1243
@@ -379,11 +385,12 @@
 #define IDC_BPP_32                      1435
 #define IDC_BPP_GP                      1437
 #define IDC_SERVER_GP                   1438
-#define IDC_TCP_ONLY                    1441
 #define IDC_DEV_SERVER2                 1442
 #define IDS_DEV_GAME_SERVER_IP2         1443
 #define IDC_CUSTOM_DEV_SERVER           1444
 #define IDS_CUSTOM_IP_DEFAULT           1445
+#define IDC_CHOOSE_DESTINATION          1445
+#define IDC_STATIC_CHOOSE_DESTINATION   1445
 #define IDS_ONCE_HIDDEN_ALWAYS_HIDDEN   1446
 #define IDC_OK                          1800
 #define IDC_CANCEL                      1801
@@ -407,6 +414,7 @@
 #define IDC_ITEMHELP                    1817
 #define IDC_STATIC_CHOOSE_GUILD         1822
 #define IDC_WATCH_LIST_ARROWS           1823
+#define IDC_STATIC_CHOOSE_GUILD2        1823
 #define IDC_DOOMLAYOUT                  1824
 #define IDC_MOUSELAYOUT                 1825
 #define IDC_ULT_FUNCTIONS               1826
@@ -1882,7 +1890,7 @@
 #define IDS_NO_JP                       3263
 #define IDS_PA_NO_ARTS                  3264
 #define IDS_USE_GUILD_HOUSE             3266
-#define IDS_GUILD_HOUSE                 3267
+#define IDS_TRANSLOCATE                 3267
 #define IDS_CANT_BE_MEMBER_APPLY        3268
 #define IDS_TRAIN_BELIEF_MOON           3269
 #define IDS_TRAIN_BELIEF_ECLIPSE        3270
@@ -2804,7 +2812,6 @@
 #define IDS_ITEM_QUEST                  4251
 #define IDS_SELFTRAIN_LOW_TRAIN         4251
 #define IDS_EXPLORATION_QUEST           4252
-#define IDS_STILL_PP                    4252
 #define IDS_ITEM_DELIVERY               4253
 #define IDS_LOCATE_MARES                4253
 #define IDS_POST_QUEST                  4254
@@ -2961,6 +2968,9 @@
 #define IDS_SCROLL_POLE                 4410
 #define IDS_NOACCESS_PORTAL             4450
 #define IDS_NO_XP_MONSTER               4451
+#define IDS_FOCAL_BLADE                 4452
+#define IDS_FOCAL_FLAME                 4453
+#define IDS_NOT_ENOUGH_PT               4454
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
@@ -2970,9 +2980,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        202
+#define _APS_NEXT_RESOURCE_VALUE        203
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1444
+#define _APS_NEXT_CONTROL_VALUE         1446
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

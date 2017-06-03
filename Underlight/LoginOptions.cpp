@@ -43,7 +43,6 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 {
 	HKEY reg_key;
 	DWORD result;
-	BOOL tcp_checked = FALSE;
 
 	switch(Message)
 	{
@@ -68,10 +67,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			Button_SetCheck(GetDlgItem(hDlg, IDC_SOUND),  options.sound);
 
 			Button_SetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL),  options.extra_scroll);
-//			Button_SetCheck(GetDlgItem(hDlg, IDC_BIND_LOCAL),  options.bind_local);
-			Button_SetCheck(GetDlgItem(hDlg, IDC_TCP_ONLY),  options.tcp_only);
-			_stprintf(message, _T("%d"), options.bind_local_tcp);
-			Edit_SetText(GetDlgItem(hDlg, IDC_BIND_TCP), message);
+
 			if( options.tcp_only )
 			{
 				EnableWindow( GetDlgItem( hDlg, IDC_BIND_UDP ), FALSE );
@@ -88,16 +84,6 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 
 			ShowWindow(GetDlgItem(hDlg, IDC_ENABLE_RW), SW_HIDE);
 			ShowWindow(GetDlgItem(hDlg, IDC_ROGERWILCO), SW_HIDE);
-
-//#ifdef UL_DEV
-//			ShowWindow(GetDlgItem(hDlg, IDC_GRAPHIC_RES640), SW_SHOW);
-//			ShowWindow(GetDlgItem(hDlg, IDC_GRAPHIC_RES800), SW_SHOW);
-//			ShowWindow(GetDlgItem(hDlg, IDC_GRAPHIC_RES1024), SW_SHOW);
-//#else
-//			ShowWindow(GetDlgItem(hDlg, IDC_GRAPHIC_RES640), SW_HIDE);
-//			ShowWindow(GetDlgItem(hDlg, IDC_GRAPHIC_RES800), SW_HIDE);
-//			ShowWindow(GetDlgItem(hDlg, IDC_GRAPHIC_RES1024), SW_HIDE);
-//#endif
 
 #ifdef CHINESE
 			ShowWindow(GetDlgItem(hDlg, IDC_RESTART_LOCATION), SW_SHOW);
@@ -232,11 +218,6 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 				LoadString (hInstance, IDS_GAME_MANUAL_URL, message, sizeof(message));
 				ShellExecute(NULL, _T("open"), message, NULL, NULL, SW_SHOWNORMAL);
 				return TRUE;
-			
-			case IDC_TCP_ONLY:
-				tcp_checked = Button_GetCheck( GetDlgItem( hDlg, IDC_TCP_ONLY ) );
-				EnableWindow( GetDlgItem( hDlg, IDC_BIND_UDP ), !tcp_checked );
-				return TRUE;
 
 			case IDC_BILLING:
 				LoadString (hInstance, IDS_BILLING_URL, message, sizeof(message));
@@ -267,7 +248,6 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 				options.rw				= Button_GetCheck(GetDlgItem(hDlg, IDC_ENABLE_RW));
 				options.welcome_ai		= Button_GetCheck(GetDlgItem(hDlg, IDC_TRAINING)); 
 				options.extra_scroll	= Button_GetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL)); 
-				options.tcp_only		= Button_GetCheck(GetDlgItem(hDlg, IDC_TCP_ONLY)); 
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_TCP), message, sizeof(message)); 								
 				options.bind_local_tcp	= _ttol(message);
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_UDP), message, sizeof(message)); 								
@@ -301,7 +281,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 
 #ifdef PMARE
 				int pmare_avatar_type = 3 + ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_PMARE_LIST));
-				// if pmare_avatar_type > Shamblix, it means resume previous session
+				// if pmare_avatar_type > Horron, it means resume previous session
 				if (pmare_avatar_type <= Avatars::SHAMBLIX) {
 					options.pmare_type = pmare_avatar_type;
 					options.pmare_price = (int)((pmare_info[options.pmare_type - 3].charge)*100 + .1);
@@ -496,8 +476,6 @@ void __cdecl SaveOutOfGameRegistryOptionValues(HKEY reg_key)
 		(unsigned char *)&(options.sound), sizeof(options.sound));
 	RegSetValueEx(reg_key, _T("extra_scroll"), 0, REG_DWORD,  
 		(unsigned char *)&(options.extra_scroll), sizeof(options.extra_scroll));
-	RegSetValueEx(reg_key, _T("tcp_only"), 0, REG_DWORD,  
-		(unsigned char *)&(options.tcp_only), sizeof(options.tcp_only));
 	RegSetValueEx(reg_key, _T("bind_local_tcp"), 0, REG_DWORD,  
 		(unsigned char *)&(options.bind_local_tcp), sizeof(options.bind_local_tcp));
 	RegSetValueEx(reg_key, _T("bind_local_udp"), 0, REG_DWORD,  
@@ -601,13 +579,6 @@ void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 		(unsigned char *)&(options.extra_scroll), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.extra_scroll = TRUE;
-
-	size = sizeof(options.tcp_only);
-	keyresult = RegQueryValueEx(reg_key, _T("tcp_only"), NULL, &reg_type,
-		(unsigned char *)&(options.tcp_only), &size);
-	if ((keyresult != ERROR_SUCCESS) || force) 
-		options.tcp_only = TRUE;
-
 
 	size = sizeof(options.bind_local_tcp);
 	keyresult = RegQueryValueEx(reg_key, _T("bind_local_tcp"), NULL, &reg_type,

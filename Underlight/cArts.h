@@ -95,7 +95,6 @@ public:
 	inline bool DoingLocate(void) {return fDoingLocate; };
   inline bool DisplayedAwaitUpdateArt (void) { return displayed_await_update_art; };
 	
-	int EffectiveForgeSkill(int player_skill, bool usePowerToken);
 	int Duration(int art_id, int skill); // calculates duration for art
 	bool UseInSanctuary(int art_id); // usable in sanctuary?
 	bool Restricted(int art_id); // focus restricted?
@@ -158,7 +157,7 @@ public:
 	void Darkness(void);
 	void ApplyDarkness(int skill, lyra_id_t caster_id);
 	void StartForgeTalisman(void);
-	void EndForgeTalisman(void *value, bool usePT);
+	void EndForgeTalisman(void *value, int ptCost);
 	void Terror(void);
 	void ApplyTerror(int skill, lyra_id_t caster_id);
 	void HealingAura(void);
@@ -178,7 +177,8 @@ public:
 	void EndBreakCovenant(void);
 	void Dazzle(void);
 	void ApplyDazzle(int skill, lyra_id_t caster_id);
-	void GuildHouse(void);
+	void StartPlayerTeleport(void);
+	void EndPlayerTeleport(void *value);
 	void TehthusOblivion(void);
   void Tempest (void);
   void ApplyTempest (int skill, int angle, lyra_id_t caster_id);
@@ -301,6 +301,8 @@ public:
 	void ApplySummon(lyra_id_t caster_id, int x, int y, int lvl);
 	void MidSummon(void);
 	void EndSummon(void *value);
+	void EndLock(void *value);
+	void EndKey(void *value);
 	void StartSuspend(void);
 	void MidSuspend(void);
 	void ApplySuspend(int num_days, lyra_id_t caster_id);
@@ -461,6 +463,7 @@ public:
 	void StartSummonPrime(void);
 	void ApplySummonPrime(int guild_id, int success);
 	void EndSummonPrime(void* value);
+	void UsePowerTokens(cItem** tokens, int charges_to_use);
 	int CountPowerTokens(cItem** tokens, lyra_id_t guild_id = Guild::NO_GUILD);
 
 	// pseudo arts that need to use cArts methods 
@@ -482,7 +485,7 @@ public:
 
 
 private:
-	void CreatePass(const TCHAR* name, int strength);
+	void CreatePass(const TCHAR* name, lyra_item_amulet_t amulet);
 	bool PlaceLock(lyra_item_ward_t ward, LmItemHdr header);
 	void WaitForSelection(art_method_t callback, lyra_id_t art_id); // to start waiting for a click
 	void AddDummyNeighbor(void); // to allow selection of player as a target

@@ -107,7 +107,7 @@ struct options_t {
 	int bind_local_tcp;
 	int bind_local_udp;
 	BOOL restart_last_location; // for Chinese Ul; log in at last location
-	BOOL tcp_only; // use TCP only - for firewall/NAT/ICS/etc.
+	BOOL tcp_only = true; // use TCP only - for firewall/NAT/ICS/etc.
 
 	int resolution; // 640 = 640x480, 800 = 800x600, 1024 = 1024x768
 

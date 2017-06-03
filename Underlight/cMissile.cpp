@@ -365,17 +365,20 @@ void cMissile::StrikeActor(cActor* actor)
 				case Avatars::SHAMBLIX: // only hit from rear
 					if ((view > 1) && (view < 5))
 #ifdef PMARE
-						// pmares don't get invulnerability, only 70% shield
-						damage = damage*.30;
+						// pmares don't get invulnerability, only 75% shield
+						damage = damage*.25;
 #else
 						damage = 0;
 #endif
 					break;
-				case Avatars::HORRON: // only hit from directly behind
-					if (view != 0)
+				case Avatars::HORRON: 
+					// side back shots to a horron do 50% damage
+					if (view == 1 || view == 5)
+						damage = damage*.50;
+					else if (view != 0) // only hit from directly behind for full damage
 #ifdef PMARE
-						// pmares don't get invulnerability, only 87% shield
-						damage = damage*.30;
+						// pmares don't get invulnerability, only 80% shield
+						damage = damage*.20;
 #else
 						damage = 0;
 #endif
@@ -441,6 +444,10 @@ void cMissile::StrikeActor(cActor* actor)
 					display->DisplayMessage (message);
 				}
 			}
+			// Cancel the guildhouse evoke if the player is struck by a missile
+			if (arts->CurrentArt() == Arts::GUILDHOUSE)
+				arts->CancelArt();
+
 			player->SetInjured(true);
 			player->SetCurrStat(Stats::DREAMSOUL, -damage, SET_RELATIVE, owner_id);
 			//_tprintf("took %d damage!\n",damage);

@@ -614,7 +614,7 @@ bool cNeighbor::RightClick(void)
 #else
 	
 	// can only see the focus of a normal dreamer
-	if (this->SphereID() < 1)
+	if (this->SphereID() < 1 && !IsMonster())
 		_stprintf(message, "That's %s (%s)", name, player->StatName(this->Avatar().Focus()));
 	else
 		_stprintf(message, disp_message,name);

@@ -78,8 +78,10 @@ int CalculateModifierMax(int modifier);
 int CalculateModifierMin(int modifier);
 int CalculateDuration(int index);
 void TranslateValue(int type, int value);
-bool CanPlayerForgeValue(int type, int value, bool usePowerToken);
+int PowerTokenCostToForge(int type, int value, bool combineItem);
+bool CanPlayerForgeValue(int type, int value, int powerTokens);
 int	MinModifierSkill(int value);
+int MaxChargesForFunction(int function);
 int NumberTranslations(int type);
 TCHAR* GuildName(int guild_id);
 int GuildFlag(int guild_id);
@@ -97,6 +99,11 @@ TCHAR* DreamweaponName(int color);
 void Scream(int avatar_type, cActor* actor, bool propagate = false);
 
 bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2);
+
+unsigned int NumLocations(void);
+const char *LocationNameAt(unsigned int index);
+const char *LocationCoordinateAt(unsigned int index);
+bool TeleportLocationAvailable(unsigned int index);
 
 TCHAR *TalismanName(int bitmap_id);
 unsigned int NumTalismans(void);

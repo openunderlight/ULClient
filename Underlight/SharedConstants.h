@@ -36,7 +36,9 @@ const int EMPHANT_DAMAGE = 15;
 const int BOGROM_DAMAGE = 16;
 const int AGOKNIGHT_DAMAGE = 60;
 const int SHAMBLIX_DAMAGE = 60;
+const int SHAMBLIX_DAMAGE_XTR = 29;
 const int HORRON_DAMAGE = 38;
+const int HORRON_DAMAGE_XTR = 8;
 
 struct EffectOrigin {
 	enum {
@@ -271,7 +273,7 @@ struct Arts {
   CHAOTIC_VORTEX, // Chaotic Vortex
   CHAOS_WELL, // Essence Container
   RALLY, // Summon party member
-  CHANNEL,     
+  CHANNEL,
 	// END OF ARTS LIST - below are art-related constants
 
 	INITIATE_DRAIN = 100,   // amount of essences drained from prime to Initiate
