@@ -1941,23 +1941,24 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
 				break;
 			}
-
 			case IDC_ITEM_COMBINE:
-			{
-				combineItem = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_COMBINE));
-
-				// refresh the pt cost
-				_stprintf(temp_message, _T("%d"), PowerTokenCostToForge(curr_translation, curr_value, combineItem));
-				ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_HIDE);
-				Edit_SetText(GetDlgItem(hDlg, IDC_PT_COST), temp_message);
-				ShowWindow(GetDlgItem(hDlg, IDC_PT_COST), SW_NORMAL);
-				break;
-			}
 			case IDC_PROPERTY1:
 			case IDC_PROPERTY2:
 			case IDC_PROPERTY3:
 			{
-				if (HIWORD(wParam) == LBN_SELCHANGE && CreateItem::FORGE_ITEM == called_by)
+				bool updatePtCost = false;
+
+				if (LOWORD(wParam) == IDC_ITEM_COMBINE)
+				{
+					combineItem = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_COMBINE));
+					updatePtCost = true;
+				}
+				else if (HIWORD(wParam) == LBN_SELCHANGE && CreateItem::FORGE_ITEM == called_by)
+				{
+					updatePtCost = true;
+				}
+
+				if (updatePtCost) 
 				{
 					int temp_cost, ptCost = 0;
 					curr_function = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_TYPE_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_TYPE_COMBO)));
