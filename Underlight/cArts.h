@@ -509,7 +509,7 @@ private:
 	int CountDemotionTokens(lyra_id_t guild_id, cItem** tokens, cNeighbor* n);
 	cItem* FindPrime(lyra_id_t guild_id, int min_charges);
 	cItem* HasQuestCodex(lyra_id_t neighbor_id, lyra_id_t art_id);
-	bool IsSharesFocus(lyra_id_t target_focus_id);
+	bool IsSharesFocus(int art_id, int neighbor_focus);
 
 
 	// copy constructor and assignment operator are
