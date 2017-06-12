@@ -10644,7 +10644,7 @@ void cArts::EndLocate(void *value)
 
 	if (locate_all)
 	{
-		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 						NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 
 		size = sizeof(num_buddies);

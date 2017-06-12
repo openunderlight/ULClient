@@ -121,9 +121,9 @@ struct options_t {
 };
 
 #ifndef OPTIONS_DLL
-TCHAR* RegPlayerKey(bool fBase = false);
-void LoadInGameRegistryOptionValues(HKEY reg_key, bool force);
-void __cdecl SaveInGameRegistryOptionValues(HKEY reg_key);
+TCHAR* RegPlayerKey(bool fBase);
+void LoadInGameRegistryOptionValues(HKEY main_key, HKEY player_key, bool force);
+void __cdecl SaveInGameRegistryOptionValues(HKEY main_key, HKEY player_key);
 void __cdecl SaveInGameRegistryOptionValues(void);
 #endif
 
