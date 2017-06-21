@@ -363,6 +363,8 @@ public:
 	void EndCleanseMare(void);
 	void StartCorruptEssence(void);
 	void EndCorruptEssence(void);
+	void StartDrainPrime(void);
+	void EndDrainPrime(void *value);
 
 	// arts that require selecting a neighbor and a skill
 	void StartTrain(void);
