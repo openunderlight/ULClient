@@ -1530,6 +1530,13 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 			display->DisplayMessage(disp_message);
 			return stats[stat].current;
 		}
+		
+		// check if we're in a no damage level before trying to apply damage
+		for (int i = 0; i < num_no_damage_levels; i++)
+		{
+			if (no_damage_levels[i] == level->ID())
+				return stats[stat].current;
+		}
 	}
 
 	// check for armor on dreamsoul drains
