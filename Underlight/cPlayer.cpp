@@ -157,6 +157,7 @@ void cPlayer::InitPlayer(void)
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
 	session_id = 0;
+	safezone = false;
 
 	for (i=0; i<NUM_GUILDS; i++)
 		guild_ranks[i].rank = Guild::NO_RANK;
@@ -1532,11 +1533,7 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 		}
 		
 		// check if we're in a no damage level before trying to apply damage
-		for (int i = 0; i < num_no_damage_levels; i++)
-		{
-			if (no_damage_levels[i] == level->ID())
-				return stats[stat].current;
-		}
+		if (safezone) return stats[stat].current;
 	}
 
 	// check for armor on dreamsoul drains
@@ -2859,6 +2856,18 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 		
 		// remove the avatar shield upon level change
 		player->RemoveTimedEffect(LyraEffect::PLAYER_SHIELD);
+
+		safezone = false;
+
+		// check if we're in a no damage level before trying to apply damage
+		for (int i = 0; i < num_no_damage_levels; i++)
+		{
+			if (no_damage_levels[i] == level->ID())
+			{
+				safezone = true;
+				break;
+			}
+		}
 	}
 	else
 	{
