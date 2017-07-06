@@ -1512,6 +1512,14 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 	if (value != Stats::STAT_MIN)
 		this->ValidateChecksums();
 
+	if (origin_id == Lyra::ID_UNKNOWN) 
+	{
+		if (last_attacker_id != Lyra::ID_UNKNOWN)
+			origin_id = last_attacker_id;
+		else
+			origin_id = this->ID();
+	}
+
 #ifdef GAMEMASTER // check for invulnerability
 	if ((origin_id != this->ID()) && (how == SET_RELATIVE) &&
 		(value < 0) && options.invulnerable)
