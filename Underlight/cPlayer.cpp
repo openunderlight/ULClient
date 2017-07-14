@@ -1573,9 +1573,11 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 			amount = (int)(amount*.75);
 #endif
 #ifdef PMARE // pmare bogroms get an additional 30% shield
+
 		if (this->GetMonsterType() == Avatars::BOGROM)
 			amount = amount*.70;
-		else if (this->GetMonsterType() != Avatars::AGOKNIGHT) // other pmares get a 15% shield
+		else if (this->GetMonsterType() != Avatars::AGOKNIGHT)
+			// other pmares get a 15% shield
 			amount = amount*.85;
 #endif
 		if (amount)
@@ -2241,46 +2243,42 @@ void cPlayer::ReformAvatar(void)
 void cPlayer::HandlePmareDefense(bool add_all)
 {
 	bool added_art = false;
+	DWORD duration = 1200000;
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_PARALYSIS]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_DETECT_INVISIBLE]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REFLECT]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 3600000, playerID, EffectOrigin::ART_EVOKE);
-		added_art = true;
-	}
-
-	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REGENERATING]))
-	{
-		this->SetTimedEffect(LyraEffect::PLAYER_REGENERATING, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_FEAR]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_NO_POISON]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_NO_POISON, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->EffectExpire(LyraEffect::PLAYER_POISONED);
+		this->SetTimedEffect(LyraEffect::PLAYER_NO_POISON, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_TRAIL]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_TRAIL, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->SetTimedEffect(LyraEffect::PLAYER_TRAIL, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}			
 }
