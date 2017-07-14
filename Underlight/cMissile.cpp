@@ -348,6 +348,13 @@ void cMissile::StrikeActor(cActor* actor)
 // 3 - front
 // 4 - front right
 // 5 - back right
+
+#ifdef PMARE
+			// flip a pmare if they've been hit in the face while evoking
+			if (maretype > Avatars::AGOKNIGHT && view >= 2 && view <= 4 && arts->CurrentArt() != Arts::NONE)
+				player->angle = FixAngle(player->angle + Angle_180);
+#endif
+
 			switch (maretype)
 			{
 				case Avatars::EMPHANT:
