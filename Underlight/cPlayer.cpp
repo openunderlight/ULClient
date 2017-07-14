@@ -984,27 +984,29 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 								   } break;
 
 	case LyraEffect::PLAYER_POISONED: {
-		if (flags & ACTOR_NO_POISON)
+		if (this->flags & ACTOR_NO_POISON)
 		{
 			LoadString (hInstance, IDS_PLAYER_POISON_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
+
+			timed_effects->expires[LyraEffect::PLAYER_NO_POISON] -= CalculateBreakthrough(duration, effect_origin);
 			return false;
 		}
 
 		if (caster_id != player->ID())
 			last_poisoner = caster_id;
 
-		// pmares and dark mares can only be affected w/ a 1 strength poison
-		if (duration > 60000 && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
-		{ 
-			duration = 60000;
-		}
-
 		int new_strength = (duration / 60000) + 1;
 		if (new_strength > 10) new_strength = 10;
 
 		if (new_strength > poison_strength)
 			poison_strength = new_strength;
+
+		// set the maximum duration after the strength calculation for pmare/dmare
+		if (duration > 60000 && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
+		{
+			duration = 60000;
+		}
 	} 
 	break;
   case LyraEffect::PLAYER_SPIN:
@@ -2271,7 +2273,7 @@ void cPlayer::HandlePmareDefense(bool add_all)
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_NO_POISON]))
 	{
-		this->EffectExpire(LyraEffect::PLAYER_POISONED);
+		this->RemoveTimedEffect(LyraEffect::PLAYER_POISONED);
 		this->SetTimedEffect(LyraEffect::PLAYER_NO_POISON, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
