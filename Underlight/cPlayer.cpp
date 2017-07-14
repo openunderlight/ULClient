@@ -2271,6 +2271,12 @@ void cPlayer::HandlePmareDefense(bool add_all)
 		added_art = true;
 	}
 
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_CURSE]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_PROT_CURSE, duration*3, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_NO_POISON]))
 	{
 		this->RemoveTimedEffect(LyraEffect::PLAYER_POISONED);
