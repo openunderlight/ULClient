@@ -1079,7 +1079,41 @@ teleport_locale_t teleport_locations[] =
 	{ BY_HC, "House Calenture", "-2252;-5480", 17 },
 	{ BY_POR, "Peace Corpse", "762;-13361", 21 },
 	{ BY_KOES, "Keepers of the Eternal Shadow", "2583;-14543", 24 },
-	{ BY_GOE, "Gathering of the Entranced", "3833;-16439", 23 }
+	{ BY_GOE, "Gathering of the Entranced", "3833;-16439", 23 },
+	{ BY_GM, "Fayd's Fortress", "10805;-3727", 19 },
+	{ BY_GM, "Thresh GM Room", "19948;-842", 20 },
+	{ BY_GM, "The Unknown", "-7839;12457", 43 }
+#ifdef UL_DEV
+	,{ BY_GM, "Lower Basin of Stars", "9309;2572", 2 },
+	{ BY_GM, "Mt Illapse", "2043;1502", 4 },
+	{ BY_GM, "Edgeward Barrows", "6989;-1472", 5 },
+	{ BY_GM, "Lower Lambent", "14126;-1244", 6 },
+	{ BY_GM, "Trinity Rise", "90;-305", 9 },
+	{ BY_GM, "Trinity Walk", "2178;6910", 10 },
+	{ BY_GM, "Trinity Fields", "6103;37", 11 },
+	{ BY_GM, "Evernight Plateau", "3440;16992", 12 },
+	{ BY_GM, "West Valley", "1836;1145", 13 },
+	{ BY_GM, "Loth Cistern", "8127;3307", 15 },
+	{ BY_GM, "Upper Umbric", "5931;3016", 16 },
+	{ BY_GM, "Albino Caves", "2694;2515", 27 },
+	{ BY_GM, "Cairn of Sorrow", "7152;-1776", 28 },
+	{ BY_GM, "Chasm of Souls", "10619;-14666", 30 },
+	{ BY_GM, "Gloom Peaks", "2531;5024", 31 },
+	{ BY_GM, "Harrow Glades", "4118;-788", 32 },
+	{ BY_GM, "Lost Caves", "-121;-31", 33 },
+	{ BY_GM, "Ossuary of Dread", "554;-4793", 34 },
+	{ BY_GM, "Horron's Lair", "23312;8064", 35 },
+	{ BY_GM, "Dorsal Rift", "-628;386", 36 },
+	{ BY_GM, "Lower Cairn", "-3355;-2216", 37 },
+	{ BY_GM, "Lower Ossuary", "11532;1171", 38 },
+	{ BY_GM, "Thresh Pits", "7304;6592", 39 },
+	{ BY_GM, "Chimeric", "554;166", 40 },
+	{ BY_GM, "Library of Dreams", "355;-202", 41 },
+	{ BY_GM, "Thresh Pits", "-2508;-5959", 42 },
+	{ BY_GM, "Dark Awakening", "-525;1990", 44 },
+	{ BY_GM, "DCA", "6958;7522", 46 },
+	{ BY_GM, "Palisade", "3693;6973", 48 }
+#endif
 };
 
 unsigned int NumLocations(void)
