@@ -1179,7 +1179,7 @@ void cPlayer::CheckStatus(void)
 				value = 3;
 				break;
 			default:
-				value = 1;
+				value = 2;
 		}
 #else  // dreamers regen slowly
 		if (flags & ACTOR_MEDITATING)
