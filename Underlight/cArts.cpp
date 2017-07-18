@@ -7921,17 +7921,50 @@ cItem* cArts::HasQuestCodex(lyra_id_t neighbor_id, lyra_id_t art_id)
 	return quest_codex;
 }
 
-bool cArts::IsSharesFocus(lyra_id_t art_focus_id)
+bool cArts::IsSharesFocus(int art_id, int neighbor_focus)
 {
+	lyra_id_t art_focus_id = art_info[art_id].stat;
+
+	// handle the case of trying to teach a focal art
+	if (art_focus_id == Stats::NO_STAT) 
+	{
+		bool restrict_neighbor = false;
+		switch (art_id)
+		{
+			case Arts::DREAMSEER:
+				art_focus_id = Stats::INSIGHT;
+				restrict_neighbor = true;
+				break;
+			case Arts::SOULMASTER:
+				art_focus_id = Stats::RESILIENCE;
+				restrict_neighbor = true;
+				break;
+			case Arts::FATESENDER:
+				art_focus_id = Stats::LUCIDITY;
+				restrict_neighbor = true;
+				break;
+			case Arts::GATEKEEPER:
+				art_focus_id = Stats::WILLPOWER;
+				restrict_neighbor = true;
+				break;
+		}
+
+		// can't train a neighbor in an art they're not allowed to learn
+		if (restrict_neighbor && neighbor_focus != art_focus_id) {
+			return false;
+		}
+	}
+
 	if (player->Avatar().Focus() == art_focus_id) {
 		return true;
 	}
+
 	switch (art_focus_id)
 	{
-		case Arts::GATEKEEPER: return player->Skill(Arts::GATEKEEPER);
-		case Arts::DREAMSEER: return player->Skill(Arts::DREAMSEER);
-		case Arts::SOULMASTER: return player->Skill(Arts::SOULMASTER);
-		case Arts::FATESENDER: return player->Skill(Arts::FATESENDER);
+		case Stats::WILLPOWER: return player->Skill(Arts::GATEKEEPER)>0;
+		case Stats::INSIGHT: return player->Skill(Arts::DREAMSEER)>0;
+		case Stats::RESILIENCE: return player->Skill(Arts::SOULMASTER)>0;
+		case Stats::LUCIDITY: return player->Skill(Arts::FATESENDER)>0;
 		default: return false;
 	}
 	// default to not the same focus
@@ -8003,7 +8036,7 @@ void cArts::EndTrain(void)
 
 	}
 #ifndef GAMEMASTER	//GMs SHOULD be allowed to train arts even if not within their primary/secondary focus
-	else if (art_info[art_id].restricted() && !this->IsSharesFocus(art_info[art_id].stat))
+	else if (art_info[art_id].restricted() && !this->IsSharesFocus(art_id, n->Avatar().Focus()))
 	{
 		LoadString (hInstance, IDS_TRAIN_OTHER_FAILED, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, n->Name(), this->Descrip(art_id));
