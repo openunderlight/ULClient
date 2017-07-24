@@ -946,6 +946,9 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	case VK_F4:
 		agentbox->Show();
 		return true;
+	case VK_F5:
+		arts->StartDrainPrime();
+		return true;
 	case VK_F6:
 		player->Teleport(6958, 7522, 979, 29);
 		return true;
