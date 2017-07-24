@@ -306,7 +306,7 @@ void RegistryReadMacro(int macro_number, macro_t macro)
 
 	_stprintf(macro_name,_T("macro_%d"),macro_number);
 
-	RegOpenKeyEx(HKEY_CURRENT_USER, RegPlayerKey(), 0, KEY_ALL_ACCESS, &reg_key );
+	RegOpenKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0, KEY_ALL_ACCESS, &reg_key );
 	size = sizeof macro_t;
 	result = RegQueryValueEx(reg_key, macro_name, NULL, &reg_type,
 								(unsigned char *)macro, &size);
@@ -326,7 +326,7 @@ static void RegistryWriteMacro(int macro_number, macro_t macro)
 
 	_stprintf(macro_name,_T("macro_%d"),macro_number);
 
-	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(), 0, NULL, 0, KEY_ALL_ACCESS, NULL, &reg_key, &result);
+	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0, NULL, 0, KEY_ALL_ACCESS, NULL, &reg_key, &result);
 	RegSetValueEx(reg_key, macro_name, 0, REG_BINARY, (unsigned char *)macro, sizeof macro_t);
 	RegCloseKey(reg_key);
 
@@ -2904,7 +2904,7 @@ BOOL CALLBACK KeyboardConfigDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPAR
 					map = new keymap_t[num_keys];
 					keymap->GetMap(map);
 
-					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 						NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 
 					RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD,
@@ -3938,7 +3938,7 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 			hwnd_locateavatar = hDlg;
 			locateavatardlg = true;
 
-			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 
 			size = sizeof(num_buddies);
@@ -4028,7 +4028,7 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_WATCH_LIST), num_buddies);
 			_tcscpy(buddies[num_buddies].name, buddy);
 			num_buddies++;
-			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 			RegSetValueEx(reg_key, _T("num_buddies"), 0, REG_DWORD,
 				(unsigned char *)&(num_buddies), sizeof(num_buddies));
@@ -4170,7 +4170,7 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 							ListBox_SetCurSel(GetDlgItem(hDlg, IDC_WATCH_LIST), j);
 						}
 					}
-					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 					RegSetValueEx(reg_key, _T("num_buddies"), 0, REG_DWORD,
 						(unsigned char *)&(num_buddies), sizeof(num_buddies));
@@ -4228,7 +4228,7 @@ BOOL CALLBACK IgnoreListDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			hwnd_ignorelist = hDlg;
 			ignorelistdlg = true;
 
-			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 			RegCloseKey(reg_key);
 			for (i=0; i<options.num_bungholes; i++)
@@ -4297,7 +4297,7 @@ BOOL CALLBACK IgnoreListDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			_tcscpy(options.bungholes[options.num_bungholes].name, bunghole);
 			options.num_bungholes++;
 
-			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 				NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 			RegSetValueEx(reg_key, _T("num_ignores"), 0, REG_DWORD,
 				(unsigned char *)&(options.num_bungholes), sizeof(options.num_bungholes));
@@ -4362,7 +4362,7 @@ BOOL CALLBACK IgnoreListDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							ListBox_SetCurSel(GetDlgItem(hDlg, IDC_IGNORE_LIST), j);
 						}
 					}
-					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 					RegSetValueEx(reg_key, _T("num_ignores"), 0, REG_DWORD,
 						(unsigned char *)&(options.num_bungholes), sizeof(options.num_bungholes));

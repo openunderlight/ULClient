@@ -309,74 +309,76 @@ BOOL CALLBACK OptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 /////////////////////////////////////////////////
 // Functions
 
-void __cdecl SaveInGameRegistryOptionValues(HKEY reg_key)
+void __cdecl SaveInGameRegistryOptionValues(HKEY main_key, HKEY player_key)
 {
-	RegSetValueEx(reg_key, _T("sound_active"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("sound_active"), 0, REG_DWORD,  
 		(unsigned char *)&(options.sound_active), sizeof(options.sound_active));
-	RegSetValueEx(reg_key, _T("music_active"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("music_active"), 0, REG_DWORD,  
 		(unsigned char *)&(options.music_active), sizeof(options.music_active));
-	RegSetValueEx(reg_key, _T("reverse"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("reverse"), 0, REG_DWORD,  
 		(unsigned char *)&(options.reverse), sizeof(options.reverse));
-	RegSetValueEx(reg_key, _T("autoreject"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("autoreject"), 0, REG_DWORD,  
 		(unsigned char *)&(options.autoreject), sizeof(options.autoreject));
-	RegSetValueEx(reg_key, _T("autorejoin"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("autorejoin"), 0, REG_DWORD,  
 		(unsigned char *)&(options.autorejoin), sizeof(options.autorejoin));
-	RegSetValueEx(reg_key, _T("nametags"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("nametags"), 0, REG_DWORD,  
 		(unsigned char *)&(options.nametags), sizeof(options.nametags));
-	RegSetValueEx(reg_key, _T("multiline"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("multiline"), 0, REG_DWORD,  
 		(unsigned char *)&(options.multiline), sizeof(options.multiline));
-	RegSetValueEx(reg_key, _T("footsteps"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("footsteps"), 0, REG_DWORD,  
 		(unsigned char *)&(options.footsteps), sizeof(options.footsteps));
-	RegSetValueEx(reg_key, _T("art_prompts"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("art_prompts"), 0, REG_DWORD,  
 		(unsigned char *)&(options.art_prompts), sizeof(options.art_prompts));
-	RegSetValueEx(reg_key, _T("mouselook"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("mouselook"), 0, REG_DWORD,  
 		(unsigned char *)&(options.mouselook), sizeof(options.mouselook));
-	RegSetValueEx(reg_key, _T("invertmouse"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("invertmouse"), 0, REG_DWORD,  
 		(unsigned char *)&(options.invertmouse), sizeof(options.invertmouse));
-	RegSetValueEx(reg_key, _T("log_chat"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("log_chat"), 0, REG_DWORD,  
 		(unsigned char *)&(options.log_chat), sizeof(options.log_chat));
 	int turnrate = (int)options.turnrate;
-	RegSetValueEx(reg_key, _T("turnrate"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("turnrate"), 0, REG_DWORD,  
 		(unsigned char *)&(turnrate), sizeof(turnrate));
-	RegSetValueEx(reg_key, _T("volume"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("volume"), 0, REG_DWORD,  
 		(unsigned char *)&(options.effects_volume), sizeof(options.effects_volume));
-	RegSetValueEx(reg_key, _T("music_volume"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("music_volume"), 0, REG_DWORD,  
 		(unsigned char *)&(options.music_volume), sizeof(options.music_volume));
-	RegSetValueEx(reg_key, _T("avatar"), 0, REG_BINARY,  
-		(unsigned char *)&(options.avatar), sizeof(options.avatar));
-	RegSetValueEx(reg_key, _T("speech_color"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("speech_color"), 0, REG_DWORD,  
 		(unsigned char *)&(options.speech_color), sizeof(options.speech_color));
-	RegSetValueEx(reg_key, _T("message_color"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("message_color"), 0, REG_DWORD,  
 		(unsigned char *)&(options.message_color), sizeof(options.message_color));
-	RegSetValueEx(reg_key, _T("bg_color"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("bg_color"), 0, REG_DWORD,  
 		(unsigned char *)&(options.bg_color), sizeof(options.bg_color));
-	RegSetValueEx(reg_key, _T("ignore_list"), 0, REG_BINARY,  
-		(unsigned char *)options.bungholes, MAX_IGNORELIST*sizeof(other_t));
-	RegSetValueEx(reg_key, _T("num_ignores"), 0, REG_DWORD,  
-		(unsigned char *)&(options.num_bungholes), sizeof(options.num_bungholes));
-	RegSetValueEx(reg_key, _T("autorun"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("autorun"), 0, REG_DWORD,  
 		(unsigned char *)&(options.autorun), sizeof(options.autorun));
-	RegSetValueEx(reg_key, _T("adult_filter"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("adult_filter"), 0, REG_DWORD,  
 		(unsigned char *)&(options.adult_filter), sizeof(options.adult_filter));
-	RegSetValueEx(reg_key, _T("pmare_session_start"), 0, REG_BINARY,  
+	RegSetValueEx(main_key, _T("pmare_session_start"), 0, REG_BINARY,  
 		(unsigned char *)&(options.pmare_session_start), sizeof(options.pmare_session_start));
-	RegSetValueEx(reg_key, _T("pmare_type"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("pmare_type"), 0, REG_DWORD,  
 		(unsigned char *)&(options.pmare_type), sizeof(options.pmare_type));
-	RegSetValueEx(reg_key, _T("pmare_start_type"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("pmare_start_type"), 0, REG_DWORD,  
 		(unsigned char *)&(options.pmare_start_type), sizeof(options.pmare_start_type));
-	RegSetValueEx(reg_key, _T("pmare_price"), 0, REG_DWORD,  
+	RegSetValueEx(main_key, _T("pmare_price"), 0, REG_DWORD,  
 		(unsigned char *)&(options.pmare_price), sizeof(options.pmare_price));
 
-	
+	// character specific
+
+	RegSetValueEx(player_key, _T("avatar"), 0, REG_BINARY,
+		(unsigned char *)&(options.avatar), sizeof(options.avatar));
+	RegSetValueEx(player_key, _T("ignore_list"), 0, REG_BINARY,
+		(unsigned char *)options.bungholes, MAX_IGNORELIST * sizeof(other_t));
+	RegSetValueEx(player_key, _T("num_ignores"), 0, REG_DWORD,
+		(unsigned char *)&(options.num_bungholes), sizeof(options.num_bungholes));
+
 	// save keyboard layout
 	int num_keys;
 	keymap_t *map;
 	num_keys = keymap->num_keys();
 	map = new keymap_t[num_keys];
 	keymap->GetMap(map);
-	RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD, 
+	RegSetValueEx(player_key, _T("number_keys_mapped"), 0, REG_DWORD,
 		(unsigned char *)&(num_keys), sizeof(num_keys));
-	RegSetValueEx(reg_key, _T("key_mappings"), 0, REG_BINARY, 
+	RegSetValueEx(player_key, _T("key_mappings"), 0, REG_BINARY,
 		(unsigned char *)map, (num_keys*sizeof(keymap_t)));
 	delete map;
 	
@@ -385,12 +387,17 @@ void __cdecl SaveInGameRegistryOptionValues(HKEY reg_key)
 void __cdecl SaveInGameRegistryOptionValues(void)
 {
 	// write out new value to registry
-	HKEY reg_key;
-	unsigned long result;
+	HKEY main_key;
+	HKEY player_key;
+	unsigned long mresult, presult;
 	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(true),0, 
-					NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
-	SaveInGameRegistryOptionValues(reg_key);
-	RegCloseKey(reg_key);
+					NULL,0,KEY_ALL_ACCESS, NULL, &main_key, &mresult);
+
+	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0,
+		NULL, 0, KEY_ALL_ACCESS, NULL, &player_key, &presult);
+	SaveInGameRegistryOptionValues(main_key, player_key);
+	RegCloseKey(main_key);
+	RegCloseKey(player_key);
 }
 
 
@@ -399,82 +406,82 @@ static bool ColorOutOfRange(int color)
 	return color < 0 || color >= NUM_CHAT_COLORS;
 }
 
-void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
+void LoadInGameRegistryOptionValues(HKEY main_key, HKEY player_key, bool force)
 {
 	int num_keys;
 	DWORD keyresult, size, reg_type;
 	keymap_t *map;
 
 	size = sizeof(options.sound_active);
-	keyresult = RegQueryValueEx(reg_key, _T("sound_active"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("sound_active"), NULL, &reg_type,
 		(unsigned char *)&(options.sound_active), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.sound_active = TRUE;
 
 	size = sizeof(options.music_active);
-	keyresult = RegQueryValueEx(reg_key, _T("music_active"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("music_active"), NULL, &reg_type,
 		(unsigned char *)&(options.music_active), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.music_active = TRUE;
 
 	size = sizeof(options.autoreject);
-	keyresult = RegQueryValueEx(reg_key, _T("autoreject"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("autoreject"), NULL, &reg_type,
 		(unsigned char *)&(options.autoreject), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.autoreject = FALSE;
 
 	size = sizeof(options.autorejoin);
-	keyresult = RegQueryValueEx(reg_key, _T("autorejoin"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("autorejoin"), NULL, &reg_type,
 		(unsigned char *)&(options.autorejoin), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.autorejoin = TRUE;
 
 	size = sizeof(options.nametags);
-	keyresult = RegQueryValueEx(reg_key, _T("nametags"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("nametags"), NULL, &reg_type,
 		(unsigned char *)&(options.nametags), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.nametags = TRUE;
 
 	size = sizeof(options.multiline);
-	keyresult = RegQueryValueEx(reg_key, _T("multiline"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("multiline"), NULL, &reg_type,
 		(unsigned char *)&(options.multiline), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.multiline = FALSE;
 
 	size = sizeof(options.footsteps);
-	keyresult = RegQueryValueEx(reg_key, _T("footsteps"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("footsteps"), NULL, &reg_type,
 		(unsigned char *)&(options.footsteps), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.footsteps = TRUE;
 
 	size = sizeof(options.art_prompts);
-	keyresult = RegQueryValueEx(reg_key, _T("art_prompts"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("art_prompts"), NULL, &reg_type,
 		(unsigned char *)&(options.art_prompts), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.art_prompts = TRUE;
 
 	size = sizeof(options.mouselook);
-	keyresult = RegQueryValueEx(reg_key, _T("mouselook"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("mouselook"), NULL, &reg_type,
 		(unsigned char *)&(options.mouselook), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.mouselook = FALSE;
 
 	size = sizeof(options.invertmouse);
-	keyresult = RegQueryValueEx(reg_key, _T("invertmouse"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("invertmouse"), NULL, &reg_type,
 		(unsigned char *)&(options.invertmouse), &size);
 	
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.invertmouse = FALSE;
 	
 	size = sizeof(options.log_chat);
-	keyresult = RegQueryValueEx(reg_key, _T("log_chat"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("log_chat"), NULL, &reg_type,
 		(unsigned char *)&(options.log_chat), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.log_chat = TRUE;
 
 	int turnrate;
 	size = sizeof(turnrate);
-	keyresult = RegQueryValueEx(reg_key, _T("turnrate"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("turnrate"), NULL, &reg_type,
 		(unsigned char *)&(turnrate), &size);
 	if ((keyresult != ERROR_SUCCESS) || force || 
 		(turnrate < min_turnrate) || (turnrate > max_turnrate))
@@ -483,138 +490,138 @@ void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
 		options.turnrate = (float)turnrate; // need intermediate var b/c turnrate is a float
 		
 	size = sizeof(options.effects_volume);
-	keyresult = RegQueryValueEx(reg_key, _T("volume"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("volume"), NULL, &reg_type,
 		(unsigned char *)&(options.effects_volume), &size);
 	if ((keyresult != ERROR_SUCCESS) || force || 
 		(options.effects_volume < min_volume) || (options.effects_volume > max_volume))
 		options.effects_volume = default_volume;
 
 	size = sizeof(options.music_volume);
-	keyresult = RegQueryValueEx(reg_key, _T("music_volume"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("music_volume"), NULL, &reg_type,
 		(unsigned char *)&(options.music_volume), &size);
 	if ((keyresult != ERROR_SUCCESS) || force || 
 		(options.music_volume < min_volume) || (options.music_volume > max_volume))
 		options.music_volume = default_volume;
 
-
-	size = sizeof(options.avatar);
-	keyresult = RegQueryValueEx(reg_key, _T("avatar"), NULL, &reg_type,
-		(unsigned char *)&(options.avatar), &size);
-	if ((keyresult != ERROR_SUCCESS) || force) // default avatar
-		memset(&options.avatar, 0, sizeof(options.avatar));
-
 	size = sizeof(options.speech_color);
-	keyresult = RegQueryValueEx(reg_key, _T("speech_color"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("speech_color"), NULL, &reg_type,
 		(unsigned char *)&(options.speech_color), &size);
 	if ((keyresult != ERROR_SUCCESS) || force || ColorOutOfRange(options.speech_color))
 		options.speech_color = default_speech_color;
 
 	size = sizeof(options.message_color);
-	keyresult = RegQueryValueEx(reg_key, _T("message_color"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("message_color"), NULL, &reg_type,
 		(unsigned char *)&(options.message_color), &size);
 	if ((keyresult != ERROR_SUCCESS) || force || ColorOutOfRange(options.message_color))
 		options.message_color = default_message_color;
 	
 	size = sizeof(options.bg_color);
-	keyresult = RegQueryValueEx(reg_key, _T("bg_color"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("bg_color"), NULL, &reg_type,
 		(unsigned char *)&(options.bg_color), &size);
 	if ((keyresult != ERROR_SUCCESS) || force|| ColorOutOfRange(options.bg_color))
 		options.bg_color = default_bg_color;
 
 	size = sizeof(options.reverse);
-	keyresult = RegQueryValueEx(reg_key, _T("reverse"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("reverse"), NULL, &reg_type,
 		(unsigned char *)&(options.reverse), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.reverse = FALSE;
 
-	size = sizeof(options.num_bungholes);
-	keyresult = RegQueryValueEx(reg_key, _T("num_ignores"), NULL, &reg_type,
-		(unsigned char *)&(options.num_bungholes), &size);
-	if ((keyresult != ERROR_SUCCESS) || 
-		(options.num_bungholes > MAX_IGNORELIST))
-		options.num_bungholes = 0;
-
-	size = MAX_IGNORELIST*sizeof(other_t);
-	keyresult = RegQueryValueEx(reg_key, _T("ignore_list"), NULL, &reg_type,
-		(unsigned char *)options.bungholes, &size);
-	if ((keyresult != ERROR_SUCCESS) || (!options.num_bungholes))
-	{
-		for (int i=0; i<MAX_IGNORELIST; i++)
-			_tcscpy(options.bungholes[i].name, _T(""));
-		options.num_bungholes = 0;
-	}
-
 	size = sizeof(options.autorun);
-	keyresult = RegQueryValueEx(reg_key, _T("autorun"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("autorun"), NULL, &reg_type,
 		(unsigned char *)&(options.autorun), &size);
 	
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.autorun = TRUE;
 
 	size = sizeof(options.adult_filter);
-	keyresult = RegQueryValueEx(reg_key, _T("adult_filter"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("adult_filter"), NULL, &reg_type,
 		(unsigned char *)&(options.adult_filter), &size);
 	
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.adult_filter = TRUE;
 
 	size = sizeof(options.pmare_type);
-	keyresult = RegQueryValueEx(reg_key, _T("pmare_type"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("pmare_type"), NULL, &reg_type,
 		(unsigned char *)&(options.pmare_type), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.pmare_type = 0;
 
 	size = sizeof(options.pmare_start_type);
-	keyresult = RegQueryValueEx(reg_key, _T("pmare_start_type"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("pmare_start_type"), NULL, &reg_type,
 		(unsigned char *)&(options.pmare_start_type), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.pmare_start_type = 0;
 
 
 	size = sizeof(options.pmare_price);
-	keyresult = RegQueryValueEx(reg_key, _T("pmare_price"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("pmare_price"), NULL, &reg_type,
 		(unsigned char *)&(options.pmare_price), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.pmare_price = 0;
 
 
 	size = sizeof(options.pmare_session_start);
-	keyresult = RegQueryValueEx(reg_key, _T("pmare_session_start"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(main_key, _T("pmare_session_start"), NULL, &reg_type,
 		(unsigned char *)&(options.pmare_session_start), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.pmare_session_start.wYear = 1970;
+
+
+	size = sizeof(options.avatar);
+	keyresult = RegQueryValueEx(player_key, _T("avatar"), NULL, &reg_type,
+		(unsigned char *)&(options.avatar), &size);
+	if ((keyresult != ERROR_SUCCESS) || force) // default avatar
+		memset(&options.avatar, 0, sizeof(options.avatar));
+
+	size = sizeof(options.num_bungholes);
+	keyresult = RegQueryValueEx(player_key, _T("num_ignores"), NULL, &reg_type,
+		(unsigned char *)&(options.num_bungholes), &size);
+	if ((keyresult != ERROR_SUCCESS) ||
+		(options.num_bungholes > MAX_IGNORELIST))
+		options.num_bungholes = 0;
+
+	size = MAX_IGNORELIST * sizeof(other_t);
+	keyresult = RegQueryValueEx(player_key, _T("ignore_list"), NULL, &reg_type,
+		(unsigned char *)options.bungholes, &size);
+	if ((keyresult != ERROR_SUCCESS) || (!options.num_bungholes))
+	{
+		for (int i = 0; i<MAX_IGNORELIST; i++)
+			_tcscpy(options.bungholes[i].name, _T(""));
+		options.num_bungholes = 0;
+	}
 
 	// keymapping
 	num_keys = keymap->num_keys();
 	map = new keymap_t[num_keys];
 	keymap->GetMap(map);
 	size = sizeof(num_keys);
-	keyresult = RegQueryValueEx(reg_key, _T("number_keys_mapped"), NULL, &reg_type,
+	keyresult = RegQueryValueEx(player_key, _T("number_keys_mapped"), NULL, &reg_type,
 		(unsigned char *)&(num_keys), &size);
 	if (keyresult == ERROR_SUCCESS)
 	{
 		size = num_keys * sizeof(keymap_t);
 		delete map;
 		map = new keymap_t[num_keys];
-		RegQueryValueEx(reg_key, _T("key_mappings"), NULL, &reg_type,
+		RegQueryValueEx(player_key, _T("key_mappings"), NULL, &reg_type,
 			(unsigned char *)map, &size);
 		keymap->Init(num_keys, map);
 		delete map;
 	}
 	else 
-	{ // may have version without keymap registry entries
+	{ // may have version without keymap registry entries -- look in main registry first and then pull defaults from code
 		keymap->SetDefaultKeymap(0);
 		num_keys = keymap->num_keys();
 		delete map;
 		map = new keymap_t[num_keys];
 		keymap->GetMap(map);
-		RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD, 
+		RegSetValueEx(player_key, _T("number_keys_mapped"), 0, REG_DWORD,
 			(unsigned char *)&(num_keys), sizeof(num_keys));
-		RegSetValueEx(reg_key, _T("key_mappings"), 0, REG_BINARY, 
+		RegSetValueEx(player_key, _T("key_mappings"), 0, REG_BINARY,
 			(unsigned char *)map, (num_keys*sizeof(keymap_t)));
 		delete map;
 	}
 
 	// save them back, in case a default was set
-	SaveInGameRegistryOptionValues(reg_key);
+	SaveInGameRegistryOptionValues(main_key, player_key);
 }

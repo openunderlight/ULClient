@@ -55,10 +55,8 @@ const unsigned int MS_PER_TICK = 53; // ms per IBM PC clock tick
 const unsigned int TALISMAN_INDEX_CUTOFF = 250; // anything above this incurs a linear search
 
 // Return a Reg key indexed by charater name
-TCHAR* RegPlayerKey(bool fBase /* = false */)
+TCHAR* RegPlayerKey(bool fBase)
 {
-	fBase = true; // force common
-
 	if (player == NULL || fBase)
 		return REGISTRY_DATA_KEY;
 
@@ -130,20 +128,30 @@ bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2)
 // registry can not be accessed
 bool __cdecl LoadGameOptions(void)
 {
-	HKEY reg_key = NULL;
-	unsigned long result;
+	HKEY main_key, player_key = NULL;
+	unsigned long mresult, presult;
 
-	if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0, 
-				NULL, 0, KEY_ALL_ACCESS, NULL, &reg_key, &result)
+	if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(true),0, 
+				NULL, 0, KEY_ALL_ACCESS, NULL, &main_key, &mresult)
 					!= ERROR_SUCCESS)
 	{
 		GAME_ERROR(IDS_NO_ACCESS_REGISTRY);
 		return false;
 	}
-	LoadInGameRegistryOptionValues(reg_key, false);
-	LoadOutOfGameRegistryOptionValues(reg_key, false);
 
-	RegCloseKey(reg_key);
+	if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0,
+		NULL, 0, KEY_ALL_ACCESS, NULL, &player_key, &presult)
+		!= ERROR_SUCCESS)
+	{
+		GAME_ERROR(IDS_NO_ACCESS_REGISTRY);
+		return false;
+	}
+
+	LoadInGameRegistryOptionValues(main_key, player_key, false);
+	LoadOutOfGameRegistryOptionValues(main_key, false);
+
+	RegCloseKey(main_key);
+	RegCloseKey(player_key);
 
 	return true;
 }
