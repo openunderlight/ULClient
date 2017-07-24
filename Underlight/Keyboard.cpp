@@ -944,7 +944,17 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		}
 		return true;
 	case VK_F4:
-		agentbox->Show();
+		if ((!itemdlg) && (options.network))
+		{
+
+			cItem *selected_item = cp->SelectedItem();
+			// don't attempt to modify if no item has been selected or if it's not a valid item 			
+			if ((selected_item == NO_ACTOR) || !(actors->ValidItem(selected_item)))
+				return false;
+
+			itemdlg = TRUE;
+			HWND hDlg = CreateLyraDialog(hInstance, IDD_MODIFY_ITEM, cDD->Hwnd_Main(), (DLGPROC)ModifyItemDlgProc);
+		}
 		return true;
 	case VK_F6:
 		player->Teleport(6958, 7522, 979, 29);
@@ -963,6 +973,9 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			arts->CanUseArt(q, true);
 		return true;
 	}
+	case VK_F10:
+		agentbox->Show();
+		return true;
 
 		
 	default:

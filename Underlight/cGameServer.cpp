@@ -245,6 +245,7 @@ cGameServer::cGameServer(unsigned short udp_port_num, unsigned short gs_port_num
 	last_update.SetFlags(0);
 	last_room_target = last_level_target;
 	item_to_dupe = NULL;
+	delete_after_duping = false;
 	displayed_item_use_message = false;
 	alert_count = 0;
 	for (int i = 0; i < ALERT_TABLE_SIZE; i++) {
@@ -3683,8 +3684,9 @@ bool cGameServer::CreateItem(cItem *item, int ttl, TCHAR *description)
 }
 
 #ifdef GAMEMASTER
-void cGameServer::DuplicateItem(cItem *orig_item)
+void cGameServer::DuplicateItem(cItem *orig_item, bool delete_original)
 {
+	delete_after_duping = delete_original;
 	// request the description if there is one
 	if (orig_item->Lmitem().Flags() & LyraItem::FLAG_HASDESCRIPTION)
 	{
@@ -3789,6 +3791,16 @@ void cGameServer::FinalizeItemDuplicate(cItem *orig_item, TCHAR* description)
 	new_item = new cItem(player->x, player->y, player->angle, info, ITEM_CREATING, 0,
 		false, ttl);
 	CreateItem(new_item, ttl, description);
+
+	// destroy the original item, if necessary
+	if (delete_after_duping)
+	{
+		// reset to false, just in case
+		delete_after_duping = false;
+
+		// kill the selected item, NOT the passed in item since we've mucked with the headers
+		cp->SelectedItem()->Destroy();
+	}
 }
 #endif
 

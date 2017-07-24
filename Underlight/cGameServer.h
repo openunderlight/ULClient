@@ -137,6 +137,7 @@ class cGameServer
 	   int			last_level_target;
 	   int			alert_count;
 	   cItem*		item_to_dupe;
+	   bool			delete_after_duping;
 
    public:
       cGameServer(unsigned short udp_port_num = DEFAULT_UDP_PORT, unsigned short gs_port_num = 0);
@@ -179,7 +180,7 @@ class cGameServer
 	  bool GetItem(cItem *item);
 	  bool CreateItem(cItem *item, int ttl = GMsg_PutItem::DEFAULT_TTL, TCHAR *description = NULL);
 #ifdef GAMEMASTER
-	  void DuplicateItem(cItem *orig_item);
+	  void DuplicateItem(cItem *orig_item, bool delete_original = false);
 #endif
 	  bool DropItem(cItem *item);
 	  bool DestroyItem(cItem *item);

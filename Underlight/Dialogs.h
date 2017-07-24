@@ -90,6 +90,7 @@ BOOL CALLBACK GMItemHelpDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 BOOL CALLBACK PlayerItemHelpDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK QuestItemHelpDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK QuestHelpDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK ModifyItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK KeyboardConfigDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK ChooseGuildDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
