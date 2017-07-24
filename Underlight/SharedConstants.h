@@ -849,4 +849,9 @@ const int no_rally_levels[] =
 const int num_no_rally_levels =
   sizeof(no_rally_levels) / sizeof(int);
 
+const int no_damage_levels[] = {41, 47};
+
+const int num_no_damage_levels =
+	sizeof(no_damage_levels) / sizeof(int);
+
 #endif
