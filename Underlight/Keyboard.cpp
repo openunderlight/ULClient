@@ -1171,6 +1171,35 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 					
 				default:
 					break;
+#ifdef UL_DEV
+		// the F12 key is used to test all of the active levels in the game to ensure we don't corrupt level files
+		case VK_F12:
+		{
+			float start_x, start_y, start_level, x, y; int level_id;
+			start_x = player->x;
+			start_y = player->y;
+			start_level = level->ID();
+			for (i = 0; i <= NumLocations(); i++)
+			{
+				_stscanf(LocationCoordinateAt(i), _T("%f;%f;%d"), &x, &y, &level_id);
+				bool success = player->Teleport(x, y, 0, level_id);
+
+				if (!success || (player->x != x || player->y != y || level->ID() != level_id))
+				{
+					strcpy(disp_message, "Level id '%d' (%s) has issues!!!");
+					_stprintf(message, disp_message, level_id, LocationNameAt(i));
+					display->DisplayMessage(message);
+
+					break;
+				}
+				actors->Purge();
+			}
+
+			// do one more teleport to verify the last level in the list is okay
+			player->Teleport(start_x, start_y, 0, start_level);
+			break;
+		}
+#endif
 	}
 	
 	
