@@ -8818,6 +8818,65 @@ void cArts::EndIlluminatedBlade(void *value)
 }
 
 
+void cArts::StartDrainPrime(void)
+{
+
+#ifndef GAMEMASTER
+	LoadString(hInstance, IDS_GM_ONLY, disp_message, sizeof(disp_message));
+	display->DisplayMessage(disp_message);
+	this->ArtFinished(false);
+	return;
+#endif
+
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	entervaluedlg = true;
+	_stprintf(message, "How much Strength do you want to Drain?", player->ID());
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
+	entervalue_callback = (&cArts::EndDrainPrime);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+
+	return;
+}
+
+void cArts::EndDrainPrime(void *value)
+{
+	if (!value)
+		return;
+
+	int drain_amt = 0;
+	_stscanf(message, _T("%d"), &drain_amt);
+	
+	if (drain_amt > 0)
+	{
+		// find the prime to use
+		cItem* prime = FindPrime(Guild::NO_GUILD, drain_amt);
+		if (prime == NO_ITEM)
+		{
+			strcpy(disp_message, "You need a prime artifact with %d strength to drain!");
+			_stprintf(message, disp_message, drain_amt);
+			display->DisplayMessage(message);
+		}
+		else
+		{
+			prime->DrainMetaEssence(drain_amt);
+
+			strcpy(disp_message, "Draining %d strength from %s!");
+			_stprintf(message, disp_message, drain_amt, prime->Name());
+			display->DisplayMessage(message);
+		}
+	}
+
+
+	return;
+}
+
+
 ////////////////////////////////////////////////////////////////
 // *** Arts that require selecting a neighbor and a guild ***
 ////////////////////////////////////////////////////////////////
@@ -10644,7 +10703,7 @@ void cArts::EndLocate(void *value)
 
 	if (locate_all)
 	{
-		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 						NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 
 		size = sizeof(num_buddies);

@@ -291,6 +291,9 @@ void __cdecl CreateFrame(void)
 			//_tprintf("now: %d logout: %d\n", LyraTime(), options.pmare_logout_time);
 			if (LyraTime() > options.pmare_logout_time)
 			{
+				// collapse the pmare on its way out
+				player->SetCurrStat(Stats::DREAMSOUL, 0, SET_ABSOLUTE, Lyra::ID_UNKNOWN);
+
 				exiting = true;
 				gs->Logout(GMsg_Logout::LOGOUT_NORMAL, true);
 				LoadString (hInstance, IDS_PMARE_TIMEOUT, message, sizeof(message));

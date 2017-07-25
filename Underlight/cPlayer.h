@@ -128,6 +128,7 @@ class cPlayer : public cActor
 	   avatar_poses_t *avatar_poses;
 	   bool old_sanct;
 	   bool checksum_incorrect;
+	   bool safezone;
 	   lyra_id_t last_party_leader;
 	   unsigned int collapse_time;
 	   bool item_flags_sorting_changed;

@@ -366,7 +366,7 @@ BEGIN
     PUSHBUTTON      "<",IDC_SCROLL_LEFT,379,5,11,11
     PUSHBUTTON      ">",IDC_SCROLL_RIGHT,391,5,11,11
     PUSHBUTTON      "Doom Layout",IDC_DOOMLAYOUT,40,2,66,13
-    PUSHBUTTON      "Mouse Layout",IDC_MOUSELAYOUT,146,2,66,13
+    PUSHBUTTON      "Mouse Layout",IDC_MOUSELAYOUT,146,2,66,13,NOT WS_VISIBLE
 END
 
 IDD_CHOOSE_DESTINATION DIALOGEX 0, 0, 203, 91
@@ -4463,6 +4463,7 @@ BEGIN
     IDS_FOCAL_BLADE         "Focal Blade"
     IDS_FOCAL_FLAME         "Focal Flame"
     IDS_NOT_ENOUGH_PT       "You do not have enough Power Tokens to create that item!"
+    IDS_PT_COMBINED         "You have combined your Power Tokens!"
 END
 
 #endif    // English (United States) resources
