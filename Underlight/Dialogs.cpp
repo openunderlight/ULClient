@@ -1613,6 +1613,7 @@ BOOL CALLBACK ModifyItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			break;
 
 		case WM_INITDIALOG: {
+			SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
 			selected_item = cp->SelectedItem();
 			TCHAR buffer[64];
 
