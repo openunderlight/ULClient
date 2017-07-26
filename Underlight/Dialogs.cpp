@@ -1739,46 +1739,7 @@ BOOL CALLBACK ModifyItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 
 					int graphic = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO)));
 
-					LmItem lmitem = selected_item->Lmitem();
-					
-					lmitem.SetName(itemname);
-					lmitem.SetCharges(numcharges);
-					lmitem.Header().SetGraphic(graphic);
-
-					if (is_nopickup)
-					{
-						// make sure we don't have always drop
-						if (lmitem.FlagSet(LyraItem::FLAG_ALWAYS_DROP))
-							lmitem.Header().ClearFlag(LyraItem::FLAG_ALWAYS_DROP);
-
-						// add noreap, if necessary
-						if (!lmitem.FlagSet(LyraItem::FLAG_NOREAP))
-							lmitem.Header().SetFlag(LyraItem::FLAG_NOREAP);
-					}
-					else if (is_artifact)
-					{
-						// add noreap, if necessary
-						if (!lmitem.FlagSet(LyraItem::FLAG_NOREAP))
-							lmitem.Header().SetFlag(LyraItem::FLAG_NOREAP);
-
-						// add always drop, if necessary
-						if (!lmitem.FlagSet(LyraItem::FLAG_ALWAYS_DROP))
-							lmitem.Header().SetFlag(LyraItem::FLAG_ALWAYS_DROP);
-					}
-					else
-					{
-						// clear both noreap and always drop if the flags are set
-						if (lmitem.FlagSet(LyraItem::FLAG_ALWAYS_DROP))
-							lmitem.Header().ClearFlag(LyraItem::FLAG_ALWAYS_DROP);
-
-						if (lmitem.FlagSet(LyraItem::FLAG_NOREAP))
-							lmitem.Header().ClearFlag(LyraItem::FLAG_NOREAP);
-					}
-					
-					selected_item->SetLmItem(lmitem);
-
-					// save the item
-					gs->DuplicateItem(selected_item, true);
+					gs->ModifyItem(selected_item, itemname, numcharges, graphic, is_nopickup, is_artifact);
 					
 					DestroyWindow(hDlg);
 					return TRUE;

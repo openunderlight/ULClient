@@ -54,6 +54,7 @@ struct alert_t {
 
 // make manipulation of goal detail message easier
 typedef TCHAR pname_t[Lyra::PLAYERNAME_MAX];
+typedef void (cGameServer::*desc_method_t)(cItem *item, TCHAR* descript);
 
 ///////////////////////////////////////////////////////////////////
 // Additional Windows Messages
@@ -137,7 +138,7 @@ class cGameServer
 	   int			last_level_target;
 	   int			alert_count;
 	   cItem*		item_to_dupe;
-	   bool			delete_after_duping;
+	   desc_method_t	descript_callback;
 
    public:
       cGameServer(unsigned short udp_port_num = DEFAULT_UDP_PORT, unsigned short gs_port_num = 0);
@@ -180,7 +181,8 @@ class cGameServer
 	  bool GetItem(cItem *item);
 	  bool CreateItem(cItem *item, int ttl = GMsg_PutItem::DEFAULT_TTL, TCHAR *description = NULL);
 #ifdef GAMEMASTER
-	  void DuplicateItem(cItem *orig_item, bool delete_original = false);
+	  void ModifyItem(cItem *orig_item, TCHAR* new_name, int new_charges, int new_graphic, bool is_nopickup, bool is_artifact);
+	  void DuplicateItem(cItem *orig_item);
 #endif
 	  bool DropItem(cItem *item);
 	  bool DestroyItem(cItem *item);
@@ -266,7 +268,9 @@ class cGameServer
 
    private:
 #ifdef GAMEMASTER
+	  void FinalizeItemModify(cItem *item_to_modify, TCHAR* description);
 	  void FinalizeItemDuplicate(cItem *orig_item, TCHAR* description);
+	  void CloneItemFunction(LmItem& info, const void *state, int item_function);
 #endif
 	  void InitUDPSocket(void);
 	  void FillInPlayerPosition(LmPeerUpdate *update, int trigger = TRIGGER_TIMER);
