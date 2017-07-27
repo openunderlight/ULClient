@@ -3758,9 +3758,11 @@ void cGameServer::FinalizeItemModify(cItem *item_to_modify, TCHAR* description)
 	if ((cp->SelectedItem() == NO_ACTOR) || !(actors->ValidItem(cp->SelectedItem())))
 		return;
 
-	CreateItem(item_to_modify, GMsg_PutItem::DEFAULT_TTL, description);
-
-	cp->SelectedItem()->Destroy();
+	if (CreateItem(item_to_modify, GMsg_PutItem::DEFAULT_TTL, description))
+	{
+		// delete the existing item if we successfully create a new one
+		cp->SelectedItem()->Destroy();
+	}
 }
 
 void cGameServer::DuplicateItem(cItem *orig_item)
