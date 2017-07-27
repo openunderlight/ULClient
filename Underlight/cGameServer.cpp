@@ -3733,7 +3733,14 @@ void cGameServer::ModifyItem(cItem *orig_item, TCHAR* new_name, int new_charges,
 
 
 	info.Init(header, new_name, 0, 0, 0);
-	CloneItemFunction(info, state, orig_item->ItemFunction(0));
+
+	if (!CloneItemFunction(info, state, orig_item->ItemFunction(0)))
+	{
+		// fail out
+		display->DisplayMessage("Cannot modify selected item function");
+		return;
+	}
+	
 	info.SetCharges(new_charges);
 
 	new_item = new cItem(player->x, player->y, player->angle, info, ITEM_CREATING, 0,
@@ -3801,7 +3808,11 @@ void cGameServer::FinalizeItemDuplicate(cItem *orig_item, TCHAR* description)
 	const void *state = orig_item->Lmitem().StateField(0);
 	info.Init(header, orig_item->Name(), 0, 0, 0);
 
-	CloneItemFunction(info, state, orig_item->ItemFunction(0));
+	if (!CloneItemFunction(info, state, orig_item->ItemFunction(0)))
+	{
+		display->DisplayMessage("Cannot duplicate selected item function");
+		return;
+	}
 
 	// set charges
 	info.SetCharges(orig_item->Lmitem().Charges());
@@ -3812,71 +3823,75 @@ void cGameServer::FinalizeItemDuplicate(cItem *orig_item, TCHAR* description)
 	CreateItem(new_item, ttl, description);
 }
 
-void cGameServer::CloneItemFunction(LmItem& info, const void *state, int item_function)
+bool cGameServer::CloneItemFunction(LmItem& info, const void *state, int item_function)
 {
 	// handle the item function
 	switch (item_function)
 	{
-	case LyraItem::NOTHING_FUNCTION:
-	{
-		lyra_item_nothing_t do_nothing;
-		memcpy(&do_nothing, state, sizeof(do_nothing));
-		info.SetStateField(0, &do_nothing, sizeof(do_nothing));
-		break;
+		case LyraItem::NOTHING_FUNCTION:
+		{
+			lyra_item_nothing_t do_nothing;
+			memcpy(&do_nothing, state, sizeof(do_nothing));
+			info.SetStateField(0, &do_nothing, sizeof(do_nothing));
+			break;
+		}
+		case LyraItem::CHANGE_STAT_FUNCTION:
+		{
+			lyra_item_change_stat_t change_stat;
+			memcpy(&change_stat, state, sizeof(lyra_item_change_stat_t));
+			info.SetStateField(0, &change_stat, sizeof(change_stat));
+			break;
+		}
+		case LyraItem::MISSILE_FUNCTION:
+		{
+			lyra_item_missile_t missile;
+			memcpy(&missile, state, sizeof(lyra_item_missile_t));
+			info.SetStateField(0, &missile, sizeof(missile));
+			break;
+		}
+		case LyraItem::EFFECT_PLAYER_FUNCTION:
+		{
+			lyra_item_effect_player_t effect_player;
+			memcpy(&effect_player, state, sizeof(lyra_item_effect_player_t));
+			info.SetStateField(0, &effect_player, sizeof(effect_player));
+			break;
+		}
+		case LyraItem::ARMOR_FUNCTION:
+		{
+			lyra_item_armor_t armor;
+			memcpy(&armor, state, sizeof(lyra_item_armor_t));
+			info.SetStateField(0, &armor, sizeof(armor));
+			break;
+		}
+		case LyraItem::AMULET_FUNCTION:
+		{
+			lyra_item_amulet_t amulet;
+			memcpy(&amulet, state, sizeof(lyra_item_amulet_t));
+			info.SetStateField(0, &amulet, sizeof(amulet));
+			break;
+		}
+		case LyraItem::ESSENCE_FUNCTION:
+		{
+			lyra_item_essence_t essence;
+			memcpy(&essence, state, sizeof(lyra_item_essence_t));
+			info.SetStateField(0, &essence, sizeof(essence));
+			break;
+		}
+		case LyraItem::SUPPORT_FUNCTION:
+		{
+			lyra_item_support_t support;
+			memcpy(&support, state, sizeof(lyra_item_support_t));
+			info.SetStateField(0, &support, sizeof(support));
+			break;
+		}
+		default:
+		{			
+			return false;
+		}
+		
 	}
-	case LyraItem::CHANGE_STAT_FUNCTION:
-	{
-		lyra_item_change_stat_t change_stat;
-		memcpy(&change_stat, state, sizeof(lyra_item_change_stat_t));
-		info.SetStateField(0, &change_stat, sizeof(change_stat));
-		break;
-	}
-	case LyraItem::MISSILE_FUNCTION:
-	{
-		lyra_item_missile_t missile;
-		memcpy(&missile, state, sizeof(lyra_item_missile_t));
-		info.SetStateField(0, &missile, sizeof(missile));
-		break;
-	}
-	case LyraItem::EFFECT_PLAYER_FUNCTION:
-	{
-		lyra_item_effect_player_t effect_player;
-		memcpy(&effect_player, state, sizeof(lyra_item_effect_player_t));
-		info.SetStateField(0, &effect_player, sizeof(effect_player));
-		break;
-	}
-	case LyraItem::ARMOR_FUNCTION:
-	{
-		lyra_item_armor_t armor;
-		memcpy(&armor, state, sizeof(lyra_item_armor_t));
-		info.SetStateField(0, &armor, sizeof(armor));
-		break;
-	}
-	case LyraItem::AMULET_FUNCTION:
-	{
-		lyra_item_amulet_t amulet;
-		memcpy(&amulet, state, sizeof(lyra_item_amulet_t));
-		info.SetStateField(0, &amulet, sizeof(amulet));
-		break;
-	}
-	case LyraItem::ESSENCE_FUNCTION:
-	{
-		lyra_item_essence_t essence;
-		memcpy(&essence, state, sizeof(lyra_item_essence_t));
-		info.SetStateField(0, &essence, sizeof(essence));
-		break;
-	}
-	case LyraItem::SUPPORT_FUNCTION:
-	{
-		lyra_item_support_t support;
-		memcpy(&support, state, sizeof(lyra_item_support_t));
-		info.SetStateField(0, &support, sizeof(support));
-		break;
-	}
-	default:
-		display->DisplayMessage("Cannot duplicate selected item function");
-		return;
-	}
+
+	return true;
 }
 #endif
 

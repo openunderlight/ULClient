@@ -270,7 +270,7 @@ class cGameServer
 #ifdef GAMEMASTER
 	  void FinalizeItemModify(cItem *item_to_modify, TCHAR* description);
 	  void FinalizeItemDuplicate(cItem *orig_item, TCHAR* description);
-	  void CloneItemFunction(LmItem& info, const void *state, int item_function);
+	  bool CloneItemFunction(LmItem& info, const void *state, int item_function);
 #endif
 	  void InitUDPSocket(void);
 	  void FillInPlayerPosition(LmPeerUpdate *update, int trigger = TRIGGER_TIMER);
