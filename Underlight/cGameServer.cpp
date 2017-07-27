@@ -3688,9 +3688,6 @@ bool cGameServer::CreateItem(cItem *item, int ttl, TCHAR *description)
 
 void cGameServer::ModifyItem(cItem *orig_item, TCHAR* new_name, int new_charges, int new_graphic, bool is_nopickup, bool is_artifact)
 {
-	_stprintf(temp_message, "Modifying item name '%s', with charges %d, to nopickup: %d, and artifact: %d ", new_name, new_charges, is_nopickup, is_artifact);
-	display->DisplayMessage(temp_message);
-
 	cItem *new_item;
 	LmItem info;
 	LmItemHdr header;
