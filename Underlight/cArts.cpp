@@ -7654,7 +7654,7 @@ void cArts::EndSacrifice(void)
 	bool is_missile = false;
 	const void* state;
 
-	if ((chakram_item == NO_ACTOR) || !(actors->ValidItem(chakram_item)))
+	if ((chakram_item == NO_ACTOR) || !(actors->ValidItem(chakram_item)) || chakram_item->Lmitem().FlagSet(LyraItem::FLAG_HASDESCRIPTION))
 	{
 		this->DisplayItemBailed(Arts::SACRIFICE);
 		this->ArtFinished(false);
@@ -7670,7 +7670,7 @@ void cArts::EndSacrifice(void)
 			if (missile.velocity != 0)
 				is_missile = true;
 		}
-
+	
 	if (is_missile)
 	{ // transmute into an imprisoned talisman
       // create new talisman for imprisoned mare essence
@@ -7680,7 +7680,13 @@ void cArts::EndSacrifice(void)
 		header.SetColor1(0); header.SetColor2(0);
 		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
 		essence.type = LyraItem::ESSENCE_FUNCTION;
-		essence.strength = 1 + player->SkillSphere(Arts::SACRIFICE);
+		// Scale up by 10 while calculating to account for integer division
+		int essence_str = (((MinModifierSkill(missile.damage)*10 / 2) * ((player->Skill(Arts::SACRIFICE) + 1 ) / 10))/100) + 1;
+#ifdef UL_DEV
+		_stprintf(temp_message, "Sacrificed token with %d strength has been created.", essence_str);
+		display->DisplayMessage(temp_message);
+#endif
+		essence.strength = essence_str;
 		essence.mare_type = 2;
 		essence.slaver_id = player->ID();
 		essence.weapon_type = 0;
