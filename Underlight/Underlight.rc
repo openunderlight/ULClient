@@ -4443,6 +4443,7 @@ BEGIN
     IDS_FOCAL_FLAME         "Focal Flame"
     IDS_NOT_ENOUGH_PT       "You do not have enough Power Tokens to create that item!"
     IDS_PT_COMBINED         "You have combined your Power Tokens!"
+    IDS_NO_SACRIFICE        "Sacrifice failed. You cannot Sacrifice an item with a Description!"
 END
 
 #endif    // English (United States) resources

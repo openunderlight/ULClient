@@ -7654,9 +7654,17 @@ void cArts::EndSacrifice(void)
 	bool is_missile = false;
 	const void* state;
 
-	if ((chakram_item == NO_ACTOR) || !(actors->ValidItem(chakram_item)) || chakram_item->Lmitem().FlagSet(LyraItem::FLAG_HASDESCRIPTION))
+	if ((chakram_item == NO_ACTOR) || !(actors->ValidItem(chakram_item)))
 	{
 		this->DisplayItemBailed(Arts::SACRIFICE);
+		this->ArtFinished(false);
+		return;
+	}
+
+	if (chakram_item->Lmitem().FlagSet(LyraItem::FLAG_HASDESCRIPTION))
+	{
+		LoadString(hInstance, IDS_NO_SACRIFICE, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 		return;
 	}
