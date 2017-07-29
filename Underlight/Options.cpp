@@ -637,16 +637,41 @@ void LoadCharacterRegistryOptionValues(HKEY reg_key, bool force)
 	}
 	else
 	{ // may have version without keymap registry entries -- look in main registry first and then pull defaults from code
-		keymap->SetDefaultKeymap(0);
-		num_keys = keymap->num_keys();
-		delete map;
-		map = new keymap_t[num_keys];
-		keymap->GetMap(map);
-		RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD,
-			(unsigned char *)&(num_keys), sizeof(num_keys));
-		RegSetValueEx(reg_key, _T("key_mappings"), 0, REG_BINARY,
-			(unsigned char *)map, (num_keys * sizeof(keymap_t)));
-		delete map;
+
+		HKEY main_key = NULL;
+		unsigned long mresult;
+		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(true), 0,
+			NULL, 0, KEY_ALL_ACCESS, NULL, &main_key, &mresult);
+
+		keyresult = RegQueryValueEx(main_key, _T("number_keys_mapped"), NULL, &reg_type,
+			(unsigned char *)&(num_keys), &size);
+
+		if (keyresult == ERROR_SUCCESS)
+		{
+			size = num_keys * sizeof(keymap_t);
+			delete map;
+			map = new keymap_t[num_keys];
+			RegQueryValueEx(main_key, _T("key_mappings"), NULL, &reg_type,
+				(unsigned char *)map, &size);
+			keymap->Init(num_keys, map);
+			delete map;
+		}
+		else
+		{
+			// okay, we really don't have keys set, use defaults
+			keymap->SetDefaultKeymap(0);
+			num_keys = keymap->num_keys();
+			delete map;
+			map = new keymap_t[num_keys];
+			keymap->GetMap(map);
+			RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD,
+				(unsigned char *)&(num_keys), sizeof(num_keys));
+			RegSetValueEx(reg_key, _T("key_mappings"), 0, REG_BINARY,
+				(unsigned char *)map, (num_keys * sizeof(keymap_t)));
+			delete map;
+		}
+
+		RegCloseKey(main_key);
 	}
 
 	// save it incase something changed
