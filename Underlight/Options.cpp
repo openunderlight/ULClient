@@ -364,7 +364,6 @@ void __cdecl SaveInGameRegistryOptionValues(HKEY reg_key)
 
 void __cdecl SaveCharacterRegistryOptionValues(HKEY reg_key)
 {
-	// character specific
 	RegSetValueEx(reg_key, _T("avatar"), 0, REG_BINARY,
 		(unsigned char *)&(options.avatar), sizeof(options.avatar));
 	RegSetValueEx(reg_key, _T("ignore_list"), 0, REG_BINARY,
