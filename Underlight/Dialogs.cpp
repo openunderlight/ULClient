@@ -1757,8 +1757,9 @@ BOOL CALLBACK ModifyItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					break;
 			}
 	}
-	return FALSE;
 #endif
+	
+	return FALSE;
 }
 
 // window proc for create item dialog box
