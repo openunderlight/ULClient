@@ -973,7 +973,13 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 									 } break;
 
 	case LyraEffect::PLAYER_BLEED: {
-		if (this->flags & ACTOR_PROT_CURSE) {
+		if (safezone)
+		{
+			LoadString(hInstance, IDS_PLAYER_BLEED_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			return false;
+		}
+		else if (this->flags & ACTOR_PROT_CURSE) {
 			LoadString (hInstance, IDS_PLAYER_BLEED_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
 			timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE] -= CalculateBreakthrough(duration, effect_origin);
@@ -985,7 +991,13 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 								   } break;
 
 	case LyraEffect::PLAYER_POISONED: {
-		if (this->flags & ACTOR_NO_POISON)
+		if (safezone)
+		{
+			LoadString(hInstance, IDS_PLAYER_POISON_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			return false;
+		}
+		else if (this->flags & ACTOR_NO_POISON)
 		{
 			LoadString (hInstance, IDS_PLAYER_POISON_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
