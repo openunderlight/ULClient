@@ -1054,7 +1054,7 @@ bool eligibleForFlag(unsigned flag)
 	if (flag & BY_DOL)
 		return player->IsInGuild(Guild::LIGHT);
 	if (flag & NOGUILD)
-		return player->NumGuilds(Guild::INITIATE) == 0;
+		return player->NumGuilds(Guild::RULER_PENDING) == 0;
 
 	return false;
 }
