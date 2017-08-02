@@ -1044,6 +1044,17 @@ bool PointInBox (linedef *line1, linedef *line2, float x, float y)
 	return true;
 }
 
+static bool CanAlterPlanarPortal()
+{
+#ifndef GAMEMASTER
+	// only gms can do this. No shattering by players
+	return false;
+#endif
+
+	// Must use lock or shatter to affect a planar portal
+	return arts->CurrentArt() == Arts::LOCK || arts->CurrentArt() == Arts::SHATTER;
+}
+
 
 // if move is false, don't actually move the actor
 // if result is non-null, fill in with the result of the move
@@ -1075,7 +1086,7 @@ static void VectorMove(move_params_t *m, move_result_t *result)
 
 		if (m->move_type == MOVE_FIND_TELEPORTAL)
 		{
-			if (l->TripFlags & TRIP_TELEPORT)
+			if (l->TripFlags & TRIP_TELEPORT || (l->TripFlags & TRIP_LEVELCHANGE && CanAlterPlanarPortal()))
 			{
 				if (result)
 				{
