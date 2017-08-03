@@ -947,7 +947,7 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		agentbox->Show();
 		return true;
 	case VK_F5:
-		arts->StartDrainPrime();
+		arts->StartAlterPrimeStrength();
 		return true;
 	case VK_F6:
 		player->Teleport(6958, 7522, 979, 29);

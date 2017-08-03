@@ -103,6 +103,7 @@ class cItem : public cActor
 	  bool Recharge(int plateau);
 	  bool DrainEssence(int amount);
 	  bool DrainMetaEssence(int amount);
+	  bool AddMetaEssence(int amount);
 	  void ApplyGratitude(cNeighbor* n);
 	  bool SurviveLevelChange(void);
 	  bool NoPickup(void);

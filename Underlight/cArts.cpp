@@ -8818,7 +8818,7 @@ void cArts::EndIlluminatedBlade(void *value)
 }
 
 
-void cArts::StartDrainPrime(void)
+void cArts::StartAlterPrimeStrength(void)
 {
 
 #ifndef GAMEMASTER
@@ -8835,27 +8835,64 @@ void cArts::StartDrainPrime(void)
 	}
 
 	entervaluedlg = true;
-	_stprintf(message, "How much Strength do you want to Drain?", player->ID());
+	_stprintf(message, "Enter Strength to add (+) or remove (-):", player->ID());
 	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
 		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
-	entervalue_callback = (&cArts::EndDrainPrime);
+	entervalue_callback = (&cArts::EndAlterPrimeStrength);
 	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
 
 	return;
 }
 
-void cArts::EndDrainPrime(void *value)
+void cArts::EndAlterPrimeStrength(void *value)
 {
 	if (!value)
 		return;
 
-	int drain_amt = 0;
-	_stscanf(message, _T("%d"), &drain_amt);
+	int entered_value = 0;
+	_stscanf(message, _T("%d"), &entered_value);
 	
-	if (drain_amt > 0)
+	// pull the selected item to try it first
+	cItem* prime = cp->SelectedItem();
+
+	// add strength
+	if (entered_value > 0)
 	{
-		// find the prime to use
-		cItem* prime = FindPrime(Guild::NO_GUILD, drain_amt);
+		// we don't have a prime selected so try to find one in the pack
+		if (prime == NO_ITEM || prime->ItemFunction(0) != LyraItem::META_ESSENCE_FUNCTION)
+		{
+			// find the prime to use
+			prime = FindPrime(Guild::NO_GUILD, 0);
+		}
+
+		if (prime == NO_ITEM)
+		{
+			strcpy(disp_message, "You need a prime artifact to alter!");
+			display->DisplayMessage(disp_message);
+		}
+		else
+		{
+			prime->AddMetaEssence(entered_value);
+
+			strcpy(disp_message, "Adding %d strength to %s!");
+			_stprintf(message, disp_message, entered_value, prime->Name());
+			display->DisplayMessage(message);
+		}
+
+	}
+	// remove strength
+	else if (entered_value < 0)
+	{
+		// make it a positive number
+		int drain_amt = entered_value * -1;
+
+		// we don't have a prime selected so try to find one in the pack
+		if (prime == NO_ITEM || prime->ItemFunction(0) != LyraItem::META_ESSENCE_FUNCTION)
+		{
+			// find the prime to use
+			prime = FindPrime(Guild::NO_GUILD, drain_amt);
+		}
+
 		if (prime == NO_ITEM)
 		{
 			strcpy(disp_message, "You need a prime artifact with %d strength to drain!");
