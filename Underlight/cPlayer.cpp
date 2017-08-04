@@ -2814,6 +2814,38 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 		return false;
 	}
 
+	// check to see if we should redirect elsewhere
+	// level 20 - room 3 for random teleport redirect
+	if (level_id == 20 || (level_id == NO_LEVEL && LastLevel() == 20))
+	{
+		int current_level;
+
+		// NO_LEVEL is used when using portals on the same plane
+		if (level_id == NO_LEVEL)
+			current_level = level_id;
+		else
+			current_level = LastLevel();		
+
+		if (current_level != 20)
+		{
+			if (options.network)
+				cDD->ShowIntroBitmap();
+
+			level->Load(20);
+		}
+
+		int p_sector = FindSector(x, y, 0, true);
+
+		if ((p_sector != DEAD_SECTOR) && (level->Rooms[level->Sectors[p_sector]->room].id == 3))
+		{
+			return this->Teleport(6378, -2411, 0, 45, LyraSound::NONE);
+		}
+		else if (current_level != 20)
+		{
+			level->Load(current_level);
+		}
+	}
+
 	this->MarkLastLocation();
 
 	// play sound for teleport
