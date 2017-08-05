@@ -1183,8 +1183,9 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			{
 				_stscanf(LocationCoordinateAt(i), _T("%f;%f;%d"), &x, &y, &level_id);
 				bool success = player->Teleport(x, y, 0, level_id);
-
-				if (!success || (player->x != x || player->y != y || level->ID() != level_id))
+				int new_sector = FindSector(x, y, 0, true);
+				
+				if (!success || (player->x != x || player->y != y || level->ID() != level_id) || new_sector == DEAD_SECTOR)
 				{
 					strcpy(disp_message, "Level id '%d' (%s) has issues!!!");
 					_stprintf(message, disp_message, level_id, LocationNameAt(i));
