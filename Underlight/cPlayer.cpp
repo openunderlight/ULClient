@@ -44,6 +44,8 @@ extern xp_entry lyra_xp_table[];
 const int PLAYER_WALK_ANIMATE_TICKS  = 84;
 const int PLAYER_RUN_ANIMATE_TICKS	 = 56;
 const int PLAYER_BLADE_ANIMATE_TICKS = 1;
+const int TP_REDIRECT_LEVEL = 20;
+const int TP_REDIRECT_ROOM = 3;
 
 // # of actor-collision-free moves after a teleport
 const unsigned int NUM_FREE_MOVES	 = 5;
@@ -2814,36 +2816,30 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 		return false;
 	}
 
-	// check to see if we should redirect elsewhere
-	// level 20 - room 3 for random teleport redirect
-	if (level_id == 20 || (level_id == NO_LEVEL && LastLevel() == 20))
+	bool trigger_redirect = false;
+
+	// check if we're going to redirect the player elsewhere
+	if (level_id == NO_LEVEL && LastLevel() == TP_REDIRECT_LEVEL)
 	{
-		int current_level;
-
-		// NO_LEVEL is used when using portals on the same plane
-		if (level_id == NO_LEVEL)
-			current_level = level_id;
-		else
-			current_level = LastLevel();		
-
-		if (current_level != 20)
-		{
-			if (options.network)
-				cDD->ShowIntroBitmap();
-
-			level->Load(20);
-		}
-
+		// we're in the same plane so use the sector to track down the room
 		int p_sector = FindSector(x, y, 0, true);
 
-		if ((p_sector != DEAD_SECTOR) && (level->Rooms[level->Sectors[p_sector]->room].id == 3))
+		// check if we're traveling to the redirect room and set the flag if we are
+		if ((p_sector != DEAD_SECTOR) && (level->Rooms[level->Sectors[p_sector]->room].id == TP_REDIRECT_ROOM))
 		{
-			return this->Teleport(6378, -2411, 0, 45, LyraSound::NONE);
+			trigger_redirect = true;
 		}
-		else if (current_level != 20)
-		{
-			level->Load(current_level);
-		}
+	}
+	// These coords mean a GM is trying to send the player somewhere random
+	else if (x == 0 && y == 0 && level_id == 0)
+	{
+		trigger_redirect = true;
+	}
+
+	if (trigger_redirect)
+	{
+		// we need to have a random redirect list to choose from here
+		return this->Teleport(6378, -2411, 0, 45, LyraSound::NONE);
 	}
 
 	this->MarkLastLocation();
