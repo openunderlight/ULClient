@@ -44,7 +44,7 @@ extern xp_entry lyra_xp_table[];
 const int PLAYER_WALK_ANIMATE_TICKS  = 84;
 const int PLAYER_RUN_ANIMATE_TICKS	 = 56;
 const int PLAYER_BLADE_ANIMATE_TICKS = 1;
-const int TP_REDIRECT_LEVEL = 20;
+const int TP_REDIRECT_LEVEL = 52; // setting to level 52 for now since there isn't a level 52
 const int TP_REDIRECT_ROOM = 3;
 
 // # of actor-collision-free moves after a teleport
@@ -2838,8 +2838,12 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 
 	if (trigger_redirect)
 	{
+		float new_x, new_y;
+		int new_level;
+		_stscanf(DisperseCoordinate(-1), _T("%f;%f;%d"), &new_x, &new_y, &new_level);
+
 		// we need to have a random redirect list to choose from here
-		return this->Teleport(6378, -2411, 0, 45, LyraSound::NONE);
+		return this->Teleport(new_x, new_y, 0, new_level, LyraSound::NONE);
 	}
 
 	this->MarkLastLocation();
