@@ -1196,6 +1196,24 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 				actors->Purge();
 			}
 
+			// now check the random tp dispersement locations
+			for (i = 0; i <= NumDisperseLocs(); i++)
+			{
+				_stscanf(DisperseCoordinate(i), _T("%f;%f;%d"), &x, &y, &level_id);
+				bool success = player->Teleport(x, y, 0, level_id);
+				int new_sector = FindSector(x, y, 0, true);
+
+				if (!success || (player->x != x || player->y != y || level->ID() != level_id) || new_sector == DEAD_SECTOR)
+				{
+					strcpy(disp_message, "Dispersement Level id '%d' and index '%d' has issues!!!");
+					_stprintf(message, disp_message, level_id, i);
+					display->DisplayMessage(message);
+
+					break;
+				}
+				actors->Purge();
+			}
+
 			// do one more teleport to verify the last level in the list is okay
 			player->Teleport(start_x, start_y, 0, start_level);
 			break;
