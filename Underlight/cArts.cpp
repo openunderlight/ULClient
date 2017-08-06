@@ -6056,8 +6056,11 @@ void cArts::ApplyExpel(int guild_id, lyra_id_t caster_id)
 
     player->EvokedFX().Activate(Arts::EXPEL, false);
 
-	// send to Boggen's lair = 7049;-4831;39 
-	player->Teleport (7049, -4831, 0, 39);	
+	float new_x, new_y;
+	int new_level;
+	_stscanf(DisperseCoordinate(-1), _T("%f;%f;%d"), &new_x, &new_y, &new_level);
+
+	player->Teleport(new_x, new_y, 0, new_level);
 
 	return;
 }
@@ -6786,8 +6789,11 @@ void cArts::ApplyChaosPurge(lyra_id_t caster_id)
 
     player->EvokedFX().Activate(Arts::CHAOS_PURGE, false);
 
-	// send to 885;3898;42 
-	player->Teleport (885, 3898, 0, 42);	
+	float new_x, new_y;
+	int new_level;
+	_stscanf(DisperseCoordinate(-1), _T("%f;%f;%d"), &new_x, &new_y, &new_level);
+
+	player->Teleport(new_x, new_y, 0, new_level);
 
 	return;
 }
