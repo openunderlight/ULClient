@@ -769,7 +769,7 @@ void cItem::Use(void)
 					if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE)
 					{ 
 						// add strength to meta talisman
-						if (avail_space > essence.strength) {
+						if (avail_space >= essence.strength) {
 							// meta talisman can take the entire essence
 							nexus.strength += essence.strength;
 							// only increase essences if it's entirely absorbed
