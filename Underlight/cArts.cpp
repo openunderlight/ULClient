@@ -8476,7 +8476,14 @@ void cArts::GiveReply(void *value)
 		return;
 
 	if (success)
+	{
+		// Cancel the guildhouse evoke if the player is accepting an item
+		// the chances of this occurring are miniscule but just in case!
+		if (this->CurrentArt() == Arts::GUILDHOUSE)
+			this->CancelArt();
+
 		gs->TakeItemAck(GMsg_TakeItemAck::TAKE_YES, receiving_item);
+	}
 	else
 		gs->TakeItemAck(GMsg_TakeItemAck::TAKE_NO, receiving_item);
 }
