@@ -8874,6 +8874,9 @@ void cArts::EndAlterPrimeStrength(void *value)
 		{
 			prime->AddMetaEssence(entered_value);
 
+			_stprintf(disp_message, "%s is adding %d strength to %s!", player->Name(), entered_value, prime->Name());
+			gs->Talk(disp_message, RMsg_Speech::RP, Lyra::ID_UNKNOWN, true);
+
 			strcpy(disp_message, "Adding %d strength to %s!");
 			_stprintf(message, disp_message, entered_value, prime->Name());
 			display->DisplayMessage(message);
@@ -8902,6 +8905,9 @@ void cArts::EndAlterPrimeStrength(void *value)
 		else
 		{
 			prime->DrainMetaEssence(drain_amt);
+
+			_stprintf(disp_message, "%s is removing %d strength to %s!", player->Name(), drain_amt, prime->Name());
+			gs->Talk(disp_message, RMsg_Speech::RP, Lyra::ID_UNKNOWN, true);
 
 			strcpy(disp_message, "Draining %d strength from %s!");
 			_stprintf(message, disp_message, drain_amt, prime->Name());
