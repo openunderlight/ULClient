@@ -1267,6 +1267,7 @@ void cPlayer::CheckStatus(void)
 		case SECTOR_DAMAGE:
 			this->SetCurrStat(Stats::DREAMSOUL, -1, SET_RELATIVE, playerID);
 			break;
+		// SECTOR_NO_PLAYER_TP and SECTOR_NO_REGEN are implemented elsewhere
 		case SECTOR_NO_PLAYER_TP:
 		case SECTOR_NO_REGEN:
 		default:
