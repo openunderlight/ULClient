@@ -260,7 +260,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xA5E2, // Passlock 
 0xCAFE, // Heal 
 0xED56, // Sanctify 
-0x164D, // Lock/Disable Portal
+0x1649, // Lock/Disable Portal
 0x3614, // Key 
 0x586F, // Break Lock 
 0x8380, // Repair 
@@ -450,7 +450,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_PASSLOCK,						Stats::INSIGHT,		50, 30, 6,	5, 	-1, SANCT|FOCUS},
 {IDS_HEAL, 							Stats::RESILIENCE,	10, 5,  0,	1, 	-1, SANCT},
 {IDS_SANCTIFY, 						Stats::WILLPOWER,	15, 5,  13, 2, 	-1, SANCT},
-{IDS_DISABLE_PORTAL, 				Stats::WILLPOWER,	20, 20, 0,	5, 	-1, MAKE_ITEM|FOCUS},
+{IDS_DISABLE_PORTAL, 				Stats::WILLPOWER,	20, 20, 0,	5, 	-1, SANCT|MAKE_ITEM|FOCUS},
 {IDS_KEY,							Stats::WILLPOWER,	20, 1,  0,	2, 	-1, SANCT|MAKE_ITEM|FOCUS},
 {IDS_BREAK_LOCK, 					Stats::WILLPOWER,	40, 40, 0,	8, 	-1, SANCT|FOCUS},
 {IDS_REPAIR, 						Stats::RESILIENCE,	15, 10, 0,	4, 	-1, SANCT|NEED_ITEM},
