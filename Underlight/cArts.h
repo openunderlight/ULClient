@@ -504,6 +504,7 @@ private:
 	void AddIfUnlearned(int art_id);
 	void HandleHouseAutoLearns(int rank);
 	int CalculatePlateauTokensRequired(int art_id);
+	bool CanPlayerTeleport(lyra_id_t art_id);
 
 	// helper methods that go through a player's inventory
 	int CountTrainSphereTokens(lyra_id_t art_id, lyra_id_t target_id, cItem** tokens, bool unique = true);
