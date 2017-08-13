@@ -3343,6 +3343,7 @@ void cArts::ApplyDazzle(int skill, lyra_id_t caster_id)
 	return;
 }
 
+// note: art_id is currently unused
 bool cArts::CanPlayerTeleport(lyra_id_t art_id)
 {
 	bool blockTeleport = false;
@@ -3352,7 +3353,7 @@ bool cArts::CanPlayerTeleport(lyra_id_t art_id)
 
 	if (blockTeleport)
 	{
-		_stprintf(disp_message, "%s is not available at your current location.", this->Descrip(art_id));
+		_stprintf(disp_message, "Planar energies interfere with your ability to teleport");
 		display->DisplayMessage(disp_message);
 
 		return false;
