@@ -1165,7 +1165,7 @@ void cPlayer::CheckStatus(void)
 	evokedFX.Update();
 
 	// check to see if we've healed naturally
-	if ((LyraTime() > next_heal) && !(flags & ACTOR_SOULSPHERE))
+	if ((LyraTime() > next_heal) && !(flags & ACTOR_SOULSPHERE) && (level->Sectors[this->sector]->tag != SECTOR_NO_REGEN))
 	{	  // raise selected if under max; else raise lowest
 #ifdef AGENT  // true nightmares regen fast
 		value = this->AvatarType();
@@ -1267,7 +1267,7 @@ void cPlayer::CheckStatus(void)
 		case SECTOR_DAMAGE:
 			this->SetCurrStat(Stats::DREAMSOUL, -1, SET_RELATIVE, playerID);
 			break;
-		case SECTOR_CURSE:
+		case SECTOR_NO_PLAYER_TP:
 		case SECTOR_NO_REGEN:
 		default:
 			break;
