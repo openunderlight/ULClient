@@ -7680,8 +7680,21 @@ void cArts::EndSacrifice(void)
 		}
 	
 	if (is_missile)
-	{ // transmute into an imprisoned talisman
-      // create new talisman for imprisoned mare essence
+	{ 
+		// 50% chance base, down to 45% at level 99
+		int mod_chance = (100 - ((player->Skill(Arts::SACRIFICE)+1)/10)) / 2;
+		if (rand() % 100 <= mod_chance)
+		{
+			_stprintf(temp_message, "Your attempt to sacrifice %s has failed and the item has been destroyed.", chakram_item->Name());
+			display->DisplayMessage(temp_message);
+			chakram_item->Destroy();
+			// destroy the item
+			this->ArtFinished(true);
+			return;
+		}
+		
+		// transmute into an imprisoned talisman
+		// create new talisman for imprisoned mare essence
 		header.Init(0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::ENSLAVED_MARE);
@@ -7689,7 +7702,7 @@ void cArts::EndSacrifice(void)
 		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
 		essence.type = LyraItem::ESSENCE_FUNCTION;
 		// Scale up by 10 while calculating to account for integer division
-		int essence_str = (((MinModifierSkill(missile.damage)*10 / 2) * ((player->Skill(Arts::SACRIFICE) + 1 ) / 10))/100) + 1;
+		int essence_str = (MinModifierSkill(missile.damage) / 2) + 1;
 #ifdef UL_DEV
 		_stprintf(temp_message, "Sacrificed token with %d strength has been created.", essence_str);
 		display->DisplayMessage(temp_message);
