@@ -1899,6 +1899,81 @@ static int PlayerTripLine(linedef *aLine)
 
 	if (aLine->TripFlags & TRIP_LEVELCHANGE)
 	{
+		bool has_proper_amulet;
+		lyra_item_ward_t ward;
+		lyra_item_amulet_t amulet;
+		lyra_id_t amulet_keys[Lyra::INVENTORY_MAX];
+		cItem *amulets[Lyra::INVENTORY_MAX];
+		int num_amulets = 0;
+		const void* state;
+		bool perma_warded = false;
+
+		for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+			if ((item->BitmapID() == LyraBitmap::AMULET) && (item->Status() == ITEM_OWNED))
+			{
+				amulets[num_amulets] = item;
+				state = item->Lmitem().StateField(0);
+				memcpy(&amulet, state, sizeof(amulet));
+				
+				// we only care about keys since planar portals can only be disabled, not warded
+				if (amulet.IsKey())
+				{
+					amulet_keys[num_amulets] = amulet.player_id;
+					amulets[num_amulets] = item;
+					num_amulets++;
+				}
+				//_tprintf("encountered amulet with player id = %d\n",amulet.player_id);
+			}
+		actors->IterateItems(DONE);
+
+		for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+			if ((item->ItemFunction(0) == LyraItem::WARD_FUNCTION) && (aLine == ((linedef*)item->Extra())))
+			{
+				has_proper_amulet = false;
+				state = item->Lmitem().StateField(0);
+				memcpy(&ward, state, sizeof(ward));
+				// we only care about perma wards so look for an impossible ward strength
+				if (ward.strength >= 100)
+				{
+					perma_warded = true;
+					//_tprintf("encountered ward with player id = %d\n",ward.player_id());
+					for (i = 0; i < num_amulets; i++)
+					{
+						if (amulet_keys[i] == ward.player_id())
+						{							
+							memcpy(&amulet, amulets[i]->Lmitem().StateField(0), sizeof(amulet));
+							// Only allow a "Key" to pass a permaward
+							has_proper_amulet = true;
+						}
+					}
+				}
+				if (!has_proper_amulet && player->flags & ACTOR_BLENDED)
+				{
+#ifndef GAMEMASTER
+					if (!perma_warded)
+					{
+#endif
+						// player is blended and the ward is blendable, so kill the blending but pass the ward
+						has_proper_amulet = true;
+						player->RemoveTimedEffect(LyraEffect::PLAYER_BLENDED);
+#ifndef GAMEMASTER
+					}
+#endif
+				}
+				if (!has_proper_amulet)
+				{
+					// add permanent message
+					if (perma_warded)
+						LoadString(hInstance, IDS_NOACCESS_PORTAL, disp_message, 256);
+					else
+						LoadString(hInstance, IDS_TELEPORTAL_WARDED, disp_message, 256);
+
+					display->DisplayMessage(disp_message);
+					actors->IterateItems(DONE);
+					return 0;
+				}
+			}
+		actors->IterateItems(DONE);
 
 		int guild_id = GetTripGuild(aLine->flags);
 		unsigned char lock = (aLine->trip4>>8);
