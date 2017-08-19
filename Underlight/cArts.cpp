@@ -226,7 +226,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xD56D, // Summon 
 0xF999, // Suspend 
 0x1BC3, // Reflect 
-0x38F7, // Sacrifice 
+0x3802, // Sacrifice 
 0x659F, // Cleanse Nightmare 
 0x8149, // Create ID Token 
 0xAC49, // Sense Dreamers 
@@ -416,7 +416,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_SUMMON_ART_NAME,				Stats::NO_STAT,		0,  0,  0,  0,  -1, SANCT},
 {IDS_SUSPEND,						Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},
 {IDS_REFLECT_ART_NAME,				Stats::WILLPOWER,   65, 40, 9,  3,	-1, SANCT|FOCUS|LEARN},
-{IDS_SACRIFICE,						Stats::DREAMSOUL,	20, 5,  0,	1, 	-1, SANCT|NEED_ITEM},
+{IDS_SACRIFICE,						Stats::DREAMSOUL,	20, 10,  0,	1, 	-1, SANCT|NEED_ITEM},
 {IDS_CLEANSE_MARE,					Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
 {IDS_CREATE_ID_TOKEN,				Stats::DREAMSOUL,	0,  20, 0,	1, 	-1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SENSE,							Stats::DREAMSOUL,	0,  0,  0,	1,  -1, SANCT|LEARN},
