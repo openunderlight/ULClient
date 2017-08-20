@@ -1310,7 +1310,8 @@ void cArts::CancelArt(void)
 
 // called either when a skill trial fails or after an art has
 // been used successfully; drains the appropriate stat from the player
-void cArts::DrainStat(lyra_id_t art_id)
+// multiplier is used for non-permanent drains to amplify the standard drain cost, default is 1
+void cArts::DrainStat(lyra_id_t art_id, int multiplier)
 {
 	if ((art_id < 0) || (art_id >= NUM_ARTS))
 	{
@@ -1325,7 +1326,7 @@ void cArts::DrainStat(lyra_id_t art_id)
 		if (art_id == Arts::SOULEVOKE)
 			player->SetMaxStat(art_info[art_id].stat, player->MaxStat(art_info[art_id].stat)-art_info[art_id].drain, player->ID());
 		else
-			player->SetCurrStat(art_info[art_id].stat, -art_info[art_id].drain, SET_RELATIVE, player->ID());
+			player->SetCurrStat(art_info[art_id].stat, -(art_info[art_id].drain * multiplier), SET_RELATIVE, player->ID());
 	}
 	return;
 }
@@ -1376,8 +1377,9 @@ bool cArts::IncreaseSkill(int art_id, int chance_increase)
 
 
 // called after the player has cast an art; drain is true if the use
-// was successful, or false if it was cancelled for some reason
-void cArts::ArtFinished(bool drain, bool allow_skill_increase)
+// was successful, or false if it was cancelled for some reason,
+// drain multiplier can be used to amplify art drain, defaults to 1
+void cArts::ArtFinished(bool drain, bool allow_skill_increase, int drain_multiplier)
 {
 	player->EvokingFX().DeActivate();
 
@@ -1393,7 +1395,7 @@ void cArts::ArtFinished(bool drain, bool allow_skill_increase)
 	callback_method = NULL;
 	if (do_drain && (art_in_use != Arts::NONE))
 	{
-		this->DrainStat(art_in_use); // drain stat
+		this->DrainStat(art_in_use, drain_multiplier); // drain stat
 #ifndef PMARE // no skill increases for pmares
 		if (allow_skill_increase)
 			this->IncreaseSkill(art_in_use,CHANCE_SKILL_INCREASE);
@@ -7688,8 +7690,8 @@ void cArts::EndSacrifice(void)
 			_stprintf(temp_message, "Your attempt to sacrifice %s has failed and the item has been destroyed.", chakram_item->Name());
 			display->DisplayMessage(temp_message);
 			chakram_item->Destroy();
-			// destroy the item
-			this->ArtFinished(true);
+			// destroy the item and have a double drain
+			this->ArtFinished(true, true, 2);
 			return;
 		}
 		
