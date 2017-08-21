@@ -2174,7 +2174,7 @@ BEGIN
     IDS_TRAIN_HOUSES_MOON   "Enter the City of Dreams in the chambers of the Order of the Sable Moon.\n"
     IDS_TRAIN_HOUSES_ECLIPSE 
                             "Enter the City of Dreams in the chambers of the Alliance of the Eclipse.\n"
-    IDS_TRAIN_HOUSES_SHADOW "Enter the City of Dreams in the chambers of the Keepers of the Eternal Shadow.\n"
+    IDS_TRAIN_HOUSES_SHADOW "Enter the City of Dreams in the chambers of the Monastery of the Shadow.\n"
     IDS_TRAIN_HOUSES_COVENANT 
                             "Enter the City of Dreams in the chambers of the Union of the Covenant.\n"
     IDS_TRAIN_HOUSES_RADIANCE 
@@ -2869,7 +2869,7 @@ BEGIN
     IDS_FASTEST             "Fastest"
     IDS_OOSM                "Order of the Sable Moon"
     IDS_AOE                 "Alliance of the Eclipse"
-    IDS_KOES                "Keepers of Eternal Shadow"
+    IDS_KOES                "Monastery of the Shadow"
     IDS_UOC                 "Union of the Covenant"
     IDS_POR                 "Peace Corpse"
 END
@@ -2964,7 +2964,7 @@ BEGIN
     IDS_DEMOTE_TOKEN        "Demotion Token"
     IDS_OOSM_MEMBER_TOKEN   "Order of the Sable Moon Membership Token"
     IDS_AOE_MEMBER_TOKEN    "Alliance of the Eclipse Membership Token"
-    IDS_KOES_MEMBER_TOKEN   "Keepers of Eternal Shadow Membership Token"
+    IDS_KOES_MEMBER_TOKEN   "Monastery of the Shadow Membership Token"
     IDS_UOC_MEMBER_TOKEN    "Union of the Covenant Membership Token"
     IDS_POR_MEMBER_TOKEN    "Peace Corpse Membership Token"
     IDS_HC_MEMBER_TOKEN     "House Calenture Membership Token"
@@ -2998,7 +2998,7 @@ BEGIN
     IDS_FLAG_DOL2           "Flag DoL2"
     IDS_FLAG_GOE            "Flag GoE"
     IDS_FLAG_HC2            "Flag HC2"
-    IDS_FLAG_KOES           "Flag KoES"
+    IDS_FLAG_KOES           "Flag MotS"
     IDS_FLAG_OOSM           "Flag OoSM"
     IDS_FLAG_POR            "Flag PoR"
     IDS_FLAG_UOC            "Flag UoC"
@@ -3007,7 +3007,7 @@ BEGIN
     IDS_CREST_UOC           "Crest UoC"
     IDS_CREST_DOL           "Crest OoL"
     IDS_CREST_GOE           "Crest GoE"
-    IDS_CREST_KOES          "Crest KoES"
+    IDS_CREST_KOES          "Crest MotS"
     IDS_CREST_POR           "Crest PC"
     IDS_CREST_OOSM          "Crest OoSM"
     IDS_BANISHMENT          "Banishment"
@@ -3197,7 +3197,7 @@ BEGIN
     IDS_TRAIN_BELIEF_MOON   "The Order of the Sable Moon is a Spiritual Freesoul Imprisoning house. They are the Spiritual center of the Freesoul faith. They study the dream and the Nightmares within it in order to discover a way to rid the dream of the menace. They Imprison the nightmare essences within their ""Relic of the Order""."
     IDS_TRAIN_BELIEF_ECLIPSE 
                             "The Alliance of the Eclipse is an Illuminated House that believes in furthering the tenets of Truth, Honor, and Understanding through peace and study."
-    IDS_TRAIN_BELIEF_SHADOW "Keepers of Eternal Shadow is a Freesoul House whose ways are steeped in mysticism and the occult.  They feel that essence, both Dreamer and Maren are sources of energy that should not be left untapped."
+    IDS_TRAIN_BELIEF_SHADOW "Monastery of the Shadow is a Freesoul House whose ways are steeped in mysticism and the occult.  They feel that essence, both Dreamer and Maren are sources of energy that should not be left untapped."
     IDS_TRAIN_BELIEF_COVENANT 
                             "The Union of the Covenant is a Freesoul House and follows the tenets of Justice, Freedom, Defense, and Honor. Their duty is to the Covenant in which they take to live by, and defend those tenets.  They believe Essence of Nightmares is merely the energy left behind from an avatar, and drain that energy for its uses."
     IDS_TRAIN_BELIEF_RADIANCE 
@@ -3485,7 +3485,7 @@ BEGIN
     IDS_DDERR_NOMIPMAPHW    "DDERR_NOMIPMAPHW"
     IDS_BLINDED_NO_RCLICK   "You can't see that because you are blind!\n"
     IDS_CORRUPT_ESSENCE     "Corrupt Essence"
-    IDS_MUST_BE_KOES        "You must be a member of Keepers of the Eternal Shadow to use the art of Corrupt Essence!\n"
+    IDS_MUST_BE_KOES        "You must be a member of Monastery of the Shadow to use the art of Corrupt Essence!\n"
     IDS_ESSENCE_CORRUPTED   "You have corrupted the essence!\n"
     IDS_NOT_DREAMER_ESSENCE "That is not a dreamer essence\n"
     IDS_UNKNOWN_ERROR       "Unknown Error"
@@ -3979,7 +3979,7 @@ BEGIN
     IDS_KNOW0326            "Graceful arches coax your gaze up to the stars of a pastel sky. A warm, gentle breeze carries the scent of flowers and waterfalls gently through the grasses. A pathway of polished stone leads onward to the Gathering of the Entranced."
     IDS_KNOW1301            "A deep grand valley opens before you. High above the winds howl like the clamor of battle, while below all is hushed silence. Gigantic monuments of stone, formed in impossible shapes, mark the path leading to the Protectors of Radiance."
     IDS_KNOW1202            "Scorched and blackened earth spreads out before you. The gloomy sky hangs low and heavy, blanketing the land in perpetual twilight. An ancient path, clear of ash, leads through the darkened realm towards House Calenture."
-    IDS_KNOW1522            "Plantlife of all varieties covers ground and walls. A hazy sky casts muted light and long shadows. A small warm breeze whispers as an indistinct path makes its way in and out of dark tunnels on its way to the Keepers of Eternal Shadow."
+    IDS_KNOW1522            "Plantlife of all varieties covers ground and walls. A hazy sky casts muted light and long shadows. A small warm breeze whispers as an indistinct path makes its way in and out of dark tunnels on its way to the Monastery of the Shadow."
     IDS_KNOW2917            "The air here is dank and cold. Where elsewhere even the slightest hum of energy can be felt, this place is utterly lifeless. A sense of loss and foreboding hangs in the atmosphere like a dark spectre."
     IDS_KNOW3007            "The air here is dank and cold. Where elsewhere even the slightest hum of energy can be felt, this place is utterly lifeless. A sense of loss and foreboding hangs in the atmosphere like a dark spectre."
     IDS_KNOW3318            "The air here is dank and cold. Where elsewhere even the slightest hum of energy can be felt, this place is utterly lifeless. A sense of loss and foreboding hangs in the atmosphere like a dark spectre."
