@@ -8001,6 +8001,7 @@ void cArts::EndTrain(void)
 #ifndef GAMEMASTER //
 	else if ((art_id == Arts::TRAIN && n->Avatar().Teacher() == 0) || // only GMs can teach Train to Learn
 			 (art_id == Arts::LEVELTRAIN) ||
+			 (art_id == Arts::NP_SYMBOL) ||
 			 (art_id == Arts::DREAMSTRIKE) || 
 		     (art_id == Arts::SUPPORT_SPHERING) ||
              (art_id == Arts::SUPPORT_TRAINING) ||
