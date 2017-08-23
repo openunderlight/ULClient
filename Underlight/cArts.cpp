@@ -10176,7 +10176,8 @@ _stprintf(message, disp_message, n->Name());
 
 void cArts::StartAscend(void)
 {
-	if (!player->IsKnight(Guild::NO_GUILD))
+	// Non-knights and Advisors are not allowed to Ascend to Ruler
+	if (!player->IsKnight(Guild::NO_GUILD) || player->Skill(Arts::NP_SYMBOL) > 0)
 	{
 		LoadString (hInstance, IDS_MUST_BE_KNIGHT, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, this->Descrip(Arts::ASCEND));
