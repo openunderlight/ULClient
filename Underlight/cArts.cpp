@@ -271,7 +271,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x37E2, // Inscribe 
 0x664D, // Forge Master 
 0x8544, // Merge Talisman 
-0xA9D8, // NP Symbol 
+0xA834, // NP Symbol 
 0xCC58, // Sense Datoken 
 #ifndef PMARE
 0xED06, // Tempest 

@@ -4136,7 +4136,7 @@ BEGIN
     IDS_TIMER_PROBLEM_CAPTION "Timer Problem"
     IDS_BACKUP_LOG          "%s-backup-%d-%d-%d.out"
     IDS_NO_PP_MONSTER       "Nightmares cannot receive roleplay points!"
-    IDS_NP_SYMBOL_ART_NAME  "NP Symbol"
+    IDS_NP_SYMBOL_ART_NAME  "Advisor"
 END
 
 STRINGTABLE
