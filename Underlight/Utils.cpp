@@ -1086,7 +1086,7 @@ teleport_locale_t teleport_locations[] =
 	{ BY_OSM, "Order of the Sable Moon", "-3030;-963", 25 },
 	{ BY_HC, "House Calenture", "-2252;-5480", 17 },
 	{ BY_POR, "Peace Corpse", "762;-13361", 21 },
-	{ BY_KOES, "Keepers of the Eternal Shadow", "2583;-14543", 24 },
+	{ BY_KOES, "Monastery of the Shadow", "2583;-14543", 24 },
 	{ BY_GOE, "Gathering of the Entranced", "3833;-16439", 23 },
 	{ BY_GM, "Fayd's Fortress", "10805;-3727", 19 },
 	{ BY_GM, "Thresh GM Room", "19948;-842", 20 },
