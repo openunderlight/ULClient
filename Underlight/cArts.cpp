@@ -2458,20 +2458,16 @@ void cArts::Recall(void)
 
 void cArts::Return(void)
 {
+	// check if the teleport is allowed
+	if (!this->CanPlayerTeleport(Arts::RETURN))
+	{
+		this->ArtFinished(false);
+		return;
+	}
 
-	// r->ErrorInfo()->RMoved this code into cPlayer so Return can occur through talismans
-//	if (player->flags & ACTOR_RETURN)
-//	{ // 2nd activation - return
-//		player->Teleport(player->ReturnX(), player->ReturnY(), player->ReturnAngle(), player->ReturnLevel());
-//		player->RemoveTimedEffect(LyraEffect::PLAYER_RETURN);
-//	}
-//	else
-//	{ // 1st activation - mark location
-		int duration = this->Duration(Arts::RETURN, player->Skill(Arts::RETURN));
-		player->SetTimedEffect(LyraEffect::PLAYER_RETURN, duration, player->ID(), EffectOrigin::ART_EVOKE);
-//		 player->SetReturn(player->x, player->y, player->angle, level->ID());
-//		gs->SendPlayerMessage(0, RMsg_PlayerMsg::RETURN, 0, 0);
-//	}
+	// main logic is in cPlayer so Return can occur through talisman
+	int duration = this->Duration(Arts::RETURN, player->Skill(Arts::RETURN));
+	player->SetTimedEffect(LyraEffect::PLAYER_RETURN, duration, player->ID(), EffectOrigin::ART_EVOKE);
 	cDS->PlaySound(LyraSound::RETURN, player->x, player->y, true);
 	this->ArtFinished(true);
 	return;
@@ -3347,12 +3343,36 @@ void cArts::ApplyDazzle(int skill, lyra_id_t caster_id)
 	return;
 }
 
+// note: art_id is currently unused
+bool cArts::CanPlayerTeleport(lyra_id_t art_id)
+{
+	bool blockTeleport = false;
+
+	// block player teleports from no tp sectors
+	blockTeleport = level->Sectors[player->sector]->tag == SECTOR_NO_PLAYER_TP;
+
+	if (blockTeleport)
+	{
+		_stprintf(disp_message, "Planar energies interfere with your ability to teleport");
+		display->DisplayMessage(disp_message);
+
+		return false;
+	}
+}
+
 //////////////////////////////////////////////////////////////////
 // Guild House
 
 void cArts::StartPlayerTeleport(void)
 {  
 	if (chooseguilddlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	// check if the teleport is allowed
+	if (!this->CanPlayerTeleport(Arts::GUILDHOUSE))
 	{
 		this->ArtFinished(false);
 		return;
@@ -5906,6 +5926,11 @@ void cArts::GotRallied(void *value)
 		LoadString(hInstance, IDS_RALLY_NO_SS, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 	}
+	// check if the teleport is allowed
+	else if (!this->CanPlayerTeleport(Arts::RALLY))
+	{
+		// do nothing in here
+	}
 	else if (success) {
 		if (player->Room() != level->Rooms[level->Sectors[FindSector(rally_x, rally_y, 0, true)]->room].id) {
 			LoadString(hInstance, IDS_RALLY_PREEMOTE, message, sizeof(message));
@@ -6048,6 +6073,12 @@ void cArts::StartExpel(void)
 
 void cArts::ApplyExpel(int guild_id, lyra_id_t caster_id)
 {
+	// check if the teleport is allowed
+	if (!this->CanPlayerTeleport(Arts::EXPEL))
+	{
+		return;
+	}
+
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::EXPEL);
 
@@ -6842,6 +6873,11 @@ void cArts::StartCupSummons(void)
 
 void cArts::ApplyCupSummons(lyra_id_t caster_id)
 {
+	// check if the teleport is allowed
+	if (!this->CanPlayerTeleport(Arts::CUP_SUMMONS))
+	{
+		return;
+	}
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::CUP_SUMMONS);
 
