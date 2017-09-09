@@ -766,6 +766,8 @@ void cGameServer::HandleMessage(void)
 		//	options.local_login_time = LyraTime()/1000;
 			portNumber = loginack_msg.ServerPort();
 
+			LoadCharacterRegistryOptionValues(false);
+
 #ifdef PMARE
 			options.pmare_logout_time = 0;
 			if (options.pmare_type != Avatars::PMARE_RESUME)

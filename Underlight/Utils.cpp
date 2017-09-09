@@ -138,20 +138,28 @@ bool __cdecl LoadGameOptions(void)
 		GAME_ERROR(IDS_NO_ACCESS_REGISTRY);
 		return false;
 	}
+	
+	LoadInGameRegistryOptionValues(main_key, false);
 
-	if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0,
-		NULL, 0, KEY_ALL_ACCESS, NULL, &player_key, &presult)
-		!= ERROR_SUCCESS)
+	// only load the character options if we have a character object available
+	if (player != NULL)
 	{
-		GAME_ERROR(IDS_NO_ACCESS_REGISTRY);
-		return false;
+
+		if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0,
+			NULL, 0, KEY_ALL_ACCESS, NULL, &player_key, &presult)
+			!= ERROR_SUCCESS)
+		{
+			GAME_ERROR(IDS_NO_ACCESS_REGISTRY);
+			return false;
+		}
+
+		LoadCharacterRegistryOptionValues(player_key, false);
+		RegCloseKey(player_key);
 	}
 
-	LoadInGameRegistryOptionValues(main_key, player_key, false);
 	LoadOutOfGameRegistryOptionValues(main_key, false);
 
 	RegCloseKey(main_key);
-	RegCloseKey(player_key);
 
 	return true;
 }
