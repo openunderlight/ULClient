@@ -420,6 +420,7 @@
 #define IDC_ULT_FUNCTIONS               1826
 #define IDC_IGNORE_LIST_STATIC          1827
 #define IDD_CREDITS                     1828
+#define IDC_TRANSLOCATE					1829
 #define IDC_LOCATE                      1830
 #define IDC_LOCATE_ALL                  1831
 #define IDC_ADD                         1832
