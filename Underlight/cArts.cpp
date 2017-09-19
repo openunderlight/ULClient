@@ -3365,6 +3365,28 @@ bool cArts::CanPlayerTeleport(lyra_id_t art_id)
 
 void cArts::StartPlayerTeleport(void)
 {  
+#ifndef GAMEMASTER
+	bool primeFound = false;
+	cItem* item;
+	// peons can't Translocate with a prime
+	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+		if ((item->Status() == ITEM_OWNED) && (item->AlwaysDrop()))
+		{
+			primeFound = true;
+			break;
+		}
+	actors->IterateItems(DONE);
+
+	if (primeFound)
+	{
+		// THOU SHALT NOT TRANSLOCATE WITH A PRIME
+		LoadString(hInstance, IDS_ARTIFACT_NO_TP, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+#endif
+
 	if (chooseguilddlg)
 	{
 		this->ArtFinished(false);
@@ -8490,7 +8512,14 @@ void cArts::GiveReply(void *value)
 		return;
 
 	if (success)
+	{
+		// Cancel the guildhouse evoke if the player is accepting an item
+		// the chances of this occurring are miniscule but just in case!
+		if (this->CurrentArt() == Arts::GUILDHOUSE)
+			this->CancelArt();
+
 		gs->TakeItemAck(GMsg_TakeItemAck::TAKE_YES, receiving_item);
+	}
 	else
 		gs->TakeItemAck(GMsg_TakeItemAck::TAKE_NO, receiving_item);
 }

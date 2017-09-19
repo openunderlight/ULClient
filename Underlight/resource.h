@@ -2973,6 +2973,7 @@
 #define IDS_FOCAL_FLAME                 4453
 #define IDS_NOT_ENOUGH_PT               4454
 #define IDS_PT_COMBINED                 4455
+#define IDS_ARTIFACT_NO_TP              4460
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
