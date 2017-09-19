@@ -1023,6 +1023,7 @@ const int BY_SM		= 16384;
 const int BY_FS		= 32768;
 const int BY_HALO	= 65536;
 const int BY_MT		= 131072;
+const int NOGUILD	= 262144;
 
 bool eligibleForFlag(unsigned flag)
 {
@@ -1060,6 +1061,8 @@ bool eligibleForFlag(unsigned flag)
 		return player->IsInGuild(Guild::ENTRANCED);
 	if (flag & BY_DOL)
 		return player->IsInGuild(Guild::LIGHT);
+	if (flag & NOGUILD)
+		return player->NumGuilds(Guild::RULER_PENDING) == 0;
 
 	return false;
 }
@@ -1081,6 +1084,7 @@ struct teleport_locale_t
 teleport_locale_t teleport_locations[] =
 {
 	{BY_PLAYER, "The Nexus", "6378;-2411", 45},
+	{NOGUILD, "Peaceful Retreat", "12545;-4036", 11},
 	{BY_FS, "Fatesender Guildhall", "-1738;-1548",29},
 	{ BY_SM, "Soulmaster Guildhall", "8177;8235", 7 },
 	{ BY_GK, "Gatekeeper Guildhall", "-850;-3556", 14 },
