@@ -226,7 +226,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xD56D, // Summon 
 0xF999, // Suspend 
 0x1BC3, // Reflect 
-0x3DFD, // Sacrifice 
+0x3802, // Sacrifice 
 0x659F, // Cleanse Nightmare 
 0x8149, // Create ID Token 
 0xAC49, // Sense Dreamers 
@@ -416,7 +416,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_SUMMON_ART_NAME,				Stats::NO_STAT,		0,  0,  0,  0,  -1, SANCT},
 {IDS_SUSPEND,						Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},
 {IDS_REFLECT_ART_NAME,				Stats::WILLPOWER,   65, 40, 9,  3,	-1, SANCT|FOCUS|LEARN},
-{IDS_SACRIFICE,						Stats::RESILIENCE,	10, 5,  0,	1, 	-1, SANCT|NEED_ITEM},
+{IDS_SACRIFICE,						Stats::DREAMSOUL,	20, 10,  0,	1, 	-1, SANCT|NEED_ITEM},
 {IDS_CLEANSE_MARE,					Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
 {IDS_CREATE_ID_TOKEN,				Stats::DREAMSOUL,	0,  20, 0,	1, 	-1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SENSE,							Stats::DREAMSOUL,	0,  0,  0,	1,  -1, SANCT|LEARN},
@@ -1310,7 +1310,8 @@ void cArts::CancelArt(void)
 
 // called either when a skill trial fails or after an art has
 // been used successfully; drains the appropriate stat from the player
-void cArts::DrainStat(lyra_id_t art_id)
+// multiplier is used for non-permanent drains to amplify the standard drain cost, default is 1
+void cArts::DrainStat(lyra_id_t art_id, int multiplier)
 {
 	if ((art_id < 0) || (art_id >= NUM_ARTS))
 	{
@@ -1325,7 +1326,7 @@ void cArts::DrainStat(lyra_id_t art_id)
 		if (art_id == Arts::SOULEVOKE)
 			player->SetMaxStat(art_info[art_id].stat, player->MaxStat(art_info[art_id].stat)-art_info[art_id].drain, player->ID());
 		else
-			player->SetCurrStat(art_info[art_id].stat, -art_info[art_id].drain, SET_RELATIVE, player->ID());
+			player->SetCurrStat(art_info[art_id].stat, -(art_info[art_id].drain * multiplier), SET_RELATIVE, player->ID());
 	}
 	return;
 }
@@ -1376,8 +1377,9 @@ bool cArts::IncreaseSkill(int art_id, int chance_increase)
 
 
 // called after the player has cast an art; drain is true if the use
-// was successful, or false if it was cancelled for some reason
-void cArts::ArtFinished(bool drain, bool allow_skill_increase)
+// was successful, or false if it was cancelled for some reason,
+// drain multiplier can be used to amplify art drain, defaults to 1
+void cArts::ArtFinished(bool drain, bool allow_skill_increase, int drain_multiplier)
 {
 	player->EvokingFX().DeActivate();
 
@@ -1393,7 +1395,7 @@ void cArts::ArtFinished(bool drain, bool allow_skill_increase)
 	callback_method = NULL;
 	if (do_drain && (art_in_use != Arts::NONE))
 	{
-		this->DrainStat(art_in_use); // drain stat
+		this->DrainStat(art_in_use, drain_multiplier); // drain stat
 #ifndef PMARE // no skill increases for pmares
 		if (allow_skill_increase)
 			this->IncreaseSkill(art_in_use,CHANCE_SKILL_INCREASE);
@@ -7684,6 +7686,7 @@ void cArts::EndDestroyItem(void)
 void cArts::StartSacrifice(void)
 {
 
+#ifndef GAMEMASTER
 	if (!player->IsInitiate(Guild::NO_GUILD) &&
 		!player->IsKnight(Guild::NO_GUILD) &&
 		!player->IsRuler(Guild::NO_GUILD))
@@ -7694,7 +7697,7 @@ void cArts::StartSacrifice(void)
 		this->ArtFinished(false);
 		return;
 	}
-
+#endif
 	this->WaitForSelection(&cArts::EndSacrifice, Arts::SACRIFICE);
 	this->CaptureCP(INVENTORY_TAB, Arts::SACRIFICE);
 	return;
@@ -7718,6 +7721,14 @@ void cArts::EndSacrifice(void)
 		return;
 	}
 
+	if (chakram_item->Lmitem().FlagSet(LyraItem::FLAG_HASDESCRIPTION))
+	{
+		LoadString(hInstance, IDS_NO_SACRIFICE, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	// check that the item is a chakram or blade
 	for (int i=0; i<chakram_item->NumFunctions(); i++)
 		if (chakram_item->ItemFunction(i) == LyraItem::MISSILE_FUNCTION)
@@ -7727,17 +7738,36 @@ void cArts::EndSacrifice(void)
 			if (missile.velocity != 0)
 				is_missile = true;
 		}
-
+	
 	if (is_missile)
-	{ // transmute into an imprisoned talisman
-      // create new talisman for imprisoned mare essence
+	{ 
+		// 50% chance base, down to 45% at level 99
+		int mod_chance = (100 - ((player->Skill(Arts::SACRIFICE)+1)/10)) / 2;
+		if (rand() % 100 <= mod_chance)
+		{
+			_stprintf(temp_message, "Your attempt to sacrifice %s has failed and the item has been destroyed.", chakram_item->Name());
+			display->DisplayMessage(temp_message);
+			chakram_item->Destroy();
+			// destroy the item and have a double drain
+			this->ArtFinished(true, true, 2);
+			return;
+		}
+		
+		// transmute into an imprisoned talisman
+		// create new talisman for imprisoned mare essence
 		header.Init(0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::ENSLAVED_MARE);
 		header.SetColor1(0); header.SetColor2(0);
 		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
 		essence.type = LyraItem::ESSENCE_FUNCTION;
-		essence.strength = 1 + player->SkillSphere(Arts::SACRIFICE);
+		// Scale up by 10 while calculating to account for integer division
+		int essence_str = (MinModifierSkill(missile.damage) / 2) + 1;
+#ifdef UL_DEV
+		_stprintf(temp_message, "Sacrificed token with %d strength has been created.", essence_str);
+		display->DisplayMessage(temp_message);
+#endif
+		essence.strength = essence_str;
 		essence.mare_type = 2;
 		essence.slaver_id = player->ID();
 		essence.weapon_type = 0;
