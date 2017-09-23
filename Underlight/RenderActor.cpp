@@ -496,11 +496,17 @@ static bool get_avatar_patch(cActor *actor, int patch_order, avatar_patch &patch
 				static short guild_knight	[2] = { 7,1 };
 				static short guild_ruler	[2] = { 15,7};
 				static short guild_seneschal[2] = { 15,1 };
+				static short guild_pguide[2] = { 15,0 };
 
 				switch (avatar.GuildRank())
 				{
 					case Guild::INITIATE: guild_colors = guild_initiate; break;
-					case Guild::KNIGHT  : guild_colors = guild_knight;   break;
+					case Guild::KNIGHT  : 
+						if (avatar.NPSymbol())
+							guild_colors = guild_pguide;
+						else
+							guild_colors = guild_knight;   
+						break;
 					case Guild::RULER   : 
 						if (avatar.AccountType()==LmAvatar::ACCT_ADMIN)
 							guild_colors = guild_seneschal;
@@ -508,7 +514,7 @@ static bool get_avatar_patch(cActor *actor, int patch_order, avatar_patch &patch
 							guild_colors = guild_ruler;	  
 						break;
 					default : guild_colors = guild_initiate;
-				}
+				}				
 
 				int guild_bitmap	= LyraBitmap::AVATAR_GUILD_START + avatar.GuildID()*3;
 		//		if (avatar.NPSymbol())
@@ -564,34 +570,38 @@ static bool get_avatar_patch(cActor *actor, int patch_order, avatar_patch &patch
 				static short ds_smith_unmarked [4] = { 0,1,15,2 };
 				static short ds_dreamsmith_marked	[4] = { 3,1,15,2 };
 				static short ds_wordsmith_marked	[4] = { 6,1,15,2 };
-				static short ds_bothsmith_marked	[4] = { 4,1,15,2  };
-				
-				if (!avatar.NPSymbol()) //MDA 4/12/03
+				static short ds_bothsmith_marked	[4] = { 4,1,15,2  };	
+
+				// do the NP check here so we can restrict it to GM only. Also, it overrides other functions by its nature
+				if (avatar.NPSymbol() && avatar.AccountType() == LmAvatar::ACCT_ADMIN)
+				{
+					sphere_bitmap = LyraBitmap::AVATAR_NP_START;
+				}
+				else
 				{
 					if (avatar.Dreamstrike())
 					{
 						smith_colors = ds_smith_unmarked;
-						if (avatar.DreamSmith() && !avatar.WordSmith()) 
+						if (avatar.DreamSmith() && !avatar.WordSmith())
 							smith_colors = ds_dreamsmith_marked;
-						else if (!avatar.DreamSmith() && avatar.WordSmith()) 
+						else if (!avatar.DreamSmith() && avatar.WordSmith())
 							smith_colors = ds_wordsmith_marked;
-						else if (avatar.DreamSmith() && avatar.WordSmith()) 
+						else if (avatar.DreamSmith() && avatar.WordSmith())
 							smith_colors = ds_bothsmith_marked;
 					}
 					else
 					{
 						smith_colors = smith_unmarked;
-						if (avatar.DreamSmith() && !avatar.WordSmith()) 
+						if (avatar.DreamSmith() && !avatar.WordSmith())
 							smith_colors = dreamsmith_marked;
-						else if (!avatar.DreamSmith() && avatar.WordSmith()) 
+						else if (!avatar.DreamSmith() && avatar.WordSmith())
 							smith_colors = wordsmith_marked;
-						else if (avatar.DreamSmith() && avatar.WordSmith()) 
+						else if (avatar.DreamSmith() && avatar.WordSmith())
 							smith_colors = bothsmith_marked;
 					}
-					sphere_bitmap	= LyraBitmap::AVATAR_SPHERE_START + avatar.Sphere()*3;
+					sphere_bitmap = LyraBitmap::AVATAR_SPHERE_START + avatar.Sphere() * 3;
 				}
-				else
-					sphere_bitmap = LyraBitmap::AVATAR_NP_START;
+
 				sphere_bitmap		+= (6-current_view) % 3;		// sphere symbols have only 3 views.
 				int center_col 	= effects->EffectBitmap(sphere_bitmap)->h/2;
 				int center_row 	= effects->EffectBitmap(sphere_bitmap)->w/2;
@@ -699,7 +709,7 @@ int pp;
 							halo_color = 7;
 					}
 					// NPSymbol for GMMT
-					else if (avatar.NPSymbol())
+					else if (avatar.AccountType() == LmAvatar::ACCT_ADMIN && avatar.NPSymbol())
 						halo_color = 4;
 					// Teacher is third priority
 					else if (avatar.Teacher())
@@ -749,7 +759,7 @@ int pp;
 						halo_color = 6;
 					}
 					// NPSymbol takes priority					
-					else if (avatar.NPSymbol()) {
+					else if (avatar.AccountType() == LmAvatar::ACCT_ADMIN && avatar.NPSymbol()) {
 						patch.resolution = 4.0f;
 						halo_color = 4;
 					}

@@ -271,7 +271,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x37E2, // Inscribe 
 0x664D, // Forge Master 
 0x8544, // Merge Talisman 
-0xA9D8, // NP Symbol 
+0xA834, // NP Symbol 
 0xCC58, // Sense Datoken 
 #ifndef PMARE
 0xED06, // Tempest 
@@ -8059,6 +8059,7 @@ void cArts::EndTrain(void)
 #ifndef GAMEMASTER //
 	else if ((art_id == Arts::TRAIN && n->Avatar().Teacher() == 0) || // only GMs can teach Train to Learn
 			 (art_id == Arts::LEVELTRAIN) ||
+			 (art_id == Arts::NP_SYMBOL) ||
 			 (art_id == Arts::DREAMSTRIKE) || 
 		     (art_id == Arts::SUPPORT_SPHERING) ||
              (art_id == Arts::SUPPORT_TRAINING) ||
@@ -10240,7 +10241,8 @@ _stprintf(message, disp_message, n->Name());
 
 void cArts::StartAscend(void)
 {
-	if (!player->IsKnight(Guild::NO_GUILD))
+	// Non-knights and Advisors are not allowed to Ascend to Ruler
+	if (!player->IsKnight(Guild::NO_GUILD) || player->Skill(Arts::NP_SYMBOL) > 0)
 	{
 		LoadString (hInstance, IDS_MUST_BE_KNIGHT, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, this->Descrip(Arts::ASCEND));
