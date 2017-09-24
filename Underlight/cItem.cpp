@@ -1589,6 +1589,31 @@ bool cItem::DrainEssence(int amount)
 	return false;
 }
 
+bool cItem::AddMetaEssence(int amount)
+{
+	lyra_item_meta_essence_t meta_essence;
+	const void* state;
+
+	if (status != ITEM_OWNED)
+	{
+		LoadString(hInstance, IDS_META_NOT_OWNED, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		return false;
+	}
+
+	if (this->ItemFunction(0) == LyraItem::META_ESSENCE_FUNCTION)
+	{	// each item can have only one essence function
+		state = lmitem.StateField(0);
+		memcpy(&meta_essence, state, sizeof(meta_essence));
+
+		meta_essence.set_strength(meta_essence.strength() + amount);
+		lmitem.SetStateField(0, &meta_essence, sizeof(meta_essence));
+		needsUpdate = true;
+		return true;
+	}
+
+	return false;
+}
 
 // this method just drains meta essences.
 bool cItem::DrainMetaEssence(int amount)
