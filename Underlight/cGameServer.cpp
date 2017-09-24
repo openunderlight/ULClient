@@ -245,6 +245,7 @@ cGameServer::cGameServer(unsigned short udp_port_num, unsigned short gs_port_num
 	last_update.SetFlags(0);
 	last_room_target = last_level_target;
 	item_to_dupe = NULL;
+	descript_callback = NULL;
 	displayed_item_use_message = false;
 	alert_count = 0;
 	for (int i = 0; i < ALERT_TABLE_SIZE; i++) {
@@ -1640,7 +1641,8 @@ void cGameServer::HandleMessage(void)
 			if (item_to_dupe != NULL)
 			{
 				strcpy(message, descrip_msg.Description());
-				this->FinalizeItemDuplicate(item_to_dupe, message);
+				(this->*(descript_callback))(item_to_dupe, message);
+				//this->FinalizeItemDuplicate(item_to_dupe, message);
 				item_to_dupe = NULL;
 			}
 			else 
@@ -3685,12 +3687,100 @@ bool cGameServer::CreateItem(cItem *item, int ttl, TCHAR *description)
 }
 
 #ifdef GAMEMASTER
+
+void cGameServer::ModifyItem(cItem *orig_item, TCHAR* new_name, int new_charges, int new_graphic, bool is_nopickup, bool is_artifact)
+{
+	cItem *new_item;
+	LmItem info;
+	LmItemHdr header;
+
+	header.Init(0, 0);
+	header.SetFlags(orig_item->Lmitem().Header().Flags());
+	header.SetGraphic(new_graphic);
+	header.SetColor1(orig_item->Lmitem().Header().Color1());
+	header.SetColor2(orig_item->Lmitem().Header().Color2());
+	header.SetStateFormat(orig_item->Lmitem().Header().StateFormat());
+
+	const void *state = orig_item->Lmitem().StateField(0);
+
+	if (is_nopickup)
+	{
+		// make sure we don't have always drop
+		if (orig_item->AlwaysDrop())
+			header.ClearFlag(LyraItem::FLAG_ALWAYS_DROP);
+
+		// add noreap, if necessary
+		if (!orig_item->NoReap())
+			header.SetFlag(LyraItem::FLAG_NOREAP);
+	}
+	else if (is_artifact)
+	{
+		// add noreap, if necessary
+		if (!orig_item->NoReap())
+			header.SetFlag(LyraItem::FLAG_NOREAP);
+
+		// add always drop, if necessary
+		if (!orig_item->AlwaysDrop())
+			header.SetFlag(LyraItem::FLAG_ALWAYS_DROP);
+	}
+	else
+	{
+		// clear both noreap and always drop if the flags are set
+		if (orig_item->AlwaysDrop())
+			header.ClearFlag(LyraItem::FLAG_ALWAYS_DROP);
+
+		if (orig_item->NoReap())
+			header.ClearFlag(LyraItem::FLAG_NOREAP);
+	}
+
+
+	info.Init(header, new_name, 0, 0, 0);
+
+	if (!CloneItemFunction(info, state, orig_item->ItemFunction(0)))
+	{
+		// fail out
+		display->DisplayMessage("Cannot modify selected item function");
+		return;
+	}
+	
+	info.SetCharges(new_charges);
+
+	new_item = new cItem(player->x, player->y, player->angle, info, ITEM_CREATING, 0,
+		false, GMsg_PutItem::DEFAULT_TTL);
+
+	if (orig_item->Lmitem().Flags() & LyraItem::FLAG_HASDESCRIPTION)
+	{
+		item_to_dupe = new_item;
+		descript_callback = (&cGameServer::FinalizeItemModify);
+		this->SendItemDescripRequest(orig_item->ID());
+	}
+	else
+	{
+		// just call the method directly
+		this->FinalizeItemModify(new_item, NULL);
+	}
+}
+
+void cGameServer::FinalizeItemModify(cItem *item_to_modify, TCHAR* description)
+{
+	// One more sanity check
+	if ((cp->SelectedItem() == NO_ACTOR) || !(actors->ValidItem(cp->SelectedItem())))
+		return;
+
+	if (CreateItem(item_to_modify, GMsg_PutItem::DEFAULT_TTL, description))
+	{
+		// delete the existing item if we successfully create a new one
+		cp->SelectedItem()->Destroy();
+	}
+}
+
 void cGameServer::DuplicateItem(cItem *orig_item)
 {
 	// request the description if there is one
 	if (orig_item->Lmitem().Flags() & LyraItem::FLAG_HASDESCRIPTION)
 	{
 		item_to_dupe = orig_item;
+		descript_callback = (&cGameServer::FinalizeItemDuplicate);
 		this->SendItemDescripRequest(orig_item->ID());
 	}
 	else 
@@ -3720,8 +3810,25 @@ void cGameServer::FinalizeItemDuplicate(cItem *orig_item, TCHAR* description)
 	const void *state = orig_item->Lmitem().StateField(0);
 	info.Init(header, orig_item->Name(), 0, 0, 0);
 
+	if (!CloneItemFunction(info, state, orig_item->ItemFunction(0)))
+	{
+		display->DisplayMessage("Cannot duplicate selected item function");
+		return;
+	}
+
+	// set charges
+	info.SetCharges(orig_item->Lmitem().Charges());
+	int ttl = GMsg_PutItem::DEFAULT_TTL;
+	
+	new_item = new cItem(player->x, player->y, player->angle, info, ITEM_CREATING, 0,
+		false, ttl);
+	CreateItem(new_item, ttl, description);
+}
+
+bool cGameServer::CloneItemFunction(LmItem& info, const void *state, int item_function)
+{
 	// handle the item function
-	switch (orig_item->ItemFunction(0))
+	switch (item_function)
 	{
 		case LyraItem::NOTHING_FUNCTION:
 		{
@@ -3780,17 +3887,13 @@ void cGameServer::FinalizeItemDuplicate(cItem *orig_item, TCHAR* description)
 			break;
 		}
 		default:
-			display->DisplayMessage("Cannot duplicate selected item function");
-			return;
+		{			
+			return false;
+		}
+		
 	}
 
-	// set charges
-	info.SetCharges(orig_item->Lmitem().Charges());
-	int ttl = GMsg_PutItem::DEFAULT_TTL;
-	
-	new_item = new cItem(player->x, player->y, player->angle, info, ITEM_CREATING, 0,
-		false, ttl);
-	CreateItem(new_item, ttl, description);
+	return true;
 }
 #endif
 

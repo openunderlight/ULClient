@@ -54,6 +54,7 @@
 #define IDD_PMARE_AVATAR                184
 #define IDD_MONSTER_AVATAR              184
 #define IDD_PMARE_TALK                  185
+#define IDD_MODIFY_ITEM					186
 #define IDD_LAUNCH_OPTIONS              190
 #define IDD_VIDEOOPTIONS                191
 #define IDD_VIDEO_OPTIONS               191
