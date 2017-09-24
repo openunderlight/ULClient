@@ -1104,37 +1104,80 @@ teleport_locale_t teleport_locations[] =
 	{ BY_GM, "Thresh GM Room", "19948;-842", 20 },
 	{ BY_GM, "The Unknown", "-7839;12457", 43 }
 #ifdef UL_DEV
-	,{ BY_GM, "Lower Basin of Stars", "9309;2572", 2 },
-	{ BY_GM, "Mt Illapse", "2043;1502", 4 },
-	{ BY_GM, "Edgeward Barrows", "6989;-1472", 5 },
-	{ BY_GM, "Lower Lambent", "14126;-1244", 6 },
-	{ BY_GM, "Trinity Rise", "90;-305", 9 },
-	{ BY_GM, "Trinity Walk", "2178;6910", 10 },
+	,{ BY_GM, "Trinity Rise", "90;-305", 9 },
 	{ BY_GM, "Trinity Fields", "6103;37", 11 },
-	{ BY_GM, "Evernight Plateau", "3440;16992", 12 },
-	{ BY_GM, "West Valley", "1836;1145", 13 },
-	{ BY_GM, "Loth Cistern", "8127;3307", 15 },
 	{ BY_GM, "Upper Umbric", "5931;3016", 16 },
-	{ BY_GM, "Albino Caves", "2694;2515", 27 },
-	{ BY_GM, "Cairn of Sorrow", "7152;-1776", 28 },
-	{ BY_GM, "Chasm of Souls", "10619;-14666", 30 },
-	{ BY_GM, "Gloom Peaks", "2531;5024", 31 },
-	{ BY_GM, "Harrow Glades", "4118;-788", 32 },
-	{ BY_GM, "Lost Caves", "-121;-31", 33 },
-	{ BY_GM, "Ossuary of Dread", "554;-4793", 34 },
-	{ BY_GM, "Horron's Lair", "23312;8064", 35 },
-	{ BY_GM, "Dorsal Rift", "-628;386", 36 },
 	{ BY_GM, "Lower Cairn", "-3355;-2216", 37 },
 	{ BY_GM, "Lower Ossuary", "11532;1171", 38 },
-	{ BY_GM, "Thresh Pits", "7304;6592", 39 },
 	{ BY_GM, "Chimeric", "554;166", 40 },
 	{ BY_GM, "Library of Dreams", "355;-202", 41 },
-	{ BY_GM, "Thresh Pits", "-2508;-5959", 42 },
 	{ BY_GM, "Dark Awakening", "-525;1990", 44 },
-	{ BY_GM, "DCA", "6958;7522", 46 },
-	{ BY_GM, "Palisade", "3693;6973", 48 }
+	{ BY_GM, "DCA", "6958;7522", 46 }
 #endif
 };
+
+teleport_locale_t dispersement_locations[] =
+{
+	{ BY_PLAYER, "Private Walk", "9309;2572", 2 },
+	{ BY_PLAYER, "Camp of Kings", "25989; -3316", 4 },
+	{ BY_PLAYER, "Cavern of Tears", "-5903;-14684", 5 },
+	{ BY_PLAYER, "Turgin's Turn", "14126;-1244", 6 },
+	{ BY_PLAYER, "Cairn of Don Argan", "2178;6910", 10 },
+	{ BY_PLAYER, "The Dark Turn", "5460;-7023", 12 }, 
+	{ BY_PLAYER, "Amphitheatre of the Sphere", "9271;8032", 13 },
+	{ BY_PLAYER, "The Resevoir", "557;-10126", 15},
+	// the rest show up twice to give preference to them
+	{ BY_PLAYER, "Ivory Palace", "2694;2515", 27 },
+	{ BY_PLAYER, "Ivory Palace", "2694;2515", 27 },
+	{ BY_PLAYER, "Cairn of Sorrow", "7152;-1776", 28 },
+	{ BY_PLAYER, "Cairn of Sorrow", "7152;-1776", 28 },
+	{ BY_PLAYER, "Cistern of Torture", "6320;-5140", 29},
+	{ BY_PLAYER, "Cistern of Torture", "6320;-5140", 29},
+	{ BY_PLAYER, "Cavern of Battle", "3991;-8601", 30 }, 
+	{ BY_PLAYER, "Cavern of Battle", "3991;-8601", 30 },
+	{ BY_PLAYER, "Mystic Tunnel", "-1976;5987", 31 },
+	{ BY_PLAYER, "Mystic Tunnel", "-1976;5987", 31 },
+	{ BY_PLAYER, "West Glade", "-14272;692", 32 },
+	{ BY_PLAYER, "West Glade", "-14272;692", 32 },
+	{ BY_PLAYER, "Lair of Teng", "3097;10907", 33 },
+	{ BY_PLAYER, "Lair of Teng", "3097;10907", 33 },
+	{ BY_PLAYER, "Derelict Chamber", "13456;-15655", 34 }, 
+	{ BY_PLAYER, "Derelict Chamber", "13456;-15655", 34 },
+	{ BY_PLAYER, "The Black Id", "14516;5879", 35 },
+	{ BY_PLAYER, "The Black Id", "14516;5879", 35 },
+	{ BY_PLAYER, "The Edge Of Consciousness", "-5504;4800", 36 },
+	{ BY_PLAYER, "The Edge Of Consciousness", "-5504;4800", 36 },
+	{ BY_PLAYER, "Bogrom's Lair", "7049;-4831", 39 },
+	{ BY_PLAYER, "Bogrom's Lair", "7049;-4831", 39 },
+	{ BY_PLAYER, "Meditation Hall", "885;3898", 42},
+	{ BY_PLAYER, "Meditation Hall", "885;3898", 42 },
+	{ BY_PLAYER, "Meditation Room", "618;-251", 43},
+	{ BY_PLAYER, "Meditation Room", "618;-251", 43 },
+	{ BY_PLAYER, "Execution Chamber", "19968;256", 48 },
+	{ BY_PLAYER, "Execution Chamber", "19968;256", 48 }
+};
+
+
+// Chooses a coordinate from the dispersement list.
+// NOTE: We do not care about the location flags for this call.
+// PARAM: Takes in either the index for the coordinate to use OR -1 to choose a random coordinate
+const char *DisperseCoordinate(unsigned int index)
+{
+	int idx = index;
+	// use a random index if we take in -1, otherwise we'll use what's passed in
+	if (index == -1)
+	{
+		idx = rand() % NumDisperseLocs();
+	}
+
+	_stprintf(temp_message, "%s;%d", dispersement_locations[idx].coordinates, dispersement_locations[idx].level_id);
+	return temp_message;
+}
+
+unsigned int NumDisperseLocs(void)
+{
+	return sizeof(dispersement_locations) / sizeof(teleport_locale_t);
+}
 
 unsigned int NumLocations(void)
 {

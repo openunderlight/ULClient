@@ -44,6 +44,8 @@ extern xp_entry lyra_xp_table[];
 const int PLAYER_WALK_ANIMATE_TICKS  = 84;
 const int PLAYER_RUN_ANIMATE_TICKS	 = 56;
 const int PLAYER_BLADE_ANIMATE_TICKS = 1;
+const int TP_REDIRECT_LEVEL = 52; // setting to level 52 for now since there isn't a level 52
+const int TP_REDIRECT_ROOM = 3;
 
 // # of actor-collision-free moves after a teleport
 const unsigned int NUM_FREE_MOVES	 = 5;
@@ -2825,6 +2827,36 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 			cDS->PlaySound(LyraSound::MESSAGE);
 		}
 		return false;
+	}
+
+	bool trigger_redirect = false;
+
+	// check if we're going to redirect the player elsewhere
+	if (level_id == NO_LEVEL && LastLevel() == TP_REDIRECT_LEVEL)
+	{
+		// we're in the same plane so use the sector to track down the room
+		int p_sector = FindSector(x, y, 0, true);
+
+		// check if we're traveling to the redirect room and set the flag if we are
+		if ((p_sector != DEAD_SECTOR) && (level->Rooms[level->Sectors[p_sector]->room].id == TP_REDIRECT_ROOM))
+		{
+			trigger_redirect = true;
+		}
+	}
+	// These coords mean a GM is trying to send the player somewhere random
+	else if (x == 0 && y == 0 && level_id == 0)
+	{
+		trigger_redirect = true;
+	}
+
+	if (trigger_redirect)
+	{
+		float new_x, new_y;
+		int new_level;
+		_stscanf(DisperseCoordinate(-1), _T("%f;%f;%d"), &new_x, &new_y, &new_level);
+
+		// we need to have a random redirect list to choose from here
+		return this->Teleport(new_x, new_y, 0, new_level, LyraSound::NONE);
 	}
 
 	this->MarkLastLocation();
