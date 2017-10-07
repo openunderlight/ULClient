@@ -9712,7 +9712,7 @@ void cArts::EndPowerToken(void *value)
 				lyra_item_support_t support = { LyraItem::SUPPORT_FUNCTION, 0, 0, 0 };
 
 				header.Init(0, 0);
-				header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
+				header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_CHANGE_CHARGES);
 				header.SetGraphic(LyraBitmap::SOUL_ESSENCE);
 				header.SetColor1(0); header.SetColor2(0);
 				header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SUPPORT_FUNCTION), 0, 0));
