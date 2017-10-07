@@ -3875,7 +3875,7 @@ BEGIN
     IDS_DSERR_OTHERAPPHASPRIO "DSERR_OTHERAPPHASPRIO"
     IDS_DSERR_UNINITIALIZED "DSERR_UNINITIALIZED"
     IDS_LIVE_GAME_SERVER_IP "metatron.koiware.com"
-    IDS_DEV_GAME_SERVER_IP1 "dev1.koiware.com"
+    IDS_DEV_GAME_SERVER_IP1 "ec2-54-157-94-210.compute-1.amazonaws.com"
     IDS_GAME_MANUAL_URL     "http://wiki.underlight.com"
     IDS_BILLING_URL         "http://forums.underlight.com/viewtopic.php?f=2&t=78"
     IDS_FIREWALL_FAQ_URL    "http://www.underlight.com/"
@@ -4464,8 +4464,8 @@ BEGIN
     IDS_FOCAL_FLAME         "Focal Flame"
     IDS_NOT_ENOUGH_PT       "You do not have enough Power Tokens to create that item!"
     IDS_PT_COMBINED         "You have combined your Power Tokens!"
-    IDS_ARTIFACT_NO_TP      "You cannot Translocate while holding an Artifact!"
     IDS_NO_SACRIFICE        "Sacrifice failed. You cannot Sacrifice an item with a Description!"
+    IDS_ARTIFACT_NO_TP      "You cannot Translocate while holding an Artifact!"
 END
 
 #endif    // English (United States) resources
