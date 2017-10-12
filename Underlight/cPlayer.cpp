@@ -44,8 +44,8 @@ extern xp_entry lyra_xp_table[];
 const int PLAYER_WALK_ANIMATE_TICKS  = 84;
 const int PLAYER_RUN_ANIMATE_TICKS	 = 56;
 const int PLAYER_BLADE_ANIMATE_TICKS = 1;
-const int TP_REDIRECT_LEVEL = 52; // setting to level 52 for now since there isn't a level 52
-const int TP_REDIRECT_ROOM = 3;
+const int TP_REDIRECT_LEVEL = 49; // setting to level 52 for now since there isn't a level 52
+const int TP_REDIRECT_ROOM = 6;
 
 // # of actor-collision-free moves after a teleport
 const unsigned int NUM_FREE_MOVES	 = 5;
