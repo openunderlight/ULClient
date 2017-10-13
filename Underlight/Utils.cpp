@@ -1102,7 +1102,10 @@ teleport_locale_t teleport_locations[] =
 	{ BY_GOE, "Gathering of the Entranced", "3833;-16439", 23 },
 	{ BY_GM, "Fayd's Fortress", "10805;-3727", 19 },
 	{ BY_GM, "Thresh GM Room", "19948;-842", 20 },
-	{ BY_GM, "The Unknown", "-7839;12457", 43 }
+	{ BY_GM, "The Unknown", "-7839;12457", 43 },
+	{ BY_GM, "The Conclave", "-5181;3375", 50},
+	{ BY_GM, "Conclave Maze", "5639;-14414", 50 },
+	{ BY_GM, "Lightless Hollow", "-1232;-747", 51}
 #ifdef UL_DEV
 	,{ BY_GM, "Trinity Rise", "90;-305", 9 },
 	{ BY_GM, "Trinity Fields", "6103;37", 11 },
