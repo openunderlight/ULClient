@@ -94,7 +94,7 @@ struct Lyra {
 
     MAX_SPEECHLEN = 512,    // maximum length of speech text
     MAX_ITEMDESC = 512,     // maximum length of an item's description
-    MAX_AVATARDESC = 512,   // max length of avatar description
+    MAX_AVATARDESC = 1024,   // max length of avatar description
 
 	MAX_LEVELS = 64,        // max # of levels
     MAX_LEVELROOMS = 64,   // maximum number of rooms in a level
