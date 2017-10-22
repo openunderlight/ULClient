@@ -3850,7 +3850,7 @@ BOOL CALLBACK PowerTokenDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			{
 				case IDC_OK:
 
-					i = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS));
+					i = ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS));
 					num_charges = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_VALUE), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_VALUE)));
 					if (i == -1)
 						i = Guild::NO_GUILD;
