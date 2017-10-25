@@ -44,6 +44,8 @@ extern xp_entry lyra_xp_table[];
 const int PLAYER_WALK_ANIMATE_TICKS  = 84;
 const int PLAYER_RUN_ANIMATE_TICKS	 = 56;
 const int PLAYER_BLADE_ANIMATE_TICKS = 1;
+const int TP_REDIRECT_LEVEL = 49; // setting to level 52 for now since there isn't a level 52
+const int TP_REDIRECT_ROOM = 6;
 
 // # of actor-collision-free moves after a teleport
 const unsigned int NUM_FREE_MOVES	 = 5;
@@ -157,6 +159,7 @@ void cPlayer::InitPlayer(void)
 	gamesite = GMsg_LoginAck::GAMESITE_LYRA;
 	gamesite_id = 0;
 	session_id = 0;
+	safezone = false;
 
 	for (i=0; i<NUM_GUILDS; i++)
 		guild_ranks[i].rank = Guild::NO_RANK;
@@ -972,7 +975,13 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 									 } break;
 
 	case LyraEffect::PLAYER_BLEED: {
-		if (this->flags & ACTOR_PROT_CURSE) {
+		if (safezone)
+		{
+			LoadString(hInstance, IDS_PLAYER_BLEED_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			return false;
+		}
+		else if (this->flags & ACTOR_PROT_CURSE) {
 			LoadString (hInstance, IDS_PLAYER_BLEED_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
 			timed_effects->expires[LyraEffect::PLAYER_PROT_CURSE] -= CalculateBreakthrough(duration, effect_origin);
@@ -984,27 +993,35 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 								   } break;
 
 	case LyraEffect::PLAYER_POISONED: {
-		if (flags & ACTOR_NO_POISON)
+		if (safezone)
+		{
+			LoadString(hInstance, IDS_PLAYER_POISON_DEFLECT, disp_message, sizeof(disp_message));
+			display->DisplayMessage(disp_message);
+			return false;
+		}
+		else if (this->flags & ACTOR_NO_POISON)
 		{
 			LoadString (hInstance, IDS_PLAYER_POISON_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
+
+			timed_effects->expires[LyraEffect::PLAYER_NO_POISON] -= CalculateBreakthrough(duration, effect_origin);
 			return false;
 		}
 
 		if (caster_id != player->ID())
 			last_poisoner = caster_id;
 
-		// pmares and dark mares can only be affected w/ a 1 strength poison
-		if (duration > 60000 && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
-		{ 
-			duration = 60000;
-		}
-
 		int new_strength = (duration / 60000) + 1;
 		if (new_strength > 10) new_strength = 10;
 
 		if (new_strength > poison_strength)
 			poison_strength = new_strength;
+
+		// set the maximum duration after the strength calculation for pmare/dmare
+		if (duration > 60000 && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
+		{
+			duration = 60000;
+		}
 	} 
 	break;
   case LyraEffect::PLAYER_SPIN:
@@ -1162,7 +1179,7 @@ void cPlayer::CheckStatus(void)
 	evokedFX.Update();
 
 	// check to see if we've healed naturally
-	if ((LyraTime() > next_heal) && !(flags & ACTOR_SOULSPHERE))
+	if ((LyraTime() > next_heal) && !(flags & ACTOR_SOULSPHERE) && (level->Sectors[this->sector]->tag != SECTOR_NO_REGEN))
 	{	  // raise selected if under max; else raise lowest
 #ifdef AGENT  // true nightmares regen fast
 		value = this->AvatarType();
@@ -1177,7 +1194,7 @@ void cPlayer::CheckStatus(void)
 				value = 3;
 				break;
 			default:
-				value = 1;
+				value = 2;
 		}
 #else  // dreamers regen slowly
 		if (flags & ACTOR_MEDITATING)
@@ -1264,7 +1281,8 @@ void cPlayer::CheckStatus(void)
 		case SECTOR_DAMAGE:
 			this->SetCurrStat(Stats::DREAMSOUL, -1, SET_RELATIVE, playerID);
 			break;
-		case SECTOR_CURSE:
+		// SECTOR_NO_PLAYER_TP and SECTOR_NO_REGEN are implemented elsewhere
+		case SECTOR_NO_PLAYER_TP:
 		case SECTOR_NO_REGEN:
 		default:
 			break;
@@ -1512,6 +1530,14 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 	if (value != Stats::STAT_MIN)
 		this->ValidateChecksums();
 
+	if (origin_id == Lyra::ID_UNKNOWN) 
+	{
+		if (last_attacker_id != Lyra::ID_UNKNOWN)
+			origin_id = last_attacker_id;
+		else
+			origin_id = this->ID();
+	}
+
 #ifdef GAMEMASTER // check for invulnerability
 	if ((origin_id != this->ID()) && (how == SET_RELATIVE) &&
 		(value < 0) && options.invulnerable)
@@ -1530,6 +1556,9 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 			display->DisplayMessage(disp_message);
 			return stats[stat].current;
 		}
+		
+		// check if we're in a no damage level before trying to apply damage
+		if (safezone) return stats[stat].current;
 	}
 
 	// check for armor on dreamsoul drains
@@ -1565,9 +1594,11 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 			amount = (int)(amount*.75);
 #endif
 #ifdef PMARE // pmare bogroms get an additional 30% shield
+
 		if (this->GetMonsterType() == Avatars::BOGROM)
 			amount = amount*.70;
-		else if (this->GetMonsterType() != Avatars::AGOKNIGHT) // other pmares get a 15% shield
+		else if (this->GetMonsterType() != Avatars::AGOKNIGHT)
+			// other pmares get a 15% shield
 			amount = amount*.85;
 #endif
 		if (amount)
@@ -2233,46 +2264,48 @@ void cPlayer::ReformAvatar(void)
 void cPlayer::HandlePmareDefense(bool add_all)
 {
 	bool added_art = false;
+	DWORD duration = 1200000;
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_PARALYSIS]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->SetTimedEffect(LyraEffect::PLAYER_PROT_PARALYSIS, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_DETECT_INVISIBLE]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->SetTimedEffect(LyraEffect::PLAYER_DETECT_INVISIBLE, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REFLECT]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, 3600000, playerID, EffectOrigin::ART_EVOKE);
-		added_art = true;
-	}
-
-	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_REGENERATING]))
-	{
-		this->SetTimedEffect(LyraEffect::PLAYER_REGENERATING, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->SetTimedEffect(LyraEffect::PLAYER_REFLECT, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_FEAR]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->SetTimedEffect(LyraEffect::PLAYER_PROT_FEAR, duration, playerID, EffectOrigin::ART_EVOKE);
+		added_art = true;
+	}
+
+	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_PROT_CURSE]))
+	{
+		this->SetTimedEffect(LyraEffect::PLAYER_PROT_CURSE, duration*3, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_NO_POISON]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_NO_POISON, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->RemoveTimedEffect(LyraEffect::PLAYER_POISONED);
+		this->SetTimedEffect(LyraEffect::PLAYER_NO_POISON, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}
 
 	if ((add_all || !added_art) && !(flags & timed_effects->actor_flag[LyraEffect::PLAYER_TRAIL]))
 	{
-		this->SetTimedEffect(LyraEffect::PLAYER_TRAIL, 3600000, playerID, EffectOrigin::ART_EVOKE);
+		this->SetTimedEffect(LyraEffect::PLAYER_TRAIL, duration, playerID, EffectOrigin::ART_EVOKE);
 		added_art = true;
 	}			
 }
@@ -2796,6 +2829,36 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 		return false;
 	}
 
+	bool trigger_redirect = false;
+
+	// check if we're going to redirect the player elsewhere
+	if (level_id == NO_LEVEL && LastLevel() == TP_REDIRECT_LEVEL)
+	{
+		// we're in the same plane so use the sector to track down the room
+		int p_sector = FindSector(x, y, 0, true);
+
+		// check if we're traveling to the redirect room and set the flag if we are
+		if ((p_sector != DEAD_SECTOR) && (level->Rooms[level->Sectors[p_sector]->room].id == TP_REDIRECT_ROOM))
+		{
+			trigger_redirect = true;
+		}
+	}
+	// These coords mean a GM is trying to send the player somewhere random
+	else if (x == 0 && y == 0 && level_id == 0)
+	{
+		trigger_redirect = true;
+	}
+
+	if (trigger_redirect)
+	{
+		float new_x, new_y;
+		int new_level;
+		_stscanf(DisperseCoordinate(-1), _T("%f;%f;%d"), &new_x, &new_y, &new_level);
+
+		// we need to have a random redirect list to choose from here
+		return this->Teleport(new_x, new_y, 0, new_level, LyraSound::NONE);
+	}
+
 	this->MarkLastLocation();
 
 	// play sound for teleport
@@ -2852,6 +2915,18 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 		
 		// remove the avatar shield upon level change
 		player->RemoveTimedEffect(LyraEffect::PLAYER_SHIELD);
+
+		safezone = false;
+
+		// check if we're in a no damage level before trying to apply damage
+		for (int i = 0; i < num_no_damage_levels; i++)
+		{
+			if (no_damage_levels[i] == level->ID())
+			{
+				safezone = true;
+				break;
+			}
+		}
 	}
 	else
 	{

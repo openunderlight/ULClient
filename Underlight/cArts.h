@@ -363,6 +363,8 @@ public:
 	void EndCleanseMare(void);
 	void StartCorruptEssence(void);
 	void EndCorruptEssence(void);
+	void StartAlterPrimeStrength(void);
+	void EndAlterPrimeStrength(void *value);
 
 	// arts that require selecting a neighbor and a skill
 	void StartTrain(void);
@@ -497,11 +499,12 @@ private:
 	void DisplayNeighborBailed(lyra_id_t art_id);
 	void DisplayItemBailed(lyra_id_t art_id);
 	void DisplayArtBailed(lyra_id_t art_id);
-	void DrainStat(lyra_id_t art_id);
-	void ArtFinished(bool drain, bool allow_skill_increase = true);
+	void DrainStat(lyra_id_t art_id, int multiplier = 1);
+	void ArtFinished(bool drain, bool allow_skill_increase = true, int drain_multiplier=1);
 	void AddIfUnlearned(int art_id);
 	void HandleHouseAutoLearns(int rank);
 	int CalculatePlateauTokensRequired(int art_id);
+	bool CanPlayerTeleport(lyra_id_t art_id);
 
 	// helper methods that go through a player's inventory
 	int CountTrainSphereTokens(lyra_id_t art_id, lyra_id_t target_id, cItem** tokens, bool unique = true);

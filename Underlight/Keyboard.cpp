@@ -944,7 +944,20 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		}
 		return true;
 	case VK_F4:
-		agentbox->Show();
+		if ((!itemdlg) && (options.network))
+		{
+
+			cItem *selected_item = cp->SelectedItem();
+			// don't attempt to modify if no item has been selected or if it's not a valid item 			
+			if ((selected_item == NO_ACTOR) || !(actors->ValidItem(selected_item)))
+				return false;
+
+			itemdlg = TRUE;
+			HWND hDlg = CreateLyraDialog(hInstance, IDD_MODIFY_ITEM, cDD->Hwnd_Main(), (DLGPROC)ModifyItemDlgProc);
+		}
+		return true;
+	case VK_F5:
+		arts->StartAlterPrimeStrength();
 		return true;
 	case VK_F6:
 		player->Teleport(6958, 7522, 979, 29);
@@ -963,6 +976,9 @@ bool HandleGMSpecialKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			arts->CanUseArt(q, true);
 		return true;
 	}
+	case VK_F10:
+		agentbox->Show();
+		return true;
 
 		
 	default:
@@ -1168,6 +1184,54 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 					
 				default:
 					break;
+#ifdef UL_DEV
+		// the F12 key is used to test all of the active levels in the game to ensure we don't corrupt level files
+		case VK_F12:
+		{
+			float start_x, start_y, start_level, x, y; int level_id;
+			start_x = player->x;
+			start_y = player->y;
+			start_level = level->ID();
+			for (i = 0; i <= NumLocations(); i++)
+			{
+				_stscanf(LocationCoordinateAt(i), _T("%f;%f;%d"), &x, &y, &level_id);
+				bool success = player->Teleport(x, y, 0, level_id);
+				int new_sector = FindSector(x, y, 0, true);
+				
+				if (!success || (player->x != x || player->y != y || level->ID() != level_id) || new_sector == DEAD_SECTOR)
+				{
+					strcpy(disp_message, "Level id '%d' (%s) has issues!!!");
+					_stprintf(message, disp_message, level_id, LocationNameAt(i));
+					display->DisplayMessage(message);
+
+					break;
+				}
+				actors->Purge();
+			}
+
+			// now check the random tp dispersement locations
+			for (i = 0; i <= NumDisperseLocs(); i++)
+			{
+				_stscanf(DisperseCoordinate(i), _T("%f;%f;%d"), &x, &y, &level_id);
+				bool success = player->Teleport(x, y, 0, level_id);
+				int new_sector = FindSector(x, y, 0, true);
+
+				if (!success || (player->x != x || player->y != y || level->ID() != level_id) || new_sector == DEAD_SECTOR)
+				{
+					strcpy(disp_message, "Dispersement Level id '%d' and index '%d' has issues!!!");
+					_stprintf(message, disp_message, level_id, i);
+					display->DisplayMessage(message);
+
+					break;
+				}
+				actors->Purge();
+			}
+
+			// do one more teleport to verify the last level in the list is okay
+			player->Teleport(start_x, start_y, 0, start_level);
+			break;
+		}
+#endif
 	}
 	
 	

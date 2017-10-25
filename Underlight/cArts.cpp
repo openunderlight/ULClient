@@ -226,7 +226,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xD56D, // Summon 
 0xF999, // Suspend 
 0x1BC3, // Reflect 
-0x3DFD, // Sacrifice 
+0x3802, // Sacrifice 
 0x659F, // Cleanse Nightmare 
 0x8149, // Create ID Token 
 0xAC49, // Sense Dreamers 
@@ -260,7 +260,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xA5E2, // Passlock 
 0xCAFE, // Heal 
 0xED56, // Sanctify 
-0x164D, // Lock/Disable Portal
+0x1649, // Lock/Disable Portal
 0x3614, // Key 
 0x586F, // Break Lock 
 0x8380, // Repair 
@@ -271,7 +271,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x37E2, // Inscribe 
 0x664D, // Forge Master 
 0x8544, // Merge Talisman 
-0xA9D8, // NP Symbol 
+0xA834, // NP Symbol 
 0xCC58, // Sense Datoken 
 #ifndef PMARE
 0xED06, // Tempest 
@@ -416,7 +416,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_SUMMON_ART_NAME,				Stats::NO_STAT,		0,  0,  0,  0,  -1, SANCT},
 {IDS_SUSPEND,						Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},
 {IDS_REFLECT_ART_NAME,				Stats::WILLPOWER,   65, 40, 9,  3,	-1, SANCT|FOCUS|LEARN},
-{IDS_SACRIFICE,						Stats::RESILIENCE,	10, 5,  0,	1, 	-1, SANCT|NEED_ITEM},
+{IDS_SACRIFICE,						Stats::DREAMSOUL,	20, 10,  0,	1, 	-1, SANCT|NEED_ITEM},
 {IDS_CLEANSE_MARE,					Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
 {IDS_CREATE_ID_TOKEN,				Stats::DREAMSOUL,	0,  20, 0,	1, 	-1, SANCT|NEED_ITEM|MAKE_ITEM},
 {IDS_SENSE,							Stats::DREAMSOUL,	0,  0,  0,	1,  -1, SANCT|LEARN},
@@ -450,7 +450,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_PASSLOCK,						Stats::INSIGHT,		50, 30, 6,	5, 	-1, SANCT|FOCUS},
 {IDS_HEAL, 							Stats::RESILIENCE,	10, 5,  0,	1, 	-1, SANCT},
 {IDS_SANCTIFY, 						Stats::WILLPOWER,	15, 5,  13, 2, 	-1, SANCT},
-{IDS_DISABLE_PORTAL, 				Stats::WILLPOWER,	20, 20, 0,	5, 	-1, MAKE_ITEM|FOCUS},
+{IDS_DISABLE_PORTAL, 				Stats::WILLPOWER,	20, 20, 0,	5, 	-1, SANCT|MAKE_ITEM|FOCUS},
 {IDS_KEY,							Stats::WILLPOWER,	20, 1,  0,	2, 	-1, SANCT|MAKE_ITEM|FOCUS},
 {IDS_BREAK_LOCK, 					Stats::WILLPOWER,	40, 40, 0,	8, 	-1, SANCT|FOCUS},
 {IDS_REPAIR, 						Stats::RESILIENCE,	15, 10, 0,	4, 	-1, SANCT|NEED_ITEM},
@@ -1310,7 +1310,8 @@ void cArts::CancelArt(void)
 
 // called either when a skill trial fails or after an art has
 // been used successfully; drains the appropriate stat from the player
-void cArts::DrainStat(lyra_id_t art_id)
+// multiplier is used for non-permanent drains to amplify the standard drain cost, default is 1
+void cArts::DrainStat(lyra_id_t art_id, int multiplier)
 {
 	if ((art_id < 0) || (art_id >= NUM_ARTS))
 	{
@@ -1325,7 +1326,7 @@ void cArts::DrainStat(lyra_id_t art_id)
 		if (art_id == Arts::SOULEVOKE)
 			player->SetMaxStat(art_info[art_id].stat, player->MaxStat(art_info[art_id].stat)-art_info[art_id].drain, player->ID());
 		else
-			player->SetCurrStat(art_info[art_id].stat, -art_info[art_id].drain, SET_RELATIVE, player->ID());
+			player->SetCurrStat(art_info[art_id].stat, -(art_info[art_id].drain * multiplier), SET_RELATIVE, player->ID());
 	}
 	return;
 }
@@ -1376,8 +1377,9 @@ bool cArts::IncreaseSkill(int art_id, int chance_increase)
 
 
 // called after the player has cast an art; drain is true if the use
-// was successful, or false if it was cancelled for some reason
-void cArts::ArtFinished(bool drain, bool allow_skill_increase)
+// was successful, or false if it was cancelled for some reason,
+// drain multiplier can be used to amplify art drain, defaults to 1
+void cArts::ArtFinished(bool drain, bool allow_skill_increase, int drain_multiplier)
 {
 	player->EvokingFX().DeActivate();
 
@@ -1393,7 +1395,7 @@ void cArts::ArtFinished(bool drain, bool allow_skill_increase)
 	callback_method = NULL;
 	if (do_drain && (art_in_use != Arts::NONE))
 	{
-		this->DrainStat(art_in_use); // drain stat
+		this->DrainStat(art_in_use, drain_multiplier); // drain stat
 #ifndef PMARE // no skill increases for pmares
 		if (allow_skill_increase)
 			this->IncreaseSkill(art_in_use,CHANCE_SKILL_INCREASE);
@@ -2458,20 +2460,16 @@ void cArts::Recall(void)
 
 void cArts::Return(void)
 {
+	// check if the teleport is allowed
+	if (!this->CanPlayerTeleport(Arts::RETURN))
+	{
+		this->ArtFinished(false);
+		return;
+	}
 
-	// r->ErrorInfo()->RMoved this code into cPlayer so Return can occur through talismans
-//	if (player->flags & ACTOR_RETURN)
-//	{ // 2nd activation - return
-//		player->Teleport(player->ReturnX(), player->ReturnY(), player->ReturnAngle(), player->ReturnLevel());
-//		player->RemoveTimedEffect(LyraEffect::PLAYER_RETURN);
-//	}
-//	else
-//	{ // 1st activation - mark location
-		int duration = this->Duration(Arts::RETURN, player->Skill(Arts::RETURN));
-		player->SetTimedEffect(LyraEffect::PLAYER_RETURN, duration, player->ID(), EffectOrigin::ART_EVOKE);
-//		 player->SetReturn(player->x, player->y, player->angle, level->ID());
-//		gs->SendPlayerMessage(0, RMsg_PlayerMsg::RETURN, 0, 0);
-//	}
+	// main logic is in cPlayer so Return can occur through talisman
+	int duration = this->Duration(Arts::RETURN, player->Skill(Arts::RETURN));
+	player->SetTimedEffect(LyraEffect::PLAYER_RETURN, duration, player->ID(), EffectOrigin::ART_EVOKE);
 	cDS->PlaySound(LyraSound::RETURN, player->x, player->y, true);
 	this->ArtFinished(true);
 	return;
@@ -3347,12 +3345,58 @@ void cArts::ApplyDazzle(int skill, lyra_id_t caster_id)
 	return;
 }
 
+// note: art_id is currently unused
+bool cArts::CanPlayerTeleport(lyra_id_t art_id)
+{
+	bool blockTeleport = false;
+
+	// block player teleports from no tp sectors
+	blockTeleport = level->Sectors[player->sector]->tag == SECTOR_NO_PLAYER_TP;
+
+	if (blockTeleport)
+	{
+		_stprintf(disp_message, "Planar energies interfere with your ability to teleport");
+		display->DisplayMessage(disp_message);
+
+		return false;
+	}
+}
+
 //////////////////////////////////////////////////////////////////
 // Guild House
 
 void cArts::StartPlayerTeleport(void)
 {  
+#ifndef GAMEMASTER
+	bool primeFound = false;
+	cItem* item;
+	// peons can't Translocate with a prime
+	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+		if ((item->Status() == ITEM_OWNED) && (item->AlwaysDrop()))
+		{
+			primeFound = true;
+			break;
+		}
+	actors->IterateItems(DONE);
+
+	if (primeFound)
+	{
+		// THOU SHALT NOT TRANSLOCATE WITH A PRIME
+		LoadString(hInstance, IDS_ARTIFACT_NO_TP, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+#endif
+
 	if (chooseguilddlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	// check if the teleport is allowed
+	if (!this->CanPlayerTeleport(Arts::GUILDHOUSE))
 	{
 		this->ArtFinished(false);
 		return;
@@ -5906,6 +5950,11 @@ void cArts::GotRallied(void *value)
 		LoadString(hInstance, IDS_RALLY_NO_SS, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 	}
+	// check if the teleport is allowed
+	else if (!this->CanPlayerTeleport(Arts::RALLY))
+	{
+		// do nothing in here
+	}
 	else if (success) {
 		if (player->Room() != level->Rooms[level->Sectors[FindSector(rally_x, rally_y, 0, true)]->room].id) {
 			LoadString(hInstance, IDS_RALLY_PREEMOTE, message, sizeof(message));
@@ -6048,6 +6097,12 @@ void cArts::StartExpel(void)
 
 void cArts::ApplyExpel(int guild_id, lyra_id_t caster_id)
 {
+	// check if the teleport is allowed
+	if (!this->CanPlayerTeleport(Arts::EXPEL))
+	{
+		return;
+	}
+
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::EXPEL);
 
@@ -6056,8 +6111,11 @@ void cArts::ApplyExpel(int guild_id, lyra_id_t caster_id)
 
     player->EvokedFX().Activate(Arts::EXPEL, false);
 
-	// send to Boggen's lair = 7049;-4831;39 
-	player->Teleport (7049, -4831, 0, 39);	
+	float new_x, new_y;
+	int new_level;
+	_stscanf(DisperseCoordinate(-1), _T("%f;%f;%d"), &new_x, &new_y, &new_level);
+
+	player->Teleport(new_x, new_y, 0, new_level);
 
 	return;
 }
@@ -6786,8 +6844,11 @@ void cArts::ApplyChaosPurge(lyra_id_t caster_id)
 
     player->EvokedFX().Activate(Arts::CHAOS_PURGE, false);
 
-	// send to 885;3898;42 
-	player->Teleport (885, 3898, 0, 42);	
+	float new_x, new_y;
+	int new_level;
+	_stscanf(DisperseCoordinate(-1), _T("%f;%f;%d"), &new_x, &new_y, &new_level);
+
+	player->Teleport(new_x, new_y, 0, new_level);
 
 	return;
 }
@@ -6842,6 +6903,11 @@ void cArts::StartCupSummons(void)
 
 void cArts::ApplyCupSummons(lyra_id_t caster_id)
 {
+	// check if the teleport is allowed
+	if (!this->CanPlayerTeleport(Arts::CUP_SUMMONS))
+	{
+		return;
+	}
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::CUP_SUMMONS);
 
@@ -7626,6 +7692,7 @@ void cArts::EndDestroyItem(void)
 void cArts::StartSacrifice(void)
 {
 
+#ifndef GAMEMASTER
 	if (!player->IsInitiate(Guild::NO_GUILD) &&
 		!player->IsKnight(Guild::NO_GUILD) &&
 		!player->IsRuler(Guild::NO_GUILD))
@@ -7636,7 +7703,7 @@ void cArts::StartSacrifice(void)
 		this->ArtFinished(false);
 		return;
 	}
-
+#endif
 	this->WaitForSelection(&cArts::EndSacrifice, Arts::SACRIFICE);
 	this->CaptureCP(INVENTORY_TAB, Arts::SACRIFICE);
 	return;
@@ -7660,6 +7727,14 @@ void cArts::EndSacrifice(void)
 		return;
 	}
 
+	if (chakram_item->Lmitem().FlagSet(LyraItem::FLAG_HASDESCRIPTION))
+	{
+		LoadString(hInstance, IDS_NO_SACRIFICE, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+		return;
+	}
+
 	// check that the item is a chakram or blade
 	for (int i=0; i<chakram_item->NumFunctions(); i++)
 		if (chakram_item->ItemFunction(i) == LyraItem::MISSILE_FUNCTION)
@@ -7669,17 +7744,36 @@ void cArts::EndSacrifice(void)
 			if (missile.velocity != 0)
 				is_missile = true;
 		}
-
+	
 	if (is_missile)
-	{ // transmute into an imprisoned talisman
-      // create new talisman for imprisoned mare essence
+	{ 
+		// 50% chance base, down to 45% at level 99
+		int mod_chance = (100 - ((player->Skill(Arts::SACRIFICE)+1)/10)) / 2;
+		if (rand() % 100 <= mod_chance)
+		{
+			_stprintf(temp_message, "Your attempt to sacrifice %s has failed and the item has been destroyed.", chakram_item->Name());
+			display->DisplayMessage(temp_message);
+			chakram_item->Destroy();
+			// destroy the item and have a double drain
+			this->ArtFinished(true, true, 2);
+			return;
+		}
+		
+		// transmute into an imprisoned talisman
+		// create new talisman for imprisoned mare essence
 		header.Init(0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::ENSLAVED_MARE);
 		header.SetColor1(0); header.SetColor2(0);
 		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
 		essence.type = LyraItem::ESSENCE_FUNCTION;
-		essence.strength = 1 + player->SkillSphere(Arts::SACRIFICE);
+		// Scale up by 10 while calculating to account for integer division
+		int essence_str = (MinModifierSkill(missile.damage) / 2) + 1;
+#ifdef UL_DEV
+		_stprintf(temp_message, "Sacrificed token with %d strength has been created.", essence_str);
+		display->DisplayMessage(temp_message);
+#endif
+		essence.strength = essence_str;
 		essence.mare_type = 2;
 		essence.slaver_id = player->ID();
 		essence.weapon_type = 0;
@@ -8001,6 +8095,7 @@ void cArts::EndTrain(void)
 #ifndef GAMEMASTER //
 	else if ((art_id == Arts::TRAIN && n->Avatar().Teacher() == 0) || // only GMs can teach Train to Learn
 			 (art_id == Arts::LEVELTRAIN) ||
+			 (art_id == Arts::NP_SYMBOL) ||
 			 (art_id == Arts::DREAMSTRIKE) || 
 		     (art_id == Arts::SUPPORT_SPHERING) ||
              (art_id == Arts::SUPPORT_TRAINING) ||
@@ -8454,7 +8549,14 @@ void cArts::GiveReply(void *value)
 		return;
 
 	if (success)
+	{
+		// Cancel the guildhouse evoke if the player is accepting an item
+		// the chances of this occurring are miniscule but just in case!
+		if (this->CurrentArt() == Arts::GUILDHOUSE)
+			this->CancelArt();
+
 		gs->TakeItemAck(GMsg_TakeItemAck::TAKE_YES, receiving_item);
+	}
 	else
 		gs->TakeItemAck(GMsg_TakeItemAck::TAKE_NO, receiving_item);
 }
@@ -8813,6 +8915,108 @@ void cArts::EndIlluminatedBlade(void *value)
 	}
 	item->Destroy();
 	this->ArtFinished(true);
+
+	return;
+}
+
+
+void cArts::StartAlterPrimeStrength(void)
+{
+
+#ifndef GAMEMASTER
+	LoadString(hInstance, IDS_GM_ONLY, disp_message, sizeof(disp_message));
+	display->DisplayMessage(disp_message);
+	this->ArtFinished(false);
+	return;
+#endif
+
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	entervaluedlg = true;
+	_stprintf(message, "Enter Strength to add (+) or remove (-):", player->ID());
+	HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+		cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
+	entervalue_callback = (&cArts::EndAlterPrimeStrength);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+
+	return;
+}
+
+void cArts::EndAlterPrimeStrength(void *value)
+{
+	if (!value)
+		return;
+
+	int entered_value = 0;
+	_stscanf(message, _T("%d"), &entered_value);
+	
+	// pull the selected item to try it first
+	cItem* prime = cp->SelectedItem();
+
+	// add strength
+	if (entered_value > 0)
+	{
+		// we don't have a prime selected so try to find one in the pack
+		if (prime == NO_ITEM || prime->ItemFunction(0) != LyraItem::META_ESSENCE_FUNCTION)
+		{
+			// find the prime to use
+			prime = FindPrime(Guild::NO_GUILD, 0);
+		}
+
+		if (prime == NO_ITEM)
+		{
+			strcpy(disp_message, "You need a prime artifact to alter!");
+			display->DisplayMessage(disp_message);
+		}
+		else
+		{
+			prime->AddMetaEssence(entered_value);
+
+			_stprintf(disp_message, "%s is adding %d strength to %s!", player->Name(), entered_value, prime->Name());
+			gs->Talk(disp_message, RMsg_Speech::RP, Lyra::ID_UNKNOWN, true);
+
+			strcpy(disp_message, "Adding %d strength to %s!");
+			_stprintf(message, disp_message, entered_value, prime->Name());
+			display->DisplayMessage(message);
+		}
+
+	}
+	// remove strength
+	else if (entered_value < 0)
+	{
+		// make it a positive number
+		int drain_amt = entered_value * -1;
+
+		// we don't have a prime selected so try to find one in the pack
+		if (prime == NO_ITEM || prime->ItemFunction(0) != LyraItem::META_ESSENCE_FUNCTION)
+		{
+			// find the prime to use
+			prime = FindPrime(Guild::NO_GUILD, drain_amt);
+		}
+
+		if (prime == NO_ITEM)
+		{
+			strcpy(disp_message, "You need a prime artifact with %d strength to drain!");
+			_stprintf(message, disp_message, drain_amt);
+			display->DisplayMessage(message);
+		}
+		else
+		{
+			prime->DrainMetaEssence(drain_amt);
+
+			_stprintf(disp_message, "%s is removing %d strength from %s!", player->Name(), drain_amt, prime->Name());
+			gs->Talk(disp_message, RMsg_Speech::RP, Lyra::ID_UNKNOWN, true);
+
+			strcpy(disp_message, "Draining %d strength from %s!");
+			_stprintf(message, disp_message, drain_amt, prime->Name());
+			display->DisplayMessage(message);
+		}
+	}
+
 
 	return;
 }
@@ -9508,7 +9712,7 @@ void cArts::EndPowerToken(void *value)
 				lyra_item_support_t support = { LyraItem::SUPPORT_FUNCTION, 0, 0, 0 };
 
 				header.Init(0, 0);
-				header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
+				header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_CHANGE_CHARGES);
 				header.SetGraphic(LyraBitmap::SOUL_ESSENCE);
 				header.SetColor1(0); header.SetColor2(0);
 				header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SUPPORT_FUNCTION), 0, 0));
@@ -10116,7 +10320,8 @@ _stprintf(message, disp_message, n->Name());
 
 void cArts::StartAscend(void)
 {
-	if (!player->IsKnight(Guild::NO_GUILD))
+	// Non-knights and Advisors are not allowed to Ascend to Ruler
+	if (!player->IsKnight(Guild::NO_GUILD) || player->Skill(Arts::NP_SYMBOL) > 0)
 	{
 		LoadString (hInstance, IDS_MUST_BE_KNIGHT, disp_message, sizeof(disp_message));
 		_stprintf(message, disp_message, this->Descrip(Arts::ASCEND));
@@ -10644,7 +10849,7 @@ void cArts::EndLocate(void *value)
 
 	if (locate_all)
 	{
-		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 						NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 
 		size = sizeof(num_buddies);

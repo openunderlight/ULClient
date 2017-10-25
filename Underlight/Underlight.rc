@@ -42,8 +42,8 @@ BEGIN
     CONTROL         "800x600",IDC_GRAPHIC_RES800,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,143,76,40,9
     CONTROL         "1024x768 (recommended)",IDC_GRAPHIC_RES1024,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,191,76,110,9
     CONTROL         "Dev 1",IDC_DEV_SERVER1,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,25,89,39,10
-    CONTROL         "Dev 2",IDC_DEV_SERVER2,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,65,90,40,10
-    CONTROL         "Custom",IDC_CUSTOM_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,104,90,43,10
+    //CONTROL         "Dev 2",IDC_DEV_SERVER2,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,65,90,40,10
+    //CONTROL         "Custom",IDC_CUSTOM_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,104,90,43,10
     EDITTEXT        IDC_CUSTOM_IP,142,88,58,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
     CONTROL         "Live",IDC_LIVE_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,13,89,25,10
     CONTROL         "Debug Server:",IDC_DEBUG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,202,90,56,10
@@ -173,6 +173,23 @@ BEGIN
     PUSHBUTTON      "Underlight Options",IDC_GOTOOPTIONS,18,37,89,11,NOT WS_TABSTOP
     PUSHBUTTON      "Underlight Credits",IDC_GOTOCREDITS,18,52,89,11,NOT WS_TABSTOP
     DEFPUSHBUTTON   "Exit the Underlight",IDC_EXIT,18,67,89,11,NOT WS_TABSTOP
+END
+
+IDD_MODIFY_ITEM DIALOGEX 0, 0, 198, 122
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
+EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_ITEM_NAME,40,14,115,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_CHARGES,40,29,24,13,ES_AUTOHSCROLL
+    CONTROL         "Artifact",IDC_ITEM_ARTIFACT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,9,66,44,10
+    LTEXT           "Graphic",IDC_GRAPHIC_HEADER,65,31,36,11
+    DEFPUSHBUTTON   "OK",IDC_OK,136,50,45,14
+    PUSHBUTTON      "Cancel",IDC_CANCEL,136,73,45,14
+    LTEXT           "Name",IDC_NAME_HEADER,0,16,23,8
+    LTEXT           "Charges",IDC_CHARGES_HEADER,0,31,32,11
+    COMBOBOX        IDC_GRAPHIC_COMBO,103,29,78,94,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "NoPickup",IDC_ITEM_NOPICKUP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,0,54,53,10
 END
 
 IDD_CREATE_ITEM DIALOGEX 0, 0, 405, 124
@@ -349,7 +366,7 @@ BEGIN
     PUSHBUTTON      "<",IDC_SCROLL_LEFT,379,5,11,11
     PUSHBUTTON      ">",IDC_SCROLL_RIGHT,391,5,11,11
     PUSHBUTTON      "Doom Layout",IDC_DOOMLAYOUT,40,2,66,13
-    PUSHBUTTON      "Mouse Layout",IDC_MOUSELAYOUT,146,2,66,13
+    PUSHBUTTON      "Mouse Layout",IDC_MOUSELAYOUT,146,2,66,13,NOT WS_VISIBLE
 END
 
 IDD_CHOOSE_DESTINATION DIALOGEX 0, 0, 203, 91
@@ -360,7 +377,7 @@ BEGIN
     PUSHBUTTON      "OK",IDC_OK,148,25,33,14,NOT WS_TABSTOP
     PUSHBUTTON      "Cancel",IDC_CANCEL,148,45,34,14,NOT WS_TABSTOP
     COMBOBOX        IDC_DESTINATIONS,4,25,135,116,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Please select a location",IDC_STATIC_CHOOSE_DESTINATION,11,3,115,10
+    LTEXT           "Translocate",IDC_TRANSLOCATE,0,2,115,10
 END
 
 IDD_CHOOSE_GUILD DIALOGEX 0, 0, 190, 91
@@ -989,6 +1006,10 @@ BEGIN
     BEGIN
         LEFTMARGIN, 2
         RIGHTMARGIN, 124
+    END
+
+    IDD_MODIFY_ITEM, DIALOG
+    BEGIN
     END
 
     IDD_CREATE_ITEM, DIALOG
@@ -2174,7 +2195,7 @@ BEGIN
     IDS_TRAIN_HOUSES_MOON   "Enter the City of Dreams in the chambers of the Order of the Sable Moon.\n"
     IDS_TRAIN_HOUSES_ECLIPSE 
                             "Enter the City of Dreams in the chambers of the Alliance of the Eclipse.\n"
-    IDS_TRAIN_HOUSES_SHADOW "Enter the City of Dreams in the chambers of the Keepers of the Eternal Shadow.\n"
+    IDS_TRAIN_HOUSES_SHADOW "Enter the City of Dreams in the chambers of the Monastery of the Shadow.\n"
     IDS_TRAIN_HOUSES_COVENANT 
                             "Enter the City of Dreams in the chambers of the Union of the Covenant.\n"
     IDS_TRAIN_HOUSES_RADIANCE 
@@ -2869,7 +2890,7 @@ BEGIN
     IDS_FASTEST             "Fastest"
     IDS_OOSM                "Order of the Sable Moon"
     IDS_AOE                 "Alliance of the Eclipse"
-    IDS_KOES                "Keepers of Eternal Shadow"
+    IDS_KOES                "Monastery of the Shadow"
     IDS_UOC                 "Union of the Covenant"
     IDS_POR                 "Peace Corpse"
 END
@@ -2964,7 +2985,7 @@ BEGIN
     IDS_DEMOTE_TOKEN        "Demotion Token"
     IDS_OOSM_MEMBER_TOKEN   "Order of the Sable Moon Membership Token"
     IDS_AOE_MEMBER_TOKEN    "Alliance of the Eclipse Membership Token"
-    IDS_KOES_MEMBER_TOKEN   "Keepers of Eternal Shadow Membership Token"
+    IDS_KOES_MEMBER_TOKEN   "Monastery of the Shadow Membership Token"
     IDS_UOC_MEMBER_TOKEN    "Union of the Covenant Membership Token"
     IDS_POR_MEMBER_TOKEN    "Peace Corpse Membership Token"
     IDS_HC_MEMBER_TOKEN     "House Calenture Membership Token"
@@ -2998,7 +3019,7 @@ BEGIN
     IDS_FLAG_DOL2           "Flag DoL2"
     IDS_FLAG_GOE            "Flag GoE"
     IDS_FLAG_HC2            "Flag HC2"
-    IDS_FLAG_KOES           "Flag KoES"
+    IDS_FLAG_KOES           "Flag MotS"
     IDS_FLAG_OOSM           "Flag OoSM"
     IDS_FLAG_POR            "Flag PoR"
     IDS_FLAG_UOC            "Flag UoC"
@@ -3007,7 +3028,7 @@ BEGIN
     IDS_CREST_UOC           "Crest UoC"
     IDS_CREST_DOL           "Crest OoL"
     IDS_CREST_GOE           "Crest GoE"
-    IDS_CREST_KOES          "Crest KoES"
+    IDS_CREST_KOES          "Crest MotS"
     IDS_CREST_POR           "Crest PC"
     IDS_CREST_OOSM          "Crest OoSM"
     IDS_BANISHMENT          "Banishment"
@@ -3197,7 +3218,7 @@ BEGIN
     IDS_TRAIN_BELIEF_MOON   "The Order of the Sable Moon is a Spiritual Freesoul Imprisoning house. They are the Spiritual center of the Freesoul faith. They study the dream and the Nightmares within it in order to discover a way to rid the dream of the menace. They Imprison the nightmare essences within their ""Relic of the Order""."
     IDS_TRAIN_BELIEF_ECLIPSE 
                             "The Alliance of the Eclipse is an Illuminated House that believes in furthering the tenets of Truth, Honor, and Understanding through peace and study."
-    IDS_TRAIN_BELIEF_SHADOW "Keepers of Eternal Shadow is a Freesoul House whose ways are steeped in mysticism and the occult.  They feel that essence, both Dreamer and Maren are sources of energy that should not be left untapped."
+    IDS_TRAIN_BELIEF_SHADOW "Monastery of the Shadow is a Freesoul House whose ways are steeped in mysticism and the occult.  They feel that essence, both Dreamer and Maren are sources of energy that should not be left untapped."
     IDS_TRAIN_BELIEF_COVENANT 
                             "The Union of the Covenant is a Freesoul House and follows the tenets of Justice, Freedom, Defense, and Honor. Their duty is to the Covenant in which they take to live by, and defend those tenets.  They believe Essence of Nightmares is merely the energy left behind from an avatar, and drain that energy for its uses."
     IDS_TRAIN_BELIEF_RADIANCE 
@@ -3485,7 +3506,7 @@ BEGIN
     IDS_DDERR_NOMIPMAPHW    "DDERR_NOMIPMAPHW"
     IDS_BLINDED_NO_RCLICK   "You can't see that because you are blind!\n"
     IDS_CORRUPT_ESSENCE     "Corrupt Essence"
-    IDS_MUST_BE_KOES        "You must be a member of Keepers of the Eternal Shadow to use the art of Corrupt Essence!\n"
+    IDS_MUST_BE_KOES        "You must be a member of Monastery of the Shadow to use the art of Corrupt Essence!\n"
     IDS_ESSENCE_CORRUPTED   "You have corrupted the essence!\n"
     IDS_NOT_DREAMER_ESSENCE "That is not a dreamer essence\n"
     IDS_UNKNOWN_ERROR       "Unknown Error"
@@ -3854,7 +3875,8 @@ BEGIN
     IDS_DSERR_OTHERAPPHASPRIO "DSERR_OTHERAPPHASPRIO"
     IDS_DSERR_UNINITIALIZED "DSERR_UNINITIALIZED"
     IDS_LIVE_GAME_SERVER_IP "metatron.koiware.com"
-    IDS_DEV_GAME_SERVER_IP1 "dev1.koiware.com"
+	IDS_DEV_GAME_SERVER_IP1 "dev1.koiware.com"
+    // IDS_DEV_GAME_SERVER_IP1 "ec2-54-157-94-210.compute-1.amazonaws.com"
     IDS_GAME_MANUAL_URL     "http://wiki.underlight.com"
     IDS_BILLING_URL         "http://forums.underlight.com/viewtopic.php?f=2&t=78"
     IDS_FIREWALL_FAQ_URL    "http://www.underlight.com/"
@@ -3979,7 +4001,7 @@ BEGIN
     IDS_KNOW0326            "Graceful arches coax your gaze up to the stars of a pastel sky. A warm, gentle breeze carries the scent of flowers and waterfalls gently through the grasses. A pathway of polished stone leads onward to the Gathering of the Entranced."
     IDS_KNOW1301            "A deep grand valley opens before you. High above the winds howl like the clamor of battle, while below all is hushed silence. Gigantic monuments of stone, formed in impossible shapes, mark the path leading to the Protectors of Radiance."
     IDS_KNOW1202            "Scorched and blackened earth spreads out before you. The gloomy sky hangs low and heavy, blanketing the land in perpetual twilight. An ancient path, clear of ash, leads through the darkened realm towards House Calenture."
-    IDS_KNOW1522            "Plantlife of all varieties covers ground and walls. A hazy sky casts muted light and long shadows. A small warm breeze whispers as an indistinct path makes its way in and out of dark tunnels on its way to the Keepers of Eternal Shadow."
+    IDS_KNOW1522            "Plantlife of all varieties covers ground and walls. A hazy sky casts muted light and long shadows. A small warm breeze whispers as an indistinct path makes its way in and out of dark tunnels on its way to the Monastery of the Shadow."
     IDS_KNOW2917            "The air here is dank and cold. Where elsewhere even the slightest hum of energy can be felt, this place is utterly lifeless. A sense of loss and foreboding hangs in the atmosphere like a dark spectre."
     IDS_KNOW3007            "The air here is dank and cold. Where elsewhere even the slightest hum of energy can be felt, this place is utterly lifeless. A sense of loss and foreboding hangs in the atmosphere like a dark spectre."
     IDS_KNOW3318            "The air here is dank and cold. Where elsewhere even the slightest hum of energy can be felt, this place is utterly lifeless. A sense of loss and foreboding hangs in the atmosphere like a dark spectre."
@@ -4136,7 +4158,7 @@ BEGIN
     IDS_TIMER_PROBLEM_CAPTION "Timer Problem"
     IDS_BACKUP_LOG          "%s-backup-%d-%d-%d.out"
     IDS_NO_PP_MONSTER       "Nightmares cannot receive roleplay points!"
-    IDS_NP_SYMBOL_ART_NAME  "NP Symbol"
+    IDS_NP_SYMBOL_ART_NAME  "Advisor"
 END
 
 STRINGTABLE
@@ -4442,6 +4464,9 @@ BEGIN
     IDS_FOCAL_BLADE         "Focal Blade"
     IDS_FOCAL_FLAME         "Focal Flame"
     IDS_NOT_ENOUGH_PT       "You do not have enough Power Tokens to create that item!"
+    IDS_PT_COMBINED         "You have combined your Power Tokens!"
+    IDS_NO_SACRIFICE        "Sacrifice failed. You cannot Sacrifice an item with a Description!"
+    IDS_ARTIFACT_NO_TP      "You cannot Translocate while holding an Artifact!"
 END
 
 #endif    // English (United States) resources

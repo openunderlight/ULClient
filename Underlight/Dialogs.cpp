@@ -306,7 +306,7 @@ void RegistryReadMacro(int macro_number, macro_t macro)
 
 	_stprintf(macro_name,_T("macro_%d"),macro_number);
 
-	RegOpenKeyEx(HKEY_CURRENT_USER, RegPlayerKey(), 0, KEY_ALL_ACCESS, &reg_key );
+	RegOpenKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0, KEY_ALL_ACCESS, &reg_key );
 	size = sizeof macro_t;
 	result = RegQueryValueEx(reg_key, macro_name, NULL, &reg_type,
 								(unsigned char *)macro, &size);
@@ -326,7 +326,7 @@ static void RegistryWriteMacro(int macro_number, macro_t macro)
 
 	_stprintf(macro_name,_T("macro_%d"),macro_number);
 
-	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(), 0, NULL, 0, KEY_ALL_ACCESS, NULL, &reg_key, &result);
+	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0, NULL, 0, KEY_ALL_ACCESS, NULL, &reg_key, &result);
 	RegSetValueEx(reg_key, macro_name, 0, REG_BINARY, (unsigned char *)macro, sizeof macro_t);
 	RegCloseKey(reg_key);
 
@@ -1595,6 +1595,172 @@ BOOL CALLBACK PPointHelpDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 
 }
 
+BOOL CALLBACK ModifyItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
+{
+#ifdef GAMEMASTER
+	static cItem *selected_item = NULL;
+	
+	if (HBRUSH brush = SetControlColors(hDlg, Message, wParam, lParam))
+		return (LRESULT)brush;
+
+	switch (Message)
+	{
+		case WM_GETDLGCODE:
+			return DLGC_WANTMESSAGE;
+
+		case WM_DESTROY:
+			itemdlg = false;
+			break;
+
+		case WM_INITDIALOG: {
+			SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
+			selected_item = cp->SelectedItem();
+			TCHAR buffer[64];
+
+			if ((selected_item == NO_ACTOR) || !(actors->ValidItem(selected_item)))
+				return FALSE;
+
+			_stprintf(buffer, _T("%d"), selected_item->Lmitem().Charges());
+
+			ShowWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), SW_SHOWNORMAL);
+			ShowWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), SW_SHOWNORMAL);
+			Edit_LimitText(GetDlgItem(hDlg, IDC_ITEM_NAME), LmItem::NAME_LENGTH - 1);
+			Edit_LimitText(GetDlgItem(hDlg, IDC_CHARGES), 3);
+
+			Edit_SetText(GetDlgItem(hDlg, IDC_ITEM_NAME), selected_item->Name());
+			Edit_SetText(GetDlgItem(hDlg, IDC_CHARGES), buffer);
+
+			// default to 29 if we don't have access to it
+			int graphic_idx = 29;
+
+			for (int i = 1; i <= NumTalismans(); i++)
+			{
+				if (TalismanForgable(i))
+				{
+					int index = ComboBox_AddString(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), TalismanNameAt(i));
+					ComboBox_SetItemData(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), index, TalismanBitmapAt(i));
+
+					if (selected_item->BitmapID() == TalismanBitmapAt(i))
+						graphic_idx = index;
+				}
+			}
+
+			// default to invis for GMs
+			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), graphic_idx);
+
+
+			if (selected_item->Lmitem().FlagSet(LyraItem::FLAG_NOREAP))
+			{
+				if (selected_item->Lmitem().FlagSet(LyraItem::FLAG_ALWAYS_DROP))
+				{
+					// artifact checkbox
+					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), 1);
+					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), 0);
+					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), false);
+				}
+				else
+				{
+					// nopickup checkbox
+					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), 1);
+					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), 0);
+					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), false);
+				}
+			}
+
+			break;
+		}
+		case WM_PAINT:
+			if (TileBackground(hDlg))
+				return (LRESULT)0;
+			break;
+
+		case WM_KEYUP:
+			switch (LOWORD(wParam))
+			{
+			case VK_RETURN:
+				PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_OK, 0);
+				return 0;
+			case VK_ESCAPE:
+				PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_CANCEL, 0);
+				return 0;
+			};
+			break;
+
+		case WM_COMMAND:
+			switch (LOWORD(wParam))
+			{
+
+				case IDC_ITEM_NOPICKUP:
+				{
+					bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
+					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), disable);
+					break;
+				}
+				case IDC_ITEM_ARTIFACT:
+				{
+					bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT));
+					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
+					break;
+				}
+				case IDC_OK: 
+				{
+					bool is_nopickup = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
+					bool is_artifact = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT));
+					int numcharges;
+					TCHAR itemname[LmItem::NAME_LENGTH];
+					TCHAR itemcharges[4];
+					TCHAR *stopstring;
+
+					// Check for a name
+					GetWindowText(GetDlgItem(hDlg, IDC_ITEM_NAME), itemname, LmItem::NAME_LENGTH);
+					itemname[LmItem::NAME_LENGTH - 1] = '\0';
+					if (itemname[0] == '\0')
+					{
+						LoadString(hInstance, IDS_NAME_ITEM, message, sizeof(message));
+						CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
+							cDD->Hwnd_Main(), (DLGPROC)NonfatalErrorDlgProc);
+						break;
+					}
+
+
+					// Check for charges
+					GetWindowText(GetDlgItem(hDlg, IDC_CHARGES), itemcharges, 4);
+					itemcharges[3] = '\0';
+					numcharges = _tcstol(itemcharges, &stopstring, 10);
+					if (Button_GetCheck(GetDlgItem(hDlg, IDC_ANY_CHARGES)))
+						numcharges = 1;
+
+					if ((itemcharges[0] == '\0') || (numcharges < 1) || (numcharges > 255))
+					{
+						LoadString(hInstance, IDS_CHARGES, message, sizeof(message));
+						CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
+							cDD->Hwnd_Main(), (DLGPROC)NonfatalErrorDlgProc);
+						break;
+					}
+
+					int graphic = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO)));
+
+					gs->ModifyItem(selected_item, itemname, numcharges, graphic, is_nopickup, is_artifact);
+					
+					DestroyWindow(hDlg);
+					return TRUE;
+					break; 
+				}
+
+				case IDC_CANCEL:
+				{
+					DestroyWindow(hDlg);
+					return FALSE;
+				}
+
+				default:
+					break;
+			}
+	}
+#endif
+	
+	return FALSE;
+}
 
 // window proc for create item dialog box
 BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
@@ -2080,8 +2246,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
         EnableWindow (hwndControl, disable);
       } break;
 
-
-			case IDC_OK: {
+	  case IDC_OK: {
 
 						LmItem info;
 						LmItemHdr header;
@@ -2904,7 +3069,7 @@ BOOL CALLBACK KeyboardConfigDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPAR
 					map = new keymap_t[num_keys];
 					keymap->GetMap(map);
 
-					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 						NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 
 					RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD,
@@ -3685,7 +3850,7 @@ BOOL CALLBACK PowerTokenDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			{
 				case IDC_OK:
 
-					i = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS));
+					i = ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_GUILDS));
 					num_charges = ComboBox_GetItemData(GetDlgItem(hDlg, IDC_VALUE), ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_VALUE)));
 					if (i == -1)
 						i = Guild::NO_GUILD;
@@ -3938,7 +4103,7 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 			hwnd_locateavatar = hDlg;
 			locateavatardlg = true;
 
-			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 
 			size = sizeof(num_buddies);
@@ -4028,7 +4193,7 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_WATCH_LIST), num_buddies);
 			_tcscpy(buddies[num_buddies].name, buddy);
 			num_buddies++;
-			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 			RegSetValueEx(reg_key, _T("num_buddies"), 0, REG_DWORD,
 				(unsigned char *)&(num_buddies), sizeof(num_buddies));
@@ -4170,7 +4335,7 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 							ListBox_SetCurSel(GetDlgItem(hDlg, IDC_WATCH_LIST), j);
 						}
 					}
-					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 					RegSetValueEx(reg_key, _T("num_buddies"), 0, REG_DWORD,
 						(unsigned char *)&(num_buddies), sizeof(num_buddies));
@@ -4228,7 +4393,7 @@ BOOL CALLBACK IgnoreListDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			hwnd_ignorelist = hDlg;
 			ignorelistdlg = true;
 
-			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 			RegCloseKey(reg_key);
 			for (i=0; i<options.num_bungholes; i++)
@@ -4297,7 +4462,7 @@ BOOL CALLBACK IgnoreListDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			_tcscpy(options.bungholes[options.num_bungholes].name, bunghole);
 			options.num_bungholes++;
 
-			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 				NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 			RegSetValueEx(reg_key, _T("num_ignores"), 0, REG_DWORD,
 				(unsigned char *)&(options.num_bungholes), sizeof(options.num_bungholes));
@@ -4362,7 +4527,7 @@ BOOL CALLBACK IgnoreListDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							ListBox_SetCurSel(GetDlgItem(hDlg, IDC_IGNORE_LIST), j);
 						}
 					}
-					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0,
+					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
 							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
 					RegSetValueEx(reg_key, _T("num_ignores"), 0, REG_DWORD,
 						(unsigned char *)&(options.num_bungholes), sizeof(options.num_bungholes));

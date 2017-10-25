@@ -769,7 +769,7 @@ void cItem::Use(void)
 					if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE)
 					{ 
 						// add strength to meta talisman
-						if (avail_space > essence.strength) {
+						if (avail_space >= essence.strength) {
 							// meta talisman can take the entire essence
 							nexus.strength += essence.strength;
 							// only increase essences if it's entirely absorbed
@@ -797,10 +797,13 @@ void cItem::Use(void)
 				needsUpdate = true;
 			} // if I didn't drain and I'm not full display failure
 			else if (!full)
+			{
 				LoadString(hInstance, IDS_CHAOS_WELL_FAILURE, disp_message, sizeof(disp_message));
-				display->DisplayMessage(disp_message);
 			}
-			break;
+			
+			display->DisplayMessage(disp_message);
+		}
+		break;
 
 		case LyraItem::ARMOR_FUNCTION:
 			if (player->SetActiveShield(this))
@@ -974,8 +977,73 @@ void cItem::Use(void)
 			break;
 		}
 
-		case LyraItem::ESSENCE_FUNCTION:
 		case LyraItem::SUPPORT_FUNCTION:
+		{
+			lyra_item_support_t token;
+			lyra_item_support_t other_token;
+			bool drains = false, full = false;
+			int max_size = 10;
+
+			memcpy(&token, state, sizeof(token));
+
+			// only combine power tokens
+			if (token.token_type() == Tokens::POWER_TOKEN)
+			{
+				for (cItem *item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+				{
+					if (lmitem.Charges() >= max_size)
+					{
+						// no mas, we're full
+						full = true;
+						break;
+					}
+
+					if ((item->Status() == ITEM_OWNED) && item->ItemFunction(0) == LyraItem::SUPPORT_FUNCTION && 
+						item->Lmitem().Charges() < max_size && this->ID().Serial() != item->ID().Serial())
+					{
+						state = item->Lmitem().StateField(0);
+						memcpy(&other_token, state, sizeof(other_token));
+
+						// make sure this is a power token and the same guild as the one we're trying to combine
+						if (other_token.token_type() == Tokens::POWER_TOKEN && other_token.guild_id() == token.guild_id())
+						{
+							int avail_space = max_size - lmitem.Charges();
+
+							// absorb the entire item
+							if (avail_space > item->Lmitem().Charges())
+							{
+								lmitem.SetCharges(lmitem.Charges() + item->Lmitem().Charges());
+								item->Lmitem().SetCharges(0);
+							}
+							// only eat as many charges as we need
+							else
+							{
+								lmitem.SetCharges(lmitem.Charges() + avail_space);
+								item->Lmitem().SetCharges(item->Lmitem().Charges() - avail_space);
+								needsUpdate = true;
+							}
+							drains = true;
+						}
+					}
+				}
+
+				actors->IterateItems(DONE);
+
+				// if I drained, regardless if I filled it, display success
+				if (drains)
+				{
+					LoadString(hInstance, IDS_PT_COMBINED, disp_message, sizeof(disp_message));
+					display->DisplayMessage(disp_message);
+					lmitem.SetStateField(0, &token, sizeof(token));
+					needsUpdate = true;
+
+					// break here so we can show 'nothing happens' if anything else happens.
+					break;
+				} 
+			}
+		}
+		// the SUPPORT_FUNCTION case will intentionally fall through if it's the wrong support type
+		case LyraItem::ESSENCE_FUNCTION:
 		case LyraItem::WARD_FUNCTION:
 		case LyraItem::AMULET_FUNCTION:
 		case LyraItem::AREA_EFFECT_FUNCTION:
@@ -1521,6 +1589,31 @@ bool cItem::DrainEssence(int amount)
 	return false;
 }
 
+bool cItem::AddMetaEssence(int amount)
+{
+	lyra_item_meta_essence_t meta_essence;
+	const void* state;
+
+	if (status != ITEM_OWNED)
+	{
+		LoadString(hInstance, IDS_META_NOT_OWNED, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		return false;
+	}
+
+	if (this->ItemFunction(0) == LyraItem::META_ESSENCE_FUNCTION)
+	{	// each item can have only one essence function
+		state = lmitem.StateField(0);
+		memcpy(&meta_essence, state, sizeof(meta_essence));
+
+		meta_essence.set_strength(meta_essence.strength() + amount);
+		lmitem.SetStateField(0, &meta_essence, sizeof(meta_essence));
+		needsUpdate = true;
+		return true;
+	}
+
+	return false;
+}
 
 // this method just drains meta essences.
 bool cItem::DrainMetaEssence(int amount)

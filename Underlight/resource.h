@@ -54,6 +54,7 @@
 #define IDD_PMARE_AVATAR                184
 #define IDD_MONSTER_AVATAR              184
 #define IDD_PMARE_TALK                  185
+#define IDD_MODIFY_ITEM					186
 #define IDD_LAUNCH_OPTIONS              190
 #define IDD_VIDEOOPTIONS                191
 #define IDD_VIDEO_OPTIONS               191
@@ -420,6 +421,7 @@
 #define IDC_ULT_FUNCTIONS               1826
 #define IDC_IGNORE_LIST_STATIC          1827
 #define IDD_CREDITS                     1828
+#define IDC_TRANSLOCATE					1829
 #define IDC_LOCATE                      1830
 #define IDC_LOCATE_ALL                  1831
 #define IDC_ADD                         1832
@@ -2971,6 +2973,9 @@
 #define IDS_FOCAL_BLADE                 4452
 #define IDS_FOCAL_FLAME                 4453
 #define IDS_NOT_ENOUGH_PT               4454
+#define IDS_PT_COMBINED                 4455
+#define IDS_ARTIFACT_NO_TP              4460
+#define IDS_NO_SACRIFICE                4456
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

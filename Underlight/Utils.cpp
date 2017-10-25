@@ -55,10 +55,8 @@ const unsigned int MS_PER_TICK = 53; // ms per IBM PC clock tick
 const unsigned int TALISMAN_INDEX_CUTOFF = 250; // anything above this incurs a linear search
 
 // Return a Reg key indexed by charater name
-TCHAR* RegPlayerKey(bool fBase /* = false */)
+TCHAR* RegPlayerKey(bool fBase)
 {
-	fBase = true; // force common
-
 	if (player == NULL || fBase)
 		return REGISTRY_DATA_KEY;
 
@@ -130,20 +128,38 @@ bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2)
 // registry can not be accessed
 bool __cdecl LoadGameOptions(void)
 {
-	HKEY reg_key = NULL;
-	unsigned long result;
+	HKEY main_key, player_key = NULL;
+	unsigned long mresult, presult;
 
-	if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(),0, 
-				NULL, 0, KEY_ALL_ACCESS, NULL, &reg_key, &result)
+	if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(true),0, 
+				NULL, 0, KEY_ALL_ACCESS, NULL, &main_key, &mresult)
 					!= ERROR_SUCCESS)
 	{
 		GAME_ERROR(IDS_NO_ACCESS_REGISTRY);
 		return false;
 	}
-	LoadInGameRegistryOptionValues(reg_key, false);
-	LoadOutOfGameRegistryOptionValues(reg_key, false);
+	
+	LoadInGameRegistryOptionValues(main_key, false);
 
-	RegCloseKey(reg_key);
+	// only load the character options if we have a character object available
+	if (player != NULL)
+	{
+
+		if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0,
+			NULL, 0, KEY_ALL_ACCESS, NULL, &player_key, &presult)
+			!= ERROR_SUCCESS)
+		{
+			GAME_ERROR(IDS_NO_ACCESS_REGISTRY);
+			return false;
+		}
+
+		LoadCharacterRegistryOptionValues(player_key, false);
+		RegCloseKey(player_key);
+	}
+
+	LoadOutOfGameRegistryOptionValues(main_key, false);
+
+	RegCloseKey(main_key);
 
 	return true;
 }
@@ -1007,6 +1023,7 @@ const int BY_SM		= 16384;
 const int BY_FS		= 32768;
 const int BY_HALO	= 65536;
 const int BY_MT		= 131072;
+const int NOGUILD	= 262144;
 
 bool eligibleForFlag(unsigned flag)
 {
@@ -1044,6 +1061,8 @@ bool eligibleForFlag(unsigned flag)
 		return player->IsInGuild(Guild::ENTRANCED);
 	if (flag & BY_DOL)
 		return player->IsInGuild(Guild::LIGHT);
+	if (flag & NOGUILD)
+		return player->NumGuilds(Guild::RULER_PENDING) == 0;
 
 	return false;
 }
@@ -1065,6 +1084,7 @@ struct teleport_locale_t
 teleport_locale_t teleport_locations[] =
 {
 	{BY_PLAYER, "The Nexus", "6378;-2411", 45},
+	{NOGUILD, "Peaceful Retreat", "12545;-4036", 11},
 	{BY_FS, "Fatesender Guildhall", "-1738;-1548",29},
 	{ BY_SM, "Soulmaster Guildhall", "8177;8235", 7 },
 	{ BY_GK, "Gatekeeper Guildhall", "-850;-3556", 14 },
@@ -1078,9 +1098,89 @@ teleport_locale_t teleport_locations[] =
 	{ BY_OSM, "Order of the Sable Moon", "-3030;-963", 25 },
 	{ BY_HC, "House Calenture", "-2252;-5480", 17 },
 	{ BY_POR, "Peace Corpse", "762;-13361", 21 },
-	{ BY_KOES, "Keepers of the Eternal Shadow", "2583;-14543", 24 },
-	{ BY_GOE, "Gathering of the Entranced", "3833;-16439", 23 }
+	{ BY_KOES, "Monastery of the Shadow", "2583;-14543", 24 },
+	{ BY_GOE, "Gathering of the Entranced", "3833;-16439", 23 },
+	{ BY_GM, "Fayd's Fortress", "10805;-3727", 19 },
+	{ BY_GM, "Thresh GM Room", "19948;-842", 20 },
+	{ BY_GM, "The Unknown", "-7839;12457", 43 },
+	{ BY_GM, "The Conclave", "-5181;3375", 50},
+	{ BY_GM, "Conclave Maze", "5639;-14414", 50 },
+	{ BY_GM, "Lightless Hollow", "-1232;-747", 51}
+#ifdef UL_DEV
+	,{ BY_GM, "Trinity Rise", "90;-305", 9 },
+	{ BY_GM, "Trinity Fields", "6103;37", 11 },
+	{ BY_GM, "Upper Umbric", "5931;3016", 16 },
+	{ BY_GM, "Lower Cairn", "-3355;-2216", 37 },
+	{ BY_GM, "Lower Ossuary", "11532;1171", 38 },
+	{ BY_GM, "Chimeric", "554;166", 40 },
+	{ BY_GM, "Library of Dreams", "355;-202", 41 },
+	{ BY_GM, "Dark Awakening", "-525;1990", 44 },
+	{ BY_GM, "DCA", "6958;7522", 46 }
+#endif
 };
+
+teleport_locale_t dispersement_locations[] =
+{
+	{ BY_PLAYER, "Private Walk", "9309;2572", 2 },
+	{ BY_PLAYER, "Camp of Kings", "25989; -3316", 4 },
+	{ BY_PLAYER, "Cavern of Tears", "-5903;-14684", 5 },
+	{ BY_PLAYER, "Turgin's Turn", "14126;-1244", 6 },
+	{ BY_PLAYER, "Cairn of Don Argan", "2178;6910", 10 },
+	{ BY_PLAYER, "The Dark Turn", "5460;-7023", 12 }, 
+	{ BY_PLAYER, "Amphitheatre of the Sphere", "9271;8032", 13 },
+	{ BY_PLAYER, "The Resevoir", "557;-10126", 15},
+	// the rest show up twice to give preference to them
+	{ BY_PLAYER, "Ivory Palace", "2694;2515", 27 },
+	{ BY_PLAYER, "Ivory Palace", "2694;2515", 27 },
+	{ BY_PLAYER, "Cairn of Sorrow", "7152;-1776", 28 },
+	{ BY_PLAYER, "Cairn of Sorrow", "7152;-1776", 28 },
+	{ BY_PLAYER, "Cistern of Torture", "6320;-5140", 29},
+	{ BY_PLAYER, "Cistern of Torture", "6320;-5140", 29},
+	{ BY_PLAYER, "Cavern of Battle", "3991;-8601", 30 }, 
+	{ BY_PLAYER, "Cavern of Battle", "3991;-8601", 30 },
+	{ BY_PLAYER, "Mystic Tunnel", "-1976;5987", 31 },
+	{ BY_PLAYER, "Mystic Tunnel", "-1976;5987", 31 },
+	{ BY_PLAYER, "West Glade", "-14272;692", 32 },
+	{ BY_PLAYER, "West Glade", "-14272;692", 32 },
+	{ BY_PLAYER, "Lair of Teng", "3097;10907", 33 },
+	{ BY_PLAYER, "Lair of Teng", "3097;10907", 33 },
+	{ BY_PLAYER, "Derelict Chamber", "13456;-15655", 34 }, 
+	{ BY_PLAYER, "Derelict Chamber", "13456;-15655", 34 },
+	{ BY_PLAYER, "The Black Id", "14516;5879", 35 },
+	{ BY_PLAYER, "The Black Id", "14516;5879", 35 },
+	{ BY_PLAYER, "The Edge Of Consciousness", "-5504;4800", 36 },
+	{ BY_PLAYER, "The Edge Of Consciousness", "-5504;4800", 36 },
+	{ BY_PLAYER, "Bogrom's Lair", "7049;-4831", 39 },
+	{ BY_PLAYER, "Bogrom's Lair", "7049;-4831", 39 },
+	{ BY_PLAYER, "Meditation Hall", "885;3898", 42},
+	{ BY_PLAYER, "Meditation Hall", "885;3898", 42 },
+	{ BY_PLAYER, "Meditation Room", "618;-251", 43},
+	{ BY_PLAYER, "Meditation Room", "618;-251", 43 },
+	{ BY_PLAYER, "Execution Chamber", "19968;256", 48 },
+	{ BY_PLAYER, "Execution Chamber", "19968;256", 48 }
+};
+
+
+// Chooses a coordinate from the dispersement list.
+// NOTE: We do not care about the location flags for this call.
+// PARAM: Takes in either the index for the coordinate to use OR -1 to choose a random coordinate
+const char *DisperseCoordinate(unsigned int index)
+{
+	int idx = index;
+	// use a random index if we take in -1, otherwise we'll use what's passed in
+	if (index == -1)
+	{
+		idx = rand() % NumDisperseLocs();
+	}
+
+	_stprintf(temp_message, "%s;%d", dispersement_locations[idx].coordinates, dispersement_locations[idx].level_id);
+	return temp_message;
+}
+
+unsigned int NumDisperseLocs(void)
+{
+	return sizeof(dispersement_locations) / sizeof(teleport_locale_t);
+}
 
 unsigned int NumLocations(void)
 {

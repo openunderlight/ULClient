@@ -342,18 +342,12 @@ void __cdecl SaveInGameRegistryOptionValues(HKEY reg_key)
 		(unsigned char *)&(options.effects_volume), sizeof(options.effects_volume));
 	RegSetValueEx(reg_key, _T("music_volume"), 0, REG_DWORD,  
 		(unsigned char *)&(options.music_volume), sizeof(options.music_volume));
-	RegSetValueEx(reg_key, _T("avatar"), 0, REG_BINARY,  
-		(unsigned char *)&(options.avatar), sizeof(options.avatar));
 	RegSetValueEx(reg_key, _T("speech_color"), 0, REG_DWORD,  
 		(unsigned char *)&(options.speech_color), sizeof(options.speech_color));
 	RegSetValueEx(reg_key, _T("message_color"), 0, REG_DWORD,  
 		(unsigned char *)&(options.message_color), sizeof(options.message_color));
 	RegSetValueEx(reg_key, _T("bg_color"), 0, REG_DWORD,  
 		(unsigned char *)&(options.bg_color), sizeof(options.bg_color));
-	RegSetValueEx(reg_key, _T("ignore_list"), 0, REG_BINARY,  
-		(unsigned char *)options.bungholes, MAX_IGNORELIST*sizeof(other_t));
-	RegSetValueEx(reg_key, _T("num_ignores"), 0, REG_DWORD,  
-		(unsigned char *)&(options.num_bungholes), sizeof(options.num_bungholes));
 	RegSetValueEx(reg_key, _T("autorun"), 0, REG_DWORD,  
 		(unsigned char *)&(options.autorun), sizeof(options.autorun));
 	RegSetValueEx(reg_key, _T("adult_filter"), 0, REG_DWORD,  
@@ -365,32 +359,52 @@ void __cdecl SaveInGameRegistryOptionValues(HKEY reg_key)
 	RegSetValueEx(reg_key, _T("pmare_start_type"), 0, REG_DWORD,  
 		(unsigned char *)&(options.pmare_start_type), sizeof(options.pmare_start_type));
 	RegSetValueEx(reg_key, _T("pmare_price"), 0, REG_DWORD,  
-		(unsigned char *)&(options.pmare_price), sizeof(options.pmare_price));
+		(unsigned char *)&(options.pmare_price), sizeof(options.pmare_price));	
+}
 
-	
+void __cdecl SaveCharacterRegistryOptionValues(HKEY reg_key)
+{
+	RegSetValueEx(reg_key, _T("avatar"), 0, REG_BINARY,
+		(unsigned char *)&(options.avatar), sizeof(options.avatar));
+	RegSetValueEx(reg_key, _T("ignore_list"), 0, REG_BINARY,
+		(unsigned char *)options.bungholes, MAX_IGNORELIST * sizeof(other_t));
+	RegSetValueEx(reg_key, _T("num_ignores"), 0, REG_DWORD,
+		(unsigned char *)&(options.num_bungholes), sizeof(options.num_bungholes));
+
 	// save keyboard layout
 	int num_keys;
 	keymap_t *map;
 	num_keys = keymap->num_keys();
 	map = new keymap_t[num_keys];
 	keymap->GetMap(map);
-	RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD, 
+	RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD,
 		(unsigned char *)&(num_keys), sizeof(num_keys));
-	RegSetValueEx(reg_key, _T("key_mappings"), 0, REG_BINARY, 
-		(unsigned char *)map, (num_keys*sizeof(keymap_t)));
+	RegSetValueEx(reg_key, _T("key_mappings"), 0, REG_BINARY,
+		(unsigned char *)map, (num_keys * sizeof(keymap_t)));
 	delete map;
-	
+
 }
 
 void __cdecl SaveInGameRegistryOptionValues(void)
 {
 	// write out new value to registry
-	HKEY reg_key;
-	unsigned long result;
+	HKEY main_key = NULL;
+	unsigned long mresult, presult;
 	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(true),0, 
-					NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
-	SaveInGameRegistryOptionValues(reg_key);
-	RegCloseKey(reg_key);
+					NULL,0,KEY_ALL_ACCESS, NULL, &main_key, &mresult);
+
+	if (player != NULL)
+	{
+		HKEY player_key = NULL;
+		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0,
+			NULL, 0, KEY_ALL_ACCESS, NULL, &player_key, &presult);
+
+		SaveCharacterRegistryOptionValues(player_key);
+		RegCloseKey(player_key);
+	}
+	
+	SaveInGameRegistryOptionValues(main_key);	
+	RegCloseKey(main_key);
 }
 
 
@@ -401,9 +415,7 @@ static bool ColorOutOfRange(int color)
 
 void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
 {
-	int num_keys;
 	DWORD keyresult, size, reg_type;
-	keymap_t *map;
 
 	size = sizeof(options.sound_active);
 	keyresult = RegQueryValueEx(reg_key, _T("sound_active"), NULL, &reg_type,
@@ -496,13 +508,6 @@ void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
 		(options.music_volume < min_volume) || (options.music_volume > max_volume))
 		options.music_volume = default_volume;
 
-
-	size = sizeof(options.avatar);
-	keyresult = RegQueryValueEx(reg_key, _T("avatar"), NULL, &reg_type,
-		(unsigned char *)&(options.avatar), &size);
-	if ((keyresult != ERROR_SUCCESS) || force) // default avatar
-		memset(&options.avatar, 0, sizeof(options.avatar));
-
 	size = sizeof(options.speech_color);
 	keyresult = RegQueryValueEx(reg_key, _T("speech_color"), NULL, &reg_type,
 		(unsigned char *)&(options.speech_color), &size);
@@ -526,23 +531,6 @@ void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
 		(unsigned char *)&(options.reverse), &size);
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.reverse = FALSE;
-
-	size = sizeof(options.num_bungholes);
-	keyresult = RegQueryValueEx(reg_key, _T("num_ignores"), NULL, &reg_type,
-		(unsigned char *)&(options.num_bungholes), &size);
-	if ((keyresult != ERROR_SUCCESS) || 
-		(options.num_bungholes > MAX_IGNORELIST))
-		options.num_bungholes = 0;
-
-	size = MAX_IGNORELIST*sizeof(other_t);
-	keyresult = RegQueryValueEx(reg_key, _T("ignore_list"), NULL, &reg_type,
-		(unsigned char *)options.bungholes, &size);
-	if ((keyresult != ERROR_SUCCESS) || (!options.num_bungholes))
-	{
-		for (int i=0; i<MAX_IGNORELIST; i++)
-			_tcscpy(options.bungholes[i].name, _T(""));
-		options.num_bungholes = 0;
-	}
 
 	size = sizeof(options.autorun);
 	keyresult = RegQueryValueEx(reg_key, _T("autorun"), NULL, &reg_type,
@@ -584,6 +572,52 @@ void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
 	if ((keyresult != ERROR_SUCCESS) || force)
 		options.pmare_session_start.wYear = 1970;
 
+	// save them back, in case a default was set
+	SaveInGameRegistryOptionValues(reg_key);
+}
+
+void LoadCharacterRegistryOptionValues(bool force)
+{
+	// write out new value to registry
+	HKEY reg_key = NULL;
+	unsigned long result;
+	
+	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0,
+		NULL, 0, KEY_ALL_ACCESS, NULL, &reg_key, &result);
+
+	LoadCharacterRegistryOptionValues(reg_key, force);
+	RegCloseKey(reg_key);
+}
+
+void LoadCharacterRegistryOptionValues(HKEY reg_key, bool force)
+{
+	int num_keys;
+	DWORD keyresult, size, reg_type;
+	keymap_t *map;
+
+	size = sizeof(options.avatar);
+	keyresult = RegQueryValueEx(reg_key, _T("avatar"), NULL, &reg_type,
+		(unsigned char *)&(options.avatar), &size);
+	if ((keyresult != ERROR_SUCCESS) || force) // default avatar
+		memset(&options.avatar, 0, sizeof(options.avatar));
+
+	size = sizeof(options.num_bungholes);
+	keyresult = RegQueryValueEx(reg_key, _T("num_ignores"), NULL, &reg_type,
+		(unsigned char *)&(options.num_bungholes), &size);
+	if ((keyresult != ERROR_SUCCESS) ||
+		(options.num_bungholes > MAX_IGNORELIST))
+		options.num_bungholes = 0;
+
+	size = MAX_IGNORELIST * sizeof(other_t);
+	keyresult = RegQueryValueEx(reg_key, _T("ignore_list"), NULL, &reg_type,
+		(unsigned char *)options.bungholes, &size);
+	if ((keyresult != ERROR_SUCCESS) || (!options.num_bungholes))
+	{
+		for (int i = 0; i < MAX_IGNORELIST; i++)
+			_tcscpy(options.bungholes[i].name, _T(""));
+		options.num_bungholes = 0;
+	}
+
 	// keymapping
 	num_keys = keymap->num_keys();
 	map = new keymap_t[num_keys];
@@ -601,20 +635,45 @@ void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
 		keymap->Init(num_keys, map);
 		delete map;
 	}
-	else 
-	{ // may have version without keymap registry entries
-		keymap->SetDefaultKeymap(0);
-		num_keys = keymap->num_keys();
-		delete map;
-		map = new keymap_t[num_keys];
-		keymap->GetMap(map);
-		RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD, 
-			(unsigned char *)&(num_keys), sizeof(num_keys));
-		RegSetValueEx(reg_key, _T("key_mappings"), 0, REG_BINARY, 
-			(unsigned char *)map, (num_keys*sizeof(keymap_t)));
-		delete map;
+	else
+	{ // may have version without keymap registry entries -- look in main registry first and then pull defaults from code
+
+		HKEY main_key = NULL;
+		unsigned long mresult;
+		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(true), 0,
+			NULL, 0, KEY_ALL_ACCESS, NULL, &main_key, &mresult);
+
+		keyresult = RegQueryValueEx(main_key, _T("number_keys_mapped"), NULL, &reg_type,
+			(unsigned char *)&(num_keys), &size);
+
+		if (keyresult == ERROR_SUCCESS)
+		{
+			size = num_keys * sizeof(keymap_t);
+			delete map;
+			map = new keymap_t[num_keys];
+			RegQueryValueEx(main_key, _T("key_mappings"), NULL, &reg_type,
+				(unsigned char *)map, &size);
+			keymap->Init(num_keys, map);
+			delete map;
+		}
+		else
+		{
+			// okay, we really don't have keys set, use defaults
+			keymap->SetDefaultKeymap(0);
+			num_keys = keymap->num_keys();
+			delete map;
+			map = new keymap_t[num_keys];
+			keymap->GetMap(map);
+			RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD,
+				(unsigned char *)&(num_keys), sizeof(num_keys));
+			RegSetValueEx(reg_key, _T("key_mappings"), 0, REG_BINARY,
+				(unsigned char *)map, (num_keys * sizeof(keymap_t)));
+			delete map;
+		}
+
+		RegCloseKey(main_key);
 	}
 
-	// save them back, in case a default was set
-	SaveInGameRegistryOptionValues(reg_key);
+	// save it incase something changed
+	SaveCharacterRegistryOptionValues(reg_key);
 }

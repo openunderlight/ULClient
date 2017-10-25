@@ -121,8 +121,11 @@ struct options_t {
 };
 
 #ifndef OPTIONS_DLL
-TCHAR* RegPlayerKey(bool fBase = false);
+TCHAR* RegPlayerKey(bool fBase);
 void LoadInGameRegistryOptionValues(HKEY reg_key, bool force);
+void LoadCharacterRegistryOptionValues(bool force);
+void LoadCharacterRegistryOptionValues(HKEY reg_key, bool force);
+void __cdecl SaveCharacterRegistryOptionValues(HKEY reg_key);
 void __cdecl SaveInGameRegistryOptionValues(HKEY reg_key);
 void __cdecl SaveInGameRegistryOptionValues(void);
 #endif

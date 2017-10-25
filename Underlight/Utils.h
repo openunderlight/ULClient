@@ -100,6 +100,8 @@ void Scream(int avatar_type, cActor* actor, bool propagate = false);
 
 bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2);
 
+const char *DisperseCoordinate(unsigned int index);
+unsigned int NumDisperseLocs(void);
 unsigned int NumLocations(void);
 const char *LocationNameAt(unsigned int index);
 const char *LocationCoordinateAt(unsigned int index);

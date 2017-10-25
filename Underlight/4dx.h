@@ -219,8 +219,8 @@ const unsigned int SECTOR_RESILIENCE =		3;
 const unsigned int SECTOR_LUCIDITY  =		4;
 const unsigned int SECTOR_DREAMSOUL  =		5;
 const unsigned int SECTOR_DAMAGE	  =		6; // lose 1 point
-const unsigned int SECTOR_CURSE  =			7;
-const unsigned int SECTOR_NO_REGEN  =		8;
+const unsigned int SECTOR_NO_REGEN =		7;
+const unsigned int SECTOR_NO_PLAYER_TP  =	8;
 
 
 // room flags
