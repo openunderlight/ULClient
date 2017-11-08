@@ -692,7 +692,6 @@ void cGameServer::HandleMessage(void)
 					LoadString (hInstance, IDS_PMARE_EXPIRED, disp_message, sizeof(disp_message));
 					_tprintf(_T("%s\n"), disp_message);
 					options.pmare_session_start.wYear = 1970;
-					SaveInGameRegistryOptionValues();
 					this->ServerError(disp_message);
 					return;
 
@@ -1016,8 +1015,6 @@ void cGameServer::HandleMessage(void)
 #endif
 		}
 		options.avatar = player->Avatar();
-
-		SaveInGameRegistryOptionValues();
 
 		// many times we wish to auto login to the level server
 		// immediately after gs connect; ex. posession, disconnect

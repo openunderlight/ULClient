@@ -839,6 +839,9 @@ void __cdecl CancelExit(void)
 void __cdecl StartExit(void)
 {
 #ifndef AGENT
+	// Save keymap to registry if this was an active session
+	if (gs && gs->LoggedIntoGame()) SaveInGameRegistryOptionValues();
+
 #ifndef GAMEMASTER
 #ifndef UL_DEBUG
 	// if we're logged into a level, give a 5 second delay
@@ -872,8 +875,9 @@ void __cdecl Exit(void)
 {
 	ShowCursor(TRUE);
 
-	if (player && gs && player->Gamesite() == GMsg_LoginAck::GAMESITE_MULTIPLAYER)
-		gs->MPGPLogTime(100);
+	// No longer needed
+	//if (player && gs && player->Gamesite() == GMsg_LoginAck::GAMESITE_MULTIPLAYER)
+	//	gs->MPGPLogTime(100);
 
 	if (cDD != NULL) // We might not have a window yet
 	{
@@ -888,9 +892,6 @@ void __cdecl Exit(void)
 	}
 
 	timeEndPeriod(1);
-
-	if (keymap) 
-		SaveInGameRegistryOptionValues();
 
 #ifdef PMARE 
 	EstimatePmareBilling();
