@@ -137,7 +137,7 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">C:\lyra\dev\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">.\Development\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Pmare|Win32'">C:\lyra\dev\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Pmare|Win32'">C:\lyra\prod\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Pmare|Win32'">.\Pmare\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Pmare|Win32'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">C:\lyra\dev\</OutDir>
@@ -146,7 +146,7 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Dev Player|Win32'">C:\lyra\dev\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Dev Player|Win32'">.\Dev_Player\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Dev Player|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Gamemaster|Win32'">C:\lyra\dev\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Gamemaster|Win32'">C:\lyra\prod\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Gamemaster|Win32'">.\Gamemaster\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Gamemaster|Win32'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\lyra\dev\</OutDir>
@@ -155,7 +155,7 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">.\Live-Debug\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Master|Win32'">C:\lyra\dev\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Master|Win32'">C:\lyra\prod\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Master|Win32'">.\Master\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Master|Win32'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateManifest>
@@ -217,6 +217,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;PMARE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -275,6 +276,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -331,6 +333,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;PMARE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -372,7 +375,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;_DEBUG;GAME_LYR;UNICODE;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\Unicode/Underlight.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\Unicode/</AssemblerListingLocation>
@@ -387,6 +390,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -445,6 +449,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -501,6 +506,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -540,7 +546,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GAME_CLI;_DEBUG;UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;VORBIS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\Debug/Underlight.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
@@ -555,6 +561,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -596,7 +603,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;UL_DEBUG;LIVE_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;VORBIS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\Debug/Underlight.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
@@ -611,6 +618,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -669,6 +677,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
