@@ -600,11 +600,15 @@ void cGameServer::HandleMessage(void)
 			{
 				if (server_level_file_checksum != g_lLevelFileCheckSum)
 				{
-
-//#ifdef UL_DEBUG	// we use this code to help reset new checksums
+					LoadString(hInstance, IDS_HACKED_LEVELFILE, disp_message, sizeof(disp_message));
+					_stprintf(message, disp_message, server_level_file_checksum, g_lLevelFileCheckSum,
+						player->Name(), options.pmare_type, player->Password(), udp_port, loginack_msg.Version(), loginack_msg.Build(), loginack_msg.SubBuild());
+					gs->Talk(message, RMsg_Speech::AUTO_CHEAT, Lyra::ID_UNKNOWN, true);
+					LoadString(hInstance, IDS_BAD_LEVELFILE, disp_message, sizeof(message));
+#ifdef UL_DEBUG	// we use this code to help reset new checksums
 					LoadString (hInstance, IDS_BAD_LEVELFILE_DEBUG, message, sizeof(message));
 					_stprintf(disp_message, message, server_level_file_checksum, g_lLevelFileCheckSum);
-//#endif UL_DEBUG
+#endif UL_DEBUG
 					////// change this back to disp_message when done...
 					GAME_ERROR(disp_message);
 					this->ServerError(disp_message);
