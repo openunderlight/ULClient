@@ -1092,6 +1092,7 @@ teleport_locale_t teleport_locations[] =
 	{ BY_DSMITH, "Forge Guildhall", "3141;-7139", 49},
 	{ BY_WSMITH, "Wordsmith Guildhall", "1901;-4643", 8},
 	{ BY_MT, "Teaching Guild", "417;2746", 47},
+	{ BY_MT, "Convocation of Masters", "8345;-7116", 49 },
 	{ BY_DOL, "Order of Light", "-3452;-3398", 18 },
 	{ BY_UOC, "Union of the Covenant", "-4927;-10515", 26 },
 	{ BY_AOE, "Alliance of the Eclipse", "-6983;-14141", 22 },
