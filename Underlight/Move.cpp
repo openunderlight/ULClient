@@ -1892,8 +1892,18 @@ static int PlayerTripLine(linedef *aLine)
 		if (options.network && !CanPassPortal(aLine->trip3, guild_id))
 			return 0;
 
+//		_stprintf(message, _T("%f, %f, %d"), (float)aLine->trip1, (float)aLine->trip2, aLine->trip4);
+//		display->DisplayMessage(message);
+		// 10602;-4515;49
+//		player->Room
+		// Sends player to random location
+		if (aLine->trip1 == 10602 && aLine->trip2 == -4515) {
+			 player->Teleport(0, 0, 0, 0);
+		}
+		else {
+			player->Teleport((float)aLine->trip1, (float)aLine->trip2, aLine->trip4);
+		}
 
-		player->Teleport((float)aLine->trip1, (float)aLine->trip2,	aLine->trip4);
 		return TELEPORTED;
 	}
 

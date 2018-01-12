@@ -44,8 +44,8 @@ extern xp_entry lyra_xp_table[];
 const int PLAYER_WALK_ANIMATE_TICKS  = 84;
 const int PLAYER_RUN_ANIMATE_TICKS	 = 56;
 const int PLAYER_BLADE_ANIMATE_TICKS = 1;
-const int TP_REDIRECT_LEVEL = 49; // setting to level 52 for now since there isn't a level 52
-const int TP_REDIRECT_ROOM = 6;
+const int TP_REDIRECT_LEVEL = 52; // setting to level 52 for now since there isn't a level 52
+const int TP_REDIRECT_ROOM = 1;
 
 // # of actor-collision-free moves after a teleport
 const unsigned int NUM_FREE_MOVES	 = 5;
@@ -2836,6 +2836,13 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 	{
 		// we're in the same plane so use the sector to track down the room
 		int p_sector = FindSector(x, y, 0, true);
+
+		//_stprintf(message, _T("Room ID: %d, Last Room ID: %d, Level ID: %d, Last Level ID: %d"), 
+		//	level->Rooms[level->Sectors[p_sector]->room].id, 
+		//	last_room, 
+		//	level->ID(),
+		//	LastLevel());
+		//display->DisplayMessage(message);
 
 		// check if we're traveling to the redirect room and set the flag if we are
 		if ((p_sector != DEAD_SECTOR) && (level->Rooms[level->Sectors[p_sector]->room].id == TP_REDIRECT_ROOM))
