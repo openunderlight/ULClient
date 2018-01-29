@@ -75,8 +75,13 @@ const unsigned int  PLAYER_STATS_UPDATE_INTERVAL = 30000; // other server update
 const unsigned int  PACKET_CHECK_INTERVAL = 120000;
 const unsigned int  PACKET_COUNT_INTERVAL = 1000;
 const unsigned int  CHECK_DRAG_SCROLL_INTERVAL = 1000;
-const unsigned int  MAX_IDLE_TIME = 800000;
 const unsigned int  CHECK_INV_COUNT_INTERVAL = 500;
+
+#ifndef GAMEMASTER
+const unsigned int  MAX_IDLE_TIME = 900000;
+#else
+const unsigned int MAX_IDLE_TIME = 1200000;
+#endif
 
 #ifdef AGENT
 #define MIN_MSECS_PER_FRAME 80
@@ -199,7 +204,7 @@ void __cdecl CreateFrame(void)
 #endif
 
 #ifndef AGENT
-#if ! (defined (UL_DEBUG) || defined (GAMEMASTER))
+	#ifndef UL_DEBUG
 	// uncomment for no afk in goal posting
 	//if (goals->Active())
 	//	last_keystroke = LyraTime();
@@ -208,12 +213,15 @@ void __cdecl CreateFrame(void)
 	{
 		exiting = true;
 		gs->Logout(GMsg_Logout::LOGOUT_NORMAL, true);
-		LoadString (hInstance, IDS_IDLE_TIMEOUT, message, sizeof(message));
+		LoadString(hInstance, IDS_IDLE_TIMEOUT, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, (MAX_IDLE_TIME / 1000 / 60));
+		display->DisplayMessage(message);
+
 	    LyraDialogBox(hInstance, IDD_FATAL_ERROR, NULL, (DLGPROC)FatalErrorDlgProc);
 		Exit();
 		exit(-1);
 	}
-#endif
+	#endif
 #endif
 
    if (!ready || exiting || ((LyraTime() - timing->lastFrame) < MIN_MSECS_PER_FRAME))

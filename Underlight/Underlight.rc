@@ -2163,7 +2163,7 @@ BEGIN
     IDS_GM_ONLY_LEVELTRAIN  "Only Elders may instruct others in the art of Sphere\n"
     IDS_CANT_WARD_IMPASSABLE 
                             "Ward failed-  you can only ward portals that you are allowed to pass through\n"
-    IDS_IDLE_TIMEOUT        "You have been idle for more than fifteen minutes, so you have been disconnected."
+    IDS_IDLE_TIMEOUT        "You have been idle for more than %d minutes, so you have been disconnected."
     IDS_WARD_TRIP_ONLY      "You may not ward portals that trigger by simply crossing them\n"
     IDS_TRAIN_FOLLOW_TORCHES 
                             "\nIf you become lost, follow these torches.  They will always guide you back to Threshold.\n"
