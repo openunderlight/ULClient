@@ -139,6 +139,7 @@ unsigned long exit_time;
 
 unsigned char keyboard[num_keystates]; // keyboard
 TCHAR message[DEFAULT_MESSAGE_SIZE]; // generic string for output messages
+TCHAR values_select[100][DEFAULT_MESSAGE_SIZE];
 TCHAR disp_message[DEFAULT_MESSAGE_SIZE]; // generic string for output messages
 TCHAR temp_message[DEFAULT_MESSAGE_SIZE]; // generic string for output messages
 TCHAR errbuf[DEFAULT_MESSAGE_SIZE];// generic string for error messages

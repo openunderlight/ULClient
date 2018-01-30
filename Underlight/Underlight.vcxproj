@@ -46,48 +46,48 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Master|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Gamemaster|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev Player|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Pmare|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev Pmare|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -131,31 +131,31 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Dev Pmare|Win32'">C:\lyra\dev\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Dev Pmare|Win32'">C:\lyra\dev</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Dev Pmare|Win32'">.\Dev_Pmare\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Dev Pmare|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">C:\lyra\dev\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">C:\lyra\dev</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">.\Development\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Pmare|Win32'">C:\lyra\prod\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Pmare|Win32'">C:\lyra\dev</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Pmare|Win32'">.\Pmare\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Pmare|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">C:\lyra\dev\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">C:\lyra\dev</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">.\Unicode\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Dev Player|Win32'">C:\lyra\dev\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Dev Player|Win32'">C:\lyra\dev</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Dev Player|Win32'">.\Dev_Player\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Dev Player|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Gamemaster|Win32'">C:\lyra\prod\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Gamemaster|Win32'">C:\lyra\dev</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Gamemaster|Win32'">.\Gamemaster\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Gamemaster|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\lyra\dev\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">C:\lyra\dev\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\lyra\dev</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">C:\lyra\dev</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">.\Live-Debug\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Master|Win32'">C:\lyra\prod\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Master|Win32'">C:\lyra\dev</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Master|Win32'">.\Master\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Master|Win32'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateManifest>
