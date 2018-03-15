@@ -594,6 +594,13 @@ void cNeighbor::MakeOutsider(void)
 // do nothing on left click
 bool cNeighbor::LeftClick(void)
 {
+	// Waiting for selection on the neighbors tab...
+	if (arts->WaitingForSelection() && cp->Mode() == NEIGHBORS_TAB)
+	{
+		cp->SetSelectedNeighbor(this);
+		cp->SetSelectionMade(true);
+		return true;
+	}
 	return false;
 }
 
@@ -618,6 +625,7 @@ bool cNeighbor::RightClick(void)
 		_stprintf(message, "That's %s (%s)", name, player->StatName(this->Avatar().Focus()));
 	else
 		_stprintf(message, disp_message,name);
+	gs->GetAvatarDescrip(this->ID());
 #endif
 	display->DisplayMessage(message, false);
 
