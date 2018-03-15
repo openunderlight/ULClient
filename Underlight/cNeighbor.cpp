@@ -594,7 +594,7 @@ void cNeighbor::MakeOutsider(void)
 // do nothing on left click
 bool cNeighbor::LeftClick(void)
 {
-	// Waiting for selection on the neighbors tab...
+	// Waiting for selection on the neighbors tab? Trigger art evoke.
 	if (arts->WaitingForSelection() && cp->Mode() == NEIGHBORS_TAB)
 	{
 		cp->SetSelectedNeighbor(this);

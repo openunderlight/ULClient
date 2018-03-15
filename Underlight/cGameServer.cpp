@@ -4711,7 +4711,7 @@ void cGameServer::FillInPlayerPosition(LmPeerUpdate *update, int trigger)
 			//printf("weapon bitmap2: %d\n", update->WeaponBitmap());
 		update->SetWeaponEffect(last_attack.effect);
 		//if (last_attack.bitmap)
-			//printf("weapon bitmap3: %d\n", update->WeaponBitmap());
+			///printf("weapon bitmap3: %d\n", update->WeaponBitmap());
 
 		int height_delta = last_attack.height_delta;
 		if (height_delta < 0)
