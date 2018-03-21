@@ -2365,7 +2365,9 @@ void cGameServer::HandleMessage(void)
 
 			// apply burn effect for appropriate messages - state1 is art plat, state3 is focal art plat
 			player->ApplyCrippleEffect(player_msg.MsgType(), player_msg.State1(), player_msg.State3(), player_msg.SenderID());
-			
+			n = actors->LookUpNeighbor(player_msg.SenderID());
+			bool castByInvisGM = n != NO_ACTOR && n->Avatar().Hidden();
+
 			bool art_reflected = false;
 			if (player->flags & ACTOR_REFLECT) {
 				
@@ -2508,7 +2510,7 @@ void cGameServer::HandleMessage(void)
 					arts->ApplyVision(player_msg.State1(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::BLAST:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 					{
 						arts->ApplyBlast(player_msg.State1(), player_msg.SenderID());
 #ifdef AGENT
@@ -2549,60 +2551,60 @@ void cGameServer::HandleMessage(void)
 					arts->ApplyDrainSelf(player_msg.State1(), player_msg.State2(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::ABJURE:		// art_id, success
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyAbjure(player_msg.State1(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::POISON:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyPoison(player_msg.State1(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::ANTIDOTE:	 // skill, not used
 					arts->ApplyAntidote(player_msg.State1(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::CURSE:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyCurse(player_msg.State1(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::ENSLAVE:   // skill, not used
 					break;
 				case RMsg_PlayerMsg::SCARE:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyScare(player_msg.State1(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::STAGGER:   // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyStagger(player_msg.State1(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::DEAFEN:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyDeafen(player_msg.State1(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::BLIND:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyBlind(player_msg.State1(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::DARKNESS:		 // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyDarkness(player_msg.State1(), player_msg.SenderID());
 					break;
 				case RMsg_PlayerMsg::PARALYZE:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyParalyze(Arts::PARALYZE, player_msg.State1(), player_msg.SenderID());
 						break;
 				case RMsg_PlayerMsg::HOLD_AVATAR:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyParalyze(Arts::HOLD_AVATAR, player_msg.State1(), player_msg.SenderID());
 						break;
 				case RMsg_PlayerMsg::FIRESTORM:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 					arts->ApplyFirestorm(player_msg.State1(), player_msg.SenderID());
 						break;
 				case RMsg_PlayerMsg::TEMPEST:	  // skill, angle
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 					arts->ApplyTempest (player_msg.State1(), player_msg.State2(), player_msg.SenderID());
 						break;
 				case RMsg_PlayerMsg::RAZORWIND:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 					arts->ApplyRazorwind(player_msg.State1(), player_msg.SenderID());
 						break;
 				case RMsg_PlayerMsg::TRAIN:	  // art_id, teacher_skill/success/new skill
@@ -2728,17 +2730,17 @@ void cGameServer::HandleMessage(void)
 					break;
 
 				case RMsg_PlayerMsg::RADIANT_BLAZE:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyRadiantBlaze(player_msg.State1(), player_msg.SenderID());
 						break;
 
 				case RMsg_PlayerMsg::POISON_CLOUD:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyPoisonCloud(player_msg.State1(), player_msg.SenderID());
 						break;
         
 				case RMsg_PlayerMsg::KINESIS: // skill, angle
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyKinesis(player_msg.State1(), player_msg.SenderID(), player_msg.State2 ());
 						break;
 
@@ -2763,7 +2765,7 @@ void cGameServer::HandleMessage(void)
 					break;
 
 				case RMsg_PlayerMsg::DAZZLE:	  // skill, not used
-					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY))
+					if (!(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) || castByInvisGM)
 						arts->ApplyDazzle(player_msg.State1(), player_msg.SenderID());
 						break;
 				case RMsg_PlayerMsg::TEHTHUS_OBLIVION:
