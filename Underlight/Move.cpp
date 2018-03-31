@@ -1857,8 +1857,8 @@ static int PlayerTripLine(linedef *aLine)
 							has_proper_amulet = true;
 						
 						// uncomment to give amulets charges
-						//if (actors->ValidItem(amulets[i]))
-						// amulets[i]->DrainCharge();
+						if (actors->ValidItem(amulets[i]) && !amulet.IsKey())
+							amulets[i]->DrainCharge();
 					}
 				if (!has_proper_amulet && player->flags & ACTOR_BLENDED)
 				{ 

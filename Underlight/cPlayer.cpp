@@ -776,7 +776,11 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 {
 	if (duration <= 0)
 		return false;
-
+	cNeighbor* n = arts->LookUpNeighbor(caster_id);
+	bool invisGMBreakthru = false;
+	if (n != NO_ACTOR) {
+		invisGMBreakthru = n->Avatar().Hidden(); 
+	}
 #ifdef GAMEMASTER
 #ifdef AGENT
 	if (((this->AvatarType() >= Avatars::AGOKNIGHT) || (this->AvatarType() < Avatars::MIN_NIGHTMARE_TYPE)) &&
@@ -800,7 +804,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 	switch (effect) {
 	case LyraEffect::PLAYER_CURSED:{
 		// check to see if protection is in effect
-		if (flags & ACTOR_PROT_CURSE)
+		if (flags & ACTOR_PROT_CURSE && !invisGMBreakthru)
 		{
 		LoadString (hInstance, IDS_PLAYER_CURSE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
@@ -833,7 +837,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		} break;
 								   }
 	case LyraEffect::PLAYER_PARALYZED:{
-		if (flags & ACTOR_FREE_ACTION)
+		if (flags & ACTOR_FREE_ACTION && !invisGMBreakthru)
 		{
 			LoadString(hInstance, IDS_PLAYER_PARALYZE_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
@@ -860,7 +864,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 	} 
 	break;
 	case LyraEffect::PLAYER_DRUNK:{
-		if (flags & ACTOR_FREE_ACTION)
+		if (flags & ACTOR_FREE_ACTION && !invisGMBreakthru)
 		{
 			LoadString (hInstance, IDS_PLAYER_STAGGER_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
@@ -869,7 +873,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 			return false;
 		  }} break;
 	case LyraEffect::PLAYER_FEAR:{
-		if (flags & ACTOR_PROT_FEAR)
+		if (flags & ACTOR_PROT_FEAR && !invisGMBreakthru)
 		{
 			LoadString (hInstance, IDS_PLAYER_FEAR_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
@@ -878,7 +882,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 			return false;
 		}} break;
 	case LyraEffect::PLAYER_BLIND:{
-		if (flags & ACTOR_DETECT_INVIS)
+		if (flags & ACTOR_DETECT_INVIS && !invisGMBreakthru)
 		{
 			LoadString (hInstance, IDS_PLAYER_BLIND_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
