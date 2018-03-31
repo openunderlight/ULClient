@@ -149,6 +149,7 @@ extern char agent_gs_ip_address[16];
 // uncomment the following lines to test checksums
 //#undef GAME_LYR
 //#define GAME_CLI
+
 //#define PMARE
 
 // if GAME_LYR is defined, use game.lyr, unless we are overriding by setting GAME_CLI
@@ -157,7 +158,7 @@ extern char agent_gs_ip_address[16];
 int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x001A970A << 2);  // for pmare game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1D22B3B2 << 2);
 #else
-int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031E7D4 << 2);  // for game.cli
+int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031EB67 << 2);  // for game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1DCF4AD3 << 2);
 #endif // #ifdef PMARE
 #else
