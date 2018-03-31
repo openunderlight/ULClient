@@ -7,6 +7,7 @@
 #include "Central.h"
 #include <windows.h>
 #include <windowsx.h>
+#include <stdio.h>
 #include "Utils.h"
 #include "Resource.h"
 #include "cGameServer.h"
@@ -408,10 +409,9 @@ cJSON* __cdecl WriteGlobalJSONOptionValues()
 	ADDNUM(pmare_start_type);
 	ADDNUM(pmare_price);
 	size_t output_length = 0;
-	char* pmareSesh = base64_encode((unsigned char *)&(options.pmare_session_start), sizeof(options.pmare_session_start), &output_length);
+	char* pmareSesh = (char*)base64_encode((unsigned char *)&(options.pmare_session_start), sizeof(options.pmare_session_start), &output_length);
 	cJSON_AddStringToObject(obj, "pmare_session_start", pmareSesh);
 	free(pmareSesh);
-
 	return obj;
 }
 
@@ -444,7 +444,7 @@ cJSON* __cdecl WriteJSONOptionValues()
 		cJSON_AddStringToObject(obj, "name", player->Name());
 		cJSON_AddStringToObject(obj, "password", player->Password());
 		size_t output_length = 0;
-		char* av = base64_encode((unsigned char *)&(options.avatar), sizeof(options.avatar), &output_length);
+		char* av = (char*)base64_encode((unsigned char *)&(options.avatar), sizeof(options.avatar), &output_length);
 		cJSON_AddStringToObject(obj, "avatar", av);
 		free(av);
 		ADDNUM(num_bungholes);
@@ -459,7 +459,7 @@ cJSON* __cdecl WriteJSONOptionValues()
 		map = new keymap_t[num_keys];
 		keymap->GetMap(map);
 		cJSON_AddNumberToObject(obj, "number_keys_mapped", num_keys);
-		char* keys = base64_encode((unsigned char*)map, (num_keys * sizeof(keymap_t)), &output_length);
+		char* keys = (char*)base64_encode((unsigned char*)map, (num_keys * sizeof(keymap_t)), &output_length);
 		cJSON_AddStringToObject(obj, "key_mappings", keys);
 		free(keys);
 		delete map;
@@ -468,8 +468,83 @@ cJSON* __cdecl WriteJSONOptionValues()
 	return obj;
 }
 
+cJSON** LoadJSONFiles()
+{
+	// first count em, then load em, parse em and return em.
+	HANDLE hFind;
+	WIN32_FIND_DATA data;
+	int fcount = 0;
+	hFind = FindFirstFile("*.json", &data);
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			fcount++;
+		} while (FindNextFile(hFind, &data));
+		FindClose(hFind);
+	}
+	
+	cJSON** jsonFiles = new cJSON*[fcount];
+	hFind = FindFirstFile("*.json", &data);
+	int fidx = 1;
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			FILE* f = fopen(data.cFileName, "r");
+			fseek(f, 0, SEEK_END);
+			long fsize = ftell(f);
+			fseek(f, 0, SEEK_SET);  //same as rewind(f);
+
+			char *string = (char*)malloc(fsize + 1);
+			fread(string, fsize, 1, f);
+			fclose(f);
+
+			cJSON* parsed = cJSON_Parse(string);
+			if (parsed && cJSON_HasObjectItem(parsed, "name"))
+				jsonFiles[fidx++] = parsed;
+			else if (parsed) {
+				jsonFiles[0] = parsed; // assume global
+			}
+		} while (FindNextFile(hFind, &data));
+		FindClose(hFind);
+	}
+
+	return jsonFiles;
+}
+
+void __cdecl WriteJSONFile(cJSON* json, char* file)
+{
+	FILE* f = fopen(file, "w+t");
+	char* jsonString = cJSON_Print(json);
+	if (jsonString) {
+		fwrite(jsonString, sizeof(char), strlen(jsonString), f);
+		fclose(f);
+		free(jsonString);
+	}
+}
+
 void __cdecl SaveInGameRegistryOptionValues(void)
 {
+	if (!player)
+	{
+		cJSON* globals = WriteGlobalJSONOptionValues();
+		cJSON* localGlobals = WriteJSONOptionValues();
+		cJSON* cur = NULL;
+		cJSON_ArrayForEach(cur, localGlobals)
+		{
+			char* k = cur->string;
+			if (k) {
+				cJSON_AddItemToObject(globals, k, cur);
+			}
+		}
+
+		WriteJSONFile(globals, "globals.json");
+		cJSON_Delete(globals);
+	}
+	else {
+		cJSON* locals = WriteJSONOptionValues();
+		char filename[Lyra::PLAYERNAME_MAX + 5] = { NULL };
+		sprintf(filename, "%s.json", player->UpperName());
+		WriteJSONFile(locals, filename);
+		cJSON_Delete(locals);
+	}
 	// write out new value to registry
 	HKEY main_key = NULL;
 	unsigned long mresult, presult;

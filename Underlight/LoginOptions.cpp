@@ -455,6 +455,11 @@ BOOL CALLBACK LaunchOptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARA
 // writes the out of game options to the registry
 void __cdecl SaveOutOfGameRegistryOptionValues(HKEY reg_key)
 {
+	cJSON* globals = WriteGlobalJSONOptionValues();
+	if (globals)
+	{
+		WriteJSONFile(globals, "globals.json");
+	}
 	RegSetValueEx(reg_key, _T("welcome_ai"), 0, REG_DWORD,  
 		(unsigned char *)&(options.welcome_ai), sizeof(options.welcome_ai));
 	RegSetValueEx(reg_key, _T("account_index"), 0, REG_DWORD, 
