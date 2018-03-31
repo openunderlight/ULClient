@@ -1075,7 +1075,7 @@ struct teleport_locale_t
 	int level_id;
 
 	public:
-		bool available()
+		bool available()Bastion of the Covenant
 		{
 			return eligibleForFlag(location_flags);
 		}
@@ -1094,7 +1094,7 @@ teleport_locale_t teleport_locations[] =
 	{ BY_MT, "Teaching Guild", "417;2746", 47},
 	{ BY_MT, "Convocation of Masters", "8345;-7116", 49 },
 	{ BY_DOL, "Order of Light", "-3452;-3398", 18 },
-	{ BY_UOC, "Union of the Covenant", "-4927;-10515", 26 },
+	{ BY_UOC, "Bastion of the Covenant", "-4927;-10515", 26 },
 	{ BY_AOE, "Alliance of the Eclipse", "-6983;-14141", 22 },
 	{ BY_OSM, "Order of the Sable Moon", "-3030;-963", 25 },
 	{ BY_HC, "House Calenture", "-2252;-5480", 17 },
