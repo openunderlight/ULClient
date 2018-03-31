@@ -215,6 +215,7 @@
     <ClInclude Include="AMsg_Loginack.h" />
     <ClInclude Include="AMsg_Logout.h" />
     <ClInclude Include="AMsg_PosessInfo.h" />
+    <ClInclude Include="cJSON.h" />
     <ClInclude Include="GMsg.h" />
     <ClInclude Include="GMsg_AgentLogin.h" />
     <ClInclude Include="GMsg_All.h" />
@@ -502,6 +503,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="cJSON.cpp" />
     <ClCompile Include="GMsg_AgentLogin.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

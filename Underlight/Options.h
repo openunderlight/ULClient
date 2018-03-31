@@ -10,6 +10,7 @@
 #ifndef OPTIONS_DLL
 #include "LmAvatar.h"
 #include "Central.h"
+#include "cJSON.h"
 #endif
 
 //////////////////////////////////////////////////////////////////
@@ -128,6 +129,8 @@ void LoadCharacterRegistryOptionValues(HKEY reg_key, bool force);
 void __cdecl SaveCharacterRegistryOptionValues(HKEY reg_key);
 void __cdecl SaveInGameRegistryOptionValues(HKEY reg_key);
 void __cdecl SaveInGameRegistryOptionValues(void);
+cJSON* __cdecl WriteGlobalJSONOptionValues();
+cJSON* __cdecl WriteJSONOptionValues();
 #endif
 
 

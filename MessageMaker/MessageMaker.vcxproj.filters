@@ -375,6 +375,9 @@
     <ClInclude Include="json_maker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cJSON.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="AMsg_AgentInfo.i">
@@ -1004,6 +1007,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RMsg_GetRoomDescription.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cJSON.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
