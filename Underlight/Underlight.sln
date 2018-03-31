@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AgentSvc", "..\AgentSvc\AgentSvc.vcxproj", "{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}"
 EndProject
@@ -32,26 +32,30 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.AgentSvr|Win32.ActiveCfg = Release|Win32
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.AgentSvr|Win32.Build.0 = Release|Win32
-		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Debug|Win32.ActiveCfg = Release|Win32
-		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Dev Player|Win32.ActiveCfg = Release|Win32
-		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Dev Pmare|Win32.ActiveCfg = Release|Win32
-		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Development|Win32.ActiveCfg = Release|Win32
-		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Gamemaster|Win32.ActiveCfg = Release|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Debug|Win32.Build.0 = Debug|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Dev Player|Win32.ActiveCfg = Debug|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Dev Pmare|Win32.ActiveCfg = Debug|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Dev Pmare|Win32.Build.0 = Debug|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Development|Win32.ActiveCfg = Debug|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Gamemaster|Win32.ActiveCfg = Unicode|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Gamemaster|Win32.Build.0 = Unicode|Win32
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Master|Win32.ActiveCfg = Release|Win32
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Master|Win32.Build.0 = Release|Win32
-		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Pmare|Win32.ActiveCfg = Release|Win32
-		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Unicode|Win32.ActiveCfg = Release|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Pmare|Win32.ActiveCfg = Unicode|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Pmare|Win32.Build.0 = Unicode|Win32
+		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Unicode|Win32.ActiveCfg = Unicode|Win32
 		{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}.Unicode|Win32.Build.0 = Unicode|Win32
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.AgentSvr|Win32.ActiveCfg = Release|Win32
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.AgentSvr|Win32.Build.0 = Release|Win32
-		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Debug|Win32.ActiveCfg = Release|Win32
-		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Dev Player|Win32.ActiveCfg = Release|Win32
-		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Dev Pmare|Win32.ActiveCfg = Release|Win32
-		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Development|Win32.ActiveCfg = Release|Win32
+		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Dev Player|Win32.ActiveCfg = Debug|Win32
+		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Dev Pmare|Win32.ActiveCfg = Debug|Win32
+		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Development|Win32.ActiveCfg = Debug|Win32
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Gamemaster|Win32.ActiveCfg = Release|Win32
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Master|Win32.ActiveCfg = Release|Win32
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Pmare|Win32.ActiveCfg = Release|Win32
-		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Unicode|Win32.ActiveCfg = Release|Win32
+		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Unicode|Win32.ActiveCfg = Unicode|Win32
 		{E1FF5388-2AF5-4789-B5C2-DB40C41916CA}.Unicode|Win32.Build.0 = Unicode|Win32
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.AgentSvr|Win32.ActiveCfg = Release|Win32
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.AgentSvr|Win32.Build.0 = Release|Win32
@@ -69,30 +73,27 @@ Global
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Master|Win32.Build.0 = Release|Win32
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Pmare|Win32.ActiveCfg = Release|Win32
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Pmare|Win32.Build.0 = Release|Win32
-		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Unicode|Win32.ActiveCfg = Release|Win32
-		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Unicode|Win32.Build.0 = Release|Win32
+		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Unicode|Win32.ActiveCfg = Unicode|Win32
+		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Unicode|Win32.Build.0 = Unicode|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.AgentSvr|Win32.ActiveCfg = Master|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Debug|Win32.ActiveCfg = Debug|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Debug|Win32.Build.0 = Debug|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Dev Player|Win32.ActiveCfg = Dev Player|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Dev Player|Win32.Build.0 = Dev Player|Win32
-		{F427253E-F158-4722-B7E1-27761AE6C921}.Dev Pmare|Win32.ActiveCfg = Master|Win32
-		{F427253E-F158-4722-B7E1-27761AE6C921}.Dev Pmare|Win32.Build.0 = Master|Win32
+		{F427253E-F158-4722-B7E1-27761AE6C921}.Dev Pmare|Win32.ActiveCfg = Dev Pmare|Win32
+		{F427253E-F158-4722-B7E1-27761AE6C921}.Dev Pmare|Win32.Build.0 = Dev Pmare|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Development|Win32.ActiveCfg = Development|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Development|Win32.Build.0 = Development|Win32
-		{F427253E-F158-4722-B7E1-27761AE6C921}.Gamemaster|Win32.ActiveCfg = Master|Win32
-		{F427253E-F158-4722-B7E1-27761AE6C921}.Gamemaster|Win32.Build.0 = Master|Win32
+		{F427253E-F158-4722-B7E1-27761AE6C921}.Gamemaster|Win32.ActiveCfg = Gamemaster|Win32
+		{F427253E-F158-4722-B7E1-27761AE6C921}.Gamemaster|Win32.Build.0 = Gamemaster|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Master|Win32.ActiveCfg = Master|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Master|Win32.Build.0 = Master|Win32
-		{F427253E-F158-4722-B7E1-27761AE6C921}.Pmare|Win32.ActiveCfg = Master|Win32
-		{F427253E-F158-4722-B7E1-27761AE6C921}.Pmare|Win32.Build.0 = Master|Win32
-		{F427253E-F158-4722-B7E1-27761AE6C921}.Unicode|Win32.ActiveCfg = Master|Win32
+		{F427253E-F158-4722-B7E1-27761AE6C921}.Pmare|Win32.ActiveCfg = Pmare|Win32
+		{F427253E-F158-4722-B7E1-27761AE6C921}.Pmare|Win32.Build.0 = Pmare|Win32
+		{F427253E-F158-4722-B7E1-27761AE6C921}.Unicode|Win32.ActiveCfg = Unicode|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Unicode|Win32.Build.0 = Unicode|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F2703843-54DB-41CC-A106-A3E4AEAD8FCD}
 	EndGlobalSection
 EndGlobal
