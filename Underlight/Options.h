@@ -131,6 +131,7 @@ void __cdecl SaveInGameRegistryOptionValues(HKEY reg_key);
 void __cdecl SaveInGameRegistryOptionValues(void);
 cJSON* __cdecl WriteGlobalJSONOptionValues();
 cJSON* __cdecl WriteJSONOptionValues();
+void __cdecl WriteJSONFile(cJSON* json, char* file);
 #endif
 
 
