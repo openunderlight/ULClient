@@ -1664,10 +1664,10 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_UOC_FLAG            "UOC_FLAG"
+    IDS_UOC_FLAG            "BOC_FLAG"
     IDS_AOE_SYM             "AOE_SYM"
     IDS_HC_SYM              "HC_SYM"
-    IDS_UOC_SYM             "UOC_SYM"
+    IDS_UOC_SYM             "BOC_SYM"
     IDS_DOL_SYM             "DOL_SYM"
     IDS_GOE_SYM             "GOE_SYM"
     IDS_KOES_SYM            "KOES_SYM"
@@ -2197,7 +2197,7 @@ BEGIN
                             "Enter the City of Dreams in the chambers of the Alliance of the Eclipse.\n"
     IDS_TRAIN_HOUSES_SHADOW "Enter the City of Dreams in the chambers of the Monastery of the Shadow.\n"
     IDS_TRAIN_HOUSES_COVENANT 
-                            "Enter the City of Dreams in the chambers of the Union of the Covenant.\n"
+                            "Enter the City of Dreams in the chambers of the Bastion of the Covenant.\n"
     IDS_TRAIN_HOUSES_RADIANCE 
                             "Enter the City of Dreams in the chambers of the Peace Corpse.\n"
     IDS_TRAIN_HOUSES_CALENTURE 
@@ -2891,7 +2891,7 @@ BEGIN
     IDS_OOSM                "Order of the Sable Moon"
     IDS_AOE                 "Alliance of the Eclipse"
     IDS_KOES                "Monastery of the Shadow"
-    IDS_UOC                 "Union of the Covenant"
+    IDS_UOC                 "Bastion of the Covenant"
     IDS_POR                 "Peace Corpse"
 END
 
@@ -2986,7 +2986,7 @@ BEGIN
     IDS_OOSM_MEMBER_TOKEN   "Order of the Sable Moon Membership Token"
     IDS_AOE_MEMBER_TOKEN    "Alliance of the Eclipse Membership Token"
     IDS_KOES_MEMBER_TOKEN   "Monastery of the Shadow Membership Token"
-    IDS_UOC_MEMBER_TOKEN    "Union of the Covenant Membership Token"
+    IDS_UOC_MEMBER_TOKEN    "Bastion of the Covenant Membership Token"
     IDS_POR_MEMBER_TOKEN    "Peace Corpse Membership Token"
     IDS_HC_MEMBER_TOKEN     "House Calenture Membership Token"
     IDS_GOE_MEMBER_TOKEN    "Gathering of the Entranced Membership Token"
@@ -3022,10 +3022,10 @@ BEGIN
     IDS_FLAG_KOES           "Flag MotS"
     IDS_FLAG_OOSM           "Flag OoSM"
     IDS_FLAG_POR            "Flag PoR"
-    IDS_FLAG_UOC            "Flag UoC"
+    IDS_FLAG_UOC            "Flag BoC"
     IDS_CREST_AOE           "Crest AoE"
     IDS_CREST_HC            "Crest HC"
-    IDS_CREST_UOC           "Crest UoC"
+    IDS_CREST_UOC           "Crest BoC"
     IDS_CREST_DOL           "Crest OoL"
     IDS_CREST_GOE           "Crest GoE"
     IDS_CREST_KOES          "Crest MotS"
@@ -3220,7 +3220,7 @@ BEGIN
                             "The Alliance of the Eclipse is an Illuminated House that believes in furthering the tenets of Truth, Honor, and Understanding through peace and study."
     IDS_TRAIN_BELIEF_SHADOW "Monastery of the Shadow is a Freesoul House whose ways are steeped in mysticism and the occult.  They feel that essence, both Dreamer and Maren are sources of energy that should not be left untapped."
     IDS_TRAIN_BELIEF_COVENANT 
-                            "The Union of the Covenant is a Freesoul House and follows the tenets of Justice, Freedom, Defense, and Honor. Their duty is to the Covenant in which they take to live by, and defend those tenets.  They believe Essence of Nightmares is merely the energy left behind from an avatar, and drain that energy for its uses."
+                            "The Bastion of the Covenant is a Freesoul House and follows the tenets of Justice, Freedom, Defense, and Honor. Their duty is to the Covenant in which they take to live by, and defend those tenets.  They believe Essence of Nightmares is merely the energy left behind from an avatar, and drain that energy for its uses."
     IDS_TRAIN_BELIEF_RADIANCE 
                             "Protectors of the Radiance is a Warrior Illuminated House. They save the souls of the unawakened by banishing essences, which they call the Crusade of the Unawakened. It is a Protector's solemn duty to follow Illuminated beliefs and the Crusade. They use an artifact known as the ""Soul of Radiance"" to banish nightmare essences."
     IDS_TRAIN_BELIEF_CALENTURE 
@@ -3994,7 +3994,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_KNOW0629            "The turf here is lush and springy, suggestive of marshy conditions. A cool breeze carries the scent of exotic flowers and the cries of birds. A crystalline stream forms a path leading to the Alliance of the Eclipse."
-    IDS_KNOW0528            "A wasteland of stone and sand stretches before you. The air is dry and hot. Ancient mounds, worn by time, dot the landscape. A carefully fitted stone path meanders among the natural splendors on its way to the Union of the Covenant."
+    IDS_KNOW0528            "A wasteland of stone and sand stretches before you. The air is dry and hot. Ancient mounds, worn by time, dot the landscape. A carefully fitted stone path meanders among the natural splendors on its way to the Bastion of the Covenant."
     IDS_KNOW0401            "Massive rock walls rise up to delineate a path along an escarpment. Strong winds gust from time to time, pushing at you with a strong force. The footpath up the mountain is worn from countless travelers' steps on its way to the Order of Light."
     IDS_KNOW2005            "A radiant sense of peace and warmth pervades the atmosphere here, the gentle colors are pleasing to the eye. The hand-woven tapestries that hang from the ceiling are of exceptional quality and show a master artist's touch."
     IDS_NO_ARTS_DOCA_PIT    "No Arts can be evoked in this room."
