@@ -24,6 +24,7 @@
 #include "cDDraw.h"
 #include "Realm.h"
 #include "Dialogs.h"
+#include "cJSON.h"
 #include "LmItem.h"
 #include "LmItemDefs.h"
 #include "LmItemHdr.h"
@@ -34,7 +35,7 @@
 #include "cArts.h"
 #include "cEffects.h"
 #include "LoginOptions.h"
-
+#include "base64.h"
 /////////////////////////////////////////////////
 // External Global Variables
 
@@ -383,6 +384,88 @@ void __cdecl SaveCharacterRegistryOptionValues(HKEY reg_key)
 		(unsigned char *)map, (num_keys * sizeof(keymap_t)));
 	delete map;
 
+}
+
+#define ADDNUM(Field) { cJSON_AddNumberToObject(obj, #Field, options.##Field); }
+
+cJSON* __cdecl WriteGlobalJSONOptionValues()
+{
+	cJSON* obj = cJSON_CreateObject();
+	ADDNUM(account_index);
+	ADDNUM(welcome_ai);
+	ADDNUM(sound);
+	ADDNUM(extra_scroll);
+	ADDNUM(bind_local_tcp);
+	ADDNUM(bind_local_udp);
+	ADDNUM(resolution);
+#ifdef UL_DEV
+	ADDNUM(dev_server);
+	cJSON_AddStringToObject(obj, "custom_server_ip", options.custom_ip);
+	ADDNUM(debug);
+	ADDNUM(network);
+#endif
+	ADDNUM(pmare_type);
+	ADDNUM(pmare_start_type);
+	ADDNUM(pmare_price);
+	size_t output_length = 0;
+	char* pmareSesh = base64_encode((unsigned char *)&(options.pmare_session_start), sizeof(options.pmare_session_start), &output_length);
+	cJSON_AddStringToObject(obj, "pmare_session_start", pmareSesh);
+	free(pmareSesh);
+
+	return obj;
+}
+
+cJSON* __cdecl WriteJSONOptionValues()
+{
+	cJSON* obj = cJSON_CreateObject();
+	ADDNUM(sound_active);
+	ADDNUM(music_active);
+	ADDNUM(reverse);
+	ADDNUM(autoreject);
+	ADDNUM(autorejoin);
+	ADDNUM(nametags);
+	ADDNUM(multiline);
+	ADDNUM(footsteps);
+	ADDNUM(art_prompts);
+	ADDNUM(mouselook);
+	ADDNUM(invertmouse);
+	ADDNUM(log_chat);
+	ADDNUM(effects_volume);
+	ADDNUM(turnrate);
+	ADDNUM(music_volume);
+	ADDNUM(speech_color);
+	ADDNUM(message_color);
+	ADDNUM(bg_color);
+	ADDNUM(autorun);
+	ADDNUM(adult_filter);
+
+	if (player)
+	{
+		cJSON_AddStringToObject(obj, "name", player->Name());
+		cJSON_AddStringToObject(obj, "password", player->Password());
+		size_t output_length = 0;
+		char* av = base64_encode((unsigned char *)&(options.avatar), sizeof(options.avatar), &output_length);
+		cJSON_AddStringToObject(obj, "avatar", av);
+		free(av);
+		ADDNUM(num_bungholes);
+		cJSON* ignores = cJSON_CreateArray();
+		for (int ig = 0; ig < options.num_bungholes; ig++)
+			cJSON_AddItemToArray(ignores, cJSON_CreateString(options.bungholes[ig].name));
+		cJSON_AddItemToObject(obj, "ignore_list", ignores);
+		// save keyboard layout
+		int num_keys;
+		keymap_t *map;
+		num_keys = keymap->num_keys();
+		map = new keymap_t[num_keys];
+		keymap->GetMap(map);
+		cJSON_AddNumberToObject(obj, "number_keys_mapped", num_keys);
+		char* keys = base64_encode((unsigned char*)map, (num_keys * sizeof(keymap_t)), &output_length);
+		cJSON_AddStringToObject(obj, "key_mappings", keys);
+		free(keys);
+		delete map;
+	}
+
+	return obj;
 }
 
 void __cdecl SaveInGameRegistryOptionValues(void)
