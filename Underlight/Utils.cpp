@@ -1075,7 +1075,7 @@ struct teleport_locale_t
 	int level_id;
 
 	public:
-		bool available()Bastion of the Covenant
+		bool available()
 		{
 			return eligibleForFlag(location_flags);
 		}
