@@ -19,8 +19,11 @@
 const short min_volume = 1;
 const short max_volume = 10;
 const int MAX_IGNORELIST = 64;
-const int MAX_STORED_ACCOUNTS = 8;
-
+#ifndef AGENT
+const int MAX_STORED_ACCOUNTS = 128;
+#else
+const int MAX_STORED_ACCOUNTS = 512;
+#endif
 //////////////////////////////////////////////////////////////////
 // Types
 
@@ -132,6 +135,11 @@ void __cdecl SaveInGameRegistryOptionValues(void);
 cJSON* __cdecl WriteGlobalJSONOptionValues();
 cJSON* __cdecl WriteJSONOptionValues();
 void __cdecl WriteJSONFile(cJSON* json, char* file);
+void LoadParsedJSONOptions(cJSON* json);
+cJSON** LoadJSONFiles();
+void SmartLoadJSON();
+void LoadDefaultOptionValues();
+void __cdecl CleanupLoadedJSONFiles();
 #endif
 
 
