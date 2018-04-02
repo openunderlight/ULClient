@@ -70,7 +70,8 @@ const int default_message_color = 2;
 const int default_bg_color = 0;
 const float default_turnrate = 13.0f;
 const int default_volume = 10;
-
+int numJsonFiles = 0;
+cJSON** jsonFiles;
 
 //////////////////////////////////////////////////////////////////
 // Functions
@@ -311,83 +312,20 @@ BOOL CALLBACK OptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 /////////////////////////////////////////////////
 // Functions
 
-void __cdecl SaveInGameRegistryOptionValues(HKEY reg_key)
-{
-	RegSetValueEx(reg_key, _T("sound_active"), 0, REG_DWORD,  
-		(unsigned char *)&(options.sound_active), sizeof(options.sound_active));
-	RegSetValueEx(reg_key, _T("music_active"), 0, REG_DWORD,  
-		(unsigned char *)&(options.music_active), sizeof(options.music_active));
-	RegSetValueEx(reg_key, _T("reverse"), 0, REG_DWORD,  
-		(unsigned char *)&(options.reverse), sizeof(options.reverse));
-	RegSetValueEx(reg_key, _T("autoreject"), 0, REG_DWORD,  
-		(unsigned char *)&(options.autoreject), sizeof(options.autoreject));
-	RegSetValueEx(reg_key, _T("autorejoin"), 0, REG_DWORD,  
-		(unsigned char *)&(options.autorejoin), sizeof(options.autorejoin));
-	RegSetValueEx(reg_key, _T("nametags"), 0, REG_DWORD,  
-		(unsigned char *)&(options.nametags), sizeof(options.nametags));
-	RegSetValueEx(reg_key, _T("multiline"), 0, REG_DWORD,  
-		(unsigned char *)&(options.multiline), sizeof(options.multiline));
-	RegSetValueEx(reg_key, _T("footsteps"), 0, REG_DWORD,  
-		(unsigned char *)&(options.footsteps), sizeof(options.footsteps));
-	RegSetValueEx(reg_key, _T("art_prompts"), 0, REG_DWORD,  
-		(unsigned char *)&(options.art_prompts), sizeof(options.art_prompts));
-	RegSetValueEx(reg_key, _T("mouselook"), 0, REG_DWORD,  
-		(unsigned char *)&(options.mouselook), sizeof(options.mouselook));
-	RegSetValueEx(reg_key, _T("invertmouse"), 0, REG_DWORD,  
-		(unsigned char *)&(options.invertmouse), sizeof(options.invertmouse));
-	RegSetValueEx(reg_key, _T("log_chat"), 0, REG_DWORD,  
-		(unsigned char *)&(options.log_chat), sizeof(options.log_chat));
-	int turnrate = (int)options.turnrate;
-	RegSetValueEx(reg_key, _T("turnrate"), 0, REG_DWORD,  
-		(unsigned char *)&(turnrate), sizeof(turnrate));
-	RegSetValueEx(reg_key, _T("volume"), 0, REG_DWORD,  
-		(unsigned char *)&(options.effects_volume), sizeof(options.effects_volume));
-	RegSetValueEx(reg_key, _T("music_volume"), 0, REG_DWORD,  
-		(unsigned char *)&(options.music_volume), sizeof(options.music_volume));
-	RegSetValueEx(reg_key, _T("speech_color"), 0, REG_DWORD,  
-		(unsigned char *)&(options.speech_color), sizeof(options.speech_color));
-	RegSetValueEx(reg_key, _T("message_color"), 0, REG_DWORD,  
-		(unsigned char *)&(options.message_color), sizeof(options.message_color));
-	RegSetValueEx(reg_key, _T("bg_color"), 0, REG_DWORD,  
-		(unsigned char *)&(options.bg_color), sizeof(options.bg_color));
-	RegSetValueEx(reg_key, _T("autorun"), 0, REG_DWORD,  
-		(unsigned char *)&(options.autorun), sizeof(options.autorun));
-	RegSetValueEx(reg_key, _T("adult_filter"), 0, REG_DWORD,  
-		(unsigned char *)&(options.adult_filter), sizeof(options.adult_filter));
-	RegSetValueEx(reg_key, _T("pmare_session_start"), 0, REG_BINARY,  
-		(unsigned char *)&(options.pmare_session_start), sizeof(options.pmare_session_start));
-	RegSetValueEx(reg_key, _T("pmare_type"), 0, REG_DWORD,  
-		(unsigned char *)&(options.pmare_type), sizeof(options.pmare_type));
-	RegSetValueEx(reg_key, _T("pmare_start_type"), 0, REG_DWORD,  
-		(unsigned char *)&(options.pmare_start_type), sizeof(options.pmare_start_type));
-	RegSetValueEx(reg_key, _T("pmare_price"), 0, REG_DWORD,  
-		(unsigned char *)&(options.pmare_price), sizeof(options.pmare_price));	
-}
-
 void __cdecl SaveCharacterRegistryOptionValues(HKEY reg_key)
 {
-	RegSetValueEx(reg_key, _T("avatar"), 0, REG_BINARY,
-		(unsigned char *)&(options.avatar), sizeof(options.avatar));
-	RegSetValueEx(reg_key, _T("ignore_list"), 0, REG_BINARY,
-		(unsigned char *)options.bungholes, MAX_IGNORELIST * sizeof(other_t));
-	RegSetValueEx(reg_key, _T("num_ignores"), 0, REG_DWORD,
-		(unsigned char *)&(options.num_bungholes), sizeof(options.num_bungholes));
-
-	// save keyboard layout
-	int num_keys;
-	keymap_t *map;
-	num_keys = keymap->num_keys();
-	map = new keymap_t[num_keys];
-	keymap->GetMap(map);
-	RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD,
-		(unsigned char *)&(num_keys), sizeof(num_keys));
-	RegSetValueEx(reg_key, _T("key_mappings"), 0, REG_BINARY,
-		(unsigned char *)map, (num_keys * sizeof(keymap_t)));
-	delete map;
-
+	SaveInGameRegistryOptionValues();
 }
 
 #define ADDNUM(Field) { cJSON_AddNumberToObject(obj, #Field, options.##Field); }
+#define GETNUM(Field) \
+	do { \
+		if(cJSON_HasObjectItem(obj, #Field)) \
+		{ \
+			cJSON* node = cJSON_GetObjectItem(obj, #Field); \
+			if (node && cJSON_IsNumber(node)) options.##Field = node->valueint;  \
+		} \
+	} while (0)
 
 cJSON* __cdecl WriteGlobalJSONOptionValues()
 {
@@ -405,6 +343,7 @@ cJSON* __cdecl WriteGlobalJSONOptionValues()
 	ADDNUM(debug);
 	ADDNUM(network);
 #endif
+	cJSON_AddStringToObject(obj, "last_username", options.username[options.account_index]);
 	ADDNUM(pmare_type);
 	ADDNUM(pmare_start_type);
 	ADDNUM(pmare_price);
@@ -481,10 +420,18 @@ cJSON** LoadJSONFiles()
 		} while (FindNextFile(hFind, &data));
 		FindClose(hFind);
 	}
-	
-	cJSON** jsonFiles = new cJSON*[fcount];
+	numJsonFiles = fcount;
+
+	if (numJsonFiles > MAX_STORED_ACCOUNTS)
+	{
+		GAME_ERROR("Too many JSON files - delete some!");
+		return NULL;
+	}
+
+	jsonFiles = new cJSON*[fcount];
 	hFind = FindFirstFile("*.json", &data);
 	int fidx = 1;
+	int u = 0;
 	if (hFind != INVALID_HANDLE_VALUE) {
 		do {
 			FILE* f = fopen(data.cFileName, "r");
@@ -497,15 +444,22 @@ cJSON** LoadJSONFiles()
 			fclose(f);
 
 			cJSON* parsed = cJSON_Parse(string);
-			if (parsed && cJSON_HasObjectItem(parsed, "name"))
+			cJSON* name = cJSON_GetObjectItem(parsed, "name");
+			cJSON* pass = cJSON_GetObjectItem(parsed, "password");
+			if (parsed && name && cJSON_IsString(name)) {
 				jsonFiles[fidx++] = parsed;
+				_tcscpy(options.username[u], cJSON_GetStringValue(name));
+				if (cJSON_IsString(pass))
+					_tcscpy(options.password[u], cJSON_GetStringValue(pass));
+				u++;
+			}
 			else if (parsed) {
 				jsonFiles[0] = parsed; // assume global
 			}
 		} while (FindNextFile(hFind, &data));
 		FindClose(hFind);
 	}
-
+	
 	return jsonFiles;
 }
 
@@ -545,24 +499,6 @@ void __cdecl SaveInGameRegistryOptionValues(void)
 		WriteJSONFile(locals, filename);
 		cJSON_Delete(locals);
 	}
-	// write out new value to registry
-	HKEY main_key = NULL;
-	unsigned long mresult, presult;
-	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(true),0, 
-					NULL,0,KEY_ALL_ACCESS, NULL, &main_key, &mresult);
-
-	if (player != NULL)
-	{
-		HKEY player_key = NULL;
-		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0,
-			NULL, 0, KEY_ALL_ACCESS, NULL, &player_key, &presult);
-
-		SaveCharacterRegistryOptionValues(player_key);
-		RegCloseKey(player_key);
-	}
-	
-	SaveInGameRegistryOptionValues(main_key);	
-	RegCloseKey(main_key);
 }
 
 
@@ -571,8 +507,229 @@ static bool ColorOutOfRange(int color)
 	return color < 0 || color >= NUM_CHAT_COLORS;
 }
 
+void LoadJSONOptionValues(char* charName)
+{
+	int fidx = 0;
+	cJSON *global = NULL, *local = NULL;
+	if (numJsonFiles)
+		global = jsonFiles[0];
+
+	if (charName)
+	{
+		for (int i = 1; i < numJsonFiles; i++)
+		{
+			cJSON* nameNode = cJSON_GetObjectItem(jsonFiles[i], "name");
+			if (!nameNode)
+				continue;
+			if (stricmp(nameNode->valuestring, charName) == 0) {
+				local = jsonFiles[i];
+				break;
+			}
+		}
+	}
+	LoadParsedJSONOptions(global);
+	LoadParsedJSONOptions(local);
+}
+
+void __cdecl CleanupLoadedJSONFiles()
+{
+	for (int i = 0; i < numJsonFiles; i++)
+	{
+		cJSON* json = jsonFiles[i];
+		cJSON_Delete(json);
+	}
+	numJsonFiles = 0;
+	jsonFiles = NULL;
+}
+
+void LoadParsedJSONOptions(cJSON* json)
+{
+	if (!json)
+		return;
+	// OOG option vals
+	cJSON* obj = json;
+	// go go macro hackery
+	GETNUM(account_index);
+	GETNUM(rw);
+	GETNUM(sound);
+	GETNUM(extra_scroll);
+	GETNUM(bind_local_tcp);
+	GETNUM(bind_local_udp);
+	GETNUM(restart_last_location);
+	GETNUM(resolution);
+	GETNUM(network);
+	GETNUM(debug);
+	GETNUM(welcome_ai);
+	GETNUM(sound_active);
+	GETNUM(music_active);
+	GETNUM(autoreject);
+	GETNUM(autorejoin);
+	GETNUM(nametags);
+	GETNUM(multiline);
+	GETNUM(footsteps);
+	GETNUM(art_prompts);
+	GETNUM(mouselook);
+	GETNUM(invertmouse);
+	GETNUM(log_chat);
+	cJSON* tr = cJSON_GetObjectItem(obj, "turnrate"); 
+	if (tr && cJSON_IsNumber(tr)) options.turnrate = tr->valuedouble;
+
+	GETNUM(effects_volume);
+	GETNUM(music_volume);
+	GETNUM(speech_color);
+	GETNUM(message_color);
+	GETNUM(bg_color);
+	GETNUM(reverse);
+	GETNUM(autorun);
+	GETNUM(adult_filter);
+	GETNUM(pmare_type);
+	GETNUM(pmare_start_type);
+	GETNUM(pmare_price);
+#ifdef UL_DEV
+	GETNUM(dev_server);
+	cJSON* customIpNode = cJSON_GetObjectItem(obj, "custom_ip");
+	if(customIpNode && cJSON_IsString(customIpNode))
+		_tcscpy(options.custom_ip, customIpNode->valuestring);
+	cJSON* gsNode = cJSON_GetObjectItem(obj, "game_server");
+	if (gsNode && cJSON_IsString(gsNode))
+		_tcscpy(options.game_server, gsNode->valuestring);
+#endif
+
+	cJSON* last = cJSON_GetObjectItem(obj, "last_username");
+	if (last && cJSON_IsString(last))
+	{
+		char* lastVal = cJSON_GetStringValue(last);
+		for (int i = 0; i < MAX_STORED_ACCOUNTS; i++) {
+			if (stricmp(options.username[i], lastVal) == 0) {
+				options.account_index = i;
+				break;
+			}
+		}
+	}
+#ifndef UL_DEV
+	LoadString(hInstance, IDS_LIVE_GAME_SERVER_IP, options.game_server, sizeof(options.game_server));
+#endif
+	cJSON* ig; cJSON* ignoreList = cJSON_GetObjectItem(obj, "bungholes");
+	int igIdx = 0;
+	cJSON_ArrayForEach(ig, ignoreList) {
+		if (igIdx < MAX_IGNORELIST && ig && cJSON_IsString(ig))
+		{
+			_tcscpy(options.bungholes[igIdx++].name, cJSON_GetStringValue(ig));
+		}
+	}
+
+	options.num_bungholes = igIdx;
+	cJSON* pmareStart = cJSON_GetObjectItem(obj, "pmare_session_start");
+	if (pmareStart && cJSON_IsString(pmareStart))
+	{
+		size_t out;
+		unsigned char* sesh = base64_decode((const unsigned char*)cJSON_GetStringValue(pmareStart), strlen(cJSON_GetStringValue(pmareStart)), &out);
+		if (sesh)
+			memcpy(&options.pmare_session_start, sesh, out);
+	}
+
+	cJSON* av = cJSON_GetObjectItem(obj, "avatar");
+	if (av && cJSON_IsString(av))
+	{
+		size_t out;
+		unsigned char* avbytes = base64_decode((const unsigned char*)cJSON_GetStringValue(av), strlen(cJSON_GetStringValue(av)), &out);
+		if (avbytes)
+			memcpy(&options.avatar, avbytes, out);
+	}
+	cJSON* numKeys = cJSON_GetObjectItem(obj, "number_keys_mapped");
+	keymap_t* map;
+	if (numKeys && cJSON_IsNumber(numKeys))
+	{
+		map = new keymap_t[numKeys->valueint];
+		cJSON* km = cJSON_GetObjectItem(obj, "key_mappings");
+		if (km && cJSON_IsString(km))
+		{
+			size_t out;
+			unsigned char* kmbytes = base64_decode((const unsigned char*)cJSON_GetStringValue(km), strlen(cJSON_GetStringValue(km)), &out);
+			if (kmbytes)
+				memcpy(map, kmbytes, out);
+			keymap->Init(numKeys->valueint, map);
+		}
+	}
+}
+
+void LoadDefaultOptionValues()
+{
+	// OOG option vals
+	options.account_index = 0;
+	for (int i = 0; i < MAX_STORED_ACCOUNTS; i++) {
+		_tcscpy(options.username[i], _T(""));
+		_tcscpy(options.password[i], _T(""));
+	}
+	options.rw = TRUE;
+	options.sound = TRUE;
+	options.extra_scroll = TRUE;
+	options.bind_local_tcp = 0;
+	options.bind_local_udp = DEFAULT_UDP_PORT;
+	options.restart_last_location = FALSE;
+	options.resolution = 1024;
+#ifdef UL_DEV
+	options.dev_server = 1;
+	_tcscpy(options.custom_ip, "127.0.0.1");
+#endif
+	options.network = INTERNET;
+	options.debug = FALSE;
+	LoadString(hInstance, IDS_LIVE_GAME_SERVER_IP, options.game_server, sizeof(options.game_server));
+	options.welcome_ai = TRUE;
+	options.sound_active = TRUE;
+	options.music_active = TRUE;
+	options.autoreject = FALSE;
+	options.autorejoin = TRUE;
+	options.nametags = TRUE;
+	options.multiline = FALSE;
+	options.footsteps = TRUE;
+	options.art_prompts = TRUE;
+	options.mouselook = FALSE;
+	options.invertmouse = FALSE;
+	options.log_chat = TRUE;
+	options.turnrate = default_turnrate;
+	options.effects_volume = default_volume;
+	options.music_volume = default_volume;
+	options.speech_color = default_speech_color;
+	options.message_color = default_message_color;
+	options.bg_color = default_bg_color;
+	options.reverse = FALSE;
+	options.autorun = TRUE;
+	options.adult_filter = TRUE;
+	options.pmare_type = 0;
+	options.pmare_start_type = 0;
+	options.pmare_price = 0;
+	options.pmare_session_start.wYear = 1970;
+	memset(&options.avatar, 0, sizeof(options.avatar));
+	options.num_bungholes = 0;
+	for (int i = 0; i < MAX_IGNORELIST; i++)
+		_tcscpy(options.bungholes[i].name, _T(""));
+	keymap->SetDefaultKeymap(0);
+}
+
+void SmartLoadJSON()
+{
+	static bool alreadyLoadedGlobal = false;
+	static bool alreadyLoadedLocal = true;
+
+	if (!player && !alreadyLoadedGlobal) {
+		LoadJSONOptionValues(NULL);
+		alreadyLoadedGlobal = true;
+	}
+	else if (!alreadyLoadedLocal)
+	{
+		LoadJSONOptionValues(player->UpperName());
+		alreadyLoadedLocal = alreadyLoadedGlobal = true;
+	}
+}
+
 void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
 {
+	if (numJsonFiles) {
+		SmartLoadJSON();
+		return;
+	}
+
 	DWORD keyresult, size, reg_type;
 
 	size = sizeof(options.sound_active);
@@ -731,7 +888,7 @@ void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
 		options.pmare_session_start.wYear = 1970;
 
 	// save them back, in case a default was set
-	SaveInGameRegistryOptionValues(reg_key);
+	SaveInGameRegistryOptionValues();
 }
 
 void LoadCharacterRegistryOptionValues(bool force)
@@ -749,6 +906,11 @@ void LoadCharacterRegistryOptionValues(bool force)
 
 void LoadCharacterRegistryOptionValues(HKEY reg_key, bool force)
 {
+	if (numJsonFiles) {
+		LoadJSONOptionValues(player->UpperName());
+		return;
+	}
+
 	int num_keys;
 	DWORD keyresult, size, reg_type;
 	keymap_t *map;
