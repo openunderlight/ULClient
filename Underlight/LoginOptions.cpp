@@ -26,6 +26,7 @@ extern bool show_training_messages;
 extern HINSTANCE hInstance;
 extern cDDraw* cDD;
 extern pmare_t pmare_info[3];
+extern int numJsonFiles;
 
 // these are for getting the Windows Version #
 //extern unsigned int _osver; // only _winmajor is used here
@@ -463,53 +464,17 @@ void __cdecl SaveOutOfGameRegistryOptionValues(HKEY reg_key)
 	if (globals)
 	{
 		WriteJSONFile(globals, "globals.json");
+		return;
 	}
-	RegSetValueEx(reg_key, _T("welcome_ai"), 0, REG_DWORD,  
-		(unsigned char *)&(options.welcome_ai), sizeof(options.welcome_ai));
-	RegSetValueEx(reg_key, _T("account_index"), 0, REG_DWORD, 
-		(unsigned char *)&(options.account_index), sizeof(options.account_index));
-	TCHAR buffer[64];
-	for (int i=0; i<MAX_STORED_ACCOUNTS; i++) {
-		_stprintf(buffer, _T("username_%d"), i);
-		RegSetValueEx(reg_key, buffer, 0, REG_SZ, 
-			(unsigned char *)options.username[i], Lyra::PLAYERNAME_MAX);
-		_stprintf(buffer, _T("password_%d"), i);
-		RegSetValueEx(reg_key, buffer, 0, REG_SZ, 
-			(unsigned char *)options.password[i], Lyra::PASSWORD_MAX);
-	}
-	RegSetValueEx(reg_key, _T("sound"), 0, REG_DWORD,  
-		(unsigned char *)&(options.sound), sizeof(options.sound));
-	RegSetValueEx(reg_key, _T("extra_scroll"), 0, REG_DWORD,  
-		(unsigned char *)&(options.extra_scroll), sizeof(options.extra_scroll));
-	RegSetValueEx(reg_key, _T("bind_local_tcp"), 0, REG_DWORD,  
-		(unsigned char *)&(options.bind_local_tcp), sizeof(options.bind_local_tcp));
-	RegSetValueEx(reg_key, _T("bind_local_udp"), 0, REG_DWORD,  
-		(unsigned char *)&(options.bind_local_udp), sizeof(options.bind_local_udp));
-	RegSetValueEx(reg_key, _T("restart_last_location"), 0, REG_DWORD,  
-		(unsigned char *)&(options.restart_last_location), sizeof(options.restart_last_location));
-	RegSetValueEx(reg_key, _T("resolution"), 0, REG_DWORD,  
-		(unsigned char *)&(options.resolution), sizeof(options.resolution));
-#ifdef UL_DEV
-	RegSetValueEx(reg_key, _T("dev_server"), 0, REG_DWORD,
-		(unsigned char *)&(options.dev_server), sizeof(options.dev_server));
-	RegSetValueEx(reg_key, _T("custom_server_ip"), 0, REG_SZ,
-		(unsigned char *) &(options.custom_ip), sizeof(options.custom_ip));
-#endif
-	RegSetValueEx(reg_key, _T("rogerwilco"), 0, REG_DWORD,  
-		(unsigned char *)&(options.rw), sizeof(options.rw));
-	RegSetValueEx(reg_key, _T("network"), 0, REG_DWORD,  
-		(unsigned char *)&(options.network), sizeof(options.network));
-	RegSetValueEx(reg_key, _T("debug"), 0, REG_DWORD,  
-		(unsigned char *)&(options.debug), sizeof(options.debug));
-	RegSetValueEx(reg_key, _T("gameserver"), 0, REG_SZ,  //ROUND_ROBIN 
-		(unsigned char *)options.game_server, sizeof(options.game_server));
-	RegSetValueEx(reg_key, _T("pmare_session_start"), 0, REG_BINARY,  
-		(unsigned char *)&(options.pmare_session_start), sizeof(options.pmare_session_start));
-
 }
 
 void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
 {
+	if (numJsonFiles)
+	{
+		SmartLoadJSON();
+		return;
+	}
 	DWORD keyresult, size, reg_type;
 
 	size = sizeof(options.account_index);

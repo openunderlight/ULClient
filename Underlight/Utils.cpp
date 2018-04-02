@@ -128,6 +128,9 @@ bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2)
 // registry can not be accessed
 bool __cdecl LoadGameOptions(void)
 {
+	LoadDefaultOptionValues();
+	LoadJSONFiles();
+
 	HKEY main_key, player_key = NULL;
 	unsigned long mresult, presult;
 
