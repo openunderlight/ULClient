@@ -17,6 +17,9 @@
 #define IDS_GOALBOOK_ERR                11
 #define IDS_IDENTIFY_ESSENCE_NEXUS      12
 #define IDS_SELECT_AMULET_CHARGES       13
+#define IDS_GKSHIELD_ON                 14
+#define IDS_GKSHIELD_OFF                15
+#define IDS_GKSHIELD                    16
 #define IDR_AgentSvr                    100
 #define IDS_SERVICENAME                 100
 #define IDD_LOGIN                       101

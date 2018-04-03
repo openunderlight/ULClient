@@ -11,8 +11,8 @@
 // NOTE: keep consistent with Visual Effects.ASC!
 
  
-const int NUM_TIMED_EFFECTS = 32; // add one for NONE
-const int NUM_ARTS = 147;
+const int NUM_TIMED_EFFECTS = 33; // add one for NONE
+const int NUM_ARTS = 148;
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
 const int NUM_PLAYER_STATS = 5;
@@ -28,7 +28,7 @@ const int ART_MISSILE_VELOCITY = 4;
 const int NUM_ACTOR_COLORS = 16;
 const int NUM_MONSTER_COLORS = 16;
 const int ANY_COLOR = NUM_ACTOR_COLORS;
-
+const int BULWARK_ABSORB = 15;
 const int PPOINTS_PER_PMARE_CREDIT = 20;
 
 // these are indexes into the modifier table
@@ -274,6 +274,7 @@ struct Arts {
   CHAOS_WELL, // Essence Container
   RALLY, // Summon party member
   CHANNEL,
+BULWARK,
 	// END OF ARTS LIST - below are art-related constants
 
 	INITIATE_DRAIN = 100,   // amount of essences drained from prime to Initiate
@@ -697,7 +698,8 @@ struct LyraEffect {
 	MAX_ITEM_EFFECT = PLAYER_SPIN,
 	// Non-forgable effects
 	PLAYER_CRIPPLE,
-	PLAYER_SHIELD
+	PLAYER_SHIELD,
+	PLAYER_GKSHIELD, // Bulwark
 	};
 };
 
