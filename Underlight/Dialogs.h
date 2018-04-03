@@ -50,6 +50,7 @@ const int ACCEPTREJECT_TIMER  =  WM_USER + DIALOG_MAGIC + 50;
 #define WM_ADD_DESTINATIONS + WM_USER + 23
 #define WM_POWER_TOKEN + WM_USER + 24
 #define WM_SET_VALUES DIALOG_MAGIC + WM_USER + 25 // used for passing a pointer to an array of values to set.
+#define WM_SET_LOGIN_DEFAULTS + WM_USER + 26
 
 //////////////////////////////////////////////////////////////////
 // New Types

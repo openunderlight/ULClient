@@ -631,7 +631,7 @@ bool __cdecl Init_Game(void)
 #endif
 
 	player->InitPlayer();
-
+	SaveInGameRegistryOptionValues();
 	// Initialize 
 	Init4DX(cDD->ViewX(), cDD->ViewY());  
 	MemoryCheck(_T("4DX initialized"));
