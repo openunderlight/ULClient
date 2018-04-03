@@ -331,12 +331,8 @@ cJSON* __cdecl WriteGlobalJSONOptionValues()
 {
 	cJSON* obj = cJSON_CreateObject();
 	ADDNUM(account_index);
-	ADDNUM(welcome_ai);
-	ADDNUM(sound);
-	ADDNUM(extra_scroll);
 	ADDNUM(bind_local_tcp);
 	ADDNUM(bind_local_udp);
-	ADDNUM(resolution);
 #ifdef UL_DEV
 	ADDNUM(dev_server);
 	cJSON_AddStringToObject(obj, "custom_server_ip", options.custom_ip);
@@ -344,19 +340,16 @@ cJSON* __cdecl WriteGlobalJSONOptionValues()
 	ADDNUM(network);
 #endif
 	cJSON_AddStringToObject(obj, "last_username", options.username[options.account_index]);
-	ADDNUM(pmare_type);
-	ADDNUM(pmare_start_type);
-	ADDNUM(pmare_price);
-	size_t output_length = 0;
-	char* pmareSesh = (char*)base64_encode((unsigned char *)&(options.pmare_session_start), sizeof(options.pmare_session_start), &output_length);
-	cJSON_AddStringToObject(obj, "pmare_session_start", pmareSesh);
-	free(pmareSesh);
 	return obj;
 }
 
 cJSON* __cdecl WriteJSONOptionValues()
 {
 	cJSON* obj = cJSON_CreateObject();
+	ADDNUM(welcome_ai);
+	ADDNUM(sound);
+	ADDNUM(extra_scroll);
+	ADDNUM(resolution);
 	ADDNUM(sound_active);
 	ADDNUM(music_active);
 	ADDNUM(reverse);
@@ -404,6 +397,16 @@ cJSON* __cdecl WriteJSONOptionValues()
 		delete map;
 	}
 
+#ifdef PMARE
+	ADDNUM(pmare_type);
+	ADDNUM(pmare_start_type);
+	ADDNUM(pmare_price);
+	size_t output_length = 0;
+	char* pmareSesh = (char*)base64_encode((unsigned char *)&(options.pmare_session_start), sizeof(options.pmare_session_start), &output_length);
+	cJSON_AddStringToObject(obj, "pmare_session_start", pmareSesh);
+	free(pmareSesh);
+#endif
+
 	return obj;
 }
 
@@ -444,6 +447,7 @@ cJSON** LoadJSONFiles()
 			fclose(f);
 
 			cJSON* parsed = cJSON_Parse(string);
+			free(string);
 			cJSON* name = cJSON_GetObjectItem(parsed, "name");
 			cJSON* pass = cJSON_GetObjectItem(parsed, "password");
 			if (parsed && name && cJSON_IsString(name)) {
@@ -479,16 +483,6 @@ void __cdecl SaveInGameRegistryOptionValues(void)
 	if (!player)
 	{
 		cJSON* globals = WriteGlobalJSONOptionValues();
-		cJSON* localGlobals = WriteJSONOptionValues();
-		cJSON* cur = NULL;
-		cJSON_ArrayForEach(cur, localGlobals)
-		{
-			char* k = cur->string;
-			if (k) {
-				cJSON_AddItemToObject(globals, k, cur);
-			}
-		}
-
 		WriteJSONFile(globals, "globals.json");
 		cJSON_Delete(globals);
 	}
@@ -528,7 +522,8 @@ void LoadJSONOptionValues(char* charName)
 		}
 	}
 	LoadParsedJSONOptions(global);
-	LoadParsedJSONOptions(local);
+	if(local)
+		LoadParsedJSONOptions(local);
 }
 
 void __cdecl CleanupLoadedJSONFiles()
@@ -699,6 +694,7 @@ void LoadDefaultOptionValues()
 	options.pmare_type = 0;
 	options.pmare_start_type = 0;
 	options.pmare_price = 0;
+	options.tcp_only = TRUE;
 	options.pmare_session_start.wYear = 1970;
 	memset(&options.avatar, 0, sizeof(options.avatar));
 	options.num_bungholes = 0;
@@ -710,290 +706,19 @@ void LoadDefaultOptionValues()
 void SmartLoadJSON()
 {
 	static bool alreadyLoadedGlobal = false;
-	static bool alreadyLoadedLocal = true;
+	static bool alreadyLoadedLocal = false;
 
 	if (!player && !alreadyLoadedGlobal) {
 		LoadJSONOptionValues(NULL);
+		if (strlen(options.username[options.account_index])) {
+			LoadJSONOptionValues(options.username[options.account_index]);
+		}
 		alreadyLoadedGlobal = true;
 	}
-	else if (!alreadyLoadedLocal)
+
+	if (!alreadyLoadedLocal && player)
 	{
 		LoadJSONOptionValues(player->UpperName());
 		alreadyLoadedLocal = alreadyLoadedGlobal = true;
 	}
-}
-
-void LoadInGameRegistryOptionValues(HKEY reg_key, bool force)
-{
-	if (numJsonFiles) {
-		SmartLoadJSON();
-		return;
-	}
-
-	DWORD keyresult, size, reg_type;
-
-	size = sizeof(options.sound_active);
-	keyresult = RegQueryValueEx(reg_key, _T("sound_active"), NULL, &reg_type,
-		(unsigned char *)&(options.sound_active), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.sound_active = TRUE;
-
-	size = sizeof(options.music_active);
-	keyresult = RegQueryValueEx(reg_key, _T("music_active"), NULL, &reg_type,
-		(unsigned char *)&(options.music_active), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.music_active = TRUE;
-
-	size = sizeof(options.autoreject);
-	keyresult = RegQueryValueEx(reg_key, _T("autoreject"), NULL, &reg_type,
-		(unsigned char *)&(options.autoreject), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.autoreject = FALSE;
-
-	size = sizeof(options.autorejoin);
-	keyresult = RegQueryValueEx(reg_key, _T("autorejoin"), NULL, &reg_type,
-		(unsigned char *)&(options.autorejoin), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.autorejoin = TRUE;
-
-	size = sizeof(options.nametags);
-	keyresult = RegQueryValueEx(reg_key, _T("nametags"), NULL, &reg_type,
-		(unsigned char *)&(options.nametags), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.nametags = TRUE;
-
-	size = sizeof(options.multiline);
-	keyresult = RegQueryValueEx(reg_key, _T("multiline"), NULL, &reg_type,
-		(unsigned char *)&(options.multiline), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.multiline = FALSE;
-
-	size = sizeof(options.footsteps);
-	keyresult = RegQueryValueEx(reg_key, _T("footsteps"), NULL, &reg_type,
-		(unsigned char *)&(options.footsteps), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.footsteps = TRUE;
-
-	size = sizeof(options.art_prompts);
-	keyresult = RegQueryValueEx(reg_key, _T("art_prompts"), NULL, &reg_type,
-		(unsigned char *)&(options.art_prompts), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.art_prompts = TRUE;
-
-	size = sizeof(options.mouselook);
-	keyresult = RegQueryValueEx(reg_key, _T("mouselook"), NULL, &reg_type,
-		(unsigned char *)&(options.mouselook), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.mouselook = FALSE;
-
-	size = sizeof(options.invertmouse);
-	keyresult = RegQueryValueEx(reg_key, _T("invertmouse"), NULL, &reg_type,
-		(unsigned char *)&(options.invertmouse), &size);
-	
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.invertmouse = FALSE;
-	
-	size = sizeof(options.log_chat);
-	keyresult = RegQueryValueEx(reg_key, _T("log_chat"), NULL, &reg_type,
-		(unsigned char *)&(options.log_chat), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.log_chat = TRUE;
-
-	int turnrate;
-	size = sizeof(turnrate);
-	keyresult = RegQueryValueEx(reg_key, _T("turnrate"), NULL, &reg_type,
-		(unsigned char *)&(turnrate), &size);
-	if ((keyresult != ERROR_SUCCESS) || force || 
-		(turnrate < min_turnrate) || (turnrate > max_turnrate))
-		options.turnrate = default_turnrate;
-	else
-		options.turnrate = (float)turnrate; // need intermediate var b/c turnrate is a float
-		
-	size = sizeof(options.effects_volume);
-	keyresult = RegQueryValueEx(reg_key, _T("volume"), NULL, &reg_type,
-		(unsigned char *)&(options.effects_volume), &size);
-	if ((keyresult != ERROR_SUCCESS) || force || 
-		(options.effects_volume < min_volume) || (options.effects_volume > max_volume))
-		options.effects_volume = default_volume;
-
-	size = sizeof(options.music_volume);
-	keyresult = RegQueryValueEx(reg_key, _T("music_volume"), NULL, &reg_type,
-		(unsigned char *)&(options.music_volume), &size);
-	if ((keyresult != ERROR_SUCCESS) || force || 
-		(options.music_volume < min_volume) || (options.music_volume > max_volume))
-		options.music_volume = default_volume;
-
-	size = sizeof(options.speech_color);
-	keyresult = RegQueryValueEx(reg_key, _T("speech_color"), NULL, &reg_type,
-		(unsigned char *)&(options.speech_color), &size);
-	if ((keyresult != ERROR_SUCCESS) || force || ColorOutOfRange(options.speech_color))
-		options.speech_color = default_speech_color;
-
-	size = sizeof(options.message_color);
-	keyresult = RegQueryValueEx(reg_key, _T("message_color"), NULL, &reg_type,
-		(unsigned char *)&(options.message_color), &size);
-	if ((keyresult != ERROR_SUCCESS) || force || ColorOutOfRange(options.message_color))
-		options.message_color = default_message_color;
-	
-	size = sizeof(options.bg_color);
-	keyresult = RegQueryValueEx(reg_key, _T("bg_color"), NULL, &reg_type,
-		(unsigned char *)&(options.bg_color), &size);
-	if ((keyresult != ERROR_SUCCESS) || force|| ColorOutOfRange(options.bg_color))
-		options.bg_color = default_bg_color;
-
-	size = sizeof(options.reverse);
-	keyresult = RegQueryValueEx(reg_key, _T("reverse"), NULL, &reg_type,
-		(unsigned char *)&(options.reverse), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.reverse = FALSE;
-
-	size = sizeof(options.autorun);
-	keyresult = RegQueryValueEx(reg_key, _T("autorun"), NULL, &reg_type,
-		(unsigned char *)&(options.autorun), &size);
-	
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.autorun = TRUE;
-
-	size = sizeof(options.adult_filter);
-	keyresult = RegQueryValueEx(reg_key, _T("adult_filter"), NULL, &reg_type,
-		(unsigned char *)&(options.adult_filter), &size);
-	
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.adult_filter = TRUE;
-
-	size = sizeof(options.pmare_type);
-	keyresult = RegQueryValueEx(reg_key, _T("pmare_type"), NULL, &reg_type,
-		(unsigned char *)&(options.pmare_type), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.pmare_type = 0;
-
-	size = sizeof(options.pmare_start_type);
-	keyresult = RegQueryValueEx(reg_key, _T("pmare_start_type"), NULL, &reg_type,
-		(unsigned char *)&(options.pmare_start_type), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.pmare_start_type = 0;
-
-
-	size = sizeof(options.pmare_price);
-	keyresult = RegQueryValueEx(reg_key, _T("pmare_price"), NULL, &reg_type,
-		(unsigned char *)&(options.pmare_price), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.pmare_price = 0;
-
-
-	size = sizeof(options.pmare_session_start);
-	keyresult = RegQueryValueEx(reg_key, _T("pmare_session_start"), NULL, &reg_type,
-		(unsigned char *)&(options.pmare_session_start), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.pmare_session_start.wYear = 1970;
-
-	// save them back, in case a default was set
-	SaveInGameRegistryOptionValues();
-}
-
-void LoadCharacterRegistryOptionValues(bool force)
-{
-	// write out new value to registry
-	HKEY reg_key = NULL;
-	unsigned long result;
-	
-	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0,
-		NULL, 0, KEY_ALL_ACCESS, NULL, &reg_key, &result);
-
-	LoadCharacterRegistryOptionValues(reg_key, force);
-	RegCloseKey(reg_key);
-}
-
-void LoadCharacterRegistryOptionValues(HKEY reg_key, bool force)
-{
-	if (numJsonFiles) {
-		LoadJSONOptionValues(player->UpperName());
-		return;
-	}
-
-	int num_keys;
-	DWORD keyresult, size, reg_type;
-	keymap_t *map;
-
-	size = sizeof(options.avatar);
-	keyresult = RegQueryValueEx(reg_key, _T("avatar"), NULL, &reg_type,
-		(unsigned char *)&(options.avatar), &size);
-	if ((keyresult != ERROR_SUCCESS) || force) // default avatar
-		memset(&options.avatar, 0, sizeof(options.avatar));
-
-	size = sizeof(options.num_bungholes);
-	keyresult = RegQueryValueEx(reg_key, _T("num_ignores"), NULL, &reg_type,
-		(unsigned char *)&(options.num_bungholes), &size);
-	if ((keyresult != ERROR_SUCCESS) ||
-		(options.num_bungholes > MAX_IGNORELIST))
-		options.num_bungholes = 0;
-
-	size = MAX_IGNORELIST * sizeof(other_t);
-	keyresult = RegQueryValueEx(reg_key, _T("ignore_list"), NULL, &reg_type,
-		(unsigned char *)options.bungholes, &size);
-	if ((keyresult != ERROR_SUCCESS) || (!options.num_bungholes))
-	{
-		for (int i = 0; i < MAX_IGNORELIST; i++)
-			_tcscpy(options.bungholes[i].name, _T(""));
-		options.num_bungholes = 0;
-	}
-
-	// keymapping
-	num_keys = keymap->num_keys();
-	map = new keymap_t[num_keys];
-	keymap->GetMap(map);
-	size = sizeof(num_keys);
-	keyresult = RegQueryValueEx(reg_key, _T("number_keys_mapped"), NULL, &reg_type,
-		(unsigned char *)&(num_keys), &size);
-	if (keyresult == ERROR_SUCCESS)
-	{
-		size = num_keys * sizeof(keymap_t);
-		delete map;
-		map = new keymap_t[num_keys];
-		RegQueryValueEx(reg_key, _T("key_mappings"), NULL, &reg_type,
-			(unsigned char *)map, &size);
-		keymap->Init(num_keys, map);
-		delete map;
-	}
-	else
-	{ // may have version without keymap registry entries -- look in main registry first and then pull defaults from code
-
-		HKEY main_key = NULL;
-		unsigned long mresult;
-		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(true), 0,
-			NULL, 0, KEY_ALL_ACCESS, NULL, &main_key, &mresult);
-
-		keyresult = RegQueryValueEx(main_key, _T("number_keys_mapped"), NULL, &reg_type,
-			(unsigned char *)&(num_keys), &size);
-
-		if (keyresult == ERROR_SUCCESS)
-		{
-			size = num_keys * sizeof(keymap_t);
-			delete map;
-			map = new keymap_t[num_keys];
-			RegQueryValueEx(main_key, _T("key_mappings"), NULL, &reg_type,
-				(unsigned char *)map, &size);
-			keymap->Init(num_keys, map);
-			delete map;
-		}
-		else
-		{
-			// okay, we really don't have keys set, use defaults
-			keymap->SetDefaultKeymap(0);
-			num_keys = keymap->num_keys();
-			delete map;
-			map = new keymap_t[num_keys];
-			keymap->GetMap(map);
-			RegSetValueEx(reg_key, _T("number_keys_mapped"), 0, REG_DWORD,
-				(unsigned char *)&(num_keys), sizeof(num_keys));
-			RegSetValueEx(reg_key, _T("key_mappings"), 0, REG_BINARY,
-				(unsigned char *)map, (num_keys * sizeof(keymap_t)));
-			delete map;
-		}
-
-		RegCloseKey(main_key);
-	}
-
-	// save it incase something changed
-	SaveCharacterRegistryOptionValues(reg_key);
 }

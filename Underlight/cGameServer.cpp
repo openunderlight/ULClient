@@ -765,8 +765,7 @@ void cGameServer::HandleMessage(void)
 		//	options.UNIX_login_time = loginack_msg.LoginTime();
 		//	options.local_login_time = LyraTime()/1000;
 			portNumber = loginack_msg.ServerPort();
-
-			LoadCharacterRegistryOptionValues(false);
+			LoadJSONOptionValues(player->Name());
 
 #ifdef PMARE
 			options.pmare_logout_time = 0;
