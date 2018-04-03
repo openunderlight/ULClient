@@ -130,40 +130,7 @@ bool __cdecl LoadGameOptions(void)
 {
 	LoadDefaultOptionValues();
 	LoadJSONFiles();
-
-	HKEY main_key, player_key = NULL;
-	unsigned long mresult, presult;
-
-	if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(true),0, 
-				NULL, 0, KEY_ALL_ACCESS, NULL, &main_key, &mresult)
-					!= ERROR_SUCCESS)
-	{
-		GAME_ERROR(IDS_NO_ACCESS_REGISTRY);
-		return false;
-	}
-	
-	LoadInGameRegistryOptionValues(main_key, false);
-
-	// only load the character options if we have a character object available
-	if (player != NULL)
-	{
-
-		if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0,
-			NULL, 0, KEY_ALL_ACCESS, NULL, &player_key, &presult)
-			!= ERROR_SUCCESS)
-		{
-			GAME_ERROR(IDS_NO_ACCESS_REGISTRY);
-			return false;
-		}
-
-		LoadCharacterRegistryOptionValues(player_key, false);
-		RegCloseKey(player_key);
-	}
-
-	LoadOutOfGameRegistryOptionValues(main_key, false);
-
-	RegCloseKey(main_key);
-
+	SmartLoadJSON();
 	return true;
 }
 
