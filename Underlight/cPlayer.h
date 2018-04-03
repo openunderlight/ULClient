@@ -158,7 +158,7 @@ class cPlayer : public cActor
 		 bool using_blade;
 		 int  blade_position_index;
 		 int  blade_ticks;
-		 
+		 int bulwark;
 		 bool hit;
 
 		float tportx, tporty; // for retrying failed teleports
@@ -181,11 +181,13 @@ class cPlayer : public cActor
 	  int reflect_strength;
 	  int cripple_strength;
 	  int avatar_armor_strength;
-	  
+	  int bulwark_durability;
 	  // Selection Functions
 	  virtual TCHAR* Name(void);
 	  virtual TCHAR* Password(void);
 	  bool IsMare(void);
+	  inline void SetBulwark(int bulwark_) { bulwark = bulwark_; }
+	  inline int GetBulwark() { return bulwark;  }
 	  inline TCHAR* UpperName(void) { return upper_name; };
 	  inline LmAvatar Avatar(void) { return avatar; };
 	  inline LmAvatar TransformedAvatar(void) { return transformed_avatar; };

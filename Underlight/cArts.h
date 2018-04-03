@@ -143,6 +143,7 @@ public:
 	void SoulEvoke(void);
 	void NightmareForm(void);
 	void Recall(void);
+	void Bulwark(void);
 	void Return(void);
 	void Reflect(void);
 	void ApplyReflectedArt(int art_id, lyra_id_t caster_id);
