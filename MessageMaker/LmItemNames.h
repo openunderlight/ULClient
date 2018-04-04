@@ -51,6 +51,7 @@
 #define ITEM_AE _T("Area Effect")
 #define ITEM_TIME _T("Time to Detonate")
 #define ITEM_CASTER _T("Caster ID")
+#define ITEM_DISTANCE _T("Distance")
 
 #define ITEM_ESSENCE _T("Essence")
 #define ITEM_ESSTYPE _T("Essence Type")
