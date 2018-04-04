@@ -1296,7 +1296,29 @@ void cPlayer::CheckStatus(void)
 		default:
 			break;
 		}
-		next_sector_tag = LyraTime() +  SECTOR_TAG_INTERVAL;
+
+		// now apply AOEs we're near - 1/2 dist as Horron pain aura
+		if (!(flags & ACTOR_SOULSPHERE))
+		{
+			for (cItem *item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+			{
+				if (item == NO_ITEM || (item->Status() == ITEM_OWNED) ||
+					(item->ItemFunction(0) != LyraItem::AREA_EFFECT_FUNCTION))
+					continue;
+				dist = (int)((item->x - x)*(item->x - x) + (item->y - y)*(item->y - y));
+				if (dist > (HORRON_DRAIN_DISTANCE / 2))
+					continue;
+
+				const void* state = item->Lmitem().StateField(0);
+				lyra_item_area_effect_t aoe;
+				memcpy(&aoe, state, sizeof(aoe));
+				int modifier = CalculateModifier(aoe.damage); // dmg is actually modifier
+				player->SetCurrStat(Stats::DREAMSOUL, modifier, SET_RELATIVE, aoe.caster_id);
+				player->SetTimedEffect(aoe.effect, CalculateDuration(aoe.duration), aoe.caster_id, EffectOrigin::MASS_EVOKE);
+			}
+			actors->IterateItems(DONE);		
+		}
+		next_sector_tag = LyraTime() + SECTOR_TAG_INTERVAL;
 	}
 
 	if ((flags & ACTOR_TRAILING) && (LyraTime() > next_trail))

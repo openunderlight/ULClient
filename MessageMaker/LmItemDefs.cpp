@@ -158,11 +158,11 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
   },
 
   // AREA_EFFECT_FUNCTION
-  { ITEM_AE, 8, 4, false, false, false, true, true, false, true, {
+  { ITEM_AE, 8, 4, false, false, true, true, true, false, true, {
     { ITEM_EFFECT, 1, TRANSLATION_EFFECT, true, 0, NUM_TIMED_EFFECTS},
-    { ITEM_DAMAGE, 1, TRANSLATION_POS_MODIFIER, true, -NUM_MODIFIERS+1, NUM_MODIFIERS-1},
-    { ITEM_TIME, 1, TRANSLATION_NONE, true, 0, INT_MAX},
-    { ITEM_CASTER, 4, TRANSLATION_NONE, false, 0, UINT_MAX},
+    { ITEM_MOD, 1, TRANSLATION_MODIFIER, true, -NUM_MODIFIERS+1, NUM_MODIFIERS-1},
+	{ ITEM_DUR, 1, TRANSLATION_DURATION, true, 0, NUM_DURATIONS - 1 },
+    { ITEM_CASTER, 4, TRANSLATION_NONE, false, 0, INT_MAX},
     NO_FIELD,
     NO_FIELD},
   },

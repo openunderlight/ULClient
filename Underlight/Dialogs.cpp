@@ -2209,7 +2209,14 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								{
 									defaultIdx = successCnt / 2;
 								}
+								
 								ComboBox_SetCurSel(GetDlgItem(hDlg, property_fields[i]), defaultIdx);
+							}
+							if (_tcsicmp(LyraItem::EntryName(curr_effect, i), _T("Caster ID")) == 0)
+							{
+								sprintf(message, "%d", player->ID());
+								SendMessage((GetDlgItem(hDlg, property_fields[i])), CB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
+								ComboBox_SetItemData(GetDlgItem(hDlg, property_fields[i]), (ComboBox_GetCount(GetDlgItem(hDlg, property_fields[i])) - 1), player->ID());
 							}
 						}
 						  }
