@@ -186,6 +186,8 @@
 #define IDC_PROPERTY3                   1108
 #define IDC_PROPERTY4                   1109
 #define IDC_PROPERTY5                   1110
+#define IDC_PROPERTY6                   1111
+#define IDC_PROPERTY7                   1112
 #define IDC_FUNCTION_TAB                1114
 #define IDC_EFFECT_HEADER               1115
 #define IDC_PROPERTY2_HEADER            1115
@@ -209,6 +211,9 @@
 #define IDC_EFFECT2_HEADER              1126
 #define IDC_DURATION_HEADER             1127
 #define IDC_KEY_EFFECT_COMBO            1127
+#define IDC_PROPERTY6_HEADER            1128
+#define IDC_PROPERTY5_HEADER3           1129
+#define IDC_PROPERTY7_HEADER            1129
 #define IDC_DEFAULT                     1229
 #define IDC_MOUSETEXT                   1233
 #define IDC_GUILDS                      1234
@@ -2983,6 +2988,11 @@
 #define IDS_PT_COMBINED                 4455
 #define IDS_NO_SACRIFICE                4456
 #define IDS_ARTIFACT_NO_TP              4460
+#define IDS_CLOSEST                     4461
+#define IDS_VERY_CLOSE                  4462
+#define IDS_NEARBY                      4463
+#define IDS_WIDE_RANGE                  4464
+#define IDS_WHOLE_ROOM                  4465
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

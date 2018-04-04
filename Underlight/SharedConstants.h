@@ -16,6 +16,7 @@ const int NUM_ARTS = 148;
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
 const int NUM_PLAYER_STATS = 5;
+const int NUM_DISTANCES = 5;
 const int NUM_GUILDS = 8;
 const int NUM_HOUSES = 8;
 const int NUM_RANKS = 3;
