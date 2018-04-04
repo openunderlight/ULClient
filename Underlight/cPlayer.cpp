@@ -1296,15 +1296,18 @@ void cPlayer::CheckStatus(void)
 				if (item == NO_ITEM || (item->Status() == ITEM_OWNED) ||
 					(item->ItemFunction(0) != LyraItem::AREA_EFFECT_FUNCTION))
 					continue;
-				dist = (int)((item->x - x)*(item->x - x) + (item->y - y)*(item->y - y));
-				if (dist > (HORRON_DRAIN_DISTANCE / 2))
-					continue;
 
 				const void* state = item->Lmitem().StateField(0);
 				lyra_item_area_effect_t aoe;
 				memcpy(&aoe, state, sizeof(aoe));
+				dist = (int)((item->x - x)*(item->x - x) + (item->y - y)*(item->y - y));
+				int xy, ht; 
+				CalculateDistance(aoe.distance, &xy, &ht);
+				if (dist > xy || (z - physht - item->z) > ht || (item->z - z) > ht)
+					continue;
+
 				int modifier = CalculateModifier(aoe.damage); // dmg is actually modifier
-				player->SetCurrStat(Stats::DREAMSOUL, modifier, SET_RELATIVE, aoe.caster_id);
+				player->SetCurrStat(aoe.stat, modifier, SET_RELATIVE, aoe.caster_id);
 				player->SetTimedEffect(aoe.effect, CalculateDuration(aoe.duration), aoe.caster_id, EffectOrigin::MASS_EVOKE);
 			}
 			actors->IterateItems(DONE);		

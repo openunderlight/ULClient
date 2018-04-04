@@ -368,6 +368,13 @@ const duration_t duration_types[NUM_DURATIONS] =
     {28800,    0,      100,         IDS_8_HR      }, // 63
 };
 
+const distance_t distances[NUM_DISTANCES] = {
+	{20000, 1000, 1, IDS_CLOSEST},
+	{50000, 5000, 10, IDS_VERY_CLOSE},
+	{120000, 10000, 50, IDS_NEARBY},
+	{500000, 50000, 90, IDS_WIDE_RANGE}, // whisper x,y taller than whisper
+	{9999999, 99999, 100, IDS_WHOLE_ROOM}
+};
 
 // calculates a duration based on the duration table above
 int CalculateDuration(int index) 
@@ -378,6 +385,13 @@ int CalculateDuration(int index)
 		random = 1000*((rand()%(duration_types[index].random))+1); 
 	return (base + random);
 };
+
+void CalculateDistance(int index, int* xydist, int* heightdist)
+{
+	distance_t dist = distances[index];
+	*xydist = dist.cartesian_distance;
+	*heightdist = dist.height_distance;
+}
 
 const velocity_t velocity_types[] =
 {// min skill
@@ -411,7 +425,12 @@ void TranslateValue(int type, int value)
 				_stprintf(message, _T("-%s"), disp_message);
 			}
 			break;
-
+		case LyraItem::TRANSLATION_DISTANCE:
+		{
+			LoadString(hInstance, distances[value].descrip, disp_message, sizeof(disp_message));
+			_stprintf(message, _T("%s"), disp_message);
+		}
+		break;
 		case LyraItem::TRANSLATION_DURATION:
 			{
 				LoadString(hInstance, duration_types[value].descrip, disp_message, sizeof(disp_message));
@@ -669,6 +688,8 @@ int NumberTranslations(int type)
 			return Avatars::MAX_AVATAR_TYPE+1;
 		case LyraItem::TRANSLATION_LEVEL_ID:
 		    return MAX_LEVELS;
+		case LyraItem::TRANSLATION_DISTANCE:
+			return NUM_DISTANCES;
 		default:
 		case LyraItem::TRANSLATION_NONE:
 			return 0;
