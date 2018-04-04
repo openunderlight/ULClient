@@ -264,7 +264,7 @@ struct lyra_item_area_effect_t {  // 8 bytes
   unsigned char type;      // AREA_EFFECT_FUNCTION
   unsigned char effect;    // timed effect constant activate on hit
   char          damage;    // index into modifier table for damage
-  unsigned char detonate;  // seconds until detonation
+  unsigned char duration;  // index into duration table
   lyra_id_t     caster_id; // player id of caster
   // conversion methods
   inline void hton() {
