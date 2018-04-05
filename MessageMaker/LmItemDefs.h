@@ -59,6 +59,7 @@ public:
 	SUPPORT_TRAIN_FUNCTION,  // 10 bytes
 	GRATITUDE_FUNCTION,		 // 10 bytes
 	META_ESSENCE_NEXUS_FUNCTION, // 9 bytes
+	PORTKEY_FUNCTION, // 7 bytes
     
     // translation types for item effect fields
     TRANSLATION_NONE = 0,
@@ -276,6 +277,23 @@ struct lyra_item_area_effect_t {  // 10 bytes
   inline void ntoh() {
     NTOHL(caster_id);
   }
+};
+
+struct lyra_item_portkey_t {
+	unsigned char type;      // PORTKEY_FUNCTION
+	unsigned char distance;
+	unsigned char	level_id;
+	short x;
+	short y;
+
+	inline void hton() {
+		HTONS(x);
+		HTONS(y);
+	}
+	inline void ntoh() {
+		NTOHS(x);
+		NTOHS(y);		
+	}
 };
 
 struct lyra_item_essence_t {  // 8 bytes 

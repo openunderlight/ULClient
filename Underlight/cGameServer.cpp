@@ -3940,7 +3940,8 @@ bool cGameServer::DropItem(cItem *item)
 		send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
 	}
 
-	putitem_msg.Init(player->Room(), item->ID(), pos, GMsg_PutItem::DEFAULT_TTL);
+	int ttl = item->ItemFunction(0) != LyraItem::PORTKEY_FUNCTION ? GMsg_PutItem::DEFAULT_TTL : 10 * (player->SkillSphere(Arts::PORTKEY) + 1);
+	putitem_msg.Init(player->Room(), item->ID(), pos, ttl);
 	sendbuf.ReadMessage(putitem_msg);
 	send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
 

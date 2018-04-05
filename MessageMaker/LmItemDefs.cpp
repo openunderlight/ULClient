@@ -284,7 +284,17 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
 	  { ITEM_ESSENCE, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
 	  { ITEM_STRCAP, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
 	  { ITEM_ESSCAP, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
-	  NO_FIELD }, }
+	  NO_FIELD }, },
+
+	  // AREA_EFFECT_FUNCTION
+{ ITEM_PORTKEY, 7, 6, false, false, true, true, true, false, true, {
+	{ ITEM_DISTANCE, 1, TRANSLATION_DISTANCE, true, 0, NUM_DISTANCES - 1 },
+	{ ITEM_LEVELID, 1, TRANSLATION_LEVEL_ID, true, 1, 100 },
+	{ ITEM_X, 2, TRANSLATION_TPORT_DEST, false, SHRT_MIN, SHRT_MAX },
+	{ ITEM_Y, 2, TRANSLATION_TPORT_DEST, false, SHRT_MIN, SHRT_MAX },
+	NO_FIELD,
+	NO_FIELD },
+}
 };
 
 const int LyraItem::item_functions_num =
@@ -676,6 +686,10 @@ void FASTCALL LyraItem::ConvertStateToNetwork(void* ssptr)
 	lyra_item_meta_essence_nexus_t nexus;
 	convert_hton(nexus, ssptr);
 	break;
+  case PORTKEY_FUNCTION:
+	  lyra_item_portkey_t portkey;
+	  convert_hton(portkey, ssptr);
+	  break;
   case NO_FUNCTION: // should be an error
   case EFFECT_PLAYER_FUNCTION:
   case CHANGE_STAT_FUNCTION:
@@ -759,6 +773,10 @@ void FASTCALL LyraItem::ConvertStateToHost(void* ssptr)
 	lyra_item_meta_essence_nexus_t nexus;
 	convert_ntoh(nexus, ssptr);
 	break;
+  case PORTKEY_FUNCTION:
+	  lyra_item_portkey_t portkey;
+	  convert_ntoh(portkey, ssptr);
+	  break;
   case NO_FUNCTION: // should be an error
   case EFFECT_PLAYER_FUNCTION:
   case CHANGE_STAT_FUNCTION:

@@ -2993,6 +2993,8 @@
 #define IDS_NEARBY                      4463
 #define IDS_WIDE_RANGE                  4464
 #define IDS_WHOLE_ROOM                  4465
+#define IDS_ALREADY_HAVE_PORTKEY        4466
+#define IDS_PORTKEY                     4467
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
@@ -3002,7 +3004,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        205
+#define _APS_NEXT_RESOURCE_VALUE        206
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1447
 #define _APS_NEXT_SYMED_VALUE           101

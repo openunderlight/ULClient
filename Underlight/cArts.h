@@ -181,14 +181,15 @@ public:
 	void StartPlayerTeleport(void);
 	void EndPlayerTeleport(void *value);
 	void TehthusOblivion(void);
-  void Tempest (void);
-  void ApplyTempest (int skill, int angle, lyra_id_t caster_id);
-  void Misdirection (void);
-  void ApplyMisdirection (int skill, lyra_id_t caster_id);
-  void ChaoticVortex (void);
-  void ApplyChaoticVortex (int skill, lyra_id_t caster_id);
-  void EssenceContainer(void);
-
+	void Tempest (void);
+	void ApplyTempest (int skill, int angle, lyra_id_t caster_id);
+	void Misdirection (void);
+	void ApplyMisdirection (int skill, lyra_id_t caster_id);
+	void ChaoticVortex (void);
+	void ApplyChaoticVortex (int skill, lyra_id_t caster_id);
+	void EssenceContainer(void);
+	void Portkey(void);
+	bool GetPortkey(lyra_item_portkey_t *pk, int type); // true if has pk, falseotherwise
 	// arts that require selecting a neighbor
 	void StartChannel(void);
 	bool ExpireChannel(bool userInitiated);
