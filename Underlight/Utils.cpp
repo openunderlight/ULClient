@@ -386,7 +386,7 @@ int CalculateDuration(int index)
 	return (base + random);
 };
 
-void CalculateDistance(int index, int* xydist, int* heightdist)
+void CalculateDistance(int index, unsigned int* xydist, unsigned int* heightdist)
 {
 	distance_t dist = distances[index];
 	*xydist = dist.cartesian_distance;

@@ -48,7 +48,8 @@ struct EffectOrigin {
 		MISSILE,
 		ART_EVOKE,
 		MASS_EVOKE,
-		USE_ITEM
+		USE_ITEM,
+		AE_ITEM
 	};
 };
 
