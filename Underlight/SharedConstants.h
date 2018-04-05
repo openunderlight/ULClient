@@ -12,7 +12,7 @@
 
  
 const int NUM_TIMED_EFFECTS = 33; // add one for NONE
-const int NUM_ARTS = 148;
+const int NUM_ARTS = 149;
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
 const int NUM_PLAYER_STATS = 5;
@@ -277,6 +277,7 @@ struct Arts {
   RALLY, // Summon party member
   CHANNEL,
 BULWARK,
+PORTKEY,
 	// END OF ARTS LIST - below are art-related constants
 
 	INITIATE_DRAIN = 100,   // amount of essences drained from prime to Initiate

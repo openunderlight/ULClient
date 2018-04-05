@@ -86,10 +86,10 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 	selected_function = inventory_flags = 0;
 	max_sort_index++;
 	sort_index = max_sort_index;
-	
 	// GMs are always draggable!
 #if ! (defined (UL_DEBUG) || defined (GAMEMASTER))
-	if (lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP))
+	if ((lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP)) ||
+		ItemFunction(0) == LyraItem::PORTKEY_FUNCTION)
 		draggable = false;
 #endif
 
@@ -177,7 +177,7 @@ void cItem::SetGravity(void)
 	if (status != ITEM_UNOWNED)
 		gravity = false;
 
-	else if ((this->ItemFunction(0) == LyraItem::WARD_FUNCTION) && (extra != NULL))
+	else if ((this->ItemFunction(0) == LyraItem::WARD_FUNCTION) || (this->ItemFunction(0) == LyraItem::PORTKEY_FUNCTION) && (extra != NULL))
 		gravity = false;
 
 	return;
@@ -1098,13 +1098,20 @@ void cItem::Drop(float drop_x, float drop_y, int drop_angle)
 {
 	if (redeeming) 
 		return; // can't drop a gratitude token while it is being redeemed
+	
+	lyra_item_portkey_t p;
+	if (ItemFunction(0) == LyraItem::PORTKEY_FUNCTION && arts->GetPortkey(&p, ITEM_UNOWNED))
+	{
+		display->DisplayMessage("A room may only contain one portkey!");
+		return;
+	}
 
 	if (this->NeedsUpdate())
 		this->Update();
 
 	player->PerformedAction();
 
-	if (temporary)
+	if (temporary && ItemFunction(0) != LyraItem::PORTKEY_FUNCTION)
 	{ // temporary items are destroyed on a drop
 		lmitem.SetCharges(0);
 		cp->SetUpdateInvCount(true);

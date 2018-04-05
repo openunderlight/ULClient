@@ -285,6 +285,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xA329, // Rally 
 0xC767, // Channel
 0xE96C, // Bulwark
+0xDF3,
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -475,7 +476,8 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT | MAKE_ITEM | LEARN},
 {IDS_RALLY,							Stats::DREAMSOUL,	30, 30, 0,  5,  -1, SANCT | NEIGH},
 {IDS_CHANNEL,                       Stats::DREAMSOUL,   40, 35, 25, 3,  -1, SANCT | NEIGH | LEARN},
-{IDS_GKSHIELD, Stats::WILLPOWER, 70, 30, 13, 5, -1, SANCT | FOCUS | LEARN}
+{IDS_GKSHIELD, Stats::WILLPOWER, 70, 30, 13, 5, -1, SANCT | FOCUS | LEARN},
+{IDS_PORTKEY, Stats::DREAMSOUL, 90, 50, 13, 5, -1, SANCT | LEARN | MAKE_ITEM}
 };
 
 
@@ -1289,6 +1291,8 @@ void cArts::ApplyArt(void)
 	case Arts::RALLY: method = &cArts::StartRally; break;
 	case Arts::CHANNEL: method = &cArts::StartChannel; break;
 	case Arts::BULWARK: method = &cArts::Bulwark; break;
+	case Arts::PORTKEY: method = &cArts::Portkey; break;
+
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
 	}
@@ -1680,6 +1684,58 @@ void cArts::EssenceContainer(void)
 	info.SetStateField(0, &nexus, sizeof(nexus));
 	info.SetCharges(1);
 	item = CreateItem(player->x, player->y, player->angle, info, 0, false, GMsg_PutItem::DEFAULT_TTL);
+	if (item == NO_ITEM)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	this->ArtFinished(true);
+}
+
+bool cArts::GetPortkey(lyra_item_portkey_t* portkey, int type)
+{
+	bool hasPortkey = false;
+	cItem* item;
+	// type = ITEM_OWNED
+	// check that the proper # of unique support tokens are carried
+	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+		if ((item->Status() == type) && (item->ItemFunction(0) == LyraItem::PORTKEY_FUNCTION)) {
+			hasPortkey = true;
+			const void* state = item->Lmitem().StateField(0);
+			memcpy(portkey, state, sizeof(lyra_item_portkey_t));
+			break;
+		}
+
+	actors->IterateItems(DONE);
+	return hasPortkey;
+}
+
+void cArts::Portkey(void)
+{
+	lyra_item_portkey_t pk;
+	if (GetPortkey(&pk, ITEM_OWNED)) {
+		LoadString(hInstance, IDS_ALREADY_HAVE_PORTKEY, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+	}
+	LmItemHdr header;
+	LmItem info;
+	cItem *item;
+	int distance = player->SkillSphere(Arts::PORTKEY) / 2;
+	
+	pk = { LyraItem::PORTKEY_FUNCTION, (unsigned char)distance, (unsigned char)level->ID(), (short)player->x, (short)player->y };
+
+	header.Init(0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.SetGraphic(LyraBitmap::WARD);
+	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
+	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::PORTKEY_FUNCTION), 0, 0));
+	
+	info.Init(header, "Portkey", 0, 0, 0);
+	info.SetStateField(0, &pk, sizeof(pk));
+	info.SetCharges(1);
+	item = CreateItem(player->x, player->y, player->angle, info, 0, true, LyraTime() + ((GMsg_PutItem::DEFAULT_TTL * 1000) * (player->SkillSphere(Arts::PORTKEY) + 1)));
 	if (item == NO_ITEM)
 	{
 		this->ArtFinished(false);

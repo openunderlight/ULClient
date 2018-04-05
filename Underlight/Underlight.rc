@@ -4499,6 +4499,9 @@ STRINGTABLE
 BEGIN
     IDS_WIDE_RANGE          "Wide Range"
     IDS_WHOLE_ROOM          "Whole Room"
+    IDS_ALREADY_HAVE_PORTKEY 
+                            "You're already carrying a portkey - you must drop it first!"
+    IDS_PORTKEY             "Portkey"
 END
 
 STRINGTABLE
