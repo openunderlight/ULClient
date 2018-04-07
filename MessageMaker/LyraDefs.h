@@ -63,7 +63,7 @@ struct ByteOrder {
 // global constants that don't belong anywhere else
 struct Lyra {
   enum {
-    GAME_VERSION = 11313,      // build / protocol version number - MUST be 5 digits!
+    GAME_VERSION = 17011,      // build / protocol version number - MUST be 5 digits!
     GAME_SUBVERSION = GAME_VERSION,
 
     ID_UNKNOWN = 0,         // invalid id
@@ -94,7 +94,7 @@ struct Lyra {
 
     MAX_SPEECHLEN = 512,    // maximum length of speech text
     MAX_ITEMDESC = 512,     // maximum length of an item's description
-    MAX_AVATARDESC = 512,   // max length of avatar description
+    MAX_AVATARDESC = 1024,   // max length of avatar description
 
 	MAX_LEVELS = 64,        // max # of levels
     MAX_LEVELROOMS = 64,   // maximum number of rooms in a level

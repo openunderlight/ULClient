@@ -1924,13 +1924,34 @@ void cArts::EndKey(void *value)
 	// Set strength to 100 to mark this as a key instead of an amulet
 	amulet.player_id = key_id;
 
-	this->CreatePass(key_name, amulet);
-
+	this->CreatePass(key_name, amulet, player->Skill(art_in_use));
 }
 
 //////////////////////////////////////////////////////////////////
 // Amulet
 void cArts::Amulet(void)
+{
+	if (entervaluedlg)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+	entervaluedlg = true;
+	LoadString(hInstance, IDS_SELECT_AMULET_CHARGES, message, sizeof(message)); 
+	HWND hDlg = CreateLyraDialog(hInstance, IDD_SELECT_VALUE,
+		cDD->Hwnd_Main(), (DLGPROC)SelectValueDlgProc);
+	entervalue_callback = (&cArts::EndAmulet);
+	SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+	int num_entries = (player->Skill(art_in_use) / 10) + 1;
+	for (int i = 0; i < num_entries; i++)
+		_snprintf(values_select[i], 3, "%d", 10 - i);
+
+	SendMessage(hDlg, WM_SET_VALUES, num_entries, 0);
+	this->WaitForDialog(hDlg, Arts::AMULET);
+	return;
+}
+
+void cArts::EndAmulet(void* charges_idx)
 {
 	TCHAR name[LmItem::NAME_LENGTH];
 	// r->ErrorInfo()->RIf name is longer than ten, truncate it on the amulet name
@@ -1951,7 +1972,8 @@ void cArts::Amulet(void)
 		_stprintf(name, message, myname10);
 	}
 
-	int item_strength = (unsigned char)player->Skill(art_in_use);
+	int item_strength = player->Skill(art_in_use);
+	int charges = 10 - ((int)charges_idx);
 
 	// Make sure a normal amulet never exceeds 99
 	if (item_strength > 99) item_strength = 99;
@@ -1959,11 +1981,11 @@ void cArts::Amulet(void)
 	lyra_item_amulet_t amulet = { LyraItem::AMULET_FUNCTION, 0, 0 };
 	amulet.strength = item_strength;
 	amulet.player_id = player->ID();
-	
-	this->CreatePass(name, amulet);
+
+	this->CreatePass(name, amulet, charges);
 }
 
-void cArts::CreatePass(const TCHAR* pass_name, lyra_item_amulet_t amulet)
+void cArts::CreatePass(const TCHAR* pass_name, lyra_item_amulet_t amulet, int charges)
 {
 	LmItem info;
 	LmItemHdr header;
@@ -1975,7 +1997,7 @@ void cArts::CreatePass(const TCHAR* pass_name, lyra_item_amulet_t amulet)
 
 	info.Init(header, pass_name, 0, 0, 0);
 	info.SetStateField(0, &amulet, sizeof(amulet));
-	info.SetCharges(player->Skill(art_in_use));
+	info.SetCharges(charges);
 	cItem* item = CreateItem(player->x, player->y, player->angle, info, 0, false);
 	if (item == NO_ITEM)
 	{

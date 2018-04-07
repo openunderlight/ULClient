@@ -60,27 +60,27 @@ const float MAX_WHISPER_HEIGHT = 10000.0f;
 
 
 avatar_poses_t dreamer_poses[NUM_POSES] = { // start frame, end frame, increment
-// start, end, cycle
-	{ 14, 16, false},  // INJURED
-	{ 8, 13, false}, // MELEE ATTACK
-	{ 17, 17, false}, // MISSILE ATTACK
-	{ 18, 18, true }, // EVOKING
-	{ 23, 23, false},  // JUMP
-	{ 22, 22, false},  // WAVE
-	{ 0, 7, true }, // WALKING_FORWARD
-	{ 19, 21, true }, // STANDING
+											// start, end, cycle
+	{ 14, 16, false },  // INJURED
+{ 8, 13, false }, // MELEE ATTACK
+{ 17, 17, false }, // MISSILE ATTACK
+{ 18, 18, true }, // EVOKING
+{ 23, 23, false },  // JUMP
+{ 22, 22, false },  // WAVE
+{ 0, 7, true }, // WALKING_FORWARD
+{ 19, 21, true }, // STANDING
 };
 
 
 avatar_poses_t mare_poses[NUM_POSES] = { // start frame, end frame, increment
-	{ 12, 14, false  }, // INJURED
-	{ 6, 11, false }, // MELEE ATTACK
-	{ 6, 11, false }, // MISSILE ATTACK
-	{ 0, 0, false	 }, // EVOKING;
-	{ 0, 0, false	 }, // JUMP
-	{ 0, 0, false	 }, // WAVE
-	{ 0, 5, true	}, // WALKING_FORWARD
-	{ 0, 0, true	}, // STANDING
+	{ 12, 14, false }, // INJURED
+{ 6, 11, false }, // MELEE ATTACK
+{ 6, 11, false }, // MISSILE ATTACK
+{ 0, 0, false }, // EVOKING;
+{ 0, 0, false }, // JUMP
+{ 0, 0, false }, // WAVE
+{ 0, 5, true }, // WALKING_FORWARD
+{ 0, 0, true }, // STANDING
 };
 
 
@@ -95,20 +95,20 @@ avatar_poses_t mare_poses[NUM_POSES] = { // start frame, end frame, increment
 // remote player info and it's position structure. Also note
 // that initially all actors are created with generic finfo.
 
-cNeighbor::cNeighbor (const RmRemotePlayer& info, unsigned __int64 flags, int n_sector)	:
-					cActor (info.PeerUpdate().X(), info.PeerUpdate().Y(), 
-							  info.PeerUpdate().Angle(), flags, NEIGHBOR, n_sector),
-					avatar (info.Avatar())
+cNeighbor::cNeighbor(const RmRemotePlayer& info, unsigned __int64 flags, int n_sector) :
+	cActor(info.PeerUpdate().X(), info.PeerUpdate().Y(),
+		info.PeerUpdate().Angle(), flags, NEIGHBOR, n_sector),
+	avatar(info.Avatar())
 {
-	_tcscpy(name,info.PlayerName());
+	_tcscpy(name, info.PlayerName());
 
-// z = info->position.height; // set height in parent class
+	// z = info->position.height; // set height in parent class
 	id = info.PlayerID();
 	realtime_id = info.PeerUpdate().RealtimeID();
 	room = info.Room();
 	locked = moved = false;
 	on_controlpanel = false;
-  got_update = false;
+	got_update = false;
 	last_attack = last_move = last_hit = 0;
 	visible = jumping = blasting = newbie_message = false;
 	hwnd_acceptreject = NULL;
@@ -123,7 +123,7 @@ cNeighbor::cNeighbor (const RmRemotePlayer& info, unsigned __int64 flags, int n_
 
 	// set up icon
 #ifndef AGENT
-	RenderActor(this,(PIXEL *)icon,ICON_WIDTH,ICON_HEIGHT);
+	RenderActor(this, (PIXEL *)icon, ICON_WIDTH, ICON_HEIGHT);
 	name_tag = new cNameTag(name);
 #endif
 
@@ -132,25 +132,25 @@ cNeighbor::cNeighbor (const RmRemotePlayer& info, unsigned __int64 flags, int n_
 
 	if ((this->ID() != player->ID()) &&
 		!this->Avatar().Hidden()) {
-		cDS->PlaySound(LyraSound::ENTRY,x,y,false);
+		cDS->PlaySound(LyraSound::ENTRY, x, y, false);
 	}
 
 	entering = true;
 	currframe = 0;
 
 	this->MakeOutsider();
-  
-  cp->AddNeighbor(this);
+
+	cp->AddNeighbor(this);
 	on_controlpanel = true;
-  
-  if (!options.network) {
-    got_update = true;
+
+	if (!options.network) {
+		got_update = true;
 	}
 
 #ifdef UL_DEBUG
 #ifndef AGENT
-_stprintf(errbuf, _T("%s entered room %d in level %d, pid %d, rtid %d\n"), this->Name(),
-			player->Room(), level->ID(), this->ID(), this->RealtimeID());
+	_stprintf(errbuf, _T("%s entered room %d in level %d, pid %d, rtid %d\n"), this->Name(),
+		player->Room(), level->ID(), this->ID(), this->RealtimeID());
 	INFO(errbuf);
 #endif
 #endif
@@ -158,13 +158,13 @@ _stprintf(errbuf, _T("%s entered room %d in level %d, pid %d, rtid %d\n"), this-
 		options.network && options.autorejoin && gs->Party())
 		gs->Party()->JoinParty(this->ID(), this->Name(), true);
 
-//#ifdef AGENT // force agent logout if two in same room
+	//#ifdef AGENT // force agent logout if two in same room
 #if 0
 	if (WhichMonsterName(this->Name()) &&
 		(this->ID() < player->ID()))
 	{
 		gs->LevelLogout(RMsg_Logout::LOGOUT);
-	_tprintf("Agent %d deferred to %d (%s) at %d.\n",
+		_tprintf("Agent %d deferred to %d (%s) at %d.\n",
 			player->ID(), this->ID(), this->Name(), LyraTime());
 		((cAI*)(player))->SetReconnect(LyraTime() + 60000);
 	}
@@ -185,9 +185,9 @@ void cNeighbor::SetAvatar(LmAvatar new_avatar)
 	this->SetBitmapInfo(avatar.BitmapID());
 	int curr_pose = pose;
 	pose = -1;
-	this->SetPose(curr_pose,true);
+	this->SetPose(curr_pose, true);
 #ifndef AGENT
-	RenderActor(this,(PIXEL *)icon,ICON_WIDTH,ICON_HEIGHT);
+	RenderActor(this, (PIXEL *)icon, ICON_WIDTH, ICON_HEIGHT);
 	cp->ReplaceNeighborIcon(this);
 #endif
 
@@ -199,7 +199,7 @@ void cNeighbor::SetAvatar(LmAvatar new_avatar)
 // priority pose
 void cNeighbor::SetPose(int value, bool force)
 {
-	 // do nothing if already in correct pose, or if we're not forcing
+	// do nothing if already in correct pose, or if we're not forcing
 	// and the new pose is a lower priority
 	if ((pose == value) || (!force && (pose < value)))
 		return;
@@ -252,15 +252,15 @@ bool cNeighbor::Update(void)
 
 	int aticks, orig_frame;
 	bool animate = false;
-	 bool was_in_water = this->InWater();
+	bool was_in_water = this->InWater();
 
 	if (terminate)
 		return false;
 
-  if (options.network && gs && gs->LoggedIntoRoom() && gs->GotPeerUpdates() && !got_update)
-  {
-    got_update = true;
-  }
+	if (options.network && gs && gs->LoggedIntoRoom() && gs->GotPeerUpdates() && !got_update)
+	{
+		got_update = true;
+	}
 
 	this->CheckMissile();
 
@@ -303,17 +303,17 @@ bool cNeighbor::Update(void)
 					this->SetPose(STANDING, true);
 				}
 			}
-			else if (entering && (++currframe >=  effects->EffectFrames(LyraBitmap::ENTRYEXIT_EFFECT)))
+			else if (entering && (++currframe >= effects->EffectFrames(LyraBitmap::ENTRYEXIT_EFFECT)))
 			{	// make them real again
 				entering = false;
 				pose = -1;
 				this->SetPose(STANDING, true);
 			}
-			else if (!entering && (flags & ACTOR_SOULSPHERE) && (++currframe >=	effects->EffectFrames(LyraBitmap::SOULSPHERE_EFFECT)))
+			else if (!entering && (flags & ACTOR_SOULSPHERE) && (++currframe >= effects->EffectFrames(LyraBitmap::SOULSPHERE_EFFECT)))
 				currframe = 0;
 		}
 	}
-	else if	(status == OUTSIDER)
+	else if (status == OUTSIDER)
 	{
 		this->ModifyHeight();
 		if ((x != destx) || (y != desty))
@@ -321,15 +321,15 @@ bool cNeighbor::Update(void)
 			float oldx, oldy, xdistance, ydistance, newx, newy;
 			oldx = x; oldy = y;
 
-			if (((fabs(destx - x)) < (MAXWALK*timing->nticks/2)) && ((fabs(desty - y)) < (MAXWALK*timing->nticks/2)))
+			if (((fabs(destx - x)) < (MAXWALK*timing->nticks / 2)) && ((fabs(desty - y)) < (MAXWALK*timing->nticks / 2)))
 			{ // close to target, just go there to avoid jitter...
 				xdistance = (destx - x);
 				ydistance = (desty - y);
 			}
 			else // move in x/y proportional to distance from destx/desty
 			{
-				xdistance = (float)((destx - x)/((fabs(destx - x)) + fabs(desty - y))*MAXWALK*timing->nticks);
-				ydistance = (float)((desty - y)/((fabs(destx - x)) + fabs(desty - y))*MAXWALK*timing->nticks);
+				xdistance = (float)((destx - x) / ((fabs(destx - x)) + fabs(desty - y))*MAXWALK*timing->nticks);
+				ydistance = (float)((desty - y) / ((fabs(destx - x)) + fabs(desty - y))*MAXWALK*timing->nticks);
 			}
 
 			newx = x + xdistance;
@@ -408,12 +408,12 @@ bool cNeighbor::Update(void)
 		{
 			last_move = LyraTime();
 			if (strafing)
-				MoveActor(this,FixAngle(angle-Angle_90),velocity*timing->nticks,MOVE_NORMAL);
+				MoveActor(this, FixAngle(angle - Angle_90), velocity*timing->nticks, MOVE_NORMAL);
 			else
-				MoveActor(this,angle,velocity*timing->nticks,MOVE_NORMAL);
+				MoveActor(this, angle, velocity*timing->nticks, MOVE_NORMAL);
 		}
 	}
-	float xheight = level->Sectors[sector]->FloorHt(x,y)+level->Sectors[sector]->HtOffset+physht;
+	float xheight = level->Sectors[sector]->FloorHt(x, y) + level->Sectors[sector]->HtOffset + physht;
 
 	if (!was_in_water && this->InWater() && !(flags & ACTOR_SOULSPHERE)
 		&& ((z > xheight - (.1*physht)) && (z < xheight + physht)))
@@ -421,8 +421,8 @@ bool cNeighbor::Update(void)
 		//&& ((z > xheight - (.1*physht)) && (z < xheight + (.1*physht))))
 	{
 
-			if (!((this->Avatar().Hidden()) && (player->ID() != this->ID())))
-				cDS->PlaySound(LyraSound::ENTER_WATER,x,y,false);
+		if (!((this->Avatar().Hidden()) && (player->ID() != this->ID())))
+			cDS->PlaySound(LyraSound::ENTER_WATER, x, y, false);
 	}
 
 	//_tprintf("status for %s is %d; pose = %d; frame = %d\n",name, status, pose, currframe);
@@ -464,67 +464,67 @@ void cNeighbor::SelectFrame(void)
 
 	switch (pose)
 	{
-		case WALKING:
-			if (velocity > 0)
-			{
-				if (++currframe > pose_array[pose].end_frame)
-					currframe = pose_array[pose].start_frame;
-			}
-			else if (velocity < 0)
-			{
-				if (--currframe < pose_array[pose].start_frame)
-					currframe = pose_array[pose].end_frame;
-			}
-			break;
-
-		case STANDING:
-			if (frames_in_pose > (100 + (rand()%100)))
-			{ // switch to new stand every 100 frames or so
-				frames_in_pose = 0;
-				if (++currframe > pose_array[pose].end_frame)
-					currframe = pose_array[pose].start_frame;
-			}
-			break;
-
-		case MELEE_ATTACK:
+	case WALKING:
+		if (velocity > 0)
+		{
 			if (++currframe > pose_array[pose].end_frame)
-				this->SetPose(STANDING, true);
-			break;
+				currframe = pose_array[pose].start_frame;
+		}
+		else if (velocity < 0)
+		{
+			if (--currframe < pose_array[pose].start_frame)
+				currframe = pose_array[pose].end_frame;
+		}
+		break;
 
-		case MISSILE_ATTACK:
-			if (++frames_in_pose > 2)
-				this->SetPose(STANDING, true);
-			break;
-
-		case EVOKING: // cycle
-			if (!evoking)
-				this->SetPose(STANDING, true);
-			else if (!this->IsMonster())
-			{ // disable extra evoking frame
-				//if (++currframe > pose_array[pose].end_frame)
-					currframe = pose_array[pose].start_frame;
-			}
-			else
-				this->SetPose(STANDING, true);
-			break;
-
-		case INJURED:
+	case STANDING:
+		if (frames_in_pose >(100 + (rand() % 100)))
+		{ // switch to new stand every 100 frames or so
+			frames_in_pose = 0;
 			if (++currframe > pose_array[pose].end_frame)
-				this->SetPose(STANDING, true);
-			break;
+				currframe = pose_array[pose].start_frame;
+		}
+		break;
 
-		case WAVE:
-			if (!waving)
-				this->SetPose(STANDING, true);
-			break;
+	case MELEE_ATTACK:
+		if (++currframe > pose_array[pose].end_frame)
+			this->SetPose(STANDING, true);
+		break;
 
-		case JUMP:
-			if (!jumping)
-				this->SetPose(STANDING, true);
-			break;
+	case MISSILE_ATTACK:
+		if (++frames_in_pose > 2)
+			this->SetPose(STANDING, true);
+		break;
 
-		default:
-			break;
+	case EVOKING: // cycle
+		if (!evoking)
+			this->SetPose(STANDING, true);
+		else if (!this->IsMonster())
+		{ // disable extra evoking frame
+		  //if (++currframe > pose_array[pose].end_frame)
+			currframe = pose_array[pose].start_frame;
+		}
+		else
+			this->SetPose(STANDING, true);
+		break;
+
+	case INJURED:
+		if (++currframe > pose_array[pose].end_frame)
+			this->SetPose(STANDING, true);
+		break;
+
+	case WAVE:
+		if (!waving)
+			this->SetPose(STANDING, true);
+		break;
+
+	case JUMP:
+		if (!jumping)
+			this->SetPose(STANDING, true);
+		break;
+
+	default:
+		break;
 	}
 }
 
@@ -534,13 +534,13 @@ void cNeighbor::PlayFootstep(void)
 		(!strafing && (velocity < MAXWALK) && (velocity > -MAXWALK)) ||
 		(strafing && (velocity < MAXSTRAFE) && (velocity > -MAXSTRAFE)) ||
 		(flags & ACTOR_SOULSPHERE) || this->IsMonster() ||
-		(z != (level->Sectors[sector]->FloorHt(x,y)+level->Sectors[sector]->HtOffset+physht)))
+		(z != (level->Sectors[sector]->FloorHt(x, y) + level->Sectors[sector]->HtOffset + physht)))
 		return; // no footstep
 
-	// dreamers have 8 frames for walking; play footsteps on 2,6
+				// dreamers have 8 frames for walking; play footsteps on 2,6
 	int step1_frame = 6;
 	int step2_frame = 2;
-	if (this->Avatar().AvatarType() >= Avatars::MIN_NIGHTMARE_TYPE) 
+	if (this->Avatar().AvatarType() >= Avatars::MIN_NIGHTMARE_TYPE)
 	{
 		step1_frame = 4;
 		step2_frame = 1;
@@ -594,30 +594,38 @@ void cNeighbor::MakeOutsider(void)
 // do nothing on left click
 bool cNeighbor::LeftClick(void)
 {
+	// Waiting for selection on the neighbors tab? Trigger art evoke.
+	if (arts->WaitingForSelection() && cp->Mode() == NEIGHBORS_TAB)
+	{
+		cp->SetSelectedNeighbor(this);
+		cp->SetSelectionMade(true);
+		return true;
+	}
 	return false;
 }
 
 // identify neighbor
 bool cNeighbor::RightClick(void)
 {
-	LoadString (hInstance, IDS_WHO_IS_THAT, disp_message, sizeof(disp_message));
+	LoadString(hInstance, IDS_WHO_IS_THAT, disp_message, sizeof(disp_message));
 #if defined PMARE
 	if (IsMonster())
-	_stprintf(message, disp_message,name);
+		_stprintf(message, disp_message, name);
 	else
 		if (IsMale())
-		_stprintf(message,disp_message,"a male dreamer");
+			_stprintf(message, disp_message, "a male dreamer");
 		else if (IsFemale())
-		_stprintf(message,disp_message,"a female dreamer");
+			_stprintf(message, disp_message, "a female dreamer");
 		else // Dreamers in nightmare form are neither male or female
-		_stprintf(message,disp_message,"a Dreamer");
+			_stprintf(message, disp_message, "a Dreamer");
 #else
-	
+
 	// can only see the focus of a normal dreamer
 	if (this->SphereID() < 1 && !IsMonster())
 		_stprintf(message, "That's %s (%s)", name, player->StatName(this->Avatar().Focus()));
 	else
-		_stprintf(message, disp_message,name);
+		_stprintf(message, disp_message, name);
+	gs->GetAvatarDescrip(this->ID());
 #endif
 	display->DisplayMessage(message, false);
 
@@ -630,7 +638,7 @@ void cNeighbor::Form(void)
 	if (forming || (flags & ACTOR_SOULSPHERE))
 		return;
 	if (!dissolving)
-		currframe=0;
+		currframe = 0;
 	forming = true;
 	dissolving = entering = false;
 	return;
@@ -642,7 +650,7 @@ void cNeighbor::Dissolve(void)
 	if (dissolving || !(flags & ACTOR_SOULSPHERE))
 		return;
 	if (!forming)
-		currframe=0;
+		currframe = 0;
 	forming = entering = false;
 	dissolving = true;
 	return;
@@ -660,7 +668,7 @@ bool cNeighbor::Render(void)
 
 
 // returns true if we're a Female; based on avatar type
-bool cNeighbor::IsFemale (void)
+bool cNeighbor::IsFemale(void)
 {
 	if (avatar.AvatarType() == Avatars::FEMALE)
 		return true;
@@ -670,7 +678,7 @@ bool cNeighbor::IsFemale (void)
 
 
 // returns true if we're a Mmale; based on avatar type
-bool cNeighbor::IsMale (void)
+bool cNeighbor::IsMale(void)
 {
 	if (avatar.AvatarType() == Avatars::MALE)
 		return true;
@@ -679,58 +687,58 @@ bool cNeighbor::IsMale (void)
 }
 
 // returns avatar type
-unsigned int cNeighbor::GetAvatarType (void)
+unsigned int cNeighbor::GetAvatarType(void)
 {
 	return avatar.AvatarType();
 }
 
 // returns avatar name
-TCHAR* cNeighbor::Name (void)
+TCHAR* cNeighbor::Name(void)
 {
 #ifdef PMARE
-		  if ((this->GetAccountType() == LmAvatar::ACCT_DREAMER) || (this->GetAccountType() == LmAvatar::ACCT_ADMIN))
-			  if (this->IsMale())
-			  {
-				  LoadString(hInstance, IDS_MALE_DREAMER , generic_name, sizeof(generic_name));
-				  return generic_name;
-			  }
-			  else if (this->IsFemale())
-			  {
-				  LoadString(hInstance, IDS_FEMALE_DREAMER , generic_name, sizeof(generic_name));
-				  return generic_name;
-			  }
-			  else
-			  {
-				  LoadString(hInstance, IDS_UNKNOWN_DREAMER , generic_name, sizeof(generic_name));
-				  return generic_name;
-			  }
-			else
-				return name;
+	if ((this->GetAccountType() == LmAvatar::ACCT_DREAMER) || (this->GetAccountType() == LmAvatar::ACCT_ADMIN))
+		if (this->IsMale())
+		{
+			LoadString(hInstance, IDS_MALE_DREAMER, generic_name, sizeof(generic_name));
+			return generic_name;
+		}
+		else if (this->IsFemale())
+		{
+			LoadString(hInstance, IDS_FEMALE_DREAMER, generic_name, sizeof(generic_name));
+			return generic_name;
+		}
+		else
+		{
+			LoadString(hInstance, IDS_UNKNOWN_DREAMER, generic_name, sizeof(generic_name));
+			return generic_name;
+		}
+	else
+		return name;
 #else
 	if (avatar.Hidden())
 	{
-	  LoadString(hInstance, IDS_UNKNOWN_DREAMER , generic_name, sizeof(generic_name));
-	  return generic_name;
+		LoadString(hInstance, IDS_UNKNOWN_DREAMER, generic_name, sizeof(generic_name));
+		return generic_name;
 	}
 	else
-		return name; 
+		return name;
 #endif
 };
 
 // returns account type
-unsigned int cNeighbor::GetAccountType (void)
+unsigned int cNeighbor::GetAccountType(void)
 {
 	return avatar.AccountType();
 }
 
 // returns true if we're a monster; based on avatar type
-unsigned int cNeighbor::GetTransformedMonsterType (void)
+unsigned int cNeighbor::GetTransformedMonsterType(void)
 {
 	return 0;
 }
 
 // returns true if we're a monster; based on avatar type
-bool cNeighbor::IsMonster (void)
+bool cNeighbor::IsMonster(void)
 {
 	if (this->GetAvatarType() >= Avatars::MIN_NIGHTMARE_TYPE)
 		return true;
@@ -739,7 +747,7 @@ bool cNeighbor::IsMonster (void)
 }
 
 // returns true if we're an agent mare; based on account type
-bool cNeighbor::IsAgentAccount (void)
+bool cNeighbor::IsAgentAccount(void)
 {
 	if (this->GetAccountType() == LmAvatar::ACCT_NIGHTMARE)
 		return true;
@@ -748,7 +756,7 @@ bool cNeighbor::IsAgentAccount (void)
 }
 
 // returns true if we're a dreamer; based on account type
-bool cNeighbor::IsDreamerAccount (void)
+bool cNeighbor::IsDreamerAccount(void)
 {
 	if ((this->GetAccountType() == LmAvatar::ACCT_DREAMER) ||
 		(this->GetAccountType() == LmAvatar::ACCT_ADMIN))
@@ -758,34 +766,34 @@ bool cNeighbor::IsDreamerAccount (void)
 }
 
 // ToDo: Move this to cActor and make it more generalized to any two actors
-bool cNeighbor::IsVulnerable (void)
+bool cNeighbor::IsVulnerable(void)
 {
 	// must be visible to site of vulnerability to effect blast
 	bool fIsVulnerable = false;
 	if (this->Visible())
 	{
 		// determine angle of attack
-		int view = FixAngle((this->angle - player->angle)+32)/(Angle_360/Avatars::VIEWS);
+		int view = FixAngle((this->angle - player->angle) + 32) / (Angle_360 / Avatars::VIEWS);
 		switch (this->GetAvatarType())
 		{
-			case Avatars::MALE:
-			case Avatars::FEMALE:
-			case Avatars::EMPHANT:
-			case Avatars::BOGROM:
-					fIsVulnerable = true;
-				break;
-			case Avatars::AGOKNIGHT: // only hit from front
-				if (view == 3)
-					fIsVulnerable = true;
-				break;
-			case Avatars::SHAMBLIX: // only hit from rear
-				if (view == 0 || view == 1 || view == 5)
-					fIsVulnerable = true;
-				break;
-			case Avatars::HORRON: // only hit from directly behind
-				if (view == 0)
-					fIsVulnerable = true;
-				break;
+		case Avatars::MALE:
+		case Avatars::FEMALE:
+		case Avatars::EMPHANT:
+		case Avatars::BOGROM:
+			fIsVulnerable = true;
+			break;
+		case Avatars::AGOKNIGHT: // only hit from front
+			if (view == 3)
+				fIsVulnerable = true;
+			break;
+		case Avatars::SHAMBLIX: // only hit from rear
+			if (view == 0 || view == 1 || view == 5)
+				fIsVulnerable = true;
+			break;
+		case Avatars::HORRON: // only hit from directly behind
+			if (view == 0)
+				fIsVulnerable = true;
+			break;
 		}
 	}
 	return fIsVulnerable;
@@ -810,10 +818,10 @@ bool cNeighbor::CanWhisper(void)
 	float dy = (player->y - y);
 	float dz = (player->z - player->physht - z);
 
-	if ((dx*dx + dy*dy > MAX_WHISPER_DISTANCE) ||
-		 ((player->z - player->physht - z) > MAX_WHISPER_HEIGHT) ||
+	if ((dx*dx + dy * dy > MAX_WHISPER_DISTANCE) ||
+		((player->z - player->physht - z) > MAX_WHISPER_HEIGHT) ||
 		((z - player->z) > MAX_WHISPER_HEIGHT))
-		 return FALSE;
+		return FALSE;
 	else
 #endif //GM
 		return TRUE;
@@ -826,9 +834,9 @@ cNeighbor::~cNeighbor(void)
 {
 	if (acceptrejectdlg && hwnd_acceptreject)
 	{
-		PostMessage(hwnd_acceptreject, WM_COMMAND, (WPARAM) IDC_REJECT, 0);
-		LoadString (hInstance, IDS_AUTO_REJECT, disp_message, sizeof(disp_message));
-	_stprintf(message, disp_message, this->Name());
+		PostMessage(hwnd_acceptreject, WM_COMMAND, (WPARAM)IDC_REJECT, 0);
+		LoadString(hInstance, IDS_AUTO_REJECT, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, this->Name());
 		display->DisplayMessage(message, false);
 	}
 
@@ -847,12 +855,12 @@ cNeighbor::~cNeighbor(void)
 	return;
 }
 
-void cNeighbor::SetRoom(short value) 
-{ 
+void cNeighbor::SetRoom(short value)
+{
 	if (value == room)
 		return;
 
-	room = value; 
+	room = value;
 
 	// if we're not in the player's room, don't collide
 	if (room <= 0) {
@@ -863,9 +871,9 @@ void cNeighbor::SetRoom(short value)
 	}
 	else {
 		flags = flags & ~ACTOR_NOCOLLIDE;
-		this->SetXHeight();		
+		this->SetXHeight();
 		//entering = true;
-	}	
+	}
 }
 
 

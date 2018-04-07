@@ -44,8 +44,8 @@ extern xp_entry lyra_xp_table[];
 const int PLAYER_WALK_ANIMATE_TICKS  = 84;
 const int PLAYER_RUN_ANIMATE_TICKS	 = 56;
 const int PLAYER_BLADE_ANIMATE_TICKS = 1;
-const int TP_REDIRECT_LEVEL = 49; // setting to level 52 for now since there isn't a level 52
-const int TP_REDIRECT_ROOM = 6;
+const int TP_REDIRECT_LEVEL = 52; // setting to level 52 for now since there isn't a level 52
+const int TP_REDIRECT_ROOM = 1;
 
 // # of actor-collision-free moves after a teleport
 const unsigned int NUM_FREE_MOVES	 = 5;
@@ -776,7 +776,11 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 {
 	if (duration <= 0)
 		return false;
-
+	cNeighbor* n = arts->LookUpNeighbor(caster_id);
+	bool invisGMBreakthru = false;
+	if (n != NO_ACTOR) {
+		invisGMBreakthru = n->Avatar().Hidden(); 
+	}
 #ifdef GAMEMASTER
 #ifdef AGENT
 	if (((this->AvatarType() >= Avatars::AGOKNIGHT) || (this->AvatarType() < Avatars::MIN_NIGHTMARE_TYPE)) &&
@@ -800,7 +804,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 	switch (effect) {
 	case LyraEffect::PLAYER_CURSED:{
 		// check to see if protection is in effect
-		if (flags & ACTOR_PROT_CURSE)
+		if (flags & ACTOR_PROT_CURSE && !invisGMBreakthru)
 		{
 		LoadString (hInstance, IDS_PLAYER_CURSE_DEFLECT, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
@@ -833,7 +837,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		} break;
 								   }
 	case LyraEffect::PLAYER_PARALYZED:{
-		if (flags & ACTOR_FREE_ACTION)
+		if (flags & ACTOR_FREE_ACTION && !invisGMBreakthru)
 		{
 			LoadString(hInstance, IDS_PLAYER_PARALYZE_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
@@ -860,7 +864,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 	} 
 	break;
 	case LyraEffect::PLAYER_DRUNK:{
-		if (flags & ACTOR_FREE_ACTION)
+		if (flags & ACTOR_FREE_ACTION && !invisGMBreakthru)
 		{
 			LoadString (hInstance, IDS_PLAYER_STAGGER_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
@@ -869,7 +873,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 			return false;
 		  }} break;
 	case LyraEffect::PLAYER_FEAR:{
-		if (flags & ACTOR_PROT_FEAR)
+		if (flags & ACTOR_PROT_FEAR && !invisGMBreakthru)
 		{
 			LoadString (hInstance, IDS_PLAYER_FEAR_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
@@ -878,7 +882,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 			return false;
 		}} break;
 	case LyraEffect::PLAYER_BLIND:{
-		if (flags & ACTOR_DETECT_INVIS)
+		if (flags & ACTOR_DETECT_INVIS && !invisGMBreakthru)
 		{
 			LoadString (hInstance, IDS_PLAYER_BLIND_DEFLECT, disp_message, sizeof(disp_message));
 			display->DisplayMessage(disp_message);
@@ -2836,6 +2840,13 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 	{
 		// we're in the same plane so use the sector to track down the room
 		int p_sector = FindSector(x, y, 0, true);
+
+		//_stprintf(message, _T("Room ID: %d, Last Room ID: %d, Level ID: %d, Last Level ID: %d"), 
+		//	level->Rooms[level->Sectors[p_sector]->room].id, 
+		//	last_room, 
+		//	level->ID(),
+		//	LastLevel());
+		//display->DisplayMessage(message);
 
 		// check if we're traveling to the redirect room and set the flag if we are
 		if ((p_sector != DEAD_SECTOR) && (level->Rooms[level->Sectors[p_sector]->room].id == TP_REDIRECT_ROOM))

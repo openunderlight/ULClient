@@ -302,6 +302,7 @@ public:
 	void MidSummon(void);
 	void EndSummon(void *value);
 	void EndLock(void *value);
+	void EndAmulet(void* charges_idx);
 	void EndKey(void *value);
 	void StartSuspend(void);
 	void MidSuspend(void);
@@ -487,7 +488,7 @@ public:
 
 
 private:
-	void CreatePass(const TCHAR* name, lyra_item_amulet_t amulet);
+	void CreatePass(const TCHAR* name, lyra_item_amulet_t amulet, int charges);
 	bool PlaceLock(lyra_item_ward_t ward, LmItemHdr header);
 	void WaitForSelection(art_method_t callback, lyra_id_t art_id); // to start waiting for a click
 	void AddDummyNeighbor(void); // to allow selection of player as a target

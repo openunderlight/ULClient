@@ -3972,6 +3972,114 @@ BOOL CALLBACK EnterValueDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 	return FALSE;
 }
 
+// expects text to show in message; returns value in message,
+// or NULL if cancelled
+BOOL CALLBACK SelectValueDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
+{
+	static bool art_callback;
+	static dlg_callback_t callback;
+	int num_vals = 0;
+
+	if (HBRUSH brush = SetControlColors(hDlg, Message, wParam, lParam))
+		return (LRESULT)brush;
+
+	switch (Message)
+	{
+	case WM_GETDLGCODE:
+		return DLGC_WANTMESSAGE;
+
+	case WM_DESTROY:
+		entervaluedlg = false;
+		break;
+
+	case WM_INITDIALOG:
+		SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
+		SetWindowText(GetDlgItem(hDlg, IDC_VALUE_PROMPT), message);
+		while (ListBox_GetCount(GetDlgItem(hDlg, IDC_SELECT_VALUES)) > 0)
+		{
+			ComboBox_DeleteString(GetDlgItem(hDlg, IDC_SELECT_VALUES), 0);
+		}
+		callback = NULL;
+		art_callback = false;
+		entervaluedlg = true;
+		return TRUE;
+
+	case WM_PAINT:
+		if (TileBackground(hDlg))
+			return (LRESULT)0;
+		break;
+
+	case WM_KEYUP:
+		switch (LOWORD(wParam))
+		{
+		case VK_RETURN:
+			PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_OK, 0);
+			return TRUE;
+		case VK_ESCAPE:
+			PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_CANCEL, 0);
+			return TRUE;
+		}
+		break;
+
+	case WM_SET_VALUES:
+	{
+		num_vals = (int)wParam;
+		for (int i = 0; i < num_vals; i++) {
+			ListBox_AddString(GetDlgItem(hDlg, IDC_SELECT_VALUES), values_select[i]);
+		}
+		//PostMessage(hDlg, WM_COMMAND, (WPARAM)MAKEWPARAM(IDC_VALUES, LBN_SELCHANGE), (LPARAM)0); // Windows should send LBN_SELCHANGE out in SetCurSel but does not
+		ListBox_SetCurSel(GetDlgItem(hDlg, IDC_SELECT_VALUES), 0);
+	}
+		break;
+
+	case WM_SET_ART_CALLBACK: // called by art waiting for callback
+		art_callback = true;
+#ifdef AGENT // always reject
+		PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_CANCEL, 0);
+#endif
+		return TRUE;
+
+	case WM_SET_CALLBACK: // waiting for callback
+		callback = (dlg_callback_t)lParam;
+#ifdef AGENT // always reject
+		PostMessage(hDlg, WM_COMMAND, (WPARAM)IDC_CANCEL, 0);
+#endif
+		return TRUE;
+
+
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+			case IDC_OK:
+			{
+				int sel = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_SELECT_VALUES));
+				if (art_callback)
+					(arts->*(entervalue_callback))((void*)sel);
+				else if (callback)
+					callback((void*)sel);
+				DestroyWindow(hDlg);
+				return TRUE;
+			}
+				break;
+
+		case IDC_CANCEL:
+		{
+			if (art_callback)
+				arts->CancelArt();
+			else if (callback)
+				callback(NULL);
+			DestroyWindow(hDlg);
+		}
+			return FALSE;
+
+		default:
+			break;
+		}
+	}
+	return FALSE;
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Enter Text Dialog
 BOOL CALLBACK EnterTextDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
