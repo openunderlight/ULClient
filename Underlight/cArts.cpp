@@ -1693,7 +1693,7 @@ void cArts::EssenceContainer(void)
 	this->ArtFinished(true);
 }
 
-bool cArts::GetPortkey(lyra_item_portkey_t* portkey, int type)
+bool cArts::GetPortkey(int type)
 {
 	bool hasPortkey = false;
 	cItem* item;
@@ -1702,8 +1702,6 @@ bool cArts::GetPortkey(lyra_item_portkey_t* portkey, int type)
 	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
 		if ((item->Status() == type) && (item->ItemFunction(0) == LyraItem::PORTKEY_FUNCTION)) {
 			hasPortkey = true;
-			const void* state = item->Lmitem().StateField(0);
-			memcpy(portkey, state, sizeof(lyra_item_portkey_t));
 			break;
 		}
 
@@ -1713,8 +1711,9 @@ bool cArts::GetPortkey(lyra_item_portkey_t* portkey, int type)
 
 void cArts::Portkey(void)
 {
-	lyra_item_portkey_t pk;
-	if (GetPortkey(&pk, ITEM_OWNED)) {
+	int distance = player->SkillSphere(Arts::PORTKEY) / 2;
+	lyra_item_portkey_t portkey = { (unsigned char)LyraItem::PORTKEY_FUNCTION, 0, (unsigned char)distance, level->ID(), (short)player->x, (short)player->y };
+	if (GetPortkey(ITEM_OWNED)) {
 		LoadString(hInstance, IDS_ALREADY_HAVE_PORTKEY, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
@@ -1722,10 +1721,7 @@ void cArts::Portkey(void)
 	LmItemHdr header;
 	LmItem info;
 	cItem *item;
-	int distance = player->SkillSphere(Arts::PORTKEY) / 2;
 	
-	pk = { LyraItem::PORTKEY_FUNCTION, (unsigned char)distance, (unsigned char)level->ID(), (short)player->x, (short)player->y };
-
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
 	header.SetGraphic(LyraBitmap::WARD);
@@ -1733,9 +1729,9 @@ void cArts::Portkey(void)
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::PORTKEY_FUNCTION), 0, 0));
 	
 	info.Init(header, "Portkey", 0, 0, 0);
-	info.SetStateField(0, &pk, sizeof(pk));
+	info.SetStateField(0, &portkey, sizeof(portkey));
 	info.SetCharges(1);
-	item = CreateItem(player->x, player->y, player->angle, info, 0, true, LyraTime() + ((GMsg_PutItem::DEFAULT_TTL * 1000) * (player->SkillSphere(Arts::PORTKEY) + 1)));
+	item = CreateItem(player->x, player->y, player->angle, info, 0, false, GMsg_PutItem::DEFAULT_TTL);
 	if (item == NO_ITEM)
 	{
 		this->ArtFinished(false);

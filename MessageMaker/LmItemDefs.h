@@ -281,6 +281,7 @@ struct lyra_item_area_effect_t {  // 10 bytes
 
 struct lyra_item_portkey_t {
 	unsigned char type;      // PORTKEY_FUNCTION
+	unsigned char unused;
 	unsigned char distance;
 	unsigned char	level_id;
 	short x;

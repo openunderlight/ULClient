@@ -133,7 +133,7 @@ class cItem : public cActor
 	  bool Losable(void);
 	  int ItemFunction(int slot);
 	  int MissleDamage(void);
-
+	  bool IsAreaEffectItem(void);
 
 	  // mutators
 	  void SetStatus(int new_status);

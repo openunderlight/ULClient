@@ -287,13 +287,14 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
 	  NO_FIELD }, },
 
 	  // AREA_EFFECT_FUNCTION
-{ ITEM_PORTKEY, 7, 6, false, false, true, true, true, false, true, {
+{ ITEM_PORTKEY, 8, 6, false, false, true, true, true, false, true, {
+	{ ITEM_UNUSED, 1, TRANSLATION_NONE, false, 0, 0 },
 	{ ITEM_DISTANCE, 1, TRANSLATION_DISTANCE, true, 0, NUM_DISTANCES - 1 },
 	{ ITEM_LEVELID, 1, TRANSLATION_LEVEL_ID, true, 1, 100 },
 	{ ITEM_X, 2, TRANSLATION_TPORT_DEST, false, SHRT_MIN, SHRT_MAX },
 	{ ITEM_Y, 2, TRANSLATION_TPORT_DEST, false, SHRT_MIN, SHRT_MAX },
 	NO_FIELD,
-	NO_FIELD },
+	},
 }
 };
 
