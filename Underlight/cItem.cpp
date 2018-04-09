@@ -479,7 +479,8 @@ int cItem::ItemFunction(int slot)
 
 bool cItem::NoPickup(void)
 {
-    return (lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP));
+	return (lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP)) ||
+		ItemFunction(0) == LyraItem::PORTKEY_FUNCTION;
 }
 
 // can the item be lost on dissolution?
@@ -1099,8 +1100,7 @@ void cItem::Drop(float drop_x, float drop_y, int drop_angle)
 	if (redeeming) 
 		return; // can't drop a gratitude token while it is being redeemed
 	
-	lyra_item_portkey_t p;
-	if (ItemFunction(0) == LyraItem::PORTKEY_FUNCTION && arts->GetPortkey(&p, ITEM_UNOWNED))
+	if (ItemFunction(0) == LyraItem::PORTKEY_FUNCTION && arts->GetPortkey(ITEM_UNOWNED))
 	{
 		display->DisplayMessage("A room may only contain one portkey!");
 		return;
@@ -1383,6 +1383,12 @@ bool cItem::Reweave(int amount)
 	return false;
 }
 
+bool cItem::IsAreaEffectItem(void)
+{
+	int item_func = ItemFunction(0);
+	return (this != NO_ITEM && (Status() == ITEM_UNOWNED) &&
+		(item_func == LyraItem::AREA_EFFECT_FUNCTION || item_func == LyraItem::PORTKEY_FUNCTION));
+}
 // return the amount of damage this missle does
 // this is a total HACK --- insure field information is maintained
 int cItem::MissleDamage(void)

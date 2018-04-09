@@ -1318,30 +1318,33 @@ void cPlayer::CheckStatus(void)
 			break;
 		}
 
-		// now apply AOEs we're near - 1/2 dist as Horron pain aura
-		if (!(flags & ACTOR_SOULSPHERE))
+		for (cItem *item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
 		{
-			for (cItem *item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
-			{
-				if (item == NO_ITEM || (item->Status() != ITEM_UNOWNED) ||
-					(item->ItemFunction(0) != LyraItem::AREA_EFFECT_FUNCTION))
-					continue;
+			if(!item->IsAreaEffectItem())
+				continue;
 
-				const void* state = item->Lmitem().StateField(0);
-				lyra_item_area_effect_t aoe;
-				memcpy(&aoe, state, sizeof(aoe));
-				dist = (unsigned int)((item->x - x)*(item->x - x) + (item->y - y)*(item->y - y));
-				unsigned int xy, ht; 
-				CalculateDistance(aoe.distance, &xy, &ht);
-				int h1 = z - physht - item->z, h2 = item->z - z;
-				if (dist > xy || h1 > (int)ht || h2 > (int)ht)
-					continue;
-				int modifier = CalculateModifier(aoe.damage); // dmg is actually modifier
-				player->SetCurrStat(aoe.stat, modifier, SET_RELATIVE, aoe.caster_id);
-				player->SetTimedEffect(aoe.effect, CalculateDuration(aoe.duration), aoe.caster_id, EffectOrigin::AE_ITEM);
-			}
-			actors->IterateItems(DONE);		
+			if(item->ItemFunction(0) != LyraItem::AREA_EFFECT_FUNCTION)
+				continue;
+
+			// now apply AOEs we're near - 1/2 dist as Horron pain aura
+			if ((flags & ACTOR_SOULSPHERE))
+				continue;
+
+			const void* state = item->Lmitem().StateField(0);
+			lyra_item_area_effect_t aoe;
+			memcpy(&aoe, state, sizeof(aoe));
+			dist = (unsigned int)((item->x - x)*(item->x - x) + (item->y - y)*(item->y - y));
+			unsigned int xy, ht; 
+			CalculateDistance(aoe.distance, &xy, &ht);
+			int h1 = z - physht - item->z, h2 = item->z - z;
+			if (dist > xy || h1 > (int)ht || h2 > (int)ht)
+				continue;
+			int modifier = CalculateModifier(aoe.damage); // dmg is actually modifier
+			player->SetCurrStat(aoe.stat, modifier, SET_RELATIVE, aoe.caster_id);
+			player->SetTimedEffect(aoe.effect, CalculateDuration(aoe.duration), aoe.caster_id, EffectOrigin::AE_ITEM);
 		}
+		actors->IterateItems(DONE);		
+		
 		next_sector_tag = LyraTime() + SECTOR_TAG_INTERVAL;
 	}
 
@@ -2511,14 +2514,16 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 #ifdef PMARE
 		// if player mare = 200+
 		j = 150 + this->AvatarType();
-
+		i = orbit;
 		// End the pmare session 5 minutes earlier for each time it is collapsed
 		options.pmare_logout_time = options.pmare_logout_time - 5 * 60000; 
 #else 
 #ifdef GAMEMASTER // nightmare possession, dark mare orbit = 200 + nightmare index
 		if ((avatar.AvatarType() >= Avatars::MIN_NIGHTMARE_TYPE) &&
-			!(flags & ACTOR_TRANSFORMED))
+			!(flags & ACTOR_TRANSFORMED)) {
 			j = 200 + this->AvatarType();
+			i = orbit;
+		}
 #endif // pmare
 #endif // gm
 #endif // agent

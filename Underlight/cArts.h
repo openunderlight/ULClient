@@ -189,7 +189,7 @@ public:
 	void ApplyChaoticVortex (int skill, lyra_id_t caster_id);
 	void EssenceContainer(void);
 	void Portkey(void);
-	bool GetPortkey(lyra_item_portkey_t *pk, int type); // true if has pk, falseotherwise
+	bool GetPortkey(int type); // true if has pk, falseotherwise
 	// arts that require selecting a neighbor
 	void StartChannel(void);
 	bool ExpireChannel(bool userInitiated);
