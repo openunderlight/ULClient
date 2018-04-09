@@ -1040,11 +1040,8 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 
 	if (flags & timed_effects->actor_flag[effect]) 
 	{	
-		// Can't extend Bulwark
-		if (effect == LyraEffect::PLAYER_GKSHIELD)
-			return true;
-
-		if (effect == LyraEffect::PLAYER_POISONED && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
+		if ((effect == LyraEffect::PLAYER_POISONED && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE)) ||
+			effect == LyraEffect::PLAYER_GKSHIELD)
 		{
 			// can't exceed duration of poison for pmares and dmares
 			timed_effects->expires[effect] = LyraTime() + duration;
