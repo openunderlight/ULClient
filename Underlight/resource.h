@@ -2983,6 +2983,7 @@
 #define IDS_PT_COMBINED                 4455
 #define IDS_NO_SACRIFICE                4456
 #define IDS_ARTIFACT_NO_TP              4460
+#define IDS_BULWARK_MORE                4470
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
