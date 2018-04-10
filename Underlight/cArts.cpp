@@ -1667,8 +1667,16 @@ void cArts::Meditate(void)
 // Chaos Well
 void cArts::EssenceContainer(void)
 {
+	/*
+	unsigned char type;			// META_ESSENCE_NEXUS_FUNCTION
+	unsigned char unused;
+	unsigned short strength;
+	unsigned short essences;
+	unsigned short strength_cap;
+	unsigned short essence_cap;
+	*/
 	int capacity = 20 * ((player->SkillSphere(Arts::CHAOS_WELL)) + 1);
-	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity*2, capacity };
+	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity*20, capacity };
 	LmItem info;
 	LmItemHdr header;
 	cItem *item;
