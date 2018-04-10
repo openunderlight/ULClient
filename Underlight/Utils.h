@@ -106,7 +106,6 @@ TCHAR* __cdecl NightmareName(int id);
 TCHAR* DreamweaponName(int color);
 void Scream(int avatar_type, cActor* actor, bool propagate = false);
 void CalculateDistance(int index, unsigned int* xydist, unsigned int* heightdist);
-
 bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2);
 
 const char *DisperseCoordinate(unsigned int index);
