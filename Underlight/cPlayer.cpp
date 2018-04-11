@@ -899,6 +899,10 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		LoadString (hInstance, IDS_RECALL, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message, false);
 									} break;
+	case LyraEffect::PLAYER_GKSHIELD: {
+		this->SetBulwark(100);
+		break;
+	}
 	case LyraEffect::PLAYER_TRANSFORMED: {
 		if (this->flags & ACTOR_TRANSFORMED) { // 2nd activation - remove
 			this->RemoveTimedEffect(LyraEffect::PLAYER_TRANSFORMED);
@@ -1038,9 +1042,10 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		}
 
 
-	if (flags & timed_effects->actor_flag[effect])
+	if (flags & timed_effects->actor_flag[effect]) 
 	{	
-		if (effect == LyraEffect::PLAYER_POISONED && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
+		if ((effect == LyraEffect::PLAYER_POISONED && (player->IsPMare() || player->GetAccountType() == LmAvatar::ACCT_DARKMARE)) ||
+			effect == LyraEffect::PLAYER_GKSHIELD)
 		{
 			// can't exceed duration of poison for pmares and dmares
 			timed_effects->expires[effect] = LyraTime() + duration;
@@ -1166,7 +1171,8 @@ void cPlayer::RemoveTimedEffect(int effect)
 		cripple_strength = 0;
 	else if (effect == LyraEffect::PLAYER_SHIELD)
 		avatar_armor_strength = 0;
-
+	else if (effect == LyraEffect::PLAYER_GKSHIELD)
+		SetBulwark(0);
 	return;
 };
 
@@ -1589,6 +1595,20 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 			}
 			
 			amount = new_damage;
+		}
+
+		if (GetBulwark() > 0)
+		{			
+			// we're bulwark'd, go ahead and absorb what you can.
+			int bulwark_absorb = MIN((int)(amount*(BULWARK_ABSORB / 100.0)), GetBulwark());
+			SetBulwark(MAX(GetBulwark() + bulwark_absorb, 0));
+#ifdef UL_DEV
+			_stprintf(temp_message, "Amount pre-Bulwark: %d, Bulwarb absorbs: %d, Bulwark dura now: %d", amount, bulwark_absorb, GetBulwark());
+			display->DisplayMessage(temp_message);
+#endif
+			amount -= bulwark_absorb;
+			if (GetBulwark() <= 0)
+				this->RemoveTimedEffect(LyraEffect::PLAYER_GKSHIELD);
 		}
 
 		if (this->ActiveShieldValid())

@@ -689,7 +689,7 @@ bool __cdecl Init_Game(void)
 		// freed at level login ack 
 		effects->LoadEffectBitmaps(LyraBitmap::INTRO);
 	}
-
+	CleanupLoadedJSONFiles();
 	InvalidateRect(display->Hwnd(), NULL, TRUE);
 	InvalidateRect(cp->Hwnd_CP(), NULL, TRUE);   
 	MemoryCheck(_T("Networking classes created"));

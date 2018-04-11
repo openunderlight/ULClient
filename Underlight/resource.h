@@ -17,6 +17,9 @@
 #define IDS_GOALBOOK_ERR                11
 #define IDS_IDENTIFY_ESSENCE_NEXUS      12
 #define IDS_SELECT_AMULET_CHARGES       13
+#define IDS_GKSHIELD_ON                 14
+#define IDS_GKSHIELD_OFF                15
+#define IDS_GKSHIELD                    16
 #define IDR_AgentSvr                    100
 #define IDS_SERVICENAME                 100
 #define IDD_LOGIN                       101
@@ -2980,6 +2983,7 @@
 #define IDS_PT_COMBINED                 4455
 #define IDS_NO_SACRIFICE                4456
 #define IDS_ARTIFACT_NO_TP              4460
+#define IDS_BULWARK_MORE                4470
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

@@ -3719,6 +3719,8 @@ BEGIN
     IDS_IDENTIFY_ESSENCE_NEXUS 
                             "This chaos well contains %d essences and has a strength of %d. It has a maximum capacity of %d essences and %d strength."
     IDS_SELECT_AMULET_CHARGES "Select number of charges for Amulet"
+    IDS_GKSHIELD_ON         "You fortify yourself with your power of will.\n"
+    IDS_GKSHIELD_OFF        "Your shield of willpower has expired\n"
 END
 
 STRINGTABLE
@@ -4485,6 +4487,16 @@ BEGIN
     IDS_PT_COMBINED         "You have combined your Power Tokens!"
     IDS_NO_SACRIFICE        "Sacrifice failed. You cannot Sacrifice an item with a Description!"
     IDS_ARTIFACT_NO_TP      "You cannot Translocate while holding an Artifact!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_GKSHIELD            "Bulwark"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_BULWARK_MORE        "Your bulwark has been re-fortified!"
 END
 
 #endif    // English (United States) resources

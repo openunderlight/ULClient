@@ -128,6 +128,9 @@ bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2)
 // registry can not be accessed
 bool __cdecl LoadGameOptions(void)
 {
+	LoadDefaultOptionValues();
+	LoadJSONFiles();
+
 	HKEY main_key, player_key = NULL;
 	unsigned long mresult, presult;
 
@@ -1838,6 +1841,18 @@ cTimedEffects::cTimedEffects(void)
 	default_duration[i] = 3; // 3 secs
 	harmful[i] = false;
 
+	i = LyraEffect::PLAYER_GKSHIELD;
+	LoadString(hInstance, IDS_GKSHIELD_ON, disp_message, sizeof(disp_message));
+	start_descrip[i] = _tcsdup(disp_message);
+	LoadString(hInstance, IDS_GKSHIELD_OFF, disp_message, sizeof(disp_message));
+	expire_descrip[i] = _tcsdup(disp_message);
+	actor_flag[i] = ACTOR_GKSHIELD;
+	related_art[i] = Arts::BULWARK;
+	LoadString(hInstance, IDS_GKSHIELD, name[i], sizeof(name[i]));
+	default_duration[i] = 13; // 3 secs
+	harmful[i] = false;
+	LoadString(hInstance, IDS_BULWARK_MORE, disp_message, sizeof(disp_message));
+	more_descrip[i] = _tcsdup(disp_message);
 	return;
 }
 
