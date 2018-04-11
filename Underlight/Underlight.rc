@@ -4502,6 +4502,10 @@ BEGIN
     IDS_ALREADY_HAVE_PORTKEY 
                             "You're already carrying a portkey - you must drop it first!"
     IDS_PORTKEY             "Portkey"
+    IDS_CLOSE               "Close"
+    IDS_WHISPERABLE         "Whisperable"
+    IDS_RAZORWIND_AREA_EFFECT 
+                            "A Razorwind tears through the room and converges upon where %s is standing!\n"
 END
 
 STRINGTABLE

@@ -170,7 +170,7 @@ unsigned long art_chksum[NUM_ARTS] =
 #else
 0x4B82, // Firestorm pmare
 #endif
-0x6ED5, // Razorwind 
+0x6EF5, // Razorwind 
 0x8E9A, // Recall 
 0xB0A3, // Push 
 0xD632, // Soul Evoke 
@@ -362,7 +362,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 #else
 { IDS_FIRESTORM,			Stats::LUCIDITY,	0, 25, 0,	3, 	3, FOCUS | LEARN },
 #endif
-{IDS_RAZORWIND,				Stats::LUCIDITY,	70, 40, 6,	9, 	4, FOCUS | LEARN},
+{IDS_RAZORWIND,				Stats::LUCIDITY,	70, 40, 6,	9, 	4, FOCUS | LEARN | MAKE_ITEM},
 {IDS_RECALL_ART_NAME,		Stats::DREAMSOUL,	25, 1,  25, 1, 	1, SANCT | LEARN},
 {IDS_PUSH, 					Stats::DREAMSOUL,	0,  0,  0,	1, 	1, NEIGH | LEARN},
 {IDS_SOUL_EVOKE, 			Stats::DREAMSOUL,	15, 1,  23, 1, 	1, SANCT | LEARN},
@@ -1667,14 +1667,6 @@ void cArts::Meditate(void)
 // Chaos Well
 void cArts::EssenceContainer(void)
 {
-	/*
-	unsigned char type;			// META_ESSENCE_NEXUS_FUNCTION
-	unsigned char unused;
-	unsigned short strength;
-	unsigned short essences;
-	unsigned short strength_cap;
-	unsigned short essence_cap;
-	*/
 	int capacity = 20 * ((player->SkillSphere(Arts::CHAOS_WELL)) + 1);
 	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity*20, capacity };
 	LmItem info;
@@ -2864,11 +2856,107 @@ void cArts::ApplyChaoticVortex (int skill, lyra_id_t caster_id)
 //////////////////////////////////////////////////////////////////
 // Razorwind
 
+bool cArts::RoomFull()
+{
+	int items_in_room = 0;
+	cItem* item;
+	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+	{
+		if ((item->Status() == ITEM_UNOWNED))
+			items_in_room++;
+	}
+	actors->IterateItems(DONE);
+
+	if (items_in_room >= Lyra::MAX_ROOMITEMS)
+	{
+		LoadString(hInstance, IDS_MAX_ROOMITEMS, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		return true;
+	}
+
+	return false;
+}
+
 void cArts::Razorwind(void)
 {
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::RAZORWIND,
 			player->Skill(Arts::RAZORWIND), 0, player->SkillSphere(Arts::FATESENDER));
+	if (RoomFull())
+		this->ArtFinished(false);
 	this->ApplyRazorwind(player->Skill(Arts::RAZORWIND), player->ID());
+	LmItem info;
+	LmItemHdr header;
+	cItem* item;
+	int plat = player->SkillSphere(Arts::RAZORWIND) + 1;
+	int mod = 12;
+	switch (plat)
+	{
+		case 1: // 0-19
+		case 2:
+			mod = 12; // 1-2
+			break;
+		case 3: //20-39
+		case 4:
+			mod = 13; // 1-3
+			break;
+		case 5: //40-59
+		case 6:
+			mod = 14; // 1-4
+			break;
+		case 7: //60-79
+		case 8:
+			mod = 16; // 1-6
+			break;
+		case 9: //80-89
+			mod = 19; // 1-8
+			break;
+		case 10: //90-99
+			mod = 22; // 1-10
+			break;
+		default:
+			mod = 12; // 1-2
+			break;
+	}
+	int distance = 1; // VClose
+	if (plat >= 3 && plat < 6) {
+		distance = 2;
+	}
+	else if (plat >= 6 && plat < 9) {
+		distance = 3;
+	}
+	else if (plat == 10) {
+		distance = 4;
+	}
+	lyra_item_area_effect_t rw_item;
+	rw_item.type = LyraItem::AREA_EFFECT_FUNCTION;
+	rw_item.effect = LyraEffect::PLAYER_BLEED;
+	rw_item.duration = 6;
+	rw_item.stat = Stats::DREAMSOUL;
+	rw_item.damage = -mod;
+	rw_item.distance = distance;
+	rw_item.set_player_id(player->ID());
+	rw_item.set_effects_party_and_self(false);
+
+	header.Init(0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.SetGraphic(LyraBitmap::INVIS_ITEM);
+	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
+	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AREA_EFFECT_FUNCTION), 0, 0));
+
+	LoadString(hInstance, IDS_RAZORWIND, message, sizeof(message));
+	info.Init(header, message, 0, 0, 0);
+	info.SetStateField(0, &rw_item, sizeof(rw_item));
+	info.SetCharges(1);
+
+	item = CreateItem(player->x, player->y, player->angle, info, 0, false, 10 + (10 * plat));
+	item->SetMarkedForDrop();
+	item->SetUseTTLForDrop(true);
+	if (item == NO_ITEM)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
 	this->ArtFinished(true);
 	return;
 }
@@ -2876,6 +2964,8 @@ void cArts::Razorwind(void)
 void cArts::ApplyRazorwind(int skill, lyra_id_t caster_id)
 {
 	player->EvokedFX().Activate(Arts::RAZORWIND, false);
+	cNeighbor *n = this->LookUpNeighbor(caster_id);
+
 	cDS->PlaySound(LyraSound::RAZORWIND);
 
 	if ((caster_id == player->ID()) || (gs && gs->Party() && gs->Party()->IsInParty(caster_id)))
@@ -2886,8 +2976,8 @@ void cArts::ApplyRazorwind(int skill, lyra_id_t caster_id)
 	}
 	else
 	{
-		LoadString (hInstance, IDS_AREA_EFFECT, disp_message, sizeof(disp_message));
-	_stprintf(message, disp_message, this->Descrip(Arts::RAZORWIND));
+		LoadString (hInstance, IDS_RAZORWIND_AREA_EFFECT, disp_message, sizeof(disp_message));
+	_stprintf(message, disp_message, n->Name());
 		display->DisplayMessage(message, false);
 		int damage = 12 + (((skill/10)+1) * (rand()%4));
 		this->DamagePlayer(damage, caster_id);

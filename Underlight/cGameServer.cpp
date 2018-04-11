@@ -3941,6 +3941,8 @@ bool cGameServer::DropItem(cItem *item)
 	}
 
 	int ttl = item->ItemFunction(0) != LyraItem::PORTKEY_FUNCTION ? GMsg_PutItem::DEFAULT_TTL : 10 * (player->SkillSphere(Arts::PORTKEY) + 1);
+	if (item->UseTTLForDrop())
+		ttl = item->ExpireTime();
 	putitem_msg.Init(player->Room(), item->ID(), pos, ttl);
 	sendbuf.ReadMessage(putitem_msg);
 	send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);

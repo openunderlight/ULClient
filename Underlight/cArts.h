@@ -190,6 +190,7 @@ public:
 	void EssenceContainer(void);
 	void Portkey(void);
 	bool GetPortkey(int type); // true if has pk, falseotherwise
+	bool RoomFull();
 	// arts that require selecting a neighbor
 	void StartChannel(void);
 	bool ExpireChannel(bool userInitiated);

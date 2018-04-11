@@ -371,9 +371,11 @@ const duration_t duration_types[NUM_DURATIONS] =
 const distance_t distances[NUM_DISTANCES] = {
 	{20000, 1000, 1, IDS_CLOSEST},
 	{50000, 5000, 10, IDS_VERY_CLOSE},
-	{120000, 10000, 50, IDS_NEARBY},
-	{500000, 50000, 90, IDS_WIDE_RANGE}, // whisper x,y taller than whisper
-	{9999999, 99999, 100, IDS_WHOLE_ROOM}
+	{100000, 5000, 20, IDS_CLOSE},
+	{150000, 10000, 30, IDS_NEARBY},
+	{250000, 10000, 50, IDS_WHISPERABLE},
+	{700000, 50000, 90, IDS_WIDE_RANGE}, // whisper x,y taller than whisper
+	{99999999, 999999, 100, IDS_WHOLE_ROOM}
 };
 
 // calculates a duration based on the duration table above

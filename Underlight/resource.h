@@ -2995,6 +2995,9 @@
 #define IDS_WHOLE_ROOM                  4465
 #define IDS_ALREADY_HAVE_PORTKEY        4466
 #define IDS_PORTKEY                     4467
+#define IDS_CLOSE                       4468
+#define IDS_WHISPERABLE                 4469
+#define IDS_RAZORWIND_AREA_EFFECT       4470
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

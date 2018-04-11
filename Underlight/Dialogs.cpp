@@ -2189,6 +2189,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							//if (LyraItem::EntryTranslation(curr_effect, i) == 0)
 								//ComboBox_LimitText(GetDlgItem(hDlg, property_fields[i]),PROPERTY_FIELD_LENGTH);
 							//else
+
 							if (LyraItem::EntryTranslation(curr_effect, i) != 0)
 							{
 								int successCnt = 0;

@@ -77,7 +77,7 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 		temporary(temp), expire_time(expires)
 {
 	this->SetLmItem(i_lmitem);
-
+	expire_time_is_ttl = false;
 	needsUpdate = marked_for_death = thrown =  redeeming = false;
 	marked_for_drop = marked_for_death = destroy_at_zero = false;
 	draggable = gravity = true;
@@ -346,6 +346,7 @@ void cItem::DisplayCreateMessage(void)
 {
 	if ((this->ItemFunction(0) == LyraItem::ESSENCE_FUNCTION) ||
 		(this->ItemFunction(0) == LyraItem::SUPPORT_FUNCTION) ||
+		(this->ItemFunction(0) == LyraItem::AREA_EFFECT_FUNCTION  && _tcsicmp(this->Name(), "Razorwind") == 0) ||
 		(this->ItemFunction(0) == LyraItem::SUPPORT_TRAIN_FUNCTION) ||
 		quests->Active())
 	{

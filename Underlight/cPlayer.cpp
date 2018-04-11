@@ -1337,6 +1337,11 @@ void cPlayer::CheckStatus(void)
 			const void* state = item->Lmitem().StateField(0);
 			lyra_item_area_effect_t aoe;
 			memcpy(&aoe, state, sizeof(aoe));
+			// if it doesn't effect party/self and we're self or in party with caster...
+			if (!aoe.effects_party_and_self() && (aoe.player_id() == player->ID() ||
+				(gs && gs->Party() && gs->Party()->IsInParty(aoe.player_id()))))
+				continue;
+
 			dist = (unsigned int)((item->x - x)*(item->x - x) + (item->y - y)*(item->y - y));
 			unsigned int xy, ht; 
 			CalculateDistance(aoe.distance, &xy, &ht);
@@ -1344,8 +1349,8 @@ void cPlayer::CheckStatus(void)
 			if (dist > xy || h1 > (int)ht || h2 > (int)ht)
 				continue;
 			int modifier = CalculateModifier(aoe.damage); // dmg is actually modifier
-			player->SetCurrStat(aoe.stat, modifier, SET_RELATIVE, aoe.caster_id);
-			player->SetTimedEffect(aoe.effect, CalculateDuration(aoe.duration), aoe.caster_id, EffectOrigin::AE_ITEM);
+			player->SetCurrStat(aoe.stat, modifier, SET_RELATIVE, aoe.player_id());
+			player->SetTimedEffect(aoe.get_effect(), CalculateDuration(aoe.duration), aoe.player_id(), EffectOrigin::AE_ITEM);
 		}
 		actors->IterateItems(DONE);		
 		
