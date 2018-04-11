@@ -1784,10 +1784,10 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 	static int curr_value = -1;
 
 	// iteration facilitators
-	UINT property_tags[5] = {IDC_PROPERTY1_HEADER, IDC_PROPERTY2_HEADER,
-		IDC_PROPERTY3_HEADER, IDC_PROPERTY4_HEADER, IDC_PROPERTY5_HEADER};
-	UINT property_fields[5] = {IDC_PROPERTY1, IDC_PROPERTY2,
-		IDC_PROPERTY3, IDC_PROPERTY4, IDC_PROPERTY5};
+	UINT property_tags[7] = { IDC_PROPERTY1_HEADER, IDC_PROPERTY2_HEADER,
+		IDC_PROPERTY3_HEADER, IDC_PROPERTY4_HEADER, IDC_PROPERTY5_HEADER, IDC_PROPERTY6_HEADER, IDC_PROPERTY7_HEADER };
+	UINT property_fields[7] = {IDC_PROPERTY1, IDC_PROPERTY2,
+		IDC_PROPERTY3, IDC_PROPERTY4, IDC_PROPERTY5, IDC_PROPERTY6, IDC_PROPERTY7};
 
 	// data storage structures that preserve state of fields on tab control
 	struct item_effect_t {
@@ -1871,6 +1871,8 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			ShowWindow(GetDlgItem(hDlg, IDC_PROPERTY3), SW_HIDE);
 			ShowWindow(GetDlgItem(hDlg, IDC_PROPERTY4), SW_HIDE);
 			ShowWindow(GetDlgItem(hDlg, IDC_PROPERTY5), SW_HIDE);
+			ShowWindow(GetDlgItem(hDlg, IDC_PROPERTY6), SW_HIDE);
+			ShowWindow(GetDlgItem(hDlg, IDC_PROPERTY7), SW_HIDE);
 			ShowWindow(GetDlgItem(hDlg, IDC_ANY_CHARGES), SW_HIDE);
 
 			return TRUE;
@@ -2176,8 +2178,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							// Here's the thing: items can have 6 fields, but forge only has 5 properties
 							// Rather than adding property fields to forge -- that'd be annoying -- we simply break here
 							// You should never try to forge an item with >5 FunctionEntries!
-							if (i >= 5)
-								break;
+
 							// Set label text, show the appopriate tags and fields
 							SetWindowText(GetDlgItem(hDlg, property_tags[i]), LyraItem::EntryName(curr_effect, i));
 							ShowWindow(GetDlgItem(hDlg, property_tags[i]), SW_SHOWNORMAL);
@@ -2188,6 +2189,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 							//if (LyraItem::EntryTranslation(curr_effect, i) == 0)
 								//ComboBox_LimitText(GetDlgItem(hDlg, property_fields[i]),PROPERTY_FIELD_LENGTH);
 							//else
+
 							if (LyraItem::EntryTranslation(curr_effect, i) != 0)
 							{
 								int successCnt = 0;
@@ -2209,7 +2211,14 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								{
 									defaultIdx = successCnt / 2;
 								}
+								
 								ComboBox_SetCurSel(GetDlgItem(hDlg, property_fields[i]), defaultIdx);
+							}
+							if (_tcsicmp(LyraItem::EntryName(curr_effect, i), _T("Caster ID")) == 0)
+							{
+								sprintf(message, "%d", player->ID());
+								SendMessage((GetDlgItem(hDlg, property_fields[i])), CB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
+								ComboBox_SetItemData(GetDlgItem(hDlg, property_fields[i]), (ComboBox_GetCount(GetDlgItem(hDlg, property_fields[i])) - 1), player->ID());
 							}
 						}
 						  }

@@ -130,40 +130,7 @@ bool __cdecl LoadGameOptions(void)
 {
 	LoadDefaultOptionValues();
 	LoadJSONFiles();
-
-	HKEY main_key, player_key = NULL;
-	unsigned long mresult, presult;
-
-	if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(true),0, 
-				NULL, 0, KEY_ALL_ACCESS, NULL, &main_key, &mresult)
-					!= ERROR_SUCCESS)
-	{
-		GAME_ERROR(IDS_NO_ACCESS_REGISTRY);
-		return false;
-	}
-	
-	LoadInGameRegistryOptionValues(main_key, false);
-
-	// only load the character options if we have a character object available
-	if (player != NULL)
-	{
-
-		if (RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0,
-			NULL, 0, KEY_ALL_ACCESS, NULL, &player_key, &presult)
-			!= ERROR_SUCCESS)
-		{
-			GAME_ERROR(IDS_NO_ACCESS_REGISTRY);
-			return false;
-		}
-
-		LoadCharacterRegistryOptionValues(player_key, false);
-		RegCloseKey(player_key);
-	}
-
-	LoadOutOfGameRegistryOptionValues(main_key, false);
-
-	RegCloseKey(main_key);
-
+	SmartLoadJSON();
 	return true;
 }
 
@@ -401,6 +368,15 @@ const duration_t duration_types[NUM_DURATIONS] =
     {28800,    0,      100,         IDS_8_HR      }, // 63
 };
 
+const distance_t distances[NUM_DISTANCES] = {
+	{20000, 1000, 1, IDS_CLOSEST},
+	{50000, 5000, 10, IDS_VERY_CLOSE},
+	{100000, 5000, 20, IDS_CLOSE},
+	{150000, 10000, 30, IDS_NEARBY},
+	{250000, 10000, 50, IDS_WHISPERABLE},
+	{700000, 50000, 90, IDS_WIDE_RANGE}, // whisper x,y taller than whisper
+	{99999999, 999999, 100, IDS_WHOLE_ROOM}
+};
 
 // calculates a duration based on the duration table above
 int CalculateDuration(int index) 
@@ -411,6 +387,13 @@ int CalculateDuration(int index)
 		random = 1000*((rand()%(duration_types[index].random))+1); 
 	return (base + random);
 };
+
+void CalculateDistance(int index, unsigned int* xydist, unsigned int* heightdist)
+{
+	distance_t dist = distances[index];
+	*xydist = dist.cartesian_distance;
+	*heightdist = dist.height_distance;
+}
 
 const velocity_t velocity_types[] =
 {// min skill
@@ -444,7 +427,12 @@ void TranslateValue(int type, int value)
 				_stprintf(message, _T("-%s"), disp_message);
 			}
 			break;
-
+		case LyraItem::TRANSLATION_DISTANCE:
+		{
+			LoadString(hInstance, distances[value].descrip, disp_message, sizeof(disp_message));
+			_stprintf(message, _T("%s"), disp_message);
+		}
+		break;
 		case LyraItem::TRANSLATION_DURATION:
 			{
 				LoadString(hInstance, duration_types[value].descrip, disp_message, sizeof(disp_message));
@@ -702,6 +690,8 @@ int NumberTranslations(int type)
 			return Avatars::MAX_AVATAR_TYPE+1;
 		case LyraItem::TRANSLATION_LEVEL_ID:
 		    return MAX_LEVELS;
+		case LyraItem::TRANSLATION_DISTANCE:
+			return NUM_DISTANCES;
 		default:
 		case LyraItem::TRANSLATION_NONE:
 			return 0;

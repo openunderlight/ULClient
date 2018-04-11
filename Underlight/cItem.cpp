@@ -77,7 +77,7 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 		temporary(temp), expire_time(expires)
 {
 	this->SetLmItem(i_lmitem);
-
+	expire_time_is_ttl = false;
 	needsUpdate = marked_for_death = thrown =  redeeming = false;
 	marked_for_drop = marked_for_death = destroy_at_zero = false;
 	draggable = gravity = true;
@@ -86,10 +86,10 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 	selected_function = inventory_flags = 0;
 	max_sort_index++;
 	sort_index = max_sort_index;
-	
 	// GMs are always draggable!
 #if ! (defined (UL_DEBUG) || defined (GAMEMASTER))
-	if (lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP))
+	if ((lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP)) ||
+		ItemFunction(0) == LyraItem::PORTKEY_FUNCTION)
 		draggable = false;
 #endif
 
@@ -177,7 +177,7 @@ void cItem::SetGravity(void)
 	if (status != ITEM_UNOWNED)
 		gravity = false;
 
-	else if ((this->ItemFunction(0) == LyraItem::WARD_FUNCTION) && (extra != NULL))
+	else if ((this->ItemFunction(0) == LyraItem::WARD_FUNCTION) || (this->ItemFunction(0) == LyraItem::PORTKEY_FUNCTION) && (extra != NULL))
 		gravity = false;
 
 	return;
@@ -346,6 +346,7 @@ void cItem::DisplayCreateMessage(void)
 {
 	if ((this->ItemFunction(0) == LyraItem::ESSENCE_FUNCTION) ||
 		(this->ItemFunction(0) == LyraItem::SUPPORT_FUNCTION) ||
+		(this->ItemFunction(0) == LyraItem::AREA_EFFECT_FUNCTION  && _tcsicmp(this->Name(), "Razorwind") == 0) ||
 		(this->ItemFunction(0) == LyraItem::SUPPORT_TRAIN_FUNCTION) ||
 		quests->Active())
 	{
@@ -479,7 +480,8 @@ int cItem::ItemFunction(int slot)
 
 bool cItem::NoPickup(void)
 {
-    return (lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP));
+	return (lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP)) ||
+		ItemFunction(0) == LyraItem::PORTKEY_FUNCTION;
 }
 
 // can the item be lost on dissolution?
@@ -1098,13 +1100,19 @@ void cItem::Drop(float drop_x, float drop_y, int drop_angle)
 {
 	if (redeeming) 
 		return; // can't drop a gratitude token while it is being redeemed
+	
+	if (ItemFunction(0) == LyraItem::PORTKEY_FUNCTION && arts->GetPortkey(ITEM_UNOWNED))
+	{
+		display->DisplayMessage("A room may only contain one portkey!");
+		return;
+	}
 
 	if (this->NeedsUpdate())
 		this->Update();
 
 	player->PerformedAction();
 
-	if (temporary)
+	if (temporary && ItemFunction(0) != LyraItem::PORTKEY_FUNCTION)
 	{ // temporary items are destroyed on a drop
 		lmitem.SetCharges(0);
 		cp->SetUpdateInvCount(true);
@@ -1376,6 +1384,12 @@ bool cItem::Reweave(int amount)
 	return false;
 }
 
+bool cItem::IsAreaEffectItem(void)
+{
+	int item_func = ItemFunction(0);
+	return (this != NO_ITEM && (Status() == ITEM_UNOWNED) &&
+		(item_func == LyraItem::AREA_EFFECT_FUNCTION || item_func == LyraItem::PORTKEY_FUNCTION));
+}
 // return the amount of damage this missle does
 // this is a total HACK --- insure field information is maintained
 int cItem::MissleDamage(void)

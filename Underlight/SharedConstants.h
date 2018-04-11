@@ -12,10 +12,11 @@
 
  
 const int NUM_TIMED_EFFECTS = 33; // add one for NONE
-const int NUM_ARTS = 148;
+const int NUM_ARTS = 149;
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
 const int NUM_PLAYER_STATS = 5;
+const int NUM_DISTANCES = 7;
 const int NUM_GUILDS = 8;
 const int NUM_HOUSES = 8;
 const int NUM_RANKS = 3;
@@ -47,7 +48,8 @@ struct EffectOrigin {
 		MISSILE,
 		ART_EVOKE,
 		MASS_EVOKE,
-		USE_ITEM
+		USE_ITEM,
+		AE_ITEM
 	};
 };
 
@@ -275,6 +277,7 @@ struct Arts {
   RALLY, // Summon party member
   CHANNEL,
 BULWARK,
+PORTKEY,
 	// END OF ARTS LIST - below are art-related constants
 
 	INITIATE_DRAIN = 100,   // amount of essences drained from prime to Initiate

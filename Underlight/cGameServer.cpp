@@ -766,8 +766,7 @@ void cGameServer::HandleMessage(void)
 		//	options.UNIX_login_time = loginack_msg.LoginTime();
 		//	options.local_login_time = LyraTime()/1000;
 			portNumber = loginack_msg.ServerPort();
-
-			LoadCharacterRegistryOptionValues(false);
+			LoadJSONOptionValues(player->Name());
 
 #ifdef PMARE
 			options.pmare_logout_time = 0;
@@ -3941,7 +3940,10 @@ bool cGameServer::DropItem(cItem *item)
 		send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
 	}
 
-	putitem_msg.Init(player->Room(), item->ID(), pos, GMsg_PutItem::DEFAULT_TTL);
+	int ttl = item->ItemFunction(0) != LyraItem::PORTKEY_FUNCTION ? GMsg_PutItem::DEFAULT_TTL : 10 * (player->SkillSphere(Arts::PORTKEY) + 1);
+	if (item->UseTTLForDrop())
+		ttl = item->ExpireTime();
+	putitem_msg.Init(player->Room(), item->ID(), pos, ttl);
 	sendbuf.ReadMessage(putitem_msg);
 	send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
 

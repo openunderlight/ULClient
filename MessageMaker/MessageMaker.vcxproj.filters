@@ -372,15 +372,12 @@
     <ClInclude Include="RMsg_RoomDescription.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< HEAD
-=======
     <ClInclude Include="json_maker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cJSON.h">
       <Filter>Header Files</Filter>
     </ClInclude>
->>>>>>> ebeb57a37fbec1c4dc90b5b647ed8ee306e31233
   </ItemGroup>
   <ItemGroup>
     <None Include="AMsg_AgentInfo.i">
