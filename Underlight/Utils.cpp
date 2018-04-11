@@ -1841,7 +1841,8 @@ cTimedEffects::cTimedEffects(void)
 	LoadString(hInstance, IDS_GKSHIELD, name[i], sizeof(name[i]));
 	default_duration[i] = 13; // 3 secs
 	harmful[i] = false;
-
+	LoadString(hInstance, IDS_BULWARK_MORE, disp_message, sizeof(disp_message));
+	more_descrip[i] = _tcsdup(disp_message);
 	return;
 }
 

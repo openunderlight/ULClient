@@ -4513,6 +4513,11 @@ BEGIN
     IDS_GKSHIELD            "Bulwark"
 END
 
+STRINGTABLE
+BEGIN
+    IDS_BULWARK_MORE        "Your bulwark has been re-fortified!"
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
