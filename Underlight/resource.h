@@ -2998,6 +2998,8 @@
 #define IDS_CLOSE                       4468
 #define IDS_WHISPERABLE                 4469
 #define IDS_RAZORWIND_AREA_EFFECT       4470
+#define IDS_SHIELD_MAX_NOW              4471
+#define IDS_TALISMAN_RECHARGED_NOW      4472
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

@@ -1370,6 +1370,11 @@ bool cItem::Reweave(int amount)
 				LoadString (hInstance, IDS_ARMOR_REPAIRED, disp_message, sizeof(disp_message));
 			_stprintf(message, disp_message, this->Name());
 				display->DisplayMessage (message, false);
+				if (armor.curr_durability == armor.max_durability)
+				{
+					LoadString(hInstance, IDS_SHIELD_MAX_NOW, disp_message, sizeof(disp_message));
+					_stprintf(message, disp_message, this->Name());
+				}
 				return true;
 			}
 			else
@@ -1446,8 +1451,32 @@ bool cItem::Recharge(int plateaua)
 		return false;
 	}
 
+	int limit = RECHARGE_LIMIT;
 
-	 int random = rand()%100;
+	// find and use lowest" recharge
+	for (i = 0; i<this->NumFunctions(); i++)
+	{
+		int function = this->ItemFunction(i);
+
+		if (function == LyraItem::NOTHING_FUNCTION)
+			limit = min(limit, 200);
+		else if (function == LyraItem::MISSILE_FUNCTION && MissleDamage() == 0)
+			limit = min(limit, RECHARGE_LIMIT);// charms
+		else
+			limit = min(limit, MaxChargesForFunction(function));
+	}
+
+	int soft_limit = limit - 1;
+	// don't go up if we're already at the soft limit (1 less than the genned max)
+	if (lmitem.Charges() >= soft_limit)
+	{
+		LoadString(hInstance, IDS_TALISMAN_MAXCHARGE, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, this->Name());
+		display->DisplayMessage(message);
+		return false;
+	}
+
+	int random = rand()%100;
 	if (random < BASE_CHANCE_DESTRUCTION)
 	{
 		LoadString (hInstance, IDS_RECHARGE_DESTROYED, disp_message, sizeof(disp_message));
@@ -1476,34 +1505,12 @@ bool cItem::Recharge(int plateaua)
 	}
 
 	int new_charges = lmitem.Charges() + rand()%plateaua + 1;
-	int limit = RECHARGE_LIMIT;
 
-	// find and use lowest" recharge
-	for (i=0; i<this->NumFunctions(); i++)
-	{
-		int function = this->ItemFunction(i);
-
-		if (function == LyraItem::NOTHING_FUNCTION)
-			limit = min(limit, 200);
-		else if (function == LyraItem::MISSILE_FUNCTION && MissleDamage() == 0)
-			limit = min(limit, RECHARGE_LIMIT);// charms
-		else 
-			limit = min(limit, MaxChargesForFunction(function));
-	}
-
-	int soft_limit = limit - 1;
-
-	// don't go up if we're already at the soft limit (1 less than the genned max)
-	if (lmitem.Charges() >= soft_limit)
-	{
-		new_charges = lmitem.Charges();
-		LoadString(hInstance, IDS_TALISMAN_MAXCHARGE, disp_message, sizeof(disp_message));
-	}
 	// check if we exceed the limit and set the charges to the soft limit if we do
-	else if (new_charges >= limit)
+	if (new_charges >= limit)
 	{
 		new_charges = soft_limit;
-		LoadString(hInstance, IDS_TALISMAN_RECHARGED, disp_message, sizeof(disp_message));
+		LoadString(hInstance, IDS_TALISMAN_RECHARGED_NOW, disp_message, sizeof(disp_message));
 	}
 	// successful normal recharge evoke 
 	else

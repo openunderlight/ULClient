@@ -4506,6 +4506,9 @@ BEGIN
     IDS_WHISPERABLE         "Whisperable"
     IDS_RAZORWIND_AREA_EFFECT 
                             "A Razorwind tears through the room and converges upon where %s is standing!\n"
+    IDS_SHIELD_MAX_NOW      "The shield is now at maximum durability!\n"
+    IDS_TALISMAN_RECHARGED_NOW 
+                            "The %s has just been recharged to its maximum number of charges!"
 END
 
 STRINGTABLE
