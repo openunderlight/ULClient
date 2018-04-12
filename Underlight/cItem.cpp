@@ -1373,7 +1373,7 @@ bool cItem::Reweave(int amount)
 				if (armor.curr_durability == armor.max_durability)
 				{
 					LoadString(hInstance, IDS_SHIELD_MAX_NOW, disp_message, sizeof(disp_message));
-					_stprintf(message, disp_message, this->Name());
+					display->DisplayMessage(disp_message, false);
 				}
 				return true;
 			}
