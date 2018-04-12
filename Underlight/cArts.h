@@ -143,6 +143,7 @@ public:
 	void SoulEvoke(void);
 	void NightmareForm(void);
 	void Recall(void);
+	void Bulwark(void);
 	void Return(void);
 	void Reflect(void);
 	void ApplyReflectedArt(int art_id, lyra_id_t caster_id);
@@ -180,14 +181,16 @@ public:
 	void StartPlayerTeleport(void);
 	void EndPlayerTeleport(void *value);
 	void TehthusOblivion(void);
-  void Tempest (void);
-  void ApplyTempest (int skill, int angle, lyra_id_t caster_id);
-  void Misdirection (void);
-  void ApplyMisdirection (int skill, lyra_id_t caster_id);
-  void ChaoticVortex (void);
-  void ApplyChaoticVortex (int skill, lyra_id_t caster_id);
-  void EssenceContainer(void);
-
+	void Tempest (void);
+	void ApplyTempest (int skill, int angle, lyra_id_t caster_id);
+	void Misdirection (void);
+	void ApplyMisdirection (int skill, lyra_id_t caster_id);
+	void ChaoticVortex (void);
+	void ApplyChaoticVortex (int skill, lyra_id_t caster_id);
+	void EssenceContainer(void);
+	void Portkey(void);
+	bool GetPortkey(int type); // true if has pk, falseotherwise
+	bool RoomFull();
 	// arts that require selecting a neighbor
 	void StartChannel(void);
 	bool ExpireChannel(bool userInitiated);
@@ -302,6 +305,7 @@ public:
 	void MidSummon(void);
 	void EndSummon(void *value);
 	void EndLock(void *value);
+	void EndAmulet(void* charges_idx);
 	void EndKey(void *value);
 	void StartSuspend(void);
 	void MidSuspend(void);
@@ -487,7 +491,7 @@ public:
 
 
 private:
-	void CreatePass(const TCHAR* name, lyra_item_amulet_t amulet);
+	void CreatePass(const TCHAR* name, lyra_item_amulet_t amulet, int charges);
 	bool PlaceLock(lyra_item_ward_t ward, LmItemHdr header);
 	void WaitForSelection(art_method_t callback, lyra_id_t art_id); // to start waiting for a click
 	void AddDummyNeighbor(void); // to allow selection of player as a target

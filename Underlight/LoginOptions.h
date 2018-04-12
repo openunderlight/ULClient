@@ -21,8 +21,6 @@
 BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK LaunchOptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 
-void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force);
-void __cdecl SaveOutOfGameRegistryOptionValues(HKEY reg_key);
 void __cdecl SaveOutOfGameRegistryOptionValues(void);
 
 

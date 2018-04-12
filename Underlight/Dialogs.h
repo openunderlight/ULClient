@@ -49,6 +49,8 @@ const int ACCEPTREJECT_TIMER  =  WM_USER + DIALOG_MAGIC + 50;
 #define WM_SET_USE_PT DIALOG_MAGIC + WM_USER + 22
 #define WM_ADD_DESTINATIONS + WM_USER + 23
 #define WM_POWER_TOKEN + WM_USER + 24
+#define WM_SET_VALUES DIALOG_MAGIC + WM_USER + 25 // used for passing a pointer to an array of values to set.
+#define WM_SET_LOGIN_DEFAULTS + WM_USER + 26
 
 //////////////////////////////////////////////////////////////////
 // New Types
@@ -101,6 +103,7 @@ BOOL CALLBACK NonfatalErrorDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARA
 BOOL CALLBACK AcceptRejectDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK PowerTokenDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK EnterValueDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK SelectValueDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK IgnoreListDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK WriteScrollDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam);

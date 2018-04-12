@@ -47,7 +47,7 @@ extern TCHAR token_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR nightmare_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR dreamweapon_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR talisman_message[DEFAULT_MESSAGE_SIZE];
-
+extern TCHAR values_select[100][DEFAULT_MESSAGE_SIZE];
 
 extern TCHAR errbuf[DEFAULT_MESSAGE_SIZE];
 

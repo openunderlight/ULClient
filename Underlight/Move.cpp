@@ -1857,8 +1857,8 @@ static int PlayerTripLine(linedef *aLine)
 							has_proper_amulet = true;
 						
 						// uncomment to give amulets charges
-						//if (actors->ValidItem(amulets[i]))
-						// amulets[i]->DrainCharge();
+						if (actors->ValidItem(amulets[i]) && !amulet.IsKey())
+							amulets[i]->DrainCharge();
 					}
 				if (!has_proper_amulet && player->flags & ACTOR_BLENDED)
 				{ 
@@ -1892,8 +1892,14 @@ static int PlayerTripLine(linedef *aLine)
 		if (options.network && !CanPassPortal(aLine->trip3, guild_id))
 			return 0;
 
+		// If coordinates are set to 0, then send player to a random destination
+		if (aLine->trip1 == 0 && aLine->trip2 == 0) {
+			 player->Teleport(0, 0, 0, 0);
+		}
+		else {
+			player->Teleport((float)aLine->trip1, (float)aLine->trip2, aLine->trip4);
+		}
 
-		player->Teleport((float)aLine->trip1, (float)aLine->trip2,	aLine->trip4);
 		return TELEPORTED;
 	}
 

@@ -40,6 +40,14 @@ struct velocity_t // velocity types
 };
 
 
+struct distance_t
+{
+	unsigned int cartesian_distance; // x,y diff
+	unsigned int height_distance; // z diff
+	short min_skill_to_create; 
+	UINT descrip;
+};
+
 class cTimedEffects { // timed effects
 	public:	
 	   DWORD expires[NUM_TIMED_EFFECTS];
@@ -97,7 +105,7 @@ TCHAR* TokenName(int token_type);
 TCHAR* __cdecl NightmareName(int id);
 TCHAR* DreamweaponName(int color);
 void Scream(int avatar_type, cActor* actor, bool propagate = false);
-
+void CalculateDistance(int index, unsigned int* xydist, unsigned int* heightdist);
 bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2);
 
 const char *DisperseCoordinate(unsigned int index);

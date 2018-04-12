@@ -139,6 +139,7 @@ unsigned long exit_time;
 
 unsigned char keyboard[num_keystates]; // keyboard
 TCHAR message[DEFAULT_MESSAGE_SIZE]; // generic string for output messages
+TCHAR values_select[100][DEFAULT_MESSAGE_SIZE];
 TCHAR disp_message[DEFAULT_MESSAGE_SIZE]; // generic string for output messages
 TCHAR temp_message[DEFAULT_MESSAGE_SIZE]; // generic string for output messages
 TCHAR errbuf[DEFAULT_MESSAGE_SIZE];// generic string for error messages
@@ -630,7 +631,7 @@ bool __cdecl Init_Game(void)
 #endif
 
 	player->InitPlayer();
-
+	SaveInGameRegistryOptionValues();
 	// Initialize 
 	Init4DX(cDD->ViewX(), cDD->ViewY());  
 	MemoryCheck(_T("4DX initialized"));
@@ -688,7 +689,7 @@ bool __cdecl Init_Game(void)
 		// freed at level login ack 
 		effects->LoadEffectBitmaps(LyraBitmap::INTRO);
 	}
-
+	CleanupLoadedJSONFiles();
 	InvalidateRect(display->Hwnd(), NULL, TRUE);
 	InvalidateRect(cp->Hwnd_CP(), NULL, TRUE);   
 	MemoryCheck(_T("Networking classes created"));

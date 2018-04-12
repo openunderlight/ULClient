@@ -39,13 +39,12 @@ BEGIN
     PUSHBUTTON      "Underlight Wiki",IDC_MANUAL,118,232,69,14
     PUSHBUTTON      "Donate",IDC_BILLING,220,232,69,14
     PUSHBUTTON      "Quit",IDC_CANCEL,322,232,69,14
-    CONTROL         "800x600",IDC_GRAPHIC_RES800,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,143,76,40,9
+    CONTROL         "800x600",IDC_GRAPHIC_RES800,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,143,76,40,9
     CONTROL         "1024x768 (recommended)",IDC_GRAPHIC_RES1024,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,191,76,110,9
-    CONTROL         "Dev 1",IDC_DEV_SERVER1,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,25,89,39,10
-    //CONTROL         "Dev 2",IDC_DEV_SERVER2,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,65,90,40,10
-    //CONTROL         "Custom",IDC_CUSTOM_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,104,90,43,10
-    EDITTEXT        IDC_CUSTOM_IP,142,88,58,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    CONTROL         "Dev 1",IDC_DEV_SERVER1,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,43,89,39,10
+    CONTROL         "Custom",IDC_CUSTOM_DEV_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,82,89,39,10
     CONTROL         "Live",IDC_LIVE_SERVER,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_TABSTOP,13,89,25,10
+    EDITTEXT        IDC_CUSTOM_IP,142,88,58,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
     CONTROL         "Debug Server:",IDC_DEBUG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,202,90,56,10
     CONTROL         "Networking:",IDC_NETWORK,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,261,90,46,10
     CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,13,75,10
@@ -192,20 +191,20 @@ BEGIN
     CONTROL         "NoPickup",IDC_ITEM_NOPICKUP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,0,54,53,10
 END
 
-IDD_CREATE_ITEM DIALOGEX 0, 0, 405, 124
+IDD_CREATE_ITEM DIALOGEX 0, 0, 403, 128
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_ITEM_NAME,40,14,115,13,ES_AUTOHSCROLL
     EDITTEXT        IDC_CHARGES,40,29,24,13,ES_AUTOHSCROLL
-    CONTROL         "Artifact",IDC_ITEM_ARTIFACT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,353,105,44,10
-    PUSHBUTTON      "Help",IDC_ITEMHELP,352,72,45,14
+    CONTROL         "Artifact",IDC_ITEM_ARTIFACT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,347,114,44,10
+    PUSHBUTTON      "Help",IDC_ITEMHELP,350,72,45,14
     CONTROL         "Always send state",IDC_ITEM_FLAG1,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,78,70,73,10
     CONTROL         "Immutable",IDC_ITEM_FLAG2,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE,85,70,59,10
     CONTROL         "Change charges",IDC_ITEM_FLAG3,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE,77,71,65,8
-    DEFPUSHBUTTON   "OK",IDC_OK,352,34,45,14
-    PUSHBUTTON      "Cancel",IDC_CANCEL,352,53,45,14
+    DEFPUSHBUTTON   "OK",IDC_OK,350,34,45,14
+    PUSHBUTTON      "Cancel",IDC_CANCEL,350,53,45,14
     LTEXT           "Graphic",IDC_GRAPHIC_HEADER,65,31,36,11
     LTEXT           "Colors",IDC_COLORS_STATIC,0,46,26,8
     LTEXT           "Name",IDC_NAME_HEADER,0,16,23,8
@@ -234,16 +233,20 @@ BEGIN
     COMBOBOX        IDC_PROPERTY3,246,58,96,65,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        IDC_PROPERTY4,246,72,96,51,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        IDC_PROPERTY5,246,85,96,38,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Describe",IDC_ITEM_DESCRIP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,348,3,49,10
+    CONTROL         "Describe",IDC_ITEM_DESCRIP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,346,3,49,10
     LTEXT           "Quest Item Definition",IDC_QUEST_STATIC,0,0,87,10
     CONTROL         "Any Charges",IDC_ANY_CHARGES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,2,12,62,17
-    CONTROL         "Combine",IDC_ITEM_COMBINE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,348,12,49,10
+    CONTROL         "Combine",IDC_ITEM_COMBINE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,346,12,49,10
     CONTROL         "Tab1",IDC_FUNCTION_TAB,"SysTabControl32",0x0,223,0,110,15
-    LTEXT           "",IDC_FORGE_TEXT,1,82,135,41
+    LTEXT           "",IDC_FORGE_TEXT,1,87,135,41
     LTEXT           "PT Cost:",IDC_STATIC2,76,60,68,12,NOT WS_VISIBLE,WS_EX_RIGHT
     EDITTEXT        IDC_PT_COST,153,60,28,12,ES_CENTER | ES_READONLY | NOT WS_VISIBLE | NOT WS_TABSTOP
-    CONTROL         "NoPickup",IDC_ITEM_NOPICKUP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,292,105,53,10
-    CONTROL         "Recreate",IDC_ITEM_REMAKE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,235,105,49,10
+    CONTROL         "NoPickup",IDC_ITEM_NOPICKUP,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,284,114,53,10
+    CONTROL         "Recreate",IDC_ITEM_REMAKE,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,227,114,49,10
+    RTEXT           "Reserved",IDC_PROPERTY6_HEADER,189,98,50,11,NOT WS_VISIBLE
+    COMBOBOX        IDC_PROPERTY6,245,98,96,38,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Reserved",IDC_PROPERTY7_HEADER,190,111,50,11,NOT WS_VISIBLE
+    COMBOBOX        IDC_PROPERTY7,246,111,96,38,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_KEYBOARD_CONFIG DIALOGEX 0, 0, 409, 100
@@ -951,6 +954,17 @@ BEGIN
     CTEXT           "Static",IDC_PPOINT_NEXT,65,68,257,10
 END
 
+IDD_SELECT_VALUE DIALOGEX 0, 0, 221, 105
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE
+EXSTYLE WS_EX_STATICEDGE
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDC_OK,164,67,50,14
+    PUSHBUTTON      "Cancel",IDC_CANCEL,164,82,50,14
+    LTEXT           "Select a value",IDC_VALUE_PROMPT,17,16,142,20,NOT WS_GROUP
+    LISTBOX         IDC_SELECT_VALUES,29,41,82,13,LBS_NOINTEGRALHEIGHT | WS_TABSTOP
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1014,8 +1028,7 @@ BEGIN
 
     IDD_CREATE_ITEM, DIALOG
     BEGIN
-        RIGHTMARGIN, 397
-        BOTTOMMARGIN, 123
+        RIGHTMARGIN, 395
     END
 
     IDD_KEYBOARD_CONFIG, DIALOG
@@ -1243,6 +1256,14 @@ BEGIN
 
     IDD_USE_PPOINT, DIALOG
     BEGIN
+    END
+
+    IDD_SELECT_VALUE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 214
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 98
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -1664,10 +1685,10 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_UOC_FLAG            "UOC_FLAG"
+    IDS_UOC_FLAG            "BOC_FLAG"
     IDS_AOE_SYM             "AOE_SYM"
     IDS_HC_SYM              "HC_SYM"
-    IDS_UOC_SYM             "UOC_SYM"
+    IDS_UOC_SYM             "BOC_SYM"
     IDS_DOL_SYM             "DOL_SYM"
     IDS_GOE_SYM             "GOE_SYM"
     IDS_KOES_SYM            "KOES_SYM"
@@ -2197,7 +2218,7 @@ BEGIN
                             "Enter the City of Dreams in the chambers of the Alliance of the Eclipse.\n"
     IDS_TRAIN_HOUSES_SHADOW "Enter the City of Dreams in the chambers of the Monastery of the Shadow.\n"
     IDS_TRAIN_HOUSES_COVENANT 
-                            "Enter the City of Dreams in the chambers of the Union of the Covenant.\n"
+                            "Enter the City of Dreams in the chambers of the Bastion of the Covenant.\n"
     IDS_TRAIN_HOUSES_RADIANCE 
                             "Enter the City of Dreams in the chambers of the Peace Corpse.\n"
     IDS_TRAIN_HOUSES_CALENTURE 
@@ -2891,7 +2912,7 @@ BEGIN
     IDS_OOSM                "Order of the Sable Moon"
     IDS_AOE                 "Alliance of the Eclipse"
     IDS_KOES                "Monastery of the Shadow"
-    IDS_UOC                 "Union of the Covenant"
+    IDS_UOC                 "Bastion of the Covenant"
     IDS_POR                 "Peace Corpse"
 END
 
@@ -2986,7 +3007,7 @@ BEGIN
     IDS_OOSM_MEMBER_TOKEN   "Order of the Sable Moon Membership Token"
     IDS_AOE_MEMBER_TOKEN    "Alliance of the Eclipse Membership Token"
     IDS_KOES_MEMBER_TOKEN   "Monastery of the Shadow Membership Token"
-    IDS_UOC_MEMBER_TOKEN    "Union of the Covenant Membership Token"
+    IDS_UOC_MEMBER_TOKEN    "Bastion of the Covenant Membership Token"
     IDS_POR_MEMBER_TOKEN    "Peace Corpse Membership Token"
     IDS_HC_MEMBER_TOKEN     "House Calenture Membership Token"
     IDS_GOE_MEMBER_TOKEN    "Gathering of the Entranced Membership Token"
@@ -3022,10 +3043,10 @@ BEGIN
     IDS_FLAG_KOES           "Flag MotS"
     IDS_FLAG_OOSM           "Flag OoSM"
     IDS_FLAG_POR            "Flag PoR"
-    IDS_FLAG_UOC            "Flag UoC"
+    IDS_FLAG_UOC            "Flag BoC"
     IDS_CREST_AOE           "Crest AoE"
     IDS_CREST_HC            "Crest HC"
-    IDS_CREST_UOC           "Crest UoC"
+    IDS_CREST_UOC           "Crest BoC"
     IDS_CREST_DOL           "Crest OoL"
     IDS_CREST_GOE           "Crest GoE"
     IDS_CREST_KOES          "Crest MotS"
@@ -3220,7 +3241,7 @@ BEGIN
                             "The Alliance of the Eclipse is an Illuminated House that believes in furthering the tenets of Truth, Honor, and Understanding through peace and study."
     IDS_TRAIN_BELIEF_SHADOW "Monastery of the Shadow is a Freesoul House whose ways are steeped in mysticism and the occult.  They feel that essence, both Dreamer and Maren are sources of energy that should not be left untapped."
     IDS_TRAIN_BELIEF_COVENANT 
-                            "The Union of the Covenant is a Freesoul House and follows the tenets of Justice, Freedom, Defense, and Honor. Their duty is to the Covenant in which they take to live by, and defend those tenets.  They believe Essence of Nightmares is merely the energy left behind from an avatar, and drain that energy for its uses."
+                            "The Bastion of the Covenant is a Freesoul House and follows the tenets of Justice, Freedom, Defense, and Honor. Their duty is to the Covenant in which they take to live by, and defend those tenets.  They believe Essence of Nightmares is merely the energy left behind from an avatar, and drain that energy for its uses."
     IDS_TRAIN_BELIEF_RADIANCE 
                             "Protectors of the Radiance is a Warrior Illuminated House. They save the souls of the unawakened by banishing essences, which they call the Crusade of the Unawakened. It is a Protector's solemn duty to follow Illuminated beliefs and the Crusade. They use an artifact known as the ""Soul of Radiance"" to banish nightmare essences."
     IDS_TRAIN_BELIEF_CALENTURE 
@@ -3700,6 +3721,9 @@ BEGIN
     IDS_GOALBOOK_ERR        "Invariant broken - goal id at index %u should be NULL --- line %u"
     IDS_IDENTIFY_ESSENCE_NEXUS 
                             "This chaos well contains %d essences and has a strength of %d. It has a maximum capacity of %d essences and %d strength."
+    IDS_SELECT_AMULET_CHARGES "Select number of charges for Amulet"
+    IDS_GKSHIELD_ON         "You fortify yourself with your power of will.\n"
+    IDS_GKSHIELD_OFF        "Your shield of willpower has expired\n"
 END
 
 STRINGTABLE
@@ -3875,8 +3899,7 @@ BEGIN
     IDS_DSERR_OTHERAPPHASPRIO "DSERR_OTHERAPPHASPRIO"
     IDS_DSERR_UNINITIALIZED "DSERR_UNINITIALIZED"
     IDS_LIVE_GAME_SERVER_IP "metatron.koiware.com"
-	IDS_DEV_GAME_SERVER_IP1 "dev1.koiware.com"
-    // IDS_DEV_GAME_SERVER_IP1 "ec2-54-157-94-210.compute-1.amazonaws.com"
+    IDS_DEV_GAME_SERVER_IP1 "dev1.koiware.com"
     IDS_GAME_MANUAL_URL     "http://wiki.underlight.com"
     IDS_BILLING_URL         "http://forums.underlight.com/viewtopic.php?f=2&t=78"
     IDS_FIREWALL_FAQ_URL    "http://www.underlight.com/"
@@ -3994,7 +4017,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_KNOW0629            "The turf here is lush and springy, suggestive of marshy conditions. A cool breeze carries the scent of exotic flowers and the cries of birds. A crystalline stream forms a path leading to the Alliance of the Eclipse."
-    IDS_KNOW0528            "A wasteland of stone and sand stretches before you. The air is dry and hot. Ancient mounds, worn by time, dot the landscape. A carefully fitted stone path meanders among the natural splendors on its way to the Union of the Covenant."
+    IDS_KNOW0528            "A wasteland of stone and sand stretches before you. The air is dry and hot. Ancient mounds, worn by time, dot the landscape. A carefully fitted stone path meanders among the natural splendors on its way to the Bastion of the Covenant."
     IDS_KNOW0401            "Massive rock walls rise up to delineate a path along an escarpment. Strong winds gust from time to time, pushing at you with a strong force. The footpath up the mountain is worn from countless travelers' steps on its way to the Order of Light."
     IDS_KNOW2005            "A radiant sense of peace and warmth pervades the atmosphere here, the gentle colors are pleasing to the eye. The hand-woven tapestries that hang from the ceiling are of exceptional quality and show a master artist's touch."
     IDS_NO_ARTS_DOCA_PIT    "No Arts can be evoked in this room."
@@ -4467,6 +4490,32 @@ BEGIN
     IDS_PT_COMBINED         "You have combined your Power Tokens!"
     IDS_NO_SACRIFICE        "Sacrifice failed. You cannot Sacrifice an item with a Description!"
     IDS_ARTIFACT_NO_TP      "You cannot Translocate while holding an Artifact!"
+    IDS_CLOSEST             "Closest"
+    IDS_VERY_CLOSE          "Very Close"
+    IDS_NEARBY              "Nearby"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_WIDE_RANGE          "Wide Range"
+    IDS_WHOLE_ROOM          "Whole Room"
+    IDS_ALREADY_HAVE_PORTKEY 
+                            "You're already carrying a portkey - you must drop it first!"
+    IDS_PORTKEY             "Portkey"
+    IDS_CLOSE               "Close"
+    IDS_WHISPERABLE         "Whisperable"
+    IDS_RAZORWIND_AREA_EFFECT 
+                            "A Razorwind tears through the room and converges upon where %s is standing!\n"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_GKSHIELD            "Bulwark"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_BULWARK_MORE        "Your bulwark has been re-fortified!"
 END
 
 #endif    // English (United States) resources

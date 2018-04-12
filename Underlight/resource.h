@@ -16,6 +16,10 @@
 #define IDS_STRING10                    10
 #define IDS_GOALBOOK_ERR                11
 #define IDS_IDENTIFY_ESSENCE_NEXUS      12
+#define IDS_SELECT_AMULET_CHARGES       13
+#define IDS_GKSHIELD_ON                 14
+#define IDS_GKSHIELD_OFF                15
+#define IDS_GKSHIELD                    16
 #define IDR_AgentSvr                    100
 #define IDS_SERVICENAME                 100
 #define IDD_LOGIN                       101
@@ -54,7 +58,7 @@
 #define IDD_PMARE_AVATAR                184
 #define IDD_MONSTER_AVATAR              184
 #define IDD_PMARE_TALK                  185
-#define IDD_MODIFY_ITEM					186
+#define IDD_MODIFY_ITEM                 186
 #define IDD_LAUNCH_OPTIONS              190
 #define IDD_VIDEOOPTIONS                191
 #define IDD_VIDEO_OPTIONS               191
@@ -65,6 +69,7 @@
 #define IDD_USE_PPOINT                  197
 #define IDD_CHOOSE_DESTINATION          202
 #define IDD_POWER_TOKEN                 203
+#define IDD_SELECT_VALUE                204
 #define IDS_PROPERTIES                  1000
 #define IDC_USERNAME                    1004
 #define IDC_EMAIL                       1005
@@ -181,6 +186,8 @@
 #define IDC_PROPERTY3                   1108
 #define IDC_PROPERTY4                   1109
 #define IDC_PROPERTY5                   1110
+#define IDC_PROPERTY6                   1111
+#define IDC_PROPERTY7                   1112
 #define IDC_FUNCTION_TAB                1114
 #define IDC_EFFECT_HEADER               1115
 #define IDC_PROPERTY2_HEADER            1115
@@ -204,6 +211,9 @@
 #define IDC_EFFECT2_HEADER              1126
 #define IDC_DURATION_HEADER             1127
 #define IDC_KEY_EFFECT_COMBO            1127
+#define IDC_PROPERTY6_HEADER            1128
+#define IDC_PROPERTY5_HEADER3           1129
+#define IDC_PROPERTY7_HEADER            1129
 #define IDC_DEFAULT                     1229
 #define IDC_MOUSETEXT                   1233
 #define IDC_GUILDS                      1234
@@ -238,6 +248,7 @@
 #define IDC_TITLE                       1269
 #define IDC_ACCEPTEES                   1271
 #define IDC_LOADING                     1272
+#define IDC_SELECT_VALUES               1272
 #define IDC_VOTETEXT                    1274
 #define IDC_YESTEXT                     1275
 #define IDC_NOTEXT                      1276
@@ -393,6 +404,7 @@
 #define IDC_CHOOSE_DESTINATION          1445
 #define IDC_STATIC_CHOOSE_DESTINATION   1445
 #define IDS_ONCE_HIDDEN_ALWAYS_HIDDEN   1446
+#define IDC_LIST1                       1446
 #define IDC_OK                          1800
 #define IDC_CANCEL                      1801
 #define IDC_FIREWALL_FAQ                1801
@@ -421,7 +433,7 @@
 #define IDC_ULT_FUNCTIONS               1826
 #define IDC_IGNORE_LIST_STATIC          1827
 #define IDD_CREDITS                     1828
-#define IDC_TRANSLOCATE					1829
+#define IDC_TRANSLOCATE                 1829
 #define IDC_LOCATE                      1830
 #define IDC_LOCATE_ALL                  1831
 #define IDC_ADD                         1832
@@ -2974,8 +2986,20 @@
 #define IDS_FOCAL_FLAME                 4453
 #define IDS_NOT_ENOUGH_PT               4454
 #define IDS_PT_COMBINED                 4455
-#define IDS_ARTIFACT_NO_TP              4460
 #define IDS_NO_SACRIFICE                4456
+#define IDS_ARTIFACT_NO_TP              4460
+#define IDS_CLOSEST                     4461
+#define IDS_VERY_CLOSE                  4462
+#define IDS_NEARBY                      4463
+#define IDS_WIDE_RANGE                  4464
+#define IDS_WHOLE_ROOM                  4465
+#define IDS_ALREADY_HAVE_PORTKEY        4466
+#define IDS_PORTKEY                     4467
+#define IDS_CLOSE                       4468
+#define IDS_WHISPERABLE                 4469
+#define IDS_RAZORWIND_AREA_EFFECT       4470
+#define IDS_BULWARK_MORE                4471
+
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
@@ -2985,9 +3009,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        203
+#define _APS_NEXT_RESOURCE_VALUE        206
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1446
+#define _APS_NEXT_CONTROL_VALUE         1447
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
