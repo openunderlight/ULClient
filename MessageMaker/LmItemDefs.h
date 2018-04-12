@@ -300,6 +300,24 @@ struct lyra_item_area_effect_t {  // 10
 	  // returns true if effects false if not.
 	  return !(effect & (1 << 7));
   }
+
+  inline void set_razorwind(bool is_rw)
+  {
+	  if (is_rw)
+		  distance |= (1 << 7);
+	  else
+		  distance &= 127;
+  }
+
+  inline bool is_razorwind()
+  {
+	  return (distance & (1 << 7));
+  }
+
+  inline unsigned char get_distance() {
+	  return distance & 127;
+  }
+
   inline unsigned char get_effect() {
 	  return effect & 127;
   }
@@ -311,7 +329,7 @@ struct lyra_item_portkey_t {
 	unsigned char distance;
 	unsigned char	level_id;
 	short x;
-	short y;
+	short y; 
 
 	inline void hton() {
 		HTONS(x);

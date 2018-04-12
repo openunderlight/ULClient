@@ -4506,19 +4506,16 @@ BEGIN
     IDS_WHISPERABLE         "Whisperable"
     IDS_RAZORWIND_AREA_EFFECT 
                             "A Razorwind tears through the room and converges upon where %s is standing!\n"
+    IDS_BULWARK_MORE        "Your bulwark has been re-fortified!"
     IDS_SHIELD_MAX_NOW      "The shield is now at maximum durability!\n"
     IDS_TALISMAN_RECHARGED_NOW 
                             "The %s has just been recharged to its maximum number of charges!"
+    IDS_RW_REAPPLIED        "A razorwind rages all around you!"
 END
 
 STRINGTABLE
 BEGIN
     IDS_GKSHIELD            "Bulwark"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_BULWARK_MORE        "Your bulwark has been re-fortified!"
 END
 
 #endif    // English (United States) resources

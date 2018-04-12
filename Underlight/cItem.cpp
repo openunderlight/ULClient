@@ -92,7 +92,9 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 		ItemFunction(0) == LyraItem::PORTKEY_FUNCTION)
 		draggable = false;
 #endif
-
+	// GMs can never drag razorwinds
+	if (IsRazorwind())
+		draggable = false;
 	if (palette == MAGIC_AVATAR_PALETTE_1)
 		num_color_regions = 2;
 
@@ -476,6 +478,18 @@ int cItem::ItemFunction(int slot)
 
 	const void* state = lmitem.StateField(slot);
 	return (*((unsigned char*)state));
+}
+
+bool cItem::IsRazorwind()
+{
+	if (ItemFunction(0) != LyraItem::AREA_EFFECT_FUNCTION)
+		return false;
+	else {
+		const void* state = Lmitem().StateField(0);
+		lyra_item_area_effect_t aoe;
+		memcpy(&aoe, state, sizeof(aoe));
+		return aoe.is_razorwind();
+	}
 }
 
 bool cItem::NoPickup(void)

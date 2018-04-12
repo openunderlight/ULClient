@@ -2936,10 +2936,10 @@ void cArts::Razorwind(void)
 	rw_item.distance = distance;
 	rw_item.set_player_id(player->ID());
 	rw_item.set_effects_party_and_self(false);
-
+	rw_item.set_razorwind(true);
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
-	header.SetGraphic(LyraBitmap::INVIS_ITEM);
+	header.SetGraphic(LyraBitmap::DREAMBLADE);
 	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AREA_EFFECT_FUNCTION), 0, 0));
 
