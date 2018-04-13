@@ -2921,7 +2921,7 @@ void cArts::Razorwind(void)
 	if (plat >= 3 && plat < 6) {
 		distance = 2;
 	}
-	else if (plat >= 6 && plat < 9) {
+	else if (plat >= 6 && plat <= 9) {
 		distance = 3;
 	}
 	else if (plat == 10) {
