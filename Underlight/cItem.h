@@ -109,6 +109,7 @@ class cItem : public cActor
 	  bool NoPickup(void);
 
 	  // selectors
+	  bool IsRazorwind(void);
 	  inline DWORD ExpireTime(void) { return expire_time; }
 	  inline LmItemHdr& ID(void) { return lmitem.Header(); };
 	  inline LmItem& Lmitem(void) { return lmitem; };
