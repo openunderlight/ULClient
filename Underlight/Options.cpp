@@ -654,6 +654,7 @@ void LoadParsedJSONOptions(cJSON* json)
 
 void LoadDefaultOptionValues()
 {
+#ifndef AGENT
 	// OOG option vals
 	options.account_index = 0;
 	for (int i = 0; i < MAX_STORED_ACCOUNTS; i++) {
@@ -698,17 +699,15 @@ void LoadDefaultOptionValues()
 	options.pmare_type = 0;
 	options.pmare_start_type = 0;
 	options.pmare_price = 0;
-#ifndef AGENT
 	options.tcp_only = TRUE;
-#else
 	options.tcp_only = FALSE;
-#endif
 	options.pmare_session_start.wYear = 1970;
 	memset(&options.avatar, 0, sizeof(options.avatar));
 	options.num_bungholes = 0;
 	for (int i = 0; i < MAX_IGNORELIST; i++)
 		_tcscpy(options.bungholes[i].name, _T(""));
 	keymap->SetDefaultKeymap(0);
+#endif // AGENT
 }
 
 void SmartLoadJSON()
