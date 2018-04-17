@@ -12,11 +12,8 @@
 #include "LoginOptions.h"
 #include "cDDraw.h"
 #include "Options.h"
+#include "Dialogs.h"
 //#include "RogerWilco.h"
-
-
-
-
 
 /////////////////////////////////////////////////////////////////
 // Global Variables
@@ -26,6 +23,7 @@ extern bool show_training_messages;
 extern HINSTANCE hInstance;
 extern cDDraw* cDD;
 extern pmare_t pmare_info[3];
+extern int numJsonFiles;
 
 // these are for getting the Windows Version #
 //extern unsigned int _osver; // only _winmajor is used here
@@ -64,22 +62,6 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			//SetWindowPos(hDlg, HWND_TOPMOST,pos_x, pos_y, 0,0, SWP_NOSIZE);
 			SetWindowPos(hDlg, HWND_TOPMOST, 15, 10, 0,0, SWP_NOSIZE);
 
-			Button_SetCheck(GetDlgItem(hDlg, IDC_SOUND),  options.sound);
-
-			Button_SetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL),  options.extra_scroll);
-
-			if( options.tcp_only )
-			{
-				EnableWindow( GetDlgItem( hDlg, IDC_BIND_UDP ), FALSE );
-			}
-			_stprintf(message, _T("%d"), options.bind_local_udp);
-			Edit_SetText(GetDlgItem(hDlg, IDC_BIND_UDP), message);
-
-			if (options.resolution == 800)
-				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES800), 1);
-			else
-				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES1024), 1);
-
 			Button_SetCheck(GetDlgItem(hDlg, IDC_RESTART_LOCATION),  options.restart_last_location);
 
 			ShowWindow(GetDlgItem(hDlg, IDC_ENABLE_RW), SW_HIDE);
@@ -97,12 +79,6 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 #else
 			Button_SetCheck(GetDlgItem(hDlg, IDC_ENABLE_RW),  options.rw);			
 			Button_SetCheck(GetDlgItem(hDlg, IDC_SOUND),  options.sound);
-#endif
-#ifdef PMARE
-			Button_SetCheck(GetDlgItem(hDlg, IDC_TRAINING), false);
-			ShowWindow(GetDlgItem(hDlg, IDC_TRAINING), SW_HIDE);
-#else
-			Button_SetCheck(GetDlgItem(hDlg, IDC_TRAINING), options.welcome_ai);
 #endif
 //			Button_SetCheck(GetDlgItem(hDlg, IDC_CREATE_CHARACTER), options.create_character);
 
@@ -154,43 +130,6 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			LoadString (hInstance, IDS_AGREEMENT_TEXT4, disp4, sizeof(disp4));
 		_stprintf(huge_text, _T("%s\r\n\r\n%s\r\n\r\n%s\r\n\r\n%s"), disp1, disp2, disp3, disp4);
 
-
-#ifdef PMARE
-			ShowWindow(GetDlgItem(hDlg, IDC_URL), SW_HIDE);
-			LoadString (hInstance, IDS_PMARE_BOGROM, message, sizeof(message));
-			ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), message);
-			LoadString (hInstance, IDS_PMARE_AGOKNIGHT, message, sizeof(message));
-			ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), message);
-			LoadString (hInstance, IDS_PMARE_SHAMBLIX, message, sizeof(message));
-			ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), message);
-
-			// get time in seconds to determine if session can be resume
-			SYSTEMTIME cur_time; 
-			//unsigned int cur_time = (LyraTime()/1000);
-			GetLocalTime(&cur_time);
-
-			// if we have a session stored in the registry, and it has 
-			// been less than 24 hours, allow them to resume
-//			sprintf(message, "%d : %d", options.pmare_session_start, cur_time);
-//			MessageBox(NULL, message, "Hello", MB_OK);
-			if ((options.pmare_type > Avatars::MIN_NIGHTMARE_TYPE) &&
-				(Within48Hours(options.pmare_session_start, cur_time)))
-			{
-				LoadString (hInstance, IDS_PMARE_RESUME, message, sizeof(message));
-				float price = (float)options.pmare_price;
-				price = price/100;
-				_stprintf(disp_message, message, price);
-				ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), disp_message);
-				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_PMARE_LIST), 3); // Default to resume session
-			}
-			else {
-				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_PMARE_LIST), 0); // Default to weakest option
-			}
-#else 
-			ShowWindow(GetDlgItem(hDlg, IDC_STATIC_PMARE), SW_HIDE);
-			ShowWindow(GetDlgItem(hDlg, IDC_PMARE_LIST), SW_HIDE);
-#endif
-
 			SendMessage(GetDlgItem(hDlg, IDC_AGREEMENT_TEXT), WM_SETTEXT, 0, (LPARAM) huge_text); 
 			ShowWindow(GetDlgItem(hDlg, IDC_PASSWORD), SW_SHOW);
 
@@ -203,6 +142,70 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_USERNAME), options.account_index);
 
 			//SetWindowText( GetDlgItem(hDlg, IDC_USERNAME), options.username[options.account_index]);
+		}
+		case WM_SET_LOGIN_DEFAULTS:
+		{
+			Button_SetCheck(GetDlgItem(hDlg, IDC_SOUND), options.sound);
+			Button_SetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL), options.extra_scroll);
+#ifdef PMARE
+			Button_SetCheck(GetDlgItem(hDlg, IDC_TRAINING), false);
+			ShowWindow(GetDlgItem(hDlg, IDC_TRAINING), SW_HIDE);
+#else
+			Button_SetCheck(GetDlgItem(hDlg, IDC_TRAINING), options.welcome_ai);
+#endif
+			if (options.tcp_only)
+			{
+				EnableWindow(GetDlgItem(hDlg, IDC_BIND_UDP), FALSE);
+			}
+			_stprintf(message, _T("%d"), options.bind_local_udp);
+			Edit_SetText(GetDlgItem(hDlg, IDC_BIND_UDP), message);
+
+			if (options.resolution == 800) {
+				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES640), 0);
+				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES800), 1);
+				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES1024), 0);
+			}
+			else {
+				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES640), 0);
+				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES800), 0);
+				Button_SetCheck(GetDlgItem(hDlg, IDC_GRAPHIC_RES1024), 1);
+			}
+#ifdef PMARE
+			ComboBox_ResetContent(GetDlgItem(hDlg, IDC_PMARE_LIST));
+			ShowWindow(GetDlgItem(hDlg, IDC_URL), SW_HIDE);
+			LoadString(hInstance, IDS_PMARE_BOGROM, message, sizeof(message));
+			ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), message);
+			LoadString(hInstance, IDS_PMARE_AGOKNIGHT, message, sizeof(message));
+			ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), message);
+			LoadString(hInstance, IDS_PMARE_SHAMBLIX, message, sizeof(message));
+			ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), message);
+
+			// get time in seconds to determine if session can be resume
+			SYSTEMTIME cur_time;
+			//unsigned int cur_time = (LyraTime()/1000);
+			GetLocalTime(&cur_time);
+
+			// if we have a session stored in the registry, and it has 
+			// been less than 24 hours, allow them to resume
+			//			sprintf(message, "%d : %d", options.pmare_session_start, cur_time);
+			//			MessageBox(NULL, message, "Hello", MB_OK);
+			if ((options.pmare_type > Avatars::MIN_NIGHTMARE_TYPE) &&
+				(Within48Hours(options.pmare_session_start, cur_time)))
+			{
+				LoadString(hInstance, IDS_PMARE_RESUME, message, sizeof(message));
+				float price = (float)options.pmare_price;
+				price = price / 100;
+				_stprintf(disp_message, message, price);
+				ComboBox_AddString(GetDlgItem(hDlg, IDC_PMARE_LIST), disp_message);
+				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_PMARE_LIST), 3); // Default to resume session
+			}
+			else {
+				ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_PMARE_LIST), 0); // Default to weakest option
+			}
+#else 
+			ShowWindow(GetDlgItem(hDlg, IDC_STATIC_PMARE), SW_HIDE);
+			ShowWindow(GetDlgItem(hDlg, IDC_PMARE_LIST), SW_HIDE);
+#endif
 			return TRUE;
 		}
 		case WM_COMMAND:
@@ -366,11 +369,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 					_tcscpy(options.password[empty_slot], password);
 					options.account_index = empty_slot;
 				}
-
-				RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(true), 0, NULL, 0, 
-								KEY_ALL_ACCESS, NULL, &reg_key, &result);
-				SaveOutOfGameRegistryOptionValues(reg_key);
-				RegCloseKey(reg_key);
+				SaveOutOfGameRegistryOptionValues();				
 
 				/*
 				// now save version # in separate reg key
@@ -393,7 +392,9 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			case IDC_USERNAME:
 				if (HIWORD(wParam) == LBN_SELCHANGE) {
 					options.account_index = ComboBox_GetCurSel(GetDlgItem(hDlg, IDC_USERNAME));
-					SetWindowText( GetDlgItem(hDlg, IDC_PASSWORD), options.password[options.account_index]);
+					SetWindowText(GetDlgItem(hDlg, IDC_PASSWORD), options.password[options.account_index]);
+					LoadJSONOptionValues(options.username[options.account_index]);
+					SendMessage(hDlg, WM_SET_LOGIN_DEFAULTS, 0, 0);
 				}
 			}
 			break;
@@ -457,219 +458,16 @@ BOOL CALLBACK LaunchOptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARA
 
 
 // writes the out of game options to the registry
-void __cdecl SaveOutOfGameRegistryOptionValues(HKEY reg_key)
+void __cdecl SaveOutOfGameRegistryOptionValues(void)
 {
-	RegSetValueEx(reg_key, _T("welcome_ai"), 0, REG_DWORD,  
-		(unsigned char *)&(options.welcome_ai), sizeof(options.welcome_ai));
-	RegSetValueEx(reg_key, _T("account_index"), 0, REG_DWORD, 
-		(unsigned char *)&(options.account_index), sizeof(options.account_index));
-	TCHAR buffer[64];
-	for (int i=0; i<MAX_STORED_ACCOUNTS; i++) {
-		_stprintf(buffer, _T("username_%d"), i);
-		RegSetValueEx(reg_key, buffer, 0, REG_SZ, 
-			(unsigned char *)options.username[i], Lyra::PLAYERNAME_MAX);
-		_stprintf(buffer, _T("password_%d"), i);
-		RegSetValueEx(reg_key, buffer, 0, REG_SZ, 
-			(unsigned char *)options.password[i], Lyra::PASSWORD_MAX);
+	cJSON* globals = WriteGlobalJSONOptionValues();
+	if (globals)
+	{
+		WriteJSONFile(globals, "globals.json");
+		cJSON_Delete(globals);
+		return;
 	}
-	RegSetValueEx(reg_key, _T("sound"), 0, REG_DWORD,  
-		(unsigned char *)&(options.sound), sizeof(options.sound));
-	RegSetValueEx(reg_key, _T("extra_scroll"), 0, REG_DWORD,  
-		(unsigned char *)&(options.extra_scroll), sizeof(options.extra_scroll));
-	RegSetValueEx(reg_key, _T("bind_local_tcp"), 0, REG_DWORD,  
-		(unsigned char *)&(options.bind_local_tcp), sizeof(options.bind_local_tcp));
-	RegSetValueEx(reg_key, _T("bind_local_udp"), 0, REG_DWORD,  
-		(unsigned char *)&(options.bind_local_udp), sizeof(options.bind_local_udp));
-	RegSetValueEx(reg_key, _T("restart_last_location"), 0, REG_DWORD,  
-		(unsigned char *)&(options.restart_last_location), sizeof(options.restart_last_location));
-	RegSetValueEx(reg_key, _T("resolution"), 0, REG_DWORD,  
-		(unsigned char *)&(options.resolution), sizeof(options.resolution));
-#ifdef UL_DEV
-	RegSetValueEx(reg_key, _T("dev_server"), 0, REG_DWORD,
-		(unsigned char *)&(options.dev_server), sizeof(options.dev_server));
-	RegSetValueEx(reg_key, _T("custom_server_ip"), 0, REG_SZ,
-		(unsigned char *) &(options.custom_ip), sizeof(options.custom_ip));
-#endif
-	RegSetValueEx(reg_key, _T("rogerwilco"), 0, REG_DWORD,  
-		(unsigned char *)&(options.rw), sizeof(options.rw));
-	RegSetValueEx(reg_key, _T("network"), 0, REG_DWORD,  
-		(unsigned char *)&(options.network), sizeof(options.network));
-	RegSetValueEx(reg_key, _T("debug"), 0, REG_DWORD,  
-		(unsigned char *)&(options.debug), sizeof(options.debug));
-	RegSetValueEx(reg_key, _T("gameserver"), 0, REG_SZ,  //ROUND_ROBIN 
-		(unsigned char *)options.game_server, sizeof(options.game_server));
-	RegSetValueEx(reg_key, _T("pmare_session_start"), 0, REG_BINARY,  
-		(unsigned char *)&(options.pmare_session_start), sizeof(options.pmare_session_start));
-
 }
 
-void LoadOutOfGameRegistryOptionValues(HKEY reg_key, bool force)
-{
-	DWORD keyresult, size, reg_type;
-
-	size = sizeof(options.account_index);
-	keyresult = RegQueryValueEx(reg_key, _T("account_index"), NULL, &reg_type,
-		(unsigned char *)&(options.account_index), &size);
-	if ((keyresult != ERROR_SUCCESS) || force ||
-		(options.account_index >= MAX_STORED_ACCOUNTS))
-		options.account_index = 0;
-
-	// HACK: read in username/password from single storage system
-	// and use as defaults if username_0 isn't present
-
-	TCHAR legacy_username[Lyra::PLAYERNAME_MAX];
-	TCHAR legacy_password[Lyra::PASSWORD_MAX];
-	size = Lyra::PLAYERNAME_MAX;
-	keyresult = RegQueryValueEx(reg_key, _T("username"), NULL, &reg_type,
-		(unsigned char *)legacy_username, &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		_tcscpy(legacy_username, _T(""));
-
-	size = Lyra::PASSWORD_MAX;
-	keyresult = RegQueryValueEx(reg_key, _T("password"), NULL, &reg_type,
-		(unsigned char *)legacy_password, &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		_tcscpy(legacy_password, _T(""));
-
-	// now read the list of stored usernames and passwords
-	BOOL subsquent_login = FALSE;
-	TCHAR buffer[64];
-	for (int i=0; i<MAX_STORED_ACCOUNTS; i++) {
-		_stprintf(buffer, _T("username_%d"), i);
-		size = Lyra::PLAYERNAME_MAX;
-		keyresult = RegQueryValueEx(reg_key, buffer, NULL, &reg_type,
-			(unsigned char *)options.username[i], &size);
-
-		if ((keyresult != ERROR_SUCCESS) || force) {
-			if ((0 == i) && (keyresult != ERROR_SUCCESS)) // copy across legacy value
-				_tcscpy(options.username[i], legacy_username);
-			else
-				_tcscpy(options.username[i], _T(""));
-		}
-		else 
-			subsquent_login = TRUE;
-
-		_stprintf(buffer, _T("password_%d"), i);
-		size = Lyra::PASSWORD_MAX;
-		keyresult = RegQueryValueEx(reg_key, buffer, NULL, &reg_type,
-			(unsigned char *)options.password[i], &size);
-
-		if ((keyresult != ERROR_SUCCESS) || force) {
-			if ((0 == i) && (keyresult != ERROR_SUCCESS)) // copy across legacy value
-				_tcscpy(options.password[i], legacy_password);
-			else
-				_tcscpy(options.password[i], _T(""));
-		}
-	}
-
-	size = sizeof(options.rw);
-	keyresult = RegQueryValueEx(reg_key, _T("rogerwilco"), NULL, &reg_type,
-		(unsigned char *)&(options.rw), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.rw = TRUE;
-
-	size = sizeof(options.sound);
-	keyresult = RegQueryValueEx(reg_key, _T("sound"), NULL, &reg_type,
-		(unsigned char *)&(options.sound), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.sound = TRUE;
-
-	size = sizeof(options.extra_scroll);
-	keyresult = RegQueryValueEx(reg_key, _T("extra_scroll"), NULL, &reg_type,
-		(unsigned char *)&(options.extra_scroll), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.extra_scroll = TRUE;
-
-	size = sizeof(options.bind_local_tcp);
-	keyresult = RegQueryValueEx(reg_key, _T("bind_local_tcp"), NULL, &reg_type,
-		(unsigned char *)&(options.bind_local_tcp), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.bind_local_tcp = 0;
-
-	size = sizeof(options.bind_local_udp);
-	keyresult = RegQueryValueEx(reg_key, _T("bind_local_udp"), NULL, &reg_type,
-		(unsigned char *)&(options.bind_local_udp), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.bind_local_udp = DEFAULT_UDP_PORT;
-
-
-#ifdef CHINESE
-	size = sizeof(options.restart_last_location);
-	keyresult = RegQueryValueEx(reg_key, _T("restart_last_location"), NULL, &reg_type,
-		(unsigned char *)&(options.restart_last_location), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.restart_last_location = FALSE;
-#else
-		options.restart_last_location = FALSE;
-#endif
-
-	size = sizeof(options.resolution);
-	keyresult = RegQueryValueEx(reg_key, _T("resolution"), NULL, &reg_type,
-		(unsigned char *)&(options.resolution), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.resolution = 1024;
-
-#ifdef UL_DEV
-	size = sizeof(options.dev_server);
-	keyresult = RegQueryValueEx(reg_key, _T("dev_server"), NULL, &reg_type,
-		(unsigned char*) &(options.dev_server), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.dev_server = 1;	
-
-	size = sizeof(options.custom_ip);
-	keyresult = RegQueryValueEx(reg_key, _T("custom_server_ip"), NULL, &reg_type,
-		(unsigned char *)options.custom_ip, &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		LoadString(hInstance, IDS_CUSTOM_IP_DEFAULT, options.custom_ip, sizeof(options.custom_ip));
-#endif
-
-	size = sizeof(options.network);
-	keyresult = RegQueryValueEx(reg_key, _T("network"), NULL, &reg_type,
-		(unsigned char *)&(options.network), &size);
-#ifndef AGENT
-#if defined (UL_DEBUG) || defined (GAMEMASTER)
-	if ((keyresult != ERROR_SUCCESS) || force)
-#endif // non-gm's and agents MUST run networked
-#endif
-		options.network = INTERNET;
-
-	size = sizeof(options.debug);
-	keyresult = RegQueryValueEx(reg_key, _T("debug"), NULL, &reg_type,
-		(unsigned char *)&(options.debug), &size);
-#if defined (UL_DEBUG)
-	if ((keyresult != ERROR_SUCCESS) || force)
-#endif // non-debug builds can't goto debug server
-		options.debug = FALSE;
-
-#ifdef PMARE_BETA // beta builds goto debug server so shutdowns don't stop the whole game
-	options.debug = TRUE;
-#endif
-
-//ROUND_ROBIN
-	size = sizeof(options.game_server);
-	keyresult = RegQueryValueEx(reg_key, _T("gameserver"), NULL, &reg_type,
-		(unsigned char *)options.game_server, &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		LoadString(hInstance, IDS_LIVE_GAME_SERVER_IP, options.game_server, sizeof(options.game_server));
-
-	size = sizeof(options.welcome_ai);
-	keyresult = RegQueryValueEx(reg_key, _T("welcome_ai"), NULL, &reg_type,
-		(unsigned char *)&(options.welcome_ai), &size);
-	if ((keyresult != ERROR_SUCCESS) || force)
-		options.welcome_ai = TRUE;
-
-	// turn off welcome_ai when this isn't the first login
-	if (subsquent_login)
-		options.welcome_ai = FALSE;
-
-#ifdef AGENT
-	options.welcome_ai = FALSE;
-#endif
-
-	show_training_messages = options.welcome_ai;
-
-	// save them back, in case a default was set
-	SaveOutOfGameRegistryOptionValues(reg_key); 
-}
 
 

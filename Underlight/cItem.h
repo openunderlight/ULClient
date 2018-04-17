@@ -76,7 +76,7 @@ class cItem : public cActor
 	   void *extra; // extra pointer; used for wards, etc.
 	   int sort_index; // relative sort index for control panel
 	   int inventory_flags;
-
+	   bool expire_time_is_ttl;
    public:
 	   cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_status, 
 		   unsigned __int64 i_flags = 0, bool temp = false, DWORD expires = 0,
@@ -109,6 +109,8 @@ class cItem : public cActor
 	  bool NoPickup(void);
 
 	  // selectors
+	  bool IsRazorwind(void);
+	  inline DWORD ExpireTime(void) { return expire_time; }
 	  inline LmItemHdr& ID(void) { return lmitem.Header(); };
 	  inline LmItem& Lmitem(void) { return lmitem; };
 	  inline int Status(void) { return status; };
@@ -133,7 +135,7 @@ class cItem : public cActor
 	  bool Losable(void);
 	  int ItemFunction(int slot);
 	  int MissleDamage(void);
-
+	  bool IsAreaEffectItem(void);
 
 	  // mutators
 	  void SetStatus(int new_status);
@@ -141,6 +143,8 @@ class cItem : public cActor
 	  inline void SetSelectedFunction(int new_function) { selected_function = new_function; };
 	  inline void SetMarkedForDeath(bool value) { marked_for_death = value; };
 	  inline void SetMarkedForDrop(void) { marked_for_drop = true; };
+	  inline void SetUseTTLForDrop(bool val) { expire_time_is_ttl = val;  }
+	  inline bool UseTTLForDrop() { return expire_time_is_ttl;  }
 	  inline void SetThrown(bool value) { thrown = value; };
 	  inline void SetNeedsUpdate(bool value) { needsUpdate = value;};
 	  inline void SetInventoryFlags(int value) { inventory_flags = value; };

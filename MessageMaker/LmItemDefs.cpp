@@ -113,6 +113,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_TOV, 2, TRANSLATION_NONE, false, INT_MIN, INT_MAX},
     { ITEM_HIBIT, 2, TRANSLATION_NONE, false, INT_MIN, INT_MAX},
     { ITEM_LOBIT, 2, TRANSLATION_NONE, false, INT_MIN, INT_MAX},
+	NO_FIELD,
     NO_FIELD},
   },
 
@@ -121,6 +122,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_STAT, 1, TRANSLATION_STAT, true, 0, NUM_PLAYER_STATS-1},
     { ITEM_MOD, 1, TRANSLATION_MODIFIER, true, -NUM_MODIFIERS + 1, NUM_MODIFIERS - 1},
     NO_FIELD,
+	NO_FIELD,
     NO_FIELD,
     NO_FIELD,
     NO_FIELD},
@@ -133,6 +135,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     {ITEM_DAMAGE, 1, TRANSLATION_POS_MODIFIER, true, 0, NUM_MODIFIERS - 1},
     //{ _T("Bitmap ID"), 2, TRANSLATION_MISSILE_BITMAP, false, LyraBitmap::MINIMUM_MISSILE_BITMAP, LyraBitmap::MAXIMUM_MISSILE_BITMAP},
 	NO_FIELD,
+	NO_FIELD,
     NO_FIELD,
     NO_FIELD},
   },
@@ -142,6 +145,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_EFF, 1, TRANSLATION_EFFECT, true, 0, NUM_TIMED_EFFECTS},
     { ITEM_DUR, 1, TRANSLATION_DURATION, true, 0, NUM_DURATIONS - 1},
     NO_FIELD,
+	NO_FIELD,
     NO_FIELD,
     NO_FIELD,
     NO_FIELD},
@@ -153,19 +157,21 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_UNUSED, 2, TRANSLATION_NONE, false, INT_MIN, INT_MAX},
     { ITEM_CODE, 4, TRANSLATION_NONE, true, 0, UINT_MAX}, 
     NO_FIELD,
+	NO_FIELD,
     NO_FIELD,
     NO_FIELD},
   },
 
   // AREA_EFFECT_FUNCTION
-  { ITEM_AE, 8, 4, false, false, false, true, true, false, true, {
-    { ITEM_EFFECT, 1, TRANSLATION_EFFECT, true, 0, NUM_TIMED_EFFECTS},
-    { ITEM_DAMAGE, 1, TRANSLATION_POS_MODIFIER, true, -NUM_MODIFIERS+1, NUM_MODIFIERS-1},
-    { ITEM_TIME, 1, TRANSLATION_NONE, true, 0, INT_MAX},
-    { ITEM_CASTER, 4, TRANSLATION_NONE, false, 0, UINT_MAX},
-    NO_FIELD,
-    NO_FIELD},
-  },
+  { ITEM_AE, 10, 6, true, false, true, true, true, false, true, {
+	{ ITEM_EFFECT, 1, TRANSLATION_EFFECT, true, 0, 255},
+	{ ITEM_DUR, 1, TRANSLATION_DURATION, true, 0, NUM_DURATIONS - 1 },
+	{ ITEM_STAT, 1, TRANSLATION_STAT, true, 0, NUM_PLAYER_STATS - 1 },
+	{ ITEM_MOD, 1, TRANSLATION_MODIFIER, true, -NUM_MODIFIERS + 1, NUM_MODIFIERS - 1},
+	{ ITEM_DISTANCE, 1, TRANSLATION_DISTANCE, true, 0, 255},
+	{ ITEM_HIBIT, 2, TRANSLATION_NONE, false, INT_MIN, INT_MAX },
+	{ ITEM_LOBIT, 2, TRANSLATION_NONE, false, INT_MIN, INT_MAX },
+  } },
 
   // MARE_ESSENSE_FUNCTION
   { ITEM_ESSENCE, 8, 4, true, false, false, false, false, false, true, {
@@ -174,6 +180,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_WPNTYPE, 1, TRANSLATION_NONE, false, 0, 1},
     { ITEM_MAKER, 4, TRANSLATION_NONE, false, 0, UINT_MAX},
     NO_FIELD,
+	NO_FIELD,
     NO_FIELD},
   },
 
@@ -183,6 +190,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_MAXDURR, 1, TRANSLATION_DURABILITY, true, 1, 99},
     { ITEM_ABSORB, 1, TRANSLATION_ABSORPTION, true, 1, 100},
     NO_FIELD,
+	NO_FIELD,
     NO_FIELD,
     NO_FIELD},
   },
@@ -194,6 +202,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_TARGETLO, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
     { ITEM_CREATORLO, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
     { ITEM_CREATORHI, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
+	NO_FIELD,
     NO_FIELD},
   },
 
@@ -204,6 +213,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_STRLO, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
     { ITEM_TRAPHI, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
     { ITEM_TRAPLO, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
+	NO_FIELD,
     NO_FIELD},
   },
 
@@ -214,6 +224,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_MAKER, 4, TRANSLATION_NONE, false, 0, UINT_MAX},
     { ITEM_TARGETLO, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
     NO_FIELD,
+	NO_FIELD,
     NO_FIELD},
   },
 
@@ -253,18 +264,20 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_X, 2, TRANSLATION_TPORT_DEST, false, SHRT_MIN, SHRT_MAX},
     { ITEM_Y, 2, TRANSLATION_TPORT_DEST, false, SHRT_MIN, SHRT_MAX},
     NO_FIELD,
+	NO_FIELD,
     NO_FIELD,
     NO_FIELD},
   },
 
    // SUPPORT_TRAIN_FUNCTION
-  { ITEM_SUPPORT, 10, 6, true, false, false, false, true, false, false, {
-    { ITEM_SUPPORTID, 1, TRANSLATION_NONE, true, INT_MIN, INT_MAX},
-    { ITEM_ARTLVL, 1, TRANSLATION_NONE, true, INT_MIN, INT_MAX},
-    { ITEM_UNUSED, 1, TRANSLATION_NONE, false, 0, 0},
-    { ITEM_TARGETHI, 2, TRANSLATION_NONE, true, 0, USHRT_MAX},
-    { ITEM_TARGETLO, 2, TRANSLATION_NONE, true, 0, USHRT_MAX},
-    { ITEM_CREATORLO, 2, TRANSLATION_NONE, true, 0, UINT_MAX}},
+{ ITEM_SUPPORT, 10, 6, true, false, false, false, true, false, false, {
+  { ITEM_SUPPORTID, 1, TRANSLATION_NONE, true, INT_MIN, INT_MAX},
+  { ITEM_ARTLVL, 1, TRANSLATION_NONE, true, INT_MIN, INT_MAX},
+  { ITEM_UNUSED, 1, TRANSLATION_NONE, false, 0, 0},
+  { ITEM_TARGETHI, 2, TRANSLATION_NONE, true, 0, USHRT_MAX},
+  { ITEM_TARGETLO, 2, TRANSLATION_NONE, true, 0, USHRT_MAX},
+  { ITEM_CREATORLO, 2, TRANSLATION_NONE, true, 0, UINT_MAX},
+  NO_FIELD},
 	},
 
    // GRATITUDE_FUNCTION
@@ -274,6 +287,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
     { ITEM_CREATORHI, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
     { ITEM_CREATORLO, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
     { ITEM_TARGETLO, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
+	NO_FIELD,
     NO_FIELD},
   },
 
@@ -284,7 +298,19 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
 	  { ITEM_ESSENCE, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
 	  { ITEM_STRCAP, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
 	  { ITEM_ESSCAP, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
-	  NO_FIELD }, }
+	  NO_FIELD,
+	  NO_FIELD }, },
+
+	  // AREA_EFFECT_FUNCTION
+{ ITEM_PORTKEY, 8, 6, false, false, true, true, true, false, true, {
+	{ ITEM_UNUSED, 1, TRANSLATION_NONE, false, 0, 0 },
+	{ ITEM_DISTANCE, 1, TRANSLATION_DISTANCE, true, 0, NUM_DISTANCES - 1 },
+	{ ITEM_LEVELID, 1, TRANSLATION_LEVEL_ID, true, 1, 100 },
+	{ ITEM_X, 2, TRANSLATION_TPORT_DEST, false, SHRT_MIN, SHRT_MAX },
+	{ ITEM_Y, 2, TRANSLATION_TPORT_DEST, false, SHRT_MIN, SHRT_MAX },
+	NO_FIELD, NO_FIELD,
+	},
+}
 };
 
 const int LyraItem::item_functions_num =
@@ -676,6 +702,10 @@ void FASTCALL LyraItem::ConvertStateToNetwork(void* ssptr)
 	lyra_item_meta_essence_nexus_t nexus;
 	convert_hton(nexus, ssptr);
 	break;
+  case PORTKEY_FUNCTION:
+	  lyra_item_portkey_t portkey;
+	  convert_hton(portkey, ssptr);
+	  break;
   case NO_FUNCTION: // should be an error
   case EFFECT_PLAYER_FUNCTION:
   case CHANGE_STAT_FUNCTION:
@@ -759,6 +789,10 @@ void FASTCALL LyraItem::ConvertStateToHost(void* ssptr)
 	lyra_item_meta_essence_nexus_t nexus;
 	convert_ntoh(nexus, ssptr);
 	break;
+  case PORTKEY_FUNCTION:
+	  lyra_item_portkey_t portkey;
+	  convert_ntoh(portkey, ssptr);
+	  break;
   case NO_FUNCTION: // should be an error
   case EFFECT_PLAYER_FUNCTION:
   case CHANGE_STAT_FUNCTION:

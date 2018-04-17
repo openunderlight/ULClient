@@ -170,7 +170,7 @@ unsigned long art_chksum[NUM_ARTS] =
 #else
 0x4B82, // Firestorm pmare
 #endif
-0x6ED5, // Razorwind 
+0x6EF5, // Razorwind 
 0x8E9A, // Recall 
 0xB0A3, // Push 
 0xD632, // Soul Evoke 
@@ -240,7 +240,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xC88A, // Radiant Blaze 
 0xF445, // Poison Cloud 
 0x106E, // Break Covenant 
-0x3A08, // Peace Aura 
+0x3A09, // Peace Aura 
 0x5A62, // Sable Shield 
 0x8684, // Entrancement 
 0xA2E4, // Shadow Step 
@@ -284,196 +284,200 @@ unsigned long art_chksum[NUM_ARTS] =
 0x7EE1, // Chaos Well 
 0xA329, // Rally 
 0xC767, // Channel
+0xE96C, // Bulwark
+0xDF3,
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {// CKS  Name				Stat			    Orb Drn Dur Time PP 	Flags
-{IDS_JP,					Stats::NO_STAT,		0,  0,  0,	0,	-1, SANCT|NEIGH|LEARN},
+{IDS_JP,					Stats::NO_STAT,		0,  0,  0,	0,	-1, SANCT | NEIGH | LEARN},
 {IDS_GK, 					Stats::NO_STAT,		0,  0,  0,	0, 	-1, FOCUS},
 {IDS_DREAMSEER,				Stats::NO_STAT,		0,  0,  0,	0,	-1, FOCUS},
 {IDS_SM, 					Stats::NO_STAT,		0,  0,  0,	0,	-1, FOCUS},
 {IDS_FS, 					Stats::NO_STAT,		0,  0,  0,	0, 	-1, FOCUS},
-{IDS_RANDOM,				Stats::NO_STAT,		0,  0,  0,	2, 	-1, SANCT|LEARN},
-{IDS_MEDITATION, 			Stats::WILLPOWER,	0,  2,  15, 1,	1, SANCT|LEARN},
-{IDS_RF,					Stats::WILLPOWER,	10, 5,  13, 2, 	2, SANCT|LEARN},
-{IDS_PROTECTION, 			Stats::WILLPOWER,	15, 5,  13, 2, 	2, SANCT|LEARN},
-{IDS_FA,					Stats::WILLPOWER,	5,  5,  13, 2, 	2, SANCT|LEARN},
-{IDS_WARD, 					Stats::WILLPOWER,	20, 20, 0,	5, 	3, MAKE_ITEM|FOCUS|LEARN},
-{IDS_AMULET,				Stats::WILLPOWER,	20, 1,  0,	2, 	1, SANCT|MAKE_ITEM|FOCUS|LEARN},
+{IDS_RANDOM,				Stats::NO_STAT,		0,  0,  0,	2, 	-1, SANCT | LEARN},
+{IDS_MEDITATION, 			Stats::WILLPOWER,	0,  2,  15, 1,	1, SANCT | LEARN},
+{IDS_RF,					Stats::WILLPOWER,	10, 5,  13, 2, 	2, SANCT | LEARN},
+{IDS_PROTECTION, 			Stats::WILLPOWER,	15, 5,  13, 2, 	2, SANCT | LEARN},
+{IDS_FA,					Stats::WILLPOWER,	5,  5,  13, 2, 	2, SANCT | LEARN},
+{IDS_WARD, 					Stats::WILLPOWER,	20, 20, 0,	5, 	3, MAKE_ITEM | FOCUS | LEARN},
+{IDS_AMULET,				Stats::WILLPOWER,	20, 1,  0,	2, 	1, SANCT | MAKE_ITEM | FOCUS | LEARN},
 #ifndef PMARE
-{IDS_SHATTER, 				Stats::WILLPOWER,	40, 40, 0,	8, 	4, SANCT|FOCUS|LEARN},
+{IDS_SHATTER, 				Stats::WILLPOWER,	40, 40, 0,	8, 	4, SANCT | FOCUS | LEARN},
 #else
-{IDS_SHATTER, 				Stats::WILLPOWER,	0, 5, 0,	2, 	4, SANCT|LEARN},
+{IDS_SHATTER, 				Stats::WILLPOWER,	0, 5, 0,	2, 	4, SANCT | LEARN},
 #endif
-{IDS_RETURN,				Stats::WILLPOWER, 50, 20, 23,   2,  2, SANCT|FOCUS|LEARN},
-{IDS_KNOW, 					Stats::INSIGHT,		0,  0,  0,	1, 	-1, SANCT|LEARN},
-{IDS_JUDGEMENT_ART_NAME,	Stats::INSIGHT,		10, 2,  0,	1, 	1, SANCT|NEIGH|LEARN},
-{IDS_ID,					Stats::INSIGHT,		15, 6,  0,	5, 	1, SANCT|NEED_ITEM|LEARN},
-{IDS_ID_CURSE,				Stats::INSIGHT,		20, 2,  0,	1, 	1, SANCT|NEIGH|LEARN},
-{IDS_CHAMELE, 				Stats::INSIGHT,		20, 20, 16, 5, 	2, SANCT|FOCUS|LEARN},
-{IDS_VISION,				Stats::INSIGHT,		20, 5,  13, 2, 	2, SANCT|FOCUS|LEARN},
+{IDS_RETURN,				Stats::WILLPOWER, 50, 20, 23,   2,  2, SANCT | FOCUS | LEARN},
+{IDS_KNOW, 					Stats::INSIGHT,		0,  0,  0,	1, 	-1, SANCT | LEARN},
+{IDS_JUDGEMENT_ART_NAME,	Stats::INSIGHT,		10, 2,  0,	1, 	1, SANCT | NEIGH | LEARN},
+{IDS_ID,					Stats::INSIGHT,		15, 6,  0,	5, 	1, SANCT | NEED_ITEM | LEARN},
+{IDS_ID_CURSE,				Stats::INSIGHT,		20, 2,  0,	1, 	1, SANCT | NEIGH | LEARN},
+{IDS_CHAMELE, 				Stats::INSIGHT,		20, 20, 16, 5, 	2, SANCT | FOCUS | LEARN},
+{IDS_VISION,				Stats::INSIGHT,		20, 5,  13, 2, 	2, SANCT | FOCUS | LEARN},
 #ifndef PMARE
-{IDS_BLAST,					Stats::INSIGHT,		30, 2,  0,	1, 	2, NEIGH|FOCUS|LEARN},
+{IDS_BLAST,					Stats::INSIGHT,		30, 2,  0,	1, 	2, NEIGH | FOCUS | LEARN},
 #else
 { IDS_BLAST,				Stats::INSIGHT,		0, 5,  0,	1, 	2, NEIGH | FOCUS | LEARN },
 #endif 
-{IDS_BLEND,					Stats::INSIGHT,		50, 30, 6,	5, 	3, SANCT|FOCUS|LEARN},
-{IDS_FORGE,					Stats::DREAMSOUL,	50, 50, 0,	8, 	-1, SANCT|MAKE_ITEM|LEARN},
-{IDS_RECHARGE,				Stats::INSIGHT,		40, 15, 0,	8, 	2, SANCT|FOCUS|LEARN|NEED_ITEM},
+{IDS_BLEND,					Stats::INSIGHT,		50, 30, 6,	5, 	3, SANCT | FOCUS | LEARN},
+{IDS_FORGE,					Stats::DREAMSOUL,	50, 50, 0,	8, 	-1, SANCT | MAKE_ITEM | LEARN},
+{IDS_RECHARGE,				Stats::INSIGHT,		40, 15, 0,	8, 	2, SANCT | FOCUS | LEARN | NEED_ITEM},
 #ifndef PMARE
-{IDS_RESTORE, 				Stats::RESILIENCE,	10, 5,  0,	1, 	1, SANCT|LEARN},
+{IDS_RESTORE, 				Stats::RESILIENCE,	10, 5,  0,	1, 	1, SANCT | LEARN},
 #else
 { IDS_RESTORE, 				Stats::RESILIENCE,	0, 5,  0,	1, 	1, SANCT | LEARN },
 #endif
-{IDS_REWEAVE, 				Stats::RESILIENCE,	15, 10, 0,	4, 	1, SANCT|NEED_ITEM|LEARN},
-{IDS_PURIFY,				Stats::RESILIENCE,	5,  15, 0,	2, 	1, SANCT|LEARN},
-{IDS_DRAIN_SELF, 			Stats::RESILIENCE,	20, 5,  0,	2, 	2, SANCT|NEIGH|FOCUS|LEARN},
+{IDS_REWEAVE, 				Stats::RESILIENCE,	15, 10, 0,	4, 	1, SANCT | NEED_ITEM | LEARN},
+{IDS_PURIFY,				Stats::RESILIENCE,	5,  15, 0,	2, 	1, SANCT | LEARN},
+{IDS_DRAIN_SELF, 			Stats::RESILIENCE,	20, 5,  0,	2, 	2, SANCT | NEIGH | FOCUS | LEARN},
 #ifndef PMARE
-{IDS_ABJURE,				Stats::RESILIENCE,	50, 30, 0,	3, 	4, FOCUS|LEARN},
-{IDS_POISON,				Stats::RESILIENCE,	30, 15, 13, 3, 	2, NEIGH|FOCUS|LEARN},
-{IDS_ANTIDOTE,				Stats::RESILIENCE,	30, 10, 0,	2, 	3, SANCT|FOCUS|LEARN},
+{IDS_ABJURE,				Stats::RESILIENCE,	50, 30, 0,	3, 	4, FOCUS | LEARN},
+{IDS_POISON,				Stats::RESILIENCE,	30, 15, 13, 3, 	2, NEIGH | FOCUS | LEARN},
+{IDS_ANTIDOTE,				Stats::RESILIENCE,	30, 10, 0,	2, 	3, SANCT | FOCUS | LEARN},
 #else
 { IDS_ABJURE,				Stats::RESILIENCE,	0, 50, 0,	3, 	4, FOCUS | LEARN },
 { IDS_POISON,				Stats::RESILIENCE,	0, 10, 13, 3, 	2, NEIGH | FOCUS | LEARN },
 { IDS_ANTIDOTE,				Stats::RESILIENCE,	0, 5, 0,	2, 	3, SANCT | FOCUS | LEARN },
 
 #endif
-{IDS_CURSE,					Stats::RESILIENCE,	40, 10, 13, 3, 	3, NEIGH|FOCUS|LEARN},
-{IDS_DRAIN_ESSENCE,			Stats::RESILIENCE,	0,  0,  0,	1, 	1, SANCT|NEED_ITEM|LEARN},
-{IDS_BANISH_MARE,			Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
-{IDS_IMPRISON_MARE,			Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
-{IDS_TRAP_MARE,				Stats::RESILIENCE,	50, 10, 0,	3, 	3, SANCT|NEIGH|FOCUS|LEARN},
-{IDS_DREAMBLADE, 			Stats::INSIGHT,		0,  5,  23, 1, 	-1, SANCT|MAKE_ITEM|FOCUS},
-{IDS_TRAIL,					Stats::LUCIDITY,	0,  2,  25, 1, 	-1, SANCT|LEARN},
-{IDS_SCARE,					Stats::LUCIDITY,	10, 5,  4,	2, 	2, NEIGH|LEARN},
-{IDS_STAGGER, 				Stats::LUCIDITY,	20, 10, 3,	2, 	3, NEIGH|FOCUS|LEARN},
-{IDS_DEAFEN,				Stats::LUCIDITY,	5,  15, 4,	2, 	2, NEIGH|LEARN},
-{IDS_BLIND,					Stats::LUCIDITY,	45, 15, 3,	3, 	3, NEIGH|FOCUS|LEARN},
+{IDS_CURSE,					Stats::RESILIENCE,	40, 10, 13, 3, 	3, NEIGH | FOCUS | LEARN},
+{IDS_DRAIN_ESSENCE,			Stats::RESILIENCE,	0,  0,  0,	1, 	1, SANCT | NEED_ITEM | LEARN},
+{IDS_BANISH_MARE,			Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | FOCUS | LEARN},
+{IDS_IMPRISON_MARE,			Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | FOCUS | LEARN},
+{IDS_TRAP_MARE,				Stats::RESILIENCE,	50, 10, 0,	3, 	3, SANCT | NEIGH | FOCUS | LEARN},
+{IDS_DREAMBLADE, 			Stats::INSIGHT,		0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
+{IDS_TRAIL,					Stats::LUCIDITY,	0,  2,  25, 1, 	-1, SANCT | LEARN},
+{IDS_SCARE,					Stats::LUCIDITY,	10, 5,  4,	2, 	2, NEIGH | LEARN},
+{IDS_STAGGER, 				Stats::LUCIDITY,	20, 10, 3,	2, 	3, NEIGH | FOCUS | LEARN},
+{IDS_DEAFEN,				Stats::LUCIDITY,	5,  15, 4,	2, 	2, NEIGH | LEARN},
+{IDS_BLIND,					Stats::LUCIDITY,	45, 15, 3,	3, 	3, NEIGH | FOCUS | LEARN},
 #ifndef PMARE
-{IDS_DARKNESS_ART_NAME,		Stats::LUCIDITY,	50, 25, 4,	5, 	3, NEIGH|FOCUS|LEARN},
+{IDS_DARKNESS_ART_NAME,		Stats::LUCIDITY,	50, 25, 4,	5, 	3, NEIGH | FOCUS | LEARN},
 #else
 { IDS_DARKNESS_ART_NAME,	Stats::LUCIDITY,	0, 25, 4,	3, 	3, NEIGH | FOCUS | LEARN },
 #endif
-{IDS_PARALYZE,				Stats::LUCIDITY,	30, 20, 2,	3, 	3, NEIGH|FOCUS|LEARN},  
+{IDS_PARALYZE,				Stats::LUCIDITY,	30, 20, 2,	3, 	3, NEIGH | FOCUS | LEARN},
 #ifndef PMARE
-{IDS_FIRESTORM,				Stats::LUCIDITY,	50, 25, 0,	7, 	3, FOCUS|LEARN},
+{IDS_FIRESTORM,				Stats::LUCIDITY,	50, 25, 0,	7, 	3, FOCUS | LEARN},
 #else
 { IDS_FIRESTORM,			Stats::LUCIDITY,	0, 25, 0,	3, 	3, FOCUS | LEARN },
 #endif
-{IDS_RAZORWIND,				Stats::LUCIDITY,	70, 40, 6,	9, 	4, FOCUS|LEARN},
-{IDS_RECALL_ART_NAME,		Stats::DREAMSOUL,	25, 1,  25, 1, 	1, SANCT|LEARN},
-{IDS_PUSH, 					Stats::DREAMSOUL,	0,  0,  0,	1, 	1, NEIGH|LEARN},
-{IDS_SOUL_EVOKE, 			Stats::DREAMSOUL,	15, 1,  23, 1, 	1, SANCT|LEARN},
+{IDS_RAZORWIND,				Stats::LUCIDITY,	70, 40, 6,	9, 	4, FOCUS | LEARN | MAKE_ITEM},
+{IDS_RECALL_ART_NAME,		Stats::DREAMSOUL,	25, 1,  25, 1, 	1, SANCT | LEARN},
+{IDS_PUSH, 					Stats::DREAMSOUL,	0,  0,  0,	1, 	1, NEIGH | LEARN},
+{IDS_SOUL_EVOKE, 			Stats::DREAMSOUL,	15, 1,  23, 1, 	1, SANCT | LEARN},
 {IDS_DREAM_STRIKE,			Stats::DREAMSOUL,	10, 30,  0,	5, 	-1, NEIGH},
-{IDS_NMF,					Stats::DREAMSOUL,	40, 10, 13, 5, 	1, SANCT|LEARN},
-{IDS_LOCATE,				Stats::DREAMSOUL,	0,  1,  0,	1, 	-1, SANCT|LEARN},
-{IDS_TRAIN,					Stats::NO_STAT,		10, 0,  0,	2, 	-1, SANCT|NEIGH},
-{IDS_INITIATE,				Stats::NO_STAT,		0,  0,  0,	10,	-1, SANCT|NEIGH|MAKE_ITEM},
-{IDS_KNIGHT,				Stats::NO_STAT,		0,  0,  0,	10,	-1, SANCT|NEIGH},
-{IDS_SUPPORT_ASCENSION,		Stats::NO_STAT,		0,  0,  0,	10,	-1, SANCT|NEIGH|MAKE_ITEM},
-{IDS_ASCEND_RULER,			Stats::NO_STAT,		0,  0,  0,	10,	-1, SANCT|NEED_ITEM},
-{IDS_INSTA_COLLAPSE,		Stats::NO_STAT,		0,  0,  0,	1, 	-1, SANCT|NEIGH},		// gm only
+{IDS_NMF,					Stats::DREAMSOUL,	40, 10, 13, 5, 	1, SANCT | LEARN},
+{IDS_LOCATE,				Stats::DREAMSOUL,	0,  1,  0,	1, 	-1, SANCT | LEARN},
+{IDS_TRAIN,					Stats::NO_STAT,		10, 0,  0,	2, 	-1, SANCT | NEIGH},
+{IDS_INITIATE,				Stats::NO_STAT,		0,  0,  0,	10,	-1, SANCT | NEIGH | MAKE_ITEM},
+{IDS_KNIGHT,				Stats::NO_STAT,		0,  0,  0,	10,	-1, SANCT | NEIGH},
+{IDS_SUPPORT_ASCENSION,		Stats::NO_STAT,		0,  0,  0,	10,	-1, SANCT | NEIGH | MAKE_ITEM},
+{IDS_ASCEND_RULER,			Stats::NO_STAT,		0,  0,  0,	10,	-1, SANCT | NEED_ITEM},
+{IDS_INSTA_COLLAPSE,		Stats::NO_STAT,		0,  0,  0,	1, 	-1, SANCT | NEIGH},		// gm only
 {IDS_GRANT_XP_ART_NAME,		Stats::NO_STAT,		0,  0,  0,	1, 	-1, SANCT},				// gm only
-{IDS_TERMINATE,				Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},		
-{IDS_SPHERE,				Stats::NO_STAT,		20, 0,  0,	1, 	-1, SANCT|NEIGH},
-{IDS_SUPPORT_DEMOTION,		Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT|NEIGH|MAKE_ITEM},
+{IDS_TERMINATE,				Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},
+{IDS_SPHERE,				Stats::NO_STAT,		20, 0,  0,	1, 	-1, SANCT | NEIGH},
+{IDS_SUPPORT_DEMOTION,		Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT | NEIGH | MAKE_ITEM},
 {IDS_DEMOTE,				Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT},
-{IDS_INVISIBILITY,			Stats::INSIGHT,		40, 20, 6,	3, 	3, SANCT|FOCUS|LEARN},
-{IDS_GIVE, 					Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT|NEIGH|NEED_ITEM|LEARN},
-{IDS_GATESMASHER,			Stats::WILLPOWER,	0,  5,  23, 1, 	-1, SANCT|MAKE_ITEM|FOCUS},
-{IDS_FATESLAYER, 			Stats::LUCIDITY,	0,  5,  23, 1, 	-1, SANCT|MAKE_ITEM|FOCUS},
-{IDS_SOULREAPER, 			Stats::RESILIENCE,	0,  5,  23, 1, 	-1, SANCT|MAKE_ITEM|FOCUS},
-{IDS_FLAMESHAFT, 			Stats::WILLPOWER,	1,  2,  0,	1, 	2, FOCUS|LEARN},
-{IDS_TRANCEFLAME,			Stats::INSIGHT,		1,  2,  0,	1, 	2, FOCUS|LEARN},
-{IDS_FLAMESEAR,				Stats::RESILIENCE,	1,  2,  0,	1, 	2, FOCUS|LEARN},
-{IDS_FLAMERUIN,				Stats::LUCIDITY,	1,  2,  0,	1, 	2, FOCUS|LEARN},
-{IDS_INSCRIBE,				Stats::DREAMSOUL,	20, 2,  0,	1, 	1, SANCT|MAKE_ITEM|LEARN},
-{IDS_DT,					Stats::DREAMSOUL,	35, 5,	0,	2,	1, SANCT|NEED_ITEM|LEARN}, 
-{IDS_MB,					Stats::DREAMSOUL,	30, 5, 18,	5,	2, SANCT|LEARN},
-{IDS_SHOW,					Stats::NO_STAT, 	0,	0,	0,	0,	-1, SANCT|NEIGH|NEED_ITEM|LEARN},
-{IDS_AWAKEN,				Stats::NO_STAT, 	0,	0,	0,	0,	-1, SANCT|NEIGH},		// gm only
-{IDS_UNTRAIN_ART_NAME, 		Stats::NO_STAT, 	0,	0,	0,	2,	-1, SANCT|NEIGH},		// gm only
-{IDS_GRANT_RP_XP, 			Stats::NO_STAT, 	0,	0,	0,	0,	-1, SANCT|NEIGH},
+{IDS_INVISIBILITY,			Stats::INSIGHT,		40, 20, 6,	3, 	3, SANCT | FOCUS | LEARN},
+{IDS_GIVE, 					Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT | NEIGH | NEED_ITEM | LEARN},
+{IDS_GATESMASHER,			Stats::WILLPOWER,	0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
+{IDS_FATESLAYER, 			Stats::LUCIDITY,	0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
+{IDS_SOULREAPER, 			Stats::RESILIENCE,	0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
+{IDS_FLAMESHAFT, 			Stats::WILLPOWER,	1,  2,  0,	1, 	2, FOCUS | LEARN},
+{IDS_TRANCEFLAME,			Stats::INSIGHT,		1,  2,  0,	1, 	2, FOCUS | LEARN},
+{IDS_FLAMESEAR,				Stats::RESILIENCE,	1,  2,  0,	1, 	2, FOCUS | LEARN},
+{IDS_FLAMERUIN,				Stats::LUCIDITY,	1,  2,  0,	1, 	2, FOCUS | LEARN},
+{IDS_INSCRIBE,				Stats::DREAMSOUL,	20, 2,  0,	1, 	1, SANCT | MAKE_ITEM | LEARN},
+{IDS_DT,					Stats::DREAMSOUL,	35, 5,	0,	2,	1, SANCT | NEED_ITEM | LEARN},
+{IDS_MB,					Stats::DREAMSOUL,	30, 5, 18,	5,	2, SANCT | LEARN},
+{IDS_SHOW,					Stats::NO_STAT, 	0,	0,	0,	0,	-1, SANCT | NEIGH | NEED_ITEM | LEARN},
+{IDS_AWAKEN,				Stats::NO_STAT, 	0,	0,	0,	0,	-1, SANCT | NEIGH},		// gm only
+{IDS_UNTRAIN_ART_NAME, 		Stats::NO_STAT, 	0,	0,	0,	2,	-1, SANCT | NEIGH},		// gm only
+{IDS_GRANT_RP_XP, 			Stats::NO_STAT, 	0,	0,	0,	0,	-1, SANCT | NEIGH},
 #ifndef PMARE
-{IDS_DREAMQUAKE,			Stats::WILLPOWER,	60, 40, 4,	7,	3, FOCUS|LEARN}, 
+{IDS_DREAMQUAKE,			Stats::WILLPOWER,	60, 40, 4,	7,	3, FOCUS | LEARN},
 #else
 { IDS_DREAMQUAKE,			Stats::WILLPOWER,	0, 25, 4,	1,	3, FOCUS | LEARN },
 #endif
-{IDS_HYPNOTIC_WEAVE_ART_NAME,		Stats::LUCIDITY,	60, 40, 4,	7,	4, FOCUS|LEARN},
-{IDS_VAMPRIC_DRAW,					Stats::RESILIENCE,	60, 5,	0,	5,	3, FOCUS|LEARN|NEIGH|NEED_ITEM},
+{IDS_HYPNOTIC_WEAVE_ART_NAME,		Stats::LUCIDITY,	60, 40, 4,	7,	4, FOCUS | LEARN},
+{IDS_VAMPRIC_DRAW,					Stats::RESILIENCE,	60, 5,	0,	5,	3, FOCUS | LEARN | NEIGH | NEED_ITEM},
 #ifndef PMARE
-{IDS_TERROR_ART_NAME,				Stats::LUCIDITY,	60, 40, 4,	1,	3, FOCUS|LEARN},
+{IDS_TERROR_ART_NAME,				Stats::LUCIDITY,	60, 40, 4,	1,	3, FOCUS | LEARN},
 #else
 { IDS_TERROR_ART_NAME,				Stats::LUCIDITY,	0, 25, 4,	1,	3, FOCUS | LEARN },
 #endif
-{IDS_HEAL_AURA,						Stats::RESILIENCE,	60, 40, 0,	7, 	-1, FOCUS|NEIGH|SANCT|LEARN},
-{IDS_TELEPATHY,						Stats::NO_STAT,		75, 0,  0,	0, 	-1, SANCT|NEIGH},	// roger wilco voice
+{IDS_HEAL_AURA,						Stats::RESILIENCE,	60, 40, 0,	7, 	-1, FOCUS | NEIGH | SANCT | LEARN},
+{IDS_TELEPATHY,						Stats::NO_STAT,		75, 0,  0,	0, 	-1, SANCT | NEIGH},	// roger wilco voice
 {IDS_DREAMSMITH_MARK_ART_NAME, 		Stats::NO_STAT,		50, 0,  0,	1, 	-1, SANCT},
-{IDS_SUPPORT_TRAIN,					Stats::NO_STAT,		10, 0,  0,	10,	-1, SANCT|NEIGH|MAKE_ITEM},
-{IDS_SUPPORT_SPHERE,				Stats::NO_STAT,		20, 0,  0,	10,	-1, SANCT|NEIGH|MAKE_ITEM},
+{IDS_SUPPORT_TRAIN,					Stats::NO_STAT,		10, 0,  0,	10,	-1, SANCT | NEIGH | MAKE_ITEM},
+{IDS_SUPPORT_SPHERE,				Stats::NO_STAT,		20, 0,  0,	10,	-1, SANCT | NEIGH | MAKE_ITEM},
 {IDS_TRAIN_SELF,					Stats::NO_STAT,		40, 0,  0,	2, 	-1, SANCT},
-{IDS_SOUL_SHIELD,					Stats::DREAMSOUL,	40, 20, 15, 5,  2, SANCT|LEARN},
+{IDS_SOUL_SHIELD,					Stats::DREAMSOUL,	40, 20, 15, 5,  2, SANCT | LEARN},
 {IDS_SUMMON_ART_NAME,				Stats::NO_STAT,		0,  0,  0,  0,  -1, SANCT},
 {IDS_SUSPEND,						Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},
-{IDS_REFLECT_ART_NAME,				Stats::WILLPOWER,   65, 40, 9,  3,	-1, SANCT|FOCUS|LEARN},
-{IDS_SACRIFICE,						Stats::DREAMSOUL,	20, 10,  0,	1, 	-1, SANCT|NEED_ITEM},
-{IDS_CLEANSE_MARE,					Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
-{IDS_CREATE_ID_TOKEN,				Stats::DREAMSOUL,	0,  20, 0,	1, 	-1, SANCT|NEED_ITEM|MAKE_ITEM},
-{IDS_SENSE,							Stats::DREAMSOUL,	0,  0,  0,	1,  -1, SANCT|LEARN},
-{IDS_EXPEL_ART_NAME,				Stats::DREAMSOUL,	20, 0,  0,	1,  -1, SANCT|NEED_ITEM|NEIGH},
-{IDS_NEWLY_AWAKENED,				Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT|LEARN},
-{IDS_COMBINE,						Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS|LEARN},
-{IDS_POWER_TOKEN,					Stats::DREAMSOUL,	10,  0, 0,	10, -1, SANCT|NEED_ITEM|MAKE_ITEM},
-{IDS_SHOW_GRATITUDE,				Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT|NEED_ITEM|NEIGH},
-{IDS_QUEST,							Stats::NO_STAT,		0,   0, 0,	3, -1, SANCT|NEIGH|MAKE_ITEM},
-{IDS_BEQUEATH,						Stats::NO_STAT,		30,  0, 0,	10, -1, SANCT|NEIGH|LEARN},
-{IDS_RADIANT_BLAZE,					Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
-{IDS_POISON_CLOUD,					Stats::DREAMSOUL,	20, 10,15,	5,  -1, NEED_ITEM|NEIGH},
-{IDS_BREAK_COVENANT,				Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
-{IDS_PEACE_AURA_ART_NAME,			Stats::DREAMSOUL,	20, 10, 6,	5,  -1, NEED_ITEM|SANCT},
-{IDS_SABLE_SHIELD,					Stats::DREAMSOUL,	20, 10,16,	5,  -1, NEED_ITEM|SANCT},
-{IDS_ENTRANCEMENT,					Stats::DREAMSOUL,	20, 10,13,	5,  -1, NEED_ITEM|SANCT},
-{IDS_SHADOW_STEP,					Stats::DREAMSOUL,	20, 10,10,	5,  -1, NEED_ITEM|SANCT},
-{IDS_DAZZLE,						Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM|NEIGH},
-{IDS_TRANSLOCATE,					Stats::DREAMSOUL,	30, 20, 0,  10, -1, SANCT|LEARN},
-{IDS_CORRUPT_ESSENCE,				Stats::RESILIENCE,	10,  5, 0,  1,  -1, NEED_ITEM|SANCT|MAKE_ITEM},
-{IDS_TEHTHUS_OBLIVION,				Stats::DREAMSOUL,	10, 10, 0,  5,  -1, NEED_ITEM|SANCT},
+{IDS_REFLECT_ART_NAME,				Stats::WILLPOWER,   65, 40, 9,  3,	-1, SANCT | FOCUS | LEARN},
+{IDS_SACRIFICE,						Stats::DREAMSOUL,	20, 10,  0,	1, 	-1, SANCT | NEED_ITEM},
+{IDS_CLEANSE_MARE,					Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | FOCUS | LEARN},
+{IDS_CREATE_ID_TOKEN,				Stats::DREAMSOUL,	0,  20, 0,	1, 	-1, SANCT | NEED_ITEM | MAKE_ITEM},
+{IDS_SENSE,							Stats::DREAMSOUL,	0,  0,  0,	1,  -1, SANCT | LEARN},
+{IDS_EXPEL_ART_NAME,				Stats::DREAMSOUL,	20, 0,  0,	1,  -1, SANCT | NEED_ITEM | NEIGH},
+{IDS_NEWLY_AWAKENED,				Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT | LEARN},
+{IDS_COMBINE,						Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT | NEED_ITEM | MAKE_ITEM | FOCUS | LEARN},
+{IDS_POWER_TOKEN,					Stats::DREAMSOUL,	10,  0, 0,	10, -1, SANCT | NEED_ITEM | MAKE_ITEM},
+{IDS_SHOW_GRATITUDE,				Stats::NO_STAT,		0,   0, 0,	10, -1, SANCT | NEED_ITEM | NEIGH},
+{IDS_QUEST,							Stats::NO_STAT,		0,   0, 0,	3, -1, SANCT | NEIGH | MAKE_ITEM},
+{IDS_BEQUEATH,						Stats::NO_STAT,		30,  0, 0,	10, -1, SANCT | NEIGH | LEARN},
+{IDS_RADIANT_BLAZE,					Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM | NEIGH},
+{IDS_POISON_CLOUD,					Stats::DREAMSOUL,	20, 10,15,	5,  -1, NEED_ITEM | NEIGH},
+{IDS_BREAK_COVENANT,				Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM | NEIGH},
+{IDS_PEACE_AURA_ART_NAME,			Stats::DREAMSOUL,	20, 10, 13,	5,  -1, NEED_ITEM | SANCT},
+{IDS_SABLE_SHIELD,					Stats::DREAMSOUL,	20, 10,16,	5,  -1, NEED_ITEM | SANCT},
+{IDS_ENTRANCEMENT,					Stats::DREAMSOUL,	20, 10,13,	5,  -1, NEED_ITEM | SANCT},
+{IDS_SHADOW_STEP,					Stats::DREAMSOUL,	20, 10,10,	5,  -1, NEED_ITEM | SANCT},
+{IDS_DAZZLE,						Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM | NEIGH},
+{IDS_TRANSLOCATE,					Stats::DREAMSOUL,	30, 20, 0,  10, -1, SANCT | LEARN},
+{IDS_CORRUPT_ESSENCE,				Stats::RESILIENCE,	10,  5, 0,  1,  -1, NEED_ITEM | SANCT | MAKE_ITEM},
+{IDS_TEHTHUS_OBLIVION,				Stats::DREAMSOUL,	10, 10, 0,  5,  -1, NEED_ITEM | SANCT},
 {IDS_CHAOS_PURGE_ART_NAME,			Stats::DREAMSOUL,	 0, 20, 0,  5,  -1, NEIGH},
-{IDS_WORDSMITH_MARK_ART_NAME, 		Stats::NO_STAT,		10,  0, 0,	2, 	-1, SANCT|NEIGH},
+{IDS_WORDSMITH_MARK_ART_NAME, 		Stats::NO_STAT,		10,  0, 0,	2, 	-1, SANCT | NEIGH},
 {IDS_CUP_SUMMONS_ART_NAME,			Stats::NO_STAT,		 0,  0, 0,  0,  -1, SANCT},
 {IDS_HOUSE_MEMBERS,					Stats::DREAMSOUL,	 0,  1, 0,	1, 	-1, SANCT},
-{IDS_FREESOUL_BLADE,				Stats::DREAMSOUL,	 0,  0, 0,	1, 	-1, SANCT|MAKE_ITEM|NEED_ITEM|NEIGH},
-{IDS_ILLUMINATED_BLADE,				Stats::DREAMSOUL,	 0,  0, 0,	1, 	-1, SANCT|MAKE_ITEM|NEED_ITEM|NEIGH},
-{IDS_SUMMON_PRIME,				    Stats::DREAMSOUL,	 0, 25, 0,	10,	-1, SANCT|NEED_ITEM|MAKE_ITEM},
-{IDS_GRANT_PPOINT,				    Stats::NO_STAT,		 0, 0, 0,	0,	-1, SANCT|NEIGH},
-{IDS_SCAN,							Stats::INSIGHT,		10, 2,  0,	1, 	-1, SANCT|NEIGH},
-{IDS_PASSLOCK,						Stats::INSIGHT,		50, 30, 6,	5, 	-1, SANCT|FOCUS},
+{IDS_FREESOUL_BLADE,				Stats::DREAMSOUL,	 0,  0, 0,	1, 	-1, SANCT | MAKE_ITEM | NEED_ITEM | NEIGH},
+{IDS_ILLUMINATED_BLADE,				Stats::DREAMSOUL,	 0,  0, 0,	1, 	-1, SANCT | MAKE_ITEM | NEED_ITEM | NEIGH},
+{IDS_SUMMON_PRIME,				    Stats::DREAMSOUL,	 0, 25, 0,	10,	-1, SANCT | NEED_ITEM | MAKE_ITEM},
+{IDS_GRANT_PPOINT,				    Stats::NO_STAT,		 0, 0, 0,	0,	-1, SANCT | NEIGH},
+{IDS_SCAN,							Stats::INSIGHT,		10, 2,  0,	1, 	-1, SANCT | NEIGH},
+{IDS_PASSLOCK,						Stats::INSIGHT,		50, 30, 6,	5, 	-1, SANCT | FOCUS},
 {IDS_HEAL, 							Stats::RESILIENCE,	10, 5,  0,	1, 	-1, SANCT},
 {IDS_SANCTIFY, 						Stats::WILLPOWER,	15, 5,  13, 2, 	-1, SANCT},
-{IDS_DISABLE_PORTAL, 				Stats::WILLPOWER,	20, 20, 0,	5, 	-1, SANCT|MAKE_ITEM|FOCUS},
-{IDS_KEY,							Stats::WILLPOWER,	20, 1,  0,	2, 	-1, SANCT|MAKE_ITEM|FOCUS},
-{IDS_BREAK_LOCK, 					Stats::WILLPOWER,	40, 40, 0,	8, 	-1, SANCT|FOCUS},
-{IDS_REPAIR, 						Stats::RESILIENCE,	15, 10, 0,	4, 	-1, SANCT|NEED_ITEM},
+{IDS_DISABLE_PORTAL, 				Stats::WILLPOWER,	20, 20, 0,	5, 	-1, SANCT | MAKE_ITEM | FOCUS},
+{IDS_KEY,							Stats::WILLPOWER,	20, 1,  0,	2, 	-1, SANCT | MAKE_ITEM | FOCUS},
+{IDS_BREAK_LOCK, 					Stats::WILLPOWER,	40, 40, 0,	8, 	-1, SANCT | FOCUS},
+{IDS_REPAIR, 						Stats::RESILIENCE,	15, 10, 0,	4, 	-1, SANCT | NEED_ITEM},
 {IDS_REMOVE_CURSE,					Stats::RESILIENCE,	5,  15, 0,	2, 	-1, SANCT},
-{IDS_HOLD_AVATAR,					Stats::LUCIDITY,	30, 20, 1,	3, 	-1, NEIGH|FOCUS},  
+{IDS_HOLD_AVATAR,					Stats::LUCIDITY,	30, 20, 1,	3, 	-1, NEIGH | FOCUS},
 {IDS_SANCTUARY,						Stats::DREAMSOUL,	25, 1,  25, 1, 	-1, SANCT},
 {IDS_SHOVE, 						Stats::DREAMSOUL,	0,  0,  0,	1, 	-1, NEIGH},
-{IDS_INSCRIBE,						Stats::DREAMSOUL,	20, 2,  0,	1, 	-1, SANCT|MAKE_ITEM},
+{IDS_INSCRIBE,						Stats::DREAMSOUL,	20, 2,  0,	1, 	-1, SANCT | MAKE_ITEM},
 {IDS_FORGE_MASTER,		 			Stats::NO_STAT,		50, 0,  0,	1, 	-1, SANCT},
-{IDS_MERGE_TALISMAN,				Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT|NEED_ITEM|MAKE_ITEM|FOCUS},
+{IDS_MERGE_TALISMAN,				Stats::INSIGHT,	    60, 40, 0,	2, 	-1, SANCT | NEED_ITEM | MAKE_ITEM | FOCUS},
 {IDS_NP_SYMBOL_ART_NAME, 			Stats::NO_STAT,		10,  0, 0,	2, 	-1, SANCT},
-{IDS_LOCATE_MARES,					Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT|LEARN},
+{IDS_LOCATE_MARES,					Stats::INSIGHT,	    0,  1,  0,	1, 	-1, SANCT | LEARN},
 #ifndef PMARE
-{IDS_TEMPEST,				        Stats::LUCIDITY,	60, 40, 0,	7, 	-1, FOCUS|LEARN},
+{IDS_TEMPEST,				        Stats::LUCIDITY,	60, 40, 0,	7, 	-1, FOCUS | LEARN},
 #else
 { IDS_TEMPEST,				        Stats::LUCIDITY,	0, 25, 0,	3, 	-1, FOCUS | LEARN },
 #endif
-{IDS_KINESIS, 						Stats::WILLPOWER,	30, 5,  0,	1, 	-1, FOCUS|LEARN|NEIGH},
-{IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN|NEIGH},
-{IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH|NEED_ITEM},
-{IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT|MAKE_ITEM|LEARN},
-{IDS_RALLY,							Stats::DREAMSOUL,	30, 30, 0,  5,  -1, SANCT|NEIGH},
-{IDS_CHANNEL,                       Stats::DREAMSOUL,   40, 35, 25, 3,  -1, SANCT|NEIGH|LEARN}
+{IDS_KINESIS, 						Stats::WILLPOWER,	30, 5,  0,	1, 	-1, FOCUS | LEARN | NEIGH},
+{IDS_MISDIRECTION,					Stats::DREAMSOUL,   60, 30, 0,  5,  -1, LEARN | NEIGH},
+{IDS_CHAOTIC_VORTEX,				Stats::DREAMSOUL,   70, 40, 4,  5,  -1, NEIGH | NEED_ITEM},
+{IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT | MAKE_ITEM | LEARN},
+{IDS_RALLY,							Stats::DREAMSOUL,	30, 30, 0,  5,  -1, SANCT | NEIGH},
+{IDS_CHANNEL,                       Stats::DREAMSOUL,   40, 35, 25, 3,  -1, SANCT | NEIGH | LEARN},
+{IDS_GKSHIELD, Stats::WILLPOWER, 70, 30, 13, 5, -1, SANCT | FOCUS | LEARN},
+{IDS_PORTKEY, Stats::DREAMSOUL, 90, 50, 13, 5, -1, SANCT | LEARN | MAKE_ITEM}
 };
 
 
@@ -1286,6 +1290,9 @@ void cArts::ApplyArt(void)
 	case Arts::CHAOS_WELL: method = &cArts::EssenceContainer; break;
 	case Arts::RALLY: method = &cArts::StartRally; break;
 	case Arts::CHANNEL: method = &cArts::StartChannel; break;
+	case Arts::BULWARK: method = &cArts::Bulwark; break;
+	case Arts::PORTKEY: method = &cArts::Portkey; break;
+
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
 	}
@@ -1661,7 +1668,7 @@ void cArts::Meditate(void)
 void cArts::EssenceContainer(void)
 {
 	int capacity = 20 * ((player->SkillSphere(Arts::CHAOS_WELL)) + 1);
-	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity*2, capacity };
+	lyra_item_meta_essence_nexus_t nexus = { LyraItem::META_ESSENCE_NEXUS_FUNCTION, 0, 0, 0, capacity*20, capacity };
 	LmItem info;
 	LmItemHdr header;
 	cItem *item;
@@ -1675,6 +1682,54 @@ void cArts::EssenceContainer(void)
 	LoadString(hInstance, IDS_CHAOS_WELL, message, sizeof(message));
 	info.Init(header, message, 0, 0, 0);
 	info.SetStateField(0, &nexus, sizeof(nexus));
+	info.SetCharges(1);
+	item = CreateItem(player->x, player->y, player->angle, info, 0, false, GMsg_PutItem::DEFAULT_TTL);
+	if (item == NO_ITEM)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+	this->ArtFinished(true);
+}
+
+bool cArts::GetPortkey(int type)
+{
+	bool hasPortkey = false;
+	cItem* item;
+	// type = ITEM_OWNED
+	// check that the proper # of unique support tokens are carried
+	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+		if ((item->Status() == type) && (item->ItemFunction(0) == LyraItem::PORTKEY_FUNCTION)) {
+			hasPortkey = true;
+			break;
+		}
+
+	actors->IterateItems(DONE);
+	return hasPortkey;
+}
+
+void cArts::Portkey(void)
+{
+	int distance = player->SkillSphere(Arts::PORTKEY) / 2;
+	lyra_item_portkey_t portkey = { (unsigned char)LyraItem::PORTKEY_FUNCTION, 0, (unsigned char)distance, level->ID(), (short)player->x, (short)player->y };
+	if (GetPortkey(ITEM_OWNED)) {
+		LoadString(hInstance, IDS_ALREADY_HAVE_PORTKEY, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(false);
+	}
+	LmItemHdr header;
+	LmItem info;
+	cItem *item;
+	
+	header.Init(0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.SetGraphic(LyraBitmap::WARD);
+	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
+	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::PORTKEY_FUNCTION), 0, 0));
+	
+	info.Init(header, "Portkey", 0, 0, 0);
+	info.SetStateField(0, &portkey, sizeof(portkey));
 	info.SetCharges(1);
 	item = CreateItem(player->x, player->y, player->angle, info, 0, false, GMsg_PutItem::DEFAULT_TTL);
 	if (item == NO_ITEM)
@@ -2477,6 +2532,16 @@ void cArts::Recall(void)
 	return;
 }
 
+///////////////////////////////////////////////////////////////////
+// Bulwark
+void cArts::Bulwark(void)
+{
+	int duration = this->Duration(art_in_use, player->Skill(art_in_use));
+	player->SetTimedEffect(LyraEffect::PLAYER_GKSHIELD, duration, player->ID(), EffectOrigin::ART_EVOKE);
+	this->ArtFinished(true);
+	return;
+}
+
 //////////////////////////////////////////////////////////////////
 // Return
 
@@ -2791,11 +2856,107 @@ void cArts::ApplyChaoticVortex (int skill, lyra_id_t caster_id)
 //////////////////////////////////////////////////////////////////
 // Razorwind
 
+bool cArts::RoomFull()
+{
+	int items_in_room = 0;
+	cItem* item;
+	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+	{
+		if ((item->Status() == ITEM_UNOWNED))
+			items_in_room++;
+	}
+	actors->IterateItems(DONE);
+
+	if (items_in_room >= Lyra::MAX_ROOMITEMS)
+	{
+		LoadString(hInstance, IDS_MAX_ROOMITEMS, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		return true;
+	}
+
+	return false;
+}
+
 void cArts::Razorwind(void)
 {
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::RAZORWIND,
 			player->Skill(Arts::RAZORWIND), 0, player->SkillSphere(Arts::FATESENDER));
+	if (RoomFull())
+		this->ArtFinished(false);
 	this->ApplyRazorwind(player->Skill(Arts::RAZORWIND), player->ID());
+	LmItem info;
+	LmItemHdr header;
+	cItem* item;
+	int plat = player->SkillSphere(Arts::RAZORWIND) + 1;
+	int mod = 12;
+	switch (plat)
+	{
+		case 1: // 0-19
+		case 2:
+			mod = 12; // 1-2
+			break;
+		case 3: //20-39
+		case 4:
+			mod = 13; // 1-3
+			break;
+		case 5: //40-59
+		case 6:
+			mod = 14; // 1-4
+			break;
+		case 7: //60-79
+		case 8:
+			mod = 16; // 1-6
+			break;
+		case 9: //80-89
+			mod = 19; // 1-8
+			break;
+		case 10: //90-99
+			mod = 22; // 1-10
+			break;
+		default:
+			mod = 12; // 1-2
+			break;
+	}
+	int distance = 1; // VClose
+	if (plat >= 3 && plat < 6) {
+		distance = 2;
+	}
+	else if (plat >= 6 && plat <= 9) {
+		distance = 3;
+	}
+	else if (plat == 10) {
+		distance = 4;
+	}
+	lyra_item_area_effect_t rw_item;
+	rw_item.type = LyraItem::AREA_EFFECT_FUNCTION;
+	rw_item.effect = LyraEffect::PLAYER_BLEED;
+	rw_item.duration = 6;
+	rw_item.stat = Stats::DREAMSOUL;
+	rw_item.damage = -mod;
+	rw_item.distance = distance;
+	rw_item.set_player_id(player->ID());
+	rw_item.set_effects_party_and_self(false);
+	rw_item.set_razorwind(true);
+	header.Init(0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.SetGraphic(LyraBitmap::DREAMBLADE);
+	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
+	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AREA_EFFECT_FUNCTION), 0, 0));
+
+	LoadString(hInstance, IDS_RAZORWIND, message, sizeof(message));
+	info.Init(header, message, 0, 0, 0);
+	info.SetStateField(0, &rw_item, sizeof(rw_item));
+	info.SetCharges(1);
+
+	item = CreateItem(player->x, player->y, player->angle, info, 0, false, 10 + (10 * plat));
+	item->SetMarkedForDrop();
+	item->SetUseTTLForDrop(true);
+	if (item == NO_ITEM)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
 	this->ArtFinished(true);
 	return;
 }
@@ -2803,6 +2964,8 @@ void cArts::Razorwind(void)
 void cArts::ApplyRazorwind(int skill, lyra_id_t caster_id)
 {
 	player->EvokedFX().Activate(Arts::RAZORWIND, false);
+	cNeighbor *n = this->LookUpNeighbor(caster_id);
+
 	cDS->PlaySound(LyraSound::RAZORWIND);
 
 	if ((caster_id == player->ID()) || (gs && gs->Party() && gs->Party()->IsInParty(caster_id)))
@@ -2813,8 +2976,8 @@ void cArts::ApplyRazorwind(int skill, lyra_id_t caster_id)
 	}
 	else
 	{
-		LoadString (hInstance, IDS_AREA_EFFECT, disp_message, sizeof(disp_message));
-	_stprintf(message, disp_message, this->Descrip(Arts::RAZORWIND));
+		LoadString (hInstance, IDS_RAZORWIND_AREA_EFFECT, disp_message, sizeof(disp_message));
+	_stprintf(message, disp_message, n->Name());
 		display->DisplayMessage(message, false);
 		int damage = 12 + (((skill/10)+1) * (rand()%4));
 		this->DamagePlayer(damage, caster_id);
