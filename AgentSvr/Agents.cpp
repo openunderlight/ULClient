@@ -95,8 +95,8 @@ bool InitAgents(void)
 	if (fh == NULL)
 	{
 		MessageBox(NULL, _T("DOH"), _T("Test"), MB_OK);
-
 		GAME_ERROR(_T("Cannot open agent data"));
+		DWORD err = GetLastError();
 		return false;
 	}
 
