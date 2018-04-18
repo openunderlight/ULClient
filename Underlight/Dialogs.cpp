@@ -103,6 +103,7 @@ extern mouse_move_t mouse_move;
 extern ppoint_t pp; // personality points use tracker
 extern cKeymap *keymap;
 extern cNeighbor *test_avatar;
+extern macro_t chat_macros[MAX_MACROS];
 
 monster_breed_t monster_breeds[NUM_MONSTER_BREEDS] = 
 {
@@ -294,42 +295,17 @@ BOOL CALLBACK AcceptRejectDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 // Functions to read/write a macro to/from the registry
 void RegistryReadMacro(int macro_number, macro_t macro)
 {
-
-	HKEY	reg_key;
-	DWORD result;
-	DWORD reg_type,size;
-	TCHAR	macro_name[20];
-
-	*macro = '\0';
 	if ( macro_number < 0 || macro_number > MAX_MACROS)
 		return;
-
-	_stprintf(macro_name,_T("macro_%d"),macro_number);
-
-	RegOpenKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0, KEY_ALL_ACCESS, &reg_key );
-	size = sizeof macro_t;
-	result = RegQueryValueEx(reg_key, macro_name, NULL, &reg_type,
-								(unsigned char *)macro, &size);
-	RegCloseKey(reg_key);
-
+	_tcscpy(macro, chat_macros[macro_number]);
 }
 
 static void RegistryWriteMacro(int macro_number, macro_t macro)
 {
-
-	HKEY	reg_key;
-	DWORD result;
-	TCHAR	macro_name[20];
-
 	if (player->CanUseChatMacros() == false && macro_number < 0 || macro_number > MAX_MACROS)
 		return;
-
-	_stprintf(macro_name,_T("macro_%d"),macro_number);
-
-	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0, NULL, 0, KEY_ALL_ACCESS, NULL, &reg_key, &result);
-	RegSetValueEx(reg_key, macro_name, 0, REG_BINARY, (unsigned char *)macro, sizeof macro_t);
-	RegCloseKey(reg_key);
-
+	_tcscpy(chat_macros[macro_number], macro);
+	SaveCharacterRegistryOptionValues(NULL);
 }
 
 BOOL CALLBACK ChatMacrosDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)

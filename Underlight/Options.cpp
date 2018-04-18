@@ -58,6 +58,7 @@ extern bool loginoptiondlg;
 extern bool ready;
 extern bool keyboarddlg;
 extern bool mouselooking;
+extern macro_t chat_macros[MAX_MACROS];
 
 //////////////////////////////////////////////////////////////////
 // Constants
@@ -402,6 +403,14 @@ cJSON* __cdecl WriteJSONOptionValues()
 		for (int f = 0; f < options.num_buddies; f++)
 			cJSON_AddItemToArray(friends, cJSON_CreateString(options.buddies[f].name));
 		cJSON_AddItemToObject(obj, "buddies", friends);
+		cJSON* macros = cJSON_CreateArray();
+		for (int m = 0; m < MAX_MACROS; m++) {
+			if (_tcslen(chat_macros[m]) > 0)
+				cJSON_AddItemToArray(macros, cJSON_CreateString(chat_macros[m]));
+			else
+				cJSON_AddItemToArray(macros, cJSON_CreateNull());
+		}
+		cJSON_AddItemToObject(obj, "macros", macros);
 	}
 			
 #ifdef PMARE
@@ -634,6 +643,18 @@ void LoadParsedJSONOptions(cJSON* json)
 	}
 	options.num_buddies = fIdx;
 
+	cJSON* m; cJSON* macros = cJSON_GetObjectItem(obj, "macros");
+	int mIdx = 0;
+	cJSON_ArrayForEach(m, macros) {
+		if (mIdx < MAX_MACROS && m)
+		{
+			if (cJSON_IsNull(m))
+				_tcscpy(chat_macros[mIdx], _T(""));
+			else if (cJSON_IsString(m))
+				_tcscpy(chat_macros[mIdx], cJSON_GetStringValue(m));
+			mIdx++;
+		}
+	}
 
 	cJSON* pmareStart = cJSON_GetObjectItem(obj, "pmare_session_start");
 	if (pmareStart && cJSON_IsString(pmareStart))
@@ -726,6 +747,9 @@ void LoadDefaultOptionValues()
 	options.num_buddies = 0;
 	for (int i = 0; i < GMsg_LocateAvatar::MAX_PLAYERS; i++)
 		_tcscpy(options.buddies[i].name, _T(""));
+
+	for (int i = 0; i < MAX_MACROS; i++)
+		_tcscpy(chat_macros[i], _T(""));
 
 	keymap->SetDefaultKeymap(0);
 #endif // AGENT
