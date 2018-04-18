@@ -11022,11 +11022,9 @@ void cArts::EndLocate(void *value)
 {
 	TCHAR *name = (TCHAR*)value;
 	bool locate_all = false;
-	int i, num_buddies;
+	int i;
 	unsigned long result,size;
-	DWORD reg_type;
-	HKEY reg_key;
-	other_t buddies[GMsg_LocateAvatar::MAX_PLAYERS];
+	DWORD reg_type;	
 	GMsg_LocateAvatar locate_msg;
 
 	if (name == NULL)
@@ -11034,49 +11032,30 @@ void cArts::EndLocate(void *value)
 
 	if (locate_all)
 	{
-		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
-						NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
-
-		size = sizeof(num_buddies);
-		LoadString(hInstance, IDS_NUM_BUDDIES, message, sizeof(message));
-		result = RegQueryValueEx(reg_key, message, NULL, &reg_type,
-			(unsigned char *)(&num_buddies), &size);
-		if ((result != ERROR_SUCCESS) || !num_buddies)
+		if (!options.num_buddies)
 		{
-			RegCloseKey(reg_key);
 			this->ArtFinished(false);
 			return;
 		}
 
 		size = GMsg_LocateAvatar::MAX_PLAYERS*sizeof(other_t);
-		LoadString(hInstance, IDS_WATCH_LIST, message, sizeof(message));
-		result = RegQueryValueEx(reg_key, message, NULL, &reg_type,
-			(unsigned char *)buddies, &size);
-		RegCloseKey(reg_key);
-
-		if (result != ERROR_SUCCESS)
-		{
-			this->ArtFinished(false);
-			return;
-		}
-
-		locate_msg.Init(num_buddies); // set num players
+		locate_msg.Init(options.num_buddies); // set num players
 		int count = 0;
-		for (i = 0; i < num_buddies; i++)
+		for (i = 0; i < options.num_buddies; i++)
 		{
-			if (WhichMonsterName(buddies[i].name))
+			if (WhichMonsterName(options.buddies[i].name))
 			{
 				LoadString(hInstance, IDS_LOCATE_MARE, disp_message, sizeof(disp_message));
 				display->DisplayMessage(disp_message, false);
 			}
-			else if (_tcsicmp(buddies[i].name, _T("Revenant")) == 0)
+			else if (_tcsicmp(options.buddies[i].name, _T("Revenant")) == 0)
 			{
 				_stprintf(disp_message, "The invasion has begun...\n");
 				display->DisplayMessage(disp_message);
 			}
 			else
 			{
-				locate_msg.SetPlayerName(count, buddies[i].name);
+				locate_msg.SetPlayerName(count, options.buddies[i].name);
 				count++;
 			}
 		}

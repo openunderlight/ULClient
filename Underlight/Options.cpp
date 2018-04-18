@@ -397,8 +397,13 @@ cJSON* __cdecl WriteJSONOptionValues()
 		cJSON_AddStringToObject(obj, "key_mappings", keys);
 		free(keys);
 		delete map;
+		ADDNUM(num_buddies);
+		cJSON* friends = cJSON_CreateArray();
+		for (int f = 0; f < options.num_buddies; f++)
+			cJSON_AddItemToArray(friends, cJSON_CreateString(options.buddies[f].name));
+		cJSON_AddItemToObject(obj, "buddies", friends);
 	}
-
+			
 #ifdef PMARE
 	ADDNUM(pmare_type);
 	ADDNUM(pmare_start_type);
@@ -618,6 +623,18 @@ void LoadParsedJSONOptions(cJSON* json)
 	}
 
 	options.num_bungholes = igIdx;
+
+	cJSON* f; cJSON* friends = cJSON_GetObjectItem(obj, "buddies");
+	int fIdx = 0;
+	cJSON_ArrayForEach(f, friends) {
+		if (igIdx < GMsg_LocateAvatar::MAX_PLAYERS && f && cJSON_IsString(f))
+		{
+			_tcscpy(options.buddies[fIdx++].name, cJSON_GetStringValue(f));
+		}
+	}
+	options.num_buddies = fIdx;
+
+
 	cJSON* pmareStart = cJSON_GetObjectItem(obj, "pmare_session_start");
 	if (pmareStart && cJSON_IsString(pmareStart))
 	{
@@ -706,6 +723,10 @@ void LoadDefaultOptionValues()
 	options.num_bungholes = 0;
 	for (int i = 0; i < MAX_IGNORELIST; i++)
 		_tcscpy(options.bungholes[i].name, _T(""));
+	options.num_buddies = 0;
+	for (int i = 0; i < GMsg_LocateAvatar::MAX_PLAYERS; i++)
+		_tcscpy(options.buddies[i].name, _T(""));
+
 	keymap->SetDefaultKeymap(0);
 #endif // AGENT
 }
