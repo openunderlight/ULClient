@@ -314,7 +314,9 @@ BOOL CALLBACK OptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 
 void __cdecl SaveCharacterRegistryOptionValues(HKEY reg_key)
 {
+#ifndef AGENT
 	SaveInGameRegistryOptionValues();
+#endif
 }
 
 #define ADDNUM(Field) { cJSON_AddNumberToObject(obj, #Field, options.##Field); }
@@ -480,6 +482,7 @@ void __cdecl WriteJSONFile(cJSON* json, char* file)
 
 void __cdecl SaveInGameRegistryOptionValues(void)
 {
+#ifndef AGENT
 	if (!player)
 	{
 		cJSON* globals = WriteGlobalJSONOptionValues();
@@ -493,6 +496,7 @@ void __cdecl SaveInGameRegistryOptionValues(void)
 		WriteJSONFile(locals, filename);
 		cJSON_Delete(locals);
 	}
+#endif
 }
 
 
@@ -650,6 +654,7 @@ void LoadParsedJSONOptions(cJSON* json)
 
 void LoadDefaultOptionValues()
 {
+#ifndef AGENT
 	// OOG option vals
 	options.account_index = 0;
 	for (int i = 0; i < MAX_STORED_ACCOUNTS; i++) {
@@ -695,12 +700,14 @@ void LoadDefaultOptionValues()
 	options.pmare_start_type = 0;
 	options.pmare_price = 0;
 	options.tcp_only = TRUE;
+	options.tcp_only = FALSE;
 	options.pmare_session_start.wYear = 1970;
 	memset(&options.avatar, 0, sizeof(options.avatar));
 	options.num_bungholes = 0;
 	for (int i = 0; i < MAX_IGNORELIST; i++)
 		_tcscpy(options.bungholes[i].name, _T(""));
 	keymap->SetDefaultKeymap(0);
+#endif // AGENT
 }
 
 void SmartLoadJSON()
