@@ -1341,10 +1341,15 @@ void cPlayer::CheckStatus(void)
 
 			dist = (unsigned int)((item->x - x)*(item->x - x) + (item->y - y)*(item->y - y));
 			unsigned int xy, ht; 
-			CalculateDistance(aoe.distance, &xy, &ht);
+			CalculateDistance(aoe.get_distance(), &xy, &ht);
 			int h1 = z - physht - item->z, h2 = item->z - z;
 			if (dist > xy || h1 > (int)ht || h2 > (int)ht)
 				continue;
+			if (aoe.is_razorwind()) {
+				cDS->PlaySound(LyraSound::RAZORWIND);
+				LoadString(hInstance, IDS_RW_REAPPLIED, disp_message, sizeof(disp_message));
+				display->DisplayMessage(disp_message);
+			}
 			int modifier = CalculateModifier(aoe.damage); // dmg is actually modifier
 			player->SetCurrStat(aoe.stat, modifier, SET_RELATIVE, aoe.player_id());
 			player->SetTimedEffect(aoe.get_effect(), CalculateDuration(aoe.duration), aoe.player_id(), EffectOrigin::AE_ITEM);

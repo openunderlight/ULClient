@@ -240,7 +240,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xC88A, // Radiant Blaze 
 0xF445, // Poison Cloud 
 0x106E, // Break Covenant 
-0x3A08, // Peace Aura 
+0x3A09, // Peace Aura 
 0x5A62, // Sable Shield 
 0x8684, // Entrancement 
 0xA2E4, // Shadow Step 
@@ -432,7 +432,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_RADIANT_BLAZE,					Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM | NEIGH},
 {IDS_POISON_CLOUD,					Stats::DREAMSOUL,	20, 10,15,	5,  -1, NEED_ITEM | NEIGH},
 {IDS_BREAK_COVENANT,				Stats::DREAMSOUL,	20, 10, 9,	5,  -1, NEED_ITEM | NEIGH},
-{IDS_PEACE_AURA_ART_NAME,			Stats::DREAMSOUL,	20, 10, 6,	5,  -1, NEED_ITEM | SANCT},
+{IDS_PEACE_AURA_ART_NAME,			Stats::DREAMSOUL,	20, 10, 13,	5,  -1, NEED_ITEM | SANCT},
 {IDS_SABLE_SHIELD,					Stats::DREAMSOUL,	20, 10,16,	5,  -1, NEED_ITEM | SANCT},
 {IDS_ENTRANCEMENT,					Stats::DREAMSOUL,	20, 10,13,	5,  -1, NEED_ITEM | SANCT},
 {IDS_SHADOW_STEP,					Stats::DREAMSOUL,	20, 10,10,	5,  -1, NEED_ITEM | SANCT},
@@ -2921,7 +2921,7 @@ void cArts::Razorwind(void)
 	if (plat >= 3 && plat < 6) {
 		distance = 2;
 	}
-	else if (plat >= 6 && plat < 9) {
+	else if (plat >= 6 && plat <= 9) {
 		distance = 3;
 	}
 	else if (plat == 10) {
@@ -2936,10 +2936,10 @@ void cArts::Razorwind(void)
 	rw_item.distance = distance;
 	rw_item.set_player_id(player->ID());
 	rw_item.set_effects_party_and_self(false);
-
+	rw_item.set_razorwind(true);
 	header.Init(0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
-	header.SetGraphic(LyraBitmap::INVIS_ITEM);
+	header.SetGraphic(LyraBitmap::DREAMBLADE);
 	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AREA_EFFECT_FUNCTION), 0, 0));
 
