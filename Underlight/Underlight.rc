@@ -2621,7 +2621,7 @@ BEGIN
     IDS_MUST_HAVE_POWER_TOKENS 
                             "You must have at least %d power token(s) from %s in order to use %s\n"
 	IDS_POWER_TOKEN_DESTROYED
-							"The power token crumbles as its energy expenditure has been met"
+							"The Power Token crumbles as its energy expenditure has been met"
     IDS_NO_DREAM_STRIKE_LEVEL 
                             "You can not use Dreamstrike in this plane of the Dream; please try elsewhere\n"
     IDS_TEL_MUST_KNOW_ART   "You must be trained in the art of %s to use that portal\n"

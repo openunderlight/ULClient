@@ -3441,7 +3441,7 @@ void cArts::PoisonCloud(void)
 	this->ApplyPoisonCloud(player->Skill(Arts::POISON_CLOUD), player->ID());
 	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
 	
-	// Colt 4/19/18 - Destroy logic is handled in cArts::UsePowerTokens and was duplicated again here
+	// Colt 4/19/18 - Issue #191 - Destroy logic is handled in cArts::UsePowerTokens and was duplicated again here
 	/*for (int i = 0; i<HOUSE_ART_PTS; i++)
 		//power_tokens[i]->Destroy();
 	}*/
