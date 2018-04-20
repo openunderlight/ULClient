@@ -766,8 +766,9 @@ void cGameServer::HandleMessage(void)
 		//	options.UNIX_login_time = loginack_msg.LoginTime();
 		//	options.local_login_time = LyraTime()/1000;
 			portNumber = loginack_msg.ServerPort();
+#ifndef AGENT
 			LoadJSONOptionValues(player->Name());
-
+#endif
 #ifdef PMARE
 			options.pmare_logout_time = 0;
 			if (options.pmare_type != Avatars::PMARE_RESUME)
@@ -5226,6 +5227,7 @@ void cGameServer::ServerError(TCHAR *error_message)
 	// may cause problems by trying to draw things, etc. when we're exiting
 	exiting = true;
 #ifdef AGENT
+	output->Write(error_message);
 	GAME_ERROR(error_message);
 #else
 	_tcscpy(message, error_message);

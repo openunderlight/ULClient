@@ -129,8 +129,10 @@ bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2)
 bool __cdecl LoadGameOptions(void)
 {
 	LoadDefaultOptionValues();
+#ifndef AGENT
 	LoadJSONFiles();
 	SmartLoadJSON();
+#endif
 	return true;
 }
 

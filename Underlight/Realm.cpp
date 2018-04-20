@@ -402,25 +402,6 @@ bool __cdecl Init_Game(void)
 
 
 #ifdef AGENT
-	// load agent working directory from registry
-	HKEY reg_key = NULL;
-	unsigned long result, reg_type, size;
-	TCHAR buffer[_MAX_PATH];
-
-	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, AGENT_REGISTRY_KEY, 0, KEY_ALL_ACCESS, &reg_key )
-		!= ERROR_SUCCESS)
-		return false;
-	size = _MAX_PATH*sizeof(TCHAR);
-	result = RegQueryValueEx(reg_key, _T("agent_working_directory"), NULL, &reg_type,
-								(unsigned char *)buffer, &size);
-	RegCloseKey(reg_key);
-
-	if (result != ERROR_SUCCESS)
-		return false;
-
-	if (!SetCurrentDirectory(buffer))
-		return false;
-
 	LoadString(hInstance, IDS_DAEMON_LOG, temp_message, sizeof(temp_message));
 	output = new cOutput(temp_message, false, true);		
 

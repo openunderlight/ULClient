@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AgentSvc", "..\AgentSvc\AgentSvc.vcxproj", "{D6AF1D9D-D4B3-4FEC-8EC3-166406A83AE4}"
 EndProject
@@ -75,7 +75,7 @@ Global
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Pmare|Win32.Build.0 = Release|Win32
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Unicode|Win32.ActiveCfg = Unicode|Win32
 		{B67BDCBE-DDF6-4BD2-882D-7C0D4BAB1560}.Unicode|Win32.Build.0 = Unicode|Win32
-		{F427253E-F158-4722-B7E1-27761AE6C921}.AgentSvr|Win32.ActiveCfg = Master|Win32
+		{F427253E-F158-4722-B7E1-27761AE6C921}.AgentSvr|Win32.ActiveCfg = Debug|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Debug|Win32.ActiveCfg = Debug|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Debug|Win32.Build.0 = Debug|Win32
 		{F427253E-F158-4722-B7E1-27761AE6C921}.Dev Player|Win32.ActiveCfg = Dev Player|Win32
@@ -95,5 +95,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0135FA1D-2050-41E0-8093-19E2AAF6193E}
 	EndGlobalSection
 EndGlobal

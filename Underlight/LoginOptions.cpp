@@ -460,6 +460,7 @@ BOOL CALLBACK LaunchOptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARA
 // writes the out of game options to the registry
 void __cdecl SaveOutOfGameRegistryOptionValues(void)
 {
+#ifndef AGENT
 	cJSON* globals = WriteGlobalJSONOptionValues();
 	if (globals)
 	{
@@ -467,6 +468,7 @@ void __cdecl SaveOutOfGameRegistryOptionValues(void)
 		cJSON_Delete(globals);
 		return;
 	}
+#endif
 }
 
 
