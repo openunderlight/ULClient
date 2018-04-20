@@ -42,7 +42,7 @@ INLINE int LmItemHdr::Flags() const
 
 INLINE int LmItemHdr::StateFormat() const
 {
-  return item_.h2.GetBits(FORMAT_START, FORMAT_WIDTH);
+  return item_.itemid.GetBits(FORMAT_START, FORMAT_WIDTH);
 }
 
 INLINE int LmItemHdr::Graphic() const

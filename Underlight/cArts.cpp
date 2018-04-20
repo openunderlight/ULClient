@@ -1757,8 +1757,8 @@ bool cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 		return false;
 	}
 
-	if ((line->flags & LINE_NO_WARD) || (level->Rooms[player->Room()].flags & ROOM_NOREAP))
-	{	// can't ward this teleportal; in no reap areas, wards would last forever!
+	if ((line->flags & LINE_NO_WARD))
+	{	// can't ward this teleportal
 		LoadString(hInstance, IDS_NO_WARDING, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		return false;
@@ -1903,7 +1903,7 @@ void cArts::Ward(void)
 	LmItemHdr header;
 
 	header.Init(0, 0, 0);
-	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_ALWAYSREAP);
 	header.SetGraphic(LyraBitmap::WARD);
 	header.SetColor1(0); header.SetColor2(0);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
@@ -10207,7 +10207,7 @@ void cArts::EndCombine(void)
 		num_charges = 100;
 
 	header.Init(0, 0, 0);
-	header.SetFlags(item1->Lmitem().Header().Flags() | LyraItem::FLAG_HASDESCRIPTION);
+	header.SetFlags(item1->Lmitem().Header().Flags() | LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_ISCOMBINED);
 	header.SetGraphic(item1->Lmitem().Header().Graphic());
 	header.SetColor1(item1->Lmitem().Header().Color1()); 
 	header.SetColor2(item1->Lmitem().Header().Color2());
@@ -10215,7 +10215,9 @@ void cArts::EndCombine(void)
 	header.SetStateFormat(item1->Lmitem().Header().StateFormat());
 
 	if ((item1->Lmitem().Header().Flags() & LyraItem::FLAG_HASDESCRIPTION) ||
-		(item2->Lmitem().Header().Flags() & LyraItem::FLAG_HASDESCRIPTION))
+		(item2->Lmitem().Header().Flags() & LyraItem::FLAG_HASDESCRIPTION) ||
+		(item1->Lmitem().Header().Flags() & LyraItem::FLAG_ISCOMBINED) ||
+		(item2->Lmitem().Header().Flags() & LyraItem::FLAG_ISCOMBINED))
 		combinable = false;
 	else if (item1->ItemFunction(0) != item2->ItemFunction(0))
 		combinable = false; 
