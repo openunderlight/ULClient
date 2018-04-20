@@ -50,9 +50,9 @@ void LmItem::Init(const LmItemHdr& hdr, const TCHAR* name, int s1, int s2, int s
   SetState(s1, s2, s3);
 }
 
-void LmItem::Init(int serial, int header_info, const TCHAR* name, int s1, int s2, int s3)
+void LmItem::Init(int serial, int header_info, int h2, const TCHAR* name, int s1, int s2, int s3)
 {
-  hdr_.Init(header_info, serial);
+  hdr_.Init(header_info, h2, serial);
   SetName(name);
   SetState(s1, s2, s3);
 }

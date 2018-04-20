@@ -87,11 +87,6 @@ INLINE bool LmItem::IsArtifact() const
   return (Charges() == 255);
 }
 
-INLINE lyra_id_t LmItem::ItemID() const
-{
-  return hdr_.ItemID();
-}
-
 INLINE int LmItem::Serial() const
 {
   return hdr_.Serial();

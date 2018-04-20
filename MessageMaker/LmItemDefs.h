@@ -29,14 +29,16 @@ public:
 
   // constants
   enum {
-    // item header flags (up to 6)
+    // item header flags (up to 16)
     FLAG_NOREAP         = 0x01,  // item is not be reaped by server
     FLAG_SENDSTATE      = 0x02,  // item must have state sent always (wards)
     FLAG_IMMUTABLE      = 0x04,  // item state cannot be changed
     FLAG_CHANGE_CHARGES = 0x08,  // item state cannot be changed, except for # of charges
     FLAG_ALWAYS_DROP    = 0x10,  // item is auto-dropped upon player logout
     FLAG_HASDESCRIPTION = 0x20,  // item has text description
-
+	FLAG_ALWAYSREAP = 0x40, // ALWAYS reap this item, even in vaults
+	FLAG_NOPICKUP = 0x80, // Players can't drag/pickup this item
+	FLAG_ISCOMBINED = 0x100,
     MAX_FIELDS_PER_FUNCTION = 7, // max # of subfields per function
 
     // item functions

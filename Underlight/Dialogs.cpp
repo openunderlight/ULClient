@@ -1624,25 +1624,6 @@ BOOL CALLBACK ModifyItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			// default to invis for GMs
 			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), graphic_idx);
 
-
-			if (selected_item->Lmitem().FlagSet(LyraItem::FLAG_NOREAP))
-			{
-				if (selected_item->Lmitem().FlagSet(LyraItem::FLAG_ALWAYS_DROP))
-				{
-					// artifact checkbox
-					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), 1);
-					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), 0);
-					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), false);
-				}
-				else
-				{
-					// nopickup checkbox
-					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), 1);
-					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), 0);
-					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), false);
-				}
-			}
-
 			break;
 		}
 		case WM_PAINT:
@@ -1665,19 +1646,6 @@ BOOL CALLBACK ModifyItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 		case WM_COMMAND:
 			switch (LOWORD(wParam))
 			{
-
-				case IDC_ITEM_NOPICKUP:
-				{
-					bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
-					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), disable);
-					break;
-				}
-				case IDC_ITEM_ARTIFACT:
-				{
-					bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT));
-					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
-					break;
-				}
 				case IDC_OK: 
 				{
 					bool is_nopickup = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
@@ -2072,19 +2040,6 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 		case WM_COMMAND:
 			switch (LOWORD(wParam))
 			{
-
-			case IDC_ITEM_NOPICKUP:
-			{
-				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
-				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), disable);
-				break;
-			}
-			case IDC_ITEM_ARTIFACT:
-			{
-				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT));
-				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
-				break;
-			}
 			case IDC_ITEM_COMBINE:
 			case IDC_PROPERTY1:
 			case IDC_PROPERTY2:
@@ -2236,7 +2191,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						LmItem info;
 						LmItemHdr header;
 
-						header.Init(0, 0);
+						header.Init(0, 0, 0);
 
 						int curr_selection, numcharges, erritemnum;
 						TCHAR itemname[LmItem::NAME_LENGTH];
@@ -2470,8 +2425,9 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						// Get and set the item flags
 						if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT)))
 							header.SetFlag(LyraItem::FLAG_NOREAP | LyraItem::FLAG_ALWAYS_DROP);
-						else if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP)))
-							header.SetFlag(LyraItem::FLAG_NOREAP);
+						
+						if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP)))
+							header.SetFlag(LyraItem::FLAG_NOPICKUP);
 						// Figure next three flags out based on selected effect types
 						int immutable = 0;
 						int changecharges = 0;

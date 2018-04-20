@@ -20,9 +20,14 @@ INLINE void LmItemHdr::Dump1(FILE*) const
 }
 #endif /* !USE_DEBUG */
 
-INLINE lyra_id_t LmItemHdr::ItemID() const
+INLINE lyra_id_t LmItemHdr::ItemHdr1() const
 {
   return item_.itemid.Value();
+}
+
+INLINE lyra_id_t LmItemHdr::ItemHdr2() const
+{
+  return item_.h2.Value();
 }
 
 INLINE int LmItemHdr::Serial() const
@@ -32,12 +37,12 @@ INLINE int LmItemHdr::Serial() const
 
 INLINE int LmItemHdr::Flags() const
 {
-  return item_.itemid.GetBits(FLAGS_START, FLAGS_WIDTH);
+  return item_.h2.GetBits(FLAGS_START, FLAGS_WIDTH);
 }
 
 INLINE int LmItemHdr::StateFormat() const
 {
-  return item_.itemid.GetBits(FORMAT_START, FORMAT_WIDTH);
+  return item_.h2.GetBits(FORMAT_START, FORMAT_WIDTH);
 }
 
 INLINE int LmItemHdr::Graphic() const
@@ -60,9 +65,10 @@ INLINE bool LmItemHdr::FlagSet(int flag) const
   return (Flags() & flag);
 }
 
-INLINE void LmItemHdr::SetItemID(lyra_id_t itemid)
+INLINE void LmItemHdr::SetItemID(lyra_id_t itemid, lyra_id_t i2)
 {
   item_.itemid.SetValue(itemid);
+  item_.h2.SetValue(i2);
 }
 
 INLINE void LmItemHdr::SetSerial(int serial)
@@ -72,7 +78,7 @@ INLINE void LmItemHdr::SetSerial(int serial)
 
 INLINE void LmItemHdr::SetFlags(int flags)
 {
-  item_.itemid.SetBits(FLAGS_START, FLAGS_WIDTH, flags);
+  item_.h2.SetBits(FLAGS_START, FLAGS_WIDTH, flags);
 }
 
 INLINE void LmItemHdr::SetFlag(int flag)
@@ -107,5 +113,5 @@ INLINE void LmItemHdr::SetStateFormat(int format)
 
 INLINE bool LmItemHdr::Equals(const LmItemHdr& item) const
 {
-  return ((ItemID() == item.ItemID()) && (Serial() == item.Serial()));
+  return ((ItemHdr1() == item.ItemHdr1()) && (ItemHdr2() == item.ItemHdr2()) && (Serial() == item.Serial()));
 }

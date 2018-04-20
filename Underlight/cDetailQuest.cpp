@@ -745,7 +745,7 @@ void cDetailQuest::SetDetails()
 			
 			LmItem info;
 			LmItemHdr header;
-			header.Init(0, 0);
+			header.Init(0, 0, 0);
 			header.SetGraphic(quest->Graphic());
 			int color1 = quest->Color1();
 			int color2 = quest->Color2();

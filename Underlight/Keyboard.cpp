@@ -292,7 +292,7 @@ bool HandleLyraDebugKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 
 			lyra_item_gratitude_t gratitude = {LyraItem::GRATITUDE_FUNCTION, 0, 0, 0, 0, 0};
 			
-			header.Init(0, 0);
+			header.Init(0, 0, 0);
 			header.SetFlags(LyraItem::FLAG_HASDESCRIPTION);
 			header.SetGraphic(LyraBitmap::TALISMAN7);
 			header.SetColor1(15); header.SetColor2(7);
@@ -392,7 +392,7 @@ bool HandleLyraDebugKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			LmItem info;
 			LmItemHdr header;
 			cItem *item;
-			header.Init(0, 0);
+			header.Init(0, 0, 0);
 			header.SetFlags(LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_SENDSTATE);
 			header.SetGraphic(LyraBitmap::META_ESSENCE);
 			header.SetColor1(15); header.SetColor2(15);

@@ -88,8 +88,7 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 	sort_index = max_sort_index;
 	// GMs are always draggable!
 #if ! (defined (UL_DEBUG) || defined (GAMEMASTER))
-	if ((lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP)) ||
-		ItemFunction(0) == LyraItem::PORTKEY_FUNCTION)
+	if(lmitem.Header().Flags() & LyraItem::FLAG_NOPICKUP)
 		draggable = false;
 #endif
 	// GMs can never drag razorwinds
@@ -490,12 +489,6 @@ bool cItem::IsRazorwind()
 		memcpy(&aoe, state, sizeof(aoe));
 		return aoe.is_razorwind();
 	}
-}
-
-bool cItem::NoPickup(void)
-{
-	return (lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP)) ||
-		ItemFunction(0) == LyraItem::PORTKEY_FUNCTION;
 }
 
 // can the item be lost on dissolution?
