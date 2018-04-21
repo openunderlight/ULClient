@@ -2881,8 +2881,10 @@ void cArts::Razorwind(void)
 {
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::RAZORWIND,
 			player->Skill(Arts::RAZORWIND), 0, player->SkillSphere(Arts::FATESENDER));
-	if (RoomFull())
+	if (RoomFull()) {
 		this->ArtFinished(false);
+		return;
+	}
 	this->ApplyRazorwind(player->Skill(Arts::RAZORWIND), player->ID());
 	LmItem info;
 	LmItemHdr header;

@@ -78,6 +78,7 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 {
 	this->SetLmItem(i_lmitem);
 	expire_time_is_ttl = false;
+	destroy_on_failed_drop = false;
 	needsUpdate = marked_for_death = thrown =  redeeming = false;
 	marked_for_drop = marked_for_death = destroy_at_zero = false;
 	draggable = gravity = true;

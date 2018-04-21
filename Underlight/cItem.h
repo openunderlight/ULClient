@@ -77,6 +77,7 @@ class cItem : public cActor
 	   int sort_index; // relative sort index for control panel
 	   int inventory_flags;
 	   bool expire_time_is_ttl;
+	   bool destroy_on_failed_drop;
    public:
 	   cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_status, 
 		   unsigned __int64 i_flags = 0, bool temp = false, DWORD expires = 0,
