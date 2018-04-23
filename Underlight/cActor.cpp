@@ -346,11 +346,14 @@ void cActor::ModifyHeight(void)
 			else
 				z = xheight;
 		}
-		else if ( z > xheight || vertforce < 0)
+		else if (z > xheight || vertforce < 0)
 		{ // accelerate down; check if we're at the peak of our
 			vertforce += 6.0f;
 			if ((vertforce > 0.0f) && (vertforce <= 6.0f))
 				fall_height = z; // we're at the top of a fall
+			
+			if (vertforce > 0 && (flags & ACTOR_FLY))
+				continue;
 
 			z -= vertforce;
 			if (z >= level->Sectors[sector]->CeilHt(x,y))

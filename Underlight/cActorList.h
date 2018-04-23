@@ -72,6 +72,7 @@ class cActorList
 	  cActor* IterateActors(int status);
 	  cNeighbor* IterateNeighbors(int status);
 	  cItem* IterateItems(int status);
+	  cActor* IterateOthers(int status);
 
 	  cNeighbor* LookUpNeighbor(realmid_t playerID);
 	  cItem* LookUpItem(const LmItemHdr& item_id);

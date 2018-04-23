@@ -716,7 +716,7 @@ bool __cdecl Init_Game(void)
  	    LmAvatar avatar = player->Avatar();
 
 		avatar.SetAvatarType(Avatars::FEMALE);
-		update.Init(1, 0, (short)player->x, (short)player->y-50 , 0, 0 );
+		update.Init(1, 0, (short)player->x, (short)player->y-50 , (short)player->z, 0, 0 );
 		update.SetAngle(player->angle+Angle_180);
 		info.Init(update, avatar, _T("Test Avatar"), 0, 0);
 		test_avatar = new cNeighbor(info);

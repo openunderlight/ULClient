@@ -98,6 +98,7 @@ const unsigned __int64  ACTOR_BLEED			  = 0x000000000000000400000000;
 const unsigned __int64	ACTOR_CRIPPLE		  = 0x000000000000000800000000;
 const unsigned __int64	ACTOR_SHIELD		  = 0x000000000000001000000000;
 const unsigned __int64	ACTOR_GKSHIELD		  = 0x000000000000002000000000;
+const unsigned __int64  ACTOR_FLY = 0x000000000000004000000000;
 //////////////////////////////////////////////////////////////////
 // Class Definition
 struct linedef;

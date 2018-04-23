@@ -35,18 +35,18 @@ const LmPeerUpdate LmPeerUpdate::DEFAULT_INSTANCE;
 
 LmPeerUpdate::LmPeerUpdate()
 {
-  Init(Lyra::ID_UNKNOWN, 0, 0, 0, 0, 0);
+  Init(Lyra::ID_UNKNOWN, 0, 0, 0, 0, 0, 0);
 }
 
 ////
 // Init
 ////
 
-void LmPeerUpdate::Init(short realtimeid, unsigned char soundid, short x, short y, int u1, int u2)
+void LmPeerUpdate::Init(short realtimeid, unsigned char soundid, short x, short y, short z, int u1, int u2)
 {
   SetRealtimeID(realtimeid);
   SetSoundID(soundid);
-  SetPosition(x, y);
+  SetPosition(x, y, z);
   u_.u1.SetValue(u1);
   u_.u2.SetValue(u2);
 }
