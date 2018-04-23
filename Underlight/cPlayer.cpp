@@ -267,7 +267,8 @@ bool cPlayer::Update(void)
 	if (terminate)
 		return false;
 
-	this->ModifyHeight();
+	//if(!(flags & ACTOR_FLY))
+		this->ModifyHeight();
 
 	this->CheckStatus();
 
@@ -629,7 +630,7 @@ bool cPlayer::Update(void)
 	}
 	vertical_tilt = (long)vertical_tilt_float;
 
-	if ((z > xheight - (.1*physht)) && (z < xheight + (.1*physht)) &&
+	if ((z > xheight - (.1*physht)) && ((z < xheight + (.1*physht)) || (flags & ACTOR_FLY)) &&
 		keyboard[Keystates::JUMP] && move)
 	{
 		if (options.network)

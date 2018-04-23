@@ -4626,7 +4626,7 @@ void cGameServer::FillInPlayerPosition(LmPeerUpdate *update, int trigger)
 {
 	//update->SetPlayerID(player->ID());
 	update->SetRealtimeID(0);
-	update->SetPosition((int)player->x, (int)player->y);
+	update->SetPosition((int)player->x, (int)player->y, (int) player->z);
 	//_tprintf("set position at %d, %d at time %d\n",(int)player->x, (int)player->y, LyraTime());
 
 	update->SetAngle(player->angle);
@@ -4696,6 +4696,9 @@ void cGameServer::FillInPlayerPosition(LmPeerUpdate *update, int trigger)
 
 	if (player->flags & ACTOR_SOULSPHERE)
 		update->SetFlags(update->Flags() | LmPeerUpdate::LG_SOULSPHERE);
+
+	if (player->flags & ACTOR_FLY) 
+		update->SetFlying(TRUE);
 
 	attack_bits = attack_bits << 1;
 	if (last_attack.time > last_peer_update)

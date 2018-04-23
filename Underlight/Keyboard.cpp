@@ -667,8 +667,13 @@ bool HandleGMFullMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 		return true;
 				
 	case 'O':
-		cp->DumpInventory();
+		if ((player->flags & ACTOR_FLY))
+			player->flags &= ~ACTOR_FLY;
+		else
+			player->flags |= ACTOR_FLY;
 		return true;
+		//cp->DumpInventory();
+		//return true;
 		
 	case 'L': // Lift all dropped objects into inventory
 		LoadString(hInstance, IDS_LIFT, message, sizeof(message));

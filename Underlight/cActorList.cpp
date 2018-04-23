@@ -195,6 +195,13 @@ cItem* cActorList::IterateItems(int status)
 	return (cItem*)(items->Iterate(status)); 
 }
 
+cActor* cActorList::IterateOthers(int status)
+{
+	if (deleting)
+		return NO_ACTOR;
+	return  (cActor*)(others->Iterate(status));
+}
+
 
 // Given a player ID, looks up the neighbor in the actor list
 

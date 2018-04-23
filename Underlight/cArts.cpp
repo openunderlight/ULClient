@@ -1514,7 +1514,7 @@ void cArts::AddDummyNeighbor(void)
 		this->RemoveDummyNeighbor();
 	}
 
-	update.Init(0, 0, (short)player->x, (short)player->y, 0, 0);
+	update.Init(0, 0, (short)player->x, (short)player->y, (short)player->z, 0, 0);
 	update.SetAngle(player->angle);
 	LmAvatar avatar = player->Avatar();
 	avatar.SetHidden(0);
