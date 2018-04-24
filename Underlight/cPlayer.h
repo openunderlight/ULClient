@@ -145,7 +145,7 @@ class cPlayer : public cActor
 	   int ppoints;
 	   int pp_pool;
 	   int granting_pp;
-
+	   int num_fly_collides;
 	   int next_collapse_index;
 	   player_collapse_t collapses[COLLAPSES_TRACKED]; // record last 100 collapses
 	   lyra_id_t last_poisoner,last_bleeder;
