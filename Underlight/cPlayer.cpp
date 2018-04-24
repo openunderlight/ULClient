@@ -103,7 +103,7 @@ cPlayer::cPlayer(short viewport_height) :
 		cActor(0.0f, 0.0f, 0, 0,  PLAYER)
 {
 	playerID = INVALID_PLAYERID;
-
+	num_fly_collides = 0;
 	// set vertical tilt members here; rest handled in Init method
 	vertical_tilt_origin = viewport_height/2;
 	max_vertical_tilt 	= viewport_height ;
@@ -541,13 +541,33 @@ bool cPlayer::Update(void)
 	if (velocity)
 	{
 		lastRoom = room;
+		move_result_t res;
 		if (strafe != NO_STRAFE)
 		{ // make sure deceleration doesn't drag player forward after a strafe
-			MoveActor(this,moveangle,velocity*timing->nticks*speed,MOVE_NORMAL);
+			MoveActor(this,moveangle,velocity*timing->nticks*speed,MOVE_NORMAL, &res);
 			velocity = 0.0f;
 		}
 		else
-			MoveActor(this,moveangle,velocity*timing->nticks*speed,MOVE_NORMAL);
+			MoveActor(this,moveangle,velocity*timing->nticks*speed,MOVE_NORMAL, &res);
+		if (flags & ACTOR_FLY)
+		{
+			if (res.hit == HIT_FLOOR || res.hit == HIT_WALL || res.hit == HIT_CEILING || res.hit == HIT_JUMPABLE || res.hit == HIT_ACTOR)
+			{
+				num_fly_collides++;
+				velocity = -velocity;
+				speed /= 3;
+			}
+			else
+			{
+				num_fly_collides = 0;
+			}
+				
+			if (num_fly_collides >= 5)
+			{
+				RemoveTimedEffect(LyraEffect::PLAYER_FLYING);
+				num_fly_collides = 0;
+			}
+		}
 		if (free_moves)
 			free_moves--;
 

@@ -127,7 +127,7 @@ float cActor::SetXHeight(void)
 	{
 		if (flags & ACTOR_CEILHANG)
 			z = level->Sectors[sector]->CeilHt(x,y);
-		else
+		else if(!(flags & ACTOR_FLY))
 			z = level->Sectors[sector]->FloorHt(x,y)+level->Sectors[sector]->HtOffset+physht;
 		eyeheight = (float)(z-(physht*.2));
 	}
