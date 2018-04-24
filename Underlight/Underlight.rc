@@ -4516,6 +4516,23 @@ END
 STRINGTABLE
 BEGIN
     IDS_GKSHIELD            "Bulwark"
+    IDS_ONCE_PER_LOGIN      "Once Per Login"
+    IDS_EVERY_2_SEC         "Every 2 Seconds"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ONCE_PER_ROOM       "Once Per Room"
+    IDS_EVERY_30_SEC        "Every 30 seconds"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_EVERY_MINUTE        "Every minute"
+    IDS_EVERY_2_MINUTES     "Every 2 minutes"
+    IDS_FLIGHT              "Flight"
+    IDS_FLIGHT_ON           "You feel light as a feather.\n"
+    IDS_FLIGHT_OFF          "The weight of gravity descends upon you.\n"
 END
 
 #endif    // English (United States) resources

@@ -11,12 +11,13 @@
 // NOTE: keep consistent with Visual Effects.ASC!
 
  
-const int NUM_TIMED_EFFECTS = 33; // add one for NONE
+const int NUM_TIMED_EFFECTS = 34; // add one for NONE
 const int NUM_ARTS = 149;
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
 const int NUM_PLAYER_STATS = 5;
 const int NUM_DISTANCES = 7;
+const int NUM_FREQUENCIES = 6;
 const int NUM_GUILDS = 8;
 const int NUM_HOUSES = 8;
 const int NUM_RANKS = 3;
@@ -697,8 +698,9 @@ struct LyraEffect {
 	PLAYER_NO_PARTY,
 	PLAYER_NO_POISON,
 	PLAYER_SPIN,
+	PLAYER_FLYING,
 
-	MAX_ITEM_EFFECT = PLAYER_SPIN,
+	MAX_ITEM_EFFECT = PLAYER_FLYING,
 	// Non-forgable effects
 	PLAYER_CRIPPLE,
 	PLAYER_SHIELD,

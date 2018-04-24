@@ -20,6 +20,8 @@
 #define IDS_GKSHIELD_ON                 14
 #define IDS_GKSHIELD_OFF                15
 #define IDS_GKSHIELD                    16
+#define IDS_ONCE_PER_LOGIN              17
+#define IDS_EVERY_2_SEC                 18
 #define IDR_AgentSvr                    100
 #define IDS_SERVICENAME                 100
 #define IDD_LOGIN                       101
@@ -70,6 +72,13 @@
 #define IDD_CHOOSE_DESTINATION          202
 #define IDD_POWER_TOKEN                 203
 #define IDD_SELECT_VALUE                204
+#define IDS_ONCE_PER_ROOM               206
+#define IDS_EVERY_30_SEC                207
+#define IDS_EVERY_MINUTE                208
+#define IDS_EVERY_2_MINUTES             209
+#define IDS_FLIGHT                      210
+#define IDS_FLIGHT_ON                   211
+#define IDS_FLIGHT_OFF                  212
 #define IDS_PROPERTIES                  1000
 #define IDC_USERNAME                    1004
 #define IDC_EMAIL                       1005
@@ -3011,7 +3020,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        206
+#define _APS_NEXT_RESOURCE_VALUE        208
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1447
 #define _APS_NEXT_SYMED_VALUE           101
