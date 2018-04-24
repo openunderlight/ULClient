@@ -27,7 +27,6 @@ cActorList::cActorList(void)
 	neighbors = new cList();
 	items = new cList();
 	others = new cList();
-
 	actor_delete_ok = false;
 
 	CheckInvariants(__LINE__);

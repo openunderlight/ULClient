@@ -383,43 +383,22 @@ void cActor::ModifyHeight(void)
 
 				if (fall_height - z > MIN_JUMP_HEIGHT)
 				{
-/*
  // fall damage is out for now - TEMP TESTING - DEV ONLY
  				if ((fall_height - z > MAX_JUMP_HEIGHT) && this->IsPlayer())
-					{	// fall damage - d1-4 per 10' (10' = 256 pixels)
-						damage = 0;
+					{	// fall damage - d1-3 per 10' (10' = 256 pixels)
+						int damage = 0;
 						while (fall_height - z > TEN_FEET)
 						{
 							fall_height -= TEN_FEET;
-							damage+=(rand()%4)+1;
+							damage+=(rand()%3)+1;
 						}
 					if (damage>99) damage = 99;
-					int fall_index = (damage/2);
-					if (fall_index>10) fall_index = 10;
-					static TCHAR* landings[12] = 
-					{	
-						"You land with a thud!",
-						"You land with a loud thud!",
-						"You hit the ground with a loud thud!",
-						"You hear a crunch as you hit the ground!", 
-						"The ground shakes as you land with a loud smack!",
-						"You smash into the ground with a hard landing!",
-						"Your coherence wavers as you hit the ground!", 
-						"You crash into the ground with a loud crunch!", 
-						"You feel weak from falling so far!",
-						"The ground shivers in your wake, your soul feeling the pain!",
-						"Your soul shakes as you smash into the ground!",
-					};
-				_stprintf(message, landings[fall_index]);
-					display->DisplayMessage (message, false);
-					player->SetCurrStat(Stats::DREAMSOUL, -damage, SET_RELATIVE, player->ID());
+					player->SetCurrStat(Stats::DREAMSOUL, -damage, SET_RELATIVE_NO_COLLAPSE, player->ID());
 					if (this->InWater())
 						cDS->PlaySound(LyraSound::ENTER_WATER, x, y, false);
 					else
 						cDS->PlaySound(LyraSound::JUMPLANDING, x, y, false);
 					}
-
-*/
 				}
 			}
 		}

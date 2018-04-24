@@ -33,7 +33,8 @@ const int COLLAPSE_CHEAT_THRESHHOLD = 5;
 enum set_stat_enum
 {  
   SET_ABSOLUTE = 1,    
-  SET_RELATIVE = 2,          
+  SET_RELATIVE = 2,     
+  SET_RELATIVE_NO_COLLAPSE = 3, 
 };
 
 // for showing guild/sphere/shield patches

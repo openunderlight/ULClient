@@ -60,6 +60,7 @@ class cItem : public cActor
 	   LmItem lmitem; // bitmap id, colors, flags, serial #, state descrip, state
 	   int status; 
 	   int selected_function; // current selected function (0-2)
+	   int next_tick;
 	   TCHAR description[ITEM_DESCRIP_LENGTH]; // descrip at a distance
 	   bool needsUpdate; // whether state has changed since last update
 	   bool draggable; // true if can be dragged/picked up
@@ -111,6 +112,8 @@ class cItem : public cActor
 	  // selectors
 	  bool IsRazorwind(void);
 	  inline DWORD ExpireTime(void) { return expire_time; }
+	  inline DWORD NextTick(void) { return next_tick; }
+	  inline void SetNextTick(int t) { next_tick = t; }
 	  inline LmItemHdr& ID(void) { return lmitem.Header(); };
 	  inline LmItem& Lmitem(void) { return lmitem; };
 	  inline int Status(void) { return status; };

@@ -48,6 +48,19 @@ struct distance_t
 	UINT descrip;
 };
 
+struct frequency_t
+{
+	int recurrences; // -1 for always recur
+	int ms_between_recurrences; 
+	UINT descrip;
+};
+
+struct freqtick_t
+{
+	int numrecurs;
+	bool remove_with_room_change;
+};
+
 class cTimedEffects { // timed effects
 	public:	
 	   DWORD expires[NUM_TIMED_EFFECTS];
@@ -107,6 +120,7 @@ TCHAR* DreamweaponName(int color);
 void Scream(int avatar_type, cActor* actor, bool propagate = false);
 void CalculateDistance(int index, unsigned int* xydist, unsigned int* heightdist);
 bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2);
+frequency_t Frequency(int freqidx);
 
 const char *DisperseCoordinate(unsigned int index);
 unsigned int NumDisperseLocs(void);
