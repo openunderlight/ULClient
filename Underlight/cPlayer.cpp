@@ -104,6 +104,7 @@ cPlayer::cPlayer(short viewport_height) :
 {
 	playerID = INVALID_PLAYERID;
 	num_fly_collides = 0;
+	num_floor_collides = 0;
 	// set vertical tilt members here; rest handled in Init method
 	vertical_tilt_origin = viewport_height/2;
 	max_vertical_tilt 	= viewport_height ;
@@ -270,7 +271,7 @@ bool cPlayer::Update(void)
 		return false;
 
 	//if(!(flags & ACTOR_FLY))
-		this->ModifyHeight();
+	this->ModifyHeight();
 
 	this->CheckStatus();
 
@@ -540,6 +541,7 @@ bool cPlayer::Update(void)
 	}
 	if (velocity)
 	{
+		num_floor_collides = 0;
 		lastRoom = room;
 		move_result_t res;
 		if (strafe != NO_STRAFE)
@@ -555,17 +557,18 @@ bool cPlayer::Update(void)
 			{
 				num_fly_collides++;
 				velocity = -velocity;
-				speed /= 3;
 			}
 			else
 			{
 				num_fly_collides = 0;
 			}
-				
+			
+
 			if (num_fly_collides >= 5)
 			{
 				RemoveTimedEffect(LyraEffect::PLAYER_FLYING);
 				num_fly_collides = 0;
+				num_floor_collides = 0;
 			}
 		}
 		if (free_moves)
@@ -602,6 +605,21 @@ bool cPlayer::Update(void)
 	else if (options.network && gs->LoggedIntoGame() && old_velocity)
 		// preupdate for slowdown
 		gs->SendPositionUpdate(TRIGGER_MOVE);
+
+	if (!velocity && (flags & ACTOR_FLY))
+	{
+		if (z == xheight)
+		{
+			num_floor_collides++;
+			if (num_floor_collides >= 40)
+			{
+				RemoveTimedEffect(LyraEffect::PLAYER_FLYING);
+				num_fly_collides = 0;
+				num_floor_collides = 0;
+			}
+		}
+	}
+
 
 	if (!was_in_water && this->InWater() && !(flags & ACTOR_SOULSPHERE) &&
 		((z > xheight - (.1*physht)) && (z < xheight + (.1*physht))))

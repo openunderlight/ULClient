@@ -145,7 +145,7 @@ class cPlayer : public cActor
 	   int ppoints;
 	   int pp_pool;
 	   int granting_pp;
-	   int num_fly_collides;
+	   int num_fly_collides, num_floor_collides;
 	   int next_collapse_index;
 	   player_collapse_t collapses[COLLAPSES_TRACKED]; // record last 100 collapses
 	   lyra_id_t last_poisoner,last_bleeder;
@@ -205,6 +205,8 @@ class cPlayer : public cActor
 	  inline int  StartLevel (void) { return start_level; };
 	  inline float ReturnX (void) { return return_x; };
 	  inline float ReturnY (void) { return return_y; };
+	  inline bool LookingDown(void) { return (vertical_tilt + 120) < vertical_tilt_origin; }
+	  inline bool LookingUp(void) { return vertical_tilt > (vertical_tilt_origin + 120); }
 	  inline int  ReturnAngle (void) { return return_angle; };
 	  inline int  ReturnLevel (void) { return return_level; };
 	  inline float RecallX (void) { return recall_x; };
