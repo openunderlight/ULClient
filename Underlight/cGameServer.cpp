@@ -3541,7 +3541,8 @@ _stprintf(message, disp_message, level->Name(level->ID()));
 	display->DisplayMessage(message, false);
 
 	curr_level_id = level->ID();
-
+	if (player->flags & ACTOR_FLY)
+		player->RemoveTimedEffect(LyraEffect::PLAYER_FLYING);
 	this->FillInPlayerPosition(&update);
 
 	player->SetRoom(player->x, player->y);
@@ -4340,7 +4341,8 @@ void cGameServer::OnRoomChange(short last_x, short last_y)
 
 	if ((player->IsUninitiated() && (level->ID() == RECRUITING_LEVEL_ID)))
 		gs->SendPlayerMessage(0, RMsg_PlayerMsg::NEWBIE_ENTERED, 0, 0);
-
+	if (player->flags & ACTOR_FLY)
+		player->RemoveTimedEffect(LyraEffect::PLAYER_FLYING);
 	LmAvatar avatar = player->Avatar();
 	int value;
 	if ((avatar.AvatarType() >= Avatars::MIN_NIGHTMARE_TYPE) &&

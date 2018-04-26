@@ -326,6 +326,8 @@ void cActor::ModifyHeight(void)
 
 	xheight = level->Sectors[sector]->FloorHt(x,y)+level->Sectors[sector]->HtOffset+physht;
 	//_tprintf("height: %f physht: %f xheight: %f\n",height,physht,xheight);
+	bool looking_down = IsPlayer() && ((cPlayer*)this)->LookingDown();
+	bool looking_up = IsPlayer() && ((cPlayer*)this)->LookingUp();
 
 	for (i=0; i<timing->sync_ticks; i++)
 	{
@@ -352,8 +354,19 @@ void cActor::ModifyHeight(void)
 			if ((vertforce > 0.0f) && (vertforce <= 6.0f))
 				fall_height = z; // we're at the top of a fall
 			
-			if (vertforce > 0 && (flags & ACTOR_FLY))
-				continue;
+			if (flags & ACTOR_FLY)
+			{
+				if (!looking_up && !looking_down && vertforce > 0)
+				{
+					vertforce = 0;
+					continue;
+				}
+
+				if (looking_up)
+					vertforce = -3;
+				if (looking_down)
+					vertforce = 3;
+			}
 
 			z -= vertforce;
 			if (z >= level->Sectors[sector]->CeilHt(x,y))
