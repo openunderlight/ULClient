@@ -5223,7 +5223,7 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 	player->EvokedFX().Activate(Arts::ABJURE, false);
 
 	for (i=0; i<NUM_TIMED_EFFECTS; i++)
-		if (player->flags & timed_effects->actor_flag[i])
+		if (player->flags & timed_effects->actor_flag[i] && timed_effects->abjurable[i])
 			num_effects_active++;
 
 	// pmares can only have 1 effect abjured at a time
@@ -5245,15 +5245,15 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 		random = rand()%num_effects_active;
 		j=0; // j = count of active effects skipped by loop
 		for (i=0; i<NUM_TIMED_EFFECTS; i++)
-			if (player->flags & timed_effects->actor_flag[i])
+			if ((player->flags & timed_effects->actor_flag[i]) && timed_effects->abjurable[i])
 			{
 				if (j == random) // abjure this effect
 				{
 					LoadString (hInstance, IDS_ABJURED_EFFECT, disp_message, sizeof(disp_message));
 					if (caster_id == player->ID())
 					{
-					LoadString(hInstance, IDS_YOURSELF, temp_message, sizeof(temp_message));
-					_stprintf(message, disp_message, timed_effects->name[i], temp_message);
+						LoadString(hInstance, IDS_YOURSELF, temp_message, sizeof(temp_message));
+						_stprintf(message, disp_message, timed_effects->name[i], temp_message);
 						display->DisplayMessage (message);
 					}
 					else
@@ -5263,7 +5263,7 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 						LoadString (hInstance, IDS_ABJURED_EFFECT_OTHER, disp_message, sizeof(disp_message));
 						_stprintf(message, disp_message, n->Name(), timed_effects->name[i]);
 						display->DisplayMessage (message);
-          }
+					}
 					player->RemoveTimedEffect(i);
 					break;
 				}
