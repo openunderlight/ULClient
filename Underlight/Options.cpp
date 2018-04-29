@@ -738,7 +738,6 @@ void LoadDefaultOptionValues()
 	options.pmare_start_type = 0;
 	options.pmare_price = 0;
 	options.tcp_only = TRUE;
-	options.tcp_only = FALSE;
 	options.pmare_session_start.wYear = 1970;
 	memset(&options.avatar, 0, sizeof(options.avatar));
 	options.num_bungholes = 0;
