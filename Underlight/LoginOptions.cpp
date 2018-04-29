@@ -254,10 +254,9 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_TCP), message, sizeof(message)); 								
 				options.bind_local_tcp	= _ttol(message);
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_UDP), message, sizeof(message)); 								
-				if(!options.tcp_only)
-					options.bind_local_udp	= _ttol(message);
-				else
-					options.bind_local_udp = DEFAULT_UDP_PORT;
+#ifndef AGENT
+				options.tcp_only = TRUE;
+#endif
 
 #ifdef CHINESE
 				options.restart_last_location = Button_GetCheck(GetDlgItem(hDlg, IDC_RESTART_LOCATION));
