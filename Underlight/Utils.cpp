@@ -1486,6 +1486,7 @@ cTimedEffects::cTimedEffects(void)
 		related_art[i] = Arts::NONE;
 		default_duration[i] = 0;
 		harmful[i] = false;
+		abjurable[i] = true;
 	}
 
 	i = LyraEffect::NONE;
@@ -1704,6 +1705,7 @@ cTimedEffects::cTimedEffects(void)
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
 	default_duration[i]=25; 
 	harmful[i] = false;
+	abjurable[i] = false;
 
 	i = LyraEffect::PLAYER_RETURN;
 	LoadString (hInstance, IDS_PLAYER_RETURN_ON, disp_message, sizeof(disp_message));

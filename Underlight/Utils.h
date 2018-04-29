@@ -72,6 +72,7 @@ class cTimedEffects { // timed effects
 	   short related_art[NUM_TIMED_EFFECTS];
 	   short default_duration[NUM_TIMED_EFFECTS]; // duration for when caused by item
 	   bool harmful[NUM_TIMED_EFFECTS]; // harmful or helful?
+	   bool abjurable[NUM_TIMED_EFFECTS]; // abjurable?
 	protected:
 
 	public:

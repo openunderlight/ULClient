@@ -2615,7 +2615,7 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 		_stprintf(disp_message, "sending yougotme with s1=%d s2=%d", j, i);
 		display->DisplayMessage(disp_message);
 #endif // agent
-		gs->SendPlayerMessage(origin_id, RMsg_PlayerMsg::YOUGOTME, j, i);
+		gs->SendPlayerMessage(origin_id, RMsg_PlayerMsg::YOUGOTME, j, i, recall_active ? 1 : 0);
 
 #ifndef AGENT
 		// drop artifacts
