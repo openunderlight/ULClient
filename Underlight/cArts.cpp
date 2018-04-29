@@ -7471,10 +7471,16 @@ void cArts::StartBanishMare(void)
 {
 	this->WaitForSelection(&cArts::EndBanishMare, Arts::BANISH_NIGHTMARE);
 	this->CaptureCP(INVENTORY_TAB, Arts::BANISH_NIGHTMARE);
+	//IDS_BANISHED_NIGHTMARE,LyraBitmap::BANISHED_MARE
 	return;
 }
 
 void cArts::EndBanishMare(void)
+{
+	this->EndMareEssenceMetaFunc(Arts::BANISH_NIGHTMARE, LyraBitmap::BANISHED_MARE, IDS_BANISHED_NIGHTMARE, IDS_NIGHTMARE_BANISHED);
+}
+
+void cArts::EndMareEssenceMetaFunc(int art_id, int graphic, int item_name_string_id, int on_success_string_id)
 {
 	LmItem info;
 	LmItemHdr header;
@@ -7487,12 +7493,12 @@ void cArts::EndBanishMare(void)
 
 	if ((essence_item == NO_ACTOR) || !(actors->ValidItem(essence_item)))
 	{
-		this->DisplayItemBailed(Arts::BANISH_NIGHTMARE);
+		this->DisplayItemBailed(art_id);
 		this->ArtFinished(false);
 		return;
 	}
 	// check that the item has mare essence
-	for (int i=0; i<essence_item->NumFunctions(); i++)
+	for (int i = 0; i<essence_item->NumFunctions(); i++)
 		if (essence_item->ItemFunction(i) == LyraItem::ESSENCE_FUNCTION)
 		{
 			state = essence_item->Lmitem().StateField(i);
@@ -7501,17 +7507,16 @@ void cArts::EndBanishMare(void)
 				is_essence = true;
 		}
 
-	if (is_essence)
+	if (is_essence && essence.weapon_type != 0)
 	{ // transmute into banished talisman
-		// create new talisman for banished mare essence
+	  // create new talisman for banished mare essence
 		header.Init(0, 0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
-		header.SetGraphic(LyraBitmap::BANISHED_MARE);
+		header.SetGraphic(graphic);
 		header.SetColor1(0); header.SetColor2(0);
 		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
-		essence.strength = 0; // leave other fields alone
-
-		LoadString(hInstance, IDS_BANISHED_NIGHTMARE, message, sizeof(message));
+		essence.weapon_type = art_id;
+		LoadString(hInstance, item_name_string_id, message, sizeof(message));
 		info.Init(header, message, 0, 0, 0);
 		info.SetStateField(0, &essence, sizeof(essence));
 		info.SetCharges(1);
@@ -7522,18 +7527,19 @@ void cArts::EndBanishMare(void)
 			this->ArtFinished(false);
 			return;
 		}
-		LoadString (hInstance, IDS_NIGHTMARE_BANISHED, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
+		LoadString(hInstance, on_success_string_id, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 		essence_item->Destroy();
 		this->ArtFinished(true);
 	}
 	else
 	{
-		LoadString (hInstance, IDS_NOT_ESSENCE, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
+		LoadString(hInstance, IDS_NOT_ESSENCE, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 	}
 	return;
+
 }
 
 //////////////////////////////////////////////////////////////////
@@ -7548,65 +7554,7 @@ void cArts::StartEnslaveMare(void)
 
 void cArts::EndEnslaveMare(void)
 {
-	LmItem info;
-	LmItemHdr header;
-	lyra_item_essence_t essence;
-	cItem *essence_item = cp->SelectedItem();
-	cItem *slave_item;
-	bool is_essence = false;
-	const void* state;
-
-
-	if ((essence_item == NO_ACTOR) || !(actors->ValidItem(essence_item)))
-	{
-		this->DisplayItemBailed(Arts::ENSLAVE_NIGHTMARE);
-		this->ArtFinished(false);
-		return;
-	}
-	// check that the item has mare essence
-	for (int i=0; i<essence_item->NumFunctions(); i++)
-		if (essence_item->ItemFunction(i) == LyraItem::ESSENCE_FUNCTION)
-		{
-			state = essence_item->Lmitem().StateField(i);
-			memcpy(&essence, state, sizeof(essence));
-			if ((essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE) && (essence.strength > 0))
-				is_essence = true;
-		}
-
-	if (is_essence)
-	{	// transmute into enslaved talisman
-
-		// create new talisman for enslaved mare essence
-		header.Init(0, 0, 0);
-		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
-		header.SetGraphic(LyraBitmap::ENSLAVED_MARE);
-		header.SetColor1(0); header.SetColor2(0);
-		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
-		essence.strength = 0; // leave other fields alone
-
-		LoadString(hInstance, IDS_IMPRISONED_NIGHTMARE, message, sizeof(message));
-		info.Init(header, message, 0, 0, 0);
-		info.SetStateField(0, &essence, sizeof(essence));
-		info.SetCharges(1);
-		int ttl = 120;
-		slave_item = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
-		if (slave_item == NO_ITEM)
-		{
-			this->ArtFinished(false);
-			return;
-		}
-		LoadString (hInstance, IDS_NIGHTMARE_ENSLAVED, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
-		essence_item->Destroy();
-		this->ArtFinished(true);
-	}
-	else
-	{
-		LoadString (hInstance, IDS_NOT_ESSENCE, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
-		this->ArtFinished(false);
-	}
-	return;
+	this->EndMareEssenceMetaFunc(Arts::ENSLAVE_NIGHTMARE, LyraBitmap::ENSLAVED_MARE, IDS_IMPRISONED_NIGHTMARE, IDS_NIGHTMARE_ENSLAVED);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -7662,76 +7610,7 @@ void cArts::StartCleanseMare(void)
 
 void cArts::EndCleanseMare(void)
 {
-	LmItem info;
-	LmItemHdr header;
-	lyra_item_essence_t essence;
-	cItem *essence_item = cp->SelectedItem();
-	cItem *banished_item;
-	bool is_essence = false;
-	const void* state;
-
-
-	if ((essence_item == NO_ACTOR) || !(actors->ValidItem(essence_item)))
-	{
-		this->DisplayItemBailed(Arts::CLEANSE_NIGHTMARE);
-		this->ArtFinished(false);
-		return;
-	}
-
-	// only works for GOE
-
-//	if (!(player->GuildRank(Guild::ENTRANCED) >= Guild::INITIATE))
-//	{
-//		LoadString (hInstance, IDS_MUST_BE_GOE, message, sizeof(message));
-//		display->DisplayMessage(message);
-//		this->ArtFinished(false);
-//		return;
-//	}
-
-
-	// check that the item has mare essence
-	for (int i=0; i<essence_item->NumFunctions(); i++)
-		if (essence_item->ItemFunction(i) == LyraItem::ESSENCE_FUNCTION)
-		{
-			state = essence_item->Lmitem().StateField(i);
-			memcpy(&essence, state, sizeof(essence));
-			if ((essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE) && (essence.strength > 0))
-				is_essence = true;
-		}
-
-	if (is_essence)
-	{ // transmute into banished talisman
-		// create new talisman for cleansed mare essence
-		header.Init(0, 0, 0);
-		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
-		header.SetGraphic(LyraBitmap::CLEANSED_MARE);
-		header.SetColor1(0); header.SetColor2(0);
-		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
-		essence.strength = 0; // leave other fields alone
-
-		LoadString(hInstance, IDS_CLEANSED_NIGHTMARE, message, sizeof(message));
-		info.Init(header, message, 0, 0, 0);
-		info.SetStateField(0, &essence, sizeof(essence));
-		info.SetCharges(1);
-		int ttl = 120;
-		banished_item = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
-		if (banished_item == NO_ITEM)
-		{
-			this->ArtFinished(false);
-			return;
-		}
-		LoadString (hInstance, IDS_NIGHTMARE_CLEANSED, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
-		essence_item->Destroy();
-		this->ArtFinished(true);
-	}
-	else
-	{
-		LoadString (hInstance, IDS_NOT_ESSENCE, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
-		this->ArtFinished(false);
-	}
-	return;
+	this->EndMareEssenceMetaFunc(Arts::CLEANSE_NIGHTMARE, LyraBitmap::CLEANSED_MARE, IDS_CLEANSED_NIGHTMARE, IDS_NIGHTMARE_CLEANSED);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -7954,6 +7833,7 @@ void cArts::EndSacrifice(void)
 		header.SetColor1(0); header.SetColor2(0);
 		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
 		essence.type = LyraItem::ESSENCE_FUNCTION;
+		essence.weapon_type = Arts::SACRIFICE;
 		// Scale up by 10 while calculating to account for integer division
 		int essence_str = (MinModifierSkill(missile.damage) / 2) + 1;
 #ifdef UL_DEV
