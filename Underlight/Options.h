@@ -11,6 +11,7 @@
 #include "LmAvatar.h"
 #include "Central.h"
 #include "cJSON.h"
+#include "GMsg_LocateAvatar.h"
 #endif
 
 //////////////////////////////////////////////////////////////////
@@ -49,6 +50,8 @@ BOOL CALLBACK OptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 struct options_t {
 	TCHAR username[MAX_STORED_ACCOUNTS][Lyra::PLAYERNAME_MAX];
 	TCHAR password[MAX_STORED_ACCOUNTS][Lyra::PASSWORD_MAX];
+	int num_buddies;
+	other_t buddies[GMsg_LocateAvatar::MAX_PLAYERS];
 	int  account_index; // current index into above username/password arrays
 	BOOL sound; // load sound drivers - out of game option only
 	BOOL sound_active; // sound currently active - toggle in game

@@ -2537,6 +2537,8 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 		}
 #endif // pmare
 #endif // gm
+		_stprintf(disp_message, "sending yougotme with s1=%d s2=%d", j, i);
+		display->DisplayMessage(disp_message);
 #endif // agent
 		gs->SendPlayerMessage(origin_id, RMsg_PlayerMsg::YOUGOTME, j, i);
 

@@ -250,7 +250,7 @@ art_dlg_callback_t chooseguild_callback = NULL;
 LPTSTR argv; 
 int argc;
 options_t options;
-
+macro_t chat_macros[MAX_MACROS];
 // memory profiling
 #ifdef _DEBUG
 #include <CRTDBG.H>
