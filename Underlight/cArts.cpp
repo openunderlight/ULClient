@@ -3441,8 +3441,10 @@ void cArts::PoisonCloud(void)
 	this->ApplyPoisonCloud(player->Skill(Arts::POISON_CLOUD), player->ID());
 	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
 	
-	for (int i=0; i<HOUSE_ART_PTS; i++)
-		power_tokens[i]->Destroy();
+	// Colt 4/19/18 - Issue #191 - Destroy logic is handled in cArts::UsePowerTokens and was duplicated again here
+	/*for (int i = 0; i<HOUSE_ART_PTS; i++)
+		//power_tokens[i]->Destroy();
+	}*/
 
 	this->ArtFinished(true);
 	return;
@@ -6353,15 +6355,21 @@ void cArts::UsePowerTokens(cItem** tokens, int charges_to_use)
 {
 	int charges_expired = 0;
 	int token_idx = 0;
+	int cur_charges = 0;
 
 	while (charges_expired < charges_to_use)
 	{
-		int cur_charges = tokens[token_idx]->Lmitem().Charges();		
+		cur_charges = tokens[token_idx]->Lmitem().Charges();		
 		if (cur_charges <= charges_to_use - charges_expired)
 		{
 			// use up the entire token
 			charges_expired += cur_charges;
 			tokens[token_idx]->Destroy();
+
+			// Notify that power token has been consumed
+			LoadString(hInstance, IDS_POWER_TOKEN_DESTROYED, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, this->Descrip(Arts::POISON_CLOUD));
+			display->DisplayMessage(message, false);
 
 			// always move on since we destroyed the pt
 			token_idx++;

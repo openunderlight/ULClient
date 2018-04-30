@@ -73,7 +73,7 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">.\Debug\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\lyra\prod\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\lyra\dev</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">C:\lyra\dev\</OutDir>
@@ -300,6 +300,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Underlight\base64.cpp" />
     <ClCompile Include="Agents.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -926,6 +927,7 @@
     <ClInclude Include="..\Underlight\4dx.h" />
     <ClInclude Include="..\Underlight\actor.h" />
     <ClInclude Include="..\Underlight\Agent.h" />
+    <ClInclude Include="..\Underlight\base64.h" />
     <ClInclude Include="..\Underlight\cActor.h" />
     <ClInclude Include="..\Underlight\cActorList.h" />
     <ClInclude Include="..\Underlight\cAgentBox.h" />
