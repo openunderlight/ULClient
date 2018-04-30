@@ -77,6 +77,7 @@ class cItem : public cActor
 	   int sort_index; // relative sort index for control panel
 	   int inventory_flags;
 	   bool expire_time_is_ttl;
+	   bool destroy_on_failed_drop;
    public:
 	   cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_status, 
 		   unsigned __int64 i_flags = 0, bool temp = false, DWORD expires = 0,
@@ -106,7 +107,6 @@ class cItem : public cActor
 	  bool AddMetaEssence(int amount);
 	  void ApplyGratitude(cNeighbor* n);
 	  bool SurviveLevelChange(void);
-	  bool NoPickup(void);
 
 	  // selectors
 	  bool IsRazorwind(void);
@@ -128,6 +128,8 @@ class cItem : public cActor
 	  inline int NumFunctions(void) { return lmitem.NumFields(); };
 	  inline bool NoReap(void) { return lmitem.Header().Flags() & LyraItem::FLAG_NOREAP; };
 	  inline bool AlwaysDrop(void) { return lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP; };
+	  inline bool NoPickup(void) { return lmitem.Header().Flags() & LyraItem::FLAG_NOPICKUP; };
+	 
 	  inline int SortIndex(void) { return sort_index; };
 	  inline int InventoryFlags(void) { return inventory_flags; };
 	  inline bool WantDestroyAck(void) { return want_destroy_ack; };

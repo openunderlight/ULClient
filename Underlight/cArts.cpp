@@ -1673,7 +1673,7 @@ void cArts::EssenceContainer(void)
 	LmItemHdr header;
 	cItem *item;
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE);
 	header.SetGraphic(LyraBitmap::BOX);
 	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
@@ -1722,7 +1722,7 @@ void cArts::Portkey(void)
 	LmItem info;
 	cItem *item;
 	
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
 	header.SetGraphic(LyraBitmap::WARD);
 	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
@@ -1757,8 +1757,8 @@ bool cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 		return false;
 	}
 
-	if ((line->flags & LINE_NO_WARD) || (level->Rooms[player->Room()].flags & ROOM_NOREAP))
-	{	// can't ward this teleportal; in no reap areas, wards would last forever!
+	if ((line->flags & LINE_NO_WARD))
+	{	// can't ward this teleportal
 		LoadString(hInstance, IDS_NO_WARDING, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		return false;
@@ -1868,7 +1868,7 @@ void cArts::EndLock(void *value)
 	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
 	LmItemHdr header;
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_NOREAP);
 
 	header.SetGraphic(LyraBitmap::INVIS_ITEM);
@@ -1902,8 +1902,8 @@ void cArts::Ward(void)
 	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
 	LmItemHdr header;
 
-	header.Init(0, 0);
-	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.Init(0, 0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_ALWAYSREAP);
 	header.SetGraphic(LyraBitmap::WARD);
 	header.SetColor1(0); header.SetColor2(0);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
@@ -2044,7 +2044,7 @@ void cArts::CreatePass(const TCHAR* pass_name, lyra_item_amulet_t amulet, int ch
 {
 	LmItem info;
 	LmItemHdr header;
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_CHANGE_CHARGES);
 	header.SetGraphic(LyraBitmap::AMULET);
 	header.SetColor1(0); header.SetColor2(0);
@@ -2337,7 +2337,7 @@ void cArts::CreateLocalWeapon(int color)
 		0, weapon_damage_table[player->SkillSphere(art_in_use)],
 		LyraBitmap::DREAMBLADE_MISSILE};
 
-	header.Init(0, LyraTime());
+	header.Init(0, 0, LyraTime());
 	header.SetFlags(0);
 	header.SetGraphic(LyraBitmap::DREAMBLADE);
 	header.SetColor1(color);
@@ -2881,8 +2881,10 @@ void cArts::Razorwind(void)
 {
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::RAZORWIND,
 			player->Skill(Arts::RAZORWIND), 0, player->SkillSphere(Arts::FATESENDER));
-	if (RoomFull())
+	if (RoomFull()) {
 		this->ArtFinished(false);
+		return;
+	}
 	this->ApplyRazorwind(player->Skill(Arts::RAZORWIND), player->ID());
 	LmItem info;
 	LmItemHdr header;
@@ -2937,8 +2939,8 @@ void cArts::Razorwind(void)
 	rw_item.set_player_id(player->ID());
 	rw_item.set_effects_party_and_self(false);
 	rw_item.set_razorwind(true);
-	header.Init(0, 0);
-	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.Init(0, 0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_NOPICKUP | LyraItem::FLAG_ALWAYSREAP);
 	header.SetGraphic(LyraBitmap::DREAMBLADE);
 	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AREA_EFFECT_FUNCTION), 0, 0));
@@ -7510,7 +7512,7 @@ void cArts::EndBanishMare(void)
 	if (is_essence)
 	{ // transmute into banished talisman
 		// create new talisman for banished mare essence
-		header.Init(0, 0);
+		header.Init(0, 0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::BANISHED_MARE);
 		header.SetColor1(0); header.SetColor2(0);
@@ -7583,7 +7585,7 @@ void cArts::EndEnslaveMare(void)
 	{	// transmute into enslaved talisman
 
 		// create new talisman for enslaved mare essence
-		header.Init(0, 0);
+		header.Init(0, 0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::ENSLAVED_MARE);
 		header.SetColor1(0); header.SetColor2(0);
@@ -7708,7 +7710,7 @@ void cArts::EndCleanseMare(void)
 	if (is_essence)
 	{ // transmute into banished talisman
 		// create new talisman for cleansed mare essence
-		header.Init(0, 0);
+		header.Init(0, 0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::CLEANSED_MARE);
 		header.SetColor1(0); header.SetColor2(0);
@@ -7795,7 +7797,7 @@ void cArts::EndCorruptEssence(void)
 	if (is_essence)
 	{ // transmute into banished talisman
 		// create new talisman for cleansed mare essence
-		header.Init(0, 0);
+		header.Init(0, 0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::EMPHANT_ESSENCE);
 		header.SetColor1(0); header.SetColor2(0);
@@ -7954,7 +7956,7 @@ void cArts::EndSacrifice(void)
 		
 		// transmute into an imprisoned talisman
 		// create new talisman for imprisoned mare essence
-		header.Init(0, 0);
+		header.Init(0,0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::ENSLAVED_MARE);
 		header.SetColor1(0); header.SetColor2(0);
@@ -8534,7 +8536,7 @@ void cArts::EndSupportTraining(void)
 	cItem *item;
 	lyra_item_train_support_t support = {LyraItem::SUPPORT_TRAIN_FUNCTION, 0, 0, 0, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 	header.SetGraphic(LyraBitmap::GUILD_ASCENSION_TOKEN);
 	header.SetColor1(0); header.SetColor2(0);
@@ -8624,7 +8626,7 @@ void cArts::EndQuest(void *value)
 	int flags = 0;
 	lyra_item_scroll_t scroll = {LyraItem::SCROLL_FUNCTION, 0, 0, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetGraphic(LyraBitmap::CODEX);
 	header.SetColor1(scroll_type->color1); header.SetColor2(scroll_type->color2);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SCROLL_FUNCTION),0,0));
@@ -8951,7 +8953,7 @@ void cArts::EndFreesoulBlade(void *value)
 	}
 
 	// nuke it and create a blade
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION);
 	header.SetGraphic(LyraBitmap::DREAMBLADE);
 	int color = (rand()%4) + (n->Avatar().Focus()*4) - 4;
@@ -9079,7 +9081,7 @@ void cArts::EndIlluminatedBlade(void *value)
 	}
 
 	// nuke it and create a blade
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION);
 	header.SetGraphic(LyraBitmap::DREAMBLADE);
 	int color = (rand()%4) + (n->Avatar().Focus()*4) - 4;
@@ -9361,7 +9363,7 @@ void cArts::CompleteInitiate(int guild_id, int success, lyra_id_t initiate)
 		cItem *item;
 		lyra_item_support_t support = {LyraItem::SUPPORT_FUNCTION, 0, 0, 0};
 
-		header.Init(0, 0);
+		header.Init(0, 0, 0);
 		header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::GUILD_MEMBER_TOKEN_BASE + guild_id);
 		header.SetColor1(0); header.SetColor2(0);
@@ -9687,7 +9689,7 @@ void cArts::EndSupportAscension(void *value)
 	cItem *item;
 	lyra_item_support_t support = {LyraItem::SUPPORT_FUNCTION, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 	header.SetGraphic(LyraBitmap::GUILD_ASCENSION_TOKEN);
 	header.SetColor1(0); header.SetColor2(0);
@@ -9800,7 +9802,7 @@ void cArts::EndSupportDemotion(void *value)
 	cItem *item;
 	lyra_item_support_t support = {LyraItem::SUPPORT_FUNCTION, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 	header.SetGraphic(LyraBitmap::GUILD_DEMOTION_TOKEN);
 	header.SetColor1(0); header.SetColor2(0);
@@ -9904,7 +9906,7 @@ void cArts::EndPowerToken(void *value)
 				cItem *power_token;
 				lyra_item_support_t support = { LyraItem::SUPPORT_FUNCTION, 0, 0, 0 };
 
-				header.Init(0, 0);
+				header.Init(0, 0, 0);
 				header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_CHANGE_CHARGES);
 				header.SetGraphic(LyraBitmap::SOUL_ESSENCE);
 				header.SetColor1(0); header.SetColor2(0);
@@ -10118,7 +10120,7 @@ void cArts::EndCreateIDToken(void *value)
 			cItem *id_token;
 			lyra_item_support_t support = {LyraItem::SUPPORT_FUNCTION, 0, 0, 0};
 			
-			header.Init(0, 0);
+			header.Init(0, 0, 0);
 			header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 			header.SetGraphic(LyraBitmap::GUILD_MEMBER_TOKEN_BASE + guild_id);
 			header.SetColor1(0); header.SetColor2(0);
@@ -10214,8 +10216,8 @@ void cArts::EndCombine(void)
 	if (num_charges > 100) // max charges = 100 
 		num_charges = 100;
 
-	header.Init(0, 0);
-	header.SetFlags(item1->Lmitem().Header().Flags() | LyraItem::FLAG_HASDESCRIPTION);
+	header.Init(0, 0, 0);
+	header.SetFlags(item1->Lmitem().Header().Flags() | LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_ISCOMBINED);
 	header.SetGraphic(item1->Lmitem().Header().Graphic());
 	header.SetColor1(item1->Lmitem().Header().Color1()); 
 	header.SetColor2(item1->Lmitem().Header().Color2());
@@ -10223,7 +10225,9 @@ void cArts::EndCombine(void)
 	header.SetStateFormat(item1->Lmitem().Header().StateFormat());
 
 	if ((item1->Lmitem().Header().Flags() & LyraItem::FLAG_HASDESCRIPTION) ||
-		(item2->Lmitem().Header().Flags() & LyraItem::FLAG_HASDESCRIPTION))
+		(item2->Lmitem().Header().Flags() & LyraItem::FLAG_HASDESCRIPTION) ||
+		(item1->Lmitem().Header().Flags() & LyraItem::FLAG_ISCOMBINED) ||
+		(item2->Lmitem().Header().Flags() & LyraItem::FLAG_ISCOMBINED))
 		combinable = false;
 	else if (item1->ItemFunction(0) != item2->ItemFunction(0))
 		combinable = false; 
@@ -10465,7 +10469,7 @@ void cArts::EndSupportSphering(void)
 	cItem *item;
 	lyra_item_train_support_t support = {LyraItem::SUPPORT_TRAIN_FUNCTION, 0, 0, 0, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 	header.SetGraphic(LyraBitmap::GUILD_ASCENSION_TOKEN);
 	header.SetColor1(0); header.SetColor2(0);
@@ -11134,7 +11138,7 @@ void cArts::EndWriteScroll(void *value)
 	int flags = 0;
 	lyra_item_scroll_t scroll = {LyraItem::SCROLL_FUNCTION, 0, 0, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetGraphic(LyraBitmap::CODEX);
 	header.SetColor1(scroll_type->color1); header.SetColor2(scroll_type->color2);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SCROLL_FUNCTION),0,0));

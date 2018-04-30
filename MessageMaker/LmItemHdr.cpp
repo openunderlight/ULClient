@@ -36,16 +36,16 @@ const LmItemHdr LmItemHdr::DEFAULT_INSTANCE;
 
 LmItemHdr::LmItemHdr()
 {
-  Init(Lyra::ID_UNKNOWN, DEFAULT_SERIAL);
+  Init(Lyra::ID_UNKNOWN, Lyra::ID_UNKNOWN, DEFAULT_SERIAL);
 }
 
 ////
 // Init: re-construct item
 ////
 
-void LmItemHdr::Init(lyra_id_t itemid, int serial)
+void LmItemHdr::Init(lyra_id_t itemid, lyra_id_t h2, int serial)
 {
-  SetItemID(itemid);
+  SetItemID(itemid, h2);
   SetSerial(serial);
 }
 
@@ -56,6 +56,7 @@ void LmItemHdr::Init(lyra_id_t itemid, int serial)
 void LmItemHdr::ConvertToNetwork()
 {
   item_.itemid.ConvertToNetwork();
+  item_.h2.ConvertToNetwork();
   HTONL(item_.serial);
 }
 
@@ -66,6 +67,7 @@ void LmItemHdr::ConvertToNetwork()
 void LmItemHdr::ConvertToHost()
 {
   item_.itemid.ConvertToHost();
+  item_.h2.ConvertToHost();
   NTOHL(item_.serial);
 }
 
@@ -76,12 +78,12 @@ void LmItemHdr::ConvertToHost()
 
 int LmItemHdr::Parse(const TCHAR* str)
 {
-  lyra_id_t itemid;
+  lyra_id_t itemid, h2;
   int serial;
-  if (_stscanf(str, _T("%u:%u"), &itemid, &serial) != 2) {
+  if (_stscanf(str, _T("%u:%u:%u"), &itemid, &h2, &serial) != 3) {
     return -1;
   }
-  Init(itemid, serial);
+  Init(itemid, h2, serial);
   return 0;
 }
 
@@ -91,7 +93,7 @@ int LmItemHdr::Parse(const TCHAR* str)
 
 void LmItemHdr::UnParse(TCHAR* str, int /* strlen */) const
 {
- _stprintf(str, _T("%u:%u"), ItemID(), Serial());
+ _stprintf(str, _T("%u:%u:%u"), ItemHdr1(), ItemHdr2(), Serial());
 }
 
 ////
@@ -102,9 +104,9 @@ void LmItemHdr::UnParse(TCHAR* str, int /* strlen */) const
 void LmItemHdr::Dump(FILE* f, int indent) const
 {
   INDENT(indent, f);
- _ftprintf(f, _T("<LmItemHdr[%p,%d]: id=%u (flags=0x%x, fmt=%u, graphic=%u, colors=%u/%u) serial=%u>\n"),
+ _ftprintf(f, _T("<LmItemHdr[%p,%d]: h1=%u, h2=%u (flags=0x%x, fmt=%u, graphic=%u, colors=%u/%u) serial=%u>\n"),
 	  this, sizeof(LmItemHdr),
-	  ItemID(), Flags(), StateFormat(), Graphic(), Color1(), Color2(), Serial());
+	  ItemHdr1(), ItemHdr2(), Flags(), StateFormat(), Graphic(), Color1(), Color2(), Serial());
   INDENT(indent + 1, f);
   // do a bit more in-depth reporting
   int len1 = LyraItem::FieldLength(StateFormat(), 0);
@@ -133,6 +135,6 @@ void LmItemHdr::Dump(FILE* f, int indent) const
 #ifdef USE_DEBUG
 void LmItemHdr::Dump1(FILE* f) const
 {
- _ftprintf(f, _T("[%u:%u]"), ItemID(), Serial());
+ _ftprintf(f, _T("[%u:%u:%u]"), ItemHdr1(), ItemHdr2(), Serial());
 }
 #endif /* USE_DEBUG */

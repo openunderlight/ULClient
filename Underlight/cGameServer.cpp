@@ -3694,7 +3694,7 @@ void cGameServer::ModifyItem(cItem *orig_item, TCHAR* new_name, int new_charges,
 	LmItem info;
 	LmItemHdr header;
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(orig_item->Lmitem().Header().Flags());
 	header.SetGraphic(new_graphic);
 	header.SetColor1(orig_item->Lmitem().Header().Color1());
@@ -3705,15 +3705,15 @@ void cGameServer::ModifyItem(cItem *orig_item, TCHAR* new_name, int new_charges,
 
 	if (is_nopickup)
 	{
-		// make sure we don't have always drop
-		if (orig_item->AlwaysDrop())
-			header.ClearFlag(LyraItem::FLAG_ALWAYS_DROP);
-
-		// add noreap, if necessary
-		if (!orig_item->NoReap())
-			header.SetFlag(LyraItem::FLAG_NOREAP);
+		if (!orig_item->NoPickup())
+			header.SetFlag(LyraItem::FLAG_NOPICKUP);
 	}
-	else if (is_artifact)
+	else {
+		if (orig_item->NoPickup())
+			header.ClearFlag(LyraItem::FLAG_NOPICKUP);
+	}
+
+	if (is_artifact)
 	{
 		// add noreap, if necessary
 		if (!orig_item->NoReap())
@@ -3722,8 +3722,7 @@ void cGameServer::ModifyItem(cItem *orig_item, TCHAR* new_name, int new_charges,
 		// add always drop, if necessary
 		if (!orig_item->AlwaysDrop())
 			header.SetFlag(LyraItem::FLAG_ALWAYS_DROP);
-	}
-	else
+	} else
 	{
 		// clear both noreap and always drop if the flags are set
 		if (orig_item->AlwaysDrop())
@@ -3800,7 +3799,7 @@ void cGameServer::FinalizeItemDuplicate(cItem *orig_item, TCHAR* description)
 	LmItem info;
 	LmItemHdr header;
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(orig_item->Lmitem().Header().Flags());
 	header.SetGraphic(orig_item->Lmitem().Header().Graphic());
 	header.SetColor1(orig_item->Lmitem().Header().Color1());
