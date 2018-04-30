@@ -7515,7 +7515,7 @@ void cArts::EndMareEssenceMetaFunc(int art_id, int graphic, int item_name_string
 				is_essence = true;
 		}
 
-	if (is_essence && essence.weapon_type != 0)
+	if (is_essence && essence.weapon_type == 0)
 	{ // transmute into banished talisman
 	  // create new talisman for banished mare essence
 		header.Init(0, 0, 0);
