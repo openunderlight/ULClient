@@ -44,6 +44,11 @@ INLINE int LmPeerUpdate::Y() const
   return u_.y;
 }
 
+INLINE int LmPeerUpdate::Z() const
+{
+  return u_.z;
+}
+
 INLINE unsigned int LmPeerUpdate::Angle() const
 {
   return u_.u1.GetBits(ANGLE_START, ANGLE_WIDTH);
@@ -125,6 +130,10 @@ INLINE unsigned int LmPeerUpdate::Wave() const
 {
   return u_.u2.GetBits(WAVE_START, WAVE_WIDTH);
 }
+INLINE unsigned int LmPeerUpdate::Flying() const
+{
+  return u_.u1.GetBits(FLIGHT_START, FLIGHT_WIDTH);
+}
 
 
 INLINE unsigned int LmPeerUpdate::U1() const
@@ -148,10 +157,11 @@ INLINE void LmPeerUpdate::SetSoundID(unsigned char soundid)
 }
 
 
-INLINE void LmPeerUpdate::SetPosition(int x, int y)
+INLINE void LmPeerUpdate::SetPosition(int x, int y, int z)
 {
   u_.x = x;
   u_.y = y;
+  u_.z = z;
 }
 
 INLINE void LmPeerUpdate::SetAngle(unsigned int angle)
@@ -228,3 +238,7 @@ INLINE void LmPeerUpdate::SetWave(unsigned int wave)
   u_.u2.SetBits(WAVE_START, WAVE_WIDTH, wave);
 }
 
+INLINE void LmPeerUpdate::SetFlying(unsigned int flying)
+{
+  u_.u1.SetBits(FLIGHT_START, FLIGHT_WIDTH, flying);
+}

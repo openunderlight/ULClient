@@ -86,6 +86,7 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 	extra = NULL;
 	selected_function = inventory_flags = 0;
 	max_sort_index++;
+	next_tick = LyraTime();
 	sort_index = max_sort_index;
 	// GMs are always draggable!
 #if ! (defined (UL_DEBUG) || defined (GAMEMASTER))
@@ -1401,7 +1402,7 @@ bool cItem::IsAreaEffectItem(void)
 {
 	int item_func = ItemFunction(0);
 	return (this != NO_ITEM && (Status() == ITEM_UNOWNED) &&
-		(item_func == LyraItem::AREA_EFFECT_FUNCTION || item_func == LyraItem::PORTKEY_FUNCTION));
+		(item_func == LyraItem::AREA_EFFECT_FUNCTION || item_func == LyraItem::PORTKEY_FUNCTION || item_func == LyraItem::TRIP_FUNCTION));
 }
 // return the amount of damage this missle does
 // this is a total HACK --- insure field information is maintained

@@ -62,6 +62,7 @@ public:
 	GRATITUDE_FUNCTION,		 // 10 bytes
 	META_ESSENCE_NEXUS_FUNCTION, // 9 bytes
 	PORTKEY_FUNCTION, // 7 bytes
+	TRIP_FUNCTION, // 3
     
     // translation types for item effect fields
     TRANSLATION_NONE = 0,
@@ -80,7 +81,8 @@ public:
     TRANSLATION_GUILDTOKEN,
     TRANSLATION_LEVEL_ID,
     TRANSLATION_TPORT_DEST,
-	TRANSLATION_DISTANCE
+	TRANSLATION_DISTANCE,
+	TRANSLATION_FREQUENCY
   };
   
   // descriptor table selectors
@@ -262,6 +264,12 @@ struct lyra_item_amulet_t {  // 8 bytes
   inline void ntoh() {
     NTOHL(player_id);
   }
+};
+
+struct lyra_item_trip_t {
+	unsigned char type;      // TRIP_FUNCTION
+	unsigned char distance;
+	unsigned char frequency;
 };
 
 struct lyra_item_area_effect_t {  // 10

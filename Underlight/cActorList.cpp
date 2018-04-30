@@ -27,7 +27,6 @@ cActorList::cActorList(void)
 	neighbors = new cList();
 	items = new cList();
 	others = new cList();
-
 	actor_delete_ok = false;
 
 	CheckInvariants(__LINE__);
@@ -193,6 +192,13 @@ cItem* cActorList::IterateItems(int status)
 		return NO_ACTOR;
 
 	return (cItem*)(items->Iterate(status)); 
+}
+
+cActor* cActorList::IterateOthers(int status)
+{
+	if (deleting)
+		return NO_ACTOR;
+	return  (cActor*)(others->Iterate(status));
 }
 
 

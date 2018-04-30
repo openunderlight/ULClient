@@ -380,6 +380,15 @@ const distance_t distances[NUM_DISTANCES] = {
 	{99999999, 999999, 100, IDS_WHOLE_ROOM}
 };
 
+const frequency_t frequencies[NUM_FREQUENCIES] = {
+	{1, 1, IDS_ONCE_PER_LOGIN},
+	{1, 1, IDS_ONCE_PER_ROOM},
+	{-1, 2000, IDS_EVERY_2_SEC },
+	{-1, 30000, IDS_EVERY_30_SEC},
+	{-1, 60000, IDS_EVERY_MINUTE},
+	{-1, 120000, IDS_EVERY_2_MINUTES},
+};
+
 // calculates a duration based on the duration table above
 int CalculateDuration(int index) 
 { 
@@ -395,6 +404,11 @@ void CalculateDistance(int index, unsigned int* xydist, unsigned int* heightdist
 	distance_t dist = distances[index];
 	*xydist = dist.cartesian_distance;
 	*heightdist = dist.height_distance;
+}
+
+frequency_t Frequency(int freqidx)
+{
+	return frequencies[freqidx];
 }
 
 const velocity_t velocity_types[] =
@@ -432,6 +446,12 @@ void TranslateValue(int type, int value)
 		case LyraItem::TRANSLATION_DISTANCE:
 		{
 			LoadString(hInstance, distances[value].descrip, disp_message, sizeof(disp_message));
+			_stprintf(message, _T("%s"), disp_message);
+		}
+		break;
+		case LyraItem::TRANSLATION_FREQUENCY:
+		{
+			LoadString(hInstance, frequencies[value].descrip, disp_message, sizeof(disp_message));
 			_stprintf(message, _T("%s"), disp_message);
 		}
 		break;
@@ -518,7 +538,7 @@ void TranslateValue(int type, int value)
 					_stprintf(message, _T("%s"), NightmareName(value));
 			}
 			break;
-	
+		
 		case LyraItem::TRANSLATION_LEVEL_ID:
 		case LyraItem::TRANSLATION_DURABILITY:
 		case LyraItem::TRANSLATION_TPORT_DEST:
@@ -694,6 +714,8 @@ int NumberTranslations(int type)
 		    return MAX_LEVELS;
 		case LyraItem::TRANSLATION_DISTANCE:
 			return NUM_DISTANCES;
+		case LyraItem::TRANSLATION_FREQUENCY:
+			return NUM_FREQUENCIES;
 		default:
 		case LyraItem::TRANSLATION_NONE:
 			return 0;
@@ -1464,6 +1486,7 @@ cTimedEffects::cTimedEffects(void)
 		related_art[i] = Arts::NONE;
 		default_duration[i] = 0;
 		harmful[i] = false;
+		abjurable[i] = true;
 	}
 
 	i = LyraEffect::NONE;
@@ -1682,6 +1705,7 @@ cTimedEffects::cTimedEffects(void)
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
 	default_duration[i]=25; 
 	harmful[i] = false;
+	abjurable[i] = false;
 
 	i = LyraEffect::PLAYER_RETURN;
 	LoadString (hInstance, IDS_PLAYER_RETURN_ON, disp_message, sizeof(disp_message));
@@ -1845,6 +1869,17 @@ cTimedEffects::cTimedEffects(void)
 	harmful[i] = false;
 	LoadString(hInstance, IDS_BULWARK_MORE, disp_message, sizeof(disp_message));
 	more_descrip[i] = _tcsdup(disp_message);
+
+	i = LyraEffect::PLAYER_FLYING;
+	LoadString(hInstance, IDS_FLIGHT_ON, disp_message, sizeof(disp_message));
+	start_descrip[i] = _tcsdup(disp_message);
+	LoadString(hInstance, IDS_FLIGHT_OFF, disp_message, sizeof(disp_message));
+	expire_descrip[i] = _tcsdup(disp_message);
+	actor_flag[i] = ACTOR_FLY;
+	related_art[i] = Arts::NONE;
+	LoadString(hInstance, IDS_FLIGHT, name[i], sizeof(name[i]));
+	default_duration[i] = 13; // 3 secs
+	harmful[i] = false;
 	return;
 }
 

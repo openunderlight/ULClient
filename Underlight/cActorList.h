@@ -36,7 +36,6 @@ class cActorList
 	   cList *neighbors;
 	   cList *items;
 	   cList *others;
-		   
 	   int num_actors;		// number of total actors in the list
 	   int num_neighbors;   // number of neighbors in the list
 	   int num_items;		// number of items in the list
@@ -72,7 +71,7 @@ class cActorList
 	  cActor* IterateActors(int status);
 	  cNeighbor* IterateNeighbors(int status);
 	  cItem* IterateItems(int status);
-
+	  cActor* IterateOthers(int status);
 	  cNeighbor* LookUpNeighbor(realmid_t playerID);
 	  cItem* LookUpItem(const LmItemHdr& item_id);
 

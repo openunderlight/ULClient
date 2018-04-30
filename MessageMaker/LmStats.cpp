@@ -463,19 +463,7 @@ int LmStats::AdjustXP(int adj)
   else { // gain
     int max_xp = Lyra::MAX_XP;
     if (curr_orbit < 99) { // can still gain an orbit
-      if ((curr_orbit % 10) == 9) { // at a sphere boundary
-	// can't go to next sphere by xp gain, must be taught
-	max_xp = OrbitXPBase(curr_orbit + 1) - 1;
-      }
-      else {
-	// can only go up a single orbit
-	max_xp = OrbitXPBase(curr_orbit + 1) + 1; //+ OrbitXPGain(curr_orbit + 1) - 1;
-      }
-#if 0
-      // HACK: no sphere limit, since teaching isn't implemented
-      // can only go up a single orbit
-      max_xp = OrbitXPBase(curr_orbit + 1) + 1; //+ OrbitXPGain(curr_orbit + 1) - 1;
-#endif
+		max_xp = OrbitXPBase(curr_orbit + (10 - (curr_orbit % 10))) - 1;
     }
     // can't exceed maximum
     if (new_xp > max_xp) {

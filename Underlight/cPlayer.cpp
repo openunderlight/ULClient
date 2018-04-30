@@ -7,6 +7,8 @@
 #include "Central.h"
 #include <Windows.h>
 #include <string.h>
+#include <map>
+#include <vector>
 #include "cDDraw.h"
 #include "cDSound.h"
 #include "cChat.h"
@@ -61,7 +63,7 @@ const int HORRON_FEAR_DISTANCE = 150000;
 const int HORRON_DRAIN_DISTANCE = 50000;
 const int THRESHOLD_QUAD = 6;
 const int MAGIC_XOR_VAR = 0xf801;
-
+std::map<int, freqtick_t> item_ae_ticks;
 //////////////////////////////////////////////////////////////////
 // External Global Variables
 
@@ -101,7 +103,8 @@ cPlayer::cPlayer(short viewport_height) :
 		cActor(0.0f, 0.0f, 0, 0,  PLAYER)
 {
 	playerID = INVALID_PLAYERID;
-
+	num_fly_collides = 0;
+	num_floor_collides = 0;
 	// set vertical tilt members here; rest handled in Init method
 	vertical_tilt_origin = viewport_height/2;
 	max_vertical_tilt 	= viewport_height ;
@@ -267,6 +270,7 @@ bool cPlayer::Update(void)
 	if (terminate)
 		return false;
 
+	//if(!(flags & ACTOR_FLY))
 	this->ModifyHeight();
 
 	this->CheckStatus();
@@ -537,14 +541,36 @@ bool cPlayer::Update(void)
 	}
 	if (velocity)
 	{
+		num_floor_collides = 0;
 		lastRoom = room;
+		move_result_t res;
 		if (strafe != NO_STRAFE)
 		{ // make sure deceleration doesn't drag player forward after a strafe
-			MoveActor(this,moveangle,velocity*timing->nticks*speed,MOVE_NORMAL);
+			MoveActor(this,moveangle,velocity*timing->nticks*speed,MOVE_NORMAL, &res);
 			velocity = 0.0f;
 		}
 		else
-			MoveActor(this,moveangle,velocity*timing->nticks*speed,MOVE_NORMAL);
+			MoveActor(this,moveangle,velocity*timing->nticks*speed,MOVE_NORMAL, &res);
+		if (flags & ACTOR_FLY)
+		{
+			if (res.hit == HIT_FLOOR || res.hit == HIT_WALL || res.hit == HIT_CEILING || res.hit == HIT_JUMPABLE || res.hit == HIT_ACTOR)
+			{
+				num_fly_collides++;
+				velocity = -velocity;
+			}
+			else
+			{
+				num_fly_collides = 0;
+			}
+			
+
+			if (num_fly_collides >= 5)
+			{
+				RemoveTimedEffect(LyraEffect::PLAYER_FLYING);
+				num_fly_collides = 0;
+				num_floor_collides = 0;
+			}
+		}
 		if (free_moves)
 			free_moves--;
 
@@ -579,6 +605,21 @@ bool cPlayer::Update(void)
 	else if (options.network && gs->LoggedIntoGame() && old_velocity)
 		// preupdate for slowdown
 		gs->SendPositionUpdate(TRIGGER_MOVE);
+
+	if (!velocity && (flags & ACTOR_FLY))
+	{
+		if (z == xheight)
+		{
+			num_floor_collides++;
+			if (num_floor_collides >= 40)
+			{
+				RemoveTimedEffect(LyraEffect::PLAYER_FLYING);
+				num_fly_collides = 0;
+				num_floor_collides = 0;
+			}
+		}
+	}
+
 
 	if (!was_in_water && this->InWater() && !(flags & ACTOR_SOULSPHERE) &&
 		((z > xheight - (.1*physht)) && (z < xheight + (.1*physht))))
@@ -629,7 +670,7 @@ bool cPlayer::Update(void)
 	}
 	vertical_tilt = (long)vertical_tilt_float;
 
-	if ((z > xheight - (.1*physht)) && (z < xheight + (.1*physht)) &&
+	if ((z > xheight - (.1*physht)) && ((z < xheight + (.1*physht)) || (flags & ACTOR_FLY)) &&
 		keyboard[Keystates::JUMP] && move)
 	{
 		if (options.network)
@@ -1289,7 +1330,8 @@ void cPlayer::CheckStatus(void)
 		next_regeneration = LyraTime() +  HEAL_INTERVAL ;
 	}
 
-	if (LyraTime() > next_sector_tag)
+	int time = LyraTime();
+	if (time > next_sector_tag)
 	{
 		switch (level->Sectors[this->sector]->tag) 
 		{
@@ -1323,36 +1365,67 @@ void cPlayer::CheckStatus(void)
 		{
 			if(!item->IsAreaEffectItem())
 				continue;
+			
+			if (item->ItemFunction(0) == LyraItem::AREA_EFFECT_FUNCTION && item->NextTick() <= time)
+			{
+				// now apply AOEs we're near - 1/2 dist as Horron pain aura
+				if ((flags & ACTOR_SOULSPHERE))
+					continue;
 
-			if(item->ItemFunction(0) != LyraItem::AREA_EFFECT_FUNCTION)
-				continue;
+				const void* state = item->Lmitem().StateField(0);
+				lyra_item_area_effect_t aoe;
+				memcpy(&aoe, state, sizeof(aoe));
+				// if it doesn't effect party/self and we're self or in party with caster...
+				if (!aoe.effects_party_and_self() && (aoe.player_id() == player->ID() ||
+					(gs && gs->Party() && gs->Party()->IsInParty(aoe.player_id()))))
+					continue;
 
-			// now apply AOEs we're near - 1/2 dist as Horron pain aura
-			if ((flags & ACTOR_SOULSPHERE))
-				continue;
-
-			const void* state = item->Lmitem().StateField(0);
-			lyra_item_area_effect_t aoe;
-			memcpy(&aoe, state, sizeof(aoe));
-			// if it doesn't effect party/self and we're self or in party with caster...
-			if (!aoe.effects_party_and_self() && (aoe.player_id() == player->ID() ||
-				(gs && gs->Party() && gs->Party()->IsInParty(aoe.player_id()))))
-				continue;
-
-			dist = (unsigned int)((item->x - x)*(item->x - x) + (item->y - y)*(item->y - y));
-			unsigned int xy, ht; 
-			CalculateDistance(aoe.get_distance(), &xy, &ht);
-			int h1 = z - physht - item->z, h2 = item->z - z;
-			if (dist > xy || h1 > (int)ht || h2 > (int)ht)
-				continue;
-			if (aoe.is_razorwind()) {
-				cDS->PlaySound(LyraSound::RAZORWIND);
-				LoadString(hInstance, IDS_RW_REAPPLIED, disp_message, sizeof(disp_message));
-				display->DisplayMessage(disp_message);
+				dist = (unsigned int)((item->x - x)*(item->x - x) + (item->y - y)*(item->y - y));
+				unsigned int xy, ht;
+				CalculateDistance(aoe.get_distance(), &xy, &ht);
+				int h1 = z - physht - item->z, h2 = item->z - z;
+				if (dist > xy || h1 > (int)ht || h2 > (int)ht)
+					continue;
+				if (aoe.is_razorwind()) {
+					cDS->PlaySound(LyraSound::RAZORWIND);
+					LoadString(hInstance, IDS_RW_REAPPLIED, disp_message, sizeof(disp_message));
+					display->DisplayMessage(disp_message);
+				}
+				int modifier = CalculateModifier(aoe.damage); // dmg is actually modifier
+				player->SetCurrStat(aoe.stat, modifier, SET_RELATIVE, aoe.player_id());
+				player->SetTimedEffect(aoe.get_effect(), CalculateDuration(aoe.duration), aoe.player_id(), EffectOrigin::AE_ITEM);
+				item->SetNextTick(time + SECTOR_TAG_INTERVAL);
 			}
-			int modifier = CalculateModifier(aoe.damage); // dmg is actually modifier
-			player->SetCurrStat(aoe.stat, modifier, SET_RELATIVE, aoe.player_id());
-			player->SetTimedEffect(aoe.get_effect(), CalculateDuration(aoe.duration), aoe.player_id(), EffectOrigin::AE_ITEM);
+			else if (item->ItemFunction(0) == LyraItem::TRIP_FUNCTION) {
+				const void* state = item->Lmitem().StateField(0);
+				int ser = item->Lmitem().Header().Serial();
+				lyra_item_trip_t trip;
+				memcpy(&trip, state, sizeof(trip));
+				frequency_t f = Frequency(trip.frequency);
+				std::map<int, freqtick_t>::iterator it = item_ae_ticks.find(ser);
+				if (f.recurrences > -1 && it != item_ae_ticks.end() && item_ae_ticks[ser].numrecurs >= f.recurrences)
+					continue;
+				if (time >= item->NextTick() && (item->Lmitem().Header().Flags() & LyraItem::FLAG_HASDESCRIPTION))
+				{
+					dist = (unsigned int)((item->x - x)*(item->x - x) + (item->y - y)*(item->y - y));
+					unsigned int xy, ht;
+					CalculateDistance(trip.distance, &xy, &ht);
+					int h1 = z - physht - item->z, h2 = item->z - z;
+					if (dist > xy || h1 > (int)ht || h2 > (int)ht)
+						continue;
+
+					gs->SendItemDescripRequest(item->Lmitem().Header());
+					item_ae_ticks[ser].numrecurs++;
+					if (f.descrip == IDS_ONCE_PER_ROOM)
+						item_ae_ticks[ser].remove_with_room_change = true;
+					else
+						item_ae_ticks[ser].remove_with_room_change = false;
+
+					if (item_ae_ticks[ser].numrecurs < f.recurrences || f.recurrences == -1)
+						item->SetNextTick(time + f.ms_between_recurrences);
+				}
+			}
+
 		}
 		actors->IterateItems(DONE);		
 		
@@ -1715,11 +1788,13 @@ int cPlayer::SetCurrStat(int stat, int value, int how, lyra_id_t origin_id)
 	else
 		stats[stat].current += amount;
 
+	int min = (stat == Stats::DREAMSOUL && how == SET_RELATIVE_NO_COLLAPSE) ? 1 : 0;
+
 	// ensure we're not over max or under min
 	if (stats[stat].current > stats[stat].max)
 		stats[stat].current = stats[stat].max;
-	if (stats[stat].current <= Stats::STAT_MIN)
-		stats[stat].current = Stats::STAT_MIN;
+	if (stats[stat].current <= min)
+		stats[stat].current = min;
 
 	if (origin_id != SERVER_UPDATE_ID)
 		stats[stat].current_needs_update = true;
@@ -2540,7 +2615,7 @@ void cPlayer::Dissolve(lyra_id_t origin_id, int talisman_strength)
 		_stprintf(disp_message, "sending yougotme with s1=%d s2=%d", j, i);
 		display->DisplayMessage(disp_message);
 #endif // agent
-		gs->SendPlayerMessage(origin_id, RMsg_PlayerMsg::YOUGOTME, j, i);
+		gs->SendPlayerMessage(origin_id, RMsg_PlayerMsg::YOUGOTME, j, i, recall_active ? 1 : 0);
 
 #ifndef AGENT
 		// drop artifacts
@@ -3001,7 +3076,17 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 		if (item->Status() == ITEM_OWNED)
 			item->PlaceActor(this->x, this->y, 0, this->angle, SET_XHEIGHT, true);
 	actors->IterateItems(DONE);
+	std::map<int, freqtick_t>::iterator it;
+	std::vector<int> removals;
+	for (it = item_ae_ticks.begin(); it != item_ae_ticks.end(); it++) {
+		if (it->second.remove_with_room_change)
+			removals.push_back(it->first);
+	}
 
+	for (int i = 0; i < removals.size(); i++)
+	{
+		item_ae_ticks.erase(removals[i]);
+	}
 	if (level_change)
 	{
 		if (options.network)
