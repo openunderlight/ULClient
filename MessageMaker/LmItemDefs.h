@@ -82,7 +82,9 @@ public:
     TRANSLATION_LEVEL_ID,
     TRANSLATION_TPORT_DEST,
 	TRANSLATION_DISTANCE,
-	TRANSLATION_FREQUENCY
+	TRANSLATION_FREQUENCY,
+	TRANSLATION_GUILDBELIEF,
+	TRANSLATION_BELIEF
   };
   
   // descriptor table selectors
@@ -423,7 +425,7 @@ struct lyra_item_support_t {  // 10 bytes
 
 struct lyra_item_meta_essence_nexus_t { // 9 bytes
 	unsigned char type;			// META_ESSENCE_NEXUS_FUNCTION
-	unsigned char unused;
+	unsigned char belief;
 	unsigned short strength;
 	unsigned short essences;
 	unsigned short strength_cap;
@@ -466,6 +468,13 @@ struct lyra_item_meta_essence_t {  // 10 bytes
     num_mares_hi_bits = (value >> 16 );
     num_mares_lo_bits = (value & 0x0000ffff);
   };
+  inline unsigned char guild() {
+	  return guild_id & 0x0F;
+  }
+
+  inline unsigned char belief() {
+	  return (guild_id & 0xF0) >> 4;
+  }
   // conversion methods
   inline void hton() {
     HTONS(strength_hi_bits);

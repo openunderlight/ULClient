@@ -191,7 +191,7 @@ public:
 	void Portkey(void);
 	bool GetPortkey(int type); // true if has pk, falseotherwise
 	bool RoomFull();
-	void EndMareEssenceMetaFunc(int art_id, int graphic, int item_name_string_id, int on_success_string_id);
+	void EndMareEssenceMetaFunc(int art_id, int graphic, int item_name_string_id, int well_string_id, int on_success_string_id);
 	// arts that require selecting a neighbor
 	void StartChannel(void);
 	bool ExpireChannel(bool userInitiated);

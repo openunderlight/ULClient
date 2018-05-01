@@ -83,6 +83,7 @@
 #define ITEM_TRAPLO _T("Trapped Mares (low)")
 #define ITEM_STRCAP _T("Strength (cap)")
 #define ITEM_ESSCAP _T("Essence (cap)")
+#define ITEM_BELIEF _T("Belief")
 
 #define ITEM_CODEX _T("Codex")
 #define ITEM_ARTID _T("Art ID")

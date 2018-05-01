@@ -394,7 +394,7 @@ void cActor::ModifyHeight(void)
 						((cNeighbor*)this)->SetJumping(false);
 				}
 
-				if (fall_height - z > MIN_JUMP_HEIGHT)
+				if (fall_height - z > MIN_JUMP_HEIGHT && !(player->flags & ACTOR_SOULSPHERE))
 				{
  // fall damage is out for now - TEMP TESTING - DEV ONLY
  				if ((fall_height - z > MAX_JUMP_HEIGHT) && this->IsPlayer())

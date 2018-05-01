@@ -154,7 +154,7 @@ TCHAR token_message[DEFAULT_MESSAGE_SIZE];
 TCHAR nightmare_message[DEFAULT_MESSAGE_SIZE];
 TCHAR dreamweapon_message[DEFAULT_MESSAGE_SIZE];
 TCHAR talisman_message[DEFAULT_MESSAGE_SIZE];
-
+TCHAR guild_belief_combo_message[DEFAULT_MESSAGE_SIZE];
 
 bool showing_map,map_shows_current_level;
 

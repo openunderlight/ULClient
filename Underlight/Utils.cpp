@@ -424,10 +424,31 @@ const velocity_t velocity_types[] =
 	{90,      IDS_FASTEST},
 };
 
+belief_t beliefs[NUM_BELIEFS + 1] =
+{
+	{ IDS_ANY_BELIEF, Arts::NONE },
+	{ IDS_IMPRISON_MARE, Arts::ENSLAVE_NIGHTMARE },
+	{ IDS_BANISH_MARE, Arts::BANISH_NIGHTMARE },
+	{ IDS_CLEANSE_MARE, Arts::CLEANSE_NIGHTMARE },
+	{ IDS_SACRIFICE, Arts::SACRIFICE },
+};
+
+int BeliefFromArtID(lyra_id_t art_id)
+{
+	for (int i = 0; i <= NUM_BELIEFS; i++)
+	{
+		belief_t b = beliefs[i];
+		if (b.art_id == art_id)
+			return i;
+	}
+	
+	return 0;
+}
+
 // Translate a value into a human readable string and sticks it into
 // the "message" global variable
 
-void TranslateValue(int type, int value)
+bool TranslateValue(int type, int value)
 {
 	switch (type)
 	{
@@ -481,6 +502,27 @@ void TranslateValue(int type, int value)
 				_stprintf(message, _T("%s"), GuildName(value));
 			}
 			break;
+
+		case LyraItem::TRANSLATION_GUILDBELIEF:
+		{
+			int guild = value & 0x0F;
+			int belief = (value & 0xF0) >> 4;
+			if (guild < 0 || guild > NUM_GUILDS)
+				return false;
+			if (belief < 0 || belief > NUM_BELIEFS)
+				return false;
+			belief_t belief_type = beliefs[belief];
+			LoadString(hInstance, belief_type.string_id, disp_message, sizeof(disp_message));
+			_stprintf(message, _T("%s - %s"), GuildName(guild), disp_message);
+		}
+		break;
+
+		case LyraItem::TRANSLATION_BELIEF:
+		{
+			belief_t belief = beliefs[value];
+			LoadString(hInstance, belief.string_id, message, sizeof(message));
+		}
+		break;
 
 		case LyraItem::TRANSLATION_GUILDTOKEN:
 			{
@@ -549,7 +591,7 @@ void TranslateValue(int type, int value)
 			}
 			break;
 	}
-	return;
+	return true;
 }
 
 int PowerTokenCostToForge(int type, int value, bool combineItem = false)
@@ -718,7 +760,7 @@ int NumberTranslations(int type)
 			return NUM_FREQUENCIES;
 		default:
 		case LyraItem::TRANSLATION_NONE:
-			return 0;
+			return UCHAR_MAX;
 	}
 }
 
