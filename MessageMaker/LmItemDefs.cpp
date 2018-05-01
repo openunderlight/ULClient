@@ -208,7 +208,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
 
   // META_ESSENCE_FUNCTION
   { ITEM_PRIME, 10, 5, false, false, true, true, false, false, true, {
-    { ITEM_GID, 1, TRANSLATION_GUILD, true, 0, NUM_HOUSES-1},
+    { ITEM_GID, 1, TRANSLATION_GUILDBELIEF, true, 0, UCHAR_MAX},
     { ITEM_STRHI, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
     { ITEM_STRLO, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
     { ITEM_TRAPHI, 2, TRANSLATION_NONE, false, 0, USHRT_MAX},
@@ -293,7 +293,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
 
   // META_ESSENCE_NEXUS_FUNCTION
   { ITEM_NEXUS, 10, 4, true, false, true, true, false, false, false, {
-	  { ITEM_UNUSED, 1, TRANSLATION_NONE, false, 0, 0 }, // might eventually be the type, like Imprison, Banish, etc.
+	  { ITEM_BELIEF, 1, TRANSLATION_BELIEF, false, 0, 0 }, // might eventually be the type, like Imprison, Banish, etc.
 	  { ITEM_STR, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
 	  { ITEM_ESSENCE, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },
 	  { ITEM_STRCAP, 2, TRANSLATION_NONE, false, 0, USHRT_MAX },

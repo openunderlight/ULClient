@@ -2620,8 +2620,6 @@ BEGIN
     IDS_NEED_POWER_TOKEN    "You need to be carrying a Power Token in order to use the art of %s\n"
     IDS_MUST_HAVE_POWER_TOKENS 
                             "You must have at least %d power token(s) from %s in order to use %s\n"
-	IDS_POWER_TOKEN_DESTROYED
-							"The Power Token crumbles as its energy expenditure has been met"
     IDS_NO_DREAM_STRIKE_LEVEL 
                             "You can not use Dreamstrike in this plane of the Dream; please try elsewhere\n"
     IDS_TEL_MUST_KNOW_ART   "You must be trained in the art of %s to use that portal\n"
@@ -2635,6 +2633,30 @@ BEGIN
     IDS_MESSAGE_BEYOND_MAX  "Message beyond max length received\n"
     IDS_ERROR_READING_LOGINACK "Error reading as loginack message"
     IDS_ERROR_READ_AGENT_INFO_MSG "Error reading agent information message"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_WIDE_RANGE          "Wide Range"
+    IDS_WHOLE_ROOM          "Whole Room"
+    IDS_ALREADY_HAVE_PORTKEY 
+                            "You're already carrying a portkey - you must drop it first!"
+    IDS_PORTKEY             "Portkey"
+    IDS_CLOSE               "Close"
+    IDS_WHISPERABLE         "Whisperable"
+    IDS_RAZORWIND_AREA_EFFECT 
+                            "A Razorwind tears through the room and converges upon where %s is standing!\n"
+    IDS_BULWARK_MORE        "Your bulwark has been re-fortified!"
+    IDS_SHIELD_MAX_NOW      "The shield is now at maximum durability!\n"
+    IDS_TALISMAN_RECHARGED_NOW 
+                            "The %s has just been recharged to its maximum number of charges!"
+    IDS_RW_REAPPLIED        "A razorwind rages all around you!"
+    IDS_POWER_TOKEN_DESTROYED 
+                            "The Power Token crumbles as its energy expenditure has been met"
+    IDS_ANY_BELIEF          "Any Belief"
+    IDS_BANISHED_WELL       "Banished Well"
+    IDS_IMPRISONED_WELL     "Imprisoned Well"
+    IDS_CLEANSED_WELL       "Cleansed Well"
 END
 
 STRINGTABLE
@@ -4495,24 +4517,6 @@ BEGIN
     IDS_CLOSEST             "Closest"
     IDS_VERY_CLOSE          "Very Close"
     IDS_NEARBY              "Nearby"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_WIDE_RANGE          "Wide Range"
-    IDS_WHOLE_ROOM          "Whole Room"
-    IDS_ALREADY_HAVE_PORTKEY 
-                            "You're already carrying a portkey - you must drop it first!"
-    IDS_PORTKEY             "Portkey"
-    IDS_CLOSE               "Close"
-    IDS_WHISPERABLE         "Whisperable"
-    IDS_RAZORWIND_AREA_EFFECT 
-                            "A Razorwind tears through the room and converges upon where %s is standing!\n"
-    IDS_BULWARK_MORE        "Your bulwark has been re-fortified!"
-    IDS_SHIELD_MAX_NOW      "The shield is now at maximum durability!\n"
-    IDS_TALISMAN_RECHARGED_NOW 
-                            "The %s has just been recharged to its maximum number of charges!"
-    IDS_RW_REAPPLIED        "A razorwind rages all around you!"
 END
 
 STRINGTABLE

@@ -19,6 +19,7 @@ const int NUM_PLAYER_STATS = 5;
 const int NUM_DISTANCES = 7;
 const int NUM_FREQUENCIES = 6;
 const int NUM_GUILDS = 8;
+const int NUM_BELIEFS = 4;
 const int NUM_HOUSES = 8;
 const int NUM_RANKS = 3;
 const int NUM_TOKENS = 4;

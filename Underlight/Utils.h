@@ -61,6 +61,12 @@ struct freqtick_t
 	bool remove_with_room_change;
 };
 
+struct belief_t
+{
+	int string_id;
+	int art_id;
+};
+
 class cTimedEffects { // timed effects
 	public:	
 	   DWORD expires[NUM_TIMED_EFFECTS];
@@ -99,7 +105,7 @@ int CalculateModifier(int modifier);
 int CalculateModifierMax(int modifier);
 int CalculateModifierMin(int modifier);
 int CalculateDuration(int index);
-void TranslateValue(int type, int value);
+bool TranslateValue(int type, int value);
 int PowerTokenCostToForge(int type, int value, bool combineItem);
 bool CanPlayerForgeValue(int type, int value, int powerTokens);
 int	MinModifierSkill(int value);
@@ -122,6 +128,7 @@ void Scream(int avatar_type, cActor* actor, bool propagate = false);
 void CalculateDistance(int index, unsigned int* xydist, unsigned int* heightdist);
 bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2);
 frequency_t Frequency(int freqidx);
+int BeliefFromArtID(lyra_id_t art_id);
 
 const char *DisperseCoordinate(unsigned int index);
 unsigned int NumDisperseLocs(void);
