@@ -1515,8 +1515,8 @@ bool cItem::Recharge(int plateaua)
 
 	int new_charges = lmitem.Charges() + rand()%plateaua + 1;
 
-	// check if we exceed the limit and set the charges to the soft limit if we do
-	if (new_charges >= limit)
+	// check if we exceed the soft limit and if we do, set new charges to soft_limit
+	if (new_charges >= soft_limit)
 	{
 		new_charges = soft_limit;
 		LoadString(hInstance, IDS_TALISMAN_RECHARGED_NOW, disp_message, sizeof(disp_message));
