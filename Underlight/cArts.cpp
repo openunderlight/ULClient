@@ -150,8 +150,8 @@ unsigned long art_chksum[NUM_ARTS] =
 #endif
 0x6C08, // Curse 
 0x953C, // Drain Essence 
-0xB0F4, // Banish Nightmare 
-0xDC59, // Imprison Nightmare 
+0xB06C, // Banish Nightmare 
+0xDDF1, // Imprison Nightmare 
 0xFAE1, // Trap Nightmare 
 0x2191, // Dreamblade 
 0x48FC, // Trail 
@@ -227,7 +227,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xF999, // Suspend 
 0x1BC3, // Reflect 
 0x3802, // Sacrifice 
-0x659F, // Cleanse Nightmare 
+0x6507, // Cleanse Nightmare 
 0x8149, // Create ID Token 
 0xAC49, // Sense Dreamers 
 0xCCD3, // Expel 
@@ -342,8 +342,8 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 #endif
 {IDS_CURSE,					Stats::RESILIENCE,	40, 10, 13, 3, 	3, NEIGH | FOCUS | LEARN},
 {IDS_DRAIN_ESSENCE,			Stats::RESILIENCE,	0,  0,  0,	1, 	1, SANCT | NEED_ITEM | LEARN},
-{IDS_BANISH_MARE,			Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | FOCUS | LEARN},
-{IDS_IMPRISON_MARE,			Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | FOCUS | LEARN},
+{IDS_BANISH_MARE,			Stats::RESILIENCE,	10, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | LEARN},
+{IDS_IMPRISON_MARE,			Stats::RESILIENCE,	10, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | LEARN},
 {IDS_TRAP_MARE,				Stats::RESILIENCE,	50, 10, 0,	3, 	3, SANCT | NEIGH | FOCUS | LEARN},
 {IDS_DREAMBLADE, 			Stats::INSIGHT,		0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
 {IDS_TRAIL,					Stats::LUCIDITY,	0,  2,  25, 1, 	-1, SANCT | LEARN},
@@ -419,7 +419,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_SUSPEND,						Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},
 {IDS_REFLECT_ART_NAME,				Stats::WILLPOWER,   65, 40, 9,  3,	-1, SANCT | FOCUS | LEARN},
 {IDS_SACRIFICE,						Stats::DREAMSOUL,	20, 10,  0,	1, 	-1, SANCT | NEED_ITEM},
-{IDS_CLEANSE_MARE,					Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | FOCUS | LEARN},
+{IDS_CLEANSE_MARE,					Stats::RESILIENCE,	10, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | LEARN},
 {IDS_CREATE_ID_TOKEN,				Stats::DREAMSOUL,	0,  20, 0,	1, 	-1, SANCT | NEED_ITEM | MAKE_ITEM},
 {IDS_SENSE,							Stats::DREAMSOUL,	0,  0,  0,	1,  -1, SANCT | LEARN},
 {IDS_EXPEL_ART_NAME,				Stats::DREAMSOUL,	20, 0,  0,	1,  -1, SANCT | NEED_ITEM | NEIGH},
