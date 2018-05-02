@@ -396,7 +396,7 @@ struct LyraBitmap {
 		BOGROM_ESSENCE = 60,	 // nightmare essence
 		AGOKNIGHT_ESSENCE = 61,	 // nightmare essence
 		SHAMBLIX_ESSENCE = 62,	 // nightmare essence
-
+		
 			// avatars
 		MALE_AVATAR = 256,
 		FEMALE_AVATAR = 400,
@@ -413,6 +413,17 @@ struct LyraBitmap {
 		ENTRYEXIT_EFFECT = 758,
 		BANNER_EFFECT = 778,
 		
+		// damaging ornaments
+		FI_SM = 857,
+		FI_MD = 863,
+		FIRE = 874,
+		W_HOLE = 921,
+		S_ALT2 = 930,
+		LIGHTNING = 947,
+		LIGHTNING_SM = 951,
+		TORCH = 975,
+		ANOTHER_DAMN_TORCH = 982,
+
 		HARMLESS_EVOKED = 1100,
 		HARMFUL_EVOKED = 1110,
 		HARMLESS_EVOKING = 1120,
@@ -862,7 +873,7 @@ const int no_rally_levels[] =
 const int num_no_rally_levels =
   sizeof(no_rally_levels) / sizeof(int);
 
-const int no_damage_levels[] = {41, 47};
+const int no_damage_levels[] = {1, 41, 47};
 
 const int num_no_damage_levels =
 	sizeof(no_damage_levels) / sizeof(int);

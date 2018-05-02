@@ -93,7 +93,9 @@ extern bool showing_map;
 extern cAgentBox *agentbox;
 extern HWND hwnd_acceptreject;
 extern ppoint_t pp; // personality points use tracker
-
+const int guild_levels[NUM_GUILDS] = {
+	17,18,21,22,23,24,25,26
+};
 
 /////////////////////////////////////////////////////////////////
 // Class Defintion
@@ -162,7 +164,7 @@ void cPlayer::InitPlayer(void)
 	gamesite_id = 0;
 	session_id = 0;
 	safezone = false;
-
+	guild_level = false;
 	for (i=0; i<NUM_GUILDS; i++)
 		guild_ranks[i].rank = Guild::NO_RANK;
 
@@ -810,7 +812,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 {
 	if (duration <= 0)
 		return false;
-	cNeighbor* n = arts->LookUpNeighbor(caster_id);
+	cNeighbor* n = caster_id != Lyra::ID_UNKNOWN ? arts->LookUpNeighbor(caster_id) : NO_ACTOR;
 	bool invisGMBreakthru = false;
 	if (n != NO_ACTOR) {
 		invisGMBreakthru = n->Avatar().Hidden(); 
@@ -1326,7 +1328,7 @@ void cPlayer::CheckStatus(void)
 	int time = LyraTime();
 	if (time > next_sector_tag)
 	{
-		switch (level->Sectors[this->sector]->tag) 
+		switch (level->Sectors[this->sector]->tag)
 		{
 		case SECTOR_WILLPOWER:
 			this->SetCurrStat(Stats::WILLPOWER, +1, SET_RELATIVE, playerID);
@@ -1347,7 +1349,7 @@ void cPlayer::CheckStatus(void)
 		case SECTOR_DAMAGE:
 			this->SetCurrStat(Stats::DREAMSOUL, -1, SET_RELATIVE, playerID);
 			break;
-		// SECTOR_NO_PLAYER_TP and SECTOR_NO_REGEN are implemented elsewhere
+			// SECTOR_NO_PLAYER_TP and SECTOR_NO_REGEN are implemented elsewhere
 		case SECTOR_NO_PLAYER_TP:
 		case SECTOR_NO_REGEN:
 		default:
@@ -1356,9 +1358,9 @@ void cPlayer::CheckStatus(void)
 
 		for (cItem *item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
 		{
-			if(!item->IsAreaEffectItem())
+			if (!item->IsAreaEffectItem())
 				continue;
-			
+
 			if (item->ItemFunction(0) == LyraItem::AREA_EFFECT_FUNCTION && item->NextTick() <= time)
 			{
 				// now apply AOEs we're near - 1/2 dist as Horron pain aura
@@ -1420,8 +1422,34 @@ void cPlayer::CheckStatus(void)
 			}
 
 		}
-		actors->IterateItems(DONE);		
-		
+		actors->IterateItems(DONE);
+		if (!safezone && level->ID() != 1 && !(level->Rooms[room].flags & ROOM_SANCTUARY) && !guild_level)
+		{
+			for (cActor* actor = actors->IterateOthers(INIT); actor != NO_ACTOR; actor = actors->IterateOthers(NEXT))
+			{
+				if (actor->Type() != ORNAMENT)
+					continue;
+				cOrnament* ornament = (cOrnament*)actor;
+				if (!ornament->IsDamagingOrnament())
+					continue;
+				int dist = (int)((ornament->x - x)*(ornament->x - x) + (ornament->y - y)*(ornament->y - y));
+				if (dist > HORRON_DRAIN_DISTANCE)
+					continue;
+				// OK DO YOUR THING!
+				damaging_ornament_t dmginfo = ornament->GetDamageInfo();
+				if (dmginfo.stat != Stats::NO_STAT)
+				{
+					int mod = CalculateModifier(dmginfo.modifier);
+					player->SetCurrStat(dmginfo.stat, mod, SET_RELATIVE, Lyra::ID_UNKNOWN);
+				}
+
+				if (dmginfo.effect != LyraEffect::NONE)
+				{
+					player->SetTimedEffect(dmginfo.effect, CalculateDuration(dmginfo.duration), Lyra::ID_UNKNOWN, EffectOrigin::AE_ITEM);
+				}
+			}
+			actors->IterateOthers(DONE);
+		}
 		next_sector_tag = LyraTime() + SECTOR_TAG_INTERVAL;
 	}
 
@@ -3087,13 +3115,22 @@ bool cPlayer::Teleport( float x, float y, int facing_angle, int level_id, int so
 		player->RemoveTimedEffect(LyraEffect::PLAYER_SHIELD);
 
 		safezone = false;
-
+		guild_level = false;
 		// check if we're in a no damage level before trying to apply damage
 		for (int i = 0; i < num_no_damage_levels; i++)
 		{
 			if (no_damage_levels[i] == level->ID())
 			{
 				safezone = true;
+				break;
+			}
+		}
+
+		for (int i = 0; i < NUM_GUILDS; i++)
+		{
+			if (guild_levels[i] == level->ID())
+			{
+				guild_level = true;
 				break;
 			}
 		}

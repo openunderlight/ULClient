@@ -131,6 +131,7 @@ class cPlayer : public cActor
 	   bool old_sanct;
 	   bool checksum_incorrect;
 	   bool safezone;
+	   bool guild_level;
 	   lyra_id_t last_party_leader;
 	   unsigned int collapse_time;
 	   bool item_flags_sorting_changed;
