@@ -247,6 +247,10 @@ public:
 	void StartDeafen(void);
 	void ApplyDeafen(int skill, lyra_id_t caster_id, bool roar = false);
 	void EndDeafen(void);
+	void StartEnfeeblement();
+	void EndEnfeeblement();
+	void ApplyEnfeeblement(int skill, lyra_id_t caster_id);
+	void Sprint();
 	void StartBlind(void);
 	void ApplyBlind(int skill, lyra_id_t caster_id);
 	void EndBlind(void);

@@ -345,6 +345,17 @@ bool cPlayer::Update(void)
     forced_move.left = true;
   }
 
+  if (flags & ACTOR_WALK)
+  {
+	  if (flags & ACTOR_SPRINT)
+		  speed = RUN_SPEED;
+	  else
+		  speed = WALK_SPEED;
+  }
+  else if (flags & ACTOR_SPRINT)
+	  speed = SPRINT_SPEED;
+
+
 	if (flags & ACTOR_SCARED)
 		forced_move.forward = true;
 

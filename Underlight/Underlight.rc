@@ -4541,6 +4541,19 @@ BEGIN
     IDS_FLIGHT_OFF          "The weight of gravity descends upon you.\n"
 END
 
+STRINGTABLE
+BEGIN
+    IDS_PLAYER_WALK_ON      "Your movement slows as you become exhausted..."
+    IDS_PLAYER_WALK_MORE    "You become even more exhausted..."
+    IDS_PLAYER_WALK_OFF     "Your exhaustion fades!"
+    IDS_ENFEEBLEMENT        "Enfeeblement"
+    IDS_PLAYER_SPRINT_ON    "Your movement speed increases as you gain strength!"
+    IDS_PLAYER_SPRINT_MORE  "You gain even more strength!"
+    IDS_PLAYER_SPRINT_OFF   "Your movement slows back to normal."
+    IDS_SPRINT              "Sprint"
+    IDS_ENFEEBLE_APPLIED    "%s has slowed your speed!"
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 

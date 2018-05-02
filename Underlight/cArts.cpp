@@ -285,7 +285,10 @@ unsigned long art_chksum[NUM_ARTS] =
 0xA329, // Rally 
 0xC767, // Channel
 0xE96C, // Bulwark
-0xDF3,
+0xDF3, // Portkey
+0x3169, // Sprint
+0x5F5C, // Enfeeblement
+
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -476,8 +479,11 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT | MAKE_ITEM | LEARN},
 {IDS_RALLY,							Stats::DREAMSOUL,	30, 30, 0,  5,  -1, SANCT | NEIGH},
 {IDS_CHANNEL,                       Stats::DREAMSOUL,   40, 35, 25, 3,  -1, SANCT | NEIGH | LEARN},
-{IDS_GKSHIELD, Stats::WILLPOWER, 70, 30, 13, 5, -1, SANCT | FOCUS | LEARN},
-{IDS_PORTKEY, Stats::DREAMSOUL, 90, 50, 13, 5, -1, SANCT | LEARN | MAKE_ITEM}
+{IDS_GKSHIELD,						Stats::WILLPOWER, 70, 30, 13, 5, -1, SANCT | FOCUS | LEARN},
+{IDS_PORTKEY,						Stats::DREAMSOUL, 90, 50, 13, 5, -1, SANCT | LEARN | MAKE_ITEM},
+{IDS_SPRINT,						Stats::WILLPOWER, 35, 20, 13, 2, 2, SANCT | LEARN},
+{IDS_ENFEEBLEMENT,					Stats::LUCIDITY,	35, 20, 13, 2, 	 2, LEARN | FOCUS | NEIGH }
+
 };
 
 
@@ -1292,6 +1298,9 @@ void cArts::ApplyArt(void)
 	case Arts::CHANNEL: method = &cArts::StartChannel; break;
 	case Arts::BULWARK: method = &cArts::Bulwark; break;
 	case Arts::PORTKEY: method = &cArts::Portkey; break;
+	case Arts::SPRINT: method = &cArts::Sprint; break;
+	case Arts::ENFEEBLEMENT: method = &cArts::StartEnfeeblement; break;
+
 
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
@@ -2615,6 +2624,9 @@ void cArts::ApplyReflectedArt(int art_id, lyra_id_t caster_id)
 		break;
 	case Arts::ABJURE:
 		ApplyAbjure(player->Skill(art_id), caster_id);
+		break;
+	case Arts::ENFEEBLEMENT:
+		ApplyEnfeeblement(player->Skill(art_id), caster_id);
 		break;
 	case Arts::POISON:
 		ApplyPoison(player->Skill(art_id),player->ID());
@@ -4692,6 +4704,55 @@ void cArts::EndDeafen(void)
 	this->ArtFinished(true);
 	return;
 }
+
+void cArts::StartEnfeeblement()
+{
+	this->WaitForSelection(&cArts::EndEnfeeblement, Arts::ENFEEBLEMENT);
+	this->AddDummyNeighbor();
+	this->CaptureCP(NEIGHBORS_TAB, Arts::ENFEEBLEMENT);
+	return;
+}
+
+void cArts::EndEnfeeblement()
+{
+	cNeighbor *n = cp->SelectedNeighbor();
+	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
+	{
+		this->DisplayNeighborBailed(Arts::ENFEEBLEMENT);
+		this->ArtFinished(false);
+		return;
+	}
+	else if (n->ID() == player->ID())
+		this->ApplyEnfeeblement(player->Skill(Arts::ENFEEBLEMENT), player->ID());
+	else
+		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::ENFEEBLEMENT,
+			player->Skill(Arts::ENFEEBLEMENT), 0);
+	this->DisplayUsedOnOther(n, Arts::ENFEEBLEMENT);
+	cDS->PlaySound(LyraSound::POTION, player->x, player->y, true);
+	this->ArtFinished(true);
+	return;
+}
+
+void cArts::ApplyEnfeeblement(int skill, lyra_id_t caster_id)
+{
+	player->EvokedFX().Activate(Arts::ENFEEBLEMENT, false);
+	cNeighbor *n = this->LookUpNeighbor(caster_id);
+	this->DisplayUsedByOther(n, Arts::ENFEEBLEMENT);
+	int duration = this->Duration(Arts::ENFEEBLEMENT, skill);
+	player->SetTimedEffect(LyraEffect::PLAYER_WALK, duration, caster_id, EffectOrigin::ART_EVOKE);
+	return;
+}
+
+void cArts::Sprint()
+{
+	// main logic is in cPlayer so Sprint can occur through talisman
+	int duration = this->Duration(Arts::SPRINT, player->Skill(Arts::SPRINT));
+	player->SetTimedEffect(LyraEffect::PLAYER_SPRINT, duration, player->ID(), EffectOrigin::ART_EVOKE);
+	cDS->PlaySound(LyraSound::HOLYLIGHT, player->x, player->y, true);
+	this->ArtFinished(true);
+	return;
+}
+
 
 //////////////////////////////////////////////////////////////////
 // Blind

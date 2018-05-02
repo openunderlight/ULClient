@@ -25,6 +25,7 @@ const float MAXSTRAFE=4.0f;
 const float	SHAMBLE_SPEED=.85f; // for monsters
 const float	WALK_SPEED=1.0f;
 const float RUN_SPEED=1.5f;
+const float SPRINT_SPEED = 2.25f;
 // track up to 64 collapses in the last 20 minutes to detect cheating
 const int COLLAPSES_TRACKED = 64;
 const int COLLAPSE_TRACK_INTERVAL = 1000*60*5; // 20 minutes, in ms
