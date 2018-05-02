@@ -1922,7 +1922,35 @@ cTimedEffects::cTimedEffects(void)
 	LoadString(hInstance, IDS_FLIGHT, name[i], sizeof(name[i]));
 	default_duration[i] = 13; // 3 secs
 	harmful[i] = false;
+
+	i = LyraEffect::PLAYER_WALK;
+	LoadString(hInstance, IDS_PLAYER_WALK_ON, disp_message, DEFAULT_MESSAGE_SIZE);
+	start_descrip[i] = _strdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_WALK_MORE, disp_message, DEFAULT_MESSAGE_SIZE);
+	more_descrip[i] = _strdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_WALK_OFF, disp_message, DEFAULT_MESSAGE_SIZE);
+	expire_descrip[i] = _strdup(disp_message);
+	actor_flag[i] = ACTOR_WALK;
+	related_art[i] = Arts::ENFEEBLEMENT;
+	LoadString(hInstance, IDS_ENFEEBLEMENT, name[i], sizeof(name[i]));
+	default_duration[i] = 3; // 15 sec
+	harmful[i] = true;
+
+	i = LyraEffect::PLAYER_SPRINT;
+	LoadString(hInstance, IDS_PLAYER_SPRINT_ON, disp_message, DEFAULT_MESSAGE_SIZE);
+	start_descrip[i] = _strdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_SPRINT_MORE, disp_message, DEFAULT_MESSAGE_SIZE);
+	more_descrip[i] = _strdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_SPRINT_OFF, disp_message, DEFAULT_MESSAGE_SIZE);
+	expire_descrip[i] = _strdup(disp_message);
+	actor_flag[i] = ACTOR_SPRINT;
+	related_art[i] = Arts::SPRINT;
+	LoadString(hInstance, IDS_SPRINT, name[i], sizeof(name[i]));
+	default_duration[i] = 10; // 15 sec
+	harmful[i] = false;
+
 	return;
+
 }
 
 // destructor

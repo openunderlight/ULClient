@@ -3016,6 +3016,16 @@
 #define IDS_BANISHED_WELL               4477
 #define IDS_IMPRISONED_WELL             4478
 #define IDS_CLEANSED_WELL               4479
+#define IDS_PLAYER_WALK_ON              4480
+#define IDS_PLAYER_WALK_MORE            4481
+#define IDS_PLAYER_WALK_OFF             4482
+#define IDS_ENFEEBLEMENT                4483
+#define IDS_PLAYER_SPRINT               4484
+#define IDS_PLAYER_SPRINT_ON            4484
+#define IDS_PLAYER_SPRINT_MORE          4485
+#define IDS_PLAYER_SPRINT_OFF           4486
+#define IDS_SPRINT                      4487
+#define IDS_ENFEEBLE_APPLIED            4488
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
@@ -3025,7 +3035,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        208
+#define _APS_NEXT_RESOURCE_VALUE        214
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1447
 #define _APS_NEXT_SYMED_VALUE           101

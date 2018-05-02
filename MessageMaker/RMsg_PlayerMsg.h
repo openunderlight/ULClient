@@ -130,6 +130,7 @@ public:
     BOOT,				// not used, not used
 	SUMMON,				// not used, not used
 	SUSPEND,			// # of days, not used
+	ENFEEBLEMENT,		// skill, not used
 
     // xp related messages
     YOUGOTME = 100,      // (victim's orbit || 100 + nightmare index), dreamsoul at dissolution

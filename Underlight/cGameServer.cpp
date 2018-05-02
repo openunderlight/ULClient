@@ -4690,7 +4690,7 @@ void cGameServer::FillInPlayerPosition(LmPeerUpdate *update, int trigger)
 		update->SetFlags(update->Flags() | LmPeerUpdate::LG_WALKING);
 	else if (player->Strafe() != NO_STRAFE)
 		update->SetFlags(update->Flags() | LmPeerUpdate::LG_STRAFING);
-	if (player->Speed() == RUN_SPEED)
+	if (player->Speed() == RUN_SPEED || player->Speed() == SPRINT_SPEED)
 		update->SetFlags(update->Flags() | LmPeerUpdate::LG_RUNNING);
 
 	if ((player->flags & ACTOR_INVISIBLE) || (player->flags & ACTOR_CHAMELED))

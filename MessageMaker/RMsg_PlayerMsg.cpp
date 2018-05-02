@@ -180,7 +180,7 @@ int RMsg_PlayerMsg::ArtType(int msgtype)
   case MISDIRECTION:    retval = Arts::MISDIRECTION; break;
   case CHAOTIC_VORTEX:  retval = Arts::CHAOTIC_VORTEX; break;
   case RALLY:				retval = Arts::RALLY; break;
-
+  case ENFEEBLEMENT: retval = Arts::ENFEEBLEMENT; break; 
   default:
     retval = Arts::NONE;
   }
