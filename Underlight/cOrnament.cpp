@@ -39,15 +39,29 @@ extern timing_t *timing;
 // relative_z is for putting an ornament relative to a given height,
 // such as for explosions
 
+damaging_ornament_t damaging_ornaments[] = {
+	{LyraBitmap::FI_SM, Stats::DREAMSOUL, -12, LyraEffect::NONE, 0 },
+	{LyraBitmap::FI_MD, Stats::DREAMSOUL, -14, LyraEffect::NONE, 0},
+	{LyraBitmap::FIRE, Stats::DREAMSOUL, -52, LyraEffect::NONE, 0},
+	{LyraBitmap::W_HOLE, Stats::DREAMSOUL, -13, LyraEffect::PLAYER_POISONED, 10},
+	{LyraBitmap::S_ALT2, Stats::DREAMSOUL, -12, LyraEffect::NONE, 0},
+	{LyraBitmap::LIGHTNING, Stats::DREAMSOUL, -13, LyraEffect::PLAYER_PARALYZED, 6},
+	{LyraBitmap::LIGHTNING_SM, Stats::DREAMSOUL, -12, LyraEffect::PLAYER_PARALYZED, 5 },
+	{LyraBitmap::TORCH, Stats::DREAMSOUL, -14, LyraEffect::NONE, 0 },
+	{LyraBitmap::ANOTHER_DAMN_TORCH, Stats::DREAMSOUL, -14, LyraEffect::NONE, 0},
+};
+
+const int NumDamagingOrnaments = sizeof(damaging_ornaments) / sizeof(damaging_ornament_t);
+
 cOrnament::cOrnament(float x, float y, float relative_z, int angle,
 					 unsigned __int64 flags, int a_id, TCHAR *name, float d_x, float d_y) :
 			cActor(x, y,angle, flags, ORNAMENT), id(a_id),
 				dest_x(d_x), dest_y(d_y)
 
 {
+	is_damaging_ornament = false;
 	if (!this->SetBitmapInfo(id))
 		return;
-
 	if (name != NULL)
 		name_tag = new cNameTag(name);
 
@@ -66,6 +80,15 @@ cOrnament::cOrnament(float x, float y, float relative_z, int angle,
 			break;
 		default:
 			break;
+	}
+	
+	for (int i = 0; i < NumDamagingOrnaments; i++)
+	{
+		if (damaging_ornaments[i].bitmap_id == BitmapID())
+		{
+			is_damaging_ornament = true;
+			damage = damaging_ornaments[i];
+		}
 	}
 }
 

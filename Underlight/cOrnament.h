@@ -15,6 +15,13 @@
 
 ///////////////////////////////////////////////////////////////////
 // Structures 
+struct damaging_ornament_t {
+	int bitmap_id;
+	int stat;
+	int modifier;
+	int effect;
+	int duration;
+};
 
 ///////////////////////////////////////////////////////////////////
 // Helper Functions
@@ -34,6 +41,8 @@ class cOrnament : public cActor
 		float dest_x,dest_y;
 		bool moving;
 		int data; // generic data for ornaments
+		bool is_damaging_ornament;
+		damaging_ornament_t damage;
 
    public:
 	   cOrnament(float x, float y, float relative_z, int angle,  unsigned __int64 flags, int a_id, 
@@ -41,7 +50,9 @@ class cOrnament : public cActor
 	  ~cOrnament(void);
 	   inline realmid_t ID(void) { return id;};
 	   inline int Data(void) { return data;};
-	   inline void SetData(int value) { data = value; }
+	   inline void SetData(int value) { data = value; };
+	   inline bool IsDamagingOrnament(void) { return is_damaging_ornament; };
+	   inline damaging_ornament_t GetDamageInfo(void) { return damage; };
 
    protected:
  	  virtual bool Update(void);
