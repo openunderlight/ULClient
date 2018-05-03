@@ -4708,7 +4708,7 @@ void cArts::EndDeafen(void)
 void cArts::StartEnfeeblement()
 {
 	this->WaitForSelection(&cArts::EndEnfeeblement, Arts::ENFEEBLEMENT);
-	this->AddDummyNeighbor();
+	//this->AddDummyNeighbor();
 	this->CaptureCP(NEIGHBORS_TAB, Arts::ENFEEBLEMENT);
 	return;
 }
@@ -4724,7 +4724,14 @@ void cArts::EndEnfeeblement()
 	}
 	else if (n->ID() == player->ID())
 		this->ApplyEnfeeblement(player->Skill(Arts::ENFEEBLEMENT), player->ID());
-	else
+	else if (n->IsAgentAccount())
+	{
+		LoadString(hInstance, IDS_ENFEEBLE_MARE, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message, false);
+		cDS->PlaySound(LyraSound::REJECTED);
+		this->ArtFinished(true);
+		return;
+	}
 		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::ENFEEBLEMENT,
 			player->Skill(Arts::ENFEEBLEMENT), 0);
 	this->DisplayUsedOnOther(n, Arts::ENFEEBLEMENT);
