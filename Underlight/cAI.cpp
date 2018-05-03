@@ -1327,6 +1327,8 @@ bool cAI::NeighborVisible(int index)
 	{	// don't target ss's
 		if (neighbors[index]->flags & ACTOR_SOULSPHERE)
 			return false;
+		if (neighbors[index]->Avatar().PlayerInvis())
+			return false;
 		// do tilting before visibility check, so test missile goes in right direction...
 		float ndist = NeighborDistance(index);
 		float angle_origin = 0;
