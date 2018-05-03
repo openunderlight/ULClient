@@ -2379,6 +2379,10 @@ void cGameServer::HandleMessage(void)
 						int art_id;
 				switch (player_msg.MsgType())
 				{
+				case RMsg_PlayerMsg::ENFEEBLEMENT:
+					art_id = Arts::ENFEEBLEMENT;
+					cDS->PlaySound(LyraSound::POTION, player->x, player->y, true);
+					break;
 				case RMsg_PlayerMsg::RESIST_FEAR:
 					art_id = Arts::RESIST_FEAR;
 					cDS->PlaySound(LyraSound::PROTECT_AVATAR, player->x, player->y, true);
@@ -2482,6 +2486,9 @@ void cGameServer::HandleMessage(void)
 			if (!art_reflected)
 			switch (player_msg.MsgType())
 			{
+				case RMsg_PlayerMsg::ENFEEBLEMENT:
+					arts->ApplyEnfeeblement(player_msg.State1(), player_msg.SenderID());
+					break;
 				case RMsg_PlayerMsg::REFLECT_ART: // skill, art_id
 					arts->ApplyReflectedArt(player_msg.State2(), player_msg.SenderID());
 					break;
