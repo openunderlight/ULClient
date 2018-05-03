@@ -28,31 +28,32 @@ class LmAvatar {
 
 public:
 
-  enum { 
-    // bitfield widths for avatar1
-    AVATAR_WIDTH = 4,
-    COLOR_WIDTH = 4, // 5 of these
-    GUILD_ID_WIDTH = 4,
-    GUILD_RANK_WIDTH = 2,
-    SHOW_GUILD_WIDTH = 2, 
- 
-    // bitfield widths for avatar2
-    HEAD_WIDTH = 4,
-    SPHERE_WIDTH = 4,
-    SHOW_SPHERE_WIDTH = 2,
-    TEACHER_WIDTH = 1,
-	FOCUS_WIDTH = 3,
-	MASTER_TEACHER_WIDTH = 1,
-	SHOW_LYRAN_WIDTH = 1,
-	DREAMSMITH_WIDTH = 1,
-	ACCOUNT_WIDTH = 3,
-	HIDDEN_WIDTH = 1,
-	EXTRA_DAMAGE_WIDTH = 4,
-	WORDSMITH_WIDTH = 1,
-	DREAMSTRIKE_WIDTH = 1,
-	NP_SYMBOL_WIDTH = 1,
-	APPRENTICE_WIDTH=1,
-    UNUSED2_WIDTH = 3,
+	enum {
+		// bitfield widths for avatar1
+		AVATAR_WIDTH = 4,
+		COLOR_WIDTH = 4, // 5 of these
+		GUILD_ID_WIDTH = 4,
+		GUILD_RANK_WIDTH = 2,
+		SHOW_GUILD_WIDTH = 2,
+
+		// bitfield widths for avatar2
+		HEAD_WIDTH = 4,
+		SPHERE_WIDTH = 4,
+		SHOW_SPHERE_WIDTH = 2,
+		TEACHER_WIDTH = 1,
+		FOCUS_WIDTH = 3,
+		MASTER_TEACHER_WIDTH = 1,
+		SHOW_LYRAN_WIDTH = 1,
+		DREAMSMITH_WIDTH = 1,
+		ACCOUNT_WIDTH = 3,
+		HIDDEN_WIDTH = 1,
+		EXTRA_DAMAGE_WIDTH = 4,
+		WORDSMITH_WIDTH = 1,
+		DREAMSTRIKE_WIDTH = 1,
+		NP_SYMBOL_WIDTH = 1,
+		APPRENTICE_WIDTH = 1,
+		PLAYERINVIS_WIDTH = 1,
+    UNUSED2_WIDTH = 2,
     
     // starting positions for avatar1
     AVATAR_START = 0,
@@ -81,7 +82,7 @@ public:
 	DREAMSTRIKE_START = (WORDSMITH_START + WORDSMITH_WIDTH),
 	NP_SYMBOL_START = (DREAMSTRIKE_START + DREAMSTRIKE_WIDTH),
 	APPRENTICE_START = (NP_SYMBOL_START + NP_SYMBOL_WIDTH),
-
+	PLAYERINVIS_START = (APPRENTICE_START + APPRENTICE_WIDTH),
 	// account types for use by client
 	ACCT_DREAMER = 0,
 	ACCT_PMARE = 1,
@@ -107,7 +108,8 @@ public:
 		unsigned int show_lyran, unsigned int dreamsmith, 
 		unsigned int hidden, unsigned int extra_damage, 
 		unsigned int wordsmith, unsigned int dreamstrike,
-		unsigned int focus, unsigned int np_symbol, unsigned int apprentice);
+		unsigned int focus, unsigned int np_symbol, unsigned int apprentice,
+		unsigned int playerinvis);
   void Init(int avatar1, int avatar2);
   void Init(const lyra_avatar_t& avatar);
 
@@ -149,6 +151,7 @@ public:
   unsigned int Dreamstrike() const;
   unsigned int NPSymbol() const;
   unsigned int Apprentice() const;
+  unsigned int PlayerInvis() const;
 
   // mutators for bitfields
   void SetAvatarType(unsigned int type);
@@ -175,6 +178,7 @@ public:
   void SetDreamstrike(unsigned int dreamstrike);
   void SetNPSymbol(unsigned int np_symbol);
   void SetApprentice(unsigned int apprentice);
+  void SetPlayerInvis(unsigned int pinvis);
 
   // read from string, write to string
   int Parse(const TCHAR* str);

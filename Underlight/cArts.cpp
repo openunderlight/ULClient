@@ -753,8 +753,12 @@ void cArts::BeginArt(int art_id, bool bypass)
 		return;
 	}
 
-	if (!art_info[art_id].usable_in_sanctuary() && (player->flags & ACTOR_CHAMELED))
-		player->RemoveTimedEffect(LyraEffect::PLAYER_CHAMELED);
+	if (!art_info[art_id].usable_in_sanctuary()) {
+		if (player->flags & ACTOR_CHAMELED)
+			player->RemoveTimedEffect(LyraEffect::PLAYER_CHAMELED);
+		if (player->flags & ACTOR_INVISIBLE)
+			player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
+	}
 
 	art_in_use = art_id;
 	int duration = art_info[art_id].casting_time*CASTING_TIME_MULTIPLIER;
@@ -6771,19 +6775,21 @@ void cArts::ApplyPeaceAura(int skill, lyra_id_t caster_id)
 		return;
 	}
 
+	if(player->GuildRank(Guild::ECLIPSE) == Guild::NO_RANK)
+	{
+		LoadString (hInstance, IDS_MUST_BE_MEMBER_APPLY, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, GuildName(Guild::ECLIPSE), this->Descrip(Arts::PEACE_AURA));
+		display->DisplayMessage(message, false);
+		return;
+	}	
+
+
 	player->EvokedFX().Activate(Arts::PEACE_AURA, false);
 	this->DisplayUsedByOther(n, Arts::PEACE_AURA);
 
 	int duration = this->Duration(Arts::PEACE_AURA, skill);
 	player->SetTimedEffect(LyraEffect::PLAYER_PEACE_AURA, duration, caster_id, EffectOrigin::ART_EVOKE);
 	
-/*	else
-	{
-		LoadString (hInstance, IDS_MUST_BE_MEMBER_APPLY, disp_message, sizeof(disp_message));
-      _stprintf(message, disp_message, GuildName(Guild::ECLIPSE), this->Descrip(Arts::PEACE_AURA));
-		display->DisplayMessage(message, false);
-	}
-*/
 	return;
 }
 
@@ -7922,8 +7928,8 @@ void cArts::EndSacrifice(void)
 	
 	if (is_missile)
 	{ 
-		// 50% chance base, down to 45% at level 99
-		int mod_chance = (100 - ((player->Skill(Arts::SACRIFICE)+1)/10)) / 2;
+		// 25% chance base, down to 20% at level 99
+		int mod_chance = (50 - ((player->Skill(Arts::SACRIFICE)+1)/10)) / 2;
 		if (rand() % 100 <= mod_chance)
 		{
 			_stprintf(temp_message, "Your attempt to sacrifice %s has failed and the item has been destroyed.", chakram_item->Name());

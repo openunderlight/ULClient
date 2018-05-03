@@ -962,7 +962,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		else {
 			LmAvatar new_avatar;
 			//new_avatar.Init((player->Skill(Arts::NIGHTMARE_FORM)/20 + 1), 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-			new_avatar.Init(Avatars::EMPHANT, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+			new_avatar.Init(Avatars::EMPHANT, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 			this->SetTransformedAvatar(new_avatar);
 		}
 	} break;
@@ -1032,7 +1032,11 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 			return(true);
 		}
 									 } break;
-
+	case LyraEffect::PLAYER_INVISIBLE: {
+		avatar.SetPlayerInvis(1);
+		gs->AvatarChange(avatar, false);
+	}
+									   break;
 	case LyraEffect::PLAYER_BLEED: {
 		if (safezone)
 		{
@@ -1170,6 +1174,14 @@ void cPlayer::RemoveTimedEffect(int effect)
 
 	flags = flags & ~(timed_effects->actor_flag[effect]);
 	timed_effects->expires[effect] = 0;
+
+	if (effect == LyraEffect::PLAYER_INVISIBLE && !avatar.Hidden())
+	{
+		// Invis is expiring...
+		avatar.SetPlayerInvis(0);
+		gs->AvatarChange(avatar, false);
+	}
+
 	// in case we are invis AND chamele'd, no re-visible message
 	if (((effect == LyraEffect::PLAYER_CHAMELED) && (flags & ACTOR_INVISIBLE)) ||
 		((effect == LyraEffect::PLAYER_INVISIBLE) && (flags & ACTOR_CHAMELED)))
@@ -1423,7 +1435,9 @@ void cPlayer::CheckStatus(void)
 
 		}
 		actors->IterateItems(DONE);
-		if (!safezone && level->ID() != 1 && !(level->Rooms[room].flags & ROOM_SANCTUARY) && !guild_level)
+#ifndef AGENT
+		if (!safezone && level->ID() != 1 && !(level->Rooms[room].flags & ROOM_SANCTUARY) && !guild_level &&
+			!(flags & ACTOR_SOULSPHERE) && !Avatar().Hidden())
 		{
 			for (cActor* actor = actors->IterateOthers(INIT); actor != NO_ACTOR; actor = actors->IterateOthers(NEXT))
 			{
@@ -1450,6 +1464,7 @@ void cPlayer::CheckStatus(void)
 			}
 			actors->IterateOthers(DONE);
 		}
+#endif
 		next_sector_tag = LyraTime() + SECTOR_TAG_INTERVAL;
 	}
 
@@ -1893,7 +1908,7 @@ void cPlayer::InitAvatar(void)
 	else
 		sex = Avatars::MALE;
 #endif
-	avatar.Init(sex, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+	avatar.Init(sex, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 }
 
 bool cPlayer::IsMare(void)
@@ -1906,6 +1921,9 @@ bool cPlayer::IsMare(void)
 
 void cPlayer::SetAvatar(LmAvatar new_avatar, bool update_server)
 {
+	if (Avatar().PlayerInvis())
+		return;
+
 	if (this->playerID != INVALID_PLAYERID)
 	{
 
@@ -2037,6 +2055,8 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 
 	if (player->flags & ACTOR_CHAMELED)
 		player->RemoveTimedEffect(LyraEffect::PLAYER_CHAMELED);
+	else if(player->flags & ACTOR_INVISIBLE)
+		player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
 #ifndef AGENT
 	this->PerformedAction();
 #endif

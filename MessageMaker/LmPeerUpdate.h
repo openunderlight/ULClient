@@ -38,7 +38,7 @@ struct lyra_peer_update_t { // bit packed to the extreme
   // field is moved from u1 to u2 (say), then alot has to be changed.  Don't do this
   // unless it's absolutely necessary.
 
-  // BIT31 weapon_damage:6 flags:9 attack_bits:6 angle:10 BIT0
+  // BIT31 flight: 1weapon_damage:6 flags:9 attack_bits:6 angle:10 BIT0
   LmBit32 u1;          // 128
   
   // BIT31 unused:1 wave:1 scolor:3 pcolor:3 harmful:1 local:1 weapon_effect:5 height_delta:5 weapon_velocity:4
