@@ -4552,6 +4552,7 @@ BEGIN
     IDS_PLAYER_SPRINT_OFF   "Your movement slows back to normal."
     IDS_SPRINT              "Sprint"
     IDS_ENFEEBLE_APPLIED    "%s has slowed your speed!"
+	IDS_ENFEEBLE_MARE	    "The nightmare appears unaffected!"
 END
 
 #endif    // English (United States) resources
