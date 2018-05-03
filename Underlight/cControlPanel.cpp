@@ -2624,21 +2624,22 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 			}
 #endif
 			else if ((hwnd == cp->hwnd_avatar) && !avatardlg && 
-					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED))
+					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED) && !player->Avatar().PlayerInvis())
 			{
 					avatardlg = TRUE;
 					if ((player->GetAccountType() == LmAvatar::ACCT_PMARE) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
 						CreateLyraDialog(hInstance, IDD_MONSTER_AVATAR, 
 							 cDD->Hwnd_Main(), (DLGPROC)MonsterAvatarDlgProc);
-					else
-						CreateLyraDialog(hInstance, IDD_AVATAR, 
-							 cDD->Hwnd_Main(), (DLGPROC)AvatarDlgProc);
+					else {
+						CreateLyraDialog(hInstance, IDD_AVATAR,
+							cDD->Hwnd_Main(), (DLGPROC)AvatarDlgProc);
+					}
 			}
 			break;
 
 		case WM_LBUTTONDOWN:
 			if ((hwnd == cp->hwnd_avatar) && !avatardlg && 
-					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED))
+					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED) && !player->Avatar().PlayerInvis())
 			{
 					avatardlg = TRUE;
 					if ((player->GetAccountType() == LmAvatar::ACCT_PMARE) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))

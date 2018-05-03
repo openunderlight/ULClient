@@ -1838,6 +1838,7 @@ cTimedEffects::cTimedEffects(void)
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
 	default_duration[i]=9; // 30 sec
 	harmful[i] = false;
+	abjurable[i] = false;
 
 
 	i = LyraEffect::PLAYER_NO_PARTY;

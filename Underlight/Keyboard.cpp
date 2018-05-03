@@ -1659,7 +1659,7 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		//display->DisplayMessage(message);
 		//}
 		else if (!avatardlg && gs && gs->LoggedIntoGame() &&
-			!(player->flags & ACTOR_TRANSFORMED))
+			!(player->flags & ACTOR_TRANSFORMED) && !player->Avatar().PlayerInvis())
 		{
 			avatardlg = TRUE;
 			if ((player->GetAccountType() == LmAvatar::ACCT_PMARE) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
