@@ -3242,7 +3242,6 @@ void cGameServer::HandlePositionUpdate(RMsg_PlayerUpdate& position_msg)
 				//printf("Attack bits: %d Sanc: %d Now - Last Attack: %d Shot Interval: %d Wpn Bitmap: %d\n",
 				//	position_msg.PeerUpdate(i).AttackBits(), level->Rooms[player->Room()].flags & ROOM_SANCTUARY,
 				//	(LyraTime() - n->LastAttack()), SHOT_INTERVAL, position_msg.PeerUpdate(i).WeaponBitmap());
-				// maybe here?
 				if (position_msg.PeerUpdate(i).AttackBits() && !(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) &&
 					((LyraTime() - n->LastAttack()) > SHOT_INTERVAL) && position_msg.PeerUpdate(i).WeaponBitmap())
 				{
