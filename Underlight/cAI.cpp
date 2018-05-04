@@ -492,7 +492,7 @@ void cAI::MakeMove(void)
 			num_sightless_frames = SIGHTLESS_FRAMES_THRESHOLD + 1; // No need to count above this
 		}
 	}
-	else if (neighbors[target]->flags & ACTOR_SOULSPHERE) // Target is a soulsphere. Wander
+	else if (neighbors[target]->flags & ACTOR_SOULSPHERE || neighbors[target]->Avatar().PlayerInvis()) // Target is a soulsphere. Wander
 	{ 
 		this->Wander();
 	}
@@ -1368,7 +1368,7 @@ bool cAI::NeighborVisible(int index)
 // For now, assume non-melee creatures can hit what they can see
 bool cAI::NeighborHittable(int index)
 {
-	if (!this->NeighborVisible(index) || (index >= num_neighbors) || (neighbors[index]->flags & ACTOR_SOULSPHERE))
+	if (!this->NeighborVisible(index) || (index >= num_neighbors) || (neighbors[index]->flags & ACTOR_SOULSPHERE) || neighbors[index]->Avatar().PlayerInvis())
 		return false;
 	float target_z = neighbors[index]->z;
 	float my_z = this->z;
