@@ -758,6 +758,8 @@ void cArts::BeginArt(int art_id, bool bypass)
 			player->RemoveTimedEffect(LyraEffect::PLAYER_CHAMELED);
 		if (player->flags & ACTOR_INVISIBLE)
 			player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
+		if (player->flags & ACTOR_SPRINT)
+			player->RemoveTimedEffect(LyraEffect::PLAYER_SPRINT);
 	}
 
 	art_in_use = art_id;
