@@ -4610,6 +4610,9 @@ void cGameServer::AvatarChange(LmAvatar new_avatar, bool permanent)
 {
 	GMsg_ChangeAvatar avatar_msg;
 
+	if (new_avatar.PlayerInvis() && permanent)
+		return;
+
 	if (permanent)
 		avatar_msg.Init(new_avatar,GMsg_ChangeAvatar::AVATAR_PERMANENT);
 	else
