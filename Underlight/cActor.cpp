@@ -469,11 +469,13 @@ bool cActor::Render(void)
 {
 	if (terminate)
 		return false;
-	else if ((actors->ValidNeighbor(this)) && 
-			 ((((cNeighbor*)this)->Avatar().Hidden())))
+	else if ((actors->ValidNeighbor(this)))
+	{
+		if(((cNeighbor*)this)->Avatar().Hidden())
 			return false;
-	else if (((cNeighbor*)this)->Avatar().PlayerInvis()) {
-		return ((player->flags & ACTOR_DETECT_INVIS) && player->Skill(Arts::DREAMSEER) > 0);
+		else if (((cNeighbor*)this)->Avatar().PlayerInvis()) {
+			return ((player->flags & ACTOR_DETECT_INVIS) && player->Skill(Arts::DREAMSEER) > 0);
+		}
 	}
 	//else if ((actors->ValidNeighbor(this)))
 	//{ // for debugging
