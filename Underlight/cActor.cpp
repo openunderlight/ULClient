@@ -474,7 +474,7 @@ bool cActor::Render(void)
 		if(((cNeighbor*)this)->Avatar().Hidden())
 			return false;
 		else if (((cNeighbor*)this)->Avatar().PlayerInvis()) {
-			return ((player->flags & ACTOR_DETECT_INVIS) && player->Skill(Arts::DREAMSEER) > 0);
+			return false;
 		}
 	}
 	//else if ((actors->ValidNeighbor(this)))

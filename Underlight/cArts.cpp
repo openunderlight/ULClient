@@ -188,7 +188,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x9097, // Sphere 
 0xB1D9, // Support Demotion 
 0xD998, // Demote 
-0xFE5E, // Invisibility 
+0xFE5F, // Invisibility 
 0x248B, // Give 
 0x4501, // GateSmasher 
 0x6B4E, // FateSlayer 
@@ -383,7 +383,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_SPHERE,				Stats::NO_STAT,		20, 0,  0,	1, 	-1, SANCT | NEIGH},
 {IDS_SUPPORT_DEMOTION,		Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT | NEIGH | MAKE_ITEM},
 {IDS_DEMOTE,				Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT},
-{IDS_INVISIBILITY,			Stats::INSIGHT,		40, 20, 6,	10, 	3, SANCT | FOCUS | LEARN},
+{IDS_INVISIBILITY,			Stats::INSIGHT,		40, 20, 5,	10, 	3, SANCT | FOCUS | LEARN},
 {IDS_GIVE, 					Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT | NEIGH | NEED_ITEM | LEARN},
 {IDS_GATESMASHER,			Stats::WILLPOWER,	0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
 {IDS_FATESLAYER, 			Stats::LUCIDITY,	0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
@@ -481,7 +481,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_CHANNEL,                       Stats::DREAMSOUL,   40, 35, 25, 3,  -1, SANCT | NEIGH | LEARN},
 {IDS_GKSHIELD,						Stats::WILLPOWER, 70, 30, 13, 5, -1, SANCT | FOCUS | LEARN},
 {IDS_PORTKEY,						Stats::DREAMSOUL, 90, 50, 13, 5, -1, SANCT | LEARN | MAKE_ITEM},
-{IDS_SPRINT,						Stats::WILLPOWER, 35, 20, 13, 2, 2, SANCT | LEARN},
+{IDS_SPRINT,						Stats::WILLPOWER, 35, 20, 13, 2, 2, SANCT | LEARN },
 {IDS_ENFEEBLEMENT,					Stats::LUCIDITY,	35, 20, 13, 2, 	 2, LEARN | FOCUS | NEIGH }
 
 };
@@ -3213,8 +3213,25 @@ void cArts::ApplyHealingAura(int skill, lyra_id_t caster_id)
 
 	// int healing = 8 + ((skill/10)+1)*(rand()%3);
 	int healing = 4 + ((skill/10)+5)*(rand()%3+1);
-	player->SetCurrStat(Stats::DREAMSOUL, healing, SET_RELATIVE, caster_id);
-
+	if (player->CurrStat(Stats::DREAMSOUL))
+		player->SetCurrStat(Stats::DREAMSOUL, healing, SET_RELATIVE, caster_id);
+	else if (!acceptrejectdlg)
+	{
+		cNeighbor *n = this->LookUpNeighbor(caster_id);
+		if (n != NO_ACTOR)
+		{
+			restore_id = caster_id;
+			restore_skill = 200+skill;
+			restore_art = Arts::HEALING_AURA;
+			LoadString(hInstance, IDS_QUERY_RESTORE, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, n->Name());
+			HWND hDlg = CreateLyraDialog(hInstance, (IDD_ACCEPTREJECT),
+				cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
+			acceptreject_callback = (&cArts::GotRestored);
+			SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+			SendMessage(hDlg, WM_SET_AR_NEIGHBOR, 0, (LPARAM)n);
+		}
+	}
 	return;
 }
 
@@ -4285,10 +4302,17 @@ void cArts::GotRestored(void *value)
 		player->EvokedFX().Activate(restore_art, false);
 		cNeighbor *n = this->LookUpNeighbor(restore_id);
 		this->DisplayUsedByOther(n,restore_art);
-		int healing = ((restore_skill/10)+1+(rand()%8));
+		int healing = 0;
+		if (restore_skill > 200)
+		{
+			restore_skill -= 200;
+			healing = 4 + ((restore_skill / 10) + 5)*(rand() % 3 + 1);
+		} else 
+			healing = ((restore_skill/10)+1+(rand()%8));
 		player->SetCurrStat(Stats::DREAMSOUL, healing, SET_RELATIVE, restore_id);
 	}
 	restore_id = 0;
+	restore_skill = 0;
 	return;
 }
 

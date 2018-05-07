@@ -582,7 +582,7 @@ bool TranslateValue(int type, int value)
 			break;
 		
 		case LyraItem::TRANSLATION_LEVEL_ID:
-		case LyraItem::TRANSLATION_DURABILITY:
+		case LyraItem::TRANSLATION_DURABILITY: 
 		case LyraItem::TRANSLATION_TPORT_DEST:
 		case LyraItem::TRANSLATION_NONE:
 		default:
