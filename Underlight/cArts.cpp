@@ -756,8 +756,6 @@ void cArts::BeginArt(int art_id, bool bypass)
 	if (!art_info[art_id].usable_in_sanctuary()) {
 		if (player->flags & ACTOR_CHAMELED)
 			player->RemoveTimedEffect(LyraEffect::PLAYER_CHAMELED);
-		if (player->flags & ACTOR_INVISIBLE)
-			player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
 		if (player->flags & ACTOR_SPRINT)
 			player->RemoveTimedEffect(LyraEffect::PLAYER_SPRINT);
 	}

@@ -2065,8 +2065,6 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 
 	if (player->flags & ACTOR_CHAMELED)
 		player->RemoveTimedEffect(LyraEffect::PLAYER_CHAMELED);
-	else if (player->flags & ACTOR_INVISIBLE)
-		player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
 #ifndef AGENT
 	this->PerformedAction();
 #endif
