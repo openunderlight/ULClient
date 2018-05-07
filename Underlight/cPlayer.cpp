@@ -1046,8 +1046,14 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		}
 	} break;
 	case LyraEffect::PLAYER_INVISIBLE: {
-		avatar.SetPlayerInvis(1);
-		gs->AvatarChange(avatar, false);
+		if (this->flags & ACTOR_INVISIBLE) { // 2nd activation - remove
+			this->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
+			return false;
+		}
+		else {
+			avatar.SetPlayerInvis(1);
+			gs->AvatarChange(avatar, false);
+		}
 	}
 									   break;
 	case LyraEffect::PLAYER_BLEED: {
