@@ -875,6 +875,7 @@ void cGameServer::HandleMessage(void)
 				}
 				// avtar settings are dependant on arts, guilds and stuff. Do them first.
 				player->SetAvatar(loginack_msg.Avatar(), false);
+				options.avatar = loginack_msg.Avatar();
 			}
 			cp->SetupArts(); // set up arts display
  
@@ -4609,6 +4610,9 @@ void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, sh
 void cGameServer::AvatarChange(LmAvatar new_avatar, bool permanent)
 {
 	GMsg_ChangeAvatar avatar_msg;
+	//
+	//if (new_avatar.PlayerInvis() && permanent)
+	//	return;
 
 	if (permanent)
 		avatar_msg.Init(new_avatar,GMsg_ChangeAvatar::AVATAR_PERMANENT);

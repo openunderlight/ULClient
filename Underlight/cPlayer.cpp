@@ -1934,9 +1934,6 @@ bool cPlayer::IsMare(void)
 
 void cPlayer::SetAvatar(LmAvatar new_avatar, bool update_server)
 {
-	if (Avatar().PlayerInvis())
-		return;
-
 	if (this->playerID != INVALID_PLAYERID)
 	{
 
