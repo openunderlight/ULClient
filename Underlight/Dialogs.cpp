@@ -4998,7 +4998,7 @@ BOOL CALLBACK AvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 		case WM_COMMAND:
 
 			if (((HIWORD(wParam) == LBN_SELCHANGE) || (HIWORD(wParam) == BN_CLICKED)) &&
-				!(player->flags & ACTOR_TRANSFORMED))
+				!(player->flags & ACTOR_TRANSFORMED) && !(player->flags & ACTOR_INVISIBLE))
 			{
 
 					curr_avatar.SetColor0(ListBox_GetCurSel(GetDlgItem(hDlg, IDC_REGION0)));
@@ -5121,7 +5121,7 @@ BOOL CALLBACK AvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 			switch (LOWORD(wParam))
 			{
 				case IDC_OK:
-					if (player->flags & ACTOR_TRANSFORMED)
+					if ((player->flags & ACTOR_TRANSFORMED) || (player->flags & ACTOR_INVISIBLE))
 					{ // don't allow avatar customization with nightmare form
 						PostMessage(hwnd_avatar, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
 						break;
@@ -5140,7 +5140,7 @@ BOOL CALLBACK AvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 					return TRUE;
 
 				case IDC_RESET:
-					if (player->flags & ACTOR_TRANSFORMED)
+					if ((player->flags & ACTOR_TRANSFORMED) || player->Avatar().PlayerInvis())
 					{ // don't allow avatar customization with nightmare form
 						SendMessage(hwnd_avatar, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
 						break;

@@ -187,7 +187,7 @@ const LyraItem::item_function_entry_t LyraItem::item_functions[] = {
   // ARMOR_FUNCTION
   { ITEM_ARMOR, 4, 3, false, true, true, false, false, false, true, {
     { ITEM_CURRDURR, 1, TRANSLATION_DURABILITY, true, 1, 99},
-    { ITEM_MAXDURR, 1, TRANSLATION_DURABILITY, true, 1, 99},
+    { ITEM_MAXDURR, 1, TRANSLATION_DURABILITY, true, 1, 100},
     { ITEM_ABSORB, 1, TRANSLATION_ABSORPTION, true, 1, 100},
     NO_FIELD,
 	NO_FIELD,

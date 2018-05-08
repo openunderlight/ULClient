@@ -1046,8 +1046,14 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		}
 	} break;
 	case LyraEffect::PLAYER_INVISIBLE: {
-		avatar.SetPlayerInvis(1);
-		gs->AvatarChange(avatar, false);
+		if (this->flags & ACTOR_INVISIBLE) { // 2nd activation - remove
+			this->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
+			return false;
+		}
+		else {
+			avatar.SetPlayerInvis(1);
+			gs->AvatarChange(avatar, false);
+		}
 	}
 									   break;
 	case LyraEffect::PLAYER_BLEED: {
@@ -1934,9 +1940,6 @@ bool cPlayer::IsMare(void)
 
 void cPlayer::SetAvatar(LmAvatar new_avatar, bool update_server)
 {
-	if (Avatar().PlayerInvis())
-		return;
-
 	if (this->playerID != INVALID_PLAYERID)
 	{
 
@@ -2068,8 +2071,6 @@ bool cPlayer::NightmareAttack(lyra_id_t target)
 
 	if (player->flags & ACTOR_CHAMELED)
 		player->RemoveTimedEffect(LyraEffect::PLAYER_CHAMELED);
-	else if (player->flags & ACTOR_INVISIBLE)
-		player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
 #ifndef AGENT
 	this->PerformedAction();
 #endif

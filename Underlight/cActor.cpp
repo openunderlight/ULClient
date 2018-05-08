@@ -469,9 +469,14 @@ bool cActor::Render(void)
 {
 	if (terminate)
 		return false;
-	else if ((actors->ValidNeighbor(this)) && 
-			 ((((cNeighbor*)this)->Avatar().Hidden()) || ((cNeighbor*)this)->Avatar().PlayerInvis()))
+	else if ((actors->ValidNeighbor(this)))
+	{
+		if(((cNeighbor*)this)->Avatar().Hidden())
 			return false;
+		else if (((cNeighbor*)this)->Avatar().PlayerInvis()) {
+			return false;
+		}
+	}
 	//else if ((actors->ValidNeighbor(this)))
 	//{ // for debugging
 		//if  (((cNeighbor*)this)->Avatar().Hidden())

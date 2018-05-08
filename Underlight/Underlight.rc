@@ -4552,7 +4552,8 @@ BEGIN
     IDS_PLAYER_SPRINT_OFF   "Your movement slows back to normal."
     IDS_SPRINT              "Sprint"
     IDS_ENFEEBLE_APPLIED    "%s has slowed your speed!"
-	IDS_ENFEEBLE_MARE	    "The nightmare appears unaffected!"
+    IDS_ENFEEBLE_MARE       "The nightmare appears unaffected!"
+    IDS_NO_MISSILE_INVIS    "You cannot use that item while invisible!"
 END
 
 #endif    // English (United States) resources
