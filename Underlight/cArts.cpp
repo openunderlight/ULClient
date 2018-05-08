@@ -2565,7 +2565,7 @@ void cArts::Return(void)
 	// check if the teleport is allowed
 	if (!this->CanPlayerTeleport(Arts::RETURN))
 	{
-		this->ArtFinished(false);
+		this->ArtFinished(true); // was false
 		return;
 	}
 
@@ -3605,7 +3605,7 @@ void cArts::StartPlayerTeleport(void)
 	// check if the teleport is allowed
 	if (!this->CanPlayerTeleport(Arts::GUILDHOUSE))
 	{
-		this->ArtFinished(false);
+		this->ArtFinished(true); //was false
 		return;
 	}
 	
