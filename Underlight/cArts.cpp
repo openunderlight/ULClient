@@ -188,7 +188,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x9097, // Sphere 
 0xB1D9, // Support Demotion 
 0xD998, // Demote 
-0xFE5F, // Invisibility 
+0xFE5E, // Invisibility 
 0x248B, // Give 
 0x4501, // GateSmasher 
 0x6B4E, // FateSlayer 
@@ -383,7 +383,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_SPHERE,				Stats::NO_STAT,		20, 0,  0,	1, 	-1, SANCT | NEIGH},
 {IDS_SUPPORT_DEMOTION,		Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT | NEIGH | MAKE_ITEM},
 {IDS_DEMOTE,				Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT},
-{IDS_INVISIBILITY,			Stats::INSIGHT,		40, 20, 5,	10, 	3, SANCT | FOCUS | LEARN},
+{IDS_INVISIBILITY,			Stats::INSIGHT,		40, 20, 6,	10, 	3, SANCT | FOCUS | LEARN},
 {IDS_GIVE, 					Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT | NEIGH | NEED_ITEM | LEARN},
 {IDS_GATESMASHER,			Stats::WILLPOWER,	0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
 {IDS_FATESLAYER, 			Stats::LUCIDITY,	0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
@@ -756,6 +756,8 @@ void cArts::BeginArt(int art_id, bool bypass)
 	if (!art_info[art_id].usable_in_sanctuary()) {
 		if (player->flags & ACTOR_CHAMELED)
 			player->RemoveTimedEffect(LyraEffect::PLAYER_CHAMELED);
+		if (player->flags & ACTOR_INVISIBLE)
+			player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
 		if (player->flags & ACTOR_SPRINT)
 			player->RemoveTimedEffect(LyraEffect::PLAYER_SPRINT);
 	}
