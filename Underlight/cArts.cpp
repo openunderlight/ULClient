@@ -2422,13 +2422,13 @@ void cArts::SoulReaper(void)
 
 void cArts::LaunchFireball(void) // used by next 4 arts
 {
-	int level = player->SkillSphere(art_in_use);
+	int artSkill = player->SkillSphere(art_in_use);
 	if (player->flags & ACTOR_INVISIBLE)
-		level /= 2;
+		artSkill /= 2;
 
 	if (options.network)
 		this->ArtFinished(gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE,ART_MISSILE_VELOCITY,
-													  0, weapon_damage_table[level], NO_ACTOR,
+													  0, weapon_damage_table[artSkill], NO_ACTOR,
 													 art_in_use),false);
 	else
 		this->ArtFinished(false);
