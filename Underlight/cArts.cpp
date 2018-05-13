@@ -756,8 +756,9 @@ void cArts::BeginArt(int art_id, bool bypass)
 	if (!art_info[art_id].usable_in_sanctuary()) {
 		if (player->flags & ACTOR_CHAMELED)
 			player->RemoveTimedEffect(LyraEffect::PLAYER_CHAMELED);
-		if (player->flags & ACTOR_INVISIBLE)
+		/*if (player->flags & ACTOR_INVISIBLE)
 			player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
+		*/
 		if (player->flags & ACTOR_SPRINT)
 			player->RemoveTimedEffect(LyraEffect::PLAYER_SPRINT);
 	}
@@ -772,6 +773,13 @@ void cArts::BeginArt(int art_id, bool bypass)
 		case Arts::GUILDHOUSE:
 			modified_duration = duration*(10 - (player->SkillSphere(art_id) * 2/3));
 			break;
+		case Arts::BLAST:
+		case Arts::TRANCEFLAME:
+			if (player->flags & ACTOR_INVISIBLE) {
+				modified_duration = duration * (10 - (player->SkillSphere(art_id) / 2));
+				break;
+			}
+			// else fallthru
 		default:
 			modified_duration = duration*(10 - player->SkillSphere(art_id));
 	}
@@ -2414,9 +2422,13 @@ void cArts::SoulReaper(void)
 
 void cArts::LaunchFireball(void) // used by next 4 arts
 {
+	int level = player->SkillSphere(art_in_use);
+	if (player->flags & ACTOR_INVISIBLE)
+		level /= 2;
+
 	if (options.network)
 		this->ArtFinished(gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE,ART_MISSILE_VELOCITY,
-													  0, weapon_damage_table[player->SkillSphere(art_in_use)], NO_ACTOR,
+													  0, weapon_damage_table[level], NO_ACTOR,
 													 art_in_use),false);
 	else
 		this->ArtFinished(false);
@@ -4976,7 +4988,8 @@ void cArts::EndBlast(void)
 			(n->Room() == player->Room())) 
 		{
 			n->SetBlasting(true);
-			gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::BLAST, player->Skill(Arts::BLAST), 0);
+			int blastLevel = (player->flags & ACTOR_INVISIBLE) ? (player->Skill(Arts::BLAST) / 2) : player->Skill(Arts::BLAST);
+			gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::BLAST, blastLevel, 0);
 			this->DisplayUsedOnOther(n, Arts::BLAST);
 			cDS->PlaySound(LyraSound::BLAST, player->x, player->y, true);
 			this->ArtFinished(true);
