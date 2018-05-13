@@ -638,6 +638,13 @@ void cItem::Use(void)
 			drain_charge = true;
 			if (options.network) // drain only on successful launch
 			{
+				if ((player->flags & ACTOR_INVISIBLE) && missile.velocity != MELEE_VELOCITY)
+				{
+					LoadString(hInstance, IDS_NO_MISSILE_INVIS, disp_message, sizeof(disp_message));
+					display->DisplayMessage(disp_message);
+					return;
+				}
+
 				// 1st check to see if we're skilled enough
 				int relevant_art, skill_delta;
 				// determine relevant art based on coloration;
