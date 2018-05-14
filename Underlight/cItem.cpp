@@ -78,6 +78,7 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 {
 	this->SetLmItem(i_lmitem);
 	expire_time_is_ttl = false;
+	destroy_on_failed_drop = false;
 	needsUpdate = marked_for_death = thrown =  redeeming = false;
 	marked_for_drop = marked_for_death = destroy_at_zero = false;
 	draggable = gravity = true;
@@ -85,11 +86,11 @@ cItem::cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_st
 	extra = NULL;
 	selected_function = inventory_flags = 0;
 	max_sort_index++;
+	next_tick = LyraTime();
 	sort_index = max_sort_index;
 	// GMs are always draggable!
 #if ! (defined (UL_DEBUG) || defined (GAMEMASTER))
-	if ((lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP)) ||
-		ItemFunction(0) == LyraItem::PORTKEY_FUNCTION)
+	if(lmitem.Header().Flags() & LyraItem::FLAG_NOPICKUP)
 		draggable = false;
 #endif
 	// GMs can never drag razorwinds
@@ -257,7 +258,7 @@ bool cItem::RightClick(void)
 		lyra_item_meta_essence_t meta_essence;
 		memcpy(&meta_essence, state, sizeof(meta_essence));
 		LoadString (hInstance, IDS_IDENTIFY_META_ESSENCE, disp_message, sizeof(disp_message));
-	_stprintf(message, disp_message, GuildName(meta_essence.guild_id),
+	_stprintf(message, disp_message, GuildName(meta_essence.guild()),
 			meta_essence.strength(), meta_essence.num_mares());
 		display->DisplayMessage(message, false);
 	}
@@ -492,12 +493,6 @@ bool cItem::IsRazorwind()
 	}
 }
 
-bool cItem::NoPickup(void)
-{
-	return (lmitem.Header().Flags() & LyraItem::FLAG_NOREAP && !(lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP)) ||
-		ItemFunction(0) == LyraItem::PORTKEY_FUNCTION;
-}
-
 // can the item be lost on dissolution?
 bool cItem::Losable(void)
 {
@@ -642,7 +637,15 @@ void cItem::Use(void)
 			memcpy(&missile, state, sizeof(missile));
 			drain_charge = true;
 			if (options.network) // drain only on successful launch
-			{	// 1st check to see if we're skilled enough
+			{
+				if ((player->flags & ACTOR_INVISIBLE) && missile.velocity != MELEE_VELOCITY)
+				{
+					LoadString(hInstance, IDS_NO_MISSILE_INVIS, disp_message, sizeof(disp_message));
+					display->DisplayMessage(disp_message);
+					return;
+				}
+
+				// 1st check to see if we're skilled enough
 				int relevant_art, skill_delta;
 				// determine relevant art based on coloration;
 				// take primary color, mod 4, and add to GATEKEEPER
@@ -723,9 +726,12 @@ void cItem::Use(void)
 						// it's essence - add to meta if it's not a user
 						state = item->Lmitem().StateField(0);
 						memcpy(&essence, state, sizeof(essence));
-						if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE)
+						if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE && 
+							(meta_essence.belief() == 0 || essence.weapon_type == 0 || // belief check
+							meta_essence.belief() == essence.weapon_type))
 						{ // add strength to meta talisman
-							meta_essence.set_strength(meta_essence.strength() + essence.strength);
+							int str_to_add = meta_essence.belief() == essence.weapon_type ? essence.strength : (essence.strength/2);
+							meta_essence.set_strength(meta_essence.strength() + str_to_add);
 							meta_essence.set_num_mares(meta_essence.num_mares() + 1);
 							item->Lmitem().SetCharges(0);
 							drains = true;
@@ -736,10 +742,15 @@ void cItem::Use(void)
 					{
 						state = item->Lmitem().StateField(0);
 						memcpy(&nexus, state, sizeof(nexus));
+						if (meta_essence.belief() != 0 && nexus.belief != 0 && meta_essence.belief() != nexus.belief)
+							continue;
+
 						if (nexus.essences > 0)
 							meta_essence.set_num_mares(meta_essence.num_mares() + nexus.essences);
-						if (nexus.strength > 0)
-							meta_essence.set_strength(meta_essence.strength() + nexus.strength);
+						if (nexus.strength > 0) {
+							int str_to_add = meta_essence.belief() == nexus.belief ? nexus.strength : (nexus.strength / 2);
+							meta_essence.set_strength(meta_essence.strength() + str_to_add);
+						}
 						// MDA: Note, should this just be Destroy()?
 						item->Lmitem().SetCharges(0);
 						drains = true;
@@ -782,12 +793,15 @@ void cItem::Use(void)
 					int avail_space = nexus.strength_cap - nexus.strength;
 					state = item->Lmitem().StateField(0);
 					memcpy(&essence, state, sizeof(essence));
-					if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE)
+					if (essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE &&
+						(nexus.belief == 0 || essence.weapon_type == 0 || // belief check
+							nexus.belief == essence.weapon_type))
 					{ 
+						int str_to_add = nexus.belief == essence.weapon_type ? essence.strength : (essence.strength / 2);
 						// add strength to meta talisman
-						if (avail_space >= essence.strength) {
+						if (avail_space >= str_to_add) {
 							// meta talisman can take the entire essence
-							nexus.strength += essence.strength;
+							nexus.strength += str_to_add;
 							// only increase essences if it's entirely absorbed
 							nexus.essences++;
 							item->Lmitem().SetCharges(0);
@@ -795,7 +809,8 @@ void cItem::Use(void)
 						else {
 							// partial use of essence
 							nexus.strength += avail_space;
-							essence.strength -= avail_space;
+							int str_to_utilize = nexus.belief == essence.weapon_type ? avail_space : (avail_space * 2);
+							essence.strength -= str_to_utilize;
 							item->Lmitem().SetStateField(0, &essence, sizeof(essence));
 							needsUpdate = true;
 						}
@@ -1407,7 +1422,7 @@ bool cItem::IsAreaEffectItem(void)
 {
 	int item_func = ItemFunction(0);
 	return (this != NO_ITEM && (Status() == ITEM_UNOWNED) &&
-		(item_func == LyraItem::AREA_EFFECT_FUNCTION || item_func == LyraItem::PORTKEY_FUNCTION));
+		(item_func == LyraItem::AREA_EFFECT_FUNCTION || item_func == LyraItem::PORTKEY_FUNCTION || item_func == LyraItem::TRIP_FUNCTION));
 }
 // return the amount of damage this missle does
 // this is a total HACK --- insure field information is maintained
@@ -1520,8 +1535,8 @@ bool cItem::Recharge(int plateaua)
 
 	int new_charges = lmitem.Charges() + rand()%plateaua + 1;
 
-	// check if we exceed the limit and set the charges to the soft limit if we do
-	if (new_charges >= limit)
+	// check if we exceed the soft limit and if we do, set new charges to soft_limit
+	if (new_charges >= soft_limit)
 	{
 		new_charges = soft_limit;
 		LoadString(hInstance, IDS_TALISMAN_RECHARGED_NOW, disp_message, sizeof(disp_message));

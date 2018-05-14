@@ -232,6 +232,15 @@ void cNeighbor::SetUpdateFlags(const LmPeerUpdate& update)
 		flags = flags | ACTOR_SOULSPHERE;
 	else
 		flags = flags & ~ACTOR_SOULSPHERE;
+
+	if (update.Flying())
+	{
+		flags = flags | ACTOR_FLY;
+		z = update.Z();
+	}
+	else {
+		flags = flags & ~ACTOR_FLY;
+	}
 	return;
 }
 

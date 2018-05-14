@@ -292,7 +292,7 @@ bool HandleLyraDebugKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 
 			lyra_item_gratitude_t gratitude = {LyraItem::GRATITUDE_FUNCTION, 0, 0, 0, 0, 0};
 			
-			header.Init(0, 0);
+			header.Init(0, 0, 0);
 			header.SetFlags(LyraItem::FLAG_HASDESCRIPTION);
 			header.SetGraphic(LyraBitmap::TALISMAN7);
 			header.SetColor1(15); header.SetColor2(7);
@@ -392,7 +392,7 @@ bool HandleLyraDebugKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 			LmItem info;
 			LmItemHdr header;
 			cItem *item;
-			header.Init(0, 0);
+			header.Init(0, 0, 0);
 			header.SetFlags(LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_SENDSTATE);
 			header.SetGraphic(LyraBitmap::META_ESSENCE);
 			header.SetColor1(15); header.SetColor2(15);
@@ -667,8 +667,13 @@ bool HandleGMFullMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 		return true;
 				
 	case 'O':
-		cp->DumpInventory();
+		if ((player->flags & ACTOR_FLY))
+			player->flags &= ~ACTOR_FLY;
+		else
+			player->flags |= ACTOR_FLY;
 		return true;
+		//cp->DumpInventory();
+		//return true;
 		
 	case 'L': // Lift all dropped objects into inventory
 		LoadString(hInstance, IDS_LIFT, message, sizeof(message));
@@ -1654,7 +1659,7 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		//display->DisplayMessage(message);
 		//}
 		else if (!avatardlg && gs && gs->LoggedIntoGame() &&
-			!(player->flags & ACTOR_TRANSFORMED))
+			!(player->flags & ACTOR_TRANSFORMED) && !player->Avatar().PlayerInvis())
 		{
 			avatardlg = TRUE;
 			if ((player->GetAccountType() == LmAvatar::ACCT_PMARE) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))

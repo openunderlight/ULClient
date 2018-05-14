@@ -154,7 +154,7 @@ TCHAR token_message[DEFAULT_MESSAGE_SIZE];
 TCHAR nightmare_message[DEFAULT_MESSAGE_SIZE];
 TCHAR dreamweapon_message[DEFAULT_MESSAGE_SIZE];
 TCHAR talisman_message[DEFAULT_MESSAGE_SIZE];
-
+TCHAR guild_belief_combo_message[DEFAULT_MESSAGE_SIZE];
 
 bool showing_map,map_shows_current_level;
 
@@ -250,7 +250,7 @@ art_dlg_callback_t chooseguild_callback = NULL;
 LPTSTR argv; 
 int argc;
 options_t options;
-
+macro_t chat_macros[MAX_MACROS];
 // memory profiling
 #ifdef _DEBUG
 #include <CRTDBG.H>
@@ -716,7 +716,7 @@ bool __cdecl Init_Game(void)
  	    LmAvatar avatar = player->Avatar();
 
 		avatar.SetAvatarType(Avatars::FEMALE);
-		update.Init(1, 0, (short)player->x, (short)player->y-50 , 0, 0 );
+		update.Init(1, 0, (short)player->x, (short)player->y-50 , (short)player->z, 0, 0 );
 		update.SetAngle(player->angle+Angle_180);
 		info.Init(update, avatar, _T("Test Avatar"), 0, 0);
 		test_avatar = new cNeighbor(info);

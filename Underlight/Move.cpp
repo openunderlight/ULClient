@@ -1618,7 +1618,7 @@ static int PlayerTripLine(linedef *aLine)
 							LmItemHdr header;
 							lyra_item_missile_t missile = { LyraItem::MISSILE_FUNCTION, -4, 0, 1, LyraBitmap::FIREBALL_MISSILE}; // chakram
 
-							header.Init(0, 0);
+							header.Init(0, 0, 0);
 							header.SetFlags(0); //	LyraItem::FLAG_SENDSTATE;
 							header.SetGraphic(LyraBitmap::TALISMAN3);
 							header.SetColor1(1); header.SetColor2(2);

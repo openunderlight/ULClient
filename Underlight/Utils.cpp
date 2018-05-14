@@ -380,6 +380,15 @@ const distance_t distances[NUM_DISTANCES] = {
 	{99999999, 999999, 100, IDS_WHOLE_ROOM}
 };
 
+const frequency_t frequencies[NUM_FREQUENCIES] = {
+	{1, 1, IDS_ONCE_PER_LOGIN},
+	{1, 1, IDS_ONCE_PER_ROOM},
+	{-1, 2000, IDS_EVERY_2_SEC },
+	{-1, 30000, IDS_EVERY_30_SEC},
+	{-1, 60000, IDS_EVERY_MINUTE},
+	{-1, 120000, IDS_EVERY_2_MINUTES},
+};
+
 // calculates a duration based on the duration table above
 int CalculateDuration(int index) 
 { 
@@ -397,6 +406,11 @@ void CalculateDistance(int index, unsigned int* xydist, unsigned int* heightdist
 	*heightdist = dist.height_distance;
 }
 
+frequency_t Frequency(int freqidx)
+{
+	return frequencies[freqidx];
+}
+
 const velocity_t velocity_types[] =
 {// min skill
  // to create   descrip
@@ -410,10 +424,31 @@ const velocity_t velocity_types[] =
 	{90,      IDS_FASTEST},
 };
 
+belief_t beliefs[NUM_BELIEFS + 1] =
+{
+	{ IDS_ANY_BELIEF, Arts::NONE },
+	{ IDS_IMPRISON_MARE, Arts::ENSLAVE_NIGHTMARE },
+	{ IDS_BANISH_MARE, Arts::BANISH_NIGHTMARE },
+	{ IDS_CLEANSE_MARE, Arts::CLEANSE_NIGHTMARE },
+	{ IDS_SACRIFICE, Arts::SACRIFICE },
+};
+
+int BeliefFromArtID(lyra_id_t art_id)
+{
+	for (int i = 0; i <= NUM_BELIEFS; i++)
+	{
+		belief_t b = beliefs[i];
+		if (b.art_id == art_id)
+			return i;
+	}
+	
+	return 0;
+}
+
 // Translate a value into a human readable string and sticks it into
 // the "message" global variable
 
-void TranslateValue(int type, int value)
+bool TranslateValue(int type, int value)
 {
 	switch (type)
 	{
@@ -432,6 +467,12 @@ void TranslateValue(int type, int value)
 		case LyraItem::TRANSLATION_DISTANCE:
 		{
 			LoadString(hInstance, distances[value].descrip, disp_message, sizeof(disp_message));
+			_stprintf(message, _T("%s"), disp_message);
+		}
+		break;
+		case LyraItem::TRANSLATION_FREQUENCY:
+		{
+			LoadString(hInstance, frequencies[value].descrip, disp_message, sizeof(disp_message));
 			_stprintf(message, _T("%s"), disp_message);
 		}
 		break;
@@ -461,6 +502,27 @@ void TranslateValue(int type, int value)
 				_stprintf(message, _T("%s"), GuildName(value));
 			}
 			break;
+
+		case LyraItem::TRANSLATION_GUILDBELIEF:
+		{
+			int guild = value & 0x0F;
+			int belief = (value & 0xF0) >> 4;
+			if (guild < 0 || guild > NUM_GUILDS)
+				return false;
+			if (belief < 0 || belief > NUM_BELIEFS)
+				return false;
+			belief_t belief_type = beliefs[belief];
+			LoadString(hInstance, belief_type.string_id, disp_message, sizeof(disp_message));
+			_stprintf(message, _T("%s - %s"), GuildName(guild), disp_message);
+		}
+		break;
+
+		case LyraItem::TRANSLATION_BELIEF:
+		{
+			belief_t belief = beliefs[value];
+			LoadString(hInstance, belief.string_id, message, sizeof(message));
+		}
+		break;
 
 		case LyraItem::TRANSLATION_GUILDTOKEN:
 			{
@@ -518,9 +580,9 @@ void TranslateValue(int type, int value)
 					_stprintf(message, _T("%s"), NightmareName(value));
 			}
 			break;
-	
+		
 		case LyraItem::TRANSLATION_LEVEL_ID:
-		case LyraItem::TRANSLATION_DURABILITY:
+		case LyraItem::TRANSLATION_DURABILITY: 
 		case LyraItem::TRANSLATION_TPORT_DEST:
 		case LyraItem::TRANSLATION_NONE:
 		default:
@@ -529,7 +591,7 @@ void TranslateValue(int type, int value)
 			}
 			break;
 	}
-	return;
+	return true;
 }
 
 int PowerTokenCostToForge(int type, int value, bool combineItem = false)
@@ -694,9 +756,11 @@ int NumberTranslations(int type)
 		    return MAX_LEVELS;
 		case LyraItem::TRANSLATION_DISTANCE:
 			return NUM_DISTANCES;
+		case LyraItem::TRANSLATION_FREQUENCY:
+			return NUM_FREQUENCIES;
 		default:
 		case LyraItem::TRANSLATION_NONE:
-			return 0;
+			return UCHAR_MAX;
 	}
 }
 
@@ -1464,6 +1528,7 @@ cTimedEffects::cTimedEffects(void)
 		related_art[i] = Arts::NONE;
 		default_duration[i] = 0;
 		harmful[i] = false;
+		abjurable[i] = true;
 	}
 
 	i = LyraEffect::NONE;
@@ -1682,6 +1747,7 @@ cTimedEffects::cTimedEffects(void)
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
 	default_duration[i]=25; 
 	harmful[i] = false;
+	abjurable[i] = false;
 
 	i = LyraEffect::PLAYER_RETURN;
 	LoadString (hInstance, IDS_PLAYER_RETURN_ON, disp_message, sizeof(disp_message));
@@ -1772,6 +1838,7 @@ cTimedEffects::cTimedEffects(void)
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
 	default_duration[i]=9; // 30 sec
 	harmful[i] = false;
+	abjurable[i] = false;
 
 
 	i = LyraEffect::PLAYER_NO_PARTY;
@@ -1845,7 +1912,46 @@ cTimedEffects::cTimedEffects(void)
 	harmful[i] = false;
 	LoadString(hInstance, IDS_BULWARK_MORE, disp_message, sizeof(disp_message));
 	more_descrip[i] = _tcsdup(disp_message);
+
+	i = LyraEffect::PLAYER_FLYING;
+	LoadString(hInstance, IDS_FLIGHT_ON, disp_message, sizeof(disp_message));
+	start_descrip[i] = _tcsdup(disp_message);
+	LoadString(hInstance, IDS_FLIGHT_OFF, disp_message, sizeof(disp_message));
+	expire_descrip[i] = _tcsdup(disp_message);
+	actor_flag[i] = ACTOR_FLY;
+	related_art[i] = Arts::NONE;
+	LoadString(hInstance, IDS_FLIGHT, name[i], sizeof(name[i]));
+	default_duration[i] = 13; // 3 secs
+	harmful[i] = false;
+
+	i = LyraEffect::PLAYER_WALK;
+	LoadString(hInstance, IDS_PLAYER_WALK_ON, disp_message, DEFAULT_MESSAGE_SIZE);
+	start_descrip[i] = _strdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_WALK_MORE, disp_message, DEFAULT_MESSAGE_SIZE);
+	more_descrip[i] = _strdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_WALK_OFF, disp_message, DEFAULT_MESSAGE_SIZE);
+	expire_descrip[i] = _strdup(disp_message);
+	actor_flag[i] = ACTOR_WALK;
+	related_art[i] = Arts::ENFEEBLEMENT;
+	LoadString(hInstance, IDS_ENFEEBLEMENT, name[i], sizeof(name[i]));
+	default_duration[i] = 3; // 15 sec
+	harmful[i] = true;
+
+	i = LyraEffect::PLAYER_SPRINT;
+	LoadString(hInstance, IDS_PLAYER_SPRINT_ON, disp_message, DEFAULT_MESSAGE_SIZE);
+	start_descrip[i] = _strdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_SPRINT_MORE, disp_message, DEFAULT_MESSAGE_SIZE);
+	more_descrip[i] = _strdup(disp_message);
+	LoadString(hInstance, IDS_PLAYER_SPRINT_OFF, disp_message, DEFAULT_MESSAGE_SIZE);
+	expire_descrip[i] = _strdup(disp_message);
+	actor_flag[i] = ACTOR_SPRINT;
+	related_art[i] = Arts::SPRINT;
+	LoadString(hInstance, IDS_SPRINT, name[i], sizeof(name[i]));
+	default_duration[i] = 10; // 15 sec
+	harmful[i] = false;
+
 	return;
+
 }
 
 // destructor

@@ -52,6 +52,7 @@
 #define ITEM_TIME _T("Time to Detonate")
 #define ITEM_CASTER _T("Caster ID")
 #define ITEM_DISTANCE _T("Distance")
+#define ITEM_FREQUENCY _T("Frequency")
 
 #define ITEM_ESSENCE _T("Essence")
 #define ITEM_ESSTYPE _T("Essence Type")
@@ -74,6 +75,7 @@
 #define ITEM_PRIME _T("House Prime")
 #define ITEM_NEXUS _T("Chaos Well")
 #define ITEM_PORTKEY _T("Portkey")
+#define ITEM_TRIP _T("Trip")
 #define ITEM_GID _T("Guild ID")
 #define ITEM_STRHI _T("Strength (hi)")
 #define ITEM_STRLO _T("Strength (low)")
@@ -81,6 +83,7 @@
 #define ITEM_TRAPLO _T("Trapped Mares (low)")
 #define ITEM_STRCAP _T("Strength (cap)")
 #define ITEM_ESSCAP _T("Essence (cap)")
+#define ITEM_BELIEF _T("Belief")
 
 #define ITEM_CODEX _T("Codex")
 #define ITEM_ARTID _T("Art ID")

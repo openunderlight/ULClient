@@ -20,6 +20,8 @@
 #define IDS_GKSHIELD_ON                 14
 #define IDS_GKSHIELD_OFF                15
 #define IDS_GKSHIELD                    16
+#define IDS_ONCE_PER_LOGIN              17
+#define IDS_EVERY_2_SEC                 18
 #define IDR_AgentSvr                    100
 #define IDS_SERVICENAME                 100
 #define IDD_LOGIN                       101
@@ -70,6 +72,13 @@
 #define IDD_CHOOSE_DESTINATION          202
 #define IDD_POWER_TOKEN                 203
 #define IDD_SELECT_VALUE                204
+#define IDS_ONCE_PER_ROOM               206
+#define IDS_EVERY_30_SEC                207
+#define IDS_EVERY_MINUTE                208
+#define IDS_EVERY_2_MINUTES             209
+#define IDS_FLIGHT                      210
+#define IDS_FLIGHT_ON                   211
+#define IDS_FLIGHT_OFF                  212
 #define IDS_PROPERTIES                  1000
 #define IDC_USERNAME                    1004
 #define IDC_EMAIL                       1005
@@ -3002,6 +3011,23 @@
 #define IDS_SHIELD_MAX_NOW              4472
 #define IDS_TALISMAN_RECHARGED_NOW      4473
 #define IDS_RW_REAPPLIED                4474
+#define IDS_POWER_TOKEN_DESTROYED       4475
+#define IDS_ANY_BELIEF                  4476
+#define IDS_BANISHED_WELL               4477
+#define IDS_IMPRISONED_WELL             4478
+#define IDS_CLEANSED_WELL               4479
+#define IDS_PLAYER_WALK_ON              4480
+#define IDS_PLAYER_WALK_MORE            4481
+#define IDS_PLAYER_WALK_OFF             4482
+#define IDS_ENFEEBLEMENT                4483
+#define IDS_PLAYER_SPRINT               4484
+#define IDS_PLAYER_SPRINT_ON            4484
+#define IDS_PLAYER_SPRINT_MORE          4485
+#define IDS_PLAYER_SPRINT_OFF           4486
+#define IDS_SPRINT                      4487
+#define IDS_ENFEEBLE_APPLIED            4488
+#define IDS_ENFEEBLE_MARE               4489
+#define IDS_NO_MISSILE_INVIS            4490
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
@@ -3011,7 +3037,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        206
+#define _APS_NEXT_RESOURCE_VALUE        214
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1447
 #define _APS_NEXT_SYMED_VALUE           101

@@ -25,6 +25,7 @@ const float MAXSTRAFE=4.0f;
 const float	SHAMBLE_SPEED=.85f; // for monsters
 const float	WALK_SPEED=1.0f;
 const float RUN_SPEED=1.5f;
+const float SPRINT_SPEED = 2.25f;
 // track up to 64 collapses in the last 20 minutes to detect cheating
 const int COLLAPSES_TRACKED = 64;
 const int COLLAPSE_TRACK_INTERVAL = 1000*60*5; // 20 minutes, in ms
@@ -33,7 +34,8 @@ const int COLLAPSE_CHEAT_THRESHHOLD = 5;
 enum set_stat_enum
 {  
   SET_ABSOLUTE = 1,    
-  SET_RELATIVE = 2,          
+  SET_RELATIVE = 2,     
+  SET_RELATIVE_NO_COLLAPSE = 3, 
 };
 
 // for showing guild/sphere/shield patches
@@ -129,6 +131,7 @@ class cPlayer : public cActor
 	   bool old_sanct;
 	   bool checksum_incorrect;
 	   bool safezone;
+	   bool guild_level;
 	   lyra_id_t last_party_leader;
 	   unsigned int collapse_time;
 	   bool item_flags_sorting_changed;
@@ -144,7 +147,7 @@ class cPlayer : public cActor
 	   int ppoints;
 	   int pp_pool;
 	   int granting_pp;
-
+	   int num_fly_collides;
 	   int next_collapse_index;
 	   player_collapse_t collapses[COLLAPSES_TRACKED]; // record last 100 collapses
 	   lyra_id_t last_poisoner,last_bleeder;
@@ -204,6 +207,8 @@ class cPlayer : public cActor
 	  inline int  StartLevel (void) { return start_level; };
 	  inline float ReturnX (void) { return return_x; };
 	  inline float ReturnY (void) { return return_y; };
+	  inline bool LookingDown(void) { return (vertical_tilt + 120) < vertical_tilt_origin; }
+	  inline bool LookingUp(void) { return vertical_tilt > (vertical_tilt_origin + 120); }
 	  inline int  ReturnAngle (void) { return return_angle; };
 	  inline int  ReturnLevel (void) { return return_level; };
 	  inline float RecallX (void) { return recall_x; };

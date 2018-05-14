@@ -150,8 +150,8 @@ unsigned long art_chksum[NUM_ARTS] =
 #endif
 0x6C08, // Curse 
 0x953C, // Drain Essence 
-0xB0F4, // Banish Nightmare 
-0xDC59, // Imprison Nightmare 
+0xB06C, // Banish Nightmare 
+0xDDF1, // Imprison Nightmare 
 0xFAE1, // Trap Nightmare 
 0x2191, // Dreamblade 
 0x48FC, // Trail 
@@ -188,7 +188,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x9097, // Sphere 
 0xB1D9, // Support Demotion 
 0xD998, // Demote 
-0xFECE, // Invisibility 
+0xFE5E, // Invisibility 
 0x248B, // Give 
 0x4501, // GateSmasher 
 0x6B4E, // FateSlayer 
@@ -227,7 +227,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xF999, // Suspend 
 0x1BC3, // Reflect 
 0x3802, // Sacrifice 
-0x659F, // Cleanse Nightmare 
+0x6507, // Cleanse Nightmare 
 0x8149, // Create ID Token 
 0xAC49, // Sense Dreamers 
 0xCCD3, // Expel 
@@ -285,7 +285,10 @@ unsigned long art_chksum[NUM_ARTS] =
 0xA329, // Rally 
 0xC767, // Channel
 0xE96C, // Bulwark
-0xDF3,
+0xDF3, // Portkey
+0x3169, // Sprint
+0x5F5C, // Enfeeblement
+
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -342,8 +345,8 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 #endif
 {IDS_CURSE,					Stats::RESILIENCE,	40, 10, 13, 3, 	3, NEIGH | FOCUS | LEARN},
 {IDS_DRAIN_ESSENCE,			Stats::RESILIENCE,	0,  0,  0,	1, 	1, SANCT | NEED_ITEM | LEARN},
-{IDS_BANISH_MARE,			Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | FOCUS | LEARN},
-{IDS_IMPRISON_MARE,			Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | FOCUS | LEARN},
+{IDS_BANISH_MARE,			Stats::RESILIENCE,	10, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | LEARN},
+{IDS_IMPRISON_MARE,			Stats::RESILIENCE,	10, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | LEARN},
 {IDS_TRAP_MARE,				Stats::RESILIENCE,	50, 10, 0,	3, 	3, SANCT | NEIGH | FOCUS | LEARN},
 {IDS_DREAMBLADE, 			Stats::INSIGHT,		0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
 {IDS_TRAIL,					Stats::LUCIDITY,	0,  2,  25, 1, 	-1, SANCT | LEARN},
@@ -380,7 +383,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_SPHERE,				Stats::NO_STAT,		20, 0,  0,	1, 	-1, SANCT | NEIGH},
 {IDS_SUPPORT_DEMOTION,		Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT | NEIGH | MAKE_ITEM},
 {IDS_DEMOTE,				Stats::NO_STAT,		0,  0,  0,	3,	-1, SANCT},
-{IDS_INVISIBILITY,			Stats::INSIGHT,		40, 20, 6,	3, 	3, SANCT | FOCUS | LEARN},
+{IDS_INVISIBILITY,			Stats::INSIGHT,		40, 20, 6,	10, 	3, SANCT | FOCUS | LEARN},
 {IDS_GIVE, 					Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT | NEIGH | NEED_ITEM | LEARN},
 {IDS_GATESMASHER,			Stats::WILLPOWER,	0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
 {IDS_FATESLAYER, 			Stats::LUCIDITY,	0,  5,  23, 1, 	-1, SANCT | MAKE_ITEM | FOCUS},
@@ -419,7 +422,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_SUSPEND,						Stats::NO_STAT,		0,  0,  0,	0, 	-1, SANCT},
 {IDS_REFLECT_ART_NAME,				Stats::WILLPOWER,   65, 40, 9,  3,	-1, SANCT | FOCUS | LEARN},
 {IDS_SACRIFICE,						Stats::DREAMSOUL,	20, 10,  0,	1, 	-1, SANCT | NEED_ITEM},
-{IDS_CLEANSE_MARE,					Stats::RESILIENCE,	50, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | FOCUS | LEARN},
+{IDS_CLEANSE_MARE,					Stats::RESILIENCE,	10, 5,  0,	1, 	1, SANCT | NEED_ITEM | MAKE_ITEM | LEARN},
 {IDS_CREATE_ID_TOKEN,				Stats::DREAMSOUL,	0,  20, 0,	1, 	-1, SANCT | NEED_ITEM | MAKE_ITEM},
 {IDS_SENSE,							Stats::DREAMSOUL,	0,  0,  0,	1,  -1, SANCT | LEARN},
 {IDS_EXPEL_ART_NAME,				Stats::DREAMSOUL,	20, 0,  0,	1,  -1, SANCT | NEED_ITEM | NEIGH},
@@ -476,8 +479,11 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_CHAOS_WELL,					Stats::DREAMSOUL,   30, 5,  0,  5,  -1, SANCT | MAKE_ITEM | LEARN},
 {IDS_RALLY,							Stats::DREAMSOUL,	30, 30, 0,  5,  -1, SANCT | NEIGH},
 {IDS_CHANNEL,                       Stats::DREAMSOUL,   40, 35, 25, 3,  -1, SANCT | NEIGH | LEARN},
-{IDS_GKSHIELD, Stats::WILLPOWER, 70, 30, 13, 5, -1, SANCT | FOCUS | LEARN},
-{IDS_PORTKEY, Stats::DREAMSOUL, 90, 50, 13, 5, -1, SANCT | LEARN | MAKE_ITEM}
+{IDS_GKSHIELD,						Stats::WILLPOWER, 70, 30, 13, 5, -1, SANCT | FOCUS | LEARN},
+{IDS_PORTKEY,						Stats::DREAMSOUL, 90, 50, 13, 5, -1, SANCT | LEARN | MAKE_ITEM},
+{IDS_SPRINT,						Stats::WILLPOWER, 35, 20, 13, 2, 2, SANCT | LEARN },
+{IDS_ENFEEBLEMENT,					Stats::LUCIDITY,	35, 20, 13, 2, 	 2, LEARN | FOCUS | NEIGH }
+
 };
 
 
@@ -747,8 +753,15 @@ void cArts::BeginArt(int art_id, bool bypass)
 		return;
 	}
 
-	if (!art_info[art_id].usable_in_sanctuary() && (player->flags & ACTOR_CHAMELED))
-		player->RemoveTimedEffect(LyraEffect::PLAYER_CHAMELED);
+	if (!art_info[art_id].usable_in_sanctuary()) {
+		if (player->flags & ACTOR_CHAMELED)
+			player->RemoveTimedEffect(LyraEffect::PLAYER_CHAMELED);
+		/*if (player->flags & ACTOR_INVISIBLE)
+			player->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
+		*/
+		if (player->flags & ACTOR_SPRINT)
+			player->RemoveTimedEffect(LyraEffect::PLAYER_SPRINT);
+	}
 
 	art_in_use = art_id;
 	int duration = art_info[art_id].casting_time*CASTING_TIME_MULTIPLIER;
@@ -760,6 +773,13 @@ void cArts::BeginArt(int art_id, bool bypass)
 		case Arts::GUILDHOUSE:
 			modified_duration = duration*(10 - (player->SkillSphere(art_id) * 2/3));
 			break;
+		case Arts::BLAST:
+		case Arts::TRANCEFLAME:
+			if (player->flags & ACTOR_INVISIBLE) {
+				modified_duration = duration * (10 - (player->SkillSphere(art_id) / 2));
+				break;
+			}
+			// else fallthru
 		default:
 			modified_duration = duration*(10 - player->SkillSphere(art_id));
 	}
@@ -1292,6 +1312,9 @@ void cArts::ApplyArt(void)
 	case Arts::CHANNEL: method = &cArts::StartChannel; break;
 	case Arts::BULWARK: method = &cArts::Bulwark; break;
 	case Arts::PORTKEY: method = &cArts::Portkey; break;
+	case Arts::SPRINT: method = &cArts::Sprint; break;
+	case Arts::ENFEEBLEMENT: method = &cArts::StartEnfeeblement; break;
+
 
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
@@ -1514,7 +1537,7 @@ void cArts::AddDummyNeighbor(void)
 		this->RemoveDummyNeighbor();
 	}
 
-	update.Init(0, 0, (short)player->x, (short)player->y, 0, 0);
+	update.Init(0, 0, (short)player->x, (short)player->y, (short)player->z, 0, 0);
 	update.SetAngle(player->angle);
 	LmAvatar avatar = player->Avatar();
 	avatar.SetHidden(0);
@@ -1673,7 +1696,7 @@ void cArts::EssenceContainer(void)
 	LmItemHdr header;
 	cItem *item;
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE);
 	header.SetGraphic(LyraBitmap::BOX);
 	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
@@ -1722,7 +1745,7 @@ void cArts::Portkey(void)
 	LmItem info;
 	cItem *item;
 	
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
 	header.SetGraphic(LyraBitmap::WARD);
 	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
@@ -1757,8 +1780,8 @@ bool cArts::PlaceLock(lyra_item_ward_t ward, LmItemHdr header)
 		return false;
 	}
 
-	if ((line->flags & LINE_NO_WARD) || (level->Rooms[player->Room()].flags & ROOM_NOREAP))
-	{	// can't ward this teleportal; in no reap areas, wards would last forever!
+	if ((line->flags & LINE_NO_WARD))
+	{	// can't ward this teleportal
 		LoadString(hInstance, IDS_NO_WARDING, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		return false;
@@ -1868,7 +1891,7 @@ void cArts::EndLock(void *value)
 	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
 	LmItemHdr header;
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_NOREAP);
 
 	header.SetGraphic(LyraBitmap::INVIS_ITEM);
@@ -1902,8 +1925,8 @@ void cArts::Ward(void)
 	lyra_item_ward_t ward = { LyraItem::WARD_FUNCTION, 0, 0, 0, 0 };
 	LmItemHdr header;
 
-	header.Init(0, 0);
-	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.Init(0, 0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_ALWAYSREAP);
 	header.SetGraphic(LyraBitmap::WARD);
 	header.SetColor1(0); header.SetColor2(0);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::WARD_FUNCTION), 0, 0));
@@ -2044,7 +2067,7 @@ void cArts::CreatePass(const TCHAR* pass_name, lyra_item_amulet_t amulet, int ch
 {
 	LmItem info;
 	LmItemHdr header;
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_CHANGE_CHARGES);
 	header.SetGraphic(LyraBitmap::AMULET);
 	header.SetColor1(0); header.SetColor2(0);
@@ -2337,7 +2360,7 @@ void cArts::CreateLocalWeapon(int color)
 		0, weapon_damage_table[player->SkillSphere(art_in_use)],
 		LyraBitmap::DREAMBLADE_MISSILE};
 
-	header.Init(0, LyraTime());
+	header.Init(0, 0, LyraTime());
 	header.SetFlags(0);
 	header.SetGraphic(LyraBitmap::DREAMBLADE);
 	header.SetColor1(color);
@@ -2399,9 +2422,13 @@ void cArts::SoulReaper(void)
 
 void cArts::LaunchFireball(void) // used by next 4 arts
 {
+	int artSkill = player->SkillSphere(art_in_use);
+	if (player->flags & ACTOR_INVISIBLE)
+		artSkill /= 2;
+
 	if (options.network)
 		this->ArtFinished(gs->PlayerAttack(LyraBitmap::FIREBALL_MISSILE,ART_MISSILE_VELOCITY,
-													  0, weapon_damage_table[player->SkillSphere(art_in_use)], NO_ACTOR,
+													  0, weapon_damage_table[artSkill], NO_ACTOR,
 													 art_in_use),false);
 	else
 		this->ArtFinished(false);
@@ -2615,6 +2642,9 @@ void cArts::ApplyReflectedArt(int art_id, lyra_id_t caster_id)
 		break;
 	case Arts::ABJURE:
 		ApplyAbjure(player->Skill(art_id), caster_id);
+		break;
+	case Arts::ENFEEBLEMENT:
+		ApplyEnfeeblement(player->Skill(art_id), caster_id);
 		break;
 	case Arts::POISON:
 		ApplyPoison(player->Skill(art_id),player->ID());
@@ -2881,8 +2911,10 @@ void cArts::Razorwind(void)
 {
 	gs->SendPlayerMessage(0, RMsg_PlayerMsg::RAZORWIND,
 			player->Skill(Arts::RAZORWIND), 0, player->SkillSphere(Arts::FATESENDER));
-	if (RoomFull())
+	if (RoomFull()) {
 		this->ArtFinished(false);
+		return;
+	}
 	this->ApplyRazorwind(player->Skill(Arts::RAZORWIND), player->ID());
 	LmItem info;
 	LmItemHdr header;
@@ -2937,8 +2969,8 @@ void cArts::Razorwind(void)
 	rw_item.set_player_id(player->ID());
 	rw_item.set_effects_party_and_self(false);
 	rw_item.set_razorwind(true);
-	header.Init(0, 0);
-	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.Init(0, 0, 0);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_NOPICKUP | LyraItem::FLAG_ALWAYSREAP);
 	header.SetGraphic(LyraBitmap::DREAMBLADE);
 	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::AREA_EFFECT_FUNCTION), 0, 0));
@@ -3195,8 +3227,25 @@ void cArts::ApplyHealingAura(int skill, lyra_id_t caster_id)
 
 	// int healing = 8 + ((skill/10)+1)*(rand()%3);
 	int healing = 4 + ((skill/10)+5)*(rand()%3+1);
-	player->SetCurrStat(Stats::DREAMSOUL, healing, SET_RELATIVE, caster_id);
-
+	if (player->CurrStat(Stats::DREAMSOUL))
+		player->SetCurrStat(Stats::DREAMSOUL, healing, SET_RELATIVE, caster_id);
+	else if (!acceptrejectdlg)
+	{
+		cNeighbor *n = this->LookUpNeighbor(caster_id);
+		if (n != NO_ACTOR)
+		{
+			restore_id = caster_id;
+			restore_skill = 200+skill;
+			restore_art = Arts::HEALING_AURA;
+			LoadString(hInstance, IDS_QUERY_RESTORE, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, n->Name());
+			HWND hDlg = CreateLyraDialog(hInstance, (IDD_ACCEPTREJECT),
+				cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
+			acceptreject_callback = (&cArts::GotRestored);
+			SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+			SendMessage(hDlg, WM_SET_AR_NEIGHBOR, 0, (LPARAM)n);
+		}
+	}
 	return;
 }
 
@@ -3441,8 +3490,10 @@ void cArts::PoisonCloud(void)
 	this->ApplyPoisonCloud(player->Skill(Arts::POISON_CLOUD), player->ID());
 	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
 	
-	for (int i=0; i<HOUSE_ART_PTS; i++)
-		power_tokens[i]->Destroy();
+	// Colt 4/19/18 - Issue #191 - Destroy logic is handled in cArts::UsePowerTokens and was duplicated again here
+	/*for (int i = 0; i<HOUSE_ART_PTS; i++)
+		//power_tokens[i]->Destroy();
+	}*/
 
 	this->ArtFinished(true);
 	return;
@@ -4265,10 +4316,17 @@ void cArts::GotRestored(void *value)
 		player->EvokedFX().Activate(restore_art, false);
 		cNeighbor *n = this->LookUpNeighbor(restore_id);
 		this->DisplayUsedByOther(n,restore_art);
-		int healing = ((restore_skill/10)+1+(rand()%8));
+		int healing = 0;
+		if (restore_skill > 200)
+		{
+			restore_skill -= 200;
+			healing = 4 + ((restore_skill / 10) + 5)*(rand() % 3 + 1);
+		} else 
+			healing = ((restore_skill/10)+1+(rand()%8));
 		player->SetCurrStat(Stats::DREAMSOUL, healing, SET_RELATIVE, restore_id);
 	}
 	restore_id = 0;
+	restore_skill = 0;
 	return;
 }
 
@@ -4689,6 +4747,62 @@ void cArts::EndDeafen(void)
 	return;
 }
 
+void cArts::StartEnfeeblement()
+{
+	this->WaitForSelection(&cArts::EndEnfeeblement, Arts::ENFEEBLEMENT);
+	//this->AddDummyNeighbor();
+	this->CaptureCP(NEIGHBORS_TAB, Arts::ENFEEBLEMENT);
+	return;
+}
+
+void cArts::EndEnfeeblement()
+{
+	cNeighbor *n = cp->SelectedNeighbor();
+	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
+	{
+		this->DisplayNeighborBailed(Arts::ENFEEBLEMENT);
+		this->ArtFinished(false);
+		return;
+	}
+	else if (n->ID() == player->ID())
+		this->ApplyEnfeeblement(player->Skill(Arts::ENFEEBLEMENT), player->ID());
+	else if (n->IsAgentAccount())
+	{
+		LoadString(hInstance, IDS_ENFEEBLE_MARE, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message, false);
+		cDS->PlaySound(LyraSound::REJECTED);
+		this->ArtFinished(true);
+		return;
+	}
+		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::ENFEEBLEMENT,
+			player->Skill(Arts::ENFEEBLEMENT), 0);
+	this->DisplayUsedOnOther(n, Arts::ENFEEBLEMENT);
+	cDS->PlaySound(LyraSound::POTION, player->x, player->y, true);
+	this->ArtFinished(true);
+	return;
+}
+
+void cArts::ApplyEnfeeblement(int skill, lyra_id_t caster_id)
+{
+	player->EvokedFX().Activate(Arts::ENFEEBLEMENT, false);
+	cNeighbor *n = this->LookUpNeighbor(caster_id);
+	this->DisplayUsedByOther(n, Arts::ENFEEBLEMENT);
+	int duration = this->Duration(Arts::ENFEEBLEMENT, skill);
+	player->SetTimedEffect(LyraEffect::PLAYER_WALK, duration, caster_id, EffectOrigin::ART_EVOKE);
+	return;
+}
+
+void cArts::Sprint()
+{
+	// main logic is in cPlayer so Sprint can occur through talisman
+	int duration = this->Duration(Arts::SPRINT, player->Skill(Arts::SPRINT));
+	player->SetTimedEffect(LyraEffect::PLAYER_SPRINT, duration, player->ID(), EffectOrigin::ART_EVOKE);
+	cDS->PlaySound(LyraSound::HOLYLIGHT, player->x, player->y, true);
+	this->ArtFinished(true);
+	return;
+}
+
+
 //////////////////////////////////////////////////////////////////
 // Blind
 
@@ -4874,7 +4988,8 @@ void cArts::EndBlast(void)
 			(n->Room() == player->Room())) 
 		{
 			n->SetBlasting(true);
-			gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::BLAST, player->Skill(Arts::BLAST), 0);
+			int blastLevel = (player->flags & ACTOR_INVISIBLE) ? (player->Skill(Arts::BLAST) / 2) : player->Skill(Arts::BLAST);
+			gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::BLAST, blastLevel, 0);
 			this->DisplayUsedOnOther(n, Arts::BLAST);
 			cDS->PlaySound(LyraSound::BLAST, player->x, player->y, true);
 			this->ArtFinished(true);
@@ -5221,7 +5336,7 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 	player->EvokedFX().Activate(Arts::ABJURE, false);
 
 	for (i=0; i<NUM_TIMED_EFFECTS; i++)
-		if (player->flags & timed_effects->actor_flag[i])
+		if (player->flags & timed_effects->actor_flag[i] && timed_effects->abjurable[i])
 			num_effects_active++;
 
 	// pmares can only have 1 effect abjured at a time
@@ -5243,15 +5358,15 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 		random = rand()%num_effects_active;
 		j=0; // j = count of active effects skipped by loop
 		for (i=0; i<NUM_TIMED_EFFECTS; i++)
-			if (player->flags & timed_effects->actor_flag[i])
+			if ((player->flags & timed_effects->actor_flag[i]) && timed_effects->abjurable[i])
 			{
 				if (j == random) // abjure this effect
 				{
 					LoadString (hInstance, IDS_ABJURED_EFFECT, disp_message, sizeof(disp_message));
 					if (caster_id == player->ID())
 					{
-					LoadString(hInstance, IDS_YOURSELF, temp_message, sizeof(temp_message));
-					_stprintf(message, disp_message, timed_effects->name[i], temp_message);
+						LoadString(hInstance, IDS_YOURSELF, temp_message, sizeof(temp_message));
+						_stprintf(message, disp_message, timed_effects->name[i], temp_message);
 						display->DisplayMessage (message);
 					}
 					else
@@ -5261,7 +5376,7 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 						LoadString (hInstance, IDS_ABJURED_EFFECT_OTHER, disp_message, sizeof(disp_message));
 						_stprintf(message, disp_message, n->Name(), timed_effects->name[i]);
 						display->DisplayMessage (message);
-          }
+					}
 					player->RemoveTimedEffect(i);
 					break;
 				}
@@ -6353,15 +6468,21 @@ void cArts::UsePowerTokens(cItem** tokens, int charges_to_use)
 {
 	int charges_expired = 0;
 	int token_idx = 0;
+	int cur_charges = 0;
 
 	while (charges_expired < charges_to_use)
 	{
-		int cur_charges = tokens[token_idx]->Lmitem().Charges();		
+		cur_charges = tokens[token_idx]->Lmitem().Charges();		
 		if (cur_charges <= charges_to_use - charges_expired)
 		{
 			// use up the entire token
 			charges_expired += cur_charges;
 			tokens[token_idx]->Destroy();
+
+			// Notify that power token has been consumed
+			LoadString(hInstance, IDS_POWER_TOKEN_DESTROYED, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, this->Descrip(Arts::POISON_CLOUD));
+			display->DisplayMessage(message, false);
 
 			// always move on since we destroyed the pt
 			token_idx++;
@@ -6693,19 +6814,21 @@ void cArts::ApplyPeaceAura(int skill, lyra_id_t caster_id)
 		return;
 	}
 
+	if(player->GuildRank(Guild::ECLIPSE) == Guild::NO_RANK)
+	{
+		LoadString (hInstance, IDS_MUST_BE_MEMBER_APPLY, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, GuildName(Guild::ECLIPSE), this->Descrip(Arts::PEACE_AURA));
+		display->DisplayMessage(message, false);
+		return;
+	}	
+
+
 	player->EvokedFX().Activate(Arts::PEACE_AURA, false);
 	this->DisplayUsedByOther(n, Arts::PEACE_AURA);
 
 	int duration = this->Duration(Arts::PEACE_AURA, skill);
 	player->SetTimedEffect(LyraEffect::PLAYER_PEACE_AURA, duration, caster_id, EffectOrigin::ART_EVOKE);
 	
-/*	else
-	{
-		LoadString (hInstance, IDS_MUST_BE_MEMBER_APPLY, disp_message, sizeof(disp_message));
-      _stprintf(message, disp_message, GuildName(Guild::ECLIPSE), this->Descrip(Arts::PEACE_AURA));
-		display->DisplayMessage(message, false);
-	}
-*/
 	return;
 }
 
@@ -7469,28 +7592,35 @@ void cArts::StartBanishMare(void)
 {
 	this->WaitForSelection(&cArts::EndBanishMare, Arts::BANISH_NIGHTMARE);
 	this->CaptureCP(INVENTORY_TAB, Arts::BANISH_NIGHTMARE);
+	//IDS_BANISHED_NIGHTMARE,LyraBitmap::BANISHED_MARE
 	return;
 }
 
 void cArts::EndBanishMare(void)
 {
+	this->EndMareEssenceMetaFunc(Arts::BANISH_NIGHTMARE, LyraBitmap::BANISHED_MARE, IDS_BANISHED_NIGHTMARE, IDS_BANISHED_WELL, IDS_NIGHTMARE_BANISHED);
+}
+
+void cArts::EndMareEssenceMetaFunc(int art_id, int graphic, int item_name_string_id, int well_string_id, int on_success_string_id)
+{
 	LmItem info;
 	LmItemHdr header;
 	lyra_item_essence_t essence;
+	lyra_item_meta_essence_nexus_t nexus;
 	cItem *essence_item = cp->SelectedItem();
 	cItem *banished_item;
-	bool is_essence = false;
+	bool is_essence = false, is_nexus = false;
 	const void* state;
 
 
 	if ((essence_item == NO_ACTOR) || !(actors->ValidItem(essence_item)))
 	{
-		this->DisplayItemBailed(Arts::BANISH_NIGHTMARE);
+		this->DisplayItemBailed(art_id);
 		this->ArtFinished(false);
 		return;
 	}
 	// check that the item has mare essence
-	for (int i=0; i<essence_item->NumFunctions(); i++)
+	for (int i = 0; i<essence_item->NumFunctions(); i++)
 		if (essence_item->ItemFunction(i) == LyraItem::ESSENCE_FUNCTION)
 		{
 			state = essence_item->Lmitem().StateField(i);
@@ -7498,18 +7628,24 @@ void cArts::EndBanishMare(void)
 			if ((essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE) && (essence.strength > 0))
 				is_essence = true;
 		}
+		else if (essence_item->ItemFunction(i) == LyraItem::META_ESSENCE_NEXUS_FUNCTION)
+		{
+			state = essence_item->Lmitem().StateField(i);
+			memcpy(&nexus, state, sizeof(nexus));
+			is_nexus = true;
+		}
 
-	if (is_essence)
+	if (is_essence && essence.weapon_type == 0)
 	{ // transmute into banished talisman
-		// create new talisman for banished mare essence
-		header.Init(0, 0);
+	  // create new talisman for banished mare essence
+		header.Init(0, 0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
-		header.SetGraphic(LyraBitmap::BANISHED_MARE);
+		header.SetGraphic(graphic);
 		header.SetColor1(0); header.SetColor2(0);
 		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
-		essence.strength = 0; // leave other fields alone
-
-		LoadString(hInstance, IDS_BANISHED_NIGHTMARE, message, sizeof(message));
+		int bidx = BeliefFromArtID(art_id);
+		essence.weapon_type = bidx;
+		LoadString(hInstance, item_name_string_id, message, sizeof(message));
 		info.Init(header, message, 0, 0, 0);
 		info.SetStateField(0, &essence, sizeof(essence));
 		info.SetCharges(1);
@@ -7520,18 +7656,44 @@ void cArts::EndBanishMare(void)
 			this->ArtFinished(false);
 			return;
 		}
-		LoadString (hInstance, IDS_NIGHTMARE_BANISHED, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
+		LoadString(hInstance, on_success_string_id, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		essence_item->Destroy();
+		this->ArtFinished(true);
+	} else 	if (is_nexus && nexus.belief == 0)
+	{ // transmute into banished talisman
+	  // create new talisman for banished mare essence
+		header.Init(0, 0, 0);
+		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
+		header.SetGraphic(graphic);
+		header.SetColor1(0); header.SetColor2(0);
+		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::META_ESSENCE_NEXUS_FUNCTION), 0, 0));
+		int bidx = BeliefFromArtID(art_id);
+		nexus.belief = bidx;
+		LoadString(hInstance, well_string_id, message, sizeof(message));
+		info.Init(header, message, 0, 0, 0);
+		info.SetStateField(0, &nexus, sizeof(nexus));
+		info.SetCharges(1);
+		int ttl = 120;
+		banished_item = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
+		if (banished_item == NO_ITEM)
+		{
+			this->ArtFinished(false);
+			return;
+		}
+		LoadString(hInstance, on_success_string_id, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 		essence_item->Destroy();
 		this->ArtFinished(true);
 	}
 	else
 	{
-		LoadString (hInstance, IDS_NOT_ESSENCE, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
+		LoadString(hInstance, IDS_NOT_ESSENCE, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
 	}
 	return;
+
 }
 
 //////////////////////////////////////////////////////////////////
@@ -7546,65 +7708,7 @@ void cArts::StartEnslaveMare(void)
 
 void cArts::EndEnslaveMare(void)
 {
-	LmItem info;
-	LmItemHdr header;
-	lyra_item_essence_t essence;
-	cItem *essence_item = cp->SelectedItem();
-	cItem *slave_item;
-	bool is_essence = false;
-	const void* state;
-
-
-	if ((essence_item == NO_ACTOR) || !(actors->ValidItem(essence_item)))
-	{
-		this->DisplayItemBailed(Arts::ENSLAVE_NIGHTMARE);
-		this->ArtFinished(false);
-		return;
-	}
-	// check that the item has mare essence
-	for (int i=0; i<essence_item->NumFunctions(); i++)
-		if (essence_item->ItemFunction(i) == LyraItem::ESSENCE_FUNCTION)
-		{
-			state = essence_item->Lmitem().StateField(i);
-			memcpy(&essence, state, sizeof(essence));
-			if ((essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE) && (essence.strength > 0))
-				is_essence = true;
-		}
-
-	if (is_essence)
-	{	// transmute into enslaved talisman
-
-		// create new talisman for enslaved mare essence
-		header.Init(0, 0);
-		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
-		header.SetGraphic(LyraBitmap::ENSLAVED_MARE);
-		header.SetColor1(0); header.SetColor2(0);
-		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
-		essence.strength = 0; // leave other fields alone
-
-		LoadString(hInstance, IDS_IMPRISONED_NIGHTMARE, message, sizeof(message));
-		info.Init(header, message, 0, 0, 0);
-		info.SetStateField(0, &essence, sizeof(essence));
-		info.SetCharges(1);
-		int ttl = 120;
-		slave_item = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
-		if (slave_item == NO_ITEM)
-		{
-			this->ArtFinished(false);
-			return;
-		}
-		LoadString (hInstance, IDS_NIGHTMARE_ENSLAVED, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
-		essence_item->Destroy();
-		this->ArtFinished(true);
-	}
-	else
-	{
-		LoadString (hInstance, IDS_NOT_ESSENCE, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
-		this->ArtFinished(false);
-	}
-	return;
+	this->EndMareEssenceMetaFunc(Arts::ENSLAVE_NIGHTMARE, LyraBitmap::ENSLAVED_MARE, IDS_IMPRISONED_NIGHTMARE, IDS_IMPRISONED_WELL, IDS_NIGHTMARE_ENSLAVED);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -7660,76 +7764,7 @@ void cArts::StartCleanseMare(void)
 
 void cArts::EndCleanseMare(void)
 {
-	LmItem info;
-	LmItemHdr header;
-	lyra_item_essence_t essence;
-	cItem *essence_item = cp->SelectedItem();
-	cItem *banished_item;
-	bool is_essence = false;
-	const void* state;
-
-
-	if ((essence_item == NO_ACTOR) || !(actors->ValidItem(essence_item)))
-	{
-		this->DisplayItemBailed(Arts::CLEANSE_NIGHTMARE);
-		this->ArtFinished(false);
-		return;
-	}
-
-	// only works for GOE
-
-//	if (!(player->GuildRank(Guild::ENTRANCED) >= Guild::INITIATE))
-//	{
-//		LoadString (hInstance, IDS_MUST_BE_GOE, message, sizeof(message));
-//		display->DisplayMessage(message);
-//		this->ArtFinished(false);
-//		return;
-//	}
-
-
-	// check that the item has mare essence
-	for (int i=0; i<essence_item->NumFunctions(); i++)
-		if (essence_item->ItemFunction(i) == LyraItem::ESSENCE_FUNCTION)
-		{
-			state = essence_item->Lmitem().StateField(i);
-			memcpy(&essence, state, sizeof(essence));
-			if ((essence.mare_type >= Avatars::MIN_NIGHTMARE_TYPE) && (essence.strength > 0))
-				is_essence = true;
-		}
-
-	if (is_essence)
-	{ // transmute into banished talisman
-		// create new talisman for cleansed mare essence
-		header.Init(0, 0);
-		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
-		header.SetGraphic(LyraBitmap::CLEANSED_MARE);
-		header.SetColor1(0); header.SetColor2(0);
-		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
-		essence.strength = 0; // leave other fields alone
-
-		LoadString(hInstance, IDS_CLEANSED_NIGHTMARE, message, sizeof(message));
-		info.Init(header, message, 0, 0, 0);
-		info.SetStateField(0, &essence, sizeof(essence));
-		info.SetCharges(1);
-		int ttl = 120;
-		banished_item = CreateItem(player->x, player->y, player->angle, info, 0, false, ttl);
-		if (banished_item == NO_ITEM)
-		{
-			this->ArtFinished(false);
-			return;
-		}
-		LoadString (hInstance, IDS_NIGHTMARE_CLEANSED, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
-		essence_item->Destroy();
-		this->ArtFinished(true);
-	}
-	else
-	{
-		LoadString (hInstance, IDS_NOT_ESSENCE, disp_message, sizeof(disp_message));
-		display->DisplayMessage (disp_message);
-		this->ArtFinished(false);
-	}
-	return;
+	this->EndMareEssenceMetaFunc(Arts::CLEANSE_NIGHTMARE, LyraBitmap::CLEANSED_MARE, IDS_CLEANSED_NIGHTMARE, IDS_CLEANSED_WELL, IDS_NIGHTMARE_CLEANSED);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -7787,7 +7822,7 @@ void cArts::EndCorruptEssence(void)
 	if (is_essence)
 	{ // transmute into banished talisman
 		// create new talisman for cleansed mare essence
-		header.Init(0, 0);
+		header.Init(0, 0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::EMPHANT_ESSENCE);
 		header.SetColor1(0); header.SetColor2(0);
@@ -7932,8 +7967,8 @@ void cArts::EndSacrifice(void)
 	
 	if (is_missile)
 	{ 
-		// 50% chance base, down to 45% at level 99
-		int mod_chance = (100 - ((player->Skill(Arts::SACRIFICE)+1)/10)) / 2;
+		// 25% chance base, down to 20% at level 99
+		int mod_chance = (50 - ((player->Skill(Arts::SACRIFICE)+1)/10)) / 2;
 		if (rand() % 100 <= mod_chance)
 		{
 			_stprintf(temp_message, "Your attempt to sacrifice %s has failed and the item has been destroyed.", chakram_item->Name());
@@ -7946,12 +7981,13 @@ void cArts::EndSacrifice(void)
 		
 		// transmute into an imprisoned talisman
 		// create new talisman for imprisoned mare essence
-		header.Init(0, 0);
+		header.Init(0,0, 0);
 		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::ENSLAVED_MARE);
 		header.SetColor1(0); header.SetColor2(0);
 		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::ESSENCE_FUNCTION), 0, 0));
 		essence.type = LyraItem::ESSENCE_FUNCTION;
+		essence.weapon_type = BeliefFromArtID(Arts::SACRIFICE);
 		// Scale up by 10 while calculating to account for integer division
 		int essence_str = (MinModifierSkill(missile.damage) / 2) + 1;
 #ifdef UL_DEV
@@ -8526,7 +8562,7 @@ void cArts::EndSupportTraining(void)
 	cItem *item;
 	lyra_item_train_support_t support = {LyraItem::SUPPORT_TRAIN_FUNCTION, 0, 0, 0, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 	header.SetGraphic(LyraBitmap::GUILD_ASCENSION_TOKEN);
 	header.SetColor1(0); header.SetColor2(0);
@@ -8616,7 +8652,7 @@ void cArts::EndQuest(void *value)
 	int flags = 0;
 	lyra_item_scroll_t scroll = {LyraItem::SCROLL_FUNCTION, 0, 0, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetGraphic(LyraBitmap::CODEX);
 	header.SetColor1(scroll_type->color1); header.SetColor2(scroll_type->color2);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SCROLL_FUNCTION),0,0));
@@ -8943,7 +8979,7 @@ void cArts::EndFreesoulBlade(void *value)
 	}
 
 	// nuke it and create a blade
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION);
 	header.SetGraphic(LyraBitmap::DREAMBLADE);
 	int color = (rand()%4) + (n->Avatar().Focus()*4) - 4;
@@ -9071,7 +9107,7 @@ void cArts::EndIlluminatedBlade(void *value)
 	}
 
 	// nuke it and create a blade
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_CHANGE_CHARGES | LyraItem::FLAG_HASDESCRIPTION);
 	header.SetGraphic(LyraBitmap::DREAMBLADE);
 	int color = (rand()%4) + (n->Avatar().Focus()*4) - 4;
@@ -9233,7 +9269,7 @@ cItem* cArts::FindPrime(lyra_id_t guild_id, int min_charges)
 			//meta_essence.set_strength(meta_essence.strength() + 1300);
 			//item->Lmitem().SetStateField(0, &meta_essence, sizeof(meta_essence));
 			if ((guild_id != Guild::NO_GUILD) &&
-				(meta_essence.guild_id != guild_id))
+				(meta_essence.guild() != guild_id))
 				continue;
 			if (meta_essence.strength() >= min_charges)
 			{
@@ -9353,7 +9389,7 @@ void cArts::CompleteInitiate(int guild_id, int success, lyra_id_t initiate)
 		cItem *item;
 		lyra_item_support_t support = {LyraItem::SUPPORT_FUNCTION, 0, 0, 0};
 
-		header.Init(0, 0);
+		header.Init(0, 0, 0);
 		header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 		header.SetGraphic(LyraBitmap::GUILD_MEMBER_TOKEN_BASE + guild_id);
 		header.SetColor1(0); header.SetColor2(0);
@@ -9679,7 +9715,7 @@ void cArts::EndSupportAscension(void *value)
 	cItem *item;
 	lyra_item_support_t support = {LyraItem::SUPPORT_FUNCTION, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 	header.SetGraphic(LyraBitmap::GUILD_ASCENSION_TOKEN);
 	header.SetColor1(0); header.SetColor2(0);
@@ -9792,7 +9828,7 @@ void cArts::EndSupportDemotion(void *value)
 	cItem *item;
 	lyra_item_support_t support = {LyraItem::SUPPORT_FUNCTION, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 	header.SetGraphic(LyraBitmap::GUILD_DEMOTION_TOKEN);
 	header.SetColor1(0); header.SetColor2(0);
@@ -9896,7 +9932,7 @@ void cArts::EndPowerToken(void *value)
 				cItem *power_token;
 				lyra_item_support_t support = { LyraItem::SUPPORT_FUNCTION, 0, 0, 0 };
 
-				header.Init(0, 0);
+				header.Init(0, 0, 0);
 				header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_CHANGE_CHARGES);
 				header.SetGraphic(LyraBitmap::SOUL_ESSENCE);
 				header.SetColor1(0); header.SetColor2(0);
@@ -10110,7 +10146,7 @@ void cArts::EndCreateIDToken(void *value)
 			cItem *id_token;
 			lyra_item_support_t support = {LyraItem::SUPPORT_FUNCTION, 0, 0, 0};
 			
-			header.Init(0, 0);
+			header.Init(0, 0, 0);
 			header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 			header.SetGraphic(LyraBitmap::GUILD_MEMBER_TOKEN_BASE + guild_id);
 			header.SetColor1(0); header.SetColor2(0);
@@ -10206,8 +10242,8 @@ void cArts::EndCombine(void)
 	if (num_charges > 100) // max charges = 100 
 		num_charges = 100;
 
-	header.Init(0, 0);
-	header.SetFlags(item1->Lmitem().Header().Flags() | LyraItem::FLAG_HASDESCRIPTION);
+	header.Init(0, 0, 0);
+	header.SetFlags(item1->Lmitem().Header().Flags() | LyraItem::FLAG_HASDESCRIPTION | LyraItem::FLAG_ISCOMBINED);
 	header.SetGraphic(item1->Lmitem().Header().Graphic());
 	header.SetColor1(item1->Lmitem().Header().Color1()); 
 	header.SetColor2(item1->Lmitem().Header().Color2());
@@ -10215,7 +10251,9 @@ void cArts::EndCombine(void)
 	header.SetStateFormat(item1->Lmitem().Header().StateFormat());
 
 	if ((item1->Lmitem().Header().Flags() & LyraItem::FLAG_HASDESCRIPTION) ||
-		(item2->Lmitem().Header().Flags() & LyraItem::FLAG_HASDESCRIPTION))
+		(item2->Lmitem().Header().Flags() & LyraItem::FLAG_HASDESCRIPTION) ||
+		(item1->Lmitem().Header().Flags() & LyraItem::FLAG_ISCOMBINED) ||
+		(item2->Lmitem().Header().Flags() & LyraItem::FLAG_ISCOMBINED))
 		combinable = false;
 	else if (item1->ItemFunction(0) != item2->ItemFunction(0))
 		combinable = false; 
@@ -10457,7 +10495,7 @@ void cArts::EndSupportSphering(void)
 	cItem *item;
 	lyra_item_train_support_t support = {LyraItem::SUPPORT_TRAIN_FUNCTION, 0, 0, 0, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_IMMUTABLE);
 	header.SetGraphic(LyraBitmap::GUILD_ASCENSION_TOKEN);
 	header.SetColor1(0); header.SetColor2(0);
@@ -11022,11 +11060,9 @@ void cArts::EndLocate(void *value)
 {
 	TCHAR *name = (TCHAR*)value;
 	bool locate_all = false;
-	int i, num_buddies;
+	int i;
 	unsigned long result,size;
-	DWORD reg_type;
-	HKEY reg_key;
-	other_t buddies[GMsg_LocateAvatar::MAX_PLAYERS];
+	DWORD reg_type;	
 	GMsg_LocateAvatar locate_msg;
 
 	if (name == NULL)
@@ -11034,49 +11070,30 @@ void cArts::EndLocate(void *value)
 
 	if (locate_all)
 	{
-		RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
-						NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
-
-		size = sizeof(num_buddies);
-		LoadString(hInstance, IDS_NUM_BUDDIES, message, sizeof(message));
-		result = RegQueryValueEx(reg_key, message, NULL, &reg_type,
-			(unsigned char *)(&num_buddies), &size);
-		if ((result != ERROR_SUCCESS) || !num_buddies)
+		if (!options.num_buddies)
 		{
-			RegCloseKey(reg_key);
 			this->ArtFinished(false);
 			return;
 		}
 
 		size = GMsg_LocateAvatar::MAX_PLAYERS*sizeof(other_t);
-		LoadString(hInstance, IDS_WATCH_LIST, message, sizeof(message));
-		result = RegQueryValueEx(reg_key, message, NULL, &reg_type,
-			(unsigned char *)buddies, &size);
-		RegCloseKey(reg_key);
-
-		if (result != ERROR_SUCCESS)
-		{
-			this->ArtFinished(false);
-			return;
-		}
-
-		locate_msg.Init(num_buddies); // set num players
+		locate_msg.Init(options.num_buddies); // set num players
 		int count = 0;
-		for (i = 0; i < num_buddies; i++)
+		for (i = 0; i < options.num_buddies; i++)
 		{
-			if (WhichMonsterName(buddies[i].name))
+			if (WhichMonsterName(options.buddies[i].name))
 			{
 				LoadString(hInstance, IDS_LOCATE_MARE, disp_message, sizeof(disp_message));
 				display->DisplayMessage(disp_message, false);
 			}
-			else if (_tcsicmp(buddies[i].name, _T("Revenant")) == 0)
+			else if (_tcsicmp(options.buddies[i].name, _T("Revenant")) == 0)
 			{
 				_stprintf(disp_message, "The invasion has begun...\n");
 				display->DisplayMessage(disp_message);
 			}
 			else
 			{
-				locate_msg.SetPlayerName(count, buddies[i].name);
+				locate_msg.SetPlayerName(count, options.buddies[i].name);
 				count++;
 			}
 		}
@@ -11147,7 +11164,7 @@ void cArts::EndWriteScroll(void *value)
 	int flags = 0;
 	lyra_item_scroll_t scroll = {LyraItem::SCROLL_FUNCTION, 0, 0, 0, 0, 0};
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetGraphic(LyraBitmap::CODEX);
 	header.SetColor1(scroll_type->color1); header.SetColor2(scroll_type->color2);
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::SCROLL_FUNCTION),0,0));

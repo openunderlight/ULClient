@@ -48,6 +48,25 @@ struct distance_t
 	UINT descrip;
 };
 
+struct frequency_t
+{
+	int recurrences; // -1 for always recur
+	int ms_between_recurrences; 
+	UINT descrip;
+};
+
+struct freqtick_t
+{
+	int numrecurs;
+	bool remove_with_room_change;
+};
+
+struct belief_t
+{
+	int string_id;
+	int art_id;
+};
+
 class cTimedEffects { // timed effects
 	public:	
 	   DWORD expires[NUM_TIMED_EFFECTS];
@@ -59,6 +78,7 @@ class cTimedEffects { // timed effects
 	   short related_art[NUM_TIMED_EFFECTS];
 	   short default_duration[NUM_TIMED_EFFECTS]; // duration for when caused by item
 	   bool harmful[NUM_TIMED_EFFECTS]; // harmful or helful?
+	   bool abjurable[NUM_TIMED_EFFECTS]; // abjurable?
 	protected:
 
 	public:
@@ -85,7 +105,7 @@ int CalculateModifier(int modifier);
 int CalculateModifierMax(int modifier);
 int CalculateModifierMin(int modifier);
 int CalculateDuration(int index);
-void TranslateValue(int type, int value);
+bool TranslateValue(int type, int value);
 int PowerTokenCostToForge(int type, int value, bool combineItem);
 bool CanPlayerForgeValue(int type, int value, int powerTokens);
 int	MinModifierSkill(int value);
@@ -107,6 +127,8 @@ TCHAR* DreamweaponName(int color);
 void Scream(int avatar_type, cActor* actor, bool propagate = false);
 void CalculateDistance(int index, unsigned int* xydist, unsigned int* heightdist);
 bool Within48Hours(SYSTEMTIME t1, SYSTEMTIME t2);
+frequency_t Frequency(int freqidx);
+int BeliefFromArtID(lyra_id_t art_id);
 
 const char *DisperseCoordinate(unsigned int index);
 unsigned int NumDisperseLocs(void);

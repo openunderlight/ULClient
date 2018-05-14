@@ -31,20 +31,21 @@ struct lyra_peer_update_t { // bit packed to the extreme
   short		    realtime_id; 
   short x;             // 48
   short y;             // 64
-
+  short z;			  // 80
+  short unused;		  // 96
   // NOTE: it is extremely important that the order of the below fields is not changed
   // arbitrarily (their sizes can be modified, look in the class constants).  If a
   // field is moved from u1 to u2 (say), then alot has to be changed.  Don't do this
   // unless it's absolutely necessary.
 
-  // BIT31 weapon_damage:6 flags:9 attack_bits:6 angle:10 BIT0
-  LmBit32 u1;          // 96
+  // BIT31 flight: 1weapon_damage:6 flags:9 attack_bits:6 angle:10 BIT0
+  LmBit32 u1;          // 128
   
   // BIT31 unused:1 wave:1 scolor:3 pcolor:3 harmful:1 local:1 weapon_effect:5 height_delta:5 weapon_velocity:4
   //       hit: 5 weapon_bitmap:3 BIT0
-  LmBit32 u2;          // 128
+  LmBit32 u2;          // 160
 
-  // total = 128 bits, 16 bytes
+  // total = 160 bits, 20 bytes
 };
 
 // the class
@@ -59,7 +60,8 @@ public:
     ATTACKBITS_WIDTH = 5,    // 14
     FLAGS_WIDTH = 9,         // 23
     WEAPONDAMAGE_WIDTH = 6,  // 29
-	UNUSED_WIDTH_U1 = 2,
+	FLIGHT_WIDTH = 1,
+	UNUSED_WIDTH_U1 = 1,
 
     // bitfield widths for u2
     WEAPONBITMAP_WIDTH = 3,    // 3
@@ -79,7 +81,7 @@ public:
     ATTACKBITS_START = (ANGLE_START + ANGLE_WIDTH),
     FLAGS_START = (ATTACKBITS_START + ATTACKBITS_WIDTH),
     WEAPONDAMAGE_START = (FLAGS_START + FLAGS_WIDTH),
-
+	FLIGHT_START = (WEAPONDAMAGE_START + WEAPONDAMAGE_WIDTH),
     // starting positions for u2 (shouldn't need to be modified)
     WEAPONBITMAP_START = 0,
     HITBITS_START = (WEAPONBITMAP_START + WEAPONBITMAP_WIDTH),
@@ -111,7 +113,7 @@ public:
 
   LmPeerUpdate();
 
-  void Init(short realtimeid, unsigned char sound_id, short x, short y, int u1, int u2);
+  void Init(short realtimeid, unsigned char sound_id, short x, short y, short z, int u1, int u2);
   void Init(const lyra_peer_update_t& update);
 
   // selector/mutator for base type
@@ -123,6 +125,7 @@ public:
   unsigned char SoundID() const;
   int X() const;
   int Y() const;
+  int Z() const;
   unsigned int Angle() const;
   unsigned int AttackBits() const;
   unsigned int Flags() const;
@@ -137,13 +140,14 @@ public:
   unsigned int PrimaryColor() const;
   unsigned int SecondaryColor() const;
   unsigned int Wave() const;
+  unsigned int Flying() const;
 
   bool FlagSet(int flag) const;
   
   // mutators for bitfields
   void SetRealtimeID(short realtimeid);
   void SetSoundID(unsigned char soundid);
-  void SetPosition(int x, int y);
+  void SetPosition(int x, int y, int z);
   void SetAngle(unsigned int angle);
   void SetAttackBits(unsigned int attack_bits);
   void SetFlags(unsigned int flags);
@@ -158,7 +162,7 @@ public:
   void SetPrimaryColor(unsigned int primary);
   void SetSecondaryColor(unsigned int secondart);
   void SetWave(unsigned int wave);
-
+  void SetFlying(unsigned int flying);
   // conversion functions 
   void ConvertToNetwork();
   void ConvertToHost();

@@ -11,13 +11,15 @@
 // NOTE: keep consistent with Visual Effects.ASC!
 
  
-const int NUM_TIMED_EFFECTS = 33; // add one for NONE
-const int NUM_ARTS = 149;
+const int NUM_TIMED_EFFECTS = 36; // add one for NONE
+const int NUM_ARTS = 151; // BACARDI N COLA DO IT DO IT
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
 const int NUM_PLAYER_STATS = 5;
 const int NUM_DISTANCES = 7;
+const int NUM_FREQUENCIES = 6;
 const int NUM_GUILDS = 8;
+const int NUM_BELIEFS = 4;
 const int NUM_HOUSES = 8;
 const int NUM_RANKS = 3;
 const int NUM_TOKENS = 4;
@@ -269,15 +271,18 @@ struct Arts {
 	MERGE_TALISMAN, // combine
 	NP_SYMBOL,	 // use NP symbol on chest
 	SENSE_MARE,  // sense pmares & dark mares
-  TEMPEST,    // Tempest // 140
-  KINESIS,    // Kinesis
-  MISDIRECTION, // Misdirection
-  CHAOTIC_VORTEX, // Chaotic Vortex
-  CHAOS_WELL, // Essence Container
-  RALLY, // Summon party member
-  CHANNEL,
-BULWARK,
-PORTKEY,
+	TEMPEST,    // Tempest // 140
+	KINESIS,    // Kinesis
+	MISDIRECTION, // Misdirection
+	CHAOTIC_VORTEX, // Chaotic Vortex
+	CHAOS_WELL, // Essence Container
+	RALLY, // Summon party member
+	CHANNEL,
+	BULWARK,
+	PORTKEY,
+	SPRINT,
+	ENFEEBLEMENT,
+
 	// END OF ARTS LIST - below are art-related constants
 
 	INITIATE_DRAIN = 100,   // amount of essences drained from prime to Initiate
@@ -391,7 +396,7 @@ struct LyraBitmap {
 		BOGROM_ESSENCE = 60,	 // nightmare essence
 		AGOKNIGHT_ESSENCE = 61,	 // nightmare essence
 		SHAMBLIX_ESSENCE = 62,	 // nightmare essence
-
+		
 			// avatars
 		MALE_AVATAR = 256,
 		FEMALE_AVATAR = 400,
@@ -408,6 +413,17 @@ struct LyraBitmap {
 		ENTRYEXIT_EFFECT = 758,
 		BANNER_EFFECT = 778,
 		
+		// damaging ornaments
+		FI_SM = 857,
+		FI_MD = 863,
+		FIRE = 874,
+		W_HOLE = 921,
+		S_ALT2 = 930,
+		LIGHTNING = 947,
+		LIGHTNING_SM = 951,
+		TORCH = 975,
+		ANOTHER_DAMN_TORCH = 982,
+
 		HARMLESS_EVOKED = 1100,
 		HARMFUL_EVOKED = 1110,
 		HARMLESS_EVOKING = 1120,
@@ -697,8 +713,11 @@ struct LyraEffect {
 	PLAYER_NO_PARTY,
 	PLAYER_NO_POISON,
 	PLAYER_SPIN,
+	PLAYER_FLYING,
+	PLAYER_WALK,
+	PLAYER_SPRINT,
 
-	MAX_ITEM_EFFECT = PLAYER_SPIN,
+	MAX_ITEM_EFFECT = PLAYER_SPRINT,
 	// Non-forgable effects
 	PLAYER_CRIPPLE,
 	PLAYER_SHIELD,
@@ -854,7 +873,7 @@ const int no_rally_levels[] =
 const int num_no_rally_levels =
   sizeof(no_rally_levels) / sizeof(int);
 
-const int no_damage_levels[] = {41, 47};
+const int no_damage_levels[] = {1, 41, 47};
 
 const int num_no_damage_levels =
 	sizeof(no_damage_levels) / sizeof(int);

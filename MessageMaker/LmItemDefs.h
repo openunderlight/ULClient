@@ -29,14 +29,16 @@ public:
 
   // constants
   enum {
-    // item header flags (up to 6)
+    // item header flags (up to 16)
     FLAG_NOREAP         = 0x01,  // item is not be reaped by server
     FLAG_SENDSTATE      = 0x02,  // item must have state sent always (wards)
     FLAG_IMMUTABLE      = 0x04,  // item state cannot be changed
     FLAG_CHANGE_CHARGES = 0x08,  // item state cannot be changed, except for # of charges
     FLAG_ALWAYS_DROP    = 0x10,  // item is auto-dropped upon player logout
     FLAG_HASDESCRIPTION = 0x20,  // item has text description
-
+	FLAG_ALWAYSREAP = 0x40, // ALWAYS reap this item, even in vaults
+	FLAG_NOPICKUP = 0x80, // Players can't drag/pickup this item
+	FLAG_ISCOMBINED = 0x100,
     MAX_FIELDS_PER_FUNCTION = 7, // max # of subfields per function
 
     // item functions
@@ -60,6 +62,7 @@ public:
 	GRATITUDE_FUNCTION,		 // 10 bytes
 	META_ESSENCE_NEXUS_FUNCTION, // 9 bytes
 	PORTKEY_FUNCTION, // 7 bytes
+	TRIP_FUNCTION, // 3
     
     // translation types for item effect fields
     TRANSLATION_NONE = 0,
@@ -78,7 +81,10 @@ public:
     TRANSLATION_GUILDTOKEN,
     TRANSLATION_LEVEL_ID,
     TRANSLATION_TPORT_DEST,
-	TRANSLATION_DISTANCE
+	TRANSLATION_DISTANCE,
+	TRANSLATION_FREQUENCY,
+	TRANSLATION_GUILDBELIEF,
+	TRANSLATION_BELIEF
   };
   
   // descriptor table selectors
@@ -262,6 +268,12 @@ struct lyra_item_amulet_t {  // 8 bytes
   }
 };
 
+struct lyra_item_trip_t {
+	unsigned char type;      // TRIP_FUNCTION
+	unsigned char distance;
+	unsigned char frequency;
+};
+
 struct lyra_item_area_effect_t {  // 10
   unsigned char type;      // AREA_EFFECT_FUNCTION
   unsigned char effect;    // timed effect constant activate on hit, hibit is effect self and party. 0 means to effect.
@@ -413,7 +425,7 @@ struct lyra_item_support_t {  // 10 bytes
 
 struct lyra_item_meta_essence_nexus_t { // 9 bytes
 	unsigned char type;			// META_ESSENCE_NEXUS_FUNCTION
-	unsigned char unused;
+	unsigned char belief;
 	unsigned short strength;
 	unsigned short essences;
 	unsigned short strength_cap;
@@ -456,6 +468,13 @@ struct lyra_item_meta_essence_t {  // 10 bytes
     num_mares_hi_bits = (value >> 16 );
     num_mares_lo_bits = (value & 0x0000ffff);
   };
+  inline unsigned char guild() {
+	  return guild_id & 0x0F;
+  }
+
+  inline unsigned char belief() {
+	  return (guild_id & 0xF0) >> 4;
+  }
   // conversion methods
   inline void hton() {
     HTONS(strength_hi_bits);

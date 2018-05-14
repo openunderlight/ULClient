@@ -40,6 +40,7 @@ extern TCHAR duration_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR modifier_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR guild_name_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR guild_rank_message[DEFAULT_MESSAGE_SIZE];
+extern TCHAR guild_belief_combo_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR guild_goal_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR color_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR monster_color_message[DEFAULT_MESSAGE_SIZE];

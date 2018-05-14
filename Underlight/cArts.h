@@ -12,7 +12,7 @@
 #include "GMsg_ViewItem.h"
 #include "LyraDefs.h"
 
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 // Constants
 
 const int ART_DESCRIP_LEN = 18;
@@ -191,6 +191,7 @@ public:
 	void Portkey(void);
 	bool GetPortkey(int type); // true if has pk, falseotherwise
 	bool RoomFull();
+	void EndMareEssenceMetaFunc(int art_id, int graphic, int item_name_string_id, int well_string_id, int on_success_string_id);
 	// arts that require selecting a neighbor
 	void StartChannel(void);
 	bool ExpireChannel(bool userInitiated);
@@ -246,6 +247,10 @@ public:
 	void StartDeafen(void);
 	void ApplyDeafen(int skill, lyra_id_t caster_id, bool roar = false);
 	void EndDeafen(void);
+	void StartEnfeeblement();
+	void EndEnfeeblement();
+	void ApplyEnfeeblement(int skill, lyra_id_t caster_id);
+	void Sprint();
 	void StartBlind(void);
 	void ApplyBlind(int skill, lyra_id_t caster_id);
 	void EndBlind(void);

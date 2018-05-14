@@ -158,14 +158,13 @@ extern char agent_gs_ip_address[16];
 int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x001A970A << 2);  // for pmare game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1D22B3B2 << 2);
 #else
-int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x0031EB67 << 2);  // for game.cli
+int SERVER_LEVEL_FILE_CHECKSUM_PROXY = (0x31ECA5 << 2);  // for game.cli
 int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = (0x1DCF4AD3 << 2);
 #endif // #ifdef PMARE
 #else
-int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = 0; 
-int SERVER_LEVEL_FILE_CHECKSUM_PROXY = 0; 
+int SERVER_EFFECTS_FILE_CHECKSUM_PROXY = 0;
+int SERVER_LEVEL_FILE_CHECKSUM_PROXY = 0;
 #endif // #ifdef GAME_CLI
-
 //#undef PMARE
 
 
@@ -875,6 +874,7 @@ void cGameServer::HandleMessage(void)
 				}
 				// avtar settings are dependant on arts, guilds and stuff. Do them first.
 				player->SetAvatar(loginack_msg.Avatar(), false);
+				options.avatar = loginack_msg.Avatar();
 			}
 			cp->SetupArts(); // set up arts display
  
@@ -2379,6 +2379,10 @@ void cGameServer::HandleMessage(void)
 						int art_id;
 				switch (player_msg.MsgType())
 				{
+				case RMsg_PlayerMsg::ENFEEBLEMENT:
+					art_id = Arts::ENFEEBLEMENT;
+					cDS->PlaySound(LyraSound::POTION, player->x, player->y, true);
+					break;
 				case RMsg_PlayerMsg::RESIST_FEAR:
 					art_id = Arts::RESIST_FEAR;
 					cDS->PlaySound(LyraSound::PROTECT_AVATAR, player->x, player->y, true);
@@ -2482,6 +2486,9 @@ void cGameServer::HandleMessage(void)
 			if (!art_reflected)
 			switch (player_msg.MsgType())
 			{
+				case RMsg_PlayerMsg::ENFEEBLEMENT:
+					arts->ApplyEnfeeblement(player_msg.State1(), player_msg.SenderID());
+					break;
 				case RMsg_PlayerMsg::REFLECT_ART: // skill, art_id
 					arts->ApplyReflectedArt(player_msg.State2(), player_msg.SenderID());
 					break;
@@ -3235,7 +3242,6 @@ void cGameServer::HandlePositionUpdate(RMsg_PlayerUpdate& position_msg)
 				//printf("Attack bits: %d Sanc: %d Now - Last Attack: %d Shot Interval: %d Wpn Bitmap: %d\n",
 				//	position_msg.PeerUpdate(i).AttackBits(), level->Rooms[player->Room()].flags & ROOM_SANCTUARY,
 				//	(LyraTime() - n->LastAttack()), SHOT_INTERVAL, position_msg.PeerUpdate(i).WeaponBitmap());
-	
 				if (position_msg.PeerUpdate(i).AttackBits() && !(level->Rooms[player->Room()].flags & ROOM_SANCTUARY) &&
 					((LyraTime() - n->LastAttack()) > SHOT_INTERVAL) && position_msg.PeerUpdate(i).WeaponBitmap())
 				{
@@ -3541,7 +3547,8 @@ _stprintf(message, disp_message, level->Name(level->ID()));
 	display->DisplayMessage(message, false);
 
 	curr_level_id = level->ID();
-
+	if (player->flags & ACTOR_FLY)
+		player->RemoveTimedEffect(LyraEffect::PLAYER_FLYING);
 	this->FillInPlayerPosition(&update);
 
 	player->SetRoom(player->x, player->y);
@@ -3694,7 +3701,7 @@ void cGameServer::ModifyItem(cItem *orig_item, TCHAR* new_name, int new_charges,
 	LmItem info;
 	LmItemHdr header;
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(orig_item->Lmitem().Header().Flags());
 	header.SetGraphic(new_graphic);
 	header.SetColor1(orig_item->Lmitem().Header().Color1());
@@ -3705,15 +3712,15 @@ void cGameServer::ModifyItem(cItem *orig_item, TCHAR* new_name, int new_charges,
 
 	if (is_nopickup)
 	{
-		// make sure we don't have always drop
-		if (orig_item->AlwaysDrop())
-			header.ClearFlag(LyraItem::FLAG_ALWAYS_DROP);
-
-		// add noreap, if necessary
-		if (!orig_item->NoReap())
-			header.SetFlag(LyraItem::FLAG_NOREAP);
+		if (!orig_item->NoPickup())
+			header.SetFlag(LyraItem::FLAG_NOPICKUP);
 	}
-	else if (is_artifact)
+	else {
+		if (orig_item->NoPickup())
+			header.ClearFlag(LyraItem::FLAG_NOPICKUP);
+	}
+
+	if (is_artifact)
 	{
 		// add noreap, if necessary
 		if (!orig_item->NoReap())
@@ -3722,8 +3729,7 @@ void cGameServer::ModifyItem(cItem *orig_item, TCHAR* new_name, int new_charges,
 		// add always drop, if necessary
 		if (!orig_item->AlwaysDrop())
 			header.SetFlag(LyraItem::FLAG_ALWAYS_DROP);
-	}
-	else
+	} else
 	{
 		// clear both noreap and always drop if the flags are set
 		if (orig_item->AlwaysDrop())
@@ -3800,7 +3806,7 @@ void cGameServer::FinalizeItemDuplicate(cItem *orig_item, TCHAR* description)
 	LmItem info;
 	LmItemHdr header;
 
-	header.Init(0, 0);
+	header.Init(0, 0, 0);
 	header.SetFlags(orig_item->Lmitem().Header().Flags());
 	header.SetGraphic(orig_item->Lmitem().Header().Graphic());
 	header.SetColor1(orig_item->Lmitem().Header().Color1());
@@ -4341,7 +4347,8 @@ void cGameServer::OnRoomChange(short last_x, short last_y)
 
 	if ((player->IsUninitiated() && (level->ID() == RECRUITING_LEVEL_ID)))
 		gs->SendPlayerMessage(0, RMsg_PlayerMsg::NEWBIE_ENTERED, 0, 0);
-
+	if (player->flags & ACTOR_FLY)
+		player->RemoveTimedEffect(LyraEffect::PLAYER_FLYING);
 	LmAvatar avatar = player->Avatar();
 	int value;
 	if ((avatar.AvatarType() >= Avatars::MIN_NIGHTMARE_TYPE) &&
@@ -4602,6 +4609,12 @@ void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, sh
 void cGameServer::AvatarChange(LmAvatar new_avatar, bool permanent)
 {
 	GMsg_ChangeAvatar avatar_msg;
+	//
+	//if (new_avatar.PlayerInvis() && permanent)
+	//	return;
+
+	if (permanent && new_avatar.PlayerInvis())
+		return;
 
 	if (permanent)
 		avatar_msg.Init(new_avatar,GMsg_ChangeAvatar::AVATAR_PERMANENT);
@@ -4627,7 +4640,7 @@ void cGameServer::FillInPlayerPosition(LmPeerUpdate *update, int trigger)
 {
 	//update->SetPlayerID(player->ID());
 	update->SetRealtimeID(0);
-	update->SetPosition((int)player->x, (int)player->y);
+	update->SetPosition((int)player->x, (int)player->y, (int) player->z);
 	//_tprintf("set position at %d, %d at time %d\n",(int)player->x, (int)player->y, LyraTime());
 
 	update->SetAngle(player->angle);
@@ -4689,7 +4702,7 @@ void cGameServer::FillInPlayerPosition(LmPeerUpdate *update, int trigger)
 		update->SetFlags(update->Flags() | LmPeerUpdate::LG_WALKING);
 	else if (player->Strafe() != NO_STRAFE)
 		update->SetFlags(update->Flags() | LmPeerUpdate::LG_STRAFING);
-	if (player->Speed() == RUN_SPEED)
+	if (player->Speed() == RUN_SPEED || player->Speed() == SPRINT_SPEED)
 		update->SetFlags(update->Flags() | LmPeerUpdate::LG_RUNNING);
 
 	if ((player->flags & ACTOR_INVISIBLE) || (player->flags & ACTOR_CHAMELED))
@@ -4697,6 +4710,9 @@ void cGameServer::FillInPlayerPosition(LmPeerUpdate *update, int trigger)
 
 	if (player->flags & ACTOR_SOULSPHERE)
 		update->SetFlags(update->Flags() | LmPeerUpdate::LG_SOULSPHERE);
+
+	if (player->flags & ACTOR_FLY) 
+		update->SetFlying(TRUE);
 
 	attack_bits = attack_bits << 1;
 	if (last_attack.time > last_peer_update)

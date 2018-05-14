@@ -103,6 +103,7 @@ extern mouse_move_t mouse_move;
 extern ppoint_t pp; // personality points use tracker
 extern cKeymap *keymap;
 extern cNeighbor *test_avatar;
+extern macro_t chat_macros[MAX_MACROS];
 
 monster_breed_t monster_breeds[NUM_MONSTER_BREEDS] = 
 {
@@ -294,42 +295,17 @@ BOOL CALLBACK AcceptRejectDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 // Functions to read/write a macro to/from the registry
 void RegistryReadMacro(int macro_number, macro_t macro)
 {
-
-	HKEY	reg_key;
-	DWORD result;
-	DWORD reg_type,size;
-	TCHAR	macro_name[20];
-
-	*macro = '\0';
 	if ( macro_number < 0 || macro_number > MAX_MACROS)
 		return;
-
-	_stprintf(macro_name,_T("macro_%d"),macro_number);
-
-	RegOpenKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0, KEY_ALL_ACCESS, &reg_key );
-	size = sizeof macro_t;
-	result = RegQueryValueEx(reg_key, macro_name, NULL, &reg_type,
-								(unsigned char *)macro, &size);
-	RegCloseKey(reg_key);
-
+	_tcscpy(macro, chat_macros[macro_number]);
 }
 
 static void RegistryWriteMacro(int macro_number, macro_t macro)
 {
-
-	HKEY	reg_key;
-	DWORD result;
-	TCHAR	macro_name[20];
-
 	if (player->CanUseChatMacros() == false && macro_number < 0 || macro_number > MAX_MACROS)
 		return;
-
-	_stprintf(macro_name,_T("macro_%d"),macro_number);
-
-	RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false), 0, NULL, 0, KEY_ALL_ACCESS, NULL, &reg_key, &result);
-	RegSetValueEx(reg_key, macro_name, 0, REG_BINARY, (unsigned char *)macro, sizeof macro_t);
-	RegCloseKey(reg_key);
-
+	_tcscpy(chat_macros[macro_number], macro);
+	SaveCharacterRegistryOptionValues(NULL);
 }
 
 BOOL CALLBACK ChatMacrosDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
@@ -1648,25 +1624,6 @@ BOOL CALLBACK ModifyItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 			// default to invis for GMs
 			ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_GRAPHIC_COMBO), graphic_idx);
 
-
-			if (selected_item->Lmitem().FlagSet(LyraItem::FLAG_NOREAP))
-			{
-				if (selected_item->Lmitem().FlagSet(LyraItem::FLAG_ALWAYS_DROP))
-				{
-					// artifact checkbox
-					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), 1);
-					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), 0);
-					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), false);
-				}
-				else
-				{
-					// nopickup checkbox
-					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), 1);
-					Button_SetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), 0);
-					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), false);
-				}
-			}
-
 			break;
 		}
 		case WM_PAINT:
@@ -1689,19 +1646,6 @@ BOOL CALLBACK ModifyItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 		case WM_COMMAND:
 			switch (LOWORD(wParam))
 			{
-
-				case IDC_ITEM_NOPICKUP:
-				{
-					bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
-					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), disable);
-					break;
-				}
-				case IDC_ITEM_ARTIFACT:
-				{
-					bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT));
-					EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
-					break;
-				}
 				case IDC_OK: 
 				{
 					bool is_nopickup = Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
@@ -2096,19 +2040,6 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 		case WM_COMMAND:
 			switch (LOWORD(wParam))
 			{
-
-			case IDC_ITEM_NOPICKUP:
-			{
-				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP));
-				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), disable);
-				break;
-			}
-			case IDC_ITEM_ARTIFACT:
-			{
-				bool disable = !Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT));
-				EnableWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), disable);
-				break;
-			}
 			case IDC_ITEM_COMBINE:
 			case IDC_PROPERTY1:
 			case IDC_PROPERTY2:
@@ -2199,10 +2130,12 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 								{
 									if ((opened_by != CreateItem::FORGE_ITEM) || (CanPlayerForgeValue(LyraItem::EntryTranslation(curr_effect, i), j, num_tokens_held)))
 									{
-										TranslateValue(LyraItem::EntryTranslation(curr_effect, i), j);
-										SendMessage((GetDlgItem(hDlg, property_fields[i])), CB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
-										ComboBox_SetItemData(GetDlgItem(hDlg, property_fields[i]), (ComboBox_GetCount(GetDlgItem(hDlg, property_fields[i]))-1), j);
-										successCnt++;
+										if (TranslateValue(LyraItem::EntryTranslation(curr_effect, i), j))
+										{
+											SendMessage((GetDlgItem(hDlg, property_fields[i])), CB_ADDSTRING, 0L, (LPARAM)(LPCTSTR)(message));
+											ComboBox_SetItemData(GetDlgItem(hDlg, property_fields[i]), (ComboBox_GetCount(GetDlgItem(hDlg, property_fields[i])) - 1), j);
+											successCnt++;
+										}
 									}
 								}
 
@@ -2260,7 +2193,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						LmItem info;
 						LmItemHdr header;
 
-						header.Init(0, 0);
+						header.Init(0, 0, 0);
 
 						int curr_selection, numcharges, erritemnum;
 						TCHAR itemname[LmItem::NAME_LENGTH];
@@ -2494,8 +2427,9 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						// Get and set the item flags
 						if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT)))
 							header.SetFlag(LyraItem::FLAG_NOREAP | LyraItem::FLAG_ALWAYS_DROP);
-						else if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP)))
-							header.SetFlag(LyraItem::FLAG_NOREAP);
+						
+						if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP)))
+							header.SetFlag(LyraItem::FLAG_NOPICKUP);
 						// Figure next three flags out based on selected effect types
 						int immutable = 0;
 						int changecharges = 0;
@@ -4193,13 +4127,9 @@ void AddBuddyCallback(void *value)
 BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 {
 	static other_t lastLoc;
-	static int num_buddies = 0;
-	static int buddy_list_lengths[6];
-	static other_t buddies[GMsg_LocateAvatar::MAX_PLAYERS];
 	int i,j;
 	unsigned long result,size;
 	DWORD reg_type;
-	HKEY reg_key;
 
 	if (HBRUSH brush = SetControlColors(hDlg, Message, wParam, lParam))
 		return (LRESULT)brush;
@@ -4219,34 +4149,14 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 			SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
 			hwnd_locateavatar = hDlg;
 			locateavatardlg = true;
-
-			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
-							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
-
-			size = sizeof(num_buddies);
-			result = RegQueryValueEx(reg_key, _T("num_buddies"), NULL, &reg_type,
-				(unsigned char *)(&num_buddies), &size);
-			if (result != ERROR_SUCCESS)
-				num_buddies = 0;
-
-			size = GMsg_LocateAvatar::MAX_PLAYERS*sizeof(other_t);
-			result = RegQueryValueEx(reg_key, _T("watch_list"), NULL, &reg_type,
-				(unsigned char *)buddies, &size);
-			if ((result != ERROR_SUCCESS) || (!num_buddies))
-			{
-				for (i=0; i<GMsg_LocateAvatar::MAX_PLAYERS; i++)
-					_tcscpy(buddies[i].name, _T(""));
-				num_buddies = 0;
-			}
 //			size = sizeof(num_buddies)*6;
 //			result = RegQueryValueEx(reg_key, "buddy_list_lengths", NULL, &reg_type, 
 //				(unsigned char *)buddy_list_lengths, &size);
 
-			RegCloseKey(reg_key);
-			for (i=0; i<num_buddies; i++)
-				ListBox_AddString(GetDlgItem(hDlg, IDC_WATCH_LIST), buddies[i].name);
+			for (i=0; i<options.num_buddies; i++)
+				ListBox_AddString(GetDlgItem(hDlg, IDC_WATCH_LIST), options.buddies[i].name);
 
-			if (num_buddies)
+			if (options.num_buddies)
 				ListBox_SetCurSel(GetDlgItem(hDlg, IDC_WATCH_LIST), 0);
 			
 			if (lastLoc.name != NULL)
@@ -4297,8 +4207,8 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 		{
 			TCHAR *buddy = ((TCHAR*)lParam);
 
-			for (i=0; i<num_buddies; i++)
-				if (0 == _tcscmp(buddy, buddies[i].name))
+			for (i=0; i<options.num_buddies; i++)
+				if (0 == _tcscmp(buddy, options.buddies[i].name))
 				{
 					LoadString (hInstance, IDS_ALREADY_ON_LIST, message, sizeof(message));
 					CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
@@ -4307,17 +4217,10 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 				}
 
 			ListBox_AddString(GetDlgItem(hDlg, IDC_WATCH_LIST), buddy);
-			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_WATCH_LIST), num_buddies);
-			_tcscpy(buddies[num_buddies].name, buddy);
-			num_buddies++;
-			RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
-							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
-			RegSetValueEx(reg_key, _T("num_buddies"), 0, REG_DWORD,
-				(unsigned char *)&(num_buddies), sizeof(num_buddies));
-			RegSetValueEx(reg_key, _T("watch_list"), 0, REG_BINARY,
-				(unsigned char *)buddies, GMsg_LocateAvatar::MAX_PLAYERS*sizeof(other_t));
-			RegCloseKey(reg_key);
-
+			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_WATCH_LIST), options.num_buddies);
+			_tcscpy(options.buddies[options.num_buddies].name, buddy);
+			options.num_buddies++;
+			SaveCharacterRegistryOptionValues(NULL);
 			return TRUE;
 		}
 
@@ -4345,8 +4248,8 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 						if (i != -1)
 						{
 							if (arts->DoingLocate()){
-								lastLoc = buddies[i];
-								arts->EndLocate(buddies[i].name);
+								lastLoc = options.buddies[i];
+								arts->EndLocate(options.buddies[i].name);
 							}
 							else 
 								arts->CancelArt();
@@ -4371,7 +4274,7 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 					return TRUE;
 
 				case IDC_LOCATE_ALL:
-					if (!num_buddies)
+					if (!options.num_buddies)
 					{
 						LoadString (hInstance, IDS_NEED_BUDDIES, message, sizeof(message));
 						HWND hDlg = CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
@@ -4387,7 +4290,7 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 // Functionality changed. If player has already typed a name in the main text box before
 // clicking "Add," just add that name instead of presenting them with a new dialog. 
 				case IDC_ADD:
-					if (num_buddies >= GMsg_LocateAvatar::MAX_PLAYERS)
+					if (options.num_buddies >= GMsg_LocateAvatar::MAX_PLAYERS)
 					{
 						LoadString (hInstance, IDS_BUDDY_LIST_FULL, message, sizeof(message));
 						CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
@@ -4410,26 +4313,6 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 					}
 					return TRUE;
 
-// Jared 3-15-00
-// Backup of old functionality
-/*
-				case IDC_ADD:
-					if (num_buddies >= GMsg_LocateAvatar::MAX_PLAYERS)
-					{
-						LoadString (hInstance, IDS_BUDDY_LIST_FULL, message, sizeof(message));
-						CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
-							cDD->Hwnd_Main(), (DLGPROC)NonfatalErrorDlgProc);
-					}
-					else if (!entervaluedlg)
-					{
-						LoadString (hInstance, IDS_ADD_BUDDY, message, sizeof(message));
-						HWND hDlg = CreateLyraDialog(hInstance, IDD_ENTER_VALUE,
-											cDD->Hwnd_Main(), (DLGPROC)EnterValueDlgProc);
-						SendMessage(hDlg, WM_SET_CALLBACK, 0,	(LPARAM)AddBuddyCallback);
-					}
-					return TRUE;
-*/
-
 				case IDC_REMOVE:
 					j = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_WATCH_LIST));
 					if (j == -1)
@@ -4441,24 +4324,18 @@ BOOL CALLBACK LocateAvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM
 					else
 					{
 						ListBox_DeleteString(GetDlgItem(hDlg, IDC_WATCH_LIST), j);
-						for (i=j; i<num_buddies-1; i++)
-							_tcscpy(buddies[i].name, buddies[i+1].name);
-						num_buddies--;
-						_tcscpy(buddies[num_buddies].name, _T(""));
-						if (num_buddies)
+						for (i=j; i<options.num_buddies-1; i++)
+							_tcscpy(options.buddies[i].name, options.buddies[i+1].name);
+						options.num_buddies--;
+						_tcscpy(options.buddies[options.num_buddies].name, _T(""));
+						if (options.num_buddies)
 						{
-							if (j == num_buddies)
+							if (j == options.num_buddies)
 								j--;
 							ListBox_SetCurSel(GetDlgItem(hDlg, IDC_WATCH_LIST), j);
 						}
 					}
-					RegCreateKeyEx(HKEY_CURRENT_USER, RegPlayerKey(false),0,
-							NULL,0,KEY_ALL_ACCESS, NULL, &reg_key, &result);
-					RegSetValueEx(reg_key, _T("num_buddies"), 0, REG_DWORD,
-						(unsigned char *)&(num_buddies), sizeof(num_buddies));
-					RegSetValueEx(reg_key, _T("watch_list"), 0, REG_BINARY,
-						(unsigned char *)buddies, GMsg_LocateAvatar::MAX_PLAYERS*sizeof(other_t));
-					RegCloseKey(reg_key);
+					SaveCharacterRegistryOptionValues(NULL);
 					return TRUE;
 
 				case IDC_CANCEL:
@@ -5121,7 +4998,7 @@ BOOL CALLBACK AvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 		case WM_COMMAND:
 
 			if (((HIWORD(wParam) == LBN_SELCHANGE) || (HIWORD(wParam) == BN_CLICKED)) &&
-				!(player->flags & ACTOR_TRANSFORMED))
+				!(player->flags & ACTOR_TRANSFORMED) && !(player->flags & ACTOR_INVISIBLE))
 			{
 
 					curr_avatar.SetColor0(ListBox_GetCurSel(GetDlgItem(hDlg, IDC_REGION0)));
@@ -5244,7 +5121,7 @@ BOOL CALLBACK AvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 			switch (LOWORD(wParam))
 			{
 				case IDC_OK:
-					if (player->flags & ACTOR_TRANSFORMED)
+					if ((player->flags & ACTOR_TRANSFORMED) || (player->flags & ACTOR_INVISIBLE))
 					{ // don't allow avatar customization with nightmare form
 						PostMessage(hwnd_avatar, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
 						break;
@@ -5263,7 +5140,7 @@ BOOL CALLBACK AvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 					return TRUE;
 
 				case IDC_RESET:
-					if (player->flags & ACTOR_TRANSFORMED)
+					if ((player->flags & ACTOR_TRANSFORMED) || player->Avatar().PlayerInvis())
 					{ // don't allow avatar customization with nightmare form
 						SendMessage(hwnd_avatar, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
 						break;

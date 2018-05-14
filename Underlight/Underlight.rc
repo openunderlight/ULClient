@@ -2637,6 +2637,30 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIDE_RANGE          "Wide Range"
+    IDS_WHOLE_ROOM          "Whole Room"
+    IDS_ALREADY_HAVE_PORTKEY 
+                            "You're already carrying a portkey - you must drop it first!"
+    IDS_PORTKEY             "Portkey"
+    IDS_CLOSE               "Close"
+    IDS_WHISPERABLE         "Whisperable"
+    IDS_RAZORWIND_AREA_EFFECT 
+                            "A Razorwind tears through the room and converges upon where %s is standing!\n"
+    IDS_BULWARK_MORE        "Your bulwark has been re-fortified!"
+    IDS_SHIELD_MAX_NOW      "The shield is now at maximum durability!\n"
+    IDS_TALISMAN_RECHARGED_NOW 
+                            "The %s has just been recharged to its maximum number of charges!"
+    IDS_RW_REAPPLIED        "A razorwind rages all around you!"
+    IDS_POWER_TOKEN_DESTROYED 
+                            "The Power Token crumbles as its energy expenditure has been met"
+    IDS_ANY_BELIEF          "Any Belief"
+    IDS_BANISHED_WELL       "Banished Well"
+    IDS_IMPRISONED_WELL     "Imprisoned Well"
+    IDS_CLEANSED_WELL       "Cleansed Well"
+END
+
+STRINGTABLE
+BEGIN
     IDS_ERROR_READ_AGENT_POSSES_MSG "Error reading agent posession message"
     IDS_ABJURE_FAIL         "Abjure failed!\n"
     IDS_NO_CREATE_IMG_LIST  "Could Not Create Image List."
@@ -4497,25 +4521,39 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_WIDE_RANGE          "Wide Range"
-    IDS_WHOLE_ROOM          "Whole Room"
-    IDS_ALREADY_HAVE_PORTKEY 
-                            "You're already carrying a portkey - you must drop it first!"
-    IDS_PORTKEY             "Portkey"
-    IDS_CLOSE               "Close"
-    IDS_WHISPERABLE         "Whisperable"
-    IDS_RAZORWIND_AREA_EFFECT 
-                            "A Razorwind tears through the room and converges upon where %s is standing!\n"
-    IDS_BULWARK_MORE        "Your bulwark has been re-fortified!"
-    IDS_SHIELD_MAX_NOW      "The shield is now at maximum durability!\n"
-    IDS_TALISMAN_RECHARGED_NOW 
-                            "The %s has just been recharged to its maximum number of charges!"
-    IDS_RW_REAPPLIED        "A razorwind rages all around you!"
+    IDS_GKSHIELD            "Bulwark"
+    IDS_ONCE_PER_LOGIN      "Once Per Login"
+    IDS_EVERY_2_SEC         "Every 2 Seconds"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_GKSHIELD            "Bulwark"
+    IDS_ONCE_PER_ROOM       "Once Per Room"
+    IDS_EVERY_30_SEC        "Every 30 seconds"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_EVERY_MINUTE        "Every minute"
+    IDS_EVERY_2_MINUTES     "Every 2 minutes"
+    IDS_FLIGHT              "Flight"
+    IDS_FLIGHT_ON           "You feel light as a feather.\n"
+    IDS_FLIGHT_OFF          "The weight of gravity descends upon you.\n"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_PLAYER_WALK_ON      "Your movement slows as you become exhausted..."
+    IDS_PLAYER_WALK_MORE    "You become even more exhausted..."
+    IDS_PLAYER_WALK_OFF     "Your exhaustion fades!"
+    IDS_ENFEEBLEMENT        "Enfeeblement"
+    IDS_PLAYER_SPRINT_ON    "Your movement speed increases as you gain strength!"
+    IDS_PLAYER_SPRINT_MORE  "You gain even more strength!"
+    IDS_PLAYER_SPRINT_OFF   "Your movement slows back to normal."
+    IDS_SPRINT              "Sprint"
+    IDS_ENFEEBLE_APPLIED    "%s has slowed your speed!"
+    IDS_ENFEEBLE_MARE       "The nightmare appears unaffected!"
+    IDS_NO_MISSILE_INVIS    "You cannot use that item while invisible!"
 END
 
 #endif    // English (United States) resources

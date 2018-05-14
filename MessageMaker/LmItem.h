@@ -54,7 +54,7 @@ public:
 
   // initializers
   void Init(const LmItemHdr& hdr, const TCHAR* name = _T(""), int s1 = 0, int s2 = 0, int s3 = 0);
-  void Init(int serial, int header_info, const TCHAR* name = _T(""), int s1 = 0, int s2 = 0, int s3 = 0);
+  void Init(int serial, int header_info, int h2, const TCHAR* name = _T(""), int s1 = 0, int s2 = 0, int s3 = 0);
 
   // selectors
   const LmItemHdr& Header() const;
@@ -78,7 +78,6 @@ public:
   void* StateField(int field_num);
 
   // convenience selectors for the header object
-  lyra_id_t ItemID() const;
   int Serial() const;
   int Flags() const;
   int Graphic() const;

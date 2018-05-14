@@ -60,6 +60,7 @@ class cItem : public cActor
 	   LmItem lmitem; // bitmap id, colors, flags, serial #, state descrip, state
 	   int status; 
 	   int selected_function; // current selected function (0-2)
+	   int next_tick;
 	   TCHAR description[ITEM_DESCRIP_LENGTH]; // descrip at a distance
 	   bool needsUpdate; // whether state has changed since last update
 	   bool draggable; // true if can be dragged/picked up
@@ -77,6 +78,7 @@ class cItem : public cActor
 	   int sort_index; // relative sort index for control panel
 	   int inventory_flags;
 	   bool expire_time_is_ttl;
+	   bool destroy_on_failed_drop;
    public:
 	   cItem(float i_x, float i_y, int i_angle, const LmItem& i_lmitem, int i_status, 
 		   unsigned __int64 i_flags = 0, bool temp = false, DWORD expires = 0,
@@ -106,11 +108,12 @@ class cItem : public cActor
 	  bool AddMetaEssence(int amount);
 	  void ApplyGratitude(cNeighbor* n);
 	  bool SurviveLevelChange(void);
-	  bool NoPickup(void);
 
 	  // selectors
 	  bool IsRazorwind(void);
 	  inline DWORD ExpireTime(void) { return expire_time; }
+	  inline DWORD NextTick(void) { return next_tick; }
+	  inline void SetNextTick(int t) { next_tick = t; }
 	  inline LmItemHdr& ID(void) { return lmitem.Header(); };
 	  inline LmItem& Lmitem(void) { return lmitem; };
 	  inline int Status(void) { return status; };
@@ -128,6 +131,8 @@ class cItem : public cActor
 	  inline int NumFunctions(void) { return lmitem.NumFields(); };
 	  inline bool NoReap(void) { return lmitem.Header().Flags() & LyraItem::FLAG_NOREAP; };
 	  inline bool AlwaysDrop(void) { return lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP; };
+	  inline bool NoPickup(void) { return lmitem.Header().Flags() & LyraItem::FLAG_NOPICKUP; };
+	 
 	  inline int SortIndex(void) { return sort_index; };
 	  inline int InventoryFlags(void) { return inventory_flags; };
 	  inline bool WantDestroyAck(void) { return want_destroy_ack; };

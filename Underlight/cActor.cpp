@@ -127,7 +127,7 @@ float cActor::SetXHeight(void)
 	{
 		if (flags & ACTOR_CEILHANG)
 			z = level->Sectors[sector]->CeilHt(x,y);
-		else
+		else if(!(flags & ACTOR_FLY))
 			z = level->Sectors[sector]->FloorHt(x,y)+level->Sectors[sector]->HtOffset+physht;
 		eyeheight = (float)(z-(physht*.2));
 	}
@@ -326,6 +326,8 @@ void cActor::ModifyHeight(void)
 
 	xheight = level->Sectors[sector]->FloorHt(x,y)+level->Sectors[sector]->HtOffset+physht;
 	//_tprintf("height: %f physht: %f xheight: %f\n",height,physht,xheight);
+	bool looking_down = IsPlayer() && ((cPlayer*)this)->LookingDown();
+	bool looking_up = IsPlayer() && ((cPlayer*)this)->LookingUp();
 
 	for (i=0; i<timing->sync_ticks; i++)
 	{
@@ -346,11 +348,25 @@ void cActor::ModifyHeight(void)
 			else
 				z = xheight;
 		}
-		else if ( z > xheight || vertforce < 0)
+		else if (z > xheight || vertforce < 0)
 		{ // accelerate down; check if we're at the peak of our
 			vertforce += 6.0f;
 			if ((vertforce > 0.0f) && (vertforce <= 6.0f))
 				fall_height = z; // we're at the top of a fall
+			
+			if (flags & ACTOR_FLY)
+			{
+				if (!looking_up && !looking_down && vertforce > 0)
+				{
+					vertforce = 0;
+					continue;
+				}
+
+				if (looking_up)
+					vertforce = -3;
+				if (looking_down)
+					vertforce = 3;
+			}
 
 			z -= vertforce;
 			if (z >= level->Sectors[sector]->CeilHt(x,y))
@@ -378,45 +394,24 @@ void cActor::ModifyHeight(void)
 						((cNeighbor*)this)->SetJumping(false);
 				}
 
-				if (fall_height - z > MIN_JUMP_HEIGHT)
+				if (fall_height - z > MIN_JUMP_HEIGHT && !(player->flags & ACTOR_SOULSPHERE))
 				{
-/*
  // fall damage is out for now - TEMP TESTING - DEV ONLY
  				if ((fall_height - z > MAX_JUMP_HEIGHT) && this->IsPlayer())
-					{	// fall damage - d1-4 per 10' (10' = 256 pixels)
-						damage = 0;
+					{	// fall damage - d1-3 per 10' (10' = 256 pixels)
+						int damage = 0;
 						while (fall_height - z > TEN_FEET)
 						{
 							fall_height -= TEN_FEET;
-							damage+=(rand()%4)+1;
+							damage+=(rand()%3)+1;
 						}
 					if (damage>99) damage = 99;
-					int fall_index = (damage/2);
-					if (fall_index>10) fall_index = 10;
-					static TCHAR* landings[12] = 
-					{	
-						"You land with a thud!",
-						"You land with a loud thud!",
-						"You hit the ground with a loud thud!",
-						"You hear a crunch as you hit the ground!", 
-						"The ground shakes as you land with a loud smack!",
-						"You smash into the ground with a hard landing!",
-						"Your coherence wavers as you hit the ground!", 
-						"You crash into the ground with a loud crunch!", 
-						"You feel weak from falling so far!",
-						"The ground shivers in your wake, your soul feeling the pain!",
-						"Your soul shakes as you smash into the ground!",
-					};
-				_stprintf(message, landings[fall_index]);
-					display->DisplayMessage (message, false);
-					player->SetCurrStat(Stats::DREAMSOUL, -damage, SET_RELATIVE, player->ID());
+					player->SetCurrStat(Stats::DREAMSOUL, -damage, SET_RELATIVE_NO_COLLAPSE, player->ID());
 					if (this->InWater())
 						cDS->PlaySound(LyraSound::ENTER_WATER, x, y, false);
 					else
 						cDS->PlaySound(LyraSound::JUMPLANDING, x, y, false);
 					}
-
-*/
 				}
 			}
 		}
@@ -474,9 +469,14 @@ bool cActor::Render(void)
 {
 	if (terminate)
 		return false;
-	else if ((actors->ValidNeighbor(this)) && 
-			 (((cNeighbor*)this)->Avatar().Hidden()))
+	else if ((actors->ValidNeighbor(this)))
+	{
+		if(((cNeighbor*)this)->Avatar().Hidden())
 			return false;
+		else if (((cNeighbor*)this)->Avatar().PlayerInvis()) {
+			return false;
+		}
+	}
 	//else if ((actors->ValidNeighbor(this)))
 	//{ // for debugging
 		//if  (((cNeighbor*)this)->Avatar().Hidden())

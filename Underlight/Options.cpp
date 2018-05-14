@@ -58,6 +58,7 @@ extern bool loginoptiondlg;
 extern bool ready;
 extern bool keyboarddlg;
 extern bool mouselooking;
+extern macro_t chat_macros[MAX_MACROS];
 
 //////////////////////////////////////////////////////////////////
 // Constants
@@ -397,8 +398,21 @@ cJSON* __cdecl WriteJSONOptionValues()
 		cJSON_AddStringToObject(obj, "key_mappings", keys);
 		free(keys);
 		delete map;
+		ADDNUM(num_buddies);
+		cJSON* friends = cJSON_CreateArray();
+		for (int f = 0; f < options.num_buddies; f++)
+			cJSON_AddItemToArray(friends, cJSON_CreateString(options.buddies[f].name));
+		cJSON_AddItemToObject(obj, "buddies", friends);
+		cJSON* macros = cJSON_CreateArray();
+		for (int m = 0; m < MAX_MACROS; m++) {
+			if (_tcslen(chat_macros[m]) > 0)
+				cJSON_AddItemToArray(macros, cJSON_CreateString(chat_macros[m]));
+			else
+				cJSON_AddItemToArray(macros, cJSON_CreateNull());
+		}
+		cJSON_AddItemToObject(obj, "macros", macros);
 	}
-
+			
 #ifdef PMARE
 	ADDNUM(pmare_type);
 	ADDNUM(pmare_start_type);
@@ -618,6 +632,30 @@ void LoadParsedJSONOptions(cJSON* json)
 	}
 
 	options.num_bungholes = igIdx;
+
+	cJSON* f; cJSON* friends = cJSON_GetObjectItem(obj, "buddies");
+	int fIdx = 0;
+	cJSON_ArrayForEach(f, friends) {
+		if (igIdx < GMsg_LocateAvatar::MAX_PLAYERS && f && cJSON_IsString(f))
+		{
+			_tcscpy(options.buddies[fIdx++].name, cJSON_GetStringValue(f));
+		}
+	}
+	options.num_buddies = fIdx;
+
+	cJSON* m; cJSON* macros = cJSON_GetObjectItem(obj, "macros");
+	int mIdx = 0;
+	cJSON_ArrayForEach(m, macros) {
+		if (mIdx < MAX_MACROS && m)
+		{
+			if (cJSON_IsNull(m))
+				_tcscpy(chat_macros[mIdx], _T(""));
+			else if (cJSON_IsString(m))
+				_tcscpy(chat_macros[mIdx], cJSON_GetStringValue(m));
+			mIdx++;
+		}
+	}
+
 	cJSON* pmareStart = cJSON_GetObjectItem(obj, "pmare_session_start");
 	if (pmareStart && cJSON_IsString(pmareStart))
 	{
@@ -700,12 +738,18 @@ void LoadDefaultOptionValues()
 	options.pmare_start_type = 0;
 	options.pmare_price = 0;
 	options.tcp_only = TRUE;
-	options.tcp_only = FALSE;
 	options.pmare_session_start.wYear = 1970;
 	memset(&options.avatar, 0, sizeof(options.avatar));
 	options.num_bungholes = 0;
 	for (int i = 0; i < MAX_IGNORELIST; i++)
 		_tcscpy(options.bungholes[i].name, _T(""));
+	options.num_buddies = 0;
+	for (int i = 0; i < GMsg_LocateAvatar::MAX_PLAYERS; i++)
+		_tcscpy(options.buddies[i].name, _T(""));
+
+	for (int i = 0; i < MAX_MACROS; i++)
+		_tcscpy(chat_macros[i], _T(""));
+
 	keymap->SetDefaultKeymap(0);
 #endif // AGENT
 }
