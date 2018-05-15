@@ -467,26 +467,28 @@ void cActor::CheckMissile(void)
 
 bool cActor::Render(void)
 {
+	bool isVisioned = player != NULL && (player->flags & ACTOR_DETECT_INVIS);
+	bool isHidden = (flags & ACTOR_INVISIBLE) || (flags & ACTOR_CHAMELED);
 	if (terminate)
 		return false;
 	else if ((actors->ValidNeighbor(this)))
 	{
-		if(((cNeighbor*)this)->Avatar().Hidden())
-			return false;
-		else if (((cNeighbor*)this)->Avatar().PlayerInvis()) {
+		cNeighbor* neighbor = (cNeighbor*)this;
+		if (neighbor->Avatar().Hidden())
+		{
 			return false;
 		}
-	}
-	//else if ((actors->ValidNeighbor(this)))
-	//{ // for debugging
-		//if  (((cNeighbor*)this)->Avatar().Hidden())
-//			return false;
-	//}
-	else if (((flags & ACTOR_INVISIBLE) || (flags & ACTOR_CHAMELED)) &&
-		(player) && !(player->flags & ACTOR_DETECT_INVIS))
+		else if (neighbor->Avatar().PlayerInvis())
+		{
+			return false;
+		}
+	} 
+
+
+	if (isHidden && !isVisioned)
 		return false;
-	else
-		return true;
+
+	return true;
 }
 
 short* cActor::ColorRegions(void)

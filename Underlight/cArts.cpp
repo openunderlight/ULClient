@@ -773,13 +773,6 @@ void cArts::BeginArt(int art_id, bool bypass)
 		case Arts::GUILDHOUSE:
 			modified_duration = duration*(10 - (player->SkillSphere(art_id) * 2/3));
 			break;
-		case Arts::BLAST:
-		case Arts::TRANCEFLAME:
-			if (player->flags & ACTOR_INVISIBLE) {
-				modified_duration = duration * (10 - (player->SkillSphere(art_id) / 2));
-				break;
-			}
-			// else fallthru
 		default:
 			modified_duration = duration*(10 - player->SkillSphere(art_id));
 	}
@@ -2422,6 +2415,7 @@ void cArts::SoulReaper(void)
 
 void cArts::LaunchFireball(void) // used by next 4 arts
 {
+	// we divide the skill here because the player->Skill implementation special-cases flame due to a server error.
 	int artSkill = player->SkillSphere(art_in_use);
 	if (player->flags & ACTOR_INVISIBLE)
 		artSkill /= 2;
@@ -7701,6 +7695,7 @@ void cArts::EndMareEssenceMetaFunc(int art_id, int graphic, int item_name_string
 
 void cArts::StartEnslaveMare(void)
 {
+	display->DisplayMessage(disp_message);
 	this->WaitForSelection(&cArts::EndEnslaveMare, Arts::ENSLAVE_NIGHTMARE);
 	this->CaptureCP(INVENTORY_TAB, Arts::ENSLAVE_NIGHTMARE);
 	return;

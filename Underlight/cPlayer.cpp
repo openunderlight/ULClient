@@ -2995,11 +2995,11 @@ int cPlayer::Skill(int art_id)
 	else if ((orbit == 0) && (skills[art_id].skill) == 1)
 		return 1;
 	else if ((skills[art_id].skill) <= orbit)
-		return skills[art_id].skill;
+		return skills[art_id].skill / ((Avatar().PlayerInvis() && !arts->UseInSanctuary(art_id)) ? 2 : 1);
 	else
-		return orbit;
+		return orbit / ((Avatar().PlayerInvis() && !arts->UseInSanctuary(art_id)) ? 2 : 1);
 #endif
-}
+ }
 
 bool cPlayer::RetryTeleport(void)
 {
