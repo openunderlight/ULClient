@@ -4554,6 +4554,7 @@ BEGIN
     IDS_ENFEEBLE_APPLIED    "%s has slowed your speed!"
     IDS_ENFEEBLE_MARE       "The nightmare appears unaffected!"
     IDS_NO_MISSILE_INVIS    "You cannot use that item while invisible!"
+    IDS_ENFEEBLE_DEFLECT    "Your soul is shielded from being enfeebled!"
 END
 
 #endif    // English (United States) resources

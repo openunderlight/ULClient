@@ -7695,7 +7695,6 @@ void cArts::EndMareEssenceMetaFunc(int art_id, int graphic, int item_name_string
 
 void cArts::StartEnslaveMare(void)
 {
-	display->DisplayMessage(disp_message);
 	this->WaitForSelection(&cArts::EndEnslaveMare, Arts::ENSLAVE_NIGHTMARE);
 	this->CaptureCP(INVENTORY_TAB, Arts::ENSLAVE_NIGHTMARE);
 	return;
