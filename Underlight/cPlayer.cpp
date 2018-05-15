@@ -941,6 +941,19 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 			timed_effects->expires[LyraEffect::PLAYER_PROT_FEAR] -= CalculateBreakthrough(duration, effect_origin);
 			return false;
 		}} break;
+	case LyraEffect::PLAYER_WALK: {
+		if (flags & ACTOR_SOUL_SHIELDED && !invisGMBreakthru)
+		{
+			if (spammy_behaviour)
+			{
+				LoadString(hInstance, IDS_ENFEEBLE_DEFLECT, disp_message, sizeof(disp_message));
+				display->DisplayMessage(disp_message);
+			}
+
+			timed_effects->expires[LyraEffect::PLAYER_WALK] -= CalculateBreakthrough(duration, effect_origin);
+			return false;
+		}
+	} break;
 	case LyraEffect::PLAYER_BLIND: {
 		if (flags & ACTOR_DETECT_INVIS && !invisGMBreakthru)
 		{
@@ -2995,11 +3008,21 @@ int cPlayer::Skill(int art_id)
 	else if ((orbit == 0) && (skills[art_id].skill) == 1)
 		return 1;
 	else if ((skills[art_id].skill) <= orbit)
-		return skills[art_id].skill;
+	{
+		int modSkill = skills[art_id].skill / (((flags & ACTOR_INVISIBLE) && !arts->UseInSanctuary(art_id)) ? 2 : 1);
+		if (!modSkill)
+			modSkill = 1;
+		return modSkill;
+	}
 	else
-		return orbit;
+	{
+		int modSkill = orbit / (((flags & ACTOR_INVISIBLE) && !arts->UseInSanctuary(art_id)) ? 2 : 1);
+		if (!modSkill)
+			modSkill = 1;
+		return modSkill;
+	}
 #endif
-}
+ }
 
 bool cPlayer::RetryTeleport(void)
 {
