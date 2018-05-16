@@ -3001,26 +3001,25 @@ int cPlayer::Skill(int art_id)
 #else // otherwise, skill is limited by orbit, unless it is blade or flame,
 	// where lowering the skill level would cause a server error,
 	// or a focus skill, where the player couldn't use items in inventory
+	int skill = skills[art_id].skill;
+	if (!skill)
+		return 0;
+
 	if ((art_id == Arts::DREAMBLADE) ||
 		((art_id >= Arts::GATESMASHER) && (art_id <= Arts::FLAMERUIN)) ||
 		((art_id >= Arts::GATEKEEPER) && (art_id <= Arts::FATESENDER)))
-		return skills[art_id].skill;
-	else if ((orbit == 0) && (skills[art_id].skill) == 1)
+		return skill;
+	else if ((orbit == 0) && skill == 1)
 		return 1;
 	else if ((skills[art_id].skill) <= orbit)
-	{
-		int modSkill = skills[art_id].skill / (((flags & ACTOR_INVISIBLE) && !arts->UseInSanctuary(art_id)) ? 2 : 1);
-		if (!modSkill)
-			modSkill = 1;
-		return modSkill;
-	}
+		skill /= (((flags & ACTOR_INVISIBLE) && !arts->UseInSanctuary(art_id)) ? 2 : 1);
 	else
-	{
-		int modSkill = orbit / (((flags & ACTOR_INVISIBLE) && !arts->UseInSanctuary(art_id)) ? 2 : 1);
-		if (!modSkill)
-			modSkill = 1;
-		return modSkill;
-	}
+		skill = orbit / (((flags & ACTOR_INVISIBLE) && !arts->UseInSanctuary(art_id)) ? 2 : 1);
+
+	if (!skill && skills[art_id].skill > 0)
+		skill = 1;
+
+	return skill;
 #endif
  }
 
