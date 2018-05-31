@@ -252,7 +252,7 @@ cControlPanel::cControlPanel(void)
 	// Create the tab control
 
 	// window for tab control
-    hwnd_tab = CreateWindow(_T("CP_Tab"), _T(""), WS_POPUP | WS_CHILD, 
+    hwnd_tab = CreateWindow(_T("CP_Tab"), _T(""), WS_CHILD, 
 		tabPos[cDD->Res()].x, tabPos[cDD->Res()].y, 		
 		tabPos[cDD->Res()].width, tabPos[cDD->Res()].height,
 		cDD->Hwnd_Main(), NULL, hInstance, NULL); 
@@ -265,7 +265,7 @@ cControlPanel::cControlPanel(void)
     wc.lpszClassName = _T("CP_Window");
     RegisterClass( &wc );
 
-    hwnd_cp = CreateWindow(_T("CP_Window"), _T(""), WS_POPUP | WS_CHILD, 
+    hwnd_cp = CreateWindow(_T("CP_Window"), _T(""), WS_CHILD, 
 		mainPos[cDD->Res()].x, mainPos[cDD->Res()].y, mainPos[cDD->Res()].width, mainPos[cDD->Res()].height,
 		cDD->Hwnd_Main(), NULL, hInstance, NULL );
 
@@ -301,7 +301,7 @@ cControlPanel::cControlPanel(void)
     RegisterClass( &wc );
 
 	// window for avatar 
-    hwnd_avatar = CreateWindow(_T("CP_Avatar"), _T(""), WS_POPUP | WS_CHILD, 
+    hwnd_avatar = CreateWindow(_T("CP_Avatar"), _T(""), WS_CHILD, 
 		avatarPos[cDD->Res()].x, avatarPos[cDD->Res()].y, 		
 		avatarPos[cDD->Res()].width, avatarPos[cDD->Res()].height,
 		cDD->Hwnd_Main(), NULL, hInstance, NULL); 

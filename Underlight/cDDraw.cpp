@@ -80,7 +80,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 			break;
 	}
 
-	windowed = FALSE;
+	windowed = TRUE;
 	lpDDSOffscreen = lpDDSPrimary = NULL;
 	lpDD = NULL;
 
@@ -106,7 +106,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 
 	case 1: // 800x600
 		
-		width = 800; height = 600;
+		width = 800; height = 600 + GetSystemMetrics(SM_CYCAPTION);
 		viewx = 600; viewy = 375;
 		MAX_LV_ITEMS = 17;
 
@@ -117,7 +117,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 		if (leveleditor) 
 			windowed = TRUE;
 
-		width = 1024; height = 768;
+		width = 1024; height = 768 + GetSystemMetrics(SM_CYCAPTION);
 		MAX_LV_ITEMS = 20;
 
 
@@ -152,12 +152,13 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	RegisterClass( &wc );
 
 	style = 0;
-
+	/*
 	if (windowed)
 		type = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
 	else
 		type = WS_POPUP;
-
+	*/
+	type = WS_CAPTION | WS_BORDER | WS_MINIMIZEBOX | WS_SYSMENU;
 	hwnd_main = CreateWindowEx(
 										style,
 										name,
@@ -193,11 +194,6 @@ void cDDraw::Show()
 	
 	cp->Show();
 	display->Show();
-
-#ifndef DEVELOPER
-//	banner->Show();
-#endif
-
 	UpdateWindow( hwnd_main ); // crashes the activex control...
 	SendMessage(hwnd_main, WM_ACTIVATE, (WPARAM) WA_CLICKACTIVE, (LPARAM) hwnd_main);
 
@@ -228,32 +224,12 @@ void cDDraw::InitDDraw()
 	curr_height = ddsd.dwHeight;
 
 	bpp = curr_depth;
-	// Set up for full screen
-#if defined (UL_DEBUG) || defined (GAMEMASTER)
 	TRY_DD(lpDD->SetCooperativeLevel( hwnd_main, DDSCL_NORMAL));
 	if (curr_depth > bpp)
 	{
 		GAME_ERROR(IDS_SURFACE_COLOR_DEPTH_TOO_HIGH);
 		return;
 	}
-
-#else
-	if (windowed || (!options.exclusive)) // windowed...
-	{	
-		if ((curr_depth != bpp) || (curr_width != width) || (curr_height != height))
-		{
-			GAME_ERROR(IDS_NON_EXCLUSIVE_VID_MODE);
-			return;
-		}
-		TRY_DD(lpDD->SetCooperativeLevel( hwnd_main, DDSCL_NORMAL));
-	}
-	else // full screen
-	{
-		TRY_DD(lpDD->SetCooperativeLevel( hwnd_main, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN));
-		// reset the display mode to the parameters
-		TRY_DD(lpDD->SetDisplayMode( width, height, bpp, 0, 0));
-	}
-#endif
 
 	DDPIXELFORMAT ddpf;
 	ZeroMemory(&ddpf, sizeof(ddpf));
@@ -376,6 +352,7 @@ bool cDDraw::EraseSurface(int id)
 	ddbltfx.dwFillColor = 0;
 	while( 1 )
 	{
+		/*
 		if (windowed)
 		{
 			wndpt.x = 0;
@@ -388,6 +365,7 @@ bool cDDraw::EraseSurface(int id)
 			 status = lpDDSSurface->Blt( &rect, NULL, NULL, DDBLT_COLORFILL, &ddbltfx );
 		}
 		else
+		*/
 			status = lpDDSSurface->Blt( NULL, NULL, NULL, DDBLT_COLORFILL, &ddbltfx );
 
 		if( status == DD_OK )
