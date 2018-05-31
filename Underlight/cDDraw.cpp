@@ -158,7 +158,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	else
 		type = WS_POPUP;
 	*/
-	type = WS_CAPTION | WS_BORDER | WS_MINIMIZEBOX | WS_SYSMENU;
+	type = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
 	hwnd_main = CreateWindowEx(
 										style,
 										name,
@@ -352,22 +352,7 @@ bool cDDraw::EraseSurface(int id)
 	ddbltfx.dwFillColor = 0;
 	while( 1 )
 	{
-		/*
-		if (windowed)
-		{
-			wndpt.x = 0;
-			wndpt.y = 0;
-			ClientToScreen(hwnd_main, &wndpt);
-			rect.left  = wndpt.x;
-			rect.top   = wndpt.y;
-			rect.right = wndpt.x + width;
-			rect.bottom= wndpt.y + height;
-			 status = lpDDSSurface->Blt( &rect, NULL, NULL, DDBLT_COLORFILL, &ddbltfx );
-		}
-		else
-		*/
-			status = lpDDSSurface->Blt( NULL, NULL, NULL, DDBLT_COLORFILL, &ddbltfx );
-
+		status = lpDDSSurface->Blt( NULL, NULL, NULL, DDBLT_COLORFILL, &ddbltfx );
 		if( status == DD_OK )
 			  return true;
 

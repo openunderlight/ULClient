@@ -107,7 +107,7 @@ void RenderView(void)
 		{
 			POINT cursor;
 			GetCursorPos(&cursor);
-			SetPickScreenCo_ords(cursor.x,cursor.y);
+			SetPickScreenCo_ords(cursor.x - cDD->XOffset(),cursor.y - cDD->YOffset());
 		}
 		
 		if (!showing_map)
