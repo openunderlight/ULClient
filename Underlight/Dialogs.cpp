@@ -520,7 +520,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 			Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 1);
 
 			SetFocus(hwnd_speech);
-			SetWindowPos(hDlg, HWND_TOPMOST, cDD->DlgPosX(hDlg)+15, cDD->ViewY()+2, 0, 0, SWP_NOSIZE);
+			SetWindowPos(hDlg, HWND_TOPMOST, cDD->DlgPosX(hDlg)+15, (cDD->ViewY() + cDD->YOffset())+2, 0, 0, SWP_NOSIZE);
 
 			// Create Font for edit control
 			{
@@ -1161,8 +1161,8 @@ BOOL CALLBACK CreditsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 		case WM_INITDIALOG:
 			creditsdlg = true;
 			SetFocus(hDlg);
-			SetWindowPos(hDlg, TopMost(), 0, cDD->ViewY(),
-				0, 0, SWP_NOSIZE);
+			SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
+
 			ResizeLabel(hDlg, effects->EffectWidth(IDD_CREDITS), effects->EffectHeight(IDD_CREDITS));
 
 			hCreditsBackground = CreateWindowsBitmap(IDD_CREDITS);

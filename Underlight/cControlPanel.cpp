@@ -224,7 +224,7 @@ cControlPanel::cControlPanel(void)
    first_paint = true;
    setCounter = false;
    WNDCLASS wc;
-   WNDPROC	lpfn_inventory, lpfn_neighbors, lpfn_arts;
+   WNDPROC	lpfn_inventory, lpfn_neighbors, lpfn_arts, lpfn_avatar;
 
 
       // Create Image List
@@ -305,11 +305,8 @@ cControlPanel::cControlPanel(void)
 		avatarPos[cDD->Res()].x, avatarPos[cDD->Res()].y, 		
 		avatarPos[cDD->Res()].width, avatarPos[cDD->Res()].height,
 		cDD->Hwnd_Main(), NULL, hInstance, NULL); 
-
 	cp_avatar_bitmap = NULL;
-
 	// create selected stat bullet
-
     cp_bullet_bitmap = 	CreateWindowsBitmap(LyraBitmap::CP_BULLET + cDD->Res());
 	
 	// create buttons for turning avatar left/right
@@ -647,7 +644,7 @@ void cControlPanel::SetMode(int new_mode, bool art_capture, bool force_redraw)
 		ShowWindow(hwnd_invcounter, SW_HIDE);
 		ShowWindow(hwnd_left, SW_SHOWNORMAL);
 		ShowWindow(hwnd_right, SW_SHOWNORMAL);
-		ShowWindow(hwnd_avatar, SW_SHOWNORMAL);
+		ShowWindow(hwnd_avatar, SW_SHOWNORMAL);		
 	} 
 	else if (new_mode == INVENTORY_TAB)
 	{
@@ -2638,7 +2635,14 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 			break;
 
 		case WM_LBUTTONDOWN:
-			if ((hwnd == cp->hwnd_avatar) && !avatardlg && 
+			RECT avatarrect;
+			POINT pt;
+			pt.x = (short)LOWORD(lParam);
+			pt.y = (short)HIWORD(lParam);
+			GetWindowRect(cp->hwnd_avatar, &avatarrect);
+			ClientToScreen(cp->hwnd_avatar, &pt);
+
+			if ((hwnd == cp->hwnd_cp) && PtInRect(&avatarrect, pt) && !avatardlg && 
 					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED) && !player->Avatar().PlayerInvis())
 			{
 					avatardlg = TRUE;
@@ -2747,12 +2751,12 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 	}  
 
 	if (hwnd == hwnd_listviews[INVENTORY_TAB])
-		return CallWindowProc( lpfn_inventory, hwnd, message, wParam, lParam);
+		return CallWindowProc(lpfn_inventory, hwnd, message, wParam, lParam);
 	else if (hwnd == hwnd_listviews[NEIGHBORS_TAB])
-		return CallWindowProc( lpfn_neighbors, hwnd, message, wParam, lParam);
+		return CallWindowProc(lpfn_neighbors, hwnd, message, wParam, lParam);
 	else if (hwnd == hwnd_listviews[ARTS_TAB])
-		return CallWindowProc( lpfn_arts, hwnd, message, wParam, lParam);
-	else 
+		return CallWindowProc(lpfn_arts, hwnd, message, wParam, lParam);
+	else
 		return DefWindowProc(hwnd, message, wParam, lParam);
 } 
 

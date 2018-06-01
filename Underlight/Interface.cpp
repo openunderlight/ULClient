@@ -901,8 +901,6 @@ HWND __cdecl CreateLyraDialog( HINSTANCE hInstance, int dialog, HWND hWndParent,
 											 DLGPROC lpDialogFunc)
 
 {
-	DLGPROC lpDialogProc = lpDialogFunc;
-
 	hCurrentDlg = CreateDialogParam(hInstance,MAKEINTRESOURCE(dialog),hWndParent,LyraDialogProc, LPARAM(lpDialogFunc));
 	cDS->PlaySound(LyraSound::MESSAGE_ALERT);
 
