@@ -596,7 +596,7 @@ LRESULT WINAPI RichEditWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 	    case WM_SETCURSOR:
 			return 0;
 		case WM_MOUSEWHEEL: {
-			Realm_OnMouseWheelScroll(hwnd, LOWORD(lParam), HIWORD(lParam), (short)HIWORD(wParam));
+			Realm_OnMouseWheelScroll(hwnd, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), (short)HIWORD(wParam));
 			return (LRESULT)0;
 		}
 		break;

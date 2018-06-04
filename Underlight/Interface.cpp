@@ -716,8 +716,8 @@ void ResizeDlg(HWND hDlg)
 
 	// now resize appropriately, based on fonts
 	GetWindowRect(hDlg, &rect);
-	w = (int)(((float)(rect.right - rect.left))*scale_x);
-	h = (int)(((float)(rect.bottom - rect.top))*scale_y);
+	w = rect.right - rect.left;
+	h = rect.bottom - rect.top;
 	MoveWindow(hDlg, rect.left, rect.top, w, h, TRUE);
 
 	// and resize all child windows appropriately
@@ -733,10 +733,10 @@ BOOL CALLBACK EnumChildProcSize( HWND hChild, LPARAM lParam )
 	// now resize appropriately, based on fonts
 	GetWindowRect(GetParent(hChild), &rect1);
 	GetWindowRect(hChild, &rect2);
-	x = (int)((float)rect2.left*scale_x) - rect1.left;
-	y = (int)((float)rect2.top*scale_y) - rect1.top;
-	w = (int)(((float)(rect2.right - rect2.left))*scale_x);
-	h = (int)(((float)(rect2.bottom - rect2.top))*scale_y);
+	x = rect2.left - rect1.left;
+	y = rect2.top - rect1.top;
+	w = rect2.right - rect2.left;
+	h = rect2.bottom - rect2.top;
 	MoveWindow(hChild, x, y, w, h, TRUE);
 
 	return TRUE;

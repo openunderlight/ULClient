@@ -138,7 +138,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	}
 
 	// set up and register window class
-	wc.style 		  = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC;
+	wc.style 		  = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC | CS_NOCLOSE;
 	wc.lpfnWndProc   = wproc;
 	wc.cbClsExtra	  = 0;
 	wc.cbWndExtra	  = 0;

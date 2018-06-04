@@ -190,8 +190,8 @@ void __cdecl CreateFrame(void)
 //	AdjustCursor();	
 
 #ifndef AGENT
-#ifndef UL_DEBUG
-#ifndef GAMEMASTER
+//#ifndef UL_DEBUG
+//#ifndef GAMEMASTER
    HWND focus_hwnd = GetFocus();
    if ((focus_hwnd == NULL) && (IsLyraColors == TRUE) && (origcolors))
 	{
@@ -200,8 +200,8 @@ void __cdecl CreateFrame(void)
 	}
    
 #endif
-#endif
-#endif
+//#endif
+//#endif
 
 #ifndef AGENT
 	#ifndef UL_DEBUG

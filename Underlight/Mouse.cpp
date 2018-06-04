@@ -199,7 +199,7 @@ void  Realm_OnMButtonUp(HWND hWnd, WORD x, WORD y, WORD fwKeys )
 	return;
 }
 
-void Realm_OnMouseWheelScroll(HWND hWnd, WORD x, WORD y, int direction)
+void Realm_OnMouseWheelScroll(HWND hWnd, int x, int y, int direction)
 {
 	POINT pt;
 	pt.x = x; pt.y = y;

@@ -263,11 +263,11 @@ _CrtMemState memstuff;
 // storage for original windows colors (never needed by AI)
 
 #ifndef AGENT
-#if !(defined (UL_DEBUG) || defined (GAMEMASTER))
+//#if !(defined (UL_DEBUG) || defined (GAMEMASTER))
 unsigned long *origcolors = NULL;
 bool IsLyraColors = FALSE;
 #endif
-#endif
+//#endif
 
 
 // if GAME_LYR is defined, use game.lyr, unless we are overriding by setting GAME_CLI
@@ -683,9 +683,9 @@ bool __cdecl Init_Game(void)
 	cDS->PlaySound(LyraSound::ENTRY);
 	timing->begin_time = timing->t_start = LyraTime();
 
-#ifndef GAMEMASTER
+//#ifndef GAMEMASTER
 #ifndef AGENT
-#ifndef UL_DEBUG
+//#ifndef UL_DEBUG
 	origcolors = new unsigned long[11];
 	// screw with the windows colors
 	{
@@ -696,9 +696,9 @@ bool __cdecl Init_Game(void)
 
 	SetSysColors (11, syscolors, lyra_colors);
 	IsLyraColors = TRUE;
+//#endif
 #endif
-#endif
-#endif
+//#endif
 
 #ifdef GAMEMASTER // set up agent controller
 	as = new cAgentServer();
@@ -885,13 +885,13 @@ void __cdecl Exit(void)
 
 	exiting = true;
 
-#ifndef GAMEMASTER
+//#ifndef GAMEMASTER
 #ifndef AGENT
-#ifndef UL_DEBUG
+//#ifndef UL_DEBUG
 	if (origcolors)
 		SetSysColors (11, syscolors, origcolors);
-#endif
-#endif
+//#endif
+//#endif
 #endif
 
 	if (keymap) { delete keymap; keymap = NULL; }
@@ -950,18 +950,18 @@ void __cdecl Exit(void)
 
 	if (RichEdLibrary) { FreeLibrary(RichEdLibrary); RichEdLibrary = NULL; }
 
-#ifndef GAMEMASTER
+//ifndef GAMEMASTER
 #ifndef AGENT
-#ifndef UL_DEBUG
+//#ifndef UL_DEBUG
 	if (origcolors)
 	{
 		SetSysColors(11, syscolors, origcolors);
 		delete origcolors;
 		origcolors = NULL;
 	}
+//#endif
 #endif
-#endif
-#endif
+//#endif
 
 	if (killed)
 	{ // disp_message comes loaded with the dreamstrike message with the killer's name
