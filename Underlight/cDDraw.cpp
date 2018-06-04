@@ -21,6 +21,7 @@
 #include "4dx.h"
 #include "resource.h"
 #include "cDDraw.h"
+#include "IconDefs.h"
 
 //////////////////////////////////////////////////////////////////
 // External Global Variables
@@ -63,7 +64,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 
 
 {
-	WNDCLASS wc;
+	WNDCLASSEX wc;
 	bpp = BITS_PER_PIXEL;
 	DWORD style,type;
 
@@ -148,8 +149,10 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	wc.hbrBackground = NULL;
 	wc.lpszMenuName  = NULL;
 	wc.lpszClassName = name;
+	wc.cbSize = sizeof(WNDCLASSEX);
+	wc.hIconSm = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_LYRA_SM));
 
-	RegisterClass( &wc );
+	RegisterClassEx( &wc );
 
 	style = 0;
 	/*

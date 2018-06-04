@@ -2035,6 +2035,11 @@
     <Library Include="..\libs\dxguid.lib" />
     <Library Include="..\libs\TH32.Lib" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon2.ico" />
+    <Image Include="lyra1.ico" />
+    <Image Include="Lyra_sm.ico" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

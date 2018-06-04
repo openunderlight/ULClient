@@ -7,6 +7,7 @@
 #define IDS_MP                          2
 #define IDITEMHELP                      3
 #define IDS_MEDIUM                      3
+#define IDI_LYRA_SM                     3
 #define IDS_DAEMON_LOG                  4
 #define IDS_DEBUG                       5
 #define IDS_UNDERLIGHT                  6
@@ -79,6 +80,7 @@
 #define IDS_FLIGHT                      210
 #define IDS_FLIGHT_ON                   211
 #define IDS_FLIGHT_OFF                  212
+#define IDI_ICON1                       217
 #define IDS_PROPERTIES                  1000
 #define IDC_USERNAME                    1004
 #define IDC_EMAIL                       1005
@@ -3038,7 +3040,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        214
+#define _APS_NEXT_RESOURCE_VALUE        218
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1447
 #define _APS_NEXT_SYMED_VALUE           101
