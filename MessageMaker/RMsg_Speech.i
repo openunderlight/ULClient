@@ -88,7 +88,7 @@ INLINE void RMsg_Speech::InitServerText(lyra_id_t playerid, const TCHAR* txt)
 
 INLINE int RMsg_Speech::SpeechType() const
 {
-  return (int)data_.speech_type;
+  return (int)(data_.speech_type & 127);
 }
 
 INLINE int RMsg_Speech::Babble() const
@@ -126,3 +126,15 @@ INLINE void RMsg_Speech::SetBabble(int babble)
   data_.babble = babble;
 }
 
+INLINE void RMsg_Speech::SetUniverseWide(bool universe)
+{
+	if(universe)
+		data_.speech_type |= (1<<7);
+	else
+		data_.speech_type &= 127;
+}
+
+INLINE bool RMsg_Speech::IsUniverseWide() const
+{
+	return (data_.speech_type & (1<<7));
+}

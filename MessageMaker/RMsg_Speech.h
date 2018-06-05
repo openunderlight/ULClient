@@ -50,7 +50,7 @@ public:
     SYSTEM_WHISPER = 'w',  // "system" whisper
     TELL_IP        = 't',  // roger wilco IP address
     WHISPER        = 'W',  // person-to-person whisper
-	WHISPER_EMOTE  = 'Z'   // emote showing a whisper is happening
+	WHISPER_EMOTE  = 'Z',  // emote showing a whisper is happening
   };
 
 public:
@@ -76,12 +76,14 @@ public:
   void InitAutoCheat(lyra_id_t playerid, const TCHAR* txt);
   void InitReportDebug(lyra_id_t playerid, const TCHAR* txt);
   void InitServerText(lyra_id_t playerid, const TCHAR* txt);
+  void SetUniverseWide(bool universe);
 
   // standard public methods
   void Dump(FILE* f, int indent = 0) const;
 
   // selectors
   lyra_id_t PlayerID() const;
+  bool IsUniverseWide() const;
   int SpeechType() const;
   const TCHAR* SpeechText() const;
   int SpeechLength() const;

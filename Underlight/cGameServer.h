@@ -222,7 +222,7 @@ class cGameServer
 
 	  // room server updates
 	  void OnRoomChange(short last_x, short last_y);
-	  void Talk(TCHAR *talk, int speechType, realmid_t target, bool echo = false, bool allow_babble = true); // say something
+	  void Talk(TCHAR *talk, int speechType, realmid_t target, bool echo = false, bool allow_babble = true, bool universal=false); // say something
 	  void JoinParty(realmid_t playerID, bool auto_rejoin = false); // join another player's party
 	  void RejectPartyQuery(int reason, realmid_t playerID); // reject request
 	  void AcceptPartyQuery(realmid_t playerID); // accept request
