@@ -401,7 +401,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 	static bool stripdot = false; // strip trailing dot?
 	static bool stripret = false; // strip trailing return?
 	static HFONT hEditFont;
-
+	bool universal = false;
 	static int init_buffer=1;
 	if (init_buffer)
 	{
@@ -480,6 +480,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 			}
 #ifdef GAMEMASTER
 			ShowWindow(GetDlgItem(hDlg,IDC_RAW_EMOTE), SW_SHOW);
+			ShowWindow(GetDlgItem(hDlg, IDC_UNIVERSE), SW_SHOW);
 
 			//#else
 //			if (level->ID() == 20) // no whispers in Thresh
@@ -671,25 +672,33 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 					DestroyWindow(hDlg);
 					return TRUE;
 				}
-
+#ifdef GAMEMASTER
+				universal = Button_GetCheck(GetDlgItem(hDlg, IDC_UNIVERSE));
+				if (universal && !Button_GetCheck(GetDlgItem(hDlg, IDC_RAW_EMOTE)) && !Button_GetCheck(GetDlgItem(hDlg, IDC_TALK)))
+				{
+					display->DisplayMessage("You can only Dreamwide Broadcast with Raw Emotes or Speech; Speech is sent as a System Message");
+					return FALSE;
+				}
+#endif
 				// talk action is legal
 				if (options.network && gs && gs->LoggedIntoGame())
 				{
 					if (Button_GetCheck(GetDlgItem(hDlg, IDC_TALK)))
-						gs->Talk(sentence,RMsg_Speech::SPEECH,Lyra::ID_UNKNOWN);
+						gs->Talk(sentence,RMsg_Speech::SPEECH,Lyra::ID_UNKNOWN, false, true, universal);
 					else if (Button_GetCheck(GetDlgItem(hDlg, IDC_SHOUT)))
-						gs->Talk(sentence,RMsg_Speech::SHOUT,Lyra::ID_UNKNOWN, true);
+						gs->Talk(sentence,RMsg_Speech::SHOUT,Lyra::ID_UNKNOWN, true, true, universal);
 					else if (Button_GetCheck(GetDlgItem(hDlg, IDC_WHISPER)))
 					{
 						target = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_NEIGHBORS));
-						if (target == -1) // whisper to self
+						if (target == -1 && !universal) // whisper to self
 							display->DisplaySpeech(sentence, player->Name(), RMsg_Speech::WHISPER);
 						else
 						{
-							n = actors->LookUpNeighbor(neighborid[target]);
-							if (n && n->CanWhisper())
+							n = !universal ? actors->LookUpNeighbor(neighborid[target]) : NO_ACTOR;
+							if (universal || (n && n->CanWhisper()))
 							{
-								gs->Talk(sentence,RMsg_Speech::WHISPER, neighborid[target], true);
+								realmid_t tgt = !universal ? neighborid[target] : Lyra::ID_UNKNOWN;
+								gs->Talk(sentence,RMsg_Speech::WHISPER, tgt, true, true, universal);
 								// 1 in 10 change whisper emote is shown to all
 #ifndef GAMEMASTER // GM's don't sent out whisper emote
 								int show_emote = rand()%10;
@@ -714,9 +723,9 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 						}
 					}
 					else if (Button_GetCheck(GetDlgItem(hDlg, IDC_EMOTE)))
-						gs->Talk(sentence,RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN);
+						gs->Talk(sentence,RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN, false, true, universal);
 					else if (Button_GetCheck(GetDlgItem(hDlg, IDC_RAW_EMOTE)))
-						gs->Talk(sentence,RMsg_Speech::RAW_EMOTE, Lyra::ID_UNKNOWN);
+						gs->Talk(sentence,RMsg_Speech::RAW_EMOTE, Lyra::ID_UNKNOWN, false, true, universal);
 					else if (Button_GetCheck(GetDlgItem(hDlg, IDC_SPECIAL_TALK)))
 					{
 						target = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_SPECIAL_TALKLIST));
