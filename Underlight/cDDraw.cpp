@@ -67,6 +67,8 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	WNDCLASSEX wc;
 	bpp = BITS_PER_PIXEL;
 	DWORD style,type;
+	int screenWidth = GetSystemMetrics(SM_CXFULLSCREEN),
+		screenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
 
 	// convert resolution from (640,800,1024) to (0,1,2)
 	switch (resolution) {
@@ -98,7 +100,8 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 		}
 		else
 		{
-			width = 640; height = 480; 
+			width = 640; 
+			height = 480; 
 			//windowed=TRUE;
 		}
 		MAX_LV_ITEMS = 15;
@@ -107,7 +110,8 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 
 	case 1: // 800x600
 		
-		width = 800; height = 600 + GetSystemMetrics(SM_CYCAPTION);
+		width = 800; 
+		height = 600 + GetSystemMetrics(SM_CYCAPTION);
 		viewx = 600; viewy = 375;
 		MAX_LV_ITEMS = 17;
 
@@ -118,7 +122,8 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 		if (leveleditor) 
 			windowed = TRUE;
 
-		width = 1024; height = 768 + GetSystemMetrics(SM_CYCAPTION);
+		width = 1024; 
+		height = 768 + GetSystemMetrics(SM_CYCAPTION);
 		MAX_LV_ITEMS = 20;
 
 
@@ -139,7 +144,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	}
 
 	// set up and register window class
-	wc.style 		  = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC | CS_NOCLOSE;
+	wc.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC | CS_NOCLOSE;
 	wc.lpfnWndProc   = wproc;
 	wc.cbClsExtra	  = 0;
 	wc.cbWndExtra	  = 0;
@@ -161,7 +166,11 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	else
 		type = WS_POPUP;
 	*/
-	type = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
+	if (screenHeight > height) 
+		type = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
+	else 
+		type = WS_POPUP;
+
 	hwnd_main = CreateWindowEx(
 										style,
 										name,
