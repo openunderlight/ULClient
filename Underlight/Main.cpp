@@ -144,14 +144,14 @@ LRESULT WINAPI WindowProc ( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		//HANDLE_MSG(hWnd, WM_COMMAND, Realm_OnCommand);
 
 	case WM_MOUSEWHEEL:
-		Realm_OnMouseWheelScroll(hWnd, LOWORD(lParam), HIWORD(lParam), (short)HIWORD(wParam));
+		Realm_OnMouseWheelScroll(hWnd, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), (short)HIWORD(wParam));
 
 	case WM_TIMER:
 		if (wParam == MIN_FRAME_TIMER)
 			CreateFrame();
 		break;
 
-#if !(defined (AGENT) || defined (UL_DEBUG) || defined (GAMEMASTER))
+#ifndef AGENT
 	case WM_QUERYOPEN:
 		if (!IsLyraColors)
 		{

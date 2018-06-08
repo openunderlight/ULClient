@@ -279,6 +279,7 @@ private:
 	friend int CALLBACK CompareItems(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort); 
 	friend int CALLBACK CompareNeighbors(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort); 
 	friend int CALLBACK CompareArts(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort); 
+	friend BOOL CALLBACK AvatarWndProc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam);
 
 
 #ifdef CHECK_INVARIANTS

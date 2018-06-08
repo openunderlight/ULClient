@@ -21,6 +21,7 @@
 #include "4dx.h"
 #include "resource.h"
 #include "cDDraw.h"
+#include "IconDefs.h"
 
 //////////////////////////////////////////////////////////////////
 // External Global Variables
@@ -63,9 +64,11 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 
 
 {
-	WNDCLASS wc;
+	WNDCLASSEX wc;
 	bpp = BITS_PER_PIXEL;
 	DWORD style,type;
+	int screenWidth = GetSystemMetrics(SM_CXFULLSCREEN),
+		screenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
 
 	// convert resolution from (640,800,1024) to (0,1,2)
 	switch (resolution) {
@@ -80,7 +83,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 			break;
 	}
 
-	windowed = FALSE;
+	windowed = TRUE;
 	lpDDSOffscreen = lpDDSPrimary = NULL;
 	lpDD = NULL;
 
@@ -97,7 +100,8 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 		}
 		else
 		{
-			width = 640; height = 480; 
+			width = 640; 
+			height = 480; 
 			//windowed=TRUE;
 		}
 		MAX_LV_ITEMS = 15;
@@ -106,7 +110,8 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 
 	case 1: // 800x600
 		
-		width = 800; height = 600;
+		width = 800; 
+		height = 600 + GetSystemMetrics(SM_CYCAPTION);
 		viewx = 600; viewy = 375;
 		MAX_LV_ITEMS = 17;
 
@@ -117,7 +122,8 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 		if (leveleditor) 
 			windowed = TRUE;
 
-		width = 1024; height = 768;
+		width = 1024; 
+		height = 768 + GetSystemMetrics(SM_CYCAPTION);
 		MAX_LV_ITEMS = 20;
 
 
@@ -138,7 +144,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	}
 
 	// set up and register window class
-	wc.style 		  = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC;
+	wc.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC | CS_NOCLOSE;
 	wc.lpfnWndProc   = wproc;
 	wc.cbClsExtra	  = 0;
 	wc.cbWndExtra	  = 0;
@@ -148,14 +154,21 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	wc.hbrBackground = NULL;
 	wc.lpszMenuName  = NULL;
 	wc.lpszClassName = name;
+	wc.cbSize = sizeof(WNDCLASSEX);
+	wc.hIconSm = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_LYRA_SM));
 
-	RegisterClass( &wc );
+	RegisterClassEx( &wc );
 
 	style = 0;
-
+	/*
 	if (windowed)
 		type = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
 	else
+		type = WS_POPUP;
+	*/
+	if (screenHeight > height) 
+		type = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
+	else 
 		type = WS_POPUP;
 
 	hwnd_main = CreateWindowEx(
@@ -193,11 +206,6 @@ void cDDraw::Show()
 	
 	cp->Show();
 	display->Show();
-
-#ifndef DEVELOPER
-//	banner->Show();
-#endif
-
 	UpdateWindow( hwnd_main ); // crashes the activex control...
 	SendMessage(hwnd_main, WM_ACTIVATE, (WPARAM) WA_CLICKACTIVE, (LPARAM) hwnd_main);
 
@@ -228,32 +236,12 @@ void cDDraw::InitDDraw()
 	curr_height = ddsd.dwHeight;
 
 	bpp = curr_depth;
-	// Set up for full screen
-#if defined (UL_DEBUG) || defined (GAMEMASTER)
 	TRY_DD(lpDD->SetCooperativeLevel( hwnd_main, DDSCL_NORMAL));
 	if (curr_depth > bpp)
 	{
 		GAME_ERROR(IDS_SURFACE_COLOR_DEPTH_TOO_HIGH);
 		return;
 	}
-
-#else
-	if (windowed || (!options.exclusive)) // windowed...
-	{	
-		if ((curr_depth != bpp) || (curr_width != width) || (curr_height != height))
-		{
-			GAME_ERROR(IDS_NON_EXCLUSIVE_VID_MODE);
-			return;
-		}
-		TRY_DD(lpDD->SetCooperativeLevel( hwnd_main, DDSCL_NORMAL));
-	}
-	else // full screen
-	{
-		TRY_DD(lpDD->SetCooperativeLevel( hwnd_main, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN));
-		// reset the display mode to the parameters
-		TRY_DD(lpDD->SetDisplayMode( width, height, bpp, 0, 0));
-	}
-#endif
 
 	DDPIXELFORMAT ddpf;
 	ZeroMemory(&ddpf, sizeof(ddpf));
@@ -376,20 +364,7 @@ bool cDDraw::EraseSurface(int id)
 	ddbltfx.dwFillColor = 0;
 	while( 1 )
 	{
-		if (windowed)
-		{
-			wndpt.x = 0;
-			wndpt.y = 0;
-			ClientToScreen(hwnd_main, &wndpt);
-			rect.left  = wndpt.x;
-			rect.top   = wndpt.y;
-			rect.right = wndpt.x + width;
-			rect.bottom= wndpt.y + height;
-			 status = lpDDSSurface->Blt( &rect, NULL, NULL, DDBLT_COLORFILL, &ddbltfx );
-		}
-		else
-			status = lpDDSSurface->Blt( NULL, NULL, NULL, DDBLT_COLORFILL, &ddbltfx );
-
+		status = lpDDSSurface->Blt( NULL, NULL, NULL, DDBLT_COLORFILL, &ddbltfx );
 		if( status == DD_OK )
 			  return true;
 

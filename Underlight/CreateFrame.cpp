@@ -107,7 +107,7 @@ void RenderView(void)
 		{
 			POINT cursor;
 			GetCursorPos(&cursor);
-			SetPickScreenCo_ords(cursor.x,cursor.y);
+			SetPickScreenCo_ords(cursor.x - cDD->XOffset(),cursor.y - cDD->YOffset());
 		}
 		
 		if (!showing_map)
@@ -190,8 +190,8 @@ void __cdecl CreateFrame(void)
 //	AdjustCursor();	
 
 #ifndef AGENT
-#ifndef UL_DEBUG
-#ifndef GAMEMASTER
+//#ifndef UL_DEBUG
+//#ifndef GAMEMASTER
    HWND focus_hwnd = GetFocus();
    if ((focus_hwnd == NULL) && (IsLyraColors == TRUE) && (origcolors))
 	{
@@ -200,8 +200,8 @@ void __cdecl CreateFrame(void)
 	}
    
 #endif
-#endif
-#endif
+//#endif
+//#endif
 
 #ifndef AGENT
 	#ifndef UL_DEBUG
