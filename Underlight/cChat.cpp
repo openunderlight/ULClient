@@ -10,8 +10,6 @@
 #include "cDDraw.h"
 #include "cDSound.h"
 #include "cPlayer.h"
-#include "cGameServer.h"
-#include "cControlPanel.h"
 #include "cChat.h"
 #include "Utils.h"
 #include "cOutput.h"
@@ -27,8 +25,6 @@
 
 extern cDDraw *cDD;
 extern cDSound *cDS;
-extern cGameServer* gs;
-extern cControlPanel* cp;
 extern HINSTANCE hInstance;
 extern cPlayer *player;
 extern cChat *display; // needed for window proc
@@ -37,21 +33,17 @@ extern mouse_look_t mouse_look;
 extern mouse_move_t mouse_move;
 extern HFONT display_font[MAX_RESOLUTIONS]; 
 
-
 //////////////////////////////////////////////////////////////////
 // Constants
 
 const int MAX_LINES=60;
-const int VISIBLE_LINES[MAX_RESOLUTIONS] = { 9, 9, 11 };
+const int VISIBLE_LINES[MAX_RESOLUTIONS] = { 11, 11, 13 };
 const int MIN_REPEAT_INTERVAL = 1000; // same message no more than once/sec
 
 // position for chat display area - no ads 
 const struct window_pos_t chatPos[MAX_RESOLUTIONS] = 
-{ { 0, 300, 480, 155 }, { 0, 375, 600, 199 }, { 0, 480, 768, 263 } };
-
-const struct window_pos_t entryPos[MAX_RESOLUTIONS] =
-{ { 0, 455, 480, 25 }, { 0, 575, 600, 30 }, { 0, 743, 768, 30 } };
-
+{ { 0, 300, 480, 180 }, { 0, 375, 600, 225 }, { 0, 480, 768, 288 } };
+	
 // position for chat display area - with banner
 //const struct window_pos_t chatPos = {0, 300, 480, 119}; 
 
@@ -66,11 +58,11 @@ struct button_t {
 
 const button_t chat_buttons[NUM_CHAT_BUTTONS] = 
 {
-{ {{ 460, 150 - 25, 13, 25 }, { 579, 193 - 25, 13, 25 }, { 747, 255 - 25, 13, 25 } },
+{ {{ 460, 150, 13, 25 }, { 579, 193, 13, 25 }, { 747, 255, 13, 25 } },
 		DDOWN, LyraBitmap::CP_DDOWNA }, // double down button
 { {{ 460, 0, 13, 25 }, { 579, 0, 13, 25 }, { 747, 0, 13, 25 } },
 		DUP, LyraBitmap::CP_DUPA },   // double up button
-{ {{ 460, 135 - 25, 13, 15 }, { 579, 178 - 25, 13, 15 }, { 747, 240 - 25, 13, 15 } },
+{ {{ 460, 135, 13, 15 }, { 579, 178, 13, 15 }, { 747, 240, 13, 15 } },
 		DOWN, LyraBitmap::CP_DOWNA },   // down button
 { {{ 460, 25, 13, 15 }, { 579, 25, 13, 15 }, { 747, 25, 13, 15 } },
 		UP, LyraBitmap::CP_UPA }     // up button
@@ -119,36 +111,36 @@ TCHAR* ChatColorName(int id)
 
 
 // Constructor
-cChat::cChat(int speech_color, int message_color, int bg_color)
+cChat::cChat(int speech_color, int message_color, int bg_color) 
 {
 	// The richedit can't be read-only or we won't be able to delete
 	// from it. However, the window proc will immediately return the
 	// the focus to the main window for any attempted edits. 
 	//hwnd_richedit = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, "RICHEDIT20A", "",
 	hwnd_richedit = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, _T("RICHEDIT"), _T(""),
-		WS_CHILD | ES_MULTILINE | //ES_AUTOVSCROLL  | WS_VSCROLL | 
+		WS_CHILD |  ES_MULTILINE | //ES_AUTOVSCROLL  | WS_VSCROLL | 
 		WS_BORDER | ES_WANTRETURN,
-		chatPos[cDD->Res()].x, chatPos[cDD->Res()].y,
+		chatPos[cDD->Res()].x, chatPos[cDD->Res()].y, 
 		chatPos[cDD->Res()].width, chatPos[cDD->Res()].height,
-		cDD->Hwnd_Main(), NULL, hInstance, NULL);
-
+		cDD->Hwnd_Main(), NULL, hInstance, NULL); 
+	
 	lpfn_richedit = SubclassWindow(hwnd_richedit, RichEditWProc);
-	SendMessage(hwnd_richedit, WM_PASSPROC, 0, (LPARAM)lpfn_richedit);
+	SendMessage(hwnd_richedit, WM_PASSPROC, 0, (LPARAM) lpfn_richedit ); 
 
-	for (int i = 0; i < NUM_CHAT_BUTTONS; i++)
+	for (int i=0; i<NUM_CHAT_BUTTONS; i++)
 	{
 		hwnd_chat_buttons[i] = CreateWindow(_T("button"), _T(""),
-			WS_CHILD | BS_PUSHBUTTON | BS_OWNERDRAW,
-			chat_buttons[i].position[cDD->Res()].x, chat_buttons[i].position[cDD->Res()].y,
-			chat_buttons[i].position[cDD->Res()].width, chat_buttons[i].position[cDD->Res()].height,
-			hwnd_richedit, NULL, hInstance, NULL);
+				WS_CHILD | BS_PUSHBUTTON | BS_OWNERDRAW,
+				chat_buttons[i].position[cDD->Res()].x, chat_buttons[i].position[cDD->Res()].y, 
+				chat_buttons[i].position[cDD->Res()].width, chat_buttons[i].position[cDD->Res()].height,
+				hwnd_richedit, NULL, hInstance, NULL);
 		chat_buttons_bitmaps[i][0] = // a button
 			CreateWindowsBitmap(chat_buttons[i].bitmap_id);
 		chat_buttons_bitmaps[i][1] = // b button
 			CreateWindowsBitmap(chat_buttons[i].bitmap_id + 1);
 	}
 
-
+ 
 	// Set up paragraph format for player speech.
 
 	chatPF.cbSize = sizeof(chatPF);
@@ -156,9 +148,11 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 	chatPF.wAlignment = PFA_LEFT;
 	chatPF.dxRightIndent = 175;
 	chatPF.dxStartIndent = 0;
-	chatPF.dxOffset = 200;
+	chatPF.dxOffset = 200; 
 
 	SendMessage(hwnd_richedit, EM_SETPARAFORMAT, 0, (LPARAM)&chatPF);
+
+
 	SendMessage(hwnd_richedit, WM_SETFONT, WPARAM(display_font[cDD->Res()]), 0);
 
 	// Initialize character format structures
@@ -170,46 +164,10 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 	// set background color
 
 	this->SetBGColor(bg_color);
+ 
 	currMode = PLAYER_NAME;
 	last_system_message_time = 0;
 	first_message = true;
-
-	hwnd_textentry = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, "RICHEDIT", "",
-		WS_CHILD | ES_AUTOHSCROLL | WS_BORDER | ES_WANTRETURN,
-		entryPos[cDD->Res()].x, entryPos[cDD->Res()].y,
-		entryPos[cDD->Res()].width, entryPos[cDD->Res()].height,
-		cDD->Hwnd_Main(), NULL, hInstance, NULL
-		);
-	const TCHAR CHAT_FONT_NAME[16] = _T("Arial");
-	LOGFONT logFont;
-	memset(&logFont, 0, sizeof(LOGFONT));
-
-	logFont.lfHeight = 15;
-	logFont.lfWidth = 0;
-	logFont.lfWeight = 750;
-	logFont.lfEscapement = 0;
-	logFont.lfItalic = 0;
-	logFont.lfUnderline = 0;
-	logFont.lfOutPrecision = OUT_TT_ONLY_PRECIS;
-	logFont.lfClipPrecision = CLIP_STROKE_PRECIS;
-	logFont.lfQuality = DEFAULT_QUALITY;
-	_tcscpy(logFont.lfFaceName, CHAT_FONT_NAME);
-
-	// set the control to use this font
-	entryfont = CreateFontIndirect(&logFont);
-	lpfn_entry = SubclassWindow(hwnd_textentry, EntryWProc);
-	SendMessage(hwnd_textentry, WM_PASSPROC, 0, (LPARAM)lpfn_entry);
-	SendMessage(hwnd_textentry, WM_SETFONT, WPARAM(entryfont), 0);
-	ShowWindow(hwnd_textentry, SW_SHOWNORMAL);
-	BGColor = RGB(0x00, 0x33, 0x66);
-	FGColor = RGB(chat_colors[4].red, chat_colors[4].green, chat_colors[4].blue);
-	SendMessage(hwnd_textentry, EM_SETBKGNDCOLOR, (WPARAM)FALSE, (LPARAM)BGColor);
-	CHARFORMAT2 cf;
-	cf.dwMask = CFM_COLOR;
-	cf.crTextColor = FGColor; //The text color
-	cf.cbSize = sizeof(CHARFORMAT2);
-	cf.dwEffects = { 0 };
-	SendMessageA(hwnd_textentry, EM_SETCHARFORMAT, SCF_DEFAULT, (LPARAM)&cf);
 
 #ifndef AGENT
  	chatlog = new cOutput(player->Name(), true, false); // always append
@@ -645,177 +603,6 @@ LRESULT WINAPI RichEditWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 
 	return CallWindowProc( lpfn_wproc, hwnd, message, wParam, lParam);
 } 
-
-// Subclassed window procedure for the rich edit control
-LRESULT WINAPI EntryWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	static WNDPROC lpfn_wproc;
-	static char sentence[Lyra::MAX_SPEECHLEN - Lyra::PLAYERNAME_MAX];
-	static HFONT hEditFont;
-
-	if (HBRUSH brush = SetControlColors(hwnd, message, wParam, lParam))
-		return (LRESULT)brush;
-
-	switch (message)
-	{
-	case WM_PASSPROC:
-	{
-		lpfn_wproc = (WNDPROC)lParam;
-		return (LRESULT)0;
-	}
-
-	case WM_INITDIALOG:
-	{
-		Edit_LimitText(hwnd, (Lyra::MAX_SPEECHLEN / 2) - Lyra::PLAYERNAME_MAX - 3);
-		return TRUE;
-	}
-
-#if 0
-	CALL_HANDLE_MSG(hwnd, WM_SYSKEYUP, Realm_OnKey); break;
-	CALL_HANDLE_MSG(hwnd, WM_SYSKEYDOWN, Realm_OnKey); break;
-
-	case WM_KEYDOWN:
-		switch ((UINT)(wParam)) // key down
-		{
-		case VK_SHIFT:keyboard[Keystates::SHIFT] = 1; break;
-		case VK_CONTROL: keyboard[Keystates::CONTROL] = 1; break;
-		case VK_MENU: keyboard[Keystates::ALT] = 1; break;
-		}
-		if ((keyboard[Keystates::ALT] == 1) || (keyboard[Keystates::CONTROL] == 1))
-			Realm_OnKey(hwnd, (UINT)(wParam), TRUE, (int)(short)LOWORD(lParam), (UINT)HIWORD(lParam));
-		break;
-
-	case WM_KEYUP:
-		switch ((UINT)(wParam))
-		{
-		case VK_SHIFT: keyboard[Keystates::SHIFT] = 0; break;
-		case VK_CONTROL: keyboard[Keystates::CONTROL] = 0; break;
-		case VK_MENU: keyboard[Keystates::ALT] = 0; break;
-		}
-		if ((keyboard[Keystates::ALT] == 1) || (keyboard[Keystates::CONTROL] == 1))
-			Realm_OnKey(hwnd, (UINT)(wParam), FALSE, (int)(short)LOWORD(lParam), (UINT)HIWORD(lParam));
-		break;
-#endif
-
-		//		case WM_KEYDOWN:
-	case WM_KEYUP:
-
-		if (wParam == VK_ESCAPE)
-			SendMessage(cp->Hwnd_CP(), WM_COMMAND, 0, (LPARAM)cp->Hwnd_Meta());
-		break;
-	case WM_CHAR:
-	{
-		if (wParam == VK_TAB)
-		{
-			DWORD firstChar, lastChar;
-			SendMessage(hwnd, EM_GETSEL, (WPARAM)&firstChar, (LPARAM)&lastChar);
-			int prevBreak = SendMessage(hwnd, EM_FINDWORDBREAK, WB_PREVBREAK, (LPARAM)firstChar);
-			sprintf(disp_message, "CurPos = %d, PrevBreak = %d", (int)firstChar, prevBreak);
-			display->DisplayMessage(disp_message);
-			return 0;
-		}
-		switch (wParam)
-		{
-		case VK_RETURN:
-		{
-			GetWindowText(hwnd, sentence, Lyra::MAX_SPEECHLEN - Lyra::PLAYERNAME_MAX - 2);
-			Edit_SetText(hwnd, _T(""));
-			size_t message_length = strlen(sentence);
-			if (!message_length)
-				break;
-			// strip off extra returns at the end of a message
-			message_length = strlen(sentence);
-			for (size_t i = message_length - 2; i > 0; i--)
-			{
-				if (sentence[i] == VK_RETURN)
-					sentence[i] = '\0';
-				else
-					break;
-			}
-			// commannd
-			if (sentence[0] == '/')
-			{
-				switch (toupper(sentence[1]))
-				{
-				default:
-				case 'T':
-				{
-					gs->Talk(sentence + 2, RMsg_Speech::SPEECH, Lyra::ID_UNKNOWN);
-					break;
-				}
-				case 'S':
-				{
-					gs->Talk(sentence + 2, RMsg_Speech::SHOUT, Lyra::ID_UNKNOWN, true);
-					break;
-				}
-				case 'W':
-				{
-					//								target = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_NEIGHBORS));
-					//								if (target == -1) // whisper to self
-					//									display->DisplaySpeech(sentence+2, player->Name(), RMsg_Speech::WHISPER);
-					//								else
-					//									gs->Talk(sentence+2,RMsg_Speech::WHISPER, neighborid[target], true);
-					break;
-				}
-				case 'E':
-				{
-					// make sure player cannot emote as soulsphere
-					if ((player->flags & ACTOR_SOULSPHERE))
-					{
-						LoadString(hInstance, IDS_SOULSPHERE_NO_EMOTE, disp_message, DEFAULT_MESSAGE_SIZE);
-						display->DisplayMessage(disp_message);
-						SendMessage(cDD->Hwnd_Main(), WM_ACTIVATE, (WPARAM)WA_CLICKACTIVE, (LPARAM)cDD->Hwnd_Main());
-						return TRUE;
-					}
-					// try not to let them fake an emote on someone else
-					for (int i = 2; i < message_length; i++)
-						if (sentence[i] == '>' || sentence[i] == '›')
-						{
-							sentence[i] = '\0';
-							break;
-						}
-					gs->Talk(sentence + 2, RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN);
-					break;
-				}
-#ifdef GAMEMASTER
-				case 'R':
-				{
-					gs->Talk(sentence + 2, RMsg_Speech::RAW_EMOTE, Lyra::ID_UNKNOWN);
-					break;
-				}
-#endif
-				case 'B':
-				{
-					gs->Talk(sentence + 2, RMsg_Speech::REPORT_BUG, Lyra::ID_UNKNOWN, true);
-					break;
-				}
-				case 'C':
-				{
-					gs->Talk(sentence + 2, RMsg_Speech::REPORT_CHEAT, Lyra::ID_UNKNOWN, true);
-					break;
-				}
-				}
-			}
-			else // no command prefix.. just talk
-			{
-				gs->Talk(sentence, RMsg_Speech::SPEECH, Lyra::ID_UNKNOWN);
-			}
-
-			CHARRANGE ichCharRange;
-			ichCharRange.cpMin = 0;
-			ichCharRange.cpMax = -1;
-			SendMessage(hwnd, EM_EXSETSEL, 0, (LPARAM)&ichCharRange);
-
-			//					SendMessage(cDD->Hwnd_Main(), WM_ACTIVATE, 
-			//							(WPARAM) WA_CLICKACTIVE, (LPARAM) cDD->Hwnd_Main());
-
-			return TRUE;
-		}
-		}
-	}
-	}
-	return CallWindowProc(lpfn_wproc, hwnd, message, wParam, lParam);
-}
 
 
 // Check invariants

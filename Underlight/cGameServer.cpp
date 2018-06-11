@@ -2376,7 +2376,8 @@ void cGameServer::HandleMessage(void)
 			// apply burn effect for appropriate messages - state1 is art plat, state3 is focal art plat
 			player->ApplyCrippleEffect(player_msg.MsgType(), player_msg.State1(), player_msg.State3(), player_msg.SenderID());
 			n = actors->LookUpNeighbor(player_msg.SenderID());
-			bool castByInvisGM = n != NO_ACTOR && n->Avatar().Hidden();
+			// really just means bypass protections
+			bool castByInvisGM = (n != NO_ACTOR && n->Avatar().Hidden()) || player_msg.Universal();
 
 			bool art_reflected = false;
 			if (!player_msg.Universal() && player->flags & ACTOR_REFLECT) {

@@ -44,10 +44,8 @@ public:
 
 private:
 	HWND hwnd_richedit; // handle to rich edit control
-	HWND hwnd_textentry; 
 	HWND hwnd_chat_buttons[NUM_CHAT_BUTTONS]; // scrolling buttons
 	WNDPROC	lpfn_richedit; // pointer to window procedure
-	WNDPROC lpfn_entry; 
 	HBITMAP chat_buttons_bitmaps[NUM_CHAT_BUTTONS][2];
 	PARAFORMAT chatPF; // paragraph format
 	CHARFORMAT speechCF, nameCF, systemCF, emoteCF; // character formats for other player's speech, names, and system messages
@@ -57,8 +55,8 @@ private:
 	TCHAR last_system_message[DEFAULT_MESSAGE_SIZE];
 	DWORD last_system_message_time;
 	int old_line_count, new_line_count, offset; // for display
-	COLORREF BGColor, FGColor;
-	HFONT entryfont;
+	COLORREF BGColor;
+
 public:
     cChat(int speech_color = 0, int message_color = 0, int bg_color = 10);
     ~cChat();
@@ -97,7 +95,6 @@ private:
 
 	// The Window Proc for this control must be a friend...
 	friend LRESULT WINAPI RichEditWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
-	friend LRESULT WINAPI EntryWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 };
 
