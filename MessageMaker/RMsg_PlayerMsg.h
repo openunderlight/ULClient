@@ -150,6 +150,7 @@ public:
   ~RMsg_PlayerMsg();
 
   void Init(lyra_id_t send_id, lyra_id_t recv_id, int mtype, int state1 = 0, int state2 = 0, int state3 = 0);
+  void Init(lyra_id_t send_id, lyra_id_t recv_id, int mtype, int state1, int state2, int state3, bool universal);
 
   // standard public methods
   void Dump(FILE* f, int indent = 0) const;
@@ -161,9 +162,10 @@ public:
   int State1() const;
   int State2() const;
   int State3() const;
+  bool Universal() const;
 
   static int ArtType(int msgtype);
-
+  static bool AllowedToDreamwideBroadcast(int msgtype);
   // mutators
   void SetSenderID(lyra_id_t playerid);
   void SetReceiverID(lyra_id_t playerid);
@@ -171,6 +173,8 @@ public:
   void SetState1(int byte1);
   void SetState2(int byte2);
   void SetState3(int byte3);
+  void SetUniversal(bool universal);
+
 
 private:
 
@@ -182,7 +186,8 @@ private:
   struct data_t {
     lyra_id_t senderid;
     lyra_id_t receiverid;
-    short mtype;
+    unsigned char mtype;
+	unsigned char universal;
     short state1;
     short state2;
     short state3;

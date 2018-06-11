@@ -4558,6 +4558,7 @@ BEGIN
     IDS_ENFEEBLE_MARE       "The nightmare appears unaffected!"
     IDS_NO_MISSILE_INVIS    "You cannot use that item while invisible!"
     IDS_ENFEEBLE_DEFLECT    "Your soul is shielded from being enfeebled!"
+    IDS_DREAMWIDE_EVOKE     "Dreamwide Evoke"
 END
 
 #endif    // English (United States) resources
