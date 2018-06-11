@@ -2168,8 +2168,8 @@ void cArts::EndDreamwideEvoke(void)
 	else {
 		gs->SendPlayerMessage(0, msg,
 			player->Skill(art_id), 0, 0, true);
+		this->ArtFinished(true);
 	}
-	this->ArtFinished(true);
 
 }
 
@@ -6303,10 +6303,6 @@ void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int lvl)
 
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::SUMMON);
-
-	if (n == NO_ACTOR)
-		return;
-
     player->EvokedFX().Activate(Arts::SUMMON, false);
 	// use the supplied coordinates
 	player->Teleport(x, y, 0, lvl);
