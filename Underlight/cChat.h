@@ -59,6 +59,9 @@ private:
 	int old_line_count, new_line_count, offset; // for display
 	COLORREF BGColor, FGColor;
 	HFONT entryfont;
+	// tab state
+	bool isTabbing;
+	bool autocompleteNeedsQuoting;
 public:
     cChat(int speech_color = 0, int message_color = 0, int bg_color = 10);
     ~cChat();
@@ -67,7 +70,7 @@ public:
 	
 	void SetBGColor(int color); 
 	inline COLORREF GetBGColor(void){ return BGColor; };
-
+	void OnTabKeypress();
 	void DisplayMessage(const TCHAR *text, bool sound = true); // display in chat area
 	void DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool is_player = false, bool isUniversal = false);
 	void PreDisplay(void);

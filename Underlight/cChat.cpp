@@ -7,6 +7,7 @@
 #include "Central.h"
 #include <windowsx.h>
 #include <memory.h>
+#include "cActorList.h"
 #include "cDDraw.h"
 #include "cDSound.h"
 #include "cPlayer.h"
@@ -25,6 +26,7 @@
 //////////////////////////////////////////////////////////////////
 // External Global Variables
 
+extern cActorList* actors;
 extern cDDraw *cDD;
 extern cDSound *cDS;
 extern cGameServer* gs;
@@ -133,6 +135,8 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 		cDD->Hwnd_Main(), NULL, hInstance, NULL);
 
 	lpfn_richedit = SubclassWindow(hwnd_richedit, RichEditWProc);
+	isTabbing = false;
+	autocompleteNeedsQuoting = false;
 	SendMessage(hwnd_richedit, WM_PASSPROC, 0, (LPARAM)lpfn_richedit);
 
 	for (int i = 0; i < NUM_CHAT_BUTTONS; i++)
@@ -535,7 +539,66 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 	return;
 }
 
+typedef char name_t[Lyra::PLAYERNAME_MAX + 2]; // + 2 for quotes.
+name_t names[100];
+void cChat::OnTabKeypress()
+{
+	static char sentence[Lyra::MAX_SPEECHLEN - Lyra::PLAYERNAME_MAX];
+	static char textToComplete[Lyra::MAX_SPEECHLEN - Lyra::PLAYERNAME_MAX];
+	static int autocompleteChoices = 0;
+	static int next = -1;
+	static int prevBreak;
+	static DWORD firstChar, lastChar;
+	autocompleteNeedsQuoting = false;
+	if (!isTabbing)
+	{
+		isTabbing = true;
+		autocompleteChoices = 0;
+		strcpy(textToComplete, "\0");
+		strcpy(sentence, "\0");
+		next = -1;
+	
+		GetWindowText(hwnd_textentry, sentence, Lyra::MAX_SPEECHLEN - Lyra::PLAYERNAME_MAX - 2);
+		SendMessage(hwnd_textentry, EM_GETSEL, (WPARAM)&firstChar, (LPARAM)&lastChar);
+		prevBreak = SendMessage(hwnd_textentry, EM_FINDWORDBREAK, WB_PREVBREAK, (LPARAM)firstChar);
+		int prevPrevBreak = SendMessage(hwnd_textentry, EM_FINDWORDBREAK, WB_PREVBREAK, (LPARAM)prevBreak - 1);
+		if (prevBreak == firstChar)
+		{
+			prevBreak = prevPrevBreak;
+			prevPrevBreak = SendMessage(hwnd_textentry, EM_FINDWORDBREAK, WB_PREVBREAK, (LPARAM)prevBreak - 1);
+		}
 
+		int nextBreak = SendMessage(hwnd_textentry, EM_FINDWORDBREAK, WB_NEXTBREAK, (LPARAM)prevBreak + 1);
+		if (prevBreak != 0)
+			prevBreak++;
+		strncpy(textToComplete, sentence + prevBreak, (nextBreak - prevBreak) + 1);
+		if (prevPrevBreak == 0 && strnicmp("/whisper", sentence, 8) == 0)
+			autocompleteNeedsQuoting = true;
+		
+		cNeighbor* n;
+		for (n = actors->IterateNeighbors(INIT); n != NO_ACTOR; n = actors->IterateNeighbors(NEXT))
+		{
+			if ((n->Avatar().Hidden()) && (player->ID() != n->ID()))
+				continue;
+			if (strnicmp(textToComplete, n->Name(), strlen(textToComplete)) == 0)
+			{				
+				if (autocompleteNeedsQuoting && strchr(n->Name(), ' '))
+					sprintf(names[autocompleteChoices], "\"%s\"", n->Name());
+				else
+					strcpy(names[autocompleteChoices], n->Name());
+				autocompleteChoices++;
+			}
+		}
+		actors->IterateNeighbors(DONE);
+		strcpy(names[autocompleteChoices], textToComplete);
+		autocompleteChoices++;
+	}
+	next++;
+	next %= autocompleteChoices;
+	SendMessage(hwnd_textentry, EM_GETSEL, (WPARAM)&firstChar, (LPARAM)&lastChar);
+	SendMessage(hwnd_textentry, EM_SETSEL, (WPARAM)prevBreak, (LPARAM)firstChar);
+	SendMessage(hwnd_textentry, EM_REPLACESEL, (WPARAM)FALSE, (LPARAM)names[next]);
+}
 
 // Destructor
 cChat::~cChat(void)
@@ -707,13 +770,11 @@ LRESULT WINAPI EntryWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		if (wParam == VK_TAB)
 		{
-			DWORD firstChar, lastChar;
-			SendMessage(hwnd, EM_GETSEL, (WPARAM)&firstChar, (LPARAM)&lastChar);
-			int prevBreak = SendMessage(hwnd, EM_FINDWORDBREAK, WB_PREVBREAK, (LPARAM)firstChar);
-			sprintf(disp_message, "CurPos = %d, PrevBreak = %d", (int)firstChar, prevBreak);
-			display->DisplayMessage(disp_message);
+			display->OnTabKeypress();
 			return 0;
 		}
+		else
+			display->isTabbing = false;
 		switch (wParam)
 		{
 		case VK_RETURN:
