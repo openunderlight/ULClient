@@ -105,10 +105,30 @@ chat_colors_t chat_colors[NUM_CHAT_COLORS] = {
 	{IDS_GRAY, 0x99, 0x99, 0x99  }
 };
 
+typedef bool (cChat::*speech_callback_t)(TCHAR *value);
+
+struct slash_command_t {
+	const TCHAR* command;
+	speech_callback_t handler;
+};
+
+const int NUM_SLASH_COMMANDS = 10;
+
+slash_command_t slash_commands[NUM_SLASH_COMMANDS] = {
+	{ "whisper", &cChat::doWhisper },
+	{ "say", &cChat::doTalk },
+	{ "me", &cChat::doEmote },
+	{ "raw", &cChat::doRaw },
+	{ "rp", &cChat::doRPReport },
+	{ "cheat", &cChat::doCheatReport },
+	{ "bug", &cChat::doBugReport },
+	{ "graw", &cChat::doGlobalRaw },
+	{ "gtalk", &cChat::doGlobalTalk },
+	{ "shout", &cChat::doShout },
+};
+
 /////////////////////////////////////////////////////////////////
 // Helpers
-
-
 TCHAR* ChatColorName(int id)
 {
 	LoadString(hInstance, IDS_BLACK+id, temp_message, sizeof(temp_message));
@@ -223,6 +243,198 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 
 }
 
+bool cChat::doWhisper(TCHAR* whisper)
+{
+	TCHAR target[Lyra::PLAYERNAME_MAX] = { 0 };
+	char endChar = ' ';
+	if (*whisper == '\"')
+	{
+		whisper++;
+		endChar = '\"';
+	}
+
+	int i = 0;
+	bool bad = false;
+	while (*whisper) 
+	{
+		if (i >= (Lyra::PLAYERNAME_MAX - 1)) 
+		{
+			bad = true;
+			break;
+		}
+
+		if (*whisper == endChar)
+		{
+			whisper++;
+			break;
+		}
+
+		target[i++] = *whisper++;
+	}
+
+	if (bad)
+		return false;
+	target[i] = 0;
+	while (*whisper == ' ')
+		whisper++;
+	cNeighbor* n;
+	bool whispered = false;
+	for (n = actors->IterateNeighbors(INIT); n != NO_ACTOR; n = actors->IterateNeighbors(NEXT))
+	{
+		if ((n->Avatar().Hidden()) && (player->ID() != n->ID()))
+			continue;
+		if (strnicmp(target, n->Name(), strlen(target)) == 0)
+		{
+			if (n->CanWhisper())
+			{
+				gs->Talk(whisper, RMsg_Speech::WHISPER, n->ID(), true, true, false);
+				whispered = true;
+			}
+			else
+			{
+				LoadString(hInstance, IDS_NEIGHBOR_TOO_FAR, message, sizeof(message));
+				display->DisplayMessage(message);
+				//SetActiveWindow(cDD->Hwnd_Main());
+				//SetFocus(cDD->Hwnd_Main());
+				//CreateLyraDialog(hInstance, IDD_NONFATAL_ERROR,
+				//	cDD->Hwnd_Main(), (DLGPROC)NonfatalErrorDlgProc);
+			}
+			break;
+		}
+	}
+	actors->IterateNeighbors(DONE);
+	if (!whispered)
+		return false;
+#ifndef GAMEMASTER // GM's don't sent out whisper emote
+	int show_emote = rand() % 10;
+	if (0 == show_emote)
+	{
+		LoadString(hInstance, IDS_WHISPER_EMOTE, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, n->Name());
+		gs->Talk(message, RMsg_Speech::WHISPER_EMOTE, n->ID(), false);
+	}
+#endif // gamemaster.
+	return true;
+}
+
+bool cChat::HandleReturn(TCHAR* sentence)
+{
+	size_t message_length = strlen(sentence);
+	if (!message_length)
+		return false;
+	// strip off extra returns at the end of a message
+	message_length = strlen(sentence);
+	for (size_t i = message_length - 2; i > 0; i--)
+	{
+		if (sentence[i] == VK_RETURN)
+			sentence[i] = '\0';
+		else
+			break;
+	}
+
+	while (*sentence == ' ')
+		sentence++;
+	if (*sentence == '/')
+	{
+		sentence++;
+		for (int i = 0; i < NUM_SLASH_COMMANDS; i++)
+		{
+			slash_command_t sc = slash_commands[i];
+			if (strnicmp(sc.command, sentence, strlen(sc.command)) == 0)
+			{
+				speech_callback_t callback = sc.handler;
+				sentence += strlen(sc.command);
+				while (*sentence == ' ')
+					sentence++;
+				if (!(*sentence))
+					return false;
+				return (this->*callback)(sentence);
+			}
+		}
+	}
+	else {
+		return doTalk(sentence);
+	}
+}
+
+bool cChat::doTalk(TCHAR* talk)
+{
+	gs->Talk(talk, RMsg_Speech::SPEECH, Lyra::ID_UNKNOWN);
+	return true;
+}
+
+bool cChat::doRPReport(TCHAR* rp)
+{
+	gs->Talk(rp, RMsg_Speech::RP, Lyra::ID_UNKNOWN, true);
+	return true;
+}
+
+bool cChat::doCheatReport(TCHAR* cheat)
+{
+	gs->Talk(cheat, RMsg_Speech::REPORT_CHEAT, Lyra::ID_UNKNOWN, true);
+	return true;
+}
+
+bool cChat::doBugReport(TCHAR* bug)
+{
+	static char winVer[50];
+	strcat(message, bug);
+	getWindowsVersion(winVer);
+	strcat(message, "\n");
+	strcat(message, winVer);
+	gs->Talk(message, RMsg_Speech::REPORT_BUG, Lyra::ID_UNKNOWN, true);
+	return true;
+}
+
+bool cChat::doEmote(TCHAR* emote)
+{
+	// make sure player cannot emote as soulsphere by entering talk dlg and selecting emote
+	if ((player->flags & ACTOR_SOULSPHERE))
+	{
+		LoadString(hInstance, IDS_SOULSPHERE_NO_EMOTE, disp_message, sizeof(disp_message));
+		display->DisplayMessage(disp_message);
+		return false;
+	}
+	gs->Talk(emote, RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN);
+	return true;
+}
+
+bool cChat::doRaw(TCHAR* raw)
+{
+#ifdef GAMEMASTER
+	gs->Talk(raw, RMsg_Speech::RAW_EMOTE, Lyra::ID_UNKNOWN);
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool cChat::doShout(TCHAR* shout)
+{
+	gs->Talk(shout, RMsg_Speech::SHOUT, Lyra::ID_UNKNOWN);
+	return true;
+}
+
+bool cChat::doGlobalRaw(TCHAR* graw)
+{
+#ifdef GAMEMASTER
+	gs->Talk(graw, RMsg_Speech::RAW_EMOTE, Lyra::ID_UNKNOWN, false, true, true);
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool cChat::doGlobalTalk(TCHAR* gtalk)
+{
+#ifdef GAMEMASTER
+	gs->Talk(gtalk, RMsg_Speech::SPEECH, Lyra::ID_UNKNOWN, false, true, true);
+	return true;
+#else
+	return false;
+#endif
+}
+
 void cChat::Show(void) 
 { 
 	ShowWindow( hwnd_richedit, SW_SHOWNORMAL );
@@ -259,7 +471,6 @@ void cChat::ScrollDown(int count)
 	InvalidateRect(hwnd_richedit, NULL, TRUE);
 	return;
 }
-
 
 void cChat::SetSpeechFormat(int color)
 {
@@ -721,6 +932,14 @@ LRESULT WINAPI EntryWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
+	case WM_SETFOCUS:
+	{
+		CHARRANGE ichCharRange;
+		ichCharRange.cpMin = -1;
+		ichCharRange.cpMax = -1;
+		SendMessage(hwnd, EM_EXSETSEL, 0, (LPARAM)&ichCharRange);
+		break;
+	}
 	case WM_PASSPROC:
 	{
 		lpfn_wproc = (WNDPROC)lParam;
@@ -731,36 +950,7 @@ LRESULT WINAPI EntryWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		Edit_LimitText(hwnd, (Lyra::MAX_SPEECHLEN / 2) - Lyra::PLAYERNAME_MAX - 3);
 		return TRUE;
-	}
-
-#if 0
-	CALL_HANDLE_MSG(hwnd, WM_SYSKEYUP, Realm_OnKey); break;
-	CALL_HANDLE_MSG(hwnd, WM_SYSKEYDOWN, Realm_OnKey); break;
-
-	case WM_KEYDOWN:
-		switch ((UINT)(wParam)) // key down
-		{
-		case VK_SHIFT:keyboard[Keystates::SHIFT] = 1; break;
-		case VK_CONTROL: keyboard[Keystates::CONTROL] = 1; break;
-		case VK_MENU: keyboard[Keystates::ALT] = 1; break;
-		}
-		if ((keyboard[Keystates::ALT] == 1) || (keyboard[Keystates::CONTROL] == 1))
-			Realm_OnKey(hwnd, (UINT)(wParam), TRUE, (int)(short)LOWORD(lParam), (UINT)HIWORD(lParam));
-		break;
-
-	case WM_KEYUP:
-		switch ((UINT)(wParam))
-		{
-		case VK_SHIFT: keyboard[Keystates::SHIFT] = 0; break;
-		case VK_CONTROL: keyboard[Keystates::CONTROL] = 0; break;
-		case VK_MENU: keyboard[Keystates::ALT] = 0; break;
-		}
-		if ((keyboard[Keystates::ALT] == 1) || (keyboard[Keystates::CONTROL] == 1))
-			Realm_OnKey(hwnd, (UINT)(wParam), FALSE, (int)(short)LOWORD(lParam), (UINT)HIWORD(lParam));
-		break;
-#endif
-
-		//		case WM_KEYDOWN:
+	}	//		case WM_KEYDOWN:
 	case WM_KEYUP:
 
 		if (wParam == VK_ESCAPE)
@@ -777,101 +967,23 @@ LRESULT WINAPI EntryWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			display->isTabbing = false;
 		switch (wParam)
 		{
-		case VK_RETURN:
-		{
-			GetWindowText(hwnd, sentence, Lyra::MAX_SPEECHLEN - Lyra::PLAYERNAME_MAX - 2);
-			Edit_SetText(hwnd, _T(""));
-			size_t message_length = strlen(sentence);
-			if (!message_length)
-				break;
-			// strip off extra returns at the end of a message
-			message_length = strlen(sentence);
-			for (size_t i = message_length - 2; i > 0; i--)
+			case VK_RETURN:
 			{
-				if (sentence[i] == VK_RETURN)
-					sentence[i] = '\0';
-				else
-					break;
-			}
-			// commannd
-			if (sentence[0] == '/')
-			{
-				switch (toupper(sentence[1]))
+				GetWindowText(hwnd, sentence, Lyra::MAX_SPEECHLEN - Lyra::PLAYERNAME_MAX - 2);
+				if (display->HandleReturn(sentence))
 				{
-				default:
-				case 'T':
-				{
-					gs->Talk(sentence + 2, RMsg_Speech::SPEECH, Lyra::ID_UNKNOWN);
-					break;
+					Edit_SetText(hwnd, _T(""));
 				}
-				case 'S':
-				{
-					gs->Talk(sentence + 2, RMsg_Speech::SHOUT, Lyra::ID_UNKNOWN, true);
-					break;
-				}
-				case 'W':
-				{
-					//								target = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_NEIGHBORS));
-					//								if (target == -1) // whisper to self
-					//									display->DisplaySpeech(sentence+2, player->Name(), RMsg_Speech::WHISPER);
-					//								else
-					//									gs->Talk(sentence+2,RMsg_Speech::WHISPER, neighborid[target], true);
-					break;
-				}
-				case 'E':
-				{
-					// make sure player cannot emote as soulsphere
-					if ((player->flags & ACTOR_SOULSPHERE))
-					{
-						LoadString(hInstance, IDS_SOULSPHERE_NO_EMOTE, disp_message, DEFAULT_MESSAGE_SIZE);
-						display->DisplayMessage(disp_message);
-						SendMessage(cDD->Hwnd_Main(), WM_ACTIVATE, (WPARAM)WA_CLICKACTIVE, (LPARAM)cDD->Hwnd_Main());
-						return TRUE;
-					}
-					// try not to let them fake an emote on someone else
-					for (int i = 2; i < message_length; i++)
-						if (sentence[i] == '>' || sentence[i] == '›')
-						{
-							sentence[i] = '\0';
-							break;
-						}
-					gs->Talk(sentence + 2, RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN);
-					break;
-				}
-#ifdef GAMEMASTER
-				case 'R':
-				{
-					gs->Talk(sentence + 2, RMsg_Speech::RAW_EMOTE, Lyra::ID_UNKNOWN);
-					break;
-				}
-#endif
-				case 'B':
-				{
-					gs->Talk(sentence + 2, RMsg_Speech::REPORT_BUG, Lyra::ID_UNKNOWN, true);
-					break;
-				}
-				case 'C':
-				{
-					gs->Talk(sentence + 2, RMsg_Speech::REPORT_CHEAT, Lyra::ID_UNKNOWN, true);
-					break;
-				}
-				}
-			}
-			else // no command prefix.. just talk
-			{
-				gs->Talk(sentence, RMsg_Speech::SPEECH, Lyra::ID_UNKNOWN);
-			}
 
-			CHARRANGE ichCharRange;
-			ichCharRange.cpMin = 0;
-			ichCharRange.cpMax = -1;
-			SendMessage(hwnd, EM_EXSETSEL, 0, (LPARAM)&ichCharRange);
+				CHARRANGE ichCharRange;
+				ichCharRange.cpMin = 0;
+				ichCharRange.cpMax = -1;
+				SendMessage(hwnd, EM_EXSETSEL, 0, (LPARAM)&ichCharRange);
 
-			//					SendMessage(cDD->Hwnd_Main(), WM_ACTIVATE, 
-			//							(WPARAM) WA_CLICKACTIVE, (LPARAM) cDD->Hwnd_Main());
-
-			return TRUE;
-		}
+				//					SendMessage(cDD->Hwnd_Main(), WM_ACTIVATE, 
+				//							(WPARAM) WA_CLICKACTIVE, (LPARAM) cDD->Hwnd_Main());
+				return TRUE;
+			}
 		}
 	}
 	}

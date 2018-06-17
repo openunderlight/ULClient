@@ -67,7 +67,7 @@ public:
     ~cChat();
 	void SetSpeechFormat(int color); 
 	void SetMessageFormat(int color); 
-	
+	HWND TextEntry() { return hwnd_textentry;  }
 	void SetBGColor(int color); 
 	inline COLORREF GetBGColor(void){ return BGColor; };
 	void OnTabKeypress();
@@ -79,8 +79,17 @@ public:
 	void ScrollUp(int count);
 	void ScrollDown(int count);
 	inline HWND Hwnd(void) { return hwnd_richedit;};
-
-
+	bool doTalk(TCHAR* v);
+	bool doShout(TCHAR* v);
+	bool doEmote(TCHAR* v);
+	bool doRaw(TCHAR* v);
+	bool doWhisper(TCHAR* v);
+	bool doRPReport(TCHAR* v);
+	bool doCheatReport(TCHAR* v);
+	bool doBugReport(TCHAR* v);
+	bool doGlobalRaw(TCHAR* v);
+	bool doGlobalTalk(TCHAR* v);
+	bool HandleReturn(TCHAR* sentence);
 private:
 
 	void SwitchMode(int mode);
