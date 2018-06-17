@@ -1018,14 +1018,9 @@ bool HandleGMMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		return true;
 		
 	case 'H': // Raw EMOTE
-		if (!talkdlg && ((gs && gs->LoggedIntoGame()) || options.welcome_ai))
-		{
-			talkdlg = TRUE;
-			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
-				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
-			
-			DisableTalkDialogOptionsForInvisAvatar(hDlg);
-		}
+		Edit_SetText(display->TextEntry(), "/raw ");
+		SendMessage(display->TextEntry(), WM_ACTIVATE,
+			(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
 		return true;
 
 	case 'S': // MONSTER ROAR
@@ -1422,23 +1417,11 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 				cDD->Hwnd_Main(), (DLGPROC)PMareTalkDlgProc);
 		}
 #else
-		//if (!talkdlg && ((options.network && gs && gs->LoggedIntoGame()) || options.welcome_ai))
-		if (!talkdlg)
-		{
-			talkdlg = TRUE;
+		Edit_SetText(display->TextEntry(), "/me ");
+		
+		SendMessage(display->TextEntry(), WM_ACTIVATE,
+			(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
 
-
-			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
-				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
-
-				Button_SetCheck(GetDlgItem(hDlg, IDC_EMOTE), 1);
-				Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
-
-#ifdef GAMEMASTER
-			DisableTalkDialogOptionsForInvisAvatar(hDlg);
-#endif
-
-		}
 #endif
 		break;
 	case LyraKeyboard::OPEN_GOAL_BOOK:
@@ -1516,17 +1499,8 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 				cDD->Hwnd_Main(), (DLGPROC)PMareTalkDlgProc);
 		}
 #else
-		//if (!talkdlg && ((options.network && gs && gs->LoggedIntoGame()) || options.welcome_ai))
-		if (!talkdlg)
-		{
-			talkdlg = TRUE;
-			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
-				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
-
-#ifdef GAMEMASTER
-			DisableTalkDialogOptionsForInvisAvatar(hDlg);
-#endif
-		}
+		SendMessage(display->TextEntry(), WM_ACTIVATE,
+			(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
 #endif
 		break;
 	case LyraKeyboard::WHO_NEARBY:

@@ -44,15 +44,25 @@ extern HFONT display_font[MAX_RESOLUTIONS];
 // Constants
 
 const int MAX_LINES=60;
-const int VISIBLE_LINES[MAX_RESOLUTIONS] = { 9, 9, 11 };
+#ifndef PMARE
+const int VISIBLE_LINES[MAX_RESOLUTIONS] = { 9, 9, 10 };
+#else
+const int VISIBLE_LINES[MAX_RESOLUTIONS] = { 11, 11, 13 };
+#endif
+
 const int MIN_REPEAT_INTERVAL = 1000; // same message no more than once/sec
 
 // position for chat display area - no ads 
+#ifndef PMARE
 const struct window_pos_t chatPos[MAX_RESOLUTIONS] = 
-{ { 0, 300, 480, 155 }, { 0, 375, 600, 199 }, { 0, 480, 768, 263 } };
+{ { 0, 300, 480, 155 }, { 0, 375, 600, 194 }, { 0, 480, 768, 253 } };
 
 const struct window_pos_t entryPos[MAX_RESOLUTIONS] =
-{ { 0, 455, 480, 25 }, { 0, 575, 600, 30 }, { 0, 743, 768, 30 } };
+{ { 0, 455, 480, 25 }, { 0, 570, 600, 35 }, { 0, 733, 768, 40 } };
+#else
+const struct window_pos_t chatPos[MAX_RESOLUTIONS] =
+{ { 0, 300, 480, 180 },{ 0, 375, 600, 225 },{ 0, 480, 768, 288 } };
+#endif
 
 // position for chat display area - with banner
 //const struct window_pos_t chatPos = {0, 300, 480, 119}; 
@@ -65,19 +75,32 @@ struct button_t {
 	int			 bitmap_id;
 };
 
-
+#ifndef PMARE
 const button_t chat_buttons[NUM_CHAT_BUTTONS] = 
 {
-{ {{ 460, 150 - 25, 13, 25 }, { 579, 193 - 25, 13, 25 }, { 747, 255 - 25, 13, 25 } },
+{ {{ 460, 150 - 25, 13, 25 }, { 579, 193 - 30, 13, 25 }, { 747, 255 - 35, 13, 25 } },
 		DDOWN, LyraBitmap::CP_DDOWNA }, // double down button
 { {{ 460, 0, 13, 25 }, { 579, 0, 13, 25 }, { 747, 0, 13, 25 } },
 		DUP, LyraBitmap::CP_DUPA },   // double up button
-{ {{ 460, 135 - 25, 13, 15 }, { 579, 178 - 25, 13, 15 }, { 747, 240 - 25, 13, 15 } },
+{ {{ 460, 135 - 25, 13, 15 }, { 579, 178 - 30, 13, 15 }, { 747, 240 - 35, 13, 15 } },
 		DOWN, LyraBitmap::CP_DOWNA },   // down button
 { {{ 460, 25, 13, 15 }, { 579, 25, 13, 15 }, { 747, 25, 13, 15 } },
 		UP, LyraBitmap::CP_UPA }     // up button
 };
+#else
+const button_t chat_buttons[NUM_CHAT_BUTTONS] =
+{
+{ { { 460, 150, 13, 25 },{ 579, 193, 13, 25 },{ 747, 255, 13, 25 } },
+	DDOWN, LyraBitmap::CP_DDOWNA }, // double down button
+{ { { 460, 0, 13, 25 },{ 579, 0, 13, 25 },{ 747, 0, 13, 25 } },
+DUP, LyraBitmap::CP_DUPA },   // double up button
+{ { { 460, 135, 13, 15 },{ 579, 178, 13, 15 },{ 747, 240, 13, 15 } },
+DOWN, LyraBitmap::CP_DOWNA },   // down button
+{ { { 460, 25, 13, 15 },{ 579, 25, 13, 15 },{ 747, 25, 13, 15 } },
+UP, LyraBitmap::CP_UPA }     // up button
+};
 
+#endif
 
 struct chat_colors_t {
 	UINT name;
@@ -198,6 +221,7 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 	last_system_message_time = 0;
 	first_message = true;
 
+#ifndef PMARE
 	hwnd_textentry = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, "RICHEDIT", "",
 		WS_CHILD | ES_AUTOHSCROLL | WS_BORDER | ES_WANTRETURN,
 		entryPos[cDD->Res()].x, entryPos[cDD->Res()].y,
@@ -208,7 +232,7 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 	LOGFONT logFont;
 	memset(&logFont, 0, sizeof(LOGFONT));
 
-	logFont.lfHeight = 15;
+	logFont.lfHeight = 18;
 	logFont.lfWidth = 0;
 	logFont.lfWeight = 750;
 	logFont.lfEscapement = 0;
@@ -234,13 +258,12 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 	cf.cbSize = sizeof(CHARFORMAT2);
 	cf.dwEffects = { 0 };
 	SendMessageA(hwnd_textentry, EM_SETCHARFORMAT, SCF_DEFAULT, (LPARAM)&cf);
-
+#endif
 #ifndef AGENT
  	chatlog = new cOutput(player->Name(), true, false); // always append
 #endif
 
 	return;
-
 }
 
 bool cChat::doWhisper(TCHAR* whisper)
@@ -359,6 +382,8 @@ bool cChat::HandleReturn(TCHAR* sentence)
 
 bool cChat::doTalk(TCHAR* talk)
 {
+	if (player->Avatar().Hidden())
+		return false;
 	gs->Talk(talk, RMsg_Speech::SPEECH, Lyra::ID_UNKNOWN);
 	return true;
 }
@@ -388,6 +413,8 @@ bool cChat::doBugReport(TCHAR* bug)
 
 bool cChat::doEmote(TCHAR* emote)
 {
+	if (player->Avatar().Hidden())
+		return false;
 	// make sure player cannot emote as soulsphere by entering talk dlg and selecting emote
 	if ((player->flags & ACTOR_SOULSPHERE))
 	{
@@ -411,6 +438,8 @@ bool cChat::doRaw(TCHAR* raw)
 
 bool cChat::doShout(TCHAR* shout)
 {
+	if (player->Avatar().Hidden())
+		return false;
 	gs->Talk(shout, RMsg_Speech::SHOUT, Lyra::ID_UNKNOWN);
 	return true;
 }
