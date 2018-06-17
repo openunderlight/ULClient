@@ -828,15 +828,21 @@ void cChat::OnTabKeypress()
 	
 		GetWindowText(hwnd_textentry, sentence, Lyra::MAX_SPEECHLEN - Lyra::PLAYERNAME_MAX - 2);
 		SendMessage(hwnd_textentry, EM_GETSEL, (WPARAM)&firstChar, (LPARAM)&lastChar);
-		prevBreak = SendMessage(hwnd_textentry, EM_FINDWORDBREAK, WB_PREVBREAK, (LPARAM)firstChar);
-		int prevPrevBreak = SendMessage(hwnd_textentry, EM_FINDWORDBREAK, WB_PREVBREAK, (LPARAM)prevBreak - 1);
-		if (prevBreak == firstChar)
-		{
-			prevBreak = prevPrevBreak;
-			prevPrevBreak = SendMessage(hwnd_textentry, EM_FINDWORDBREAK, WB_PREVBREAK, (LPARAM)prevBreak - 1);
+		prevBreak = firstChar;
+		while (sentence[prevBreak] != ' ' && prevBreak != 0)
+			prevBreak--;
+		int prevPrevBreak = prevBreak - 1;
+		if (prevPrevBreak < 0)
+			prevPrevBreak = 0;
+		else {
+			while (sentence[prevPrevBreak] != ' ' && prevPrevBreak != 0)
+				prevPrevBreak--;
 		}
 
-		int nextBreak = SendMessage(hwnd_textentry, EM_FINDWORDBREAK, WB_NEXTBREAK, (LPARAM)prevBreak + 1);
+		int nextBreak = prevBreak + 1;
+		while (sentence[nextBreak] != ' ' && sentence[nextBreak])
+			nextBreak++;
+
 		if (prevBreak != 0)
 			prevBreak++;
 		strncpy(textToComplete, sentence + prevBreak, (nextBreak - prevBreak) + 1);
