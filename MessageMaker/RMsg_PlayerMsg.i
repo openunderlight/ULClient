@@ -70,3 +70,13 @@ INLINE void RMsg_PlayerMsg::SetState3(int byte3)
 {
 	data_.state3 = byte3;
 }
+
+INLINE bool RMsg_PlayerMsg::Universal() const
+{
+	return data_.universal;
+}
+
+INLINE void RMsg_PlayerMsg::SetUniversal(bool universal)
+{
+	data_.universal = universal;
+}

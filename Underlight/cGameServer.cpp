@@ -2376,10 +2376,11 @@ void cGameServer::HandleMessage(void)
 			// apply burn effect for appropriate messages - state1 is art plat, state3 is focal art plat
 			player->ApplyCrippleEffect(player_msg.MsgType(), player_msg.State1(), player_msg.State3(), player_msg.SenderID());
 			n = actors->LookUpNeighbor(player_msg.SenderID());
-			bool castByInvisGM = n != NO_ACTOR && n->Avatar().Hidden();
+			// really just means bypass protections
+			bool castByInvisGM = (n != NO_ACTOR && n->Avatar().Hidden()) || player_msg.Universal();
 
 			bool art_reflected = false;
-			if (player->flags & ACTOR_REFLECT) {
+			if (!player_msg.Universal() && player->flags & ACTOR_REFLECT) {
 				
 				if (rand()%100 <= player->reflect_strength)
 					art_reflected = true;
@@ -4471,7 +4472,7 @@ void cGameServer::Talk(TCHAR *talk, int speechType, lyra_id_t target, bool echo,
 {
 	RMsg_Speech speech_msg;
 
-	if (logged_into_game)
+	if (logged_into_game && target != DUMMY_PID_FOR_DREAMWIDE_EVOKES)
 	{ // just echo locally if we're in training, etc.
 		speech_msg.Init(speechType, target, 0, talk);
 		speech_msg.SetUniverseWide(universal);
@@ -4593,7 +4594,7 @@ void cGameServer::AcceptPartyQuery(realmid_t playerID)
 }
 
 // Send a message to another player
-void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2, short param3)
+void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2, short param3, bool universal)
 {
 	RMsg_PlayerMsg player_msg;
 	cNeighbor * n;
@@ -4612,7 +4613,7 @@ void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, sh
 		actors->IterateNeighbors(DONE);
 	}
 
-	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2, param3);
+	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2, param3, universal);
 	sendbuf.ReadMessage(player_msg);
 	send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
 	return;

@@ -829,6 +829,9 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 	if (n != NO_ACTOR) {
 		invisGMBreakthru = n->Avatar().Hidden();
 	}
+	else if (caster_id == DUMMY_PID_FOR_DREAMWIDE_EVOKES) {
+		invisGMBreakthru = true; // always breakthru on universal evokes for now.
+	}
 #ifdef GAMEMASTER
 #ifdef AGENT
 	if (((this->AvatarType() >= Avatars::AGOKNIGHT) || (this->AvatarType() < Avatars::MIN_NIGHTMARE_TYPE)) &&

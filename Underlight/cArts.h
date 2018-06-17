@@ -456,7 +456,9 @@ public:
 	void StartCombine(void);
 	void MidCombine(void);
 	void EndCombine(void);
-
+	void EndMassSummon(void* value);
+	void DreamwideEvoke(void);
+	void EndDreamwideEvoke(void);
 	// arts that require input from dialogs only
 	void StartAscend(void);
 	void EndAscend(void *value);
