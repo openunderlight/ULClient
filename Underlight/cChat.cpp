@@ -135,7 +135,7 @@ struct slash_command_t {
 	speech_callback_t handler;
 };
 
-const int NUM_SLASH_COMMANDS = 10;
+const int NUM_SLASH_COMMANDS = 11;
 
 slash_command_t slash_commands[NUM_SLASH_COMMANDS] = {
 	{ "whisper", &cChat::doWhisper },
@@ -148,6 +148,7 @@ slash_command_t slash_commands[NUM_SLASH_COMMANDS] = {
 	{ "graw", &cChat::doGlobalRaw },
 	{ "gtalk", &cChat::doGlobalTalk },
 	{ "shout", &cChat::doShout },
+	{ "help", &cChat::doHelp },
 };
 
 /////////////////////////////////////////////////////////////////
@@ -266,6 +267,17 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 	return;
 }
 
+bool cChat::doHelp(TCHAR* help)
+{
+	display->DisplayMessage("/me - Sends an emote. Example: /me smiles");
+	display->DisplayMessage("/shout - SHOUTS to the entire area. Example: /shout Can anyone hear me?!");
+	display->DisplayMessage("/whisper <Target> - whispers to the target. Example: /whisper Joe Hi, Joe!");
+	display->DisplayMessage("\tNote: For dreamers with spaces in their names, you must surround their names\r\twith quotes, i.e. /whisper \"Joe Bloggs\" Hi Joe!");
+	display->DisplayMessage("\tYou can type any number of letters of your target's name and hit the TAB key\r\tfor autocompletion.");
+	display->DisplayMessage("/say: Talks to the entire area. Alternatively, you can simply type and hit enter.");
+	return true;
+}
+
 bool cChat::doWhisper(TCHAR* whisper)
 {
 	TCHAR target[Lyra::PLAYERNAME_MAX] = { 0 };
@@ -369,8 +381,6 @@ bool cChat::HandleReturn(TCHAR* sentence)
 				sentence += strlen(sc.command);
 				while (*sentence == ' ')
 					sentence++;
-				if (!(*sentence))
-					return false;
 				return (this->*callback)(sentence);
 			}
 		}
@@ -382,6 +392,8 @@ bool cChat::HandleReturn(TCHAR* sentence)
 
 bool cChat::doTalk(TCHAR* talk)
 {
+	if (!(*talk))
+		return false;
 	if (player->Avatar().Hidden())
 		return false;
 	gs->Talk(talk, RMsg_Speech::SPEECH, Lyra::ID_UNKNOWN);
@@ -390,18 +402,24 @@ bool cChat::doTalk(TCHAR* talk)
 
 bool cChat::doRPReport(TCHAR* rp)
 {
+	if (!(*rp))
+		return false;
 	gs->Talk(rp, RMsg_Speech::RP, Lyra::ID_UNKNOWN, true);
 	return true;
 }
 
 bool cChat::doCheatReport(TCHAR* cheat)
 {
+	if (!(*cheat))
+		return false;
 	gs->Talk(cheat, RMsg_Speech::REPORT_CHEAT, Lyra::ID_UNKNOWN, true);
 	return true;
 }
 
 bool cChat::doBugReport(TCHAR* bug)
 {
+	if (!(*bug))
+		return false;
 	static char winVer[50];
 	strcat(message, bug);
 	getWindowsVersion(winVer);
@@ -413,6 +431,8 @@ bool cChat::doBugReport(TCHAR* bug)
 
 bool cChat::doEmote(TCHAR* emote)
 {
+	if (!(*emote))
+		return false;
 	if (player->Avatar().Hidden())
 		return false;
 	// make sure player cannot emote as soulsphere by entering talk dlg and selecting emote
@@ -429,6 +449,8 @@ bool cChat::doEmote(TCHAR* emote)
 bool cChat::doRaw(TCHAR* raw)
 {
 #ifdef GAMEMASTER
+	if (!(*raw))
+		return false;
 	gs->Talk(raw, RMsg_Speech::RAW_EMOTE, Lyra::ID_UNKNOWN);
 	return true;
 #else
@@ -438,6 +460,8 @@ bool cChat::doRaw(TCHAR* raw)
 
 bool cChat::doShout(TCHAR* shout)
 {
+	if (!(*shout))
+		return false;
 	if (player->Avatar().Hidden())
 		return false;
 	gs->Talk(shout, RMsg_Speech::SHOUT, Lyra::ID_UNKNOWN);
@@ -447,6 +471,8 @@ bool cChat::doShout(TCHAR* shout)
 bool cChat::doGlobalRaw(TCHAR* graw)
 {
 #ifdef GAMEMASTER
+	if (!(*graw))
+		return false;
 	gs->Talk(graw, RMsg_Speech::RAW_EMOTE, Lyra::ID_UNKNOWN, false, true, true);
 	return true;
 #else
@@ -457,6 +483,8 @@ bool cChat::doGlobalRaw(TCHAR* graw)
 bool cChat::doGlobalTalk(TCHAR* gtalk)
 {
 #ifdef GAMEMASTER
+	if (!(*gtalk))
+		return false;
 	gs->Talk(gtalk, RMsg_Speech::SPEECH, Lyra::ID_UNKNOWN, false, true, true);
 	return true;
 #else

@@ -90,6 +90,7 @@ public:
 	bool doGlobalRaw(TCHAR* v);
 	bool doGlobalTalk(TCHAR* v);
 	bool HandleReturn(TCHAR* sentence);
+	bool doHelp(TCHAR* v);
 private:
 
 	void SwitchMode(int mode);
