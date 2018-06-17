@@ -10,9 +10,8 @@
 #include "cActorList.h"
 #include "cDDraw.h"
 #include "cDSound.h"
-#include "cPlayer.h"
 #include "cGameServer.h"
-#include "cControlPanel.h"
+#include "cPlayer.h"
 #include "cChat.h"
 #include "Utils.h"
 #include "cOutput.h"
@@ -28,9 +27,10 @@
 
 extern cActorList* actors;
 extern cDDraw *cDD;
-extern cDSound *cDS;
 extern cGameServer* gs;
 extern cControlPanel* cp;
+extern cChat* display;
+extern cDSound *cDS;
 extern HINSTANCE hInstance;
 extern cPlayer *player;
 extern cChat *display; // needed for window proc
@@ -38,7 +38,6 @@ extern options_t options;
 extern mouse_look_t mouse_look;
 extern mouse_move_t mouse_move;
 extern HFONT display_font[MAX_RESOLUTIONS]; 
-
 
 //////////////////////////////////////////////////////////////////
 // Constants
@@ -63,10 +62,6 @@ const struct window_pos_t entryPos[MAX_RESOLUTIONS] =
 const struct window_pos_t chatPos[MAX_RESOLUTIONS] =
 { { 0, 300, 480, 180 },{ 0, 375, 600, 225 },{ 0, 480, 768, 288 } };
 #endif
-
-// position for chat display area - with banner
-//const struct window_pos_t chatPos = {0, 300, 480, 119}; 
-
 
 // chat scrolling buttons
 struct button_t {
@@ -165,38 +160,38 @@ TCHAR* ChatColorName(int id)
 
 
 // Constructor
-cChat::cChat(int speech_color, int message_color, int bg_color)
+cChat::cChat(int speech_color, int message_color, int bg_color) 
 {
 	// The richedit can't be read-only or we won't be able to delete
 	// from it. However, the window proc will immediately return the
 	// the focus to the main window for any attempted edits. 
 	//hwnd_richedit = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, "RICHEDIT20A", "",
 	hwnd_richedit = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, _T("RICHEDIT"), _T(""),
-		WS_CHILD | ES_MULTILINE | //ES_AUTOVSCROLL  | WS_VSCROLL | 
+		WS_CHILD |  ES_MULTILINE | //ES_AUTOVSCROLL  | WS_VSCROLL | 
 		WS_BORDER | ES_WANTRETURN,
-		chatPos[cDD->Res()].x, chatPos[cDD->Res()].y,
+		chatPos[cDD->Res()].x, chatPos[cDD->Res()].y, 
 		chatPos[cDD->Res()].width, chatPos[cDD->Res()].height,
-		cDD->Hwnd_Main(), NULL, hInstance, NULL);
-
+		cDD->Hwnd_Main(), NULL, hInstance, NULL); 
+	
 	lpfn_richedit = SubclassWindow(hwnd_richedit, RichEditWProc);
 	isTabbing = false;
 	autocompleteNeedsQuoting = false;
 	SendMessage(hwnd_richedit, WM_PASSPROC, 0, (LPARAM)lpfn_richedit);
 
-	for (int i = 0; i < NUM_CHAT_BUTTONS; i++)
+	for (int i=0; i<NUM_CHAT_BUTTONS; i++)
 	{
 		hwnd_chat_buttons[i] = CreateWindow(_T("button"), _T(""),
-			WS_CHILD | BS_PUSHBUTTON | BS_OWNERDRAW,
-			chat_buttons[i].position[cDD->Res()].x, chat_buttons[i].position[cDD->Res()].y,
-			chat_buttons[i].position[cDD->Res()].width, chat_buttons[i].position[cDD->Res()].height,
-			hwnd_richedit, NULL, hInstance, NULL);
+				WS_CHILD | BS_PUSHBUTTON | BS_OWNERDRAW,
+				chat_buttons[i].position[cDD->Res()].x, chat_buttons[i].position[cDD->Res()].y, 
+				chat_buttons[i].position[cDD->Res()].width, chat_buttons[i].position[cDD->Res()].height,
+				hwnd_richedit, NULL, hInstance, NULL);
 		chat_buttons_bitmaps[i][0] = // a button
 			CreateWindowsBitmap(chat_buttons[i].bitmap_id);
 		chat_buttons_bitmaps[i][1] = // b button
 			CreateWindowsBitmap(chat_buttons[i].bitmap_id + 1);
 	}
 
-
+ 
 	// Set up paragraph format for player speech.
 
 	chatPF.cbSize = sizeof(chatPF);
@@ -204,9 +199,11 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 	chatPF.wAlignment = PFA_LEFT;
 	chatPF.dxRightIndent = 175;
 	chatPF.dxStartIndent = 0;
-	chatPF.dxOffset = 200;
+	chatPF.dxOffset = 200; 
 
 	SendMessage(hwnd_richedit, EM_SETPARAFORMAT, 0, (LPARAM)&chatPF);
+
+
 	SendMessage(hwnd_richedit, WM_SETFONT, WPARAM(display_font[cDD->Res()]), 0);
 
 	// Initialize character format structures
@@ -218,6 +215,7 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 	// set background color
 
 	this->SetBGColor(bg_color);
+ 
 	currMode = PLAYER_NAME;
 	last_system_message_time = 0;
 	first_message = true;
@@ -260,6 +258,7 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 	cf.dwEffects = { 0 };
 	SendMessageA(hwnd_textentry, EM_SETCHARFORMAT, SCF_DEFAULT, (LPARAM)&cf);
 #endif
+
 #ifndef AGENT
  	chatlog = new cOutput(player->Name(), true, false); // always append
 #endif
@@ -1052,7 +1051,6 @@ LRESULT WINAPI EntryWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	return CallWindowProc(lpfn_wproc, hwnd, message, wParam, lParam);
 }
-
 
 // Check invariants
 

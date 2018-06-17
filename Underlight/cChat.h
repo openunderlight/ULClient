@@ -44,10 +44,9 @@ public:
 
 private:
 	HWND hwnd_richedit; // handle to rich edit control
-	HWND hwnd_textentry; 
+	HWND hwnd_textentry;
 	HWND hwnd_chat_buttons[NUM_CHAT_BUTTONS]; // scrolling buttons
-	WNDPROC	lpfn_richedit; // pointer to window procedure
-	WNDPROC lpfn_entry; 
+	WNDPROC	lpfn_richedit, lpfn_entry; // pointer to window procedure
 	HBITMAP chat_buttons_bitmaps[NUM_CHAT_BUTTONS][2];
 	PARAFORMAT chatPF; // paragraph format
 	CHARFORMAT speechCF, nameCF, systemCF, emoteCF; // character formats for other player's speech, names, and system messages
@@ -62,6 +61,7 @@ private:
 	// tab state
 	bool isTabbing;
 	bool autocompleteNeedsQuoting;
+
 public:
     cChat(int speech_color = 0, int message_color = 0, int bg_color = 10);
     ~cChat();
