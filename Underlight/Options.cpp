@@ -343,7 +343,7 @@ cJSON* __cdecl WriteGlobalJSONOptionValues()
 	ADDNUM(bind_local_udp);
 #ifdef UL_DEV
 	ADDNUM(dev_server);
-	cJSON_AddStringToObject(obj, "custom_server_ip", options.custom_ip);
+	cJSON_AddStringToObject(obj, "custom_ip", options.custom_ip);
 	ADDNUM(debug);
 	ADDNUM(network);
 #endif

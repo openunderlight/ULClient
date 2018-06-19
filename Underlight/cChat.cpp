@@ -822,6 +822,17 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 	
 	SendMessage(hwnd_richedit, EM_REPLACESEL, 0, (LPARAM) speech);
 
+	if (RMsg_Speech::WHISPER == speechType)
+	{
+		FLASHWINFO flash;
+		flash.cbSize = sizeof(flash);
+		flash.hwnd = cDD->Hwnd_Main();
+		flash.dwFlags = FLASHW_TIMERNOFG;
+		flash.dwTimeout = 0;
+		flash.uCount = 5;
+		FlashWindowEx(&flash);
+	}
+
 #ifndef AGENT
 	if (options.log_chat)
 	{
