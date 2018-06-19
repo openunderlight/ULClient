@@ -130,7 +130,7 @@ struct slash_command_t {
 	speech_callback_t handler;
 };
 
-const int NUM_SLASH_COMMANDS = 11;
+const int NUM_SLASH_COMMANDS = 12;
 
 slash_command_t slash_commands[NUM_SLASH_COMMANDS] = {
 	{ "whisper", &cChat::doWhisper },
@@ -144,6 +144,7 @@ slash_command_t slash_commands[NUM_SLASH_COMMANDS] = {
 	{ "gtalk", &cChat::doGlobalTalk },
 	{ "shout", &cChat::doShout },
 	{ "help", &cChat::doHelp },
+	{"ping", &cChat::doPing },
 };
 
 /////////////////////////////////////////////////////////////////
@@ -274,6 +275,13 @@ bool cChat::doHelp(TCHAR* help)
 	display->DisplayMessage("\tNote: For dreamers with spaces in their names, you must surround their names\r\twith quotes, i.e. /whisper \"Joe Bloggs\" Hi Joe!");
 	display->DisplayMessage("\tYou can type any number of letters of your target's name and hit the TAB key\r\tfor autocompletion.");
 	display->DisplayMessage("/say: Talks to the entire area. Alternatively, you can simply type and hit enter.");
+	display->DisplayMessage("/ping: Sends a ping message to the server.");
+	return true;
+}
+
+bool cChat::doPing(TCHAR* unused)
+{
+	gs->PingServer();
 	return true;
 }
 

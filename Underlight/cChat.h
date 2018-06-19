@@ -91,6 +91,7 @@ public:
 	bool doGlobalTalk(TCHAR* v);
 	bool HandleReturn(TCHAR* sentence);
 	bool doHelp(TCHAR* v);
+	bool doPing(TCHAR* unused);
 private:
 
 	void SwitchMode(int mode);
@@ -106,12 +107,9 @@ private:
 		inline void CheckInvariants(int line, TCHAR *file) {};
 #endif
 
-
-
 	// The Window Proc for this control must be a friend...
 	friend LRESULT WINAPI RichEditWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 	friend LRESULT WINAPI EntryWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
-
 };
 
 #endif
