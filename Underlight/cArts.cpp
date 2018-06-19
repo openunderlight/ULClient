@@ -7868,7 +7868,7 @@ void cArts::EndMareEssenceMetaFunc(int art_id, int graphic, int item_name_string
 	{ // transmute into banished talisman
 	  // create new talisman for banished mare essence
 		header.Init(0, 0, 0);
-		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
+		header.SetFlags(LyraItem::FLAG_SENDSTATE);
 		header.SetGraphic(graphic);
 		header.SetColor1(0); header.SetColor2(0);
 		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::META_ESSENCE_NEXUS_FUNCTION), 0, 0));
