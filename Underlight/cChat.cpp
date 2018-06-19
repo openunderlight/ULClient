@@ -161,7 +161,7 @@ TCHAR* ChatColorName(int id)
 
 
 // Constructor
-cChat::cChat(int speech_color, int message_color, int bg_color) 
+cChat::cChat(int speech_color, int message_color, int whisper_color, int bg_color) 
 {
 	// The richedit can't be read-only or we won't be able to delete
 	// from it. However, the window proc will immediately return the
@@ -212,7 +212,7 @@ cChat::cChat(int speech_color, int message_color, int bg_color)
 	// player chat, player name, and message character formats
 	this->SetSpeechFormat(speech_color);
 	this->SetMessageFormat(message_color);
-
+	this->SetWhisperFormat(whisper_color);
 	// set background color
 
 	this->SetBGColor(bg_color);
@@ -566,6 +566,20 @@ _stprintf(nameCF.szFaceName, FONT_NAME);
 	SendMessage(hwnd_richedit, EM_SETCHARFORMAT, SCF_SELECTION, (LPARAM)&nameCF);
 }
 
+void cChat::SetWhisperFormat(int color)
+{
+	if ((color < 0) || (color >= NUM_CHAT_COLORS))
+		color = 0;
+
+	memset(&whisperCF, 0, sizeof(whisperCF));
+	whisperCF.cbSize = sizeof(whisperCF);
+	whisperCF.dwMask = CFM_FACE | CFM_ITALIC | CFM_BOLD | CFM_COLOR;
+	whisperCF.dwEffects = 0;
+	whisperCF.crTextColor = (RGB(chat_colors[color].red, chat_colors[color].green, chat_colors[color].blue));
+	_stprintf(whisperCF.szFaceName, FONT_NAME);
+	SendMessage(hwnd_richedit, EM_SETCHARFORMAT, SCF_SELECTION, (LPARAM)&whisperCF);
+}
+
 void cChat::SetMessageFormat(int color)
 {
 	if ((color < 0) || (color >= NUM_CHAT_COLORS))
@@ -616,6 +630,11 @@ void cChat::SwitchMode(int mode)
 		case EMOTE:
 			SendMessage(hwnd_richedit, EM_SETCHARFORMAT, SCF_SELECTION, (LPARAM)&emoteCF);
 			currMode = EMOTE; 
+			break;
+
+		case WHISPER:
+			SendMessage(hwnd_richedit, EM_SETCHARFORMAT, SCF_SELECTION, (LPARAM)&whisperCF);
+			currMode = WHISPER;
 			break;
 	}
 
@@ -745,6 +764,8 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 
 	if (isEmote)
 		this->SwitchMode(EMOTE);
+	else if (speechType == RMsg_Speech::WHISPER)
+		this->SwitchMode(WHISPER);
 	else
 		this->SwitchMode(PLAYER_NAME);
 
@@ -796,7 +817,7 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 		chatlog->Write(message);
 #endif
 
-	if (isEmote == false)
+	if (isEmote == false && speechType != RMsg_Speech::WHISPER)
 		this->SwitchMode(PLAYER_SPEECH);
 	
 	SendMessage(hwnd_richedit, EM_REPLACESEL, 0, (LPARAM) speech);

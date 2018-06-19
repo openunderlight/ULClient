@@ -22,7 +22,7 @@ const int NUM_CHAT_BUTTONS = 4;
 
 enum // current paragraph format
 {
-    PLAYER_SPEECH, PLAYER_NAME, SYSTEM_MESSAGE, EMOTE
+    PLAYER_SPEECH, PLAYER_NAME, SYSTEM_MESSAGE, EMOTE, WHISPER
 };
 
 
@@ -49,7 +49,7 @@ private:
 	WNDPROC	lpfn_richedit, lpfn_entry; // pointer to window procedure
 	HBITMAP chat_buttons_bitmaps[NUM_CHAT_BUTTONS][2];
 	PARAFORMAT chatPF; // paragraph format
-	CHARFORMAT speechCF, nameCF, systemCF, emoteCF; // character formats for other player's speech, names, and system messages
+	CHARFORMAT speechCF, nameCF, systemCF, emoteCF, whisperCF; // character formats for other player's speech, names, and system messages
 	cOutput *chatlog; // for logging chat
 	int currMode;		     // current mode - player speech, system, etc.
 	bool first_message; // has a message been displayed yet?
@@ -63,9 +63,10 @@ private:
 	bool autocompleteNeedsQuoting;
 
 public:
-    cChat(int speech_color = 0, int message_color = 0, int bg_color = 10);
+    cChat(int speech_color = 0, int message_color = 0, int whisper_color = 0, int bg_color = 10);
     ~cChat();
 	void SetSpeechFormat(int color); 
+	void SetWhisperFormat(int color);
 	void SetMessageFormat(int color); 
 	HWND TextEntry() { return hwnd_textentry;  }
 	void SetBGColor(int color); 

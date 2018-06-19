@@ -131,6 +131,8 @@
 #define IDC_AVATARLEGS                  1036
 #define IDC_BGCOLOR                     1036
 #define IDC_STARTPOINT                  1037
+#define IDC_BGCOLOR2                    1037
+#define IDC_WHISPCOLOR                  1037
 #define IDC_500                         1040
 #define IDC_PASSWORD                    1041
 #define IDC_AUTOREJECT_OFF              1041
@@ -416,6 +418,7 @@
 #define IDC_STATIC_CHOOSE_DESTINATION   1445
 #define IDS_ONCE_HIDDEN_ALWAYS_HIDDEN   1446
 #define IDC_LIST1                       1446
+#define IDC_WHISPCOLORLBL               1447
 #define IDC_OK                          1800
 #define IDC_CANCEL                      1801
 #define IDC_FIREWALL_FAQ                1801
@@ -3043,7 +3046,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        218
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1447
+#define _APS_NEXT_CONTROL_VALUE         1448
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
