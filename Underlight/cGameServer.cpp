@@ -2077,6 +2077,7 @@ void cGameServer::HandleMessage(void)
 			RMsg_Speech speech_msg;
 			if (speech_msg.Read(msgbuf) < 0) { GAME_ERROR(IDS_ERR_READ_SPEECH_MSG); return; }
 			{
+				bool isUniversal = speech_msg.IsUniverseWide();
 				switch (speech_msg.SpeechType())
 				{
 					// TODO: handle MONSTER_SPEECH
@@ -2086,6 +2087,11 @@ void cGameServer::HandleMessage(void)
 					//		break;
 					//	}
 					case RMsg_Speech::SPEECH:
+						if (isUniversal)
+						{
+							display->DisplayMessage(speech_msg.SpeechText());
+							break;
+						} // else fallthru
 					case RMsg_Speech::SHOUT:
 					case RMsg_Speech::WHISPER:
 					case RMsg_Speech::GLOBALSHOUT:
@@ -2095,9 +2101,9 @@ void cGameServer::HandleMessage(void)
 					case RMsg_Speech::PARTY:
 
 						n = actors->LookUpNeighbor(speech_msg.PlayerID());
-						if (n != NO_ACTOR)
+						if (n != NO_ACTOR || isUniversal)
 						{	
-							if (options.ignore_whispers && (speech_msg.SpeechType() == RMsg_Speech::WHISPER))
+							if (!isUniversal && options.ignore_whispers && (speech_msg.SpeechType() == RMsg_Speech::WHISPER))
 							{
 								LoadString(hInstance, IDS_IGNORING_WHISPERS, temp_message, sizeof(temp_message));
 								_stprintf(message, temp_message, player->Name());
@@ -2130,7 +2136,7 @@ void cGameServer::HandleMessage(void)
 							// unless they are using a gamemaster account
 							int i = 0;
 							for (i=0; i<options.num_bungholes; i++)
-								if (0 == _tcscmp(options.bungholes[i].name, n->Name()))
+								if (!isUniversal && 0 == _tcscmp(options.bungholes[i].name, n->Name()))
 								{
 									int avatar_acct_type = n->Avatar().AccountType();
 									int acct_type2 = player->Avatar().AccountType();
@@ -2140,9 +2146,12 @@ void cGameServer::HandleMessage(void)
 
 							// don't display emotes from invisible players unless we have vision
 #ifndef GAMEMASTER // GMs and PMares see all
-							if ((speech_msg.SpeechType() == RMsg_Speech::EMOTE) && (n->flags & ACTOR_INVISIBLE) && 
-								!(player->flags & ACTOR_DETECT_INVIS))
-								break; 
+							if (!isUniversal)
+							{
+								if (((speech_msg.SpeechType() == RMsg_Speech::EMOTE) && (n->flags & ACTOR_INVISIBLE) &&
+									!(player->flags & ACTOR_DETECT_INVIS)) || n->Avatar().PlayerInvis())
+									break;
+							}
 #endif
 
 // Jared 7-21-00
@@ -2164,7 +2173,7 @@ void cGameServer::HandleMessage(void)
 #endif
 */
 							if (i == options.num_bungholes)
-								display->DisplaySpeech(speech, n->Name(), speech_msg.SpeechType());
+								display->DisplaySpeech(speech, !isUniversal ? n->Name() : _T(""), speech_msg.SpeechType(), false, isUniversal);
 
 						}
 						break;
@@ -2367,10 +2376,11 @@ void cGameServer::HandleMessage(void)
 			// apply burn effect for appropriate messages - state1 is art plat, state3 is focal art plat
 			player->ApplyCrippleEffect(player_msg.MsgType(), player_msg.State1(), player_msg.State3(), player_msg.SenderID());
 			n = actors->LookUpNeighbor(player_msg.SenderID());
-			bool castByInvisGM = n != NO_ACTOR && n->Avatar().Hidden();
+			// really just means bypass protections
+			bool castByInvisGM = (n != NO_ACTOR && n->Avatar().Hidden()) || player_msg.Universal();
 
 			bool art_reflected = false;
-			if (player->flags & ACTOR_REFLECT) {
+			if (!player_msg.Universal() && player->flags & ACTOR_REFLECT) {
 				
 				if (rand()%100 <= player->reflect_strength)
 					art_reflected = true;
@@ -4458,13 +4468,14 @@ void cGameServer::UpdateServer(void)
 
 
 // For when the player says something.
-void cGameServer::Talk(TCHAR *talk, int speechType, lyra_id_t target, bool echo, bool allow_babble)
+void cGameServer::Talk(TCHAR *talk, int speechType, lyra_id_t target, bool echo, bool allow_babble, bool universal)
 {
 	RMsg_Speech speech_msg;
 
-	if (logged_into_game)
+	if (logged_into_game && target != DUMMY_PID_FOR_DREAMWIDE_EVOKES)
 	{ // just echo locally if we're in training, etc.
 		speech_msg.Init(speechType, target, 0, talk);
+		speech_msg.SetUniverseWide(universal);
 		if (allow_babble && options.babble_filter)
 			speech_msg.SetBabble(1);
 		sendbuf.ReadMessage(speech_msg);
@@ -4487,6 +4498,8 @@ void cGameServer::Talk(TCHAR *talk, int speechType, lyra_id_t target, bool echo,
 		}
 	}
 
+	if (universal)
+		goto talk_out;
 	switch (speechType)
 	{
 		case RMsg_Speech::WHISPER_EMOTE:
@@ -4522,6 +4535,7 @@ void cGameServer::Talk(TCHAR *talk, int speechType, lyra_id_t target, bool echo,
 		default:
 			return;// no msg sent, no sound;
 	}
+talk_out:
 	cDS->PlaySound(LyraSound::MESSAGE_SENT);
 
 	return;
@@ -4580,7 +4594,7 @@ void cGameServer::AcceptPartyQuery(realmid_t playerID)
 }
 
 // Send a message to another player
-void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2, short param3)
+void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, short param1, short param2, short param3, bool universal)
 {
 	RMsg_PlayerMsg player_msg;
 	cNeighbor * n;
@@ -4599,7 +4613,7 @@ void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, sh
 		actors->IterateNeighbors(DONE);
 	}
 
-	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2, param3);
+	player_msg.Init(player->ID(), destination_id, msg_type, param1, param2, param3, universal);
 	sendbuf.ReadMessage(player_msg);
 	send (sd_game, (char *) sendbuf.BufferAddress(), sendbuf.BufferSize(), 0);
 	return;

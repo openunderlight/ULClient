@@ -829,6 +829,9 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 	if (n != NO_ACTOR) {
 		invisGMBreakthru = n->Avatar().Hidden();
 	}
+	else if (caster_id == DUMMY_PID_FOR_DREAMWIDE_EVOKES) {
+		invisGMBreakthru = true; // always breakthru on universal evokes for now.
+	}
 #ifdef GAMEMASTER
 #ifdef AGENT
 	if (((this->AvatarType() >= Avatars::AGOKNIGHT) || (this->AvatarType() < Avatars::MIN_NIGHTMARE_TYPE)) &&
@@ -1308,8 +1311,13 @@ void cPlayer::CheckStatus(void)
 			value = 2;
 }
 #else  // dreamers regen slowly
-		if (flags & ACTOR_MEDITATING)
+		if (flags & ACTOR_MEDITATING) {
 			value = 2 + (player->Skill(Arts::MEDITATION) / 10);
+			// chip at poison
+			if (flags & ACTOR_POISONED)
+				timed_effects->expires[LyraEffect::PLAYER_POISONED] -= ((player->Skill(Arts::MEDITATION) / 10) * 20 * 1000); // med plat * 20sec
+
+		}
 		else
 			value = 1;
 #endif
@@ -1350,7 +1358,7 @@ void cPlayer::CheckStatus(void)
 		next_heal = LyraTime() + HEAL_INTERVAL;
 		}
 
-	if ((flags & ACTOR_POISONED) && (LyraTime() > next_poison))
+	if ((flags & ACTOR_POISONED) && (LyraTime() > next_poison) && !(flags & ACTOR_MEDITATING))
 	{	 // sap dreamsoul...
 		this->SetCurrStat(Stats::DREAMSOUL, -((rand() % poison_strength) + 1), SET_RELATIVE, last_poisoner);
 		next_poison = LyraTime() + POISON_INTERVAL;

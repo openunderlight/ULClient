@@ -80,7 +80,6 @@
 #define IDS_FLIGHT                      210
 #define IDS_FLIGHT_ON                   211
 #define IDS_FLIGHT_OFF                  212
-#define IDI_ICON1                       217
 #define IDS_PROPERTIES                  1000
 #define IDC_USERNAME                    1004
 #define IDC_EMAIL                       1005
@@ -253,6 +252,7 @@
 #define IDC_ACCEPTREJECT_TEXT           1252
 #define IDC_CHECK10                     1253
 #define IDC_CHECK11                     1254
+#define IDC_UNIVERSE                    1254
 #define IDC_WARNING_TEXT                1257
 #define IDC_SUMMARIES                   1258
 #define IDC_PMARE_TEXT                  1258
@@ -3032,6 +3032,7 @@
 #define IDS_ENFEEBLE_MARE               4489
 #define IDS_NO_MISSILE_INVIS            4490
 #define IDS_ENFEEBLE_DEFLECT            4491
+#define IDS_DREAMWIDE_EVOKE             4492
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

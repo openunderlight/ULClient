@@ -404,7 +404,7 @@ void cChat::DisplayMessage(const TCHAR *text, bool sound)
 	return;
 }
 
-void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool is_player)
+void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool is_player, bool isUniversal)
 {
 	TCHAR speech[DEFAULT_MESSAGE_SIZE]; 
 
@@ -426,7 +426,6 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 		this->SwitchMode(EMOTE);
 	else
 		this->SwitchMode(PLAYER_NAME);
-
 
 	// fill in other stuff for name in disp_message
 	switch (speechType)

@@ -667,11 +667,8 @@ bool HandleGMFullMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 		return true;
 				
 	case 'O':
-		if ((player->flags & ACTOR_FLY))
-			player->flags &= ~ACTOR_FLY;
-		else
-			player->flags |= ACTOR_FLY;
-		return true;
+			arts->BeginArt(Arts::DREAMWIDE_EVOKE);
+			return true;
 		//cp->DumpInventory();
 		//return true;
 		

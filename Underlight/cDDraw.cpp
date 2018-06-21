@@ -67,6 +67,8 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	WNDCLASSEX wc;
 	bpp = BITS_PER_PIXEL;
 	DWORD style,type;
+	int screenWidth = GetSystemMetrics(SM_CXFULLSCREEN),
+		screenHeight = GetSystemMetrics(SM_CYFULLSCREEN);
 
 	// convert resolution from (640,800,1024) to (0,1,2)
 	switch (resolution) {
@@ -98,15 +100,17 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 		}
 		else
 		{
-			width = 640; height = 480; 
+			width = 640; 
+			height = 480; 
+			//windowed=TRUE;
 		}
 		MAX_LV_ITEMS = 15;
 		viewx = 480; viewy = 300;
 		break;
 
 	case 1: // 800x600
-		
-		width = 800; height = 600 + (windowed ? GetSystemMetrics(SM_CYCAPTION) : 0);
+		width = 800; 
+		height = 600 + (windowed ? GetSystemMetrics(SM_CYCAPTION) : 0);
 		viewx = 600; viewy = 375;
 		MAX_LV_ITEMS = 17;
 
@@ -117,7 +121,8 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 		if (leveleditor) 
 			windowed = TRUE;
 
-		width = 1024; height = 768 + (windowed ? GetSystemMetrics(SM_CYCAPTION) : 0);
+		width = 1024; 
+		height = 768 + (windowed ? GetSystemMetrics(SM_CYCAPTION) : 0);
 		MAX_LV_ITEMS = 20;
 
 
@@ -138,7 +143,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	}
 
 	// set up and register window class
-	wc.style 		  = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC | CS_NOCLOSE;
+	wc.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_OWNDC | CS_NOCLOSE;
 	wc.lpfnWndProc   = wproc;
 	wc.cbClsExtra	  = 0;
 	wc.cbWndExtra	  = 0;
@@ -154,13 +159,12 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	RegisterClassEx( &wc );
 
 	style = 0;
-	/*
-	if (windowed)
-		type = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
-	else
+
+	if (windowed && screenHeight > height) 
+		type = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
+	else 
 		type = WS_POPUP;
-	*/
-	type = windowed ? (WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU) : WS_POPUP;
+
 	hwnd_main = CreateWindowEx(
 										style,
 										name,

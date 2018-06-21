@@ -67,7 +67,7 @@ public:
 	inline COLORREF GetBGColor(void){ return BGColor; };
 
 	void DisplayMessage(const TCHAR *text, bool sound = true); // display in chat area
-	void DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool is_player = false);
+	void DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool is_player = false, bool isUniversal = false);
 	void PreDisplay(void);
 	void PostDisplay(void);
 	void Show(void);

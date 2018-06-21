@@ -61,6 +61,13 @@ void RMsg_PlayerMsg::Init(lyra_id_t send_id, lyra_id_t recv_id, int mtype, int s
   SetState1(state1);
   SetState2(state2);
   SetState3(state3);
+  SetUniversal(false);
+}
+
+void RMsg_PlayerMsg::Init(lyra_id_t send_id, lyra_id_t recv_id, int mtype, int state1, int state2, int state3, bool universal)
+{
+	Init(send_id, recv_id, mtype, state1, state2, state3);
+	SetUniversal(universal);
 }
 
 ////
@@ -71,7 +78,6 @@ void RMsg_PlayerMsg::hton()
 {
   HTONL(data_.senderid);
   HTONL(data_.receiverid);
-  HTONS(data_.mtype);
   HTONS(data_.state1);
   HTONS(data_.state2);
   HTONS(data_.state3);
@@ -86,7 +92,6 @@ void RMsg_PlayerMsg::ntoh()
 {
   NTOHL(data_.senderid);
   NTOHL(data_.receiverid);
-  NTOHS(data_.mtype);
   NTOHS(data_.state1);
   NTOHS(data_.state2);
   NTOHS(data_.state3);
@@ -103,8 +108,8 @@ void RMsg_PlayerMsg::Dump(FILE* f, int indent) const
   INDENT(indent, f);
  _ftprintf(f, _T("<RMsg_PlayerMsg[%p,%d]: "), this, sizeof(RMsg_PlayerMsg));
   if (ByteOrder() == ByteOrder::HOST) {
-   _ftprintf(f, _T("sender=%u receiver=%u mtype=%d state=(%d,%d,%d)>\n"),
-	    SenderID(), ReceiverID(), MsgType(), State1(), State2(), State3());
+   _ftprintf(f, _T("sender=%u receiver=%u mtype=%d universal=%d state=(%d,%d,%d)>\n"),
+	    SenderID(), ReceiverID(), MsgType(), Universal(), State1(), State2(), State3());
   }
   else {
    _ftprintf(f, _T("(network order)>\n"));
@@ -185,6 +190,63 @@ int RMsg_PlayerMsg::ArtType(int msgtype)
     retval = Arts::NONE;
   }
   return retval;
+}
+
+bool RMsg_PlayerMsg::AllowedToDreamwideBroadcast(int msgtype)
+{	
+	switch (msgtype) {
+	case RESIST_FEAR:         
+	case RESIST_CURSE:        
+	case RESIST_PARALYSIS:    
+	case JUDGEMENT:           
+	case IDENTIFY_CURSE:      
+	case VISION:              
+	case BLAST:               
+	case RESTORE:             
+	case PURIFY:              
+	case DRAIN_SELF:          
+	case ABJURE:              
+	case POISON:              
+	case ANTIDOTE:            
+	case CURSE:               
+	case ENSLAVE:             
+	case SCARE:               
+	case STAGGER:             
+	case DEAFEN:              
+	case BLIND:               
+	case DARKNESS:	    
+	case PARALYZE:      
+	case RANDOM:              
+	case FIRESTORM:           
+	case RAZORWIND:           
+	case MIND_BLANK_OTHER:    
+	case EARTHQUAKE:          
+	case HYPNOTIC_WEAVE:      
+	case VAMPIRIC_DRAW:		
+	case TERROR:            
+	case SOUL_SHIELD:
+	case REFLECT_ART:         
+	case SUMMON:			
+	case SUSPEND:			
+	case SENSE_DREAMERS:	
+	case EXPEL:				
+	case CHAOS_PURGE:		
+	case CUP_SUMMONS:		
+	case SCAN:				
+	case HEAL:	            
+	case SANCTIFY:          
+	case REMOVE_CURSE:		
+	case HOLD_AVATAR:		
+	case TEMPEST:         
+	case KINESIS:         
+	case MISDIRECTION:    
+	case CHAOTIC_VORTEX:  
+	case RALLY:				
+	case ENFEEBLEMENT: 
+		return true;
+	default:
+		return false;
+	}	
 }
 
 
