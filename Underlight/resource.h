@@ -3032,6 +3032,7 @@
 #define IDS_NO_MISSILE_INVIS            4490
 #define IDS_ENFEEBLE_DEFLECT            4491
 #define IDS_DREAMWIDE_EVOKE             4492
+#define IDS_SHOWXP_PPOINT_PMARE         4493
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

@@ -1553,17 +1553,32 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		player->DisplayTimedEffects();
 		break;
 	case LyraKeyboard::SHOW_XP:
+	{
 		if (options.welcome_ai)
 		{
-			LoadString (hInstance, IDS_COMPLETE_TRAINING, message, sizeof(message));
+			LoadString(hInstance, IDS_COMPLETE_TRAINING, message, sizeof(message));
 			display->DisplayMessage(message);
 			break;
 		}
 		//LoadString (hInstance, IDS_PLAYER_SHOWXP, disp_message, sizeof(disp_message));
 		//_stprintf(message,disp_message,player->XP());
-		LoadString (hInstance, IDS_SHOWXP_PPOINT, disp_message, sizeof(disp_message));
-		_stprintf(message,disp_message,player->XP(), player->PPoints(), player->PPPool());
+		int min, sec;
+		DWORD time_left;
+#ifndef PMARE
+		LoadString(hInstance, IDS_SHOWXP_PPOINT, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, player->XP(), player->PPoints(), player->PPPool());
+#else
+		// amount of time left in millis
+		time_left = options.pmare_logout_time - LyraTime();
+		// minutes
+		min = time_left / 60000;
+		// seconds
+		sec = (time_left - (min * 60000))/1000;
+		LoadString(hInstance, IDS_SHOWXP_PPOINT_PMARE, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, player->XP(), player->PPoints(), player->PPPool(), min, sec);
+#endif
 		display->DisplayMessage(message, false);
+	}
 		break;
 	case LyraKeyboard::SCROLL_UP:
 		switch (cp->Mode())
