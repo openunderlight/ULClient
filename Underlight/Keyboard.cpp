@@ -1575,7 +1575,7 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		// seconds
 		sec = (time_left - (min * 60000))/1000;
 		LoadString(hInstance, IDS_SHOWXP_PPOINT_PMARE, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, player->XP(), player->PPoints(), player->PPPool(), min, sec);
+		_stprintf(message, disp_message, player->XP(), min, sec);
 #endif
 		display->DisplayMessage(message, false);
 	}
