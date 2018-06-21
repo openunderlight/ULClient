@@ -485,6 +485,7 @@
 #define IDC_MOUSELOOK                   1859
 #define IDC_BIND_LOCAL                  1859
 #define IDC_UDP_PROXY                   1859
+#define IDC_EXTRA_SCROLL2               1859
 #define IDC_INVERTMOUSE                 1860
 #define IDC_ART_PROMPTS                 1861
 #define IDC_TURNSPD                     1862

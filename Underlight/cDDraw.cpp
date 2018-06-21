@@ -60,7 +60,7 @@ const int ERROR_THRESHHOLD = 500; // exit after 500 nonfatal errors
 // Constructor
 // normal(stand-alone) constructor
 cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
-				LPCTSTR applicon, LPCTSTR applcursor,	int resolution, int x, int y)
+				LPCTSTR applicon, LPCTSTR applcursor,int resolution, int x, int y)
 
 
 {
@@ -81,7 +81,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 			break;
 	}
 
-	windowed = TRUE;
+	windowed = !options.fullscreen;
 	lpDDSOffscreen = lpDDSPrimary = NULL;
 	lpDD = NULL;
 
@@ -99,7 +99,6 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 		else
 		{
 			width = 640; height = 480; 
-			//windowed=TRUE;
 		}
 		MAX_LV_ITEMS = 15;
 		viewx = 480; viewy = 300;
@@ -107,7 +106,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 
 	case 1: // 800x600
 		
-		width = 800; height = 600 + GetSystemMetrics(SM_CYCAPTION);
+		width = 800; height = 600 + (windowed ? GetSystemMetrics(SM_CYCAPTION) : 0);
 		viewx = 600; viewy = 375;
 		MAX_LV_ITEMS = 17;
 
@@ -118,7 +117,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 		if (leveleditor) 
 			windowed = TRUE;
 
-		width = 1024; height = 768 + GetSystemMetrics(SM_CYCAPTION);
+		width = 1024; height = 768 + (windowed ? GetSystemMetrics(SM_CYCAPTION) : 0);
 		MAX_LV_ITEMS = 20;
 
 
@@ -161,7 +160,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	else
 		type = WS_POPUP;
 	*/
-	type = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
+	type = windowed ? (WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU) : WS_POPUP;
 	hwnd_main = CreateWindowEx(
 										style,
 										name,
@@ -232,6 +231,12 @@ void cDDraw::InitDDraw()
 	{
 		GAME_ERROR(IDS_SURFACE_COLOR_DEPTH_TOO_HIGH);
 		return;
+	}
+
+	if (!windowed) {
+		TRY_DD(lpDD->SetCooperativeLevel(hwnd_main, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN));
+		// reset the display mode to the parameters
+		TRY_DD(lpDD->SetDisplayMode(width, height, bpp, 0, 0));
 	}
 
 	DDPIXELFORMAT ddpf;

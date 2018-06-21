@@ -147,6 +147,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 		{
 			Button_SetCheck(GetDlgItem(hDlg, IDC_SOUND), options.sound);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL), options.extra_scroll);
+			Button_SetCheck(GetDlgItem(hDlg, IDC_FULLSCREEN), options.fullscreen);
 #ifdef PMARE
 			Button_SetCheck(GetDlgItem(hDlg, IDC_TRAINING), false);
 			ShowWindow(GetDlgItem(hDlg, IDC_TRAINING), SW_HIDE);
@@ -250,7 +251,8 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 				options.sound			= Button_GetCheck(GetDlgItem(hDlg, IDC_SOUND));
 				options.rw				= Button_GetCheck(GetDlgItem(hDlg, IDC_ENABLE_RW));
 				options.welcome_ai		= Button_GetCheck(GetDlgItem(hDlg, IDC_TRAINING)); 
-				options.extra_scroll	= Button_GetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL)); 
+				options.extra_scroll	= Button_GetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL));
+				options.fullscreen		= Button_GetCheck(GetDlgItem(hDlg, IDC_FULLSCREEN));
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_TCP), message, sizeof(message)); 								
 				options.bind_local_tcp	= _ttol(message);
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_UDP), message, sizeof(message)); 								
