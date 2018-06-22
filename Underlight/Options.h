@@ -78,6 +78,7 @@ struct options_t {
 	int effects_volume; // sound volume 
 	int music_volume; // music volume 
 	int speech_color; // color of chat
+	int whisper_color; // color of whispers
 	int message_color; // color of system message
 	int bg_color; // color of chat background
 	int num_bungholes; // ignore list
@@ -95,6 +96,7 @@ struct options_t {
 	bool babble_filter;
 	bool ignore_whispers;
 	bool debug_state_mode;
+	BOOL fullscreen;
 
 	other_t bungholes[MAX_IGNORELIST]; // ignore list members
 	BOOL exclusive = TRUE; // exclusive mode ('95 only)

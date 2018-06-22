@@ -131,6 +131,8 @@
 #define IDC_AVATARLEGS                  1036
 #define IDC_BGCOLOR                     1036
 #define IDC_STARTPOINT                  1037
+#define IDC_BGCOLOR2                    1037
+#define IDC_WHISPCOLOR                  1037
 #define IDC_500                         1040
 #define IDC_PASSWORD                    1041
 #define IDC_AUTOREJECT_OFF              1041
@@ -417,6 +419,7 @@
 #define IDC_STATIC_CHOOSE_DESTINATION   1445
 #define IDS_ONCE_HIDDEN_ALWAYS_HIDDEN   1446
 #define IDC_LIST1                       1446
+#define IDC_WHISPCOLORLBL               1447
 #define IDC_OK                          1800
 #define IDC_CANCEL                      1801
 #define IDC_FIREWALL_FAQ                1801
@@ -486,6 +489,7 @@
 #define IDC_MOUSELOOK                   1859
 #define IDC_BIND_LOCAL                  1859
 #define IDC_UDP_PROXY                   1859
+#define IDC_EXTRA_SCROLL2               1859
 #define IDC_INVERTMOUSE                 1860
 #define IDC_ART_PROMPTS                 1861
 #define IDC_TURNSPD                     1862
@@ -3033,6 +3037,7 @@
 #define IDS_NO_MISSILE_INVIS            4490
 #define IDS_ENFEEBLE_DEFLECT            4491
 #define IDS_DREAMWIDE_EVOKE             4492
+#define IDS_SHOWXP_PPOINT_PMARE         4493
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
@@ -3044,7 +3049,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        218
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1447
+#define _APS_NEXT_CONTROL_VALUE         1448
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

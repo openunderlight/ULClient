@@ -1018,14 +1018,9 @@ bool HandleGMMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		return true;
 		
 	case 'H': // Raw EMOTE
-		if (!talkdlg && ((gs && gs->LoggedIntoGame()) || options.welcome_ai))
-		{
-			talkdlg = TRUE;
-			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
-				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
-			
-			DisableTalkDialogOptionsForInvisAvatar(hDlg);
-		}
+		Edit_SetText(display->TextEntry(), "/raw ");
+		SendMessage(display->TextEntry(), WM_ACTIVATE,
+			(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
 		return true;
 
 	case 'S': // MONSTER ROAR
@@ -1422,23 +1417,11 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 				cDD->Hwnd_Main(), (DLGPROC)PMareTalkDlgProc);
 		}
 #else
-		//if (!talkdlg && ((options.network && gs && gs->LoggedIntoGame()) || options.welcome_ai))
-		if (!talkdlg)
-		{
-			talkdlg = TRUE;
+		Edit_SetText(display->TextEntry(), "/me ");
+		
+		SendMessage(display->TextEntry(), WM_ACTIVATE,
+			(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
 
-
-			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
-				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
-
-				Button_SetCheck(GetDlgItem(hDlg, IDC_EMOTE), 1);
-				Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
-
-#ifdef GAMEMASTER
-			DisableTalkDialogOptionsForInvisAvatar(hDlg);
-#endif
-
-		}
 #endif
 		break;
 	case LyraKeyboard::OPEN_GOAL_BOOK:
@@ -1516,17 +1499,8 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 				cDD->Hwnd_Main(), (DLGPROC)PMareTalkDlgProc);
 		}
 #else
-		//if (!talkdlg && ((options.network && gs && gs->LoggedIntoGame()) || options.welcome_ai))
-		if (!talkdlg)
-		{
-			talkdlg = TRUE;
-			HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
-				cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
-
-#ifdef GAMEMASTER
-			DisableTalkDialogOptionsForInvisAvatar(hDlg);
-#endif
-		}
+		SendMessage(display->TextEntry(), WM_ACTIVATE,
+			(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
 #endif
 		break;
 	case LyraKeyboard::WHO_NEARBY:
@@ -1553,17 +1527,32 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		player->DisplayTimedEffects();
 		break;
 	case LyraKeyboard::SHOW_XP:
+	{
 		if (options.welcome_ai)
 		{
-			LoadString (hInstance, IDS_COMPLETE_TRAINING, message, sizeof(message));
+			LoadString(hInstance, IDS_COMPLETE_TRAINING, message, sizeof(message));
 			display->DisplayMessage(message);
 			break;
 		}
 		//LoadString (hInstance, IDS_PLAYER_SHOWXP, disp_message, sizeof(disp_message));
 		//_stprintf(message,disp_message,player->XP());
-		LoadString (hInstance, IDS_SHOWXP_PPOINT, disp_message, sizeof(disp_message));
-		_stprintf(message,disp_message,player->XP(), player->PPoints(), player->PPPool());
+		int min, sec;
+		DWORD time_left;
+#ifndef PMARE
+		LoadString(hInstance, IDS_SHOWXP_PPOINT, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, player->XP(), player->PPoints(), player->PPPool());
+#else
+		// amount of time left in millis
+		time_left = options.pmare_logout_time - LyraTime();
+		// minutes
+		min = time_left / 60000;
+		// seconds
+		sec = (time_left - (min * 60000))/1000;
+		LoadString(hInstance, IDS_SHOWXP_PPOINT_PMARE, disp_message, sizeof(disp_message));
+		_stprintf(message, disp_message, player->XP(), min, sec);
+#endif
 		display->DisplayMessage(message, false);
+	}
 		break;
 	case LyraKeyboard::SCROLL_UP:
 		switch (cp->Mode())

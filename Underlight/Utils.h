@@ -151,5 +151,5 @@ int WhichMonsterName(TCHAR* name);
 void GetDSTTime(LPSYSTEMTIME dsttime);
 void PrepareSrcRect(RECT* src, RECT* region, int stretch);
 int MaxSkill(int art_id);
-
+void getWindowsVersion(TCHAR* version);
 #endif

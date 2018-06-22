@@ -2601,20 +2601,21 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 				//else
 //#endif
 				{
-					talkdlg = TRUE;
-					HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK, 
-							 cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
 
-#ifdef GAMEMASTER
-					DisableTalkDialogOptionsForInvisAvatar(hDlg);
-					Button_SetCheck(GetDlgItem(hDlg, IDC_WHISPER), 1);
-					Button_SetCheck(GetDlgItem(hDlg, IDC_RAW_EMOTE), 0);
-#endif
-
-					Button_SetCheck(GetDlgItem(hDlg, IDC_WHISPER), 1);
-					Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
-
-
+					//DisableTalkDialogOptionsForInvisAvatar(hDlg);
+					//Button_SetCheck(GetDlgItem(hDlg, IDC_WHISPER), 1);
+					//Button_SetCheck(GetDlgItem(hDlg, IDC_RAW_EMOTE), 0);
+					if (strchr(cp->SelectedNeighbor()->Name(), ' ')) {
+						sprintf(::message, "/whisper \"%s\" ", cp->SelectedNeighbor()->Name());
+					}
+					else {
+						sprintf(::message, "/whisper %s ", cp->SelectedNeighbor()->Name());
+					}
+					Edit_SetText(display->TextEntry(), ::message);
+					//SendMessage(display->TextEntry(), WM_SETFOCUS, (WPARAM)hwnd, (LPARAM)0);
+					
+					SendMessage(display->TextEntry(), WM_ACTIVATE,
+						(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
 
 					return (LRESULT)0;
 				}
