@@ -116,6 +116,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			{
 				Button_SetCheck(GetDlgItem(hDlg, IDC_CUSTOM_DEV_SERVER), 1);
 				ShowWindow(GetDlgItem(hDlg, IDC_CUSTOM_IP), SW_SHOW);
+				Edit_SetText(GetDlgItem(hDlg, IDC_CUSTOM_IP), options.custom_ip);
 			}
 
 			_stprintf(message, _T("%s"), options.custom_ip);

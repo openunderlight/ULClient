@@ -637,7 +637,7 @@ bool __cdecl Init_Game(void)
 
 	// Create UI Components
 
-	display			= new cChat(options.speech_color, options.message_color, options.bg_color);
+	display			= new cChat(options.speech_color, options.message_color, options.whisper_color, options.bg_color);
 	cp					= new cControlPanel();
 //	banner			= new cBanner();
 	goals				= new cGoalPosting();

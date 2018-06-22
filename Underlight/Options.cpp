@@ -67,6 +67,7 @@ const short min_turnrate = 1;
 const short max_turnrate = 20;
 
 const int default_speech_color = 3;
+const int default_whisper_color = 3;
 const int default_message_color = 2;
 const int default_bg_color = 0;
 const float default_turnrate = 13.0f;
@@ -151,10 +152,12 @@ BOOL CALLBACK OptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 			{
 				ListBox_AddString(GetDlgItem(hDlg, IDC_SPEECHCOLOR), ChatColorName(i));
 				ListBox_AddString(GetDlgItem(hDlg, IDC_MESSAGECOLOR), ChatColorName(i));
+				ListBox_AddString(GetDlgItem(hDlg, IDC_WHISPCOLOR), ChatColorName(i));
 				ListBox_AddString(GetDlgItem(hDlg, IDC_BGCOLOR), ChatColorName(i));
 			}
 			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_SPEECHCOLOR), options.speech_color);
 			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_MESSAGECOLOR), options.message_color);
+			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_WHISPCOLOR), options.whisper_color);
 			ListBox_SetCurSel(GetDlgItem(hDlg, IDC_BGCOLOR), options.bg_color);
 
 			ResizeButton(GetDlgItem(hDlg, IDC_OK), effects->EffectWidth(IDC_OK), effects->EffectHeight(IDC_OK));
@@ -284,10 +287,12 @@ BOOL CALLBACK OptionsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 
 				options.speech_color = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_SPEECHCOLOR));
 				options.message_color = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_MESSAGECOLOR));
+				options.whisper_color = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_WHISPCOLOR));
 				options.bg_color = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_BGCOLOR));
 
 				display->SetSpeechFormat(options.speech_color);
 				display->SetMessageFormat(options.message_color);
+				display->SetWhisperFormat(options.whisper_color);
 				display->SetBGColor(options.bg_color);
 
 				// need intermediate var b/c turnrate is a float
@@ -338,7 +343,7 @@ cJSON* __cdecl WriteGlobalJSONOptionValues()
 	ADDNUM(bind_local_udp);
 #ifdef UL_DEV
 	ADDNUM(dev_server);
-	cJSON_AddStringToObject(obj, "custom_server_ip", options.custom_ip);
+	cJSON_AddStringToObject(obj, "custom_ip", options.custom_ip);
 	ADDNUM(debug);
 	ADDNUM(network);
 #endif
@@ -369,6 +374,7 @@ cJSON* __cdecl WriteJSONOptionValues()
 	ADDNUM(turnrate);
 	ADDNUM(music_volume);
 	ADDNUM(speech_color);
+	ADDNUM(whisper_color);
 	ADDNUM(message_color);
 	ADDNUM(bg_color);
 	ADDNUM(autorun);
@@ -590,6 +596,7 @@ void LoadParsedJSONOptions(cJSON* json)
 	GETNUM(effects_volume);
 	GETNUM(music_volume);
 	GETNUM(speech_color);
+	GETNUM(whisper_color);
 	GETNUM(message_color);
 	GETNUM(bg_color);
 	GETNUM(reverse);
@@ -729,6 +736,7 @@ void LoadDefaultOptionValues()
 	options.effects_volume = default_volume;
 	options.music_volume = default_volume;
 	options.speech_color = default_speech_color;
+	options.whisper_color = default_whisper_color;
 	options.message_color = default_message_color;
 	options.bg_color = default_bg_color;
 	options.reverse = FALSE;

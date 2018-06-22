@@ -445,6 +445,28 @@ int BeliefFromArtID(lyra_id_t art_id)
 	return 0;
 }
 
+void getWindowsVersion(TCHAR * ver) {
+	DWORD dwVersion = 0;
+	DWORD dwMajorVersion = 0;
+	DWORD dwMinorVersion = 0;
+	DWORD dwBuild = 0;
+
+	dwVersion = GetVersion();
+
+	// Get the Windows version
+
+	dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
+	dwMinorVersion = (DWORD)(HIBYTE(LOWORD(dwVersion)));
+
+	// Get the build number
+
+	if (dwVersion < 0x80000000)
+		dwBuild = (DWORD)(HIWORD(dwVersion));
+
+	sprintf(ver, "Platform: %d.%d (%d)", dwMajorVersion, dwMinorVersion, dwBuild);
+
+	return;
+}
 // Translate a value into a human readable string and sticks it into
 // the "message" global variable
 
