@@ -1473,7 +1473,7 @@ bool cItem::Recharge(int plateaua)
 			(this->ItemFunction(i) != LyraItem::ARMOR_FUNCTION))
 			immutable = false;
 
-	if (immutable) // can't recharge, so do nothing
+	if (immutable || this->lmitem.Header().Flags() & LyraItem::FLAG_NORECHARGE) // can't recharge, so do nothing
 	{
 		LoadString (hInstance, IDS_NOTHING_HAPPENS, disp_message, sizeof(disp_message));
 		display->DisplayMessage (disp_message);
