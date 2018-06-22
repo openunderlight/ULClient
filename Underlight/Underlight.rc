@@ -4562,6 +4562,7 @@ BEGIN
     IDS_NO_MISSILE_INVIS    "You cannot use that item while invisible!"
     IDS_ENFEEBLE_DEFLECT    "Your soul is shielded from being enfeebled!"
     IDS_DREAMWIDE_EVOKE     "Dreamwide Evoke"
+    IDS_SHOWXP_PPOINT_PMARE "XP: %d  Time Remaining: %d:%02d"
 END
 
 #endif    // English (United States) resources
