@@ -68,6 +68,7 @@ BEGIN
     LTEXT           "Bind TCP Port:",IDC_STATIC,322,61,48,9
     LTEXT           "Bind UDP Port:",IDC_STATIC,322,74,48,8
     LTEXT           "Windows XP users: do not run Underlight in Windows 95 compatibility mode",IDC_STATIC,6,63,291,11
+    CONTROL         "Fullscreen:",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,43,75,10
 END
 
 IDD_ACCEPTREJECT DIALOGEX 0, 0, 169, 54

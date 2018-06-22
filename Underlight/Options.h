@@ -96,6 +96,7 @@ struct options_t {
 	bool babble_filter;
 	bool ignore_whispers;
 	bool debug_state_mode;
+	BOOL fullscreen;
 
 	other_t bungholes[MAX_IGNORELIST]; // ignore list members
 	BOOL exclusive = TRUE; // exclusive mode ('95 only)

@@ -60,7 +60,7 @@ const int ERROR_THRESHHOLD = 500; // exit after 500 nonfatal errors
 // Constructor
 // normal(stand-alone) constructor
 cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
-				LPCTSTR applicon, LPCTSTR applcursor,	int resolution, int x, int y)
+				LPCTSTR applicon, LPCTSTR applcursor,int resolution, int x, int y)
 
 
 {
@@ -83,7 +83,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 			break;
 	}
 
-	windowed = TRUE;
+	windowed = !options.fullscreen;
 	lpDDSOffscreen = lpDDSPrimary = NULL;
 	lpDD = NULL;
 
@@ -109,9 +109,8 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 		break;
 
 	case 1: // 800x600
-		
 		width = 800; 
-		height = 600 + GetSystemMetrics(SM_CYCAPTION);
+		height = 600 + (windowed ? GetSystemMetrics(SM_CYCAPTION) : 0);
 		viewx = 600; viewy = 375;
 		MAX_LV_ITEMS = 17;
 
@@ -123,7 +122,7 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 			windowed = TRUE;
 
 		width = 1024; 
-		height = 768 + GetSystemMetrics(SM_CYCAPTION);
+		height = 768 + (windowed ? GetSystemMetrics(SM_CYCAPTION) : 0);
 		MAX_LV_ITEMS = 20;
 
 
@@ -160,13 +159,8 @@ cDDraw::cDDraw(TCHAR *name, TCHAR *title, HINSTANCE hInstance, WNDPROC wproc,
 	RegisterClassEx( &wc );
 
 	style = 0;
-	/*
-	if (windowed)
-		type = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
-	else
-		type = WS_POPUP;
-	*/
-	if (screenHeight > height) 
+
+	if (windowed && screenHeight > height) 
 		type = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
 	else 
 		type = WS_POPUP;
@@ -241,6 +235,12 @@ void cDDraw::InitDDraw()
 	{
 		GAME_ERROR(IDS_SURFACE_COLOR_DEPTH_TOO_HIGH);
 		return;
+	}
+
+	if (!windowed) {
+		TRY_DD(lpDD->SetCooperativeLevel(hwnd_main, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN));
+		// reset the display mode to the parameters
+		TRY_DD(lpDD->SetDisplayMode(width, height, bpp, 0, 0));
 	}
 
 	DDPIXELFORMAT ddpf;
