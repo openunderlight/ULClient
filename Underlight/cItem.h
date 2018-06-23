@@ -132,6 +132,7 @@ class cItem : public cActor
 	  inline bool NoReap(void) { return lmitem.Header().Flags() & LyraItem::FLAG_NOREAP; };
 	  inline bool AlwaysDrop(void) { return lmitem.Header().Flags() & LyraItem::FLAG_ALWAYS_DROP; };
 	  inline bool NoPickup(void) { return lmitem.Header().Flags() & LyraItem::FLAG_NOPICKUP; };
+	  inline bool NoRecharge(void) { return lmitem.Header().Flags() & LyraItem::FLAG_NORECHARGE; };
 	 
 	  inline int SortIndex(void) { return sort_index; };
 	  inline int InventoryFlags(void) { return inventory_flags; };

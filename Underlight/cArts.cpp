@@ -10460,7 +10460,9 @@ void cArts::EndCombine(void)
 		(item2->Lmitem().Header().Flags() & LyraItem::FLAG_ISCOMBINED))
 		combinable = false;
 	else if (item1->ItemFunction(0) != item2->ItemFunction(0))
-		combinable = false; 
+		combinable = false;
+	else if (item1->NoRecharge() || item2->NoRecharge())
+		combinable = false;
 	else if ((item1->ItemFunction(0) != LyraItem::CHANGE_STAT_FUNCTION) &&
 		(item1->ItemFunction(0) != LyraItem::MISSILE_FUNCTION) &&
 		(item1->ItemFunction(0) != LyraItem::EFFECT_PLAYER_FUNCTION))

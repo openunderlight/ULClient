@@ -193,6 +193,7 @@
 #define IDC_ITEM_FLAG7                  1080
 #define IDC_TYPE_COMBO                  1084
 #define IDC_CHARGES                     1085
+#define IDC_ITEM_NOCHARGE				1086
 #define IDC_PROPERTY1                   1106
 #define IDC_PROPERTY2                   1107
 #define IDC_PROPERTY3                   1108

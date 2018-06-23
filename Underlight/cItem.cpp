@@ -1323,6 +1323,12 @@ bool cItem::Identify(bool from_art)
 		display->DisplayMessage (message, false);
 	}
 
+	// Display a message if the particular item is not rechargeable. May want to revisit to display additional flags later.
+	if (this->NoRecharge()) {
+		_stprintf(temp_message, _T("   Not Rechargeable."));
+		display->DisplayMessage(temp_message, false);
+	}
+
 	return true;
 }
 
@@ -1473,7 +1479,7 @@ bool cItem::Recharge(int plateaua)
 			(this->ItemFunction(i) != LyraItem::ARMOR_FUNCTION))
 			immutable = false;
 
-	if (immutable) // can't recharge, so do nothing
+	if (immutable || this->NoRecharge()) // can't recharge, so do nothing
 	{
 		LoadString (hInstance, IDS_NOTHING_HAPPENS, disp_message, sizeof(disp_message));
 		display->DisplayMessage (disp_message);

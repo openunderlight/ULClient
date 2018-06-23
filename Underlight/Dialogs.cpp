@@ -1935,6 +1935,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					ShowWindow (GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), SW_SHOWNORMAL);
 					ShowWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), SW_SHOWNORMAL);
 					ShowWindow (GetDlgItem(hDlg, IDC_ITEM_DESCRIP), SW_SHOWNORMAL);
+					ShowWindow(GetDlgItem(hDlg, IDC_ITEM_NOCHARGE), SW_SHOWNORMAL);
 					
 
 					for (i = 1; i < LyraItem::NumItemFunctions(); i++) // skip 0 ('none')
@@ -2416,6 +2417,10 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						
 						if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP)))
 							header.SetFlag(LyraItem::FLAG_NOPICKUP);
+
+						if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOCHARGE)))
+							header.SetFlag(LyraItem::FLAG_NORECHARGE);
+
 						// Figure next three flags out based on selected effect types
 						int immutable = 0;
 						int changecharges = 0;

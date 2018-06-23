@@ -38,7 +38,8 @@ public:
     FLAG_HASDESCRIPTION = 0x20,  // item has text description
 	FLAG_ALWAYSREAP = 0x40, // ALWAYS reap this item, even in vaults
 	FLAG_NOPICKUP = 0x80, // Players can't drag/pickup this item
-	FLAG_ISCOMBINED = 0x100,
+	FLAG_ISCOMBINED = 0x100, // Item is combined
+	FLAG_NORECHARGE = 0x200, // Item cannot be recharged // 10
     MAX_FIELDS_PER_FUNCTION = 7, // max # of subfields per function
 
     // item functions
