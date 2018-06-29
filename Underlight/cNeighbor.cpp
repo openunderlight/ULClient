@@ -224,10 +224,16 @@ void cNeighbor::SetPose(int value, bool force)
 // of position update packets in cGameServer
 void cNeighbor::SetUpdateFlags(const LmPeerUpdate& update)
 {
-	if (update.Flags() & LmPeerUpdate::LG_INVISIBLE)
+	if (update.Flags() & LmPeerUpdate::LG_INVIS_NOVIS)
 		flags = flags | ACTOR_INVISIBLE;
 	else
 		flags = flags & ~ACTOR_INVISIBLE;
+
+	if (update.Flags() & LmPeerUpdate::LG_CHAMELE)
+		flags = flags | ACTOR_CHAMELED;
+	else
+		flags = flags & ~ACTOR_CHAMELED;
+
 	if (update.Flags() & LmPeerUpdate::LG_SOULSPHERE)
 		flags = flags | ACTOR_SOULSPHERE;
 	else

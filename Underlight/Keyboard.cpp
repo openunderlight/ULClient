@@ -1644,8 +1644,7 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		//LoadString (hInstance, IDS_AVATAR_CHANGE_SANCTUARY, message, sizeof(message));
 		//display->DisplayMessage(message);
 		//}
-		else if (!avatardlg && gs && gs->LoggedIntoGame() &&
-			!(player->flags & ACTOR_TRANSFORMED) && !player->Avatar().PlayerInvis())
+		else if (!avatardlg && gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED))
 		{
 			avatardlg = TRUE;
 			if ((player->GetAccountType() == LmAvatar::ACCT_PMARE) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))

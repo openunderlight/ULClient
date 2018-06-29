@@ -5131,7 +5131,7 @@ BOOL CALLBACK AvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 					return TRUE;
 
 				case IDC_RESET:
-					if ((player->flags & ACTOR_TRANSFORMED) || player->Avatar().PlayerInvis())
+					if (player->flags & ACTOR_TRANSFORMED)
 					{ // don't allow avatar customization with nightmare form
 						SendMessage(hwnd_avatar, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
 						break;
