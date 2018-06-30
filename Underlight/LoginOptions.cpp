@@ -31,6 +31,43 @@ extern int numJsonFiles;
 //extern unsigned int _winminor;
 //extern unsigned int _winver;
 
+#define TOS_URL "https://underlight.com/ToS.txt"
+char tos_buffer[64 * 1024]; // 64K should be enough, I'm not gonna dick around with dynamic allocation.
+
+void downloadOrLoadTos()
+{
+	tos_buffer[0] = 0;
+	HINTERNET hInternet = InternetOpen("Underlight Client", NULL, NULL, NULL, 0); //INTERNET_FLAG_ASYNC); 
+	if (!hInternet)
+	{
+		GAME_ERROR("Unable to open internet handle");
+		return;
+	}
+
+	HINTERNET response = InternetOpenUrl(hInternet, TOS_URL, NULL, NULL, INTERNET_FLAG_RELOAD | INTERNET_FLAG_PRAGMA_NOCACHE, 1);    TCHAR infoBuffer[512];
+	DWORD dummy = 0;
+	DWORD bufLen = 512;
+	bool exists = true;
+	if (response)
+	{
+		HttpQueryInfo(response, HTTP_QUERY_STATUS_CODE, infoBuffer, &bufLen, &dummy);
+		if (stricmp(infoBuffer, "200") != 0)
+			exists = false;
+	}
+
+	DWORD length;
+	if (!response || !exists || !InternetReadFile(response, (LPVOID *)tos_buffer, 64 * 1024, &length))
+	{
+		TCHAR disp1[1024]; TCHAR disp2[1024]; TCHAR disp3[1024]; TCHAR disp4[1024];
+		LoadString(hInstance, IDS_AGREEMENT_TEXT1, disp1, sizeof(disp1));
+		LoadString(hInstance, IDS_AGREEMENT_TEXT2, disp2, sizeof(disp2));
+		LoadString(hInstance, IDS_AGREEMENT_TEXT3, disp3, sizeof(disp3));
+		LoadString(hInstance, IDS_AGREEMENT_TEXT4, disp4, sizeof(disp4));
+		_stprintf(tos_buffer, _T("%s\r\n\r\n%s\r\n\r\n%s\r\n\r\n%s"), disp1, disp2, disp3, disp4);
+		return;
+	}
+	tos_buffer[length] = 0;
+}
 
 //////////////////////////////////////////////////////////////////
 // Functions
@@ -123,15 +160,8 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			Edit_SetText(GetDlgItem(hDlg, IDC_CUSTOM_IP), message);
 #endif // UL_DEV
 
-			TCHAR huge_text[4096];
-			TCHAR disp1[1024]; TCHAR disp2[1024]; TCHAR disp3[1024]; TCHAR disp4[1024]; 
-			LoadString (hInstance, IDS_AGREEMENT_TEXT1, disp1, sizeof(disp1));
-			LoadString (hInstance, IDS_AGREEMENT_TEXT2, disp2, sizeof(disp2));
-			LoadString (hInstance, IDS_AGREEMENT_TEXT3, disp3, sizeof(disp3));
-			LoadString (hInstance, IDS_AGREEMENT_TEXT4, disp4, sizeof(disp4));
-		_stprintf(huge_text, _T("%s\r\n\r\n%s\r\n\r\n%s\r\n\r\n%s"), disp1, disp2, disp3, disp4);
-
-			SendMessage(GetDlgItem(hDlg, IDC_AGREEMENT_TEXT), WM_SETTEXT, 0, (LPARAM) huge_text); 
+			downloadOrLoadTos();
+			SendMessage(GetDlgItem(hDlg, IDC_AGREEMENT_TEXT), WM_SETTEXT, 0, (LPARAM) tos_buffer); 
 			ShowWindow(GetDlgItem(hDlg, IDC_PASSWORD), SW_SHOW);
 
 			// now set username/password based on current combo box selection
