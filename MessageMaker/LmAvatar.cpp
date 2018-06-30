@@ -31,7 +31,7 @@ const LmAvatar LmAvatar::DEFAULT_INSTANCE;
 
 LmAvatar::LmAvatar()
 {
-	Init(Avatars::MALE, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+	Init(Avatars::MALE, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 }
 
 ////
@@ -48,7 +48,7 @@ void LmAvatar::Init(unsigned int avatar_type, unsigned int color0,
 			unsigned int show_lyran, unsigned int dreamsmith,
 			unsigned int hidden, unsigned int extra_damage,
 			unsigned int wordsmith, unsigned int dreamstrike,
-			unsigned int focus, unsigned int np_symbol, unsigned int apprentice, unsigned int playerinvis
+			unsigned int focus, unsigned int np_symbol, unsigned int apprentice
 			)
 {
   SetAvatarType(avatar_type);
@@ -146,7 +146,7 @@ void LmAvatar::Dump(FILE* f, int indent) const
 	  Color3(), Color4(), GuildID(), GuildRank(), ShowGuild(), Head(), 
 	  Sphere(), ShowSphere(), Teacher(), MasterTeacher(), ShowLyran(), 
 	  DreamSmith(), AccountType(), Hidden(), ExtraDamage(), WordSmith(), 
-	  Dreamstrike(), Focus(), NPSymbol(), Apprentice(), PlayerInvis());
+	  Dreamstrike(), Focus(), NPSymbol(), Apprentice());
 }
 #endif /* USE_DEBUG */
 

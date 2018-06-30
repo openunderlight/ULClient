@@ -2148,8 +2148,8 @@ void cGameServer::HandleMessage(void)
 #ifndef GAMEMASTER // GMs and PMares see all
 							if (!isUniversal)
 							{
-								if (((speech_msg.SpeechType() == RMsg_Speech::EMOTE) && (n->flags & ACTOR_INVISIBLE) &&
-									!(player->flags & ACTOR_DETECT_INVIS)) || n->Avatar().PlayerInvis())
+								if (((speech_msg.SpeechType() == RMsg_Speech::EMOTE) && (n->flags & ACTOR_CHAMELED) &&
+									!(player->flags & ACTOR_DETECT_INVIS)) || n->flags & ACTOR_INVISIBLE)
 									break;
 							}
 #endif
@@ -4623,12 +4623,6 @@ void cGameServer::SendPlayerMessage(lyra_id_t destination_id, short msg_type, sh
 void cGameServer::AvatarChange(LmAvatar new_avatar, bool permanent)
 {
 	GMsg_ChangeAvatar avatar_msg;
-	//
-	//if (new_avatar.PlayerInvis() && permanent)
-	//	return;
-
-	if (permanent && new_avatar.PlayerInvis())
-		return;
 
 	if (permanent)
 		avatar_msg.Init(new_avatar,GMsg_ChangeAvatar::AVATAR_PERMANENT);
@@ -4719,11 +4713,14 @@ void cGameServer::FillInPlayerPosition(LmPeerUpdate *update, int trigger)
 	if (player->Speed() == RUN_SPEED || player->Speed() == SPRINT_SPEED)
 		update->SetFlags(update->Flags() | LmPeerUpdate::LG_RUNNING);
 
-	if ((player->flags & ACTOR_INVISIBLE) || (player->flags & ACTOR_CHAMELED))
-		update->SetFlags(update->Flags() | LmPeerUpdate::LG_INVISIBLE);
+	if ((player->flags & ACTOR_CHAMELED))
+		update->SetFlags(update->Flags() | LmPeerUpdate::LG_CHAMELE);
 
 	if (player->flags & ACTOR_SOULSPHERE)
 		update->SetFlags(update->Flags() | LmPeerUpdate::LG_SOULSPHERE);
+
+	if ((player->flags & ACTOR_INVISIBLE))
+		update->SetFlags(update->Flags() | LmPeerUpdate::LG_INVIS_NOVIS);
 
 	if (player->flags & ACTOR_FLY) 
 		update->SetFlying(TRUE);

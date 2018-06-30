@@ -330,7 +330,8 @@ bool cAI::DetermineAlone(void)
 		if (n->GetAccountType() != LmAvatar::ACCT_NIGHTMARE)
 			// There's someone around to impress
 			alone = false;
-		if ((!(n->flags & ACTOR_INVISIBLE) || ((this->flags & ACTOR_DETECT_INVIS) && !n->Avatar().PlayerInvis())))
+		// leave alone if invisible, leave alone if chameled w/ no vision, chase otherwise
+		if ((!(n->flags & ACTOR_CHAMELE) || (this->flags & ACTOR_DETECT_INVIS) && !(n->flags & ACTOR_INVISIBLE)))
 		{
 			if (!(n->IsAgentAccount()) || (attack_other_mares && n->IsMonster()))  // Nightmares do not attack, but Revenant agents attack Nightmares
 			{

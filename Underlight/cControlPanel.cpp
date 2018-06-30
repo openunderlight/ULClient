@@ -2622,7 +2622,7 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 			}
 #endif
 			else if ((hwnd == cp->hwnd_avatar) && !avatardlg && 
-					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED) && !player->Avatar().PlayerInvis())
+					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED))
 			{
 					avatardlg = TRUE;
 					if ((player->GetAccountType() == LmAvatar::ACCT_PMARE) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
@@ -2644,7 +2644,7 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 			ClientToScreen(cp->hwnd_avatar, &pt);
 
 			if ((hwnd == cp->hwnd_cp) && PtInRect(&avatarrect, pt) && !avatardlg && 
-					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED) && !player->Avatar().PlayerInvis())
+					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED))
 			{
 					avatardlg = TRUE;
 					if ((player->GetAccountType() == LmAvatar::ACCT_PMARE) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
