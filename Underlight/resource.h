@@ -193,7 +193,7 @@
 #define IDC_ITEM_FLAG7                  1080
 #define IDC_TYPE_COMBO                  1084
 #define IDC_CHARGES                     1085
-#define IDC_ITEM_NOCHARGE				1086
+#define IDC_ITEM_NOCHARGE               1086
 #define IDC_PROPERTY1                   1106
 #define IDC_PROPERTY2                   1107
 #define IDC_PROPERTY3                   1108
@@ -3038,6 +3038,7 @@
 #define IDS_ENFEEBLE_DEFLECT            4491
 #define IDS_DREAMWIDE_EVOKE             4492
 #define IDS_SHOWXP_PPOINT_PMARE         4493
+#define IDS_OVERLAPPING                 4494
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
