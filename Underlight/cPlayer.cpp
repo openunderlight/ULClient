@@ -1476,10 +1476,14 @@ void cPlayer::CheckStatus(void)
 				if (!ornament->IsDamagingOrnament())
 					continue;
 				int dist = (int)((ornament->x - x)*(ornament->x - x) + (ornament->y - y)*(ornament->y - y));
-				if (dist > HORRON_DRAIN_DISTANCE)
-					continue;
 				// OK DO YOUR THING!
 				damaging_ornament_t dmginfo = ornament->GetDamageInfo();
+				unsigned int xy, ht;
+				CalculateDistance(dmginfo.distance_index, &xy, &ht);
+				int h1 = z - physht - ornament->z, h2 = ornament->z - z;
+				if (dist > xy || h1 > (int)ht || h2 > (int)ht)
+					continue;
+
 				if (dmginfo.stat != Stats::NO_STAT)
 				{
 					int mod = CalculateModifier(dmginfo.modifier);

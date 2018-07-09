@@ -3038,7 +3038,8 @@
 #define IDS_ENFEEBLE_DEFLECT            4491
 #define IDS_DREAMWIDE_EVOKE             4492
 #define IDS_SHOWXP_PPOINT_PMARE         4493
-#define IDS_LIVE_QA_SERVER_IP           4494
+#define IDS_OVERLAPPING                 4494
+#define IDS_LIVE_QA_SERVER_IP           4495
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

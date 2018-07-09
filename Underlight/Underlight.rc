@@ -4565,6 +4565,7 @@ BEGIN
     IDS_ENFEEBLE_DEFLECT    "Your soul is shielded from being enfeebled!"
     IDS_DREAMWIDE_EVOKE     "Dreamwide Evoke"
     IDS_SHOWXP_PPOINT_PMARE "XP: %d  Time Remaining: %d:%02d"
+    IDS_OVERLAPPING         "Overlapping"
     IDS_LIVE_QA_SERVER_IP   "shamblix.underlight.com"
 END
 
