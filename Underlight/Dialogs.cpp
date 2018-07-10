@@ -498,8 +498,9 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 			Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 1);
 
 			SetFocus(hwnd_speech);
+#ifndef AGENT
 			SetWindowPos(hDlg, HWND_TOPMOST, cDD->DlgPosX(hDlg)+15, (cDD->ViewY() + cDD->YOffset())+2, 0, 0, SWP_NOSIZE);
-
+#endif
 			// Create Font for edit control
 			{
 				const TCHAR CHAT_FONT_NAME[16]=_T("Arial");

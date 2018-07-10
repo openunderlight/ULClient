@@ -331,7 +331,7 @@ bool cAI::DetermineAlone(void)
 			// There's someone around to impress
 			alone = false;
 		// leave alone if invisible, leave alone if chameled w/ no vision, chase otherwise
-		if ((!(n->flags & ACTOR_CHAMELE) || (this->flags & ACTOR_DETECT_INVIS) && !(n->flags & ACTOR_INVISIBLE)))
+		if ((!(n->flags & ACTOR_CHAMELED) || (this->flags & ACTOR_DETECT_INVIS) && !(n->flags & ACTOR_INVISIBLE)))
 		{
 			if (!(n->IsAgentAccount()) || (attack_other_mares && n->IsMonster()))  // Nightmares do not attack, but Revenant agents attack Nightmares
 			{
@@ -493,7 +493,7 @@ void cAI::MakeMove(void)
 			num_sightless_frames = SIGHTLESS_FRAMES_THRESHOLD + 1; // No need to count above this
 		}
 	}
-	else if (neighbors[target]->flags & ACTOR_SOULSPHERE || neighbors[target]->Avatar().PlayerInvis()) // Target is a soulsphere. Wander
+	else if (neighbors[target]->flags & ACTOR_SOULSPHERE || neighbors[target]->flags & ACTOR_INVISIBLE) // Target is a soulsphere. Wander
 	{ 
 		this->Wander();
 	}
@@ -1328,7 +1328,7 @@ bool cAI::NeighborVisible(int index)
 	{	// don't target ss's
 		if (neighbors[index]->flags & ACTOR_SOULSPHERE)
 			return false;
-		if (neighbors[index]->Avatar().PlayerInvis())
+		if (neighbors[index]->flags & ACTOR_INVISIBLE)
 			return false;
 		// do tilting before visibility check, so test missile goes in right direction...
 		float ndist = NeighborDistance(index);
@@ -1369,7 +1369,7 @@ bool cAI::NeighborVisible(int index)
 // For now, assume non-melee creatures can hit what they can see
 bool cAI::NeighborHittable(int index)
 {
-	if (!this->NeighborVisible(index) || (index >= num_neighbors) || (neighbors[index]->flags & ACTOR_SOULSPHERE) || neighbors[index]->Avatar().PlayerInvis())
+	if (!this->NeighborVisible(index) || (index >= num_neighbors) || (neighbors[index]->flags & ACTOR_SOULSPHERE) || neighbors[index]->flags & ACTOR_INVISIBLE)
 		return false;
 	float target_z = neighbors[index]->z;
 	float my_z = this->z;
