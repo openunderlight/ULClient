@@ -362,7 +362,11 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 #else
 				LoadString(hInstance, IDS_LIVE_PATCH_FILE_URL, options.patch_URL, sizeof(options.patch_URL));
 #endif
+#ifdef QA		
+				LoadString(hInstance, IDS_LIVE_QA_SERVER_IP, options.game_server, sizeof(options.game_server));
+#else
 				LoadString(hInstance, IDS_LIVE_GAME_SERVER_IP, options.game_server, sizeof(options.game_server)); 
+#endif // QA
 
 #endif // UL_DEV
 				show_training_messages = options.welcome_ai;
