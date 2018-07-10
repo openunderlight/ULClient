@@ -224,7 +224,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>libcmt.lib;../MessageMaker/Release/MessageMaker.lib;oldnames.lib;winmm.lib;ws2_32.lib;odbc32.lib;odbccp32.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcmt.lib;Wininet.lib;../MessageMaker/Release/MessageMaker.lib;oldnames.lib;winmm.lib;ws2_32.lib;odbc32.lib;odbccp32.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\lyra\dev\AgentSvr.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
