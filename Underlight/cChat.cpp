@@ -21,6 +21,7 @@
 #include "Interface.h"
 #include "Mouse.h"
 #include "Realm.h"
+#include "Dialogs.h"
 
 //////////////////////////////////////////////////////////////////
 // External Global Variables
@@ -38,6 +39,7 @@ extern options_t options;
 extern mouse_look_t mouse_look;
 extern mouse_move_t mouse_move;
 extern HFONT display_font[MAX_RESOLUTIONS]; 
+extern bool talkdlg;
 
 //////////////////////////////////////////////////////////////////
 // Constants
@@ -130,7 +132,7 @@ struct slash_command_t {
 	speech_callback_t handler;
 };
 
-const int NUM_SLASH_COMMANDS = 12;
+const int NUM_SLASH_COMMANDS = 13;
 
 slash_command_t slash_commands[NUM_SLASH_COMMANDS] = {
 	{ "whisper", &cChat::doWhisper },
@@ -145,6 +147,7 @@ slash_command_t slash_commands[NUM_SLASH_COMMANDS] = {
 	{ "shout", &cChat::doShout },
 	{ "help", &cChat::doHelp },
 	{"ping", &cChat::doPing },
+	{"macro", &cChat::doMacro },
 };
 
 /////////////////////////////////////////////////////////////////
@@ -269,7 +272,11 @@ cChat::cChat(int speech_color, int message_color, int whisper_color, int bg_colo
 
 bool cChat::doHelp(TCHAR* help)
 {
+	display->DisplayMessage("/bug - Submits a bug report. Example: /bug <report>");
+	display->DisplayMessage("/cheat - Submits a cheat report. Example: /cheat <report>");
+	display->DisplayMessage("/macro - Opens the macro dialog.");
 	display->DisplayMessage("/me - Sends an emote. Example: /me smiles");
+	display->DisplayMessage("/rp - Sends a roleplaying report. Example: /rp <report>");
 	display->DisplayMessage("/shout - SHOUTS to the entire area. Example: /shout Can anyone hear me?!");
 	display->DisplayMessage("/whisper <Target> - whispers to the target. Example: /whisper Joe Hi, Joe!");
 	display->DisplayMessage("\tNote: For dreamers with spaces in their names, you must surround their names\r\twith quotes, i.e. /whisper \"Joe Bloggs\" Hi Joe!");
@@ -277,6 +284,17 @@ bool cChat::doHelp(TCHAR* help)
 	display->DisplayMessage("/say: Talks to the entire area. Alternatively, you can simply type and hit enter.");
 	display->DisplayMessage("/ping: Sends a ping message to the server.");
 	return true;
+}
+
+bool cChat::doMacro(TCHAR* message)
+{
+	if (!talkdlg) {
+		// open the macro dialog
+		CreateLyraDialog(hInstance, IDD_CHAT_MACROS, cDD->Hwnd_Main(), (DLGPROC)ChatMacrosDlgProc);
+		return true;
+	}
+
+	return false;
 }
 
 bool cChat::doPing(TCHAR* unused)

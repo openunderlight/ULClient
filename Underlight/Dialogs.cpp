@@ -299,11 +299,12 @@ static int current_macro =0;
 			return DLGC_WANTMESSAGE;
 
 		case WM_DESTROY:
+			talkdlg = false;
 			break;
-
 
 		case WM_INITDIALOG:
 		{
+			talkdlg = true;
 			SetWindowPos(hDlg, HWND_TOPMOST, cDD->DlgPosX(hDlg)+15, cDD->ViewY()+2, 0, 0, SWP_NOSIZE);
 
 			for (int i=0;i < MAX_MACROS; i++)

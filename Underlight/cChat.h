@@ -93,6 +93,7 @@ public:
 	bool HandleReturn(TCHAR* sentence);
 	bool doHelp(TCHAR* v);
 	bool doPing(TCHAR* unused);
+	bool doMacro(TCHAR* message);
 private:
 
 	void SwitchMode(int mode);
