@@ -44,7 +44,7 @@ extern bool talkdlg;
 //////////////////////////////////////////////////////////////////
 // Constants
 
-const int MAX_LINES=60;
+const int MAX_LINES=180;
 #ifndef PMARE
 const int VISIBLE_LINES[MAX_RESOLUTIONS] = { 9, 9, 10 };
 #else
@@ -272,15 +272,17 @@ cChat::cChat(int speech_color, int message_color, int whisper_color, int bg_colo
 
 bool cChat::doHelp(TCHAR* help)
 {
-	display->DisplayMessage("/bug - Submits a bug report. Example: /bug <report>");
-	display->DisplayMessage("/cheat - Submits a cheat report. Example: /cheat <report>");
-	display->DisplayMessage("/macro - Opens the macro dialog.");
-	display->DisplayMessage("/me - Sends an emote. Example: /me smiles");
-	display->DisplayMessage("/rp - Sends a roleplaying report. Example: /rp <report>");
-	display->DisplayMessage("/shout - SHOUTS to the entire area. Example: /shout Can anyone hear me?!");
-	display->DisplayMessage("/whisper <Target> - whispers to the target. Example: /whisper Joe Hi, Joe!");
-	display->DisplayMessage("\tNote: For dreamers with spaces in their names, you must surround their names\r\twith quotes, i.e. /whisper \"Joe Bloggs\" Hi Joe!");
-	display->DisplayMessage("\tYou can type any number of letters of your target's name and hit the TAB key\r\tfor autocompletion.");
+	display->DisplayMessage("/bug - Submits a bug report. Example: /bug <report>\r" 
+							"/cheat - Submits a cheat report. Example: /cheat <report>\r"
+							"/rp - Sends a roleplaying report. Example: /rp <report>\r"
+							"/macro - Opens the macro dialog.\r"
+							"/me - Sends an emote. Example: /me smiles\r"
+							"/shout - SHOUTS to the entire area. Example: /shout Can anyone hear me?!");
+	display->DisplayMessage("/whisper <Target> - whispers to the target. Example: /whisper Joe Hi, Joe!\r"
+								"\tNote: For dreamers with spaces in their names, you must surround their names\r"
+								"\twith quotes, i.e. /whisper \"Joe Bloggs\" Hi Joe!\r"
+								"\tYou can type any number of letters of your target's name and hit the TAB key\r"
+								"\tfor autocompletion.");
 	display->DisplayMessage("/say: Talks to the entire area. Alternatively, you can simply type and hit enter.");
 	display->DisplayMessage("/ping: Sends a ping message to the server.");
 	return true;
@@ -714,19 +716,12 @@ void cChat::DisplayMessage(const TCHAR *text, bool sound)
 {
 	TCHAR speech[DEFAULT_MESSAGE_SIZE]; 
 
-	static int count = 0;
-
-	count++;
-	if (count == 3)
-	{ 
-		count++;
-		count--;
-	}
-
 	if (((LyraTime() - last_system_message_time) < MIN_REPEAT_INTERVAL) &&
 		(_tcslen(last_system_message) > 2) &&
-		(_tcscmp(message, last_system_message) == 0))
+		(_tcscmp(text, last_system_message) == 0))
+	{
 		return;
+	}
 
 	if (sound)
 		cDS->PlaySound(LyraSound::MESSAGE);
@@ -1001,21 +996,7 @@ LRESULT WINAPI RichEditWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 			SendMessage(cDD->Hwnd_Main(), WM_ACTIVATE, (WPARAM) WA_CLICKACTIVE, (LPARAM) cDD->Hwnd_Main());
 			break;
 		case WM_DRAWITEM: 
-				lpdis = (LPDRAWITEMSTRUCT) lParam; 
-		//	dc = CreateCompatibleDC(lpdis->hDC); 
-			/* 
-			for (j=0; j<NUM_CHAT_BUTTONS; j++)
-			{
-				if ((lpdis->hwndItem == display->hwnd_chat_buttons[j]) && (lpdis->itemState & ODS_SELECTED)) 
-					SelectObject(dc, display->chat_buttons_bitmaps[j][0]); 
-				else if ((lpdis->hwndItem == display->hwnd_chat_buttons[j]) && !(lpdis->itemState & ODS_SELECTED)) 
-					SelectObject(dc, display->chat_buttons_bitmaps[j][1]); 
-			}
-			
-			   BitBlt(lpdis->hDC,lpdis->rcItem.left, lpdis->rcItem.top,  
-			lpdis->rcItem.right - lpdis->rcItem.left, 
-			lpdis->rcItem.bottom - lpdis->rcItem.top, 
-			dc, 0, 0, SRCCOPY); */
+			lpdis = (LPDRAWITEMSTRUCT) lParam; 
 			for (j=0; j<NUM_CHAT_BUTTONS; j++)
 			{
 				if (lpdis->hwndItem == display->hwnd_chat_buttons[j])  
@@ -1099,9 +1080,6 @@ LRESULT WINAPI EntryWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 				ichCharRange.cpMin = 0;
 				ichCharRange.cpMax = -1;
 				SendMessage(hwnd, EM_EXSETSEL, 0, (LPARAM)&ichCharRange);
-
-				//					SendMessage(cDD->Hwnd_Main(), WM_ACTIVATE, 
-				//							(WPARAM) WA_CLICKACTIVE, (LPARAM) cDD->Hwnd_Main());
 				return TRUE;
 			}
 		}
