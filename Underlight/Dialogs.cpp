@@ -139,29 +139,6 @@ HWND TopMost(void)
 	return HWND_TOPMOST;
 }
 
-void getWindowsVersion(char * ver) {
-	DWORD dwVersion = 0;
-	DWORD dwMajorVersion = 0;
-	DWORD dwMinorVersion = 0;
-	DWORD dwBuild = 0;
-
-	dwVersion = GetVersion();
-
-	// Get the Windows version
-
-	dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
-	dwMinorVersion = (DWORD)(HIBYTE(LOWORD(dwVersion)));
-
-	// Get the build number
-
-	if (dwVersion < 0x80000000)
-		dwBuild = (DWORD)(HIWORD(dwVersion));
-
-	sprintf(ver, "Platform: %d.%d (%d)", dwMajorVersion, dwMinorVersion, dwBuild);
-
-	return;
-}
-
 void CALLBACK AcceptRejectTimerCallback (HWND hWindow, UINT uMSG, UINT idEvent, DWORD dwTime)
 {	// auto-reject on timeout
 	if (hwnd_acceptreject)
@@ -322,11 +299,12 @@ static int current_macro =0;
 			return DLGC_WANTMESSAGE;
 
 		case WM_DESTROY:
+			talkdlg = false;
 			break;
-
 
 		case WM_INITDIALOG:
 		{
+			talkdlg = true;
 			SetWindowPos(hDlg, HWND_TOPMOST, cDD->DlgPosX(hDlg)+15, cDD->ViewY()+2, 0, 0, SWP_NOSIZE);
 
 			for (int i=0;i < MAX_MACROS; i++)
@@ -401,7 +379,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 	static bool stripdot = false; // strip trailing dot?
 	static bool stripret = false; // strip trailing return?
 	static HFONT hEditFont;
-
+	bool universal = false;
 	static int init_buffer=1;
 	if (init_buffer)
 	{
@@ -480,6 +458,7 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 			}
 #ifdef GAMEMASTER
 			ShowWindow(GetDlgItem(hDlg,IDC_RAW_EMOTE), SW_SHOW);
+			ShowWindow(GetDlgItem(hDlg, IDC_UNIVERSE), SW_SHOW);
 
 			//#else
 //			if (level->ID() == 20) // no whispers in Thresh
@@ -520,8 +499,9 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 			Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 1);
 
 			SetFocus(hwnd_speech);
-			SetWindowPos(hDlg, HWND_TOPMOST, cDD->DlgPosX(hDlg)+15, cDD->ViewY()+2, 0, 0, SWP_NOSIZE);
-
+#ifndef AGENT
+			SetWindowPos(hDlg, HWND_TOPMOST, cDD->DlgPosX(hDlg)+15, (cDD->ViewY() + cDD->YOffset())+2, 0, 0, SWP_NOSIZE);
+#endif
 			// Create Font for edit control
 			{
 				const TCHAR CHAT_FONT_NAME[16]=_T("Arial");
@@ -671,25 +651,33 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 					DestroyWindow(hDlg);
 					return TRUE;
 				}
-
+#ifdef GAMEMASTER
+				universal = Button_GetCheck(GetDlgItem(hDlg, IDC_UNIVERSE));
+				if (universal && !Button_GetCheck(GetDlgItem(hDlg, IDC_RAW_EMOTE)) && !Button_GetCheck(GetDlgItem(hDlg, IDC_TALK)))
+				{
+					display->DisplayMessage("You can only Dreamwide Broadcast with Raw Emotes or Speech; Speech is sent as a System Message");
+					return FALSE;
+				}
+#endif
 				// talk action is legal
 				if (options.network && gs && gs->LoggedIntoGame())
 				{
 					if (Button_GetCheck(GetDlgItem(hDlg, IDC_TALK)))
-						gs->Talk(sentence,RMsg_Speech::SPEECH,Lyra::ID_UNKNOWN);
+						gs->Talk(sentence,RMsg_Speech::SPEECH,Lyra::ID_UNKNOWN, false, true, universal);
 					else if (Button_GetCheck(GetDlgItem(hDlg, IDC_SHOUT)))
-						gs->Talk(sentence,RMsg_Speech::SHOUT,Lyra::ID_UNKNOWN, true);
+						gs->Talk(sentence,RMsg_Speech::SHOUT,Lyra::ID_UNKNOWN, true, true, universal);
 					else if (Button_GetCheck(GetDlgItem(hDlg, IDC_WHISPER)))
 					{
 						target = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_NEIGHBORS));
-						if (target == -1) // whisper to self
+						if (target == -1 && !universal) // whisper to self
 							display->DisplaySpeech(sentence, player->Name(), RMsg_Speech::WHISPER);
 						else
 						{
-							n = actors->LookUpNeighbor(neighborid[target]);
-							if (n && n->CanWhisper())
+							n = !universal ? actors->LookUpNeighbor(neighborid[target]) : NO_ACTOR;
+							if (universal || (n && n->CanWhisper()))
 							{
-								gs->Talk(sentence,RMsg_Speech::WHISPER, neighborid[target], true);
+								realmid_t tgt = !universal ? neighborid[target] : Lyra::ID_UNKNOWN;
+								gs->Talk(sentence,RMsg_Speech::WHISPER, tgt, true, true, universal);
 								// 1 in 10 change whisper emote is shown to all
 #ifndef GAMEMASTER // GM's don't sent out whisper emote
 								int show_emote = rand()%10;
@@ -714,9 +702,9 @@ BOOL CALLBACK TalkDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 						}
 					}
 					else if (Button_GetCheck(GetDlgItem(hDlg, IDC_EMOTE)))
-						gs->Talk(sentence,RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN);
+						gs->Talk(sentence,RMsg_Speech::EMOTE, Lyra::ID_UNKNOWN, false, true, universal);
 					else if (Button_GetCheck(GetDlgItem(hDlg, IDC_RAW_EMOTE)))
-						gs->Talk(sentence,RMsg_Speech::RAW_EMOTE, Lyra::ID_UNKNOWN);
+						gs->Talk(sentence,RMsg_Speech::RAW_EMOTE, Lyra::ID_UNKNOWN, false, true, universal);
 					else if (Button_GetCheck(GetDlgItem(hDlg, IDC_SPECIAL_TALK)))
 					{
 						target = ListBox_GetCurSel(GetDlgItem(hDlg, IDC_SPECIAL_TALKLIST));
@@ -1161,8 +1149,8 @@ BOOL CALLBACK CreditsDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPar
 		case WM_INITDIALOG:
 			creditsdlg = true;
 			SetFocus(hDlg);
-			SetWindowPos(hDlg, TopMost(), 0, cDD->ViewY(),
-				0, 0, SWP_NOSIZE);
+			SetWindowPos(hDlg, TopMost(), cDD->DlgPosX(hDlg), cDD->DlgPosY(hDlg), 0, 0, SWP_NOSIZE);
+
 			ResizeLabel(hDlg, effects->EffectWidth(IDD_CREDITS), effects->EffectHeight(IDD_CREDITS));
 
 			hCreditsBackground = CreateWindowsBitmap(IDD_CREDITS);
@@ -1949,6 +1937,7 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 					ShowWindow (GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), SW_SHOWNORMAL);
 					ShowWindow(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP), SW_SHOWNORMAL);
 					ShowWindow (GetDlgItem(hDlg, IDC_ITEM_DESCRIP), SW_SHOWNORMAL);
+					ShowWindow(GetDlgItem(hDlg, IDC_ITEM_NOCHARGE), SW_SHOWNORMAL);
 					
 
 					for (i = 1; i < LyraItem::NumItemFunctions(); i++) // skip 0 ('none')
@@ -2430,6 +2419,10 @@ BOOL CALLBACK CreateItemDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM l
 						
 						if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOPICKUP)))
 							header.SetFlag(LyraItem::FLAG_NOPICKUP);
+
+						if (Button_GetCheck(GetDlgItem(hDlg, IDC_ITEM_NOCHARGE)))
+							header.SetFlag(LyraItem::FLAG_NORECHARGE);
+
 						// Figure next three flags out based on selected effect types
 						int immutable = 0;
 						int changecharges = 0;
@@ -5140,7 +5133,7 @@ BOOL CALLBACK AvatarDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lPara
 					return TRUE;
 
 				case IDC_RESET:
-					if ((player->flags & ACTOR_TRANSFORMED) || player->Avatar().PlayerInvis())
+					if (player->flags & ACTOR_TRANSFORMED)
 					{ // don't allow avatar customization with nightmare form
 						SendMessage(hwnd_avatar, WM_COMMAND, (WPARAM) IDC_CANCEL, 0);
 						break;

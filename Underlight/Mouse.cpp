@@ -68,6 +68,13 @@ void  Realm_OnLButtonDown( HWND hWnd, BOOL fDoubleClick, int x, int y, UINT keyF
 	
 	if (hWnd == cDD->Hwnd_Main())
 	{
+		if (GetFocus() != cDD->Hwnd_Main())
+		{
+			SetActiveWindow(cDD->Hwnd_Main());
+			SetFocus(cDD->Hwnd_Main());
+		}
+
+
 		bool click_used = false;
 	  cActor *chosen_actor = ActorAtScreenPoint(x,y);
 		if (chosen_actor != NO_ACTOR) 
@@ -199,7 +206,7 @@ void  Realm_OnMButtonUp(HWND hWnd, WORD x, WORD y, WORD fwKeys )
 	return;
 }
 
-void Realm_OnMouseWheelScroll(HWND hWnd, WORD x, WORD y, int direction)
+void Realm_OnMouseWheelScroll(HWND hWnd, int x, int y, int direction)
 {
 	POINT pt;
 	pt.x = x; pt.y = y;

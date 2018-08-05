@@ -224,7 +224,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>libcmt.lib;../MessageMaker/Release/MessageMaker.lib;oldnames.lib;winmm.lib;ws2_32.lib;odbc32.lib;odbccp32.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcmt.lib;Wininet.lib;../MessageMaker/Release/MessageMaker.lib;oldnames.lib;winmm.lib;ws2_32.lib;odbc32.lib;odbccp32.lib;msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>\lyra\dev\AgentSvr.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -1009,6 +1009,9 @@
       <Project>{b67bdcbe-ddf6-4bd2-882d-7c0d4bab1560}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Underlight\Lyra_sm.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

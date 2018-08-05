@@ -288,7 +288,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0xDF3, // Portkey
 0x3169, // Sprint
 0x5F5C, // Enfeeblement
-
+0x81BB, // DW Evoke
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -482,8 +482,8 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_GKSHIELD,						Stats::WILLPOWER, 70, 30, 13, 5, -1, SANCT | FOCUS | LEARN},
 {IDS_PORTKEY,						Stats::DREAMSOUL, 90, 50, 13, 5, -1, SANCT | LEARN | MAKE_ITEM},
 {IDS_SPRINT,						Stats::WILLPOWER, 35, 20, 13, 2, 2, SANCT | LEARN },
-{IDS_ENFEEBLEMENT,					Stats::LUCIDITY,	35, 20, 13, 2, 	 2, LEARN | FOCUS | NEIGH }
-
+{IDS_ENFEEBLEMENT,					Stats::LUCIDITY,	35, 20, 13, 2, 	 2, LEARN | FOCUS | NEIGH },
+{IDS_DREAMWIDE_EVOKE,				Stats::NO_STAT, 0, 0, 0, 0, -1, SANCT}
 };
 
 
@@ -747,7 +747,7 @@ void cArts::BeginArt(int art_id, bool bypass)
 	if (player->flags & ACTOR_MEDITATING) // expire meditation on evoke
 		player->RemoveTimedEffect(LyraEffect::PLAYER_MEDITATING);
 
-	if (!bypass && (player->Skill(art_id) == 0) && (art_id != Arts::GRANT_PPOINT))	// no chance of success or improvement when skill=0
+	if (!bypass && (player->Skill(art_id) == 0) && (art_id != Arts::GRANT_PPOINT) && (art_id != Arts::DREAMWIDE_EVOKE))	// no chance of success or improvement when skill=0
 	{
 		cp->UpdateArt(art_id);
 		return;
@@ -1307,6 +1307,7 @@ void cArts::ApplyArt(void)
 	case Arts::PORTKEY: method = &cArts::Portkey; break;
 	case Arts::SPRINT: method = &cArts::Sprint; break;
 	case Arts::ENFEEBLEMENT: method = &cArts::StartEnfeeblement; break;
+	case Arts::DREAMWIDE_EVOKE: method = &cArts::DreamwideEvoke; break;
 
 
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
@@ -1998,6 +1999,180 @@ void cArts::EndKey(void *value)
 	this->CreatePass(key_name, amulet, player->Skill(art_in_use));
 }
 
+void cArts::DreamwideEvoke(void)
+{
+	_stprintf(disp_message, "Select art to mass evoke");
+	display->DisplayMessage(disp_message);
+   this->WaitForSelection(&cArts::EndDreamwideEvoke, Arts::DREAMWIDE_EVOKE);
+   this->CaptureCP(ARTS_TAB, Arts::DREAMWIDE_EVOKE);
+   return;
+}
+
+void cArts::EndDreamwideEvoke(void)
+{
+	lyra_id_t art_id = cp->SelectedArt();
+	int msg;
+	switch (art_id) {
+	case Arts::RESIST_FEAR:
+		msg = RMsg_PlayerMsg::RESIST_FEAR;
+		break;
+	case Arts::PROTECTION:
+		msg = RMsg_PlayerMsg::RESIST_CURSE;
+		break;
+	case Arts::FREE_ACTION:
+		msg = RMsg_PlayerMsg::RESIST_PARALYSIS;
+		break;
+	case Arts::JUDGEMENT:
+		msg = RMsg_PlayerMsg::JUDGEMENT;
+		break;
+	case Arts::IDENTIFY_CURSE:
+		msg = RMsg_PlayerMsg::IDENTIFY_CURSE;
+		break;
+	case Arts::VISION:
+		msg = RMsg_PlayerMsg::VISION;
+		break;
+	case Arts::BLAST:
+		msg = RMsg_PlayerMsg::BLAST;
+		break;
+	case Arts::RESTORE:
+		msg = RMsg_PlayerMsg::RESTORE;
+		break;
+	case Arts::PURIFY:
+		msg = RMsg_PlayerMsg::PURIFY;
+		break;
+	case Arts::DRAIN_SELF:
+		msg = RMsg_PlayerMsg::DRAIN_SELF;
+		break;
+	case Arts::ABJURE:
+		msg = RMsg_PlayerMsg::ABJURE;
+		break;
+	case Arts::POISON:
+		msg = RMsg_PlayerMsg::POISON;
+		break;
+	case Arts::ANTIDOTE:
+		msg = RMsg_PlayerMsg::ANTIDOTE;
+		break;
+	case Arts::CURSE:
+		msg = RMsg_PlayerMsg::CURSE;
+		break;
+	case Arts::SCARE:
+		msg = RMsg_PlayerMsg::SCARE;
+		break;
+	case Arts::STAGGER:
+		msg = RMsg_PlayerMsg::STAGGER;
+		break;
+	case Arts::DEAFEN:
+		msg = RMsg_PlayerMsg::DEAFEN;
+		break;
+	case Arts::BLIND:
+		msg = RMsg_PlayerMsg::BLIND;
+		break;
+	case Arts::DARKNESS:
+		msg = RMsg_PlayerMsg::DARKNESS;
+		break;
+	case Arts::PARALYZE:
+		msg = RMsg_PlayerMsg::PARALYZE;
+		break;
+	case Arts::RANDOM:
+		msg = RMsg_PlayerMsg::RANDOM;
+		break;
+	case Arts::FIRESTORM:
+		msg = RMsg_PlayerMsg::FIRESTORM;
+		break;
+	case Arts::RAZORWIND:
+		msg = RMsg_PlayerMsg::RAZORWIND;
+		break;
+	case Arts::MIND_BLANK:
+		msg = RMsg_PlayerMsg::MIND_BLANK_OTHER;
+		break;
+	case Arts::EARTHQUAKE:
+		msg = RMsg_PlayerMsg::EARTHQUAKE;
+		break;
+	case Arts::HYPNOTIC_WEAVE:
+		msg = RMsg_PlayerMsg::HYPNOTIC_WEAVE;
+		break;
+	case Arts::VAMPIRIC_DRAW:
+		msg = RMsg_PlayerMsg::VAMPIRIC_DRAW;
+		break;
+	case Arts::TERROR:
+		msg = RMsg_PlayerMsg::TERROR;
+		break;
+	case Arts::SOUL_SHIELD:
+		msg = RMsg_PlayerMsg::SOUL_SHIELD;
+		break;
+	case Arts::REFLECT:
+		msg = RMsg_PlayerMsg::REFLECT_ART;
+		break;
+	case Arts::SUMMON:
+		msg = RMsg_PlayerMsg::SUMMON;
+		break;
+	case Arts::EXPEL:
+		msg = RMsg_PlayerMsg::EXPEL;
+		break;
+	case Arts::CHAOS_PURGE:
+		msg = RMsg_PlayerMsg::CHAOS_PURGE;
+		break;
+	case Arts::CUP_SUMMONS:
+		msg = RMsg_PlayerMsg::CUP_SUMMONS;
+		break;
+	case Arts::SCAN:
+		msg = RMsg_PlayerMsg::SCAN;
+		break;
+	case Arts::HEAL:
+		msg = RMsg_PlayerMsg::HEAL;
+		break;
+	case Arts::SANCTIFY:
+		msg = RMsg_PlayerMsg::SANCTIFY;
+		break;
+	case Arts::REMOVE_CURSE:
+		msg = RMsg_PlayerMsg::REMOVE_CURSE;
+		break;
+	case Arts::HOLD_AVATAR:
+		msg = RMsg_PlayerMsg::HOLD_AVATAR;
+		break;
+	case Arts::TEMPEST:
+		msg = RMsg_PlayerMsg::TEMPEST;
+		break;
+	case Arts::KINESIS:
+		msg = RMsg_PlayerMsg::KINESIS;
+		break;
+	case Arts::MISDIRECTION:
+		msg = RMsg_PlayerMsg::MISDIRECTION;
+		break;
+	case Arts::CHAOTIC_VORTEX:
+		msg = RMsg_PlayerMsg::CHAOTIC_VORTEX;
+		break;
+	case Arts::RALLY:
+		msg = RMsg_PlayerMsg::RALLY;
+		break;
+	case Arts::ENFEEBLEMENT:
+		msg = RMsg_PlayerMsg::ENFEEBLEMENT;
+		break;
+	default:
+		_stprintf(disp_message, "Can't select that art for mass evoke");
+		display->DisplayMessage(disp_message);
+		return;
+	}
+
+	// special handling for summon
+	if (msg == RMsg_PlayerMsg::SUMMON)
+	{
+		entervaluedlg = true;
+		_stprintf(message, _T("%d;%d;%d"), (int)last_summon_x, (int)last_summon_y, last_summon_level);
+		HWND hDlg = CreateLyraDialog(hInstance, (IDD_ENTER_VALUE),
+			cDD->Hwnd_Main(), (DLGPROC)SummonDlgProc);
+		entervalue_callback = (&cArts::EndMassSummon);
+		SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+		this->WaitForDialog(hDlg, Arts::SUMMON);
+	}
+	else {
+		gs->SendPlayerMessage(0, msg,
+			player->Skill(art_id), 0, 0, true);
+		this->ArtFinished(true);
+	}
+
+}
+
 //////////////////////////////////////////////////////////////////
 // Amulet
 void cArts::Amulet(void)
@@ -2571,7 +2746,7 @@ void cArts::Return(void)
 	// check if the teleport is allowed
 	if (!this->CanPlayerTeleport(Arts::RETURN))
 	{
-		this->ArtFinished(false);
+		this->ArtFinished(true); // was false
 		return;
 	}
 
@@ -3002,8 +3177,16 @@ void cArts::ApplyRazorwind(int skill, lyra_id_t caster_id)
 	}
 	else
 	{
-		LoadString (hInstance, IDS_RAZORWIND_AREA_EFFECT, disp_message, sizeof(disp_message));
-	_stprintf(message, disp_message, n->Name());
+		if (n != NO_ACTOR)
+		{
+			LoadString(hInstance, IDS_RAZORWIND_AREA_EFFECT, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, n->Name());
+		}
+		else
+		{
+			_stprintf(message, "A razorwind tears through the room!");
+		}
+
 		display->DisplayMessage(message, false);
 		int damage = 12 + (((skill/10)+1) * (rand()%4));
 		this->DamagePlayer(damage, caster_id);
@@ -3628,7 +3811,7 @@ void cArts::StartPlayerTeleport(void)
 	// check if the teleport is allowed
 	if (!this->CanPlayerTeleport(Arts::GUILDHOUSE))
 	{
-		this->ArtFinished(false);
+		this->ArtFinished(true); //was false
 		return;
 	}
 	
@@ -5317,7 +5500,7 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
   
-  if (caster_id != player->ID () && n == NO_ACTOR)
+  if (caster_id != player->ID ())
     return; // MDA 3/18/2004 - bail if the neighbor became NULL between evoke and Apply
 
   this->DisplayUsedByOther(n, Arts::ABJURE);
@@ -5367,8 +5550,15 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 					{
 						_stprintf(message, disp_message, timed_effects->name[i], player->Name());
 						gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
-						LoadString (hInstance, IDS_ABJURED_EFFECT_OTHER, disp_message, sizeof(disp_message));
-						_stprintf(message, disp_message, n->Name(), timed_effects->name[i]);
+						if (n != NO_ACTOR)
+						{
+							LoadString(hInstance, IDS_ABJURED_EFFECT_OTHER, disp_message, sizeof(disp_message));
+							_stprintf(message, disp_message, n->Name(), timed_effects->name[i]);
+						}
+						else {
+							_stprintf(message, "%s has been abjured from you!\n", timed_effects->name[i]);
+						}
+
 						display->DisplayMessage (message);
 					}
 					player->RemoveTimedEffect(i);
@@ -6113,10 +6303,6 @@ void cArts::ApplySummon(lyra_id_t caster_id, int x, int y, int lvl)
 
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
 	this->DisplayUsedByOther(n, Arts::SUMMON);
-
-	if (n == NO_ACTOR)
-		return;
-
     player->EvokedFX().Activate(Arts::SUMMON, false);
 	// use the supplied coordinates
 	player->Teleport(x, y, 0, lvl);
@@ -6158,6 +6344,33 @@ void cArts::EndSummon(void *value)
 			this->DisplayUsedOnOther(n, Arts::SUMMON);
 		}
 
+		this->ArtFinished(true);
+		return;
+	}
+	else
+	{
+		this->ArtFinished(false);
+	}
+}
+
+void cArts::EndMassSummon(void *value)
+{
+
+	if (!value)
+	{
+		this->ArtFinished(false);
+		return;
+	}
+
+
+	float x, y; int level_id;
+	// parse the message into appropriate coordinates
+	if (_stscanf(message, _T("%f;%f;%d"), &x, &y, &level_id) == 3)
+	{
+		last_summon_x = x;
+		last_summon_y = y;
+		last_summon_level = level_id;
+		gs->SendPlayerMessage(0, RMsg_PlayerMsg::SUMMON, x, y, level_id, true);
 		this->ArtFinished(true);
 		return;
 	}
@@ -6719,9 +6932,6 @@ void cArts::StartBreakCovenant(void)
 void cArts::ApplyBreakCovenant(int skill, lyra_id_t caster_id)
 {	
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
-	if (n == NO_ACTOR)
-		return;
-
 	player->EvokedFX().Activate(Arts::BREAK_COVENANT, false);
 	this->DisplayUsedByOther(n, Arts::BREAK_COVENANT);
 
@@ -7658,7 +7868,7 @@ void cArts::EndMareEssenceMetaFunc(int art_id, int graphic, int item_name_string
 	{ // transmute into banished talisman
 	  // create new talisman for banished mare essence
 		header.Init(0, 0, 0);
-		header.SetFlags(LyraItem::FLAG_IMMUTABLE);
+		header.SetFlags(LyraItem::FLAG_SENDSTATE);
 		header.SetGraphic(graphic);
 		header.SetColor1(0); header.SetColor2(0);
 		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::META_ESSENCE_NEXUS_FUNCTION), 0, 0));
@@ -10250,7 +10460,9 @@ void cArts::EndCombine(void)
 		(item2->Lmitem().Header().Flags() & LyraItem::FLAG_ISCOMBINED))
 		combinable = false;
 	else if (item1->ItemFunction(0) != item2->ItemFunction(0))
-		combinable = false; 
+		combinable = false;
+	else if (item1->NoRecharge() || item2->NoRecharge())
+		combinable = false;
 	else if ((item1->ItemFunction(0) != LyraItem::CHANGE_STAT_FUNCTION) &&
 		(item1->ItemFunction(0) != LyraItem::MISSILE_FUNCTION) &&
 		(item1->ItemFunction(0) != LyraItem::EFFECT_PLAYER_FUNCTION))

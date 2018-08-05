@@ -153,6 +153,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 			{
 				Button_SetCheck(GetDlgItem(hDlg, IDC_CUSTOM_DEV_SERVER), 1);
 				ShowWindow(GetDlgItem(hDlg, IDC_CUSTOM_IP), SW_SHOW);
+				Edit_SetText(GetDlgItem(hDlg, IDC_CUSTOM_IP), options.custom_ip);
 			}
 
 			_stprintf(message, _T("%s"), options.custom_ip);
@@ -177,6 +178,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 		{
 			Button_SetCheck(GetDlgItem(hDlg, IDC_SOUND), options.sound);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL), options.extra_scroll);
+			Button_SetCheck(GetDlgItem(hDlg, IDC_FULLSCREEN), options.fullscreen);
 #ifdef PMARE
 			Button_SetCheck(GetDlgItem(hDlg, IDC_TRAINING), false);
 			ShowWindow(GetDlgItem(hDlg, IDC_TRAINING), SW_HIDE);
@@ -280,7 +282,8 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 				options.sound			= Button_GetCheck(GetDlgItem(hDlg, IDC_SOUND));
 				options.rw				= Button_GetCheck(GetDlgItem(hDlg, IDC_ENABLE_RW));
 				options.welcome_ai		= Button_GetCheck(GetDlgItem(hDlg, IDC_TRAINING)); 
-				options.extra_scroll	= Button_GetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL)); 
+				options.extra_scroll	= Button_GetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL));
+				options.fullscreen		= Button_GetCheck(GetDlgItem(hDlg, IDC_FULLSCREEN));
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_TCP), message, sizeof(message)); 								
 				options.bind_local_tcp	= _ttol(message);
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_UDP), message, sizeof(message)); 								
@@ -359,7 +362,11 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 #else
 				LoadString(hInstance, IDS_LIVE_PATCH_FILE_URL, options.patch_URL, sizeof(options.patch_URL));
 #endif
+#ifdef QA		
+				LoadString(hInstance, IDS_LIVE_QA_SERVER_IP, options.game_server, sizeof(options.game_server));
+#else
 				LoadString(hInstance, IDS_LIVE_GAME_SERVER_IP, options.game_server, sizeof(options.game_server)); 
+#endif // QA
 
 #endif // UL_DEV
 				show_training_messages = options.welcome_ai;

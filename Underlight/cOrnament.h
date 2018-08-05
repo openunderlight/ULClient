@@ -21,6 +21,7 @@ struct damaging_ornament_t {
 	int modifier;
 	int effect;
 	int duration;
+	int distance_index;
 };
 
 ///////////////////////////////////////////////////////////////////

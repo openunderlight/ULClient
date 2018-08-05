@@ -829,6 +829,9 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 	if (n != NO_ACTOR) {
 		invisGMBreakthru = n->Avatar().Hidden();
 	}
+	else if (caster_id == DUMMY_PID_FOR_DREAMWIDE_EVOKES) {
+		invisGMBreakthru = true; // always breakthru on universal evokes for now.
+	}
 #ifdef GAMEMASTER
 #ifdef AGENT
 	if (((this->AvatarType() >= Avatars::AGOKNIGHT) || (this->AvatarType() < Avatars::MIN_NIGHTMARE_TYPE)) &&
@@ -987,7 +990,7 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		else {
 			LmAvatar new_avatar;
 			//new_avatar.Init((player->Skill(Arts::NIGHTMARE_FORM)/20 + 1), 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-			new_avatar.Init(Avatars::EMPHANT, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+			new_avatar.Init(Avatars::EMPHANT, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 			this->SetTransformedAvatar(new_avatar);
 		}
 	} break;
@@ -1062,10 +1065,6 @@ bool cPlayer::SetTimedEffect(int effect, DWORD duration, lyra_id_t caster_id, in
 		if (this->flags & ACTOR_INVISIBLE) { // 2nd activation - remove
 			this->RemoveTimedEffect(LyraEffect::PLAYER_INVISIBLE);
 			return false;
-		}
-		else {
-			avatar.SetPlayerInvis(1);
-			gs->AvatarChange(avatar, false);
 		}
 	}
 									   break;
@@ -1207,13 +1206,6 @@ void cPlayer::RemoveTimedEffect(int effect)
 	flags = flags & ~(timed_effects->actor_flag[effect]);
 	timed_effects->expires[effect] = 0;
 
-	if (effect == LyraEffect::PLAYER_INVISIBLE && !avatar.Hidden())
-	{
-		// Invis is expiring...
-		avatar.SetPlayerInvis(0);
-		gs->AvatarChange(avatar, false);
-	}
-
 	// in case we are invis AND chamele'd, no re-visible message
 	if (((effect == LyraEffect::PLAYER_CHAMELED) && (flags & ACTOR_INVISIBLE)) ||
 		((effect == LyraEffect::PLAYER_INVISIBLE) && (flags & ACTOR_CHAMELED)))
@@ -1308,8 +1300,13 @@ void cPlayer::CheckStatus(void)
 			value = 2;
 }
 #else  // dreamers regen slowly
-		if (flags & ACTOR_MEDITATING)
+		if (flags & ACTOR_MEDITATING) {
 			value = 2 + (player->Skill(Arts::MEDITATION) / 10);
+			// chip at poison
+			if (flags & ACTOR_POISONED)
+				timed_effects->expires[LyraEffect::PLAYER_POISONED] -= ((player->Skill(Arts::MEDITATION) / 10) * 20 * 1000); // med plat * 20sec
+
+		}
 		else
 			value = 1;
 #endif
@@ -1350,7 +1347,7 @@ void cPlayer::CheckStatus(void)
 		next_heal = LyraTime() + HEAL_INTERVAL;
 		}
 
-	if ((flags & ACTOR_POISONED) && (LyraTime() > next_poison))
+	if ((flags & ACTOR_POISONED) && (LyraTime() > next_poison) && !(flags & ACTOR_MEDITATING))
 	{	 // sap dreamsoul...
 		this->SetCurrStat(Stats::DREAMSOUL, -((rand() % poison_strength) + 1), SET_RELATIVE, last_poisoner);
 		next_poison = LyraTime() + POISON_INTERVAL;
@@ -1479,10 +1476,14 @@ void cPlayer::CheckStatus(void)
 				if (!ornament->IsDamagingOrnament())
 					continue;
 				int dist = (int)((ornament->x - x)*(ornament->x - x) + (ornament->y - y)*(ornament->y - y));
-				if (dist > HORRON_DRAIN_DISTANCE)
-					continue;
 				// OK DO YOUR THING!
 				damaging_ornament_t dmginfo = ornament->GetDamageInfo();
+				unsigned int xy, ht;
+				CalculateDistance(dmginfo.distance_index, &xy, &ht);
+				int h1 = z - physht - ornament->z, h2 = ornament->z - z;
+				if (dist > xy || h1 > (int)ht || h2 > (int)ht)
+					continue;
+
 				if (dmginfo.stat != Stats::NO_STAT)
 				{
 					int mod = CalculateModifier(dmginfo.modifier);
@@ -1940,7 +1941,7 @@ void cPlayer::InitAvatar(void)
 	else
 		sex = Avatars::MALE;
 #endif
-	avatar.Init(sex, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+	avatar.Init(sex, 0, 0, 0, 0, 0, Guild::NO_GUILD, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 }
 
 bool cPlayer::IsMare(void)

@@ -377,7 +377,8 @@ const distance_t distances[NUM_DISTANCES] = {
 	{150000, 10000, 30, IDS_NEARBY},
 	{250000, 10000, 50, IDS_WHISPERABLE},
 	{700000, 50000, 90, IDS_WIDE_RANGE}, // whisper x,y taller than whisper
-	{99999999, 999999, 100, IDS_WHOLE_ROOM}
+	{99999999, 999999, 100, IDS_WHOLE_ROOM},
+	{5000, 500, 1, IDS_OVERLAPPING}
 };
 
 const frequency_t frequencies[NUM_FREQUENCIES] = {
@@ -445,6 +446,28 @@ int BeliefFromArtID(lyra_id_t art_id)
 	return 0;
 }
 
+void getWindowsVersion(TCHAR * ver) {
+	DWORD dwVersion = 0;
+	DWORD dwMajorVersion = 0;
+	DWORD dwMinorVersion = 0;
+	DWORD dwBuild = 0;
+
+	dwVersion = GetVersion();
+
+	// Get the Windows version
+
+	dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
+	dwMinorVersion = (DWORD)(HIBYTE(LOWORD(dwVersion)));
+
+	// Get the build number
+
+	if (dwVersion < 0x80000000)
+		dwBuild = (DWORD)(HIWORD(dwVersion));
+
+	sprintf(ver, "Platform: %d.%d (%d)", dwMajorVersion, dwMinorVersion, dwBuild);
+
+	return;
+}
 // Translate a value into a human readable string and sticks it into
 // the "message" global variable
 

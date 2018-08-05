@@ -458,4 +458,15 @@
       <Filter>Libraries</Filter>
     </Library>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="lyra1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icon2.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Lyra_sm.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

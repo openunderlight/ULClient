@@ -40,15 +40,15 @@ extern timing_t *timing;
 // such as for explosions
 
 damaging_ornament_t damaging_ornaments[] = {
-	{LyraBitmap::FI_SM, Stats::DREAMSOUL, -12, LyraEffect::NONE, 0 },
-	{LyraBitmap::FI_MD, Stats::DREAMSOUL, -14, LyraEffect::NONE, 0},
-	{LyraBitmap::FIRE, Stats::DREAMSOUL, -52, LyraEffect::NONE, 0},
-	{LyraBitmap::W_HOLE, Stats::DREAMSOUL, -13, LyraEffect::PLAYER_POISONED, 10},
-	{LyraBitmap::S_ALT2, Stats::DREAMSOUL, -12, LyraEffect::NONE, 0},
-	{LyraBitmap::LIGHTNING, Stats::DREAMSOUL, -13, LyraEffect::PLAYER_PARALYZED, 6},
-	{LyraBitmap::LIGHTNING_SM, Stats::DREAMSOUL, -12, LyraEffect::PLAYER_PARALYZED, 5 },
-	{LyraBitmap::TORCH, Stats::DREAMSOUL, -14, LyraEffect::NONE, 0 },
-	{LyraBitmap::ANOTHER_DAMN_TORCH, Stats::DREAMSOUL, -14, LyraEffect::NONE, 0},
+	{LyraBitmap::FI_SM, Stats::DREAMSOUL, -12, LyraEffect::NONE, 0, 7 },
+	{LyraBitmap::FI_MD, Stats::DREAMSOUL, -14, LyraEffect::NONE, 0, 7},
+	{LyraBitmap::FIRE, Stats::DREAMSOUL, -52, LyraEffect::NONE, 0, 0},
+	{LyraBitmap::W_HOLE, Stats::DREAMSOUL, -13, LyraEffect::PLAYER_POISONED, 10, 7},
+	{LyraBitmap::S_ALT2, Stats::DREAMSOUL, -12, LyraEffect::NONE, 0, 7},
+	{LyraBitmap::LIGHTNING, Stats::DREAMSOUL, -13, LyraEffect::PLAYER_PARALYZED, 6, 0},
+	{LyraBitmap::LIGHTNING_SM, Stats::DREAMSOUL, -12, LyraEffect::PLAYER_PARALYZED, 5, 7 },
+	{LyraBitmap::TORCH, Stats::DREAMSOUL, -14, LyraEffect::NONE, 0, 7 },
+	{LyraBitmap::ANOTHER_DAMN_TORCH, Stats::DREAMSOUL, -14, LyraEffect::NONE, 0, 7},
 };
 
 const int NumDamagingOrnaments = sizeof(damaging_ornaments) / sizeof(damaging_ornament_t);

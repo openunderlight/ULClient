@@ -468,7 +468,6 @@ void cActor::CheckMissile(void)
 bool cActor::Render(void)
 {
 	bool isVisioned = player != NULL && (player->flags & ACTOR_DETECT_INVIS);
-	bool isHidden = (flags & ACTOR_INVISIBLE) || (flags & ACTOR_CHAMELED);
 	if (terminate)
 		return false;
 	else if ((actors->ValidNeighbor(this)))
@@ -478,14 +477,10 @@ bool cActor::Render(void)
 		{
 			return false;
 		}
-		else if (neighbor->Avatar().PlayerInvis())
-		{
-			return false;
-		}
 	} 
 
 
-	if (isHidden && !isVisioned)
+	if (((flags & ACTOR_CHAMELED) && !isVisioned) || (flags & ACTOR_INVISIBLE))
 		return false;
 
 	return true;

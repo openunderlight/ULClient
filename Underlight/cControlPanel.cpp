@@ -224,7 +224,7 @@ cControlPanel::cControlPanel(void)
    first_paint = true;
    setCounter = false;
    WNDCLASS wc;
-   WNDPROC	lpfn_inventory, lpfn_neighbors, lpfn_arts;
+   WNDPROC	lpfn_inventory, lpfn_neighbors, lpfn_arts, lpfn_avatar;
 
 
       // Create Image List
@@ -252,7 +252,7 @@ cControlPanel::cControlPanel(void)
 	// Create the tab control
 
 	// window for tab control
-    hwnd_tab = CreateWindow(_T("CP_Tab"), _T(""), WS_POPUP | WS_CHILD, 
+    hwnd_tab = CreateWindow(_T("CP_Tab"), _T(""), WS_CHILD, 
 		tabPos[cDD->Res()].x, tabPos[cDD->Res()].y, 		
 		tabPos[cDD->Res()].width, tabPos[cDD->Res()].height,
 		cDD->Hwnd_Main(), NULL, hInstance, NULL); 
@@ -265,7 +265,7 @@ cControlPanel::cControlPanel(void)
     wc.lpszClassName = _T("CP_Window");
     RegisterClass( &wc );
 
-    hwnd_cp = CreateWindow(_T("CP_Window"), _T(""), WS_POPUP | WS_CHILD, 
+    hwnd_cp = CreateWindow(_T("CP_Window"), _T(""), WS_CHILD, 
 		mainPos[cDD->Res()].x, mainPos[cDD->Res()].y, mainPos[cDD->Res()].width, mainPos[cDD->Res()].height,
 		cDD->Hwnd_Main(), NULL, hInstance, NULL );
 
@@ -301,15 +301,12 @@ cControlPanel::cControlPanel(void)
     RegisterClass( &wc );
 
 	// window for avatar 
-    hwnd_avatar = CreateWindow(_T("CP_Avatar"), _T(""), WS_POPUP | WS_CHILD, 
+    hwnd_avatar = CreateWindow(_T("CP_Avatar"), _T(""), WS_CHILD, 
 		avatarPos[cDD->Res()].x, avatarPos[cDD->Res()].y, 		
 		avatarPos[cDD->Res()].width, avatarPos[cDD->Res()].height,
 		cDD->Hwnd_Main(), NULL, hInstance, NULL); 
-
 	cp_avatar_bitmap = NULL;
-
 	// create selected stat bullet
-
     cp_bullet_bitmap = 	CreateWindowsBitmap(LyraBitmap::CP_BULLET + cDD->Res());
 	
 	// create buttons for turning avatar left/right
@@ -647,7 +644,7 @@ void cControlPanel::SetMode(int new_mode, bool art_capture, bool force_redraw)
 		ShowWindow(hwnd_invcounter, SW_HIDE);
 		ShowWindow(hwnd_left, SW_SHOWNORMAL);
 		ShowWindow(hwnd_right, SW_SHOWNORMAL);
-		ShowWindow(hwnd_avatar, SW_SHOWNORMAL);
+		ShowWindow(hwnd_avatar, SW_SHOWNORMAL);		
 	} 
 	else if (new_mode == INVENTORY_TAB)
 	{
@@ -2271,7 +2268,7 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 	{   // the lpfn's and hwnd's need to be passed in so we can use
 		// them even before the cp is fully constructed
 		case WM_MOUSEWHEEL: // pass off to be handled elsewhere so people can scroll even when an item is selected in the listview
-			Realm_OnMouseWheelScroll(hwnd, LOWORD(lParam), HIWORD(lParam), (short)HIWORD(wParam));
+			Realm_OnMouseWheelScroll(hwnd, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), (short)HIWORD(wParam));
 			break;	
 		case WM_DESTROY:
 			break;
@@ -2604,27 +2601,28 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 				//else
 //#endif
 				{
-					talkdlg = TRUE;
-					HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK, 
-							 cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
 
-#ifdef GAMEMASTER
-					DisableTalkDialogOptionsForInvisAvatar(hDlg);
-					Button_SetCheck(GetDlgItem(hDlg, IDC_WHISPER), 1);
-					Button_SetCheck(GetDlgItem(hDlg, IDC_RAW_EMOTE), 0);
-#endif
-
-					Button_SetCheck(GetDlgItem(hDlg, IDC_WHISPER), 1);
-					Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
-
-
+					//DisableTalkDialogOptionsForInvisAvatar(hDlg);
+					//Button_SetCheck(GetDlgItem(hDlg, IDC_WHISPER), 1);
+					//Button_SetCheck(GetDlgItem(hDlg, IDC_RAW_EMOTE), 0);
+					if (strchr(cp->SelectedNeighbor()->Name(), ' ')) {
+						sprintf(::message, "/whisper \"%s\" ", cp->SelectedNeighbor()->Name());
+					}
+					else {
+						sprintf(::message, "/whisper %s ", cp->SelectedNeighbor()->Name());
+					}
+					Edit_SetText(display->TextEntry(), ::message);
+					//SendMessage(display->TextEntry(), WM_SETFOCUS, (WPARAM)hwnd, (LPARAM)0);
+					
+					SendMessage(display->TextEntry(), WM_ACTIVATE,
+						(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
 
 					return (LRESULT)0;
 				}
 			}
 #endif
 			else if ((hwnd == cp->hwnd_avatar) && !avatardlg && 
-					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED) && !player->Avatar().PlayerInvis())
+					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED))
 			{
 					avatardlg = TRUE;
 					if ((player->GetAccountType() == LmAvatar::ACCT_PMARE) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
@@ -2638,8 +2636,15 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 			break;
 
 		case WM_LBUTTONDOWN:
-			if ((hwnd == cp->hwnd_avatar) && !avatardlg && 
-					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED) && !player->Avatar().PlayerInvis())
+			RECT avatarrect;
+			POINT pt;
+			pt.x = (short)LOWORD(lParam);
+			pt.y = (short)HIWORD(lParam);
+			GetWindowRect(cp->hwnd_avatar, &avatarrect);
+			ClientToScreen(cp->hwnd_avatar, &pt);
+
+			if ((hwnd == cp->hwnd_cp) && PtInRect(&avatarrect, pt) && !avatardlg && 
+					 gs && gs->LoggedIntoGame() && !(player->flags & ACTOR_TRANSFORMED))
 			{
 					avatardlg = TRUE;
 					if ((player->GetAccountType() == LmAvatar::ACCT_PMARE) || (player->GetAccountType() == LmAvatar::ACCT_DARKMARE))
@@ -2747,12 +2752,12 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 	}  
 
 	if (hwnd == hwnd_listviews[INVENTORY_TAB])
-		return CallWindowProc( lpfn_inventory, hwnd, message, wParam, lParam);
+		return CallWindowProc(lpfn_inventory, hwnd, message, wParam, lParam);
 	else if (hwnd == hwnd_listviews[NEIGHBORS_TAB])
-		return CallWindowProc( lpfn_neighbors, hwnd, message, wParam, lParam);
+		return CallWindowProc(lpfn_neighbors, hwnd, message, wParam, lParam);
 	else if (hwnd == hwnd_listviews[ARTS_TAB])
-		return CallWindowProc( lpfn_arts, hwnd, message, wParam, lParam);
-	else 
+		return CallWindowProc(lpfn_arts, hwnd, message, wParam, lParam);
+	else
 		return DefWindowProc(hwnd, message, wParam, lParam);
 } 
 
