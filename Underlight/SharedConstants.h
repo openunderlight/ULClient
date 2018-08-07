@@ -62,7 +62,7 @@ struct Stats {
 		SKILL_MAX = 99,
 		SKILL_MIN = 0,
 		ORBIT_MIN = 0,
-		ORBIT_MAX = 99,
+		ORBIT_MAX = 100,
 		SPHERE_MIN = 0,
 		SPHERE_MAX = 9
 	};
