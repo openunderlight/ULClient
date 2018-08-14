@@ -55,6 +55,9 @@ const int MIN_REPEAT_INTERVAL = 1000; // same message no more than once/sec
 
 // position for chat display area - no ads 
 #ifndef PMARE
+const struct window_pos_t classicChatPos[MAX_RESOLUTIONS] =
+{ { 0, 300, 480, 180 },{ 0, 375, 600, 225 },{ 0, 480, 768, 288 } };
+
 const struct window_pos_t chatPos[MAX_RESOLUTIONS] = 
 { { 0, 300, 480, 155 }, { 0, 375, 600, 194 }, { 0, 480, 768, 253 } };
 
@@ -70,6 +73,18 @@ struct button_t {
 	window_pos_t position[MAX_RESOLUTIONS];
 	int			 button_id;
 	int			 bitmap_id;
+};
+
+const button_t classic_chat_buttons[NUM_CHAT_BUTTONS] =
+{
+	{ { { 460, 150, 13, 25 },{ 579, 193, 13, 25 },{ 747, 255, 13, 25 } },
+	DDOWN, LyraBitmap::CP_DDOWNA }, // double down button
+	{ { { 460, 0, 13, 25 },{ 579, 0, 13, 25 },{ 747, 0, 13, 25 } },
+	DUP, LyraBitmap::CP_DUPA },   // double up button
+	{ { { 460, 135, 13, 15 },{ 579, 178, 13, 15 },{ 747, 240, 13, 15 } },
+	DOWN, LyraBitmap::CP_DOWNA },   // down button
+	{ { { 460, 25, 13, 15 },{ 579, 25, 13, 15 },{ 747, 25, 13, 15 } },
+	UP, LyraBitmap::CP_UPA }     // up button
 };
 
 #ifndef PMARE
@@ -170,13 +185,25 @@ cChat::cChat(int speech_color, int message_color, int whisper_color, int bg_colo
 	// from it. However, the window proc will immediately return the
 	// the focus to the main window for any attempted edits. 
 	//hwnd_richedit = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, "RICHEDIT20A", "",
-	hwnd_richedit = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, _T("RICHEDIT"), _T(""),
-		WS_CHILD |  ES_MULTILINE | //ES_AUTOVSCROLL  | WS_VSCROLL | 
-		WS_BORDER | ES_WANTRETURN,
-		chatPos[cDD->Res()].x, chatPos[cDD->Res()].y, 
-		chatPos[cDD->Res()].width, chatPos[cDD->Res()].height,
-		cDD->Hwnd_Main(), NULL, hInstance, NULL); 
-	
+	if (options.classic_chat)
+	{		
+		hwnd_richedit = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, _T("RICHEDIT"), _T(""),
+			WS_CHILD | ES_MULTILINE | //ES_AUTOVSCROLL  | WS_VSCROLL | 
+			WS_BORDER | ES_WANTRETURN,
+			classicChatPos[cDD->Res()].x, classicChatPos[cDD->Res()].y,
+			classicChatPos[cDD->Res()].width, classicChatPos[cDD->Res()].height,
+			cDD->Hwnd_Main(), NULL, hInstance, NULL);
+	}
+	else
+	{
+		hwnd_richedit = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, _T("RICHEDIT"), _T(""),
+			WS_CHILD | ES_MULTILINE | //ES_AUTOVSCROLL  | WS_VSCROLL | 
+			WS_BORDER | ES_WANTRETURN,
+			chatPos[cDD->Res()].x, chatPos[cDD->Res()].y,
+			chatPos[cDD->Res()].width, chatPos[cDD->Res()].height,
+			cDD->Hwnd_Main(), NULL, hInstance, NULL);
+	}
+
 	lpfn_richedit = SubclassWindow(hwnd_richedit, RichEditWProc);
 	isTabbing = false;
 	autocompleteNeedsQuoting = false;
@@ -184,15 +211,30 @@ cChat::cChat(int speech_color, int message_color, int whisper_color, int bg_colo
 
 	for (int i=0; i<NUM_CHAT_BUTTONS; i++)
 	{
-		hwnd_chat_buttons[i] = CreateWindow(_T("button"), _T(""),
+		if (options.classic_chat)
+		{
+			hwnd_chat_buttons[i] = CreateWindow(_T("button"), _T(""),
 				WS_CHILD | BS_PUSHBUTTON | BS_OWNERDRAW,
-				chat_buttons[i].position[cDD->Res()].x, chat_buttons[i].position[cDD->Res()].y, 
+				classic_chat_buttons[i].position[cDD->Res()].x, classic_chat_buttons[i].position[cDD->Res()].y,
+				classic_chat_buttons[i].position[cDD->Res()].width, classic_chat_buttons[i].position[cDD->Res()].height,
+				hwnd_richedit, NULL, hInstance, NULL);
+			chat_buttons_bitmaps[i][0] = // a button
+				CreateWindowsBitmap(classic_chat_buttons[i].bitmap_id);
+			chat_buttons_bitmaps[i][1] = // b button
+				CreateWindowsBitmap(classic_chat_buttons[i].bitmap_id + 1);
+		}
+		else
+		{
+			hwnd_chat_buttons[i] = CreateWindow(_T("button"), _T(""),
+				WS_CHILD | BS_PUSHBUTTON | BS_OWNERDRAW,
+				chat_buttons[i].position[cDD->Res()].x, chat_buttons[i].position[cDD->Res()].y,
 				chat_buttons[i].position[cDD->Res()].width, chat_buttons[i].position[cDD->Res()].height,
 				hwnd_richedit, NULL, hInstance, NULL);
-		chat_buttons_bitmaps[i][0] = // a button
-			CreateWindowsBitmap(chat_buttons[i].bitmap_id);
-		chat_buttons_bitmaps[i][1] = // b button
-			CreateWindowsBitmap(chat_buttons[i].bitmap_id + 1);
+			chat_buttons_bitmaps[i][0] = // a button
+				CreateWindowsBitmap(chat_buttons[i].bitmap_id);
+			chat_buttons_bitmaps[i][1] = // b button
+				CreateWindowsBitmap(chat_buttons[i].bitmap_id + 1);
+		}
 	}
 
  
@@ -225,42 +267,45 @@ cChat::cChat(int speech_color, int message_color, int whisper_color, int bg_colo
 	first_message = true;
 
 #ifndef PMARE
-	hwnd_textentry = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, "RICHEDIT", "",
-		WS_CHILD | ES_AUTOHSCROLL | WS_BORDER | ES_WANTRETURN,
-		entryPos[cDD->Res()].x, entryPos[cDD->Res()].y,
-		entryPos[cDD->Res()].width, entryPos[cDD->Res()].height,
-		cDD->Hwnd_Main(), NULL, hInstance, NULL
+	if (!options.classic_chat)
+	{
+		hwnd_textentry = CreateWindowEx(WS_EX_CLIENTEDGE | WS_EX_TOPMOST, "RICHEDIT", "",
+			WS_CHILD | ES_AUTOHSCROLL | WS_BORDER | ES_WANTRETURN,
+			entryPos[cDD->Res()].x, entryPos[cDD->Res()].y,
+			entryPos[cDD->Res()].width, entryPos[cDD->Res()].height,
+			cDD->Hwnd_Main(), NULL, hInstance, NULL
 		);
-	const TCHAR CHAT_FONT_NAME[16] = _T("Arial");
-	LOGFONT logFont;
-	memset(&logFont, 0, sizeof(LOGFONT));
+		const TCHAR CHAT_FONT_NAME[16] = _T("Arial");
+		LOGFONT logFont;
+		memset(&logFont, 0, sizeof(LOGFONT));
 
-	logFont.lfHeight = 18;
-	logFont.lfWidth = 0;
-	logFont.lfWeight = 750;
-	logFont.lfEscapement = 0;
-	logFont.lfItalic = 0;
-	logFont.lfUnderline = 0;
-	logFont.lfOutPrecision = OUT_TT_ONLY_PRECIS;
-	logFont.lfClipPrecision = CLIP_STROKE_PRECIS;
-	logFont.lfQuality = DEFAULT_QUALITY;
-	_tcscpy(logFont.lfFaceName, CHAT_FONT_NAME);
+		logFont.lfHeight = 18;
+		logFont.lfWidth = 0;
+		logFont.lfWeight = 750;
+		logFont.lfEscapement = 0;
+		logFont.lfItalic = 0;
+		logFont.lfUnderline = 0;
+		logFont.lfOutPrecision = OUT_TT_ONLY_PRECIS;
+		logFont.lfClipPrecision = CLIP_STROKE_PRECIS;
+		logFont.lfQuality = DEFAULT_QUALITY;
+		_tcscpy(logFont.lfFaceName, CHAT_FONT_NAME);
 
-	// set the control to use this font
-	entryfont = CreateFontIndirect(&logFont);
-	lpfn_entry = SubclassWindow(hwnd_textentry, EntryWProc);
-	SendMessage(hwnd_textentry, WM_PASSPROC, 0, (LPARAM)lpfn_entry);
-	SendMessage(hwnd_textentry, WM_SETFONT, WPARAM(entryfont), 0);
-	ShowWindow(hwnd_textentry, SW_SHOWNORMAL);
-	BGColor = RGB(0x00, 0x33, 0x66);
-	FGColor = RGB(chat_colors[4].red, chat_colors[4].green, chat_colors[4].blue);
-	SendMessage(hwnd_textentry, EM_SETBKGNDCOLOR, (WPARAM)FALSE, (LPARAM)BGColor);
-	CHARFORMAT2 cf;
-	cf.dwMask = CFM_COLOR;
-	cf.crTextColor = FGColor; //The text color
-	cf.cbSize = sizeof(CHARFORMAT2);
-	cf.dwEffects = { 0 };
-	SendMessageA(hwnd_textentry, EM_SETCHARFORMAT, SCF_DEFAULT, (LPARAM)&cf);
+		// set the control to use this font
+		entryfont = CreateFontIndirect(&logFont);
+		lpfn_entry = SubclassWindow(hwnd_textentry, EntryWProc);
+		SendMessage(hwnd_textentry, WM_PASSPROC, 0, (LPARAM)lpfn_entry);
+		SendMessage(hwnd_textentry, WM_SETFONT, WPARAM(entryfont), 0);
+		ShowWindow(hwnd_textentry, SW_SHOWNORMAL);
+		BGColor = RGB(0x00, 0x33, 0x66);
+		FGColor = RGB(chat_colors[4].red, chat_colors[4].green, chat_colors[4].blue);
+		SendMessage(hwnd_textentry, EM_SETBKGNDCOLOR, (WPARAM)FALSE, (LPARAM)BGColor);
+		CHARFORMAT2 cf;
+		cf.dwMask = CFM_COLOR;
+		cf.crTextColor = FGColor; //The text color
+		cf.cbSize = sizeof(CHARFORMAT2);
+		cf.dwEffects = { 0 };
+		SendMessageA(hwnd_textentry, EM_SETCHARFORMAT, SCF_DEFAULT, (LPARAM)&cf);
+	}
 #endif
 
 #ifndef AGENT
