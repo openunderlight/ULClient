@@ -1007,32 +1007,45 @@ bool HandleGMMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	{
 	case 'U': // Go to Unknown / Horron's Lair
 		if (player->Avatar().AvatarType() >= Avatars::MIN_NIGHTMARE_TYPE)
-			player->Teleport (23312,8064,0, 35);	// Horron's Lair
+			player->Teleport(23312, 8064, 0, 35);	// Horron's Lair
 		else
-			player->Teleport (-7839,12457,0,43);	// Unknown
+			player->Teleport(-7839, 12457, 0, 43);	// Unknown
 		return true;
-		
-		
+
+
 	case 'Q': // NB: no 'q'! vk is a KEY not a character. small 'q' and 'Q' are the same.
 		if (options.autorun)
 		{
 			options.autorun = false;
-			LoadString (hInstance, IDS_RUN_TOGGLE, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, "Off");
+			LoadString(hInstance, IDS_RUN_TOGGLE, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, "Off");
 		}
 		else
 		{
 			options.autorun = true;
-			LoadString (hInstance, IDS_RUN_TOGGLE, disp_message, sizeof(disp_message));
-		_stprintf(message, disp_message, "On");
+			LoadString(hInstance, IDS_RUN_TOGGLE, disp_message, sizeof(disp_message));
+			_stprintf(message, disp_message, "On");
 		}
-		display->DisplayMessage (message, false);
+		display->DisplayMessage(message, false);
 		return true;
-		
+
 	case 'H': // Raw EMOTE
-		Edit_SetText(display->TextEntry(), "/raw ");
-		SendMessage(display->TextEntry(), WM_ACTIVATE,
-			(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
+		if (options.classic_chat)
+		{
+			if (!talkdlg && ((gs && gs->LoggedIntoGame()) || options.welcome_ai))
+			{
+				talkdlg = TRUE;
+				HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
+					cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
+				DisableTalkDialogOptionsForInvisAvatar(hDlg);
+			}
+		}
+		else
+		{
+			Edit_SetText(display->TextEntry(), "/raw ");
+			SendMessage(display->TextEntry(), WM_ACTIVATE,
+				(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
+		}
 		return true;
 
 	case 'S': // MONSTER ROAR
@@ -1429,10 +1442,32 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 				cDD->Hwnd_Main(), (DLGPROC)PMareTalkDlgProc);
 		}
 #else
-		Edit_SetText(display->TextEntry(), "/me ");
-		
-		SendMessage(display->TextEntry(), WM_ACTIVATE,
-			(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
+		if (options.classic_chat)
+		{
+			//if (!talkdlg && ((options.network && gs && gs->LoggedIntoGame()) || options.welcome_ai))
+			if (!talkdlg)
+			{
+				talkdlg = TRUE;
+
+
+				HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
+					cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
+
+				Button_SetCheck(GetDlgItem(hDlg, IDC_EMOTE), 1);
+				Button_SetCheck(GetDlgItem(hDlg, IDC_TALK), 0);
+
+#ifdef GAMEMASTER
+				DisableTalkDialogOptionsForInvisAvatar(hDlg);
+#endif
+			}
+		}
+		else
+		{
+			Edit_SetText(display->TextEntry(), "/me ");
+
+			SendMessage(display->TextEntry(), WM_ACTIVATE,
+				(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
+		}
 
 #endif
 		break;
@@ -1511,8 +1546,26 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 				cDD->Hwnd_Main(), (DLGPROC)PMareTalkDlgProc);
 		}
 #else
-		SendMessage(display->TextEntry(), WM_ACTIVATE,
-			(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
+		if (options.classic_chat)
+		{
+			//if (!talkdlg && ((options.network && gs && gs->LoggedIntoGame()) || options.welcome_ai))
+			if (!talkdlg)
+			{
+				talkdlg = TRUE;
+				HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
+					cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);
+
+#ifdef GAMEMASTER
+				DisableTalkDialogOptionsForInvisAvatar(hDlg);
+#endif
+			}
+
+		}
+		else
+		{
+			SendMessage(display->TextEntry(), WM_ACTIVATE,
+				(WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
+		}
 #endif
 		break;
 	case LyraKeyboard::WHO_NEARBY:
