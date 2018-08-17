@@ -1,5 +1,5 @@
 Static underlight assets:
-
+(These are contained within dev.7z; you need to extract them!)
 * Textures.rlm
 * Effects.rlm
 * Game.cli
