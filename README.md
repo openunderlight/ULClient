@@ -1,5 +1,7 @@
 # ULClient
 
+For questions find us in Discord: https://discord.gg/yuDngyj
+
 ULClient can be built using Visual Studio 2017. You'll need to download several updates after downloading MSVS 2017 Community. 
 Specifically you need to make sure you have the v140_xp Windows SDK. You can download all the necessary SDKs from Microsoft's website.
 
