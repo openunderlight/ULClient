@@ -1,0 +1,13 @@
+18.188.255.214
+Agoknight_12 442 test 7209 7500 4 29 2
+Agoknight_13 443 test 7210 7500 4 29 2
+Agoknight_14 444 test 7211 7500 4 29 1
+Agoknight_15 445 test 7212 7500 4 29 3
+Agoknight_16 446 test 7213 7500 4 29 1
+Bogrom_56 356 test 7173 7500 3 29 2
+Bogrom_57 357 test 7174 7500 3 29 3
+Bogrom_58 358 test 7175 7500 3 29 3
+Bogrom_59 359 test 7176 7500 3 29 1
+Shamblix_6 536 test 7264 7500 5 29 2
+Shamblix_7 537 test 7265 7500 5 29 0
+Shamblix_8 538 test 7266 7500 5 29 3
