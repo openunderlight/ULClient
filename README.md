@@ -9,3 +9,6 @@ You should also set the startup project to Underlight - not AgentSvr or AgentSvc
 
 You'll need the other Underlight assets in the target directory you're running the executable from (by default: C:/lyra/dev). Those assets
 can be found in this repository, under assets/
+
+
+before building search and change the changeme.localhost to your server's IP.
