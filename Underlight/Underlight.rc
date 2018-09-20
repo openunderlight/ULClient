@@ -47,15 +47,15 @@ BEGIN
     EDITTEXT        IDC_CUSTOM_IP,142,88,58,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
     CONTROL         "Debug Server:",IDC_DEBUG,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,202,90,56,10
     CONTROL         "Networking:",IDC_NETWORK,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,261,90,46,10
-    CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,13,75,10
-    CONTROL         "Start with Training:",IDC_TRAINING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,24,75,10
-    CONTROL         "Add Extra Scroll:",IDC_EXTRA_SCROLL,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,34,75,10
+    CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,9,75,10
+    CONTROL         "Start with Training:",IDC_TRAINING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,19,75,10
+    CONTROL         "Add Extra Scroll:",IDC_EXTRA_SCROLL,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,28,75,10
     EDITTEXT        IDC_BIND_TCP,374,60,24,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_BIND_UDP,374,72,24,12,ES_AUTOHSCROLL
     PUSHBUTTON      "Explain Launch Options",IDC_LAUNCH_OPTIONS,320,86,81,11
     GROUPBOX        "Launch Options",IDC_STATIC,315,0,91,99
     LTEXT           "First time players : Make sure you have gone to http://account.underlight.com to register for a KoiWare account AND an Underlight character account. Then, enter your Underlight character name and password, read the agreement below, and play!",IDC_STATIC,6,4,291,25
-    LTEXT           "Returning players: Please go to http://account.underlight.com if you wish to create or activate new Underlight characters.",IDC_STATIC,6,33,291,26
+    LTEXT           "Returning players: Please go to http://account.underlight.com if you wish to create or activate new Underlight characters.",IDC_STATIC,6,30,291,26
     LTEXT           "Character Name:",IDC_USERNAME_STATIC,8,217,55,8
     LTEXT           "Password:",IDC_STATIC,143,217,35,8
     PUSHBUTTON      "Configure Voice Setup",IDC_ROGERWILCO,17,108,69,14
@@ -68,7 +68,8 @@ BEGIN
     LTEXT           "Bind TCP Port:",IDC_STATIC,322,61,48,9
     LTEXT           "Bind UDP Port:",IDC_STATIC,322,74,48,8
     LTEXT           "Windows XP users: do not run Underlight in Windows 95 compatibility mode",IDC_STATIC,6,63,291,11
-    CONTROL         "Fullscreen:",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,43,75,10
+    CONTROL         "Fullscreen:",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,323,38,73,8
+    CONTROL         "Classic Chat:",IDC_CLASSIC_CHAT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,46,75,10
 END
 
 IDD_ACCEPTREJECT DIALOGEX 0, 0, 169, 54
@@ -833,8 +834,8 @@ BEGIN
     CONTROL         "Networking:",IDC_NETWORK,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_TABSTOP,257,90,46,10
     CONTROL         "Sound Enabled:",IDC_SOUND,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,10,75,10
     CONTROL         "Start with Training:",IDC_TRAINING,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,21,75,10
-    CONTROL         "Fullscreen:",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,34,75,10
-    CONTROL         "Use UDP Proxy:",IDC_UDP_PROXY,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,47,75,8
+    CONTROL         "Fullscreen:",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,34,75,32
+    CONTROL         "Classic Chat:",IDC_CLASSIC_CHAT,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,321,34,75,10
     EDITTEXT        IDC_BIND_TCP,374,60,24,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_BIND_UDP,374,72,24,12,ES_AUTOHSCROLL
     PUSHBUTTON      "Explain Launch Options",IDC_LAUNCH_OPTIONS,320,86,81,11
