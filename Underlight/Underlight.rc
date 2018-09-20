@@ -1991,7 +1991,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_AGENT_VERSION_EXPIRED 
-                            "This version of the agent controller has expired. Please contact KoiWare and obtain a new version"
+                            "This version of the agent controller has expired. Please contact your administrator and obtain a new version"
     IDS_GOALBOOK_ACCEPT_ERROR 
                             "Sorry, the %s could not be accepted.  The %s may already have the maximum number of acceptees.\n"
     IDS_LEVEL_SERVER_DOWN   "The location server for this portion of Underlight is currently down. Please try again later. Thank you for your cooperation."
@@ -2345,7 +2345,7 @@ BEGIN
     IDS_NOVOICE             "Because you have chosen to disable telepathy before entering the dream, you must exit, enable it, and reenter before you can use it"
     IDS_LOGIN_EXPIRED       "We're sorry, but that account has expired. To reactivate, please send email to accounts@underlight.com, and include the e-mail address for this character, plus any information that shows ownership."
     IDS_LOGIN_BILLING_LOCKOUT 
-                            "There has been a problem with your billing which must be resolved before you may play Underlight. Please go to www.underlight.com and contact a KoiWare representative for assistance."
+                            "There has been a problem with your account which must be resolved before you may play Underlight. Please go to www.openunderlight.org and contact a representative for assistance."
 END
 
 STRINGTABLE
@@ -2416,17 +2416,17 @@ STRINGTABLE
 BEGIN
     IDS_KILLED              "We're sorry, but that character is dead and can no longer be played.  Contact accounts@underlight.com for more information"
     IDS_PLAYER_SUSPENDED    "You have been temporarily suspended from Underlight for %d days. Please contact accounts@underlight.com for more information."
-    IDS_PLAYER_TERMINATED   "We're sorry, but your account has been terminated (permanently disabled) by the KoiWare team. Please contact accounts@underlight.com for further information."
+    IDS_PLAYER_TERMINATED   "We're sorry, but your account has been terminated (permanently disabled) by the team. Please contact accounts@openunderlight.org for further information."
     IDS_NO_PMARE            "We're sorry, but to use a player nightmare character, you must have enough PMare credits for at least 15 minutes of play. Earn more by using Roleplay Points on your regular player character."
     IDS_PMARE_EVOLVE        "Due to your XP gain, you have evolved into a more powerful nightmare!!!\n"
     IDS_PMARE_DEVOLVE       "Due to your XP loss, you have regressed into a less powerful nightmare!!!\n"
     IDS_PMARE_NO_ITEMS      "You can not manipulate items as a player nightmare\n"
     IDS_NO_CHARGE_PMARE     "Because of the short duration of your session, there will be no charge\n"
     IDS_CHARGE_PMARE        "You just played for %u minutes, and you previously played %u minutes during this session for a total of %u minutes. Starting as a %s at %u Credits per 15 minutes, the estimated session charge is %u Credits.\n"
-    IDS_AGREEMENT_TEXT1     "By entering the game, you are agreeing to the 3 Rules of Underlight, KoiWare account policy, and game policy as described below.\r\n\r\nThe First Rule -- ""Be Honest with the Software"" \r\n Cheating or hacking of any kind is prohibited. Client software or other programs that alter data transferred between our server and the client that causes damage or unauthorized access to our servers could be considered an attempt to hack our servers. This is a federal offense, and we will prosecute you to the fullest extent of the law."
+    IDS_AGREEMENT_TEXT1     "By entering the game, you are agreeing to the 3 Rules of Underlight, account policy, and game policy as described below.\r\n\r\nThe First Rule -- ""Be Honest with the Software"" \r\n Cheating or hacking of any kind is prohibited. Client software or other programs that alter data transferred between our server and the client that causes damage or unauthorized access to our servers could be considered an attempt to hack our servers. This is a federal offense, and we will prosecute you to the fullest extent of the law."
     IDS_AGREEMENT_TEXT2     "The Second Rule -- ""Respect Others""\r\n Keep your behavior appropriate at all times. If your language or behavior repeatedly annoys or offends others, you will be banned from playing. We place no limits on the use of language. Consenting adults are free to engage in any language or behavior they mutually agree to. Inappropriate behavior includes attacking other players without a valid 'in game reason', using unnecessarily offensive language, annoying others with out of character chat, excessive begging, etc."
     IDS_AGREEMENT_TEXT3     "The Third Rule -- ""Stay in Character""\r\nUnderlight is a true Role Playing game.  Upon entering the City of Dreams, you have to always remember you are pretending to be your character and leave the outside life of the real world behind. Your character would have no way of knowing sports scores or the latest in music or fashion.  So, to protect the environment that all role players are striving for, please leave the real world chat outside.  If you must communicate of real world things, please do so in whispers as to not offend anyone and protect the active role playing that is going on around your character.\n"
-    IDS_AGREEMENT_TEXT4     "KoiWare Underlight Account Policy\r\n\r\nAll Underlight accounts are the property of KoiWare and reside on  the KoiWare servers. KoiWare reserves the right to change, modify, or disable any account at any time, for any reason, with or without notice. By clicking 'I Agree', you are verifying that either:\r\n1) You are 18 years of age or older, and are the controller of the KoiWare account for this Underlight character,\r\n or \r\n2) You are under 18 and have permission from the adult controller of the KoiWare account for this Underlight character to be the exclusive user for this character.\r\n\r\nIf you do not agree, please click 'Quit' and send email to accounts@underlight.com so that your KoiWare and Underlight accounts can be deactivated. For more info, go to \nhttp://www.underlight.com"
+    IDS_AGREEMENT_TEXT4     "Don't be evil."
     IDS_AGREEMENT_TEXT5     "As a player nightmare, you gain and lose XP just like a dreamer. However,there are no sphere restrictions, and your nightmare form changes as you gain and lose orbits. Orbits 0-4 are Bogrom;  Orbits 5-14 are Agoknight;Orbits 15-44 are Shamblix; Orbits 45 and above are Horron.\r\n\r\nAs a player nightmare, you may use only predefined actions and speech, and will hear babble from dreamers. You can not use items, and your only arts are Show Talisman, Sense Dreamers, and Drain Essence,  which drains dreamer essences to replenishish your focal energy. You will take damage within sanctuaries. If you are collapsed, you will automatically reform immediately in the player nightmare threshold. Finally, you can never be blinded, paralyzed or staggered.\r\n\r\n"
     IDS_PMARE_NO_ARTS       "You may not use arts as a nightmare\n"
     IDS_PMARE_BOGROM        "Bogrom (Weakest): 1 PMare credit per 15 minutes"
@@ -2436,8 +2436,8 @@ STRINGTABLE
 BEGIN
     IDS_PMARE_AGOKNIGHT     "Agoknight (Medium): 2 PMare credits per 15 minutes"
     IDS_PMARE_SHAMBLIX      "Shamblix (Powerful): 3 PMare credits per 15 minutes"
-    IDS_AGREEMENT_TEXT6     "Please note that any advance in XP and  power you achieve is kept for at most 48 hours.  If you log out and then log in again within 48 hours, you have the option of resuming your previous session, with the same avatar, credit rate, and XP total. You will only be able to play for the time available in PMare credits on your account. \n\nNote that KoiWare can not provide refunds or reimbursements of any sort for player nightmare sessions. By clicking 'I Accept' and entering the game you are agreeing to the above terms.\r\n\r\n"
-    IDS_AGREEMENT_TEXT7     "You will deduct %1.2f PMare Credits from your KoiWare account for every 15 minutes of play during your session.  The number of minutes for all your logins for each starting nightmare type are summed to determine the total deduction, with a 15 minute session minimum per starting nightmare type. This ensures that you will not be deducted extra due to inadvertant logouts (storms). For example, you could log in as a Bogrom and play for 10 minutes and evolve into an Agoknight, then later that day ""resume session"" and play for 5 more minutes, and you would be charged only for one 15 minute Bogrom session.  Session minutes are summed nightly at 1:00AM PST. By clicking 'Accept', you are agreeing to this deduction.\r\n\r\n"
+    IDS_AGREEMENT_TEXT6     "Please note that any advance in XP and  power you achieve is kept for at most 48 hours.  If you log out and then log in again within 48 hours, you have the option of resuming your previous session, with the same avatar, credit rate, and XP total. You will only be able to play for the time available in PMare credits on your account. \n\nNote that we can not provide refunds or reimbursements of any sort for player nightmare sessions. By clicking 'I Accept' and entering the game you are agreeing to the above terms.\r\n\r\n"
+    IDS_AGREEMENT_TEXT7     "You will deduct %1.2f PMare Credits from your account for every 15 minutes of play during your session.  The number of minutes for all your logins for each starting nightmare type are summed to determine the total deduction, with a 15 minute session minimum per starting nightmare type. This ensures that you will not be deducted extra due to inadvertant logouts (storms). For example, you could log in as a Bogrom and play for 10 minutes and evolve into an Agoknight, then later that day ""resume session"" and play for 5 more minutes, and you would be charged only for one 15 minute Bogrom session.  Session minutes are summed nightly at 1:00AM PST. By clicking 'Accept', you are agreeing to this deduction.\r\n\r\n"
     IDS_PMARE_DISSOLVED_BY_SELF 
                             "You have collapsed into a soulsphere! You will automatically reform momentarily.\n"
     IDS_PMARE_DISSOLVED_BY_OTHER 
@@ -3930,8 +3930,8 @@ BEGIN
     IDS_DSERR_BUFFERLOST    "DSERR_BUFFERLOST"
     IDS_DSERR_OTHERAPPHASPRIO "DSERR_OTHERAPPHASPRIO"
     IDS_DSERR_UNINITIALIZED "DSERR_UNINITIALIZED"
-    IDS_LIVE_GAME_SERVER_IP "metatron.koiware.com"
-    IDS_DEV_GAME_SERVER_IP1 "dev1.koiware.com"
+    IDS_LIVE_GAME_SERVER_IP "ulsrv1.openunderlight.org"
+    IDS_DEV_GAME_SERVER_IP1 "ulsrv1.openunderlight.org"
     IDS_GAME_MANUAL_URL     "http://wiki.underlight.com"
     IDS_BILLING_URL         "http://forums.underlight.com/viewtopic.php?f=2&t=78"
     IDS_FIREWALL_FAQ_URL    "http://www.underlight.com/"
@@ -3939,7 +3939,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_DEV_GAME_SERVER_IP2 "dev2.koiware.com"
+    IDS_DEV_GAME_SERVER_IP2 "ulsrv1.openunderlight.org"
     IDS_CUSTOM_IP_DEFAULT   "127.0.0.1"
     IDS_ONCE_HIDDEN_ALWAYS_HIDDEN "\nOnce you go INVIS, you cannot go back!\n"
 END

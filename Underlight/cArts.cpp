@@ -5500,7 +5500,7 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
   
-  if (caster_id != player->ID ())
+  if (caster_id != player->ID () && n == NO_ACTOR)
     return; // MDA 3/18/2004 - bail if the neighbor became NULL between evoke and Apply
 
   this->DisplayUsedByOther(n, Arts::ABJURE);

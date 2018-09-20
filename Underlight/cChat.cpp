@@ -1074,12 +1074,10 @@ LRESULT WINAPI EntryWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 				if (display->HandleReturn(sentence))
 				{
 					Edit_SetText(hwnd, _T(""));
+					SetActiveWindow(cDD->Hwnd_Main());
+					SetFocus(cDD->Hwnd_Main());
 				}
 
-				CHARRANGE ichCharRange;
-				ichCharRange.cpMin = 0;
-				ichCharRange.cpMax = -1;
-				SendMessage(hwnd, EM_EXSETSEL, 0, (LPARAM)&ichCharRange);
 				return TRUE;
 			}
 		}
