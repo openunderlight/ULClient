@@ -519,25 +519,32 @@ bool HandlePlayerMetaKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags
 	case '8':
 	case '9':
 		if (player->CanUseChatMacros() && !talkdlg)
-			// && ((options.network && gs && gs->LoggedIntoGame()) || options.welcome_ai))
 		{
-			// pull the macro text into the chat
-			macro_t macro;
-			int macro_number = vk - '0';
-			RegistryReadMacro(macro_number, macro);
-			for (unsigned int i = 0; i < _tcslen(macro); i++)
+			if (options.classic_chat)
 			{
-				if (macro[i] == VK_RETURN) 
-					// replace returns with spaces
-					PostMessage(display->TextEntry(), WM_CHAR, VK_SPACE, 0);
-				else 
-					// paste macro into window by posting char msgs to the chat bar.
-					PostMessage(display->TextEntry(), WM_CHAR, macro[i], 0);
+				talkdlg = TRUE;
+				HWND hDlg = CreateLyraDialog(hInstance, IDD_TALK,
+					cDD->Hwnd_Main(), (DLGPROC)TalkDlgProc);		 // open talk dialog
+				SendMessage(GetDlgItem(hDlg, IDC_SPEECH), WM_SYSKEYUP, vk, 0); // tell it which macro key was used
 			}
+			else
+			{
+				// pull the macro text into the chat
+				macro_t macro;
+				int macro_number = vk - '0';
+				RegistryReadMacro(macro_number, macro);
+				for (unsigned int i = 0; i < _tcslen(macro); i++)
+				{
+					if (macro[i] == VK_RETURN)
+						// replace returns with spaces
+						PostMessage(display->TextEntry(), WM_CHAR, VK_SPACE, 0);
+					else
+						// paste macro into window by posting char msgs to the chat bar.
+						PostMessage(display->TextEntry(), WM_CHAR, macro[i], 0);
+				}
 
-			SendMessage(display->TextEntry(), WM_ACTIVATE, (WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
-
-
+				SendMessage(display->TextEntry(), WM_ACTIVATE, (WPARAM)WA_CLICKACTIVE, (LPARAM)display->TextEntry());
+			}
 #ifdef GAMEMASTER
 			DisableTalkDialogOptionsForInvisAvatar(hDlg);
 #endif
