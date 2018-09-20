@@ -835,16 +835,13 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 	
 	SendMessage(hwnd_richedit, EM_REPLACESEL, 0, (LPARAM) speech);
 
-	if (RMsg_Speech::WHISPER == speechType)
-	{
-		FLASHWINFO flash;
-		flash.cbSize = sizeof(flash);
-		flash.hwnd = cDD->Hwnd_Main();
-		flash.dwFlags = FLASHW_TIMERNOFG;
-		flash.dwTimeout = 0;
-		flash.uCount = 5;
-		FlashWindowEx(&flash);
-	}
+	FLASHWINFO flash;
+	flash.cbSize = sizeof(flash);
+	flash.hwnd = cDD->Hwnd_Main();
+	flash.dwFlags = FLASHW_TIMERNOFG;
+	flash.dwTimeout = 0;
+	flash.uCount = 5;
+	FlashWindowEx(&flash);
 
 #ifndef AGENT
 	if (options.log_chat)
@@ -1055,7 +1052,10 @@ LRESULT WINAPI EntryWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_KEYUP:
 
 		if (wParam == VK_ESCAPE)
-			SendMessage(cp->Hwnd_CP(), WM_COMMAND, 0, (LPARAM)cp->Hwnd_Meta());
+		{
+			SetActiveWindow(cDD->Hwnd_Main());
+			SetFocus(cDD->Hwnd_Main());
+		}
 		break;
 	case WM_CHAR:
 	{
