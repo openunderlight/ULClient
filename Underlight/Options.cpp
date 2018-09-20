@@ -378,6 +378,7 @@ cJSON* __cdecl WriteJSONOptionValues()
 	ADDNUM(message_color);
 	ADDNUM(bg_color);
 	ADDNUM(fullscreen);
+	ADDNUM(classic_chat);
 	ADDNUM(autorun);
 	ADDNUM(adult_filter);
 
@@ -591,6 +592,7 @@ void LoadParsedJSONOptions(cJSON* json)
 	GETNUM(mouselook);
 	GETNUM(invertmouse);
 	GETNUM(fullscreen);
+	GETNUM(classic_chat);
 	GETNUM(log_chat);
 	cJSON* tr = cJSON_GetObjectItem(obj, "turnrate"); 
 	if (tr && cJSON_IsNumber(tr)) options.turnrate = tr->valuedouble;
@@ -730,6 +732,7 @@ void LoadDefaultOptionValues()
 	options.nametags = TRUE;
 	options.multiline = FALSE;
 	options.fullscreen = FALSE;
+	options.classic_chat = FALSE;
 	options.footsteps = TRUE;
 	options.art_prompts = TRUE;
 	options.mouselook = FALSE;
