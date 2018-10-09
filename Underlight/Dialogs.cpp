@@ -5945,7 +5945,8 @@ BOOL CALLBACK UsePPointDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lP
 
 						LmStats stats;
 						stats.SetXP(player->XP());
-						if (player->Orbit() == Stats::ORBIT_MAX) {
+						// ORBIT_MAX-1 since we technically "max" at 100
+						if (player->Orbit() == Stats::ORBIT_MAX-1) {
 							LoadString (hInstance, IDS_ORBIT_MAX, message, sizeof(message));
 							pp.cost = 0;
 						}

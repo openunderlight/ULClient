@@ -97,6 +97,7 @@ struct options_t {
 	bool ignore_whispers;
 	bool debug_state_mode;
 	BOOL fullscreen;
+	BOOL classic_chat;
 
 	other_t bungholes[MAX_IGNORELIST]; // ignore list members
 	BOOL exclusive = TRUE; // exclusive mode ('95 only)

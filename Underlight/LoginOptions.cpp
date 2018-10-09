@@ -185,8 +185,12 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 #ifdef PMARE
 			Button_SetCheck(GetDlgItem(hDlg, IDC_TRAINING), false);
 			ShowWindow(GetDlgItem(hDlg, IDC_TRAINING), SW_HIDE);
+
+			Button_SetCheck(GetDlgItem(hDlg, IDC_CLASSIC_CHAT), false);
+			ShowWindow(GetDlgItem(hDlg, IDC_CLASSIC_CHAT), SW_HIDE);
 #else
 			Button_SetCheck(GetDlgItem(hDlg, IDC_TRAINING), options.welcome_ai);
+			Button_SetCheck(GetDlgItem(hDlg, IDC_CLASSIC_CHAT), options.classic_chat);
 #endif
 			if (options.tcp_only)
 			{
@@ -287,6 +291,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 				options.welcome_ai		= Button_GetCheck(GetDlgItem(hDlg, IDC_TRAINING)); 
 				options.extra_scroll	= Button_GetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL));
 				options.fullscreen		= Button_GetCheck(GetDlgItem(hDlg, IDC_FULLSCREEN));
+				options.classic_chat	= Button_GetCheck(GetDlgItem(hDlg, IDC_CLASSIC_CHAT));
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_TCP), message, sizeof(message)); 								
 				options.bind_local_tcp	= _ttol(message);
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_UDP), message, sizeof(message)); 								
