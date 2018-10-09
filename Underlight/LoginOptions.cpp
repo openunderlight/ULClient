@@ -36,6 +36,9 @@ char tos_buffer[64 * 1024]; // 64K should be enough, I'm not gonna dick around w
 
 void downloadOrLoadTos()
 {
+	DWORD length;
+// Note to Koiware: you should define KOIWARE_BUILD somewhere in your project and wrap all Koi-specific code with KOIWARE_BUILD. -MDA (OpenUL 2018)
+#ifdef KOIWARE_BUILD
 	tos_buffer[0] = 0;
 	HINTERNET hInternet = InternetOpen("Underlight Client", NULL, NULL, NULL, 0); //INTERNET_FLAG_ASYNC); 
 	if (!hInternet)
@@ -55,8 +58,8 @@ void downloadOrLoadTos()
 			exists = false;
 	}
 
-	DWORD length;
 	if (!response || !exists || !InternetReadFile(response, (LPVOID *)tos_buffer, 64 * 1024, &length))
+#endif
 	{
 		TCHAR disp1[1024]; TCHAR disp2[1024]; TCHAR disp3[1024]; TCHAR disp4[1024];
 		LoadString(hInstance, IDS_AGREEMENT_TEXT1, disp1, sizeof(disp1));
@@ -182,8 +185,12 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 #ifdef PMARE
 			Button_SetCheck(GetDlgItem(hDlg, IDC_TRAINING), false);
 			ShowWindow(GetDlgItem(hDlg, IDC_TRAINING), SW_HIDE);
+
+			Button_SetCheck(GetDlgItem(hDlg, IDC_CLASSIC_CHAT), false);
+			ShowWindow(GetDlgItem(hDlg, IDC_CLASSIC_CHAT), SW_HIDE);
 #else
 			Button_SetCheck(GetDlgItem(hDlg, IDC_TRAINING), options.welcome_ai);
+			Button_SetCheck(GetDlgItem(hDlg, IDC_CLASSIC_CHAT), options.classic_chat);
 #endif
 			if (options.tcp_only)
 			{
@@ -284,6 +291,7 @@ BOOL CALLBACK LoginDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM lParam
 				options.welcome_ai		= Button_GetCheck(GetDlgItem(hDlg, IDC_TRAINING)); 
 				options.extra_scroll	= Button_GetCheck(GetDlgItem(hDlg, IDC_EXTRA_SCROLL));
 				options.fullscreen		= Button_GetCheck(GetDlgItem(hDlg, IDC_FULLSCREEN));
+				options.classic_chat	= Button_GetCheck(GetDlgItem(hDlg, IDC_CLASSIC_CHAT));
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_TCP), message, sizeof(message)); 								
 				options.bind_local_tcp	= _ttol(message);
 				Edit_GetText(GetDlgItem(hDlg, IDC_BIND_UDP), message, sizeof(message)); 								

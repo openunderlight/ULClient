@@ -334,6 +334,7 @@
 #define IDC_BIND_TCP                    1364
 #define IDC_BIND_UDP                    1365
 #define IDC_FULLSCREEN                  1366
+#define IDC_CLASSIC_CHAT				1367
 #define IDC_24BITCOLOR                  1368
 #define IDC_32BITCOLOR                  1368
 #define IDC_HARDWARE                    1369

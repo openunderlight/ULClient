@@ -2146,10 +2146,9 @@ void cGameServer::HandleMessage(void)
 
 							// don't display emotes from invisible players unless we have vision
 #ifndef GAMEMASTER // GMs and PMares see all
-							if (!isUniversal)
+							if (!isUniversal && speech_msg.SpeechType() == RMsg_Speech::EMOTE) // only emotes, not raws.
 							{
-								if (((speech_msg.SpeechType() == RMsg_Speech::EMOTE) && (n->flags & ACTOR_CHAMELED) &&
-									!(player->flags & ACTOR_DETECT_INVIS)) || n->flags & ACTOR_INVISIBLE)
+								if (((n->flags & ACTOR_CHAMELED) && !(player->flags & ACTOR_DETECT_INVIS)) || n->flags & ACTOR_INVISIBLE)
 									break;
 							}
 #endif
