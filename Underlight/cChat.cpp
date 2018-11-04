@@ -319,15 +319,17 @@ bool cChat::doWhisper(TCHAR* whisper)
 	bool bad = false;
 	while (*whisper) 
 	{
-		if (i >= (Lyra::PLAYERNAME_MAX - 1)) 
-		{
-			bad = true;
-			break;
-		}
-
+		// If we're at a terminating character, break
 		if (*whisper == endChar)
 		{
 			whisper++;
+			break;
+		}
+
+		// If the name is too long -- break.
+		if (i >= (Lyra::PLAYERNAME_MAX - 1)) 
+		{
+			bad = true;
 			break;
 		}
 
