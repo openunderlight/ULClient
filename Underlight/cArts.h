@@ -325,6 +325,7 @@ public:
 	void StartSableShield(void);
 	void ApplySableShield(int skill, lyra_id_t caster_id);
 	void EndSableShield(void);
+	void DistressCall(void);
 	void StartEntrancement(void);
 	void ApplyEntrancement(int skill, lyra_id_t caster_id);
 	void EndEntrancement(void);

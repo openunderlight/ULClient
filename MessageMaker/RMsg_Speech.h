@@ -35,6 +35,7 @@ public:
     REPORT_BUG     = 'b',  // bug report
     REPORT_CHEAT   = 'c',  // cheater report
     AUTO_CHEAT     = 'C',  // auto-generated cheat report
+	DISTRESS_CALL  = 'D',
     REPORT_DEBUG   = 'd',  // debug report (auto-generated)
     EMOTE          = 'E',  // emote
     GLOBALSHOUT    = 'G',  // level-wide shout

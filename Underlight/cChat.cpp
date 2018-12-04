@@ -764,7 +764,8 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 	TCHAR speech[DEFAULT_MESSAGE_SIZE]; 
 
 	bool isEmote = ((speechType == RMsg_Speech::EMOTE) || 
-					(speechType == RMsg_Speech::RAW_EMOTE) ||					
+					(speechType == RMsg_Speech::RAW_EMOTE) ||	
+					(speechType == RMsg_Speech::DISTRESS_CALL) ||
 					(speechType == RMsg_Speech::WHISPER_EMOTE));
 
 	if ( isEmote && (player->flags & ACTOR_BLINDED))
@@ -805,6 +806,7 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 				_stprintf(message, _T(">%s "), name);
 			break;
 		case RMsg_Speech::RAW_EMOTE:
+		case RMsg_Speech::DISTRESS_CALL:
 		_stprintf(message, _T(""));
 			break;
 		case RMsg_Speech::SPEECH: // got speech
@@ -825,10 +827,10 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 		}
 	SendMessage(hwnd_richedit, EM_SETSEL, (WPARAM) -1, (LPARAM) -1 );
 
-	if (speechType != RMsg_Speech::RAW_EMOTE)
+	if (speechType != RMsg_Speech::RAW_EMOTE && speechType != RMsg_Speech::DISTRESS_CALL)
 	SendMessage(hwnd_richedit, EM_REPLACESEL, 0, (LPARAM) message);
 #ifndef AGENT
-	if (options.log_chat && speechType != RMsg_Speech::RAW_EMOTE)
+	if (options.log_chat && speechType != RMsg_Speech::RAW_EMOTE && speechType != RMsg_Speech::DISTRESS_CALL)
 		chatlog->Write(message);
 #endif
 

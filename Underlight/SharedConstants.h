@@ -12,7 +12,7 @@
 
  
 const int NUM_TIMED_EFFECTS = 36; // add one for NONE
-const int NUM_ARTS = 152; // BACARDI N COLA DO IT DO IT
+const int NUM_ARTS = 153; // BACARDI N COLA DO IT DO IT
 const int NUM_MODIFIERS = 64;
 const int NUM_DURATIONS = 64;
 const int NUM_PLAYER_STATS = 5;
@@ -283,6 +283,7 @@ struct Arts {
 	SPRINT,
 	ENFEEBLEMENT,
 	DREAMWIDE_EVOKE,
+	DISTRESS_CALL,
 	// END OF ARTS LIST - below are art-related constants
 
 	INITIATE_DRAIN = 100,   // amount of essences drained from prime to Initiate
