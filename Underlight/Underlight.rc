@@ -4570,6 +4570,15 @@ BEGIN
     IDS_LIVE_QA_SERVER_IP   "shamblix.underlight.com"
 END
 
+STRINGTABLE
+BEGIN
+    IDS_DISTRESS_CALL       "Distress Call"
+    IDS_NOT_ENOUGH_PT_DC    "You do not have the requisite number of power tokens to send out a distress call!"
+    IDS_DISTRESS_CALL_HOUSEMEMBERS 
+                            ">You sense a cry for help from %s, %s of %s emanating from %s, %s!"
+    IDS_DISTRESS_CALL_UNS   ">You sense a cry for help from %s, emanating from %s, %s!"
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 

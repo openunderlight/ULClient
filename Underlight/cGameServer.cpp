@@ -2098,6 +2098,7 @@ void cGameServer::HandleMessage(void)
 					case RMsg_Speech::EMOTE:
 					case RMsg_Speech::WHISPER_EMOTE:
 					case RMsg_Speech::RAW_EMOTE:
+					case RMsg_Speech::DISTRESS_CALL:
 					case RMsg_Speech::PARTY:
 
 						n = actors->LookUpNeighbor(speech_msg.PlayerID());

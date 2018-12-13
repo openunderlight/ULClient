@@ -3041,6 +3041,10 @@
 #define IDS_SHOWXP_PPOINT_PMARE         4493
 #define IDS_OVERLAPPING                 4494
 #define IDS_LIVE_QA_SERVER_IP           4495
+#define IDS_DISTRESS_CALL               4496
+#define IDS_NOT_ENOUGH_PT_DC            4497
+#define IDS_DISTRESS_CALL_HOUSEMEMBERS  4498
+#define IDS_DISTRESS_CALL_UNS           4499
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666
@@ -3050,7 +3054,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        218
+#define _APS_NEXT_RESOURCE_VALUE        219
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1448
 #define _APS_NEXT_SYMED_VALUE           101

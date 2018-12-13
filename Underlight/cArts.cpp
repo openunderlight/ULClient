@@ -289,6 +289,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x3169, // Sprint
 0x5F5C, // Enfeeblement
 0x81BB, // DW Evoke
+0xA4C7, // distress call
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -483,7 +484,8 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_PORTKEY,						Stats::DREAMSOUL, 90, 50, 13, 5, -1, SANCT | LEARN | MAKE_ITEM},
 {IDS_SPRINT,						Stats::WILLPOWER, 35, 20, 13, 2, 2, SANCT | LEARN },
 {IDS_ENFEEBLEMENT,					Stats::LUCIDITY,	35, 20, 13, 2, 	 2, LEARN | FOCUS | NEIGH },
-{IDS_DREAMWIDE_EVOKE,				Stats::NO_STAT, 0, 0, 0, 0, -1, SANCT}
+{IDS_DREAMWIDE_EVOKE,				Stats::NO_STAT, 0, 0, 0, 0, -1, SANCT},
+{IDS_DISTRESS_CALL,					Stats::DREAMSOUL, 0, 10, 0, 1, 2, SANCT | LEARN | NEED_ITEM },
 };
 
 
@@ -1308,7 +1310,7 @@ void cArts::ApplyArt(void)
 	case Arts::SPRINT: method = &cArts::Sprint; break;
 	case Arts::ENFEEBLEMENT: method = &cArts::StartEnfeeblement; break;
 	case Arts::DREAMWIDE_EVOKE: method = &cArts::DreamwideEvoke; break;
-
+	case Arts::DISTRESS_CALL: method = &cArts::DistressCall; break;
 
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
@@ -7162,6 +7164,34 @@ void cArts::EndSableShield(void)
 			player->Skill(Arts::SABLE_SHIELD), 0);
 	
 	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
+
+	this->ArtFinished(true);
+	return;
+}
+
+void cArts::DistressCall(void)
+{
+	cItem* power_tokens[Lyra::INVENTORY_MAX];
+	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::NO_GUILD);
+	if (num_tokens < 2)
+	{
+		LoadString(hInstance, IDS_NOT_ENOUGH_PT_DC, message, sizeof(message));
+		display->DisplayMessage(message);
+		this->ArtFinished(false);
+		return;
+	}
+	if (player->ShowGuildID()) {
+		LoadString(hInstance, IDS_DISTRESS_CALL_HOUSEMEMBERS, message, sizeof(message));
+		_stprintf(disp_message, message, player->Name(), RankName(player->GuildRankID()), GuildName(player->GuildPatchID()), 
+			level->RoomName(player->Room()), level->Name(level->ID()));
+	}
+	else {
+		LoadString(hInstance, IDS_DISTRESS_CALL_UNS, message, sizeof(message));
+		_stprintf(disp_message, message, player->Name(), level->RoomName(player->Room()), level->Name(level->ID()));
+	}
+	//int speechType, realmid_t target, bool echo = false, bool allow_babble = true, bool universal=false); // say something
+	gs->Talk(disp_message, RMsg_Speech::DISTRESS_CALL, Lyra::ID_UNKNOWN, false, true, true);
+	this->UsePowerTokens(power_tokens, 2);
 
 	this->ArtFinished(true);
 	return;
