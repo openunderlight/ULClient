@@ -37,7 +37,7 @@ public:
   ~GMsg_Login();
 
   void Init(int version, const TCHAR* playername, int server_port, short pmare_type,
-	    int subversion, short tcp_only);
+	    int subversion, unsigned char tcp_only, unsigned char deghost_attempt);
 
   // standard public methods
   void Dump(FILE* f, int indent = 0) const;
@@ -51,7 +51,8 @@ public:
   int ServerPort() const;
   //int Firewall() const;
   short PMareType() const;
-  short TCPOnly() const;
+  unsigned char TCPOnly() const;
+  unsigned char DeghostAttempt() const;
 
   // mutators
   void SetVersion(int version);
@@ -61,7 +62,8 @@ public:
   void SetHash(const MD5Hash_t hash);
   void SetServerPort(int server_port);
   void SetPMareType(short pmare_type);  
-  void SetTCPOnly(short tcp_only);
+  void SetTCPOnly(unsigned char tcp_only);
+  void SetDeghostAttempt(unsigned char deghost_attempt);
 
 private:
 
@@ -80,7 +82,8 @@ private:
 	MD5Hash_t hash;							// md5 hash of server challenge
     int serv_port;                          // UDP port number for S->C local group updates
     short pmare_type;							// for pmares, type selected
-	short tcp_only;							// TCP only, for firewalls/NAT/etc.
+	unsigned char tcp_only;							// TCP only, for firewalls/NAT/etc.
+	unsigned char deghost_attempt;
     int subversion;                         // another nt to use for version checking
 	//int firewall;							// indicates server must send back updates from same UDP address as they're sent to
   } data_;

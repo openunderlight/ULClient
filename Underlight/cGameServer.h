@@ -130,6 +130,7 @@ class cGameServer
 	   unsigned int build; // build number, modified by PMARE/GAMEMASTER
 	   HINTERNET hInternet, hVersionFile, hMPGamePassResponse; 
 	   bool			game_full;
+	   bool			deghost_attempt;
 	   bool			loading_inventory;
 	   bool			game_server_full[64]; //ROUND_ROBIN 
 	   DWORD		room_change_time;

@@ -52,8 +52,11 @@ INLINE short GMsg_Login::PMareType() const
 }
 
 
-INLINE short GMsg_Login::TCPOnly() const
+INLINE unsigned char GMsg_Login::TCPOnly() const
 {  return data_.tcp_only; }
+
+INLINE unsigned char GMsg_Login::DeghostAttempt() const
+{  return data_.deghost_attempt; }
 
 INLINE void GMsg_Login::SetVersion(int version)
 {
@@ -81,5 +84,8 @@ INLINE void GMsg_Login::SetPMareType(short pmare_type)
   data_.pmare_type = pmare_type;
 }
 
-INLINE void GMsg_Login::SetTCPOnly(short tcp_only)
+INLINE void GMsg_Login::SetTCPOnly(unsigned char tcp_only)
  {  data_.tcp_only = tcp_only;  }
+
+ INLINE void GMsg_Login::SetDeghostAttempt(unsigned char deghost_attempt)
+ {  data_.deghost_attempt = deghost_attempt;  }

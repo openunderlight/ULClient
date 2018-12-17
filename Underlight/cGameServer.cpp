@@ -216,7 +216,7 @@ void __cdecl MultiplayerGamePassThreadProc(void *param)
 cGameServer::cGameServer(unsigned short udp_port_num, unsigned short gs_port_num) 
 : udp_port(udp_port_num), agent_gs_port(gs_port_num)
 {
-	logged_into_game = logged_into_level = has_logged_in = game_full = false;
+	logged_into_game = logged_into_level = has_logged_in = game_full = deghost_attempt = false;
 	connected_to_gs = logged_into_room = logging_in = loading_inventory = false;
 	got_peer_updates = false;
 #ifdef PMARE
@@ -543,7 +543,7 @@ void cGameServer::HandleMessage(void)
 			{
 				GMsg_Login login_msg;
 				int subbuild = SUBBUILD - SB_OFFSET;
-				login_msg.Init(build, player->Name(), udp_port, options.pmare_type, subbuild, options.tcp_only); 
+				login_msg.Init(build, player->Name(), udp_port, options.pmare_type, subbuild, options.tcp_only, deghost_attempt); 
 				login_msg.SetHash(hash);
 				//login_msg.Init(build, player->Name(), player->Password(), udp_port, options.pmare_type, subbuild, options.udp_proxy); //, options.tcp_only, avatar_descrip);
 				sendbuf.ReadMessage(login_msg);
@@ -670,7 +670,9 @@ void cGameServer::HandleMessage(void)
 				case GMsg_LoginAck::LOGIN_ALREADYIN:
 					LoadString (hInstance, IDS_LOGIN_ALREADYIN, disp_message, sizeof(disp_message));
 					_tprintf(_T("%s\n"), disp_message);
-					this->ServerError(disp_message);
+					deghost_attempt = true;
+					login_attempts++;
+					this->Login();
 					return;
 				case GMsg_LoginAck:: LOGIN_EXPIRED:
 					LoadString (hInstance, IDS_LOGIN_EXPIRED, disp_message, sizeof(disp_message));
@@ -3356,7 +3358,9 @@ void cGameServer::Login(int type)
 	if (1 > num_open_ports)
 	{
 		if (game_full)
-			LoadString (hInstance, IDS_LOGIN_GAMEFULL, disp_message, sizeof(disp_message));
+			LoadString(hInstance, IDS_LOGIN_GAMEFULL, disp_message, sizeof(disp_message));
+		else if (deghost_attempt)
+			LoadString(hInstance, IDS_LOGIN_ALREADYIN, disp_message, sizeof(disp_message));
 		else
 			LoadString (hInstance, IDS_GAME_UNAVAILABLE, disp_message, sizeof(disp_message));
 
@@ -3364,6 +3368,12 @@ void cGameServer::Login(int type)
 		this->ServerError(disp_message);
 		return;
 	}
+
+	if (deghost_attempt)
+	{
+		display->DisplayMessage("Detected live connection - attempting deghost");
+	}
+
 	int target = ((rand())%num_open_ports)+1; // pick a server randomly
 	int num_open_ports_found = 0;
 	for (i=0; i<DEFAULT_NUM_GAME_SERVERS; i++)

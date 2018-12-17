@@ -190,7 +190,7 @@ const modifier_t modifier_types[NUM_MODIFIERS] =
     {50,     0,     0,       99,       100,    IDS_50      }, 
                                      														// 1d values
 
-    {0,      2,     1,       0,        4,      IDS_1_TO_2    },  
+    {0,      2,     1,       0,        4,      IDS_1_TO_2    },  // 12 - first index to razorwind blade
     {0,      3,     1,       0,        6,      IDS_1_TO_3    },  
     {0,      4,     1,       0,         8,     IDS_1_TO_4    }, 
     {3,      4,     1,       9,        18,     IDS_4_TO_7    }, 
