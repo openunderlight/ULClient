@@ -95,11 +95,12 @@ alert_t newly_alert[ALERT_TABLE_SIZE];
 const unsigned short DEFAULT_GAME_SERVER_PORT=7500;
 const unsigned short DEFAULT_DEBUG_SERVER_PORT=7599;
 #ifdef UL_DEV
-const unsigned short DEFAULT_NUM_GAME_SERVERS = 1; 
+const unsigned short DEFAULT_NUM_GAME_SERVERS = 6; 
 #else
 const unsigned short DEFAULT_NUM_GAME_SERVERS = 6; // 7500 7501 7502 7503 7504 7505 added extra was 5 - DiscoWay
 #endif
 
+unsigned int game_serverports[DEFAULT_NUM_GAME_SERVERS] = { 0 };
 //////////////////////////////////////////////////////////////////
 // External Global Variables
 
@@ -253,8 +254,19 @@ cGameServer::cGameServer(unsigned short udp_port_num, unsigned short gs_port_num
 		newly_alert[i].alertTime = NULL;
 	}
 	num_packets_expected = num_packets_received = 0;
-	for (int i=0; i<DEFAULT_NUM_GAME_SERVERS; i++)
+	for (int i = 0; i < DEFAULT_NUM_GAME_SERVERS; i++) {
 		game_server_full[i] = false;
+		game_serverports[i] = DEFAULT_GAME_SERVER_PORT + i;
+	}
+
+	// shuffle the ports
+	for (int i = 0; i < DEFAULT_NUM_GAME_SERVERS; i++)
+	{
+		int r = rand() % DEFAULT_NUM_GAME_SERVERS;
+		int s = game_serverports[r];
+		game_serverports[r] = game_serverports[i];
+		game_serverports[i] = s;
+	}
 
 	if (options.bind_local_udp != DEFAULT_UDP_PORT)
 		udp_port_num = options.bind_local_udp;
@@ -3352,8 +3364,7 @@ void cGameServer::Login(int type)
 	// go through the servers in round-robin fashion until we find
 	// one that let's us log in
 	unsigned short port_num = 0;
-	int num_open_ports = DEFAULT_NUM_GAME_SERVERS - login_attempts;
-	if (1 > num_open_ports)
+	if (login_attempts > DEFAULT_NUM_GAME_SERVERS)
 	{
 		if (game_full)
 			LoadString (hInstance, IDS_LOGIN_GAMEFULL, disp_message, sizeof(disp_message));
@@ -3364,27 +3375,12 @@ void cGameServer::Login(int type)
 		this->ServerError(disp_message);
 		return;
 	}
-	int target = ((rand())%num_open_ports)+1; // pick a server randomly
-	int num_open_ports_found = 0;
-	for (i=0; i<DEFAULT_NUM_GAME_SERVERS; i++)
-	{
-		if (false == game_server_full[i])
-		{
-			num_open_ports_found++;
-			if (num_open_ports_found == target)
-			{
-			if (options.debug) {
-			//	if (1) {
-					port_num = DEFAULT_DEBUG_SERVER_PORT;
-					//options.debug = false;
-				}
-				else
-					port_num = DEFAULT_GAME_SERVER_PORT + i;
-				game_server_full[i] = true;
-				break;
-			}
-		}
-	}
+
+	if (options.debug)
+		port_num = DEFAULT_DEBUG_SERVER_PORT;
+	else
+		port_num = game_serverports[login_attempts];
+
 	LPHOSTENT lphp = gethostbyname(options.game_server);
 	game_server_addr.sin_addr.s_addr = ((struct in_addr far*)(lphp->h_addr_list[0]))->s_addr;
 	//game_server_addr.sin_addr.s_addr = inet_addr (options.game_server );
