@@ -33,8 +33,8 @@ const int DEAD_Z = _I16_MAX -1;
 //
 // Most of these are globals to make it easy to use the stringtable
 
-extern TCHAR message[DEFAULT_MESSAGE_SIZE];
-extern TCHAR disp_message[DEFAULT_MESSAGE_SIZE];
+extern TCHAR message[2048]; // upgraded from default ~christy
+extern TCHAR disp_message[2048]; // upgraded from default ~christy
 extern TCHAR temp_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR duration_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR modifier_message[DEFAULT_MESSAGE_SIZE];

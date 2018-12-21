@@ -92,8 +92,8 @@ struct Lyra {
     PP_PER_DAY_ADMIN = 99, // base personality points to grant per day for GMs
 
     MAX_SPEECHLEN = 512,    // maximum length of speech text
-    MAX_ITEMDESC = 512,     // maximum length of an item's description
-    MAX_AVATARDESC = 1024,   // max length of avatar description
+    MAX_ITEMDESC = 1024,     // maximum length of an item's description ~increased by christy
+    MAX_AVATARDESC = 1948,   // max length of avatar description, upgraded from 1024 took out 100 to allow for IDS_AVATAR_DESCRIP ~christy
 
 	MAX_LEVELS = 64,        // max # of levels
     MAX_LEVELROOMS = 64,   // maximum number of rooms in a level
