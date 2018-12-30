@@ -10547,7 +10547,6 @@ void cArts::EndCombine(void)
 	
 		this->ArtFinished(true);
 	}
-	
 
 	return;
 }
