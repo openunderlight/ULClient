@@ -4687,7 +4687,12 @@ BOOL CALLBACK WriteScrollDlgProc(HWND hDlg, UINT Message, WPARAM wParam, LPARAM 
 			if (!questbuilder_callback) 
 				ShowWindow(GetDlgItem(hDlg, IDC_ITEM_ARTIFACT), SW_SHOWNORMAL);
 #endif
-			Edit_LimitText(GetDlgItem(hDlg, IDC_SCROLL), Lyra::MAX_ITEMDESC-1);
+			if (questbuilder_callback) {
+				Edit_LimitText(GetDlgItem(hDlg, IDC_SCROLL), Lyra::QUEST_KEYWORDS_LENGTH-1);
+			}
+			else {
+				Edit_LimitText(GetDlgItem(hDlg, IDC_SCROLL), Lyra::MAX_ITEMDESC-1);
+			}
 			SetFocus(GetDlgItem(hDlg, IDC_SCROLL));
 
 			return TRUE;
