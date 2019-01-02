@@ -341,11 +341,17 @@ bool cChat::doWhisper(TCHAR* whisper)
 		whisper++;
 	cNeighbor* n;
 	bool whispered = false;
+	int len = strlen(target);
 	for (n = actors->IterateNeighbors(INIT); n != NO_ACTOR; n = actors->IterateNeighbors(NEXT))
 	{
 		if ((n->Avatar().Hidden()) && (player->ID() != n->ID()))
 			continue;
-		if (strnicmp(target, n->Name(), strlen(target)) == 0)
+		// whisper bug fix: since strnicmp only compares up to len chars, we verify first that
+		// the lens match.
+		int nlen = strlen(n->Name());
+		if (len != nlen)
+			continue;
+		if (strnicmp(target, n->Name(), len) == 0)
 		{
 			if (n->CanWhisper())
 			{
