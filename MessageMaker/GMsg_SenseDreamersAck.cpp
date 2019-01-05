@@ -72,6 +72,7 @@ void GMsg_SenseDreamersAck::hton()
     HTONS(data_.num_dreamers[i]);
   }
 #endif
+  HTONL(data_.total);
 }
 
 ////
@@ -86,6 +87,7 @@ void GMsg_SenseDreamersAck::ntoh()
     NTOHS(data_.num_dreamers[i]);
   }
 #endif
+  NTOHL(data_.total);
 }
 
 ////
