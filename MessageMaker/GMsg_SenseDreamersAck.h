@@ -38,10 +38,12 @@ public:
   // selectors
   //int NumDreamers(int index) const;
   lyra_id_t LevelID(int index) const;
+  unsigned int Total() const;
 
   // mutators
   //void SetNumDreamers(int num_dreamers, int index);
   void SetLevelID(lyra_id_t level_id, int index);
+  void SetTotal(unsigned int total);
 
 
 private:
@@ -53,6 +55,7 @@ private:
   // message data structure
   struct data_t {
     //unsigned short num_dreamers[PLANES_SENSED_COUNT];
+	unsigned int total;
 	unsigned char level_id[PLANES_SENSED_COUNT ];
   } data_;
 

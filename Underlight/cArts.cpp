@@ -3991,7 +3991,9 @@ void cArts::EndSenseDreamers(void *value)
 	const UINT SenseDreamerIDs[] = {IDS_SENSE_DREAMERS1,IDS_SENSE_DREAMERS2,IDS_SENSE_DREAMERS3};
 	memset(message, '\0', sizeof(message));
 	//_stprintf(message, _T(""));
-
+	_stprintf(message, "You sense %d total awakened souls in the City of Dreams.", psense_msg->Total());
+	display->DisplayMessage(message);
+	memset(message, '\0', sizeof(message));
 	// now manipulate zeroes 
 	for (int i=0; i<PLANES_SENSED_COUNT-1; i++) {
 		if (psense_msg->LevelID(i) != 0){
