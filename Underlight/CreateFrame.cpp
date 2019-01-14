@@ -29,7 +29,7 @@
 #include "Dialogs.h"
 #include "Resource.h"
 #include "Realm.h"
-
+#include "cDSound.h"
 #ifdef AGENT
 #include "cAI.h"
 #endif
@@ -37,12 +37,11 @@
 #include "Options.h"
 #include "cPalettes.h"
 
-//#include "cDSound.h"
-
 /////////////////////////////////////////////////
 //External Global Variables
 
 extern cDDraw *cDD; // Direct Draw object
+extern cDSound *cDS;
 extern cControlPanel *cp ; // Control Panel
 extern cGameServer *gs;
 extern cArts *arts;
@@ -76,7 +75,8 @@ const unsigned int  PACKET_CHECK_INTERVAL = 120000;
 const unsigned int  PACKET_COUNT_INTERVAL = 1000;
 const unsigned int  CHECK_DRAG_SCROLL_INTERVAL = 1000;
 const unsigned int  CHECK_INV_COUNT_INTERVAL = 500;
-
+bool show_splash = false;
+unsigned int show_splash_end_time = 0;
 #ifndef GAMEMASTER
 const unsigned int  MAX_IDLE_TIME = 900000;
 #else
@@ -395,7 +395,18 @@ _tprintf(disp_message);
    {
 		// if in the game, but not the level, only render
 		// if we're in character creation or the entrance level
-		if (!options.network ||
+	   if (show_splash)
+	   {
+			cDD->ShowSplashScreen();
+			if (show_splash_end_time < LyraTime())
+			{
+				show_splash = false;
+				cDS->StopSound(LyraSound::INTRO);
+				cDS->ReleaseBuffer(LyraSound::INTRO);
+				cDS->PlaySound(LyraSound::ENTRY);
+			}
+	   }
+		else if (!options.network ||
 			((options.welcome_ai || (gs && gs->LoggedIntoGame())) &&
 			 ((gs && gs->LoggedIntoLevel()) || (level->ID() == START_LEVEL_ID))))
 			RenderView();

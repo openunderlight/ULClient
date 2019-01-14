@@ -530,30 +530,33 @@ int cDDraw::YOffset(void)
 // show game intro splash screen
 bool cDDraw::ShowSplashScreen(void)
 {
-#ifdef UL_DEBUG
-	return true;
-#endif
-	unsigned char *dst = this->GetSurface(PRIMARY);
+	if (!this->EraseSurface(BACK_BUFFER))
+		return false;
+
+	if (exiting)
+		return false;
+	effects->LoadEffectBitmaps(LyraBitmap::SPLASH, 6);
+	int bitmap = LyraBitmap::SPLASH;
+	unsigned char *dst = this->GetSurface(BACK_BUFFER);
 
 	if (dst == NULL)
 		return false;
+	unsigned char *src = effects->EffectBitmap(bitmap)->address;
+	int intro_height = effects->EffectHeight(bitmap);
+	int intro_width = effects->EffectWidth(bitmap);
 
-	effects->LoadEffectBitmaps(LyraBitmap::SPLASH, 6);
-	unsigned char *src = effects->EffectBitmap(LyraBitmap::SPLASH)->address;
-	int splash_height = effects->EffectHeight(LyraBitmap::SPLASH);
-	int splash_width = effects->EffectWidth(LyraBitmap::SPLASH);
+	// offset to center
+	dst += pitch * (int)((viewy - intro_height) / 2);
+	dst += BYTES_PER_PIXEL * (int)((viewx - intro_width) / 2);
 
-	for (int i=0; i<splash_height; i++)
+	for (int i = 0; i<intro_height; i++)
 	{
-		memcpy(dst, src, splash_width*BYTES_PER_PIXEL);
-		src += splash_width*BYTES_PER_PIXEL;
+		memcpy(dst, src, intro_width*BYTES_PER_PIXEL);
+		src += intro_width * BYTES_PER_PIXEL;
 		dst += pitch;
 	}
 
-	this->ReleaseSurface(PRIMARY);
-
-	effects->FreeEffectBitmaps(LyraBitmap::SPLASH);
-
+	this->ReleaseSurface(BACK_BUFFER);
 	return true;
 }
 

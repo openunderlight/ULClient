@@ -579,7 +579,6 @@ bool __cdecl Init_Game(void)
 
 	// Initialize Direct Sound
 	cDS = new cDSound(options.sound,options.reverse);
-
 	MemoryCheck(_T("Initialized Direct Sound") );
 
 #ifndef AGENT
@@ -595,8 +594,8 @@ bool __cdecl Init_Game(void)
 	MemoryCheck(_T("Created effects controller"));
 
 	// Removed Lyra Splash Screen for Beta - DiscoWay
-	// cDS->PlaySound(LyraSound::INTRO);
-	// cDD->ShowSplashScreen();
+	cDS->PlaySound(LyraSound::INTRO);
+
 
 	// Create Actor List - must be done before player is created
 	actors = new cActorList();
@@ -677,10 +676,6 @@ bool __cdecl Init_Game(void)
 #endif
 
 	cDD->Show();
-
-	cDS->StopSound(LyraSound::INTRO);
-	cDS->ReleaseBuffer(LyraSound::INTRO);
-	cDS->PlaySound(LyraSound::ENTRY);
 	timing->begin_time = timing->t_start = LyraTime();
 
 //#ifndef GAMEMASTER
