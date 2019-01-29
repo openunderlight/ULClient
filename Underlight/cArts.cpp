@@ -2524,41 +2524,62 @@ void cArts::DreamsmithMark(void)
 
 void cArts::CreateLocalWeapon(int color)
 {
-	LmItem info;
-	LmItemHdr header;
-	lyra_item_missile_t missile = { LyraItem::MISSILE_FUNCTION, MELEE_VELOCITY,
-		0, weapon_damage_table[player->SkillSphere(art_in_use)],
-		LyraBitmap::DREAMBLADE_MISSILE};
-
-	header.Init(0, 0, LyraTime());
-	header.SetFlags(0);
-	header.SetGraphic(LyraBitmap::DREAMBLADE);
-	header.SetColor1(color);
-	header.SetColor2(0);
-	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::MISSILE_FUNCTION), 0, 0));
-
-	info.Init(header, this->Descrip(art_in_use), 0, 0, 0);
-	info.SetStateField(0, &missile, sizeof(missile));
-	info.SetCharges(INFINITE_CHARGES);
-
-	int duration = this->Duration(art_in_use, player->Skill(art_in_use));
-
-	cItem* item = CreateItem(player->x, player->y, player->angle, info, 0, true,
-		LyraTime() + duration);
-
-	if (item == NO_ITEM)
-	{
-		this->ArtFinished(false);
-		return;
+	bool hasBlade = false;
+	cItem* item;
+	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT)) {
+		if ((item->Status() == ITEM_OWNED) && (item->ItemFunction(0) == LyraItem::MISSILE_FUNCTION) &&
+			item->Temporary() && (item->ID().Graphic() == LyraBitmap::DREAMBLADE) && 
+			(strcmp(item->Name(), this->Descrip(art_in_use))==0)) {
+			
+			hasBlade = true;
+			break;
+		}
 	}
 
-	cp->SetSelectedItem(item);
+	// default duration for this level of blade
+	int duration = this->Duration(art_in_use, player->Skill(art_in_use));
 
-	LoadString (hInstance, IDS_DREAMWEAPON_ON, disp_message, sizeof(disp_message));
-_stprintf(message, disp_message, this->Descrip(art_in_use));
+	if (hasBlade) {
+		// we have a blade, extend the duration
+		item->ExtendTTL(duration);
+				
+		LoadString(hInstance, IDS_DURATION_EXTENDED, disp_message, sizeof(disp_message));
+	}
+	else {
+		// we don't have a blade, create one
+		LmItem info;
+		LmItemHdr header;
+		lyra_item_missile_t missile = { LyraItem::MISSILE_FUNCTION, MELEE_VELOCITY,
+			0, weapon_damage_table[player->SkillSphere(art_in_use)],
+			LyraBitmap::DREAMBLADE_MISSILE };
+
+		header.Init(0, 0, LyraTime());
+		header.SetFlags(0);
+		header.SetGraphic(LyraBitmap::DREAMBLADE);
+		header.SetColor1(color);
+		header.SetColor2(0);
+		header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::MISSILE_FUNCTION), 0, 0));
+
+		info.Init(header, this->Descrip(art_in_use), 0, 0, 0);
+		info.SetStateField(0, &missile, sizeof(missile));
+		info.SetCharges(INFINITE_CHARGES);
+
+		cItem* item = CreateItem(player->x, player->y, player->angle, info, 0, true,
+			LyraTime() + duration);
+
+		if (item == NO_ITEM)
+		{
+			this->ArtFinished(false);
+			return;
+		}
+
+		cp->SetSelectedItem(item);
+
+		LoadString(hInstance, IDS_DREAMWEAPON_ON, disp_message, sizeof(disp_message));
+		cDS->PlaySound(LyraSound::DREAMBLADE, player->x, player->y, true);
+	}
+	_stprintf(message, disp_message, this->Descrip(art_in_use));
 	display->DisplayMessage(message, false);
-	cDS->PlaySound(LyraSound::DREAMBLADE, player->x, player->y, true);
-
 	this->ArtFinished(true, true);
 	return;
 }
