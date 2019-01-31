@@ -1172,7 +1172,9 @@ void cAI::FindRespawn(GMsg_LevelPlayers& players_msg)
    _tprintf(_T("Trying to find a respawn point for agent %s(%d). reconnect = %d at time %s\n"),  agent_info[nAgentIndex].name,agent_info[nAgentIndex].id, reconnect, _tstrtime(timebuf));
 
 	this->SetAgentStats();
-	agent_info[nAgentIndex].level_ptr->Load(agent_info[nAgentIndex].level_id);
+	if (agent_info[nAgentIndex].level_ptr->ID() != agent_info[nAgentIndex].level_id) {
+		agent_info[nAgentIndex].level_ptr->Load(agent_info[nAgentIndex].level_id);
+	}
 
 	// build list of possible respawn points
 	//
