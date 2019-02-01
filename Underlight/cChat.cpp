@@ -392,7 +392,7 @@ bool cChat::doWhisper(TCHAR* whisper)
 	{
 		if ((n->Avatar().Hidden()) && (player->ID() != n->ID()))
 			continue;
-		if (strnicmp(target, n->Name(), strlen(target)) == 0)
+		if (_tcsncicmp(target, n->Name(), Lyra::PLAYERNAME_MAX) == 0)
 		{
 			if (n->CanWhisper())
 			{
