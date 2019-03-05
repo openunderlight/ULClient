@@ -162,6 +162,20 @@ bool cItem::Update(void)
 	return TRUE;
 }
 
+void cItem::ExtendTTL(int extend_time)
+{
+	int actual_extension = extend_time / 2;
+	// the maximum duration is the standard duration from now 
+	// (i.e. evokes do not stack to an infinite TTL)
+	int max_dur = LyraTime() + extend_time;
+	int proj_time = expire_time + actual_extension;
+	
+	if (proj_time <= max_dur)
+		expire_time = proj_time;
+	else
+		expire_time = max_dur;
+}
+
 bool cItem::Render(void)
 {
 	if (this == cp->DragItem())
@@ -334,6 +348,22 @@ bool cItem::RightClick(void)
 				_tcscat(message,disp_message);
 				display->DisplayMessage(message, false);
 			}
+#ifdef UL_DEV
+			if (this->Temporary())
+			{
+				int min, sec;
+				DWORD time_left;
+				// amount of time left in millis
+				time_left = expire_time - LyraTime();
+				// minutes
+				min = time_left / 60000;
+				// seconds
+				sec = (time_left - (min * 60000)) / 1000;
+
+				_stprintf(temp_message, _T("This item will expire in %d minutes and %d seconds."), min, sec);
+				display->DisplayMessage(temp_message);
+			}
+#endif
 		}
 		else
 		{

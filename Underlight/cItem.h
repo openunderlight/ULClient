@@ -142,6 +142,7 @@ class cItem : public cActor
 	  int ItemFunction(int slot);
 	  int MissleDamage(void);
 	  bool IsAreaEffectItem(void);
+	  void ExtendTTL(int extend_time);
 
 	  // mutators
 	  void SetStatus(int new_status);
