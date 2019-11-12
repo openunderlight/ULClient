@@ -453,12 +453,12 @@ int cDDraw::ScaletoRes (int value)
 	switch (res) {
 		case 1:
 		{
-			temp = value*1.25;
+			temp = value*1.25f; //getting rid of warning of converting double, by switching to f
 			return (int)temp;
 		}	
 		case 2:
 		{
-			temp = value*1.6;
+			temp = value*1.6f; //getting rid of warning of converting double, by switching to f
 			return (int)temp;
 		}	
 		case 0:

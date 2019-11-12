@@ -1802,9 +1802,13 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 							
 			if (player->ActiveShieldValid())
 			{
+				
+
 				LoadString (hInstance, IDS_SHOW_SHIELD, disp_message, sizeof(disp_message));
 			_stprintf(message, disp_message, player->ActiveShield()->Name());
 				display->DisplayMessage(message);
+				LoadString(hInstance, IDS_ITEM_DESCRIBE, disp_message, sizeof(disp_message));
+				_stprintf(message, disp_message, player->ActiveShield()->Identify()); // got rid of warning about identify by adding ()
 			}
 			else
 			{

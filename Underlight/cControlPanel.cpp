@@ -106,7 +106,7 @@ const struct window_pos_t rightPos[MAX_RESOLUTIONS] =
 
 // position for tab control, relative to main window
 const struct window_pos_t tabPos[MAX_RESOLUTIONS] = 
-{ { 480, 0, 160, 38 }, { 600, 0, 200, 47 }, { 768, 0, 256, 60 } };
+{ { 480, 0, 160, 38 }, { 595, 0, 220, 47 }, { 763, 0, 256, 60 } }; //  {{ .. , .. , .. }, {600, 0, 200, 47}, {768, 0 , 256, 60} for 141 xp build
 
 // position for inventory counter, relative to tab control
 const struct window_pos_t invcountPos[MAX_RESOLUTIONS] =
@@ -114,7 +114,7 @@ const struct window_pos_t invcountPos[MAX_RESOLUTIONS] =
 
 // position for main control panel bitmap, relative to main window
 const struct window_pos_t mainPos[MAX_RESOLUTIONS] = 
-{ { 480, 38, 160, 442 }, { 600, 47, 200, 553 }, { 768, 60, 256, 708 } };
+{ { 480, 38, 160, 442 }, { 590, 47, 220, 553 }, { 758, 60, 276, 708 } }; //  {{ .. , .. , .. }, {600, 0, 200, 47}, 768, 60, 256, 708 for 141 xp build
 
 // position of listviews, relative to cp bitmap
 const struct window_pos_t listviewPos[MAX_RESOLUTIONS] = 
@@ -144,7 +144,7 @@ const struct window_pos_t grantppPos[MAX_RESOLUTIONS] =
 
 // position for meta button, relative to bottom
 const struct window_pos_t metaPos[MAX_RESOLUTIONS] = 
-{ { 58, 394, 41, 41 }, { 72, 492, 51, 51 }, { 92, 630, 65, 65 } };
+{ { 58, 394, 41, 41 }, { 72, 492, 51, 51 }, { 92, 630, 65, 65 } }; //630
 
 
 struct button_t {
