@@ -107,7 +107,7 @@ const unsigned int GREEN = 0x0000FF00;
 	{ { 80, 5, 68, 55 }, { 100, 6, 85, 69 }, { 128, 8, 109, 88 } };
 
 	// position for tab control, relative to main window
-	const struct window_pos_t tabPos[MAX_RESOLUTIONS] = { { 480, 0, 160, 38 },{ 595, 0, 220, 47 },{ 763, 0, 256, 60 } };
+	const struct window_pos_t tabPos[MAX_RESOLUTIONS] = { { 480, 0, 160, 38 },{ 595, 0, 210, 47 },{ 763, 0, 256, 60 } };
 	const struct window_pos_t tabPos_FULL[MAX_RESOLUTIONS] = { { 480, 0, 160, 38 }, { 600, 0, 200, 47 }, { 768, 0, 256, 60 } };
 
 	
@@ -117,7 +117,7 @@ const struct window_pos_t invcountPos[MAX_RESOLUTIONS] =
 { { 60, 20, 40, 12}, { 75, 30, 50, 16}, {96, 40, 64, 20 } };
 
 	// position for tab control, relative to main window
-const struct window_pos_t  mainPos[MAX_RESOLUTIONS] = { { 480, 38, 160, 442 }, { 590, 47, 220, 553 }, { 758, 60, 276, 708 } };
+const struct window_pos_t  mainPos[MAX_RESOLUTIONS] = { { 480, 38, 160, 442 }, { 598, 47, 185, 539 }, { 758, 60, 276, 708 } };
 const struct window_pos_t  mainPos_FULL[MAX_RESOLUTIONS] = { { 480, 38, 160, 442 }, { 600, 47, 200, 553 }, { 768, 60, 256, 708 } };
 
 	// position of listviews, relative to cp bitmap
@@ -143,7 +143,7 @@ const struct window_pos_t useppPos[MAX_RESOLUTIONS] =
 
 // position for use button, relative to bottom
 const struct window_pos_t grantppPos[MAX_RESOLUTIONS] = 
-{ { 101, 394, 51, 26 }, { 126, 492, 63, 32 }, { 161, 630, 81, 41 } };
+{ { 101, 394, 51, 26 }, { 10, 360, 63, 32 }, { 161, 630, 81, 41 } };
 
 
 // position for meta button, relative to bottom
@@ -178,23 +178,23 @@ struct stats_t {
 
 struct stats_t cp_stats[NUM_PLAYER_STATS] = 
 {
-	{ { { 97, 378, 40, 16}, { 121, 473, 50, 20 }, { 155, 605, 64, 25 } },
+	{ { { 97, 378, 40, 16}, { 141, 473, 50, 20 }, { 155, 605, 64, 25 } },
 	{ { 15, 377, 160, 393 }, { 19, 472, 200, 491 }, { 25, 603, 256, 628 } },
 	}, //ds
 
-	{ { { 97, 315, 40, 16}, { 121, 395, 50, 20 }, { 155, 505, 64, 25 } },
+	{ { { 97, 315, 40, 16}, { 141, 395, 50, 20 }, { 155, 505, 64, 25 } },
 	{ { 15, 313, 160, 329 }, { 19, 392, 200, 411 }, { 25, 503, 256, 526 } },
 	},  // wil
 
-	{ { { 97, 331, 40, 16}, { 121, 415, 50, 20 }, { 155, 530, 64, 25 } },
+	{ { { 97, 331, 40, 16}, { 141, 415, 50, 20 }, { 155, 530, 64, 25 } },
 	{ { 15, 329, 160, 345 }, { 19, 412, 200, 431 }, { 25, 528, 256, 552 } },
 	},  // insight
 
-	{ { { 97, 347, 40, 16}, { 121, 435, 50, 20 }, { 155, 555, 64, 25 } },
+	{ { { 97, 347, 40, 16}, { 141, 435, 50, 20 }, { 155, 555, 64, 25 } },
 	{ { 15, 345, 160, 361 }, { 19, 432, 200, 451 }, { 25, 553, 256, 577 } },
 	}, // res
 
-	{ {	{ 97, 363, 40, 16}, { 121, 454, 50, 20 }, { 155, 580, 64, 25 } },
+	{ {	{ 97, 363, 40, 16}, { 141, 454, 50, 20 }, { 155, 580, 64, 25 } },
 	{ { 15, 361, 160, 377 }, { 19, 452, 200, 471 }, { 25, 578, 256, 603 } },
 	} //lucid
 };
@@ -257,7 +257,7 @@ cControlPanel::cControlPanel(void)
 
 	// window for tab control
 
-	if (options.fullscreen == true) {
+	if (options.fullscreen == false) {
 		hwnd_tab = CreateWindow(_T("CP_Tab"), _T(""), WS_CHILD,
 		
 			tabPos[cDD->Res()].x, tabPos[cDD->Res()].y,
