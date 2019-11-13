@@ -28,6 +28,7 @@
 #include "Realm.h"
 #include "Mouse.h"
 
+
 ////////////////////////////////////////////////////////////////
 // External Global Variables
 
@@ -85,38 +86,41 @@ const unsigned int GREEN = 0x0000FF00;
 // 3) change all references to Pos. to Pos[cDD->Res()].
 // 3) transfer to grzzt, run converter, transfer back
 
-// position for the control panel, relative to the main window
-const struct window_pos_t cpPos[MAX_RESOLUTIONS] = 
-{ { 480, 0, 160, 480 }, { 600, 0, 200, 600 }, { 768, 0, 256, 768 } };
+
+	// position for the control panel, relative to the main window
+	const struct window_pos_t cpPos[MAX_RESOLUTIONS] =
+	{ { 480, 0, 160, 480 }, { 600, 0, 200, 600 }, { 768, 0, 256, 768 } };
 
 
-// position for avatar
-const struct window_pos_t avatarPos[MAX_RESOLUTIONS] = 
-{	{ 500, 90, 120, 200 }, 
-	{ 625, 112, 150, 250 }, 
-	{ 800, 144, 192, 320 } };
+	// position for avatar
+	const struct window_pos_t avatarPos[MAX_RESOLUTIONS] =
+	{ { 500, 90, 120, 200 },
+		{ 625, 112, 150, 250 },
+		{ 800, 144, 192, 320 } };
 
-// position for turn avatar left button
-const struct window_pos_t leftPos[MAX_RESOLUTIONS] = 
-{ { 12, 5, 68, 55 }, { 15, 6, 85, 69 }, { 19, 8, 109, 88 } };
+	// position for turn avatar left button
+	const struct window_pos_t leftPos[MAX_RESOLUTIONS] =
+	{ { 12, 5, 68, 55 }, { 15, 6, 85, 69 }, { 19, 8, 109, 88 } };
 
-// position for turn avatar right button
-const struct window_pos_t rightPos[MAX_RESOLUTIONS] = 
-{ { 80, 5, 68, 55 }, { 100, 6, 85, 69 }, { 128, 8, 109, 88 } };
+	// position for turn avatar right button
+	const struct window_pos_t rightPos[MAX_RESOLUTIONS] =
+	{ { 80, 5, 68, 55 }, { 100, 6, 85, 69 }, { 128, 8, 109, 88 } };
 
-// position for tab control, relative to main window
-const struct window_pos_t tabPos[MAX_RESOLUTIONS] = 
-{ { 480, 0, 160, 38 }, { 595, 0, 220, 47 }, { 763, 0, 256, 60 } }; //  {{ .. , .. , .. }, {600, 0, 200, 47}, {768, 0 , 256, 60} for 141 xp build
+	// position for tab control, relative to main window
+	const struct window_pos_t tabPos[MAX_RESOLUTIONS] = { { 480, 0, 160, 38 },{ 595, 0, 220, 47 },{ 763, 0, 256, 60 } };
+	const struct window_pos_t tabPos_FULL[MAX_RESOLUTIONS] = { { 480, 0, 160, 38 }, { 600, 0, 200, 47 }, { 768, 0, 256, 60 } };
 
-// position for inventory counter, relative to tab control
+	
+
+	 // position for inventory counter, relative to tab control
 const struct window_pos_t invcountPos[MAX_RESOLUTIONS] =
 { { 60, 20, 40, 12}, { 75, 30, 50, 16}, {96, 40, 64, 20 } };
 
-// position for main control panel bitmap, relative to main window
-const struct window_pos_t mainPos[MAX_RESOLUTIONS] = 
-{ { 480, 38, 160, 442 }, { 590, 47, 220, 553 }, { 758, 60, 276, 708 } }; //  {{ .. , .. , .. }, {600, 0, 200, 47}, 768, 60, 256, 708 for 141 xp build
+	// position for tab control, relative to main window
+const struct window_pos_t  mainPos[MAX_RESOLUTIONS] = { { 480, 38, 160, 442 }, { 590, 47, 220, 553 }, { 758, 60, 276, 708 } };
+const struct window_pos_t  mainPos_FULL[MAX_RESOLUTIONS] = { { 480, 38, 160, 442 }, { 600, 47, 200, 553 }, { 768, 60, 256, 708 } };
 
-// position of listviews, relative to cp bitmap
+	// position of listviews, relative to cp bitmap
 const struct window_pos_t listviewPos[MAX_RESOLUTIONS] = 
 { { 10, 0, 138, 255 }, { 12, 0, 172, 320 }, { 16, 8, 220, 402 } };
 
@@ -144,7 +148,7 @@ const struct window_pos_t grantppPos[MAX_RESOLUTIONS] =
 
 // position for meta button, relative to bottom
 const struct window_pos_t metaPos[MAX_RESOLUTIONS] = 
-{ { 58, 394, 41, 41 }, { 72, 492, 51, 51 }, { 92, 630, 65, 65 } }; //630
+{ { 58, 394, 41, 41 }, { 72, 492, 51, 51 }, { 92, 630, 65, 65 } };
 
 
 struct button_t {
@@ -252,10 +256,20 @@ cControlPanel::cControlPanel(void)
 	// Create the tab control
 
 	// window for tab control
-    hwnd_tab = CreateWindow(_T("CP_Tab"), _T(""), WS_CHILD, 
-		tabPos[cDD->Res()].x, tabPos[cDD->Res()].y, 		
-		tabPos[cDD->Res()].width, tabPos[cDD->Res()].height,
-		cDD->Hwnd_Main(), NULL, hInstance, NULL); 
+
+	if (options.fullscreen == true) {
+		hwnd_tab = CreateWindow(_T("CP_Tab"), _T(""), WS_CHILD,
+		
+			tabPos[cDD->Res()].x, tabPos[cDD->Res()].y,
+				tabPos[cDD->Res()].width, tabPos[cDD->Res()].height,
+			cDD->Hwnd_Main(), NULL, hInstance, NULL);
+		}else{
+			hwnd_tab = CreateWindow(_T("CP_Tab"), _T(""), WS_CHILD,
+			tabPos_FULL[cDD->Res()].x, tabPos_FULL[cDD->Res()].y,
+				tabPos_FULL[cDD->Res()].width, tabPos_FULL[cDD->Res()].height,
+				cDD->Hwnd_Main(), NULL, hInstance, NULL);
+		}
+		
 
 	// bitmaps for tab control
 	for (i = 0; i < NUM_TABS; i++)
@@ -265,9 +279,15 @@ cControlPanel::cControlPanel(void)
     wc.lpszClassName = _T("CP_Window");
     RegisterClass( &wc );
 
-    hwnd_cp = CreateWindow(_T("CP_Window"), _T(""), WS_CHILD, 
-		mainPos[cDD->Res()].x, mainPos[cDD->Res()].y, mainPos[cDD->Res()].width, mainPos[cDD->Res()].height,
-		cDD->Hwnd_Main(), NULL, hInstance, NULL );
+	if (options.fullscreen == false) {
+		hwnd_cp = CreateWindow(_T("CP_Window"), _T(""), WS_CHILD,
+			mainPos[cDD->Res()].x, mainPos[cDD->Res()].y, mainPos[cDD->Res()].width, mainPos[cDD->Res()].height,
+			cDD->Hwnd_Main(), NULL, hInstance, NULL);
+	}else{
+		hwnd_cp = CreateWindow(_T("CP_Window"), _T(""), WS_CHILD,
+			mainPos_FULL[cDD->Res()].x, mainPos_FULL[cDD->Res()].y, mainPos_FULL[cDD->Res()].width, mainPos_FULL[cDD->Res()].height,
+			cDD->Hwnd_Main(), NULL, hInstance, NULL);
+	}
 
     cp_window_bitmap = CreateWindowsBitmap(LyraBitmap::CP_WINDOW + cDD->Res());
 
@@ -467,6 +487,8 @@ cControlPanel::cControlPanel(void)
 	return;
 
 }
+
+
 
 void cControlPanel::AddAvatar(void)
 {
@@ -2758,8 +2780,15 @@ LRESULT WINAPI ControlPanelWProc ( HWND hwnd, UINT message, WPARAM wParam, LPARA
 			{
 				RECT cpr;
 				GetWindowRect(cp->Hwnd_CP(), &cpr);
-				if (cpr.top != mainPos[cDD->Res()].y) {
-					MoveWindow(cp->Hwnd_CP(), mainPos[cDD->Res()].x, mainPos[cDD->Res()].y, mainPos[cDD->Res()].width, mainPos[cDD->Res()].height, true);
+				if (options.fullscreen == false) {
+					if (cpr.top != mainPos[cDD->Res()].y) {
+						MoveWindow(cp->Hwnd_CP(), mainPos[cDD->Res()].x, mainPos[cDD->Res()].y, mainPos[cDD->Res()].width, mainPos[cDD->Res()].height, true);
+					}
+				}
+				else {
+					if (cpr.top != mainPos_FULL[cDD->Res()].y) {
+						MoveWindow(cp->Hwnd_CP(), mainPos_FULL[cDD->Res()].x, mainPos_FULL[cDD->Res()].y, mainPos_FULL[cDD->Res()].width, mainPos_FULL[cDD->Res()].height, true);
+					}
 				}
 			}
 		break;

@@ -167,7 +167,6 @@ public:
 	inline bool Using(void) { return useing; };
 	inline void SetGiving(bool value) { giving = value; };
 	inline void SetUsing(bool value) { useing = value; };
-
 	void AddAvatar(void);
 	inline int CurrAvatarView(void) { return curr_avatar_view;};
 	void Show(void);
@@ -175,7 +174,7 @@ public:
 	void DeselectSelected(void);
 	int AddIcon(unsigned char* icon_bits); // returns new index
 	unsigned int LookUpStatColor(int stat); // return color to use for stats
-
+	
 	// add/remove items from control panel
 	int AddItem(cItem* item);
 	void DeleteItem(cItem* item, int type = SHOW_NEXT);

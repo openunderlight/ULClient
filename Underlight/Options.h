@@ -96,7 +96,7 @@ struct options_t {
 	bool babble_filter;
 	bool ignore_whispers;
 	bool debug_state_mode;
-	BOOL fullscreen;
+	BOOL fullscreen = false;
 	BOOL classic_chat;
 
 	other_t bungholes[MAX_IGNORELIST]; // ignore list members
@@ -121,6 +121,7 @@ struct options_t {
 
 	int resolution; // 640 = 640x480, 800 = 800x600, 1024 = 1024x768
 
+
 #ifdef UL_DEV
 	int dev_server; // 1, 2, 3
 	char custom_ip[64] = "127.0.0.1"; // IP of Custom Server
@@ -128,6 +129,7 @@ struct options_t {
 
 	TCHAR gamed_URL[64]; // URL of game server pointer
 	TCHAR patch_URL[64]; // URL of patch file
+
 };
 
 #ifndef OPTIONS_DLL

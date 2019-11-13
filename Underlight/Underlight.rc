@@ -375,7 +375,6 @@ BEGIN
     PUSHBUTTON      "<",IDC_SCROLL_LEFT,379,5,11,11
     PUSHBUTTON      ">",IDC_SCROLL_RIGHT,391,5,11,11
     PUSHBUTTON      "Doom Layout",IDC_DOOMLAYOUT,40,2,66,13
-		//removed "mouse layout" button "Mouse Layout",IDC_MOUSELAYOUT,146,2,66,13,NOT WS_VISIBLE bug fix for when clicking more keys then clicking it again to get back
 END
 
 IDD_CHOOSE_DESTINATION DIALOGEX 0, 0, 203, 91
@@ -571,7 +570,7 @@ IDD_CREDITS DIALOGEX 0, 0, 426, 115
 STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_VISIBLE
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    DEFPUSHBUTTON   "OK",IDC_OK,204,93,27,15  //fixed missing ok button on credits,  was   DEFPUSHBUTTON   "OK",IDC_OK,218,108,50,14
+    DEFPUSHBUTTON   "OK",IDC_OK,204,93,27,15
 END
 
 IDD_LOCATE_AVATAR DIALOGEX 0, 0, 217, 102
@@ -1087,8 +1086,8 @@ BEGIN
 
     IDD_AVATAR, DIALOG
     BEGIN
-		TOPMARGIN, 1
         RIGHTMARGIN, 1
+        TOPMARGIN, 1
         BOTTOMMARGIN, 91
     END
 

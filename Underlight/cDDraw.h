@@ -111,7 +111,7 @@ class cDDraw
 
 	  // Other Windows operations
 	  void Show(void);
-
+	  
    private:
 
 
