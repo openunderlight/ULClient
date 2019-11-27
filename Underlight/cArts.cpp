@@ -1736,13 +1736,14 @@ void cArts::Portkey(void)
 		LoadString(hInstance, IDS_ALREADY_HAVE_PORTKEY, disp_message, sizeof(disp_message));
 		display->DisplayMessage(disp_message);
 		this->ArtFinished(false);
+		return;
 	}
 	LmItemHdr header;
 	LmItem info;
 	cItem *item;
 	
 	header.Init(0, 0, 0);
-	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP);
+	header.SetFlags(LyraItem::FLAG_SENDSTATE | LyraItem::FLAG_ALWAYS_DROP | LyraItem::FLAG_ALWAYSREAP | LyraItem::FLAG_NOPICKUP);
 	header.SetGraphic(LyraBitmap::WARD);
 	header.SetColor1(player->Avatar().Color2()); header.SetColor2(player->Avatar().Color3());
 	header.SetStateFormat(LyraItem::FormatType(LyraItem::FunctionSize(LyraItem::PORTKEY_FUNCTION), 0, 0));

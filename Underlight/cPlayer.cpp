@@ -92,6 +92,7 @@ extern cPaletteManager *shader;
 extern bool showing_map;
 extern cAgentBox *agentbox;
 extern HWND hwnd_acceptreject;
+extern unsigned long last_mumble_message;
 extern ppoint_t pp; // personality points use tracker
 const int guild_levels[NUM_GUILDS] = {
 	17,18,21,22,23,24,25,26
@@ -1461,7 +1462,23 @@ void cPlayer::CheckStatus(void)
 						item->SetNextTick(time + f.ms_between_recurrences);
 				}
 			}
+			else if (item->ItemFunction(0) == LyraItem::PORTKEY_FUNCTION) {
+				if ((flags & ACTOR_SOULSPHERE) || Avatar().Hidden())
+					continue;
 
+				const void* state = item->Lmitem().StateField(0);
+				lyra_item_portkey_t pkey;
+				memcpy(&pkey, state, sizeof(pkey));
+				dist = (unsigned int)((item->x - x)*(item->x - x) + (item->y - y)*(item->y - y));
+				unsigned int xy, ht;
+				CalculateDistance(pkey.distance, &xy, &ht);
+				int h1 = z - physht - item->z, h2 = item->z - z;
+				if (dist > xy || h1 > (int)ht || h2 > (int)ht)
+					continue;
+				display->DisplayMessage("The portkey whisks you away to parts unknown!");
+				player->Teleport(pkey.x, pkey.y, player->angle, pkey.level_id);
+				break;
+			}
 		}
 		actors->IterateItems(DONE);
 #ifndef AGENT
@@ -1689,6 +1706,7 @@ void cPlayer::SetRoom(float old_x, float old_y)
 	if (options.network && (room != last_room) && gs && gs->LoggedIntoLevel())
 	{
 		this->MarkLastLocation();
+		last_mumble_message = 0;
 		gs->OnRoomChange((short)old_x, short(old_y));
 	}
 

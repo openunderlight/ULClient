@@ -52,6 +52,7 @@ public:
     TELL_IP        = 't',  // roger wilco IP address
     WHISPER        = 'W',  // person-to-person whisper
 	WHISPER_EMOTE  = 'Z',  // emote showing a whisper is happening
+	MUMBLE_EMOTE   = 'm',  // mumble emote indicating talking is out of earshot
   };
 
 public:

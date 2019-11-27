@@ -134,6 +134,7 @@ extern cDetailQuest *detailquest;
 extern cOutput *output;
 extern cGoalBook *goalbook;
 extern ppoint_t pp; // personality points use tracker
+extern unsigned long last_mumble_message;
 
 #ifdef GAMEMASTER
 extern cAgentBox *agentbox;
@@ -2193,6 +2194,13 @@ void cGameServer::HandleMessage(void)
 					case RMsg_Speech::SYSTEM_WHISPER:
 					case RMsg_Speech::SERVER_TEXT:
 						display->DisplayMessage(speech_msg.SpeechText());
+						break;
+					case RMsg_Speech::MUMBLE_EMOTE:
+						if (LyraTime() - last_mumble_message > 300000)
+						{
+							display->DisplayMessage(speech_msg.SpeechText());
+							last_mumble_message = LyraTime();
+						}
 						break;
 					case RMsg_Speech::UNKNOWN:
 					default:

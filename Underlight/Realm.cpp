@@ -136,6 +136,7 @@ float scale_x = 1.0f; // x scale factor for dialog boxes
 float scale_y = 1.0f; // y scale factor for dialog boxes
 long time_offset = 0; // used to work around Windows bug that returns negative system time on ME
 unsigned long exit_time; 
+unsigned long last_mumble_message; // last time we got told someone was talking out of earshot.
 
 unsigned char keyboard[num_keystates]; // keyboard
 TCHAR message[DEFAULT_MESSAGE_SIZE]; // generic string for output messages
@@ -388,6 +389,7 @@ bool __cdecl Init_Game(void)
 	int my_x = 0;
 	int my_y = 0;
 	exit_time = UINT_MAX;
+	last_mumble_message = 0;
 
 //#include "../Launcher/Version.h"
 //	sprintf(message, "%d", LAUNCHER_CURRENT_VERSION);
