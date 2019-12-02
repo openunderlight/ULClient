@@ -35,7 +35,7 @@ GMsg_GiveItemAck::GMsg_GiveItemAck()
   : LmMesg(GMsg::GIVEITEMACK, sizeof(data_t), sizeof(data_t), &data_)
 {
   // initialize default message data values
-  Init(0, LmItemHdr::DEFAULT_INSTANCE);
+  Init(0, LmItemHdr::DEFAULT_INSTANCE, 0);
 }
 
 ////
@@ -51,10 +51,11 @@ GMsg_GiveItemAck::~GMsg_GiveItemAck()
 // Init
 ////
 
-void GMsg_GiveItemAck::Init(int status, const LmItemHdr& itemheader)
+void GMsg_GiveItemAck::Init(int status, const LmItemHdr& itemheader, lyra_id_t target)
 {
   SetStatus(status);
   SetItemHeader(itemheader);
+  SetTarget(target);
 }
 
 ////
@@ -65,6 +66,7 @@ void GMsg_GiveItemAck::hton()
 {
   HTONL(data_.status);
   data_.itemheader.ConvertToNetwork();
+  HTONL(data_.target);
 }
 
 ////
@@ -75,6 +77,7 @@ void GMsg_GiveItemAck::ntoh()
 {
   NTOHL(data_.status);
   data_.itemheader.ConvertToHost();
+  NTOHL(data_.target);
 }
 
 ////

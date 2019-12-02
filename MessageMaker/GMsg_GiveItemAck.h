@@ -39,7 +39,7 @@ public:
   GMsg_GiveItemAck();
   ~GMsg_GiveItemAck();
 
-  void Init(int status, const LmItemHdr& itemheader);
+  void Init(int status, const LmItemHdr& itemheader, lyra_id_t target);
 
   // standard public methods
   void Dump(FILE* f, int indent = 0) const;
@@ -47,10 +47,12 @@ public:
   // selectors
   int Status() const;
   const LmItemHdr& ItemHeader() const;
+  lyra_id_t Target() const;
 
   // mutators
   void SetStatus(int status);
   void SetItemHeader(const LmItemHdr& itemheader);
+  void SetTarget(lyra_id_t target);
 
 private:
 
@@ -62,6 +64,7 @@ private:
   struct data_t {
     int status;
     LmItemHdr itemheader;
+	lyra_id_t target;
   } data_;
 
 };

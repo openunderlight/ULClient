@@ -421,8 +421,20 @@ _stprintf(message, disp_message, this->Name());
 
 void cItem::DisplayGivenMessage(void)
 {
-	LoadString (hInstance, IDS_ITEM_GIVEN, disp_message, sizeof(message));
-_stprintf(message, disp_message, this->Name());
+	DisplayGivenMessage(NO_ACTOR);
+}
+
+void cItem::DisplayGivenMessage(cNeighbor* n)
+{
+	if (n == NO_ACTOR)
+	{
+		LoadString(hInstance, IDS_ITEM_GIVEN, disp_message, sizeof(message));
+		_stprintf(message, disp_message, this->Name());
+	}
+	else {
+		LoadString(hInstance, IDS_ITEM_GIVEN_TO, disp_message, sizeof(message));
+		_stprintf(message, disp_message, this->Name(), n->Name());
+	}
 	display->DisplayMessage(message);
 	return;
 }
