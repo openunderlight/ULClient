@@ -564,7 +564,8 @@ struct LyraBitmap {
 		CP_GRANTPPB     = 1769,
 
 		BULLET		 = 2030,
-		
+		SPLASH_2 = 2042, // 800x600
+		SPLASH_3 = 2043, // 1024x768
 		CHANGING_PLANES	= 2044,
 		SPLASH		 = 2045,
 		INTRO		 = 2046,

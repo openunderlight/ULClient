@@ -534,9 +534,9 @@ bool cDDraw::ShowSplashScreen(void)
 		return false;
 
 	if (exiting)
-		return false;
-	effects->LoadEffectBitmaps(LyraBitmap::SPLASH, 6);
-	int bitmap = LyraBitmap::SPLASH;
+		return false;	
+	int bitmap = viewx == 600 ? LyraBitmap::SPLASH_2 : LyraBitmap::SPLASH_3;
+	effects->LoadEffectBitmaps(bitmap, 6);
 	unsigned char *dst = this->GetSurface(BACK_BUFFER);
 
 	if (dst == NULL)
