@@ -138,9 +138,9 @@ long time_offset = 0; // used to work around Windows bug that returns negative s
 unsigned long exit_time; 
 
 unsigned char keyboard[num_keystates]; // keyboard
-TCHAR message[2048]; // generic string for output messages,  changed for larger size ~christy
+TCHAR message[DEFAULT_MESSAGE_SIZE]; // generic string for output messages
 TCHAR values_select[100][DEFAULT_MESSAGE_SIZE];
-TCHAR disp_message[2048]; // generic string for output messages , changed for larger size ~christy
+TCHAR disp_message[DEFAULT_MESSAGE_SIZE]; // generic string for output messages
 TCHAR temp_message[DEFAULT_MESSAGE_SIZE]; // generic string for output messages
 TCHAR errbuf[DEFAULT_MESSAGE_SIZE];// generic string for error messages
 TCHAR duration_message[DEFAULT_MESSAGE_SIZE];

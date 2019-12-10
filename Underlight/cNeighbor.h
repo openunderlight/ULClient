@@ -148,6 +148,7 @@ class cNeighbor : public cActor
 
 	  bool IsFemale (void);
 	  bool IsMale (void);
+	  bool IsPMare(void);
 	  bool IsMonster (void);
 	  bool IsVulnerable (void);
 	  bool CanWhisper(void);

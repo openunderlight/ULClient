@@ -5573,8 +5573,27 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 					}
 					else
 					{
-						_stprintf(message, disp_message, timed_effects->name[i], player->Name());
-						gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
+						if (n->IsPMare() == false)
+						{
+							_stprintf(message, disp_message, timed_effects->name[i], player->Name());
+							gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
+						}
+						if (n->IsPMare())
+						{
+							if (player->IsMale())
+							{
+								_stprintf(message, disp_message, timed_effects->name[i], "A male dreamer");
+							}
+							else if (player->IsFemale())
+							{
+								_stprintf(message, disp_message, timed_effects->name[i], "A female dreamer");
+							}
+							else
+							{
+								_stprintf(message, disp_message, timed_effects->name[i], player->Name());
+							}
+							gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
+						}
 						if (n != NO_ACTOR)
 						{
 							LoadString(hInstance, IDS_ABJURED_EFFECT_OTHER, disp_message, sizeof(disp_message));

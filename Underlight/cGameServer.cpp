@@ -1630,20 +1630,20 @@ void cGameServer::HandleMessage(void)
 			if (0 == _tcscmp(descrip_msg.Creator(), NOT_A_SCROLL))
 			{ // it's an item with a description
 				LoadString (hInstance, IDS_ITEM_DESCRIP, disp_message, sizeof(message));
-				snprintf(message, sizeof(disp_message), disp_message, descrip_msg.Description()); //switch to snprint from _stprintf ~christy
+				_stprintf(message, disp_message, descrip_msg.Description());
 			}
 			else
 			{ // it's a scroll or quest scroll
 				if (_tcslen(descrip_msg.Target()) > 1) // quest scroll
 				{
 					LoadString (hInstance, IDS_QUEST_DESCRIP, disp_message, sizeof(message));
-					snprintf(message, sizeof(disp_message),disp_message, descrip_msg.Creator(), descrip_msg.Target(),  //switch to snprint from _stprintf ~christy
+					_stprintf(message, disp_message, descrip_msg.Creator(), descrip_msg.Target(), 
 						descrip_msg.Description());
 				}
 				else
 				{
 					LoadString (hInstance, IDS_SCROLL_DESCRIP, disp_message, sizeof(message));
-					snprintf(message, sizeof(disp_message), disp_message, descrip_msg.Creator(), descrip_msg.Description()); //switch to snprint from _stprintf ~christy
+					_stprintf(message, disp_message, descrip_msg.Creator(), descrip_msg.Description());
 				}
 			}
 #ifndef PMARE 
@@ -3003,7 +3003,7 @@ void cGameServer::HandleMessage(void)
 				if (options.adult_filter)
 					descrip = AdultFilter((TCHAR*)avatar_msg.Description());
 				LoadString (hInstance, IDS_AVATAR_DESCRIP, disp_message, sizeof(disp_message));
-			snprintf(message, sizeof(disp_message), n->Name(), descrip); //switch to snprint from _stprintf ~christy
+			_stprintf(message, disp_message, n->Name(), descrip);
 				display->DisplayMessage(message);
 			}
 		}
