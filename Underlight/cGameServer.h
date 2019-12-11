@@ -143,7 +143,7 @@ class cGameServer
    public:
       cGameServer(unsigned short udp_port_num = DEFAULT_UDP_PORT, unsigned short gs_port_num = 0);
 	  ~cGameServer(void);
-
+	  inline bool LoggingIn() { return logging_in;  }
 	  inline void SetServerAddress(SOCKADDR_IN value) { game_server_addr = value; }
 	  inline SOCKADDR_IN ServerAddress(void) { return game_server_addr; }
 	  inline void SetAutoLevelLogin(bool value) { auto_level_login = value; }

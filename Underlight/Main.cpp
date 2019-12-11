@@ -44,9 +44,10 @@ extern LPTSTR argv;				// command line arguments
 extern int argc;
 extern DWORD last_keystroke;
 extern bool IsLyraColors;
-
+extern bool show_splash;
 const int MIN_FRAME_TIMER = WM_USER + 9234;
- 
+extern unsigned int show_splash_end_time;
+
 /////////////////////////////////////////////////
 // Functions
 
@@ -76,6 +77,8 @@ int PASCAL WinMain( HINSTANCE hInst, HINSTANCE hPrevInstance,
 	}
 
 	last_keystroke = LyraTime();
+	show_splash = true;
+	show_splash_end_time = LyraTime() + 4600;
 
 	for (;;)
 	{

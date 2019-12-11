@@ -54,56 +54,57 @@ class LmPeerUpdate {
 
 public:
 
-  enum {
-    // bitfield widths for u1
-    ANGLE_WIDTH = 10,        // 10
-    ATTACKBITS_WIDTH = 5,    // 15
-    FLAGS_WIDTH = 10,         // 25
-    WEAPONDAMAGE_WIDTH = 6,  // 31
-	FLIGHT_WIDTH = 1,		 // 32
+	enum {
+		// bitfield widths for u1
+		ANGLE_WIDTH = 10,        // 10
+		ATTACKBITS_WIDTH = 5,    // 15
+		FLAGS_WIDTH = 10,         // 25
+		WEAPONDAMAGE_WIDTH = 6,  // 31
+		FLIGHT_WIDTH = 1,		 // 32
 
-    // bitfield widths for u2
-    WEAPONBITMAP_WIDTH = 3,    // 3
-    HITBITS_WIDTH = 5,		   // 8
-    WEAPONVELOCITY_WIDTH = 4,  // 12
-    HEIGHTDELTA_WIDTH = 5,     // 17
-    WEAPONEFFECT_WIDTH = 5,    // 22
-    LOCAL_WIDTH = 1,           // 23
-    HARMFUL_WIDTH = 1,         // 24
-    PRIMARY_COLOR_WIDTH = 3,   // 27
-    SECONDARY_COLOR_WIDTH = 3, // 30
-    WAVE_WIDTH = 1,			   // 31 - U2 has sacrificed a bit for the flags
-    UNUSED_WIDTH_U2 = 1,	   // 32
+		// bitfield widths for u2
+		WEAPONBITMAP_WIDTH = 3,    // 3
+		HITBITS_WIDTH = 5,		   // 8
+		WEAPONVELOCITY_WIDTH = 4,  // 12
+		HEIGHTDELTA_WIDTH = 5,     // 17
+		WEAPONEFFECT_WIDTH = 5,    // 22
+		LOCAL_WIDTH = 1,           // 23
+		HARMFUL_WIDTH = 1,         // 24
+		PRIMARY_COLOR_WIDTH = 3,   // 27
+		SECONDARY_COLOR_WIDTH = 3, // 30
+		WAVE_WIDTH = 1,			   // 31 - U2 has sacrificed a bit for the flags
+		IDLE_WIDTH = 1,	   // 32
 
-    // starting positions for u1 (shouldn't need to be modified)
-    ANGLE_START = 0,
-    ATTACKBITS_START = (ANGLE_START + ANGLE_WIDTH),
-    FLAGS_START = (ATTACKBITS_START + ATTACKBITS_WIDTH),
-    WEAPONDAMAGE_START = (FLAGS_START + FLAGS_WIDTH),
-	FLIGHT_START = (WEAPONDAMAGE_START + WEAPONDAMAGE_WIDTH),
-    // starting positions for u2 (shouldn't need to be modified)
-    WEAPONBITMAP_START = 0,
-    HITBITS_START = (WEAPONBITMAP_START + WEAPONBITMAP_WIDTH),
-    WEAPONVELOCITY_START = (HITBITS_START + HITBITS_WIDTH),
-    HEIGHTDELTA_START = (WEAPONVELOCITY_START + WEAPONVELOCITY_WIDTH),
-    WEAPONEFFECT_START = (HEIGHTDELTA_START + HEIGHTDELTA_WIDTH),
-    LOCAL_START = (WEAPONEFFECT_START + WEAPONEFFECT_WIDTH),
-    HARMFUL_START = (LOCAL_START + LOCAL_WIDTH),
-    PRIMARY_COLOR_START = (HARMFUL_START + HARMFUL_WIDTH),
-    SECONDARY_COLOR_START = (PRIMARY_COLOR_START + PRIMARY_COLOR_WIDTH),
-    WAVE_START = (SECONDARY_COLOR_START + SECONDARY_COLOR_WIDTH),
-
-    // flag values (up to 10)
-    LG_WALKING     = 0x0001,
-    LG_RUNNING     = 0x0002,
-    LG_BACKWARDS   = 0x0004,
-    LG_JUMPED      = 0x0008,
-    LG_STRAFING    = 0x0010, // normal=left, reverse=right
-    LG_CHAMELE	   = 0x0020,
-    LG_SOULSPHERE  = 0x0040,
-    LG_EVOKING     = 0x0080,
-    LG_EVOKED      = 0x0100,
-	LG_INVIS_NOVIS = 0x0200
+		// starting positions for u1 (shouldn't need to be modified)
+		ANGLE_START = 0,
+		ATTACKBITS_START = (ANGLE_START + ANGLE_WIDTH),
+		FLAGS_START = (ATTACKBITS_START + ATTACKBITS_WIDTH),
+		WEAPONDAMAGE_START = (FLAGS_START + FLAGS_WIDTH),
+		FLIGHT_START = (WEAPONDAMAGE_START + WEAPONDAMAGE_WIDTH),
+		// starting positions for u2 (shouldn't need to be modified)
+		WEAPONBITMAP_START = 0,
+		HITBITS_START = (WEAPONBITMAP_START + WEAPONBITMAP_WIDTH),
+		WEAPONVELOCITY_START = (HITBITS_START + HITBITS_WIDTH),
+		HEIGHTDELTA_START = (WEAPONVELOCITY_START + WEAPONVELOCITY_WIDTH),
+		WEAPONEFFECT_START = (HEIGHTDELTA_START + HEIGHTDELTA_WIDTH),
+		LOCAL_START = (WEAPONEFFECT_START + WEAPONEFFECT_WIDTH),
+		HARMFUL_START = (LOCAL_START + LOCAL_WIDTH),
+		PRIMARY_COLOR_START = (HARMFUL_START + HARMFUL_WIDTH),
+		SECONDARY_COLOR_START = (PRIMARY_COLOR_START + PRIMARY_COLOR_WIDTH),
+		WAVE_START = (SECONDARY_COLOR_START + SECONDARY_COLOR_WIDTH),
+		IDLE_START = (WAVE_START + WAVE_WIDTH),
+    
+		// flag values (up to 10)
+		LG_WALKING     = 0x0001,
+		LG_RUNNING     = 0x0002,
+		LG_BACKWARDS   = 0x0004,
+		LG_JUMPED      = 0x0008,
+		LG_STRAFING    = 0x0010, // normal=left, reverse=right
+		LG_CHAMELE	   = 0x0020,
+		LG_SOULSPHERE  = 0x0040,
+		LG_EVOKING     = 0x0080,
+		LG_EVOKED      = 0x0100,
+		LG_INVIS_NOVIS = 0x0200
 
   };
 
@@ -141,6 +142,7 @@ public:
   unsigned int SecondaryColor() const;
   unsigned int Wave() const;
   unsigned int Flying() const;
+  unsigned int Idle() const;
 
   bool FlagSet(int flag) const;
   
@@ -163,6 +165,7 @@ public:
   void SetSecondaryColor(unsigned int secondart);
   void SetWave(unsigned int wave);
   void SetFlying(unsigned int flying);
+  void SetIdle(unsigned int idle);
   // conversion functions 
   void ConvertToNetwork();
   void ConvertToHost();

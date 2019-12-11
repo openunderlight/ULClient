@@ -134,6 +134,10 @@ INLINE unsigned int LmPeerUpdate::Flying() const
 {
   return u_.u1.GetBits(FLIGHT_START, FLIGHT_WIDTH);
 }
+INLINE unsigned int LmPeerUpdate::Idle() const
+{
+  return u_.u2.GetBits(IDLE_START, IDLE_WIDTH);
+}
 
 
 INLINE unsigned int LmPeerUpdate::U1() const
@@ -241,4 +245,8 @@ INLINE void LmPeerUpdate::SetWave(unsigned int wave)
 INLINE void LmPeerUpdate::SetFlying(unsigned int flying)
 {
   u_.u1.SetBits(FLIGHT_START, FLIGHT_WIDTH, flying);
+}
+INLINE void LmPeerUpdate::SetIdle(unsigned int idle)
+{
+  u_.u2.SetBits(IDLE_START, IDLE_WIDTH, idle);
 }
