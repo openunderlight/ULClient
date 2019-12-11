@@ -1433,9 +1433,10 @@ void cGameServer::HandleMessage(void)
 			if (giveitemack_msg.Read(msgbuf) < 0) { GAME_ERROR(IDS_ERR_READ_GIVE_ITEM_ACK_MSG); return; }
 			arts->SetGivingItem(NO_ITEM);
 			item = actors->LookUpItem(giveitemack_msg.ItemHeader());
+			cNeighbor* n = actors->LookUpNeighbor(giveitemack_msg.Target());
 			if (giveitemack_msg.Status() == GMsg_GiveItemAck::GIVE_YES)
 			{
-				item->DisplayGivenMessage();
+				item->DisplayGivenMessage(n);
 				item->SetTerminate();
 			}
 			else // rejected

@@ -4577,6 +4577,7 @@ BEGIN
     IDS_DISTRESS_CALL_HOUSEMEMBERS 
                             ">You sense a cry for help from %s, %s of %s emanating from %s, %s!"
     IDS_DISTRESS_CALL_UNS   ">You sense a cry for help from %s, emanating from %s, %s!"
+    IDS_ITEM_GIVEN_TO       "You have given away the %s to %s!\n"
 END
 
 #endif    // English (United States) resources

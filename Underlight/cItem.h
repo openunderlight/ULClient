@@ -90,6 +90,7 @@ class cItem : public cActor
 	  void DisplayDropMessage(void);
 	  void DisplayTakeMessage(void);
 	  void DisplayGivenMessage(void);
+	  void DisplayGivenMessage(cNeighbor* n);
 	  void DisplayReceivedMessage(void);
 		bool LeftClick(void);
 	  bool RightClick(void);
