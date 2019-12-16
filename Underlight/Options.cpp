@@ -449,6 +449,13 @@ cJSON** LoadJSONFiles()
 	}
 	numJsonFiles = fcount;
 
+	if (hFind != FindFirstFile("globals.json", &data))
+	{
+		cJSON* globals = WriteGlobalJSONOptionValues();
+		WriteJSONFile(globals, "globals.json");
+		cJSON_Delete(globals);
+	}
+
 	if (numJsonFiles > MAX_STORED_ACCOUNTS)
 	{
 		GAME_ERROR("Too many JSON files - delete some!");
