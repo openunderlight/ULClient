@@ -5595,22 +5595,22 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 						gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
 					}
 					if (n != NO_ACTOR)
-						{
+					{
 							LoadString(hInstance, IDS_ABJURED_EFFECT_OTHER, disp_message, sizeof(disp_message));
 							_stprintf(message, disp_message, n->Name(), timed_effects->name[i]);
-						}
-						else {
+					}
+					else {
 							_stprintf(message, "%s has been abjured from you!\n", timed_effects->name[i]);
-						}
+					}
 
 						display->DisplayMessage (message);
-					}
+				}
 					player->RemoveTimedEffect(i);
 					break;
-				}
+			}
 				else
 					j++;
-			}
+	
 		num_effects_active--;
 		num_effects_to_abjure--;
 		num_effects_abjured++;
