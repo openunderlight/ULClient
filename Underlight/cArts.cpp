@@ -5526,7 +5526,7 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 {
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
   
-  if (caster_id != player->ID () && n == NO_ACTOR)
+  if (caster_id != player->ID() && n == NO_ACTOR)
     return; // MDA 3/18/2004 - bail if the neighbor became NULL between evoke and Apply
 
   this->DisplayUsedByOther(n, Arts::ABJURE);
@@ -5558,59 +5558,61 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 
 	while (num_effects_active && num_effects_to_abjure)
 	{
-		random = rand()%num_effects_active;
-		j=0; // j = count of active effects skipped by loop
-		for (i=0; i<NUM_TIMED_EFFECTS; i++)
+		random = rand() % num_effects_active;
+		j = 0; // j = count of active effects skipped by loop
+		for (i = 0; i < NUM_TIMED_EFFECTS; i++)
 			if ((player->flags & timed_effects->actor_flag[i]) && timed_effects->abjurable[i])
 			{
 				if (j == random) // abjure this effect
 				{
-					LoadString (hInstance, IDS_ABJURED_EFFECT, disp_message, sizeof(disp_message));
+					LoadString(hInstance, IDS_ABJURED_EFFECT, disp_message, sizeof(disp_message));
 					if (caster_id == player->ID())
 					{
 						LoadString(hInstance, IDS_YOURSELF, temp_message, sizeof(temp_message));
 						_stprintf(message, disp_message, timed_effects->name[i], temp_message);
-						display->DisplayMessage (message);
+						display->DisplayMessage(message);
 					}
 					else
 					{
 						if (n->IsPMare() == false)
-							_stprintf(message, disp_message, timed_effects->name[i], player->Name());
-						gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
-					}
-					if (n->IsPMare())
-					{
-						if (player->IsMale())
-						{
-							_stprintf(message, disp_message, timed_effects->name[i], "A male dreamer");
-						}
-						else if (player->IsFemale())
-						{
-							_stprintf(message, disp_message, timed_effects->name[i], "A female dreamer");
-						}
-						else
 						{
 							_stprintf(message, disp_message, timed_effects->name[i], player->Name());
+							gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
 						}
-						gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
-					}
+					
+						if (n->IsPMare())
+						{
+							if (player->IsMale())
+							{
+								_stprintf(message, disp_message, timed_effects->name[i], "A male dreamer");
+							}
+							else if (player->IsFemale())
+							{
+								_stprintf(message, disp_message, timed_effects->name[i], "A female dreamer");
+							}
+							else
+							{
+								_stprintf(message, disp_message, timed_effects->name[i], player->Name());
+							}
+							gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
+						}
 					if (n != NO_ACTOR)
 					{
-							LoadString(hInstance, IDS_ABJURED_EFFECT_OTHER, disp_message, sizeof(disp_message));
-							_stprintf(message, disp_message, n->Name(), timed_effects->name[i]);
+						LoadString(hInstance, IDS_ABJURED_EFFECT_OTHER, disp_message, sizeof(disp_message));
+						_stprintf(message, disp_message, n->Name(), timed_effects->name[i]);
 					}
 					else {
-							_stprintf(message, "%s has been abjured from you!\n", timed_effects->name[i]);
+						_stprintf(message, "%s has been abjured from you!\n", timed_effects->name[i]);
 					}
 
-						display->DisplayMessage (message);
+					display->DisplayMessage(message);
 				}
-					player->RemoveTimedEffect(i);
-					break;
-			}
+				player->RemoveTimedEffect(i);
+				break;
+				}
 				else
 					j++;
-	
+			}
 		num_effects_active--;
 		num_effects_to_abjure--;
 		num_effects_abjured++;
