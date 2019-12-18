@@ -631,6 +631,15 @@ _stprintf(emoteCF.szFaceName, FONT_NAME);
 	nameCF.crTextColor = (RGB(chat_colors[color].red, chat_colors[color].green, chat_colors[color].blue));
 _stprintf(nameCF.szFaceName, FONT_NAME);
 	SendMessage(hwnd_richedit, EM_SETCHARFORMAT, SCF_SELECTION, (LPARAM)&nameCF);
+
+	// lets try this for gm raw and graw ~christy
+	memset(&raw_grawCF, 0, sizeof(raw_grawCF));
+	raw_grawCF.cbSize = sizeof(raw_grawCF);
+	raw_grawCF.dwMask = CFM_FACE | CFM_ITALIC | CFM_BOLD | CFM_COLOR;
+	raw_grawCF.dwEffects = CFM_ITALIC | CFM_BOLD;
+	raw_grawCF.crTextColor = (RGB(chat_colors[color].red, chat_colors[color].green, chat_colors[color].blue));
+	_stprintf(raw_grawCF.szFaceName, FONT_NAME);
+	SendMessage(hwnd_richedit, EM_SETCHARFORMAT, SCF_SELECTION, (LPARAM)&raw_grawCF);
 }
 
 void cChat::SetWhisperFormat(int color)
@@ -702,6 +711,11 @@ void cChat::SwitchMode(int mode)
 		case WHISPER:
 			SendMessage(hwnd_richedit, EM_SETCHARFORMAT, SCF_SELECTION, (LPARAM)&whisperCF);
 			currMode = WHISPER;
+			break;
+
+		case RAW_GRAW: //added by christy for raw_graw
+			SendMessage(hwnd_richedit, EM_SETCHARFORMAT, SCF_SELECTION, (LPARAM)&raw_grawCF);
+			currMode = RAW_GRAW;
 			break;
 	}
 
@@ -822,8 +836,9 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 	this->PreDisplay(); // set line counts, offset correctly
 
 	_tcsnccpy(speech, text, sizeof(speech));
-
-	if (isEmote)
+	if (speechType == RMsg_Speech::RAW_EMOTE)  //added by christy
+		this->SwitchMode(RAW_GRAW);
+	else if (isEmote)
 		this->SwitchMode(EMOTE);
 	else if (speechType == RMsg_Speech::WHISPER)
 		this->SwitchMode(WHISPER);
@@ -851,6 +866,11 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 				_stprintf(message, _T(">%s "), name);
 			break;
 		case RMsg_Speech::RAW_EMOTE:
+			if (speech[0] == '\'')
+				_stprintf(message, _T(">%s"), name);
+			else
+				_stprintf(message, _T(">%s "), name);
+			break;
 		case RMsg_Speech::DISTRESS_CALL:
 		_stprintf(message, _T(""));
 			break;
