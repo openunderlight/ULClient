@@ -64,6 +64,8 @@ const struct window_pos_t chatPos[MAX_RESOLUTIONS] =
 const struct window_pos_t entryPos[MAX_RESOLUTIONS] =
 { { 0, 455, 480, 25 }, { 0, 570, 600, 35 }, { 0, 733, 768, 40 } };
 #else
+const struct window_pos_t classicChatPos[MAX_RESOLUTIONS] = 
+{ { 0, 300, 480, 180 },{ 0, 375, 600, 225 },{ 0, 480, 768, 288 } };  //added to fix undeclared ident on pmare
 const struct window_pos_t chatPos[MAX_RESOLUTIONS] =
 { { 0, 300, 480, 180 },{ 0, 375, 600, 225 },{ 0, 480, 768, 288 } };
 #endif
@@ -867,9 +869,9 @@ void cChat::DisplaySpeech(const TCHAR *text, TCHAR *name, int speechType, bool i
 			break;
 		case RMsg_Speech::RAW_EMOTE:
 			if (speech[0] == '\'')
-				_stprintf(message, _T(">%s"), name);
+				_stprintf(message, _T(">%s"));
 			else
-				_stprintf(message, _T(">%s "), name);
+				_stprintf(message, _T(">%s "));
 			break;
 		case RMsg_Speech::DISTRESS_CALL:
 		_stprintf(message, _T(""));
