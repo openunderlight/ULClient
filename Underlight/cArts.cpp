@@ -5534,13 +5534,13 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 	int num_effects_active = 0;
 	int num_effects_abjured = 0;
 	int curr_skill = skill;
-	int random,i,j;
-	
+	int random = 0;
+	int i, j;
 	player->EvokedFX().Activate(Arts::ABJURE, false);
 
 	for (i=0; i<NUM_TIMED_EFFECTS; i++)
 		if (player->flags & timed_effects->actor_flag[i] && timed_effects->abjurable[i])
-			num_effects_active++;
+				num_effects_active++;
 
 	// pmares can only have 1 effect abjured at a time
 #ifndef PMARE
@@ -5555,72 +5555,57 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 	}
 
 #endif
-
+	
 	while (num_effects_active && num_effects_to_abjure)
 	{
 		random = rand() % num_effects_active;
 		j = 0; // j = count of active effects skipped by loop
 		for (i = 0; i < NUM_TIMED_EFFECTS; i++)
+		
 			if ((player->flags & timed_effects->actor_flag[i]) && timed_effects->abjurable[i])
 			{
 				if (j == random) // abjure this effect
 				{
-					LoadString(hInstance, IDS_ABJURED_EFFECT, disp_message, sizeof(disp_message));
-					if (caster_id == player->ID())
+					const TCHAR* playerName = NULL;
+					LoadString(hInstance, IDS_ABJURED_EFFECT, disp_message, sizeof(disp_message)); //  "You have abjured %s from %s!\n"
+					if (caster_id == player->ID())  //casting on self
 					{
-						LoadString(hInstance, IDS_YOURSELF, temp_message, sizeof(temp_message));
-						_stprintf(message, disp_message, timed_effects->name[i], temp_message);
+						_stprintf(message, disp_message, timed_effects->name[i], "yourself");
 						display->DisplayMessage(message);
 					}
-					else
+					else // not casting on self or im being casted on
 					{
-						if (n->IsPMare() == false)
-						{
-							_stprintf(message, disp_message, timed_effects->name[i], player->Name());
-							gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
+						playerName = player->IsPMare() ? player->Name() : ( n->IsPMare() ?  player->Name() : (player->IsMale() ? "A male dreamer" : "A female dreamer"));
+						_stprintf(message, disp_message, timed_effects->name[i], playerName);
+						gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id); //send msg to person it's landing on
+						if (n->ID() == caster_id && n != NO_ACTOR)// being casted on! by a real not us dreamer!
+						{	
+							playerName = n->IsPMare() ? (player->IsMale() ? "A male dreamer" : "A female dreamer") : n->Name();
+							LoadString(hInstance, IDS_ABJURED_EFFECT_OTHER, disp_message, sizeof(disp_message));  //"%s has abjured %s from you!\n"
+							_stprintf(message, disp_message, playerName, timed_effects->name[i]);
 						}
-					
-						if (n->IsPMare())
+						else
 						{
-							if (player->IsMale())
-							{
-								_stprintf(message, disp_message, timed_effects->name[i], "A male dreamer");
-							}
-							else if (player->IsFemale())
-							{
-								_stprintf(message, disp_message, timed_effects->name[i], "A female dreamer");
-							}
-							else
-							{
-								_stprintf(message, disp_message, timed_effects->name[i], player->Name());
-							}
-							gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id);
+							_stprintf(message, "%s has been abjured from you!\n", timed_effects->name[i]);
 						}
-					if (n != NO_ACTOR)
-					{
-						LoadString(hInstance, IDS_ABJURED_EFFECT_OTHER, disp_message, sizeof(disp_message));
-						_stprintf(message, disp_message, n->Name(), timed_effects->name[i]);
+						display->DisplayMessage(message);	
 					}
-					else {
-						_stprintf(message, "%s has been abjured from you!\n", timed_effects->name[i]);
-					}
-
-					display->DisplayMessage(message);
-				}
 				player->RemoveTimedEffect(i);
 				break;
 				}
 				else
 					j++;
 			}
-		num_effects_active--;
-		num_effects_to_abjure--;
-		num_effects_abjured++;
-		if (i == NUM_TIMED_EFFECTS)
-		{
-			GAME_ERROR(IDS_ABJURE_FAIL);
-			return;
-		}
+			num_effects_active--;
+			num_effects_to_abjure--;
+			num_effects_abjured++;
+			if (i == NUM_TIMED_EFFECTS)
+			{
+				GAME_ERROR(IDS_ABJURE_FAIL);
+				return;
+			}
+
+		
 	}
 
 	if (!num_effects_abjured && (caster_id == player->ID()))
