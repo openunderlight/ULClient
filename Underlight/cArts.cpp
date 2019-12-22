@@ -5576,10 +5576,10 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 					}
 					else // not casting on self or im being casted on
 					{
-						LoadString(hInstance, IDS_MALE_DREAMER, temp_message, sizeof(temp_message)); // "A male dreamer"
-						LoadString(hInstance, IDS_FEMALE_DREAMER, temp_message2, sizeof(temp_message2)); //"A female dreamer" 
-						//playerName = n->IsPMare() ? (player->IsMale() ? temp_message : temp_message2) : player->Name();
-						playerName = player->IsDreamerAccount() ? n->IsPMare() ? ((n->IsMale() ? temp_message : temp_message2)) : player->Name() : player->Name();
+
+						LoadString(hInstance, IDS_FEMALE_DREAMER, temp_message2, sizeof(temp_message2)); //  female
+						LoadString(hInstance, IDS_MALE_DREAMER, temp_message, sizeof(temp_message)); //  male
+						playerName = player->IsDreamerAccount() ?  (player->IsPMare() ?  player->Name() : (player->IsMale()? temp_message : temp_message2)) : player->Name();
 							_stprintf(message, disp_message, timed_effects->name[i], playerName);
 						gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id); //send msg to person it's landing on
 						
