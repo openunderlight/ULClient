@@ -5570,17 +5570,22 @@ void cArts::ApplyAbjure(int skill, lyra_id_t caster_id)
 					LoadString(hInstance, IDS_ABJURED_EFFECT, disp_message, sizeof(disp_message)); //  "You have abjured %s from %s!\n"
 					if (caster_id == player->ID())  //casting on self
 					{
-						_stprintf(message, disp_message, timed_effects->name[i], "yourself");
+						LoadString(hInstance, IDS_YOURSELF, temp_message, sizeof(temp_message)); //  "yourself"
+						_stprintf(message, disp_message, timed_effects->name[i], temp_message);
 						display->DisplayMessage(message);
 					}
 					else // not casting on self or im being casted on
 					{
-						playerName = player->IsPMare() ? player->Name() : ( n->IsPMare() ?  player->Name() : (player->IsMale() ? "A male dreamer" : "A female dreamer"));
-						_stprintf(message, disp_message, timed_effects->name[i], playerName);
+						LoadString(hInstance, IDS_MALE_DREAMER, temp_message, sizeof(temp_message)); // "A male dreamer"
+						LoadString(hInstance, IDS_FEMALE_DREAMER, temp_message2, sizeof(temp_message2)); //"A female dreamer" 
+						//playerName = n->IsPMare() ? (player->IsMale() ? temp_message : temp_message2) : player->Name();
+						playerName = player->IsDreamerAccount() ? n->IsPMare() ? ((n->IsMale() ? temp_message : temp_message2)) : player->Name() : player->Name();
+							_stprintf(message, disp_message, timed_effects->name[i], playerName);
 						gs->Talk(message, RMsg_Speech::SYSTEM_WHISPER, caster_id); //send msg to person it's landing on
+						
 						if (n->ID() == caster_id && n != NO_ACTOR)// being casted on! by a real not us dreamer!
 						{	
-							playerName = n->IsPMare() ? (player->IsMale() ? "A male dreamer" : "A female dreamer") : n->Name();
+							playerName = n->IsPMare() ? (player->IsMale() ? temp_message : temp_message2) : n->Name();
 							LoadString(hInstance, IDS_ABJURED_EFFECT_OTHER, disp_message, sizeof(disp_message));  //"%s has abjured %s from you!\n"
 							_stprintf(message, disp_message, playerName, timed_effects->name[i]);
 						}
