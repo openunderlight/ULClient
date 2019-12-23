@@ -747,7 +747,10 @@ void cArts::BeginArt(int art_id, bool bypass)
 	}
 
 	if (player->flags & ACTOR_MEDITATING) // expire meditation on evoke
+	{
 		player->RemoveTimedEffect(LyraEffect::PLAYER_MEDITATING);
+		player->SetPPMedSkill(-1);
+	}
 
 	if (!bypass && (player->Skill(art_id) == 0) && (art_id != Arts::GRANT_PPOINT) && (art_id != Arts::DREAMWIDE_EVOKE))	// no chance of success or improvement when skill=0
 	{

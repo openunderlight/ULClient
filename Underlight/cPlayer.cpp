@@ -678,7 +678,7 @@ bool cPlayer::Update(void)
 	}
 	vertical_tilt = (long)vertical_tilt_float;
 
-	if ((z > xheight - (.1*physht)) && ((z < xheight + (.1*physht)) || (flags & ACTOR_FLY)) &&
+	if ((z > xheight - (.1 * physht)) && ((z < xheight + (.1 * physht)) || (flags & ACTOR_FLY)) &&
 		keyboard[Keystates::JUMP] && move)
 	{
 		if (options.network)
@@ -687,17 +687,33 @@ bool cPlayer::Update(void)
 		vertforce = -40.0f;
 		jumped = true;
 		if (flags & ACTOR_MEDITATING) // expire meditation on jump
+		{
 			this->RemoveTimedEffect(LyraEffect::PLAYER_MEDITATING);
+			cPlayer::SetPPMedSkill(-1);
+		}
 		player->PerformedAction();
 	}
 
 	return true;
 }
 
+int cPlayer::GetPPMedSkill(void)
+{
+	return med_skill;
+}
+
+void cPlayer::SetPPMedSkill(int med_skill)
+{
+	this->med_skill = med_skill;
+}
+
 void cPlayer::PerformedAction(void)
 {
 	if (flags & ACTOR_MEDITATING) // expire meditation on move
+	{
 		this->RemoveTimedEffect(LyraEffect::PLAYER_MEDITATING);
+		cPlayer::SetPPMedSkill(-1);
+	}
 	if (arts->Casting() || arts->Waiting())
 		arts->CancelArt();
 	waving = false;
@@ -1302,11 +1318,25 @@ void cPlayer::CheckStatus(void)
 }
 #else  // dreamers regen slowly
 		if (flags & ACTOR_MEDITATING) {
-			value = 2 + (player->Skill(Arts::MEDITATION) / 10);
-			// chip at poison
-			if (flags & ACTOR_POISONED)
-				timed_effects->expires[LyraEffect::PLAYER_POISONED] -= ((player->Skill(Arts::MEDITATION) / 10) * 20 * 1000); // med plat * 20sec
+			if ((cPlayer::GetPPMedSkill()) != -1)
+			{
+				{
+					value = 2 + (cPlayer::GetPPMedSkill()) / 10;
+					// chip at poison		
+					if (flags & ACTOR_POISONED)
+						timed_effects->expires[LyraEffect::PLAYER_POISONED] -= (((cPlayer::GetPPMedSkill()) / 10) * 20 * 1000); // med plat * 20sec
+				}
+			}
+			else
+			{
+				if (flags & ACTOR_MEDITATING) {
+					value = 2 + (player->Skill(Arts::MEDITATION) / 10);
+					// chip at poison
+					if (flags & ACTOR_POISONED)
+						timed_effects->expires[LyraEffect::PLAYER_POISONED] -= ((player->Skill(Arts::MEDITATION) / 10) * 20 * 1000); // med plat * 20sec
 
+				}
+			}
 		}
 		else
 			value = 1;
@@ -2993,9 +3023,14 @@ POINT cPlayer::BladePos(void)
 int cPlayer::Skill(int art_id)
 {
 	// if it's a PP evoke, return the skill we payed for!
-	if (pp.in_use && (pp.cursel == GMsg_UsePPoint::USE_ART) &&
-		(art_id == pp.art_id))
-		return pp.skill;
+	if (pp.in_use && (pp.cursel == GMsg_UsePPoint::USE_ART)&&(art_id == pp.art_id))
+	{
+		if (pp.art_id == (Arts::MEDITATION))
+		{
+			cPlayer::SetPPMedSkill(pp.skill);
+		}
+	return pp.skill;
+	}
 #if defined (UL_DEBUG) || defined (GAMEMASTER) // no sphere restrictions in debug builds
 	return skills[art_id].skill;
 #elif PMARE
