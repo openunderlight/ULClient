@@ -99,6 +99,7 @@ class cPlayer : public cActor
 	   enum { INVALID_PLAYERID = -1 };
 
    protected:
+	   int med_skill = -1; // for med pp use
 	   lyra_id_t playerID;
 	   TCHAR upper_name[Lyra::PLAYERNAME_MAX];
 	   LmAvatar avatar;
@@ -241,6 +242,9 @@ class cPlayer : public cActor
 
 	  unsigned int GetMonsterType (void);
 	  unsigned int GetTransformedMonsterType (void);
+	 
+	  int GetPPMedSkill(void);  //lets setup the med_skill geter and setter for pp
+	  void SetPPMedSkill(int med_skill);  //lets setup the med_skill geter and setter for pp
 
 	  bool IsUninitiated(void);
 	  bool IsInitiate(int guild_id=Guild::NO_GUILD);
