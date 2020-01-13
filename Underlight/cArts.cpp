@@ -2536,7 +2536,7 @@ void cArts::CreateLocalWeapon(int color)
 			break;
 		}
 	}
-
+	actors->IterateItems(DONE);
 	// default duration for this level of blade
 	int duration = this->Duration(art_in_use, player->Skill(art_in_use));
 
