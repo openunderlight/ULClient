@@ -36,6 +36,7 @@ const int DEAD_Z = _I16_MAX -1;
 extern TCHAR message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR disp_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR temp_message[DEFAULT_MESSAGE_SIZE];
+extern TCHAR temp_message2[DEFAULT_MESSAGE_SIZE];
 extern TCHAR duration_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR modifier_message[DEFAULT_MESSAGE_SIZE];
 extern TCHAR guild_name_message[DEFAULT_MESSAGE_SIZE];
