@@ -701,14 +701,6 @@ bool cNeighbor::IsMale(void)
 		return false;
 }
 
-// returns true if we're a pmare; based on account type
-bool cNeighbor::IsPMare(void)
-{
-	if (avatar.AvatarType() == LmAvatar::ACCT_PMARE)
-		return true;
-	return false;
-}
-
 // returns avatar type
 unsigned int cNeighbor::GetAvatarType(void)
 {
