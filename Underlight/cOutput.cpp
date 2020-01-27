@@ -6,6 +6,10 @@
 #include "Utils.h"
 #include "resource.h"
 #include <time.h>
+#include <shlwapi.h>
+#pragma comment(lib,"shlwapi.lib")
+#include "shlobj.h"
+#include "tchar.h"
 
 // define the following to enable buffering on debug output
 #define BUFFER_DEBUG_OUT
@@ -23,15 +27,21 @@ extern HINSTANCE hInstance;
 
 cOutput::cOutput(TCHAR *fn, bool append_to_file, bool fForceFlush /*= false */)
 {
+
 	append = append_to_file;
 	m_fForceFlush = fForceFlush;
 	_tcscpy(filename, fn);
 	_tcscat(filename, _T(".out"));
-
+	if (SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szPath)))
+	{
+		PathAppend(szPath, _T("\\Underlight\\"));
+		CreateDirectory(szPath, NULL);
+		PathAppend(szPath, filename);
+	}
 	// check file size; rename if necessary
 	HANDLE hFile;
 	BY_HANDLE_FILE_INFORMATION info;
-	hFile = CreateFile(filename, GENERIC_READ, FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	hFile = CreateFile(szPath, GENERIC_READ , FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile) 
 	{
@@ -48,12 +58,20 @@ cOutput::cOutput(TCHAR *fn, bool append_to_file, bool fForceFlush /*= false */)
 		SYSTEMTIME dsttime;
 		GetDSTTime(&dsttime);
 		TCHAR backup_filename[_MAX_DIR];
+		
+		if (SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szPath_backup)))
+		{
+			PathAppend(szPath, _T("\\Underlight\\"));
+			CreateDirectory(szPath, NULL);
+			PathAppend(szPath, backup_filename);
+		}
 		LoadString(hInstance, IDS_BACKUP_LOG, message, sizeof(message));
-		_stprintf(backup_filename, message, fn, dsttime.wMonth, dsttime.wDay, dsttime.wYear);
-		int result = rename(filename, backup_filename);
+		_stprintf(szPath_backup, message, fn, dsttime.wMonth, dsttime.wDay, dsttime.wYear);
+		int result = rename(szPath, szPath_backup);
 		int qqq=0;
 	}
-
+	
+	
 	// insure a directory component exists. if not, create it
 	// mket 11/02/01
 	TCHAR dir[_MAX_DIR];
@@ -74,14 +92,14 @@ cOutput::cOutput(TCHAR *fn, bool append_to_file, bool fForceFlush /*= false */)
 
 	if (append)
 		if (fForceFlush)
-			fh =_tfopen(filename,_T("a+c"));
+			fh =_tfopen(szPath,_T("a+c"));
 		else
-			fh =_tfopen(filename,_T("a+"));
+			fh =_tfopen(szPath,_T("a+"));
 	else
 		if (fForceFlush)
-			fh =_tfopen(filename,_T("wc"));
+			fh =_tfopen(szPath,_T("wc"));
 		else
-			fh =_tfopen(filename,_T("w"));
+			fh =_tfopen(szPath,_T("w"));
 
 	if (fh == NULL )
 	{
@@ -139,9 +157,9 @@ void cOutput::ReInit(void)
 	fclose(fh);
 
 	if (append)
-		fh =_tfopen(filename,_T("a+"));
+		fh =_tfopen(szPath,_T("a+"));
 	else
-		fh =_tfopen(filename,_T("w"));
+		fh =_tfopen(szPath,_T("w"));
 
 	if (fh == NULL )
 	{

@@ -19,20 +19,23 @@
 class cOutput
 {
 
-public: 
+public:
 
 private:
-	FILE *fh;
+	FILE* fh;
 	TCHAR filename[DEFAULT_MESSAGE_SIZE];
+	TCHAR szPath[MAX_PATH];
+	TCHAR szPath_backup[MAX_PATH];;
 	bool append;
 	bool m_fForceFlush; // true = flush after each write. Use with care.
-	
+
 public:
-    cOutput(TCHAR *fn, bool append_to_file, bool fForceFlush = false);
+	cOutput(TCHAR* fn, bool append_to_file, bool fForceFlush = false);
 	void ReInit(void); // close & reopen
-	void Write(TCHAR *data, bool long_date = false);
+	void Write(TCHAR* data, bool long_date = false);
 	void WriteStamp(bool long_date = false);
-    ~cOutput(void);
+	~cOutput(void);
+
 
 	inline FILE *FileHandle(void) { return fh; };
 
