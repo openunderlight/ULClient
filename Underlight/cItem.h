@@ -21,7 +21,7 @@ class cNeighbor;
 #define NO_ITEM 0
 
 const int NO_EXPLOSION_ORNAMENT = 0;
-const int ITEM_DESCRIP_LENGTH = 48;
+const int ITEM_DESCRIP_LENGTH = Lyra::MAX_ITEMDESC;
 const unsigned char INFINITE_CHARGES = 255;
 
 enum item_status {
