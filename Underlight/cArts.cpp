@@ -7031,7 +7031,7 @@ void cArts::ApplyPeaceAura(int skill, lyra_id_t caster_id)
 	//if neighbor is none, and caster id is not player ID
 	if ((n == NO_ACTOR) && (caster_id != player->ID()))
 	{
-		display->DisplayMessage("error is in applypeaceaura");
+		this->DisplayNeighborBailed(Arts::PEACE_AURA);
 		//bail.
 		return;
 	}
@@ -7129,8 +7129,6 @@ void cArts::EndPeaceAura(void)
 	//if actor isnt present, or if it's an invalid target
 	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
 	{
-		display->DisplayMessage("error is in applypeaceaura");
-		//display bailed.
 		this->DisplayNeighborBailed(Arts::PEACE_AURA);
 		//does not allow art to imp
 		this->ArtFinished(false);
