@@ -372,6 +372,9 @@
     <ClInclude Include="RMsg_RoomDescription.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="json_maker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="cJSON.h">
       <Filter>Header Files</Filter>
     </ClInclude>
