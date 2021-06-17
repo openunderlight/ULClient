@@ -7014,23 +7014,35 @@ void cArts::EndBreakCovenant(void)
 // Peace Aura
 void cArts::StartPeaceAura(void)
 {
+	//wait for selection of target
 	this->WaitForSelection(&cArts::EndPeaceAura, Arts::PEACE_AURA);
+	//adds our player to list
 	this->AddDummyNeighbor();
+	// captures neighbor tab for selection
 	this->CaptureCP(NEIGHBORS_TAB, Arts::PEACE_AURA);
 	return;
 }
 
+//applying the art
 void cArts::ApplyPeaceAura(int skill, lyra_id_t caster_id)
 {
+	// finds neighbor
 	cNeighbor *n = this->LookUpNeighbor(caster_id);
+	//if neighbor is none, and caster id is not player ID
 	if ((n == NO_ACTOR) && (caster_id != player->ID()))
-		return;
-
-	if (player->IsMonster())
 	{
+		this->DisplayNeighborBailed(Arts::PEACE_AURA);
+		//bail.
 		return;
 	}
-
+	//if player is monster
+	if (player->IsMonster())
+	{
+		//bail
+		return;
+	}
+	//removed this part so can evoke on non members
+	/*
 	if(player->GuildRank(Guild::ECLIPSE) == Guild::NO_RANK)
 	{
 		LoadString (hInstance, IDS_MUST_BE_MEMBER_APPLY, disp_message, sizeof(disp_message));
@@ -7038,27 +7050,91 @@ void cArts::ApplyPeaceAura(int skill, lyra_id_t caster_id)
 		display->DisplayMessage(message, false);
 		return;
 	}	
+	*/
+	//load up PAhelper variables
+	PA_skill = skill;
+	PA_castid = caster_id;
+	// check if player has rank
+	if (player->GuildRank(Guild::ECLIPSE) >= Guild::INITIATE)
+	{
+		//good, just use it.
+		PeaceAuraHelper(skill, caster_id);
+		// puts cast cone on player
+		player->EvokedFX().Activate(Arts::PEACE_AURA, false);
+	}
+	// if caster isnt player
+	else if (!acceptrejectdlg)
+	{
+		//load string for asking if can cast
+		LoadString(hInstance, IDS_QUERY_PEACE_AURA, disp_message, sizeof(disp_message));
+		
+		//loads it into message from disp_message with variables filled in
+		_stprintf(message, disp_message, this->Descrip(Arts::PEACE_AURA), n->Name());
+		
+		//call to gdi for popup dialog with message
+		HWND hDlg = CreateLyraDialog(hInstance, (IDD_ACCEPTREJECT),
+			cDD->Hwnd_Main(), (DLGPROC)AcceptRejectDlgProc);
+		
+		//calls gotpeaceaura if evoke success
+		acceptreject_callback = (&cArts::GotPeaceAura);
+		SendMessage(hDlg, WM_SET_ART_CALLBACK, 0, 0);
+		SendMessage(hDlg, WM_SET_AR_NEIGHBOR, 0, (LPARAM)n);
+	}
 
-
-	player->EvokedFX().Activate(Arts::PEACE_AURA, false);
+	// displays art was cast upon the one using(if pertenant)
 	this->DisplayUsedByOther(n, Arts::PEACE_AURA);
-
-	int duration = this->Duration(Arts::PEACE_AURA, skill);
-	player->SetTimedEffect(LyraEffect::PLAYER_PEACE_AURA, duration, caster_id, EffectOrigin::ART_EVOKE);
-	
 	return;
 }
 
+void cArts::PeaceAuraHelper(int skill, lyra_id_t caster_id)
+{
+	//set duration
+	int duration = this->Duration(Arts::PEACE_AURA, skill);
+
+	//set effect on player
+	player->SetTimedEffect(LyraEffect::PLAYER_PEACE_AURA, duration, player->ID(), EffectOrigin::ART_EVOKE);
+
+	
+}
+//art got casted on player by someone else.
+void cArts::GotPeaceAura(void* value)
+{
+	//loads value of accept or rej
+	int success = *((int*)value);
+	// check for soulsphere
+	if (player->flags & ACTOR_SOULSPHERE) {
+		//loads IDS_SOULSPHERE_NO_ARTS string into disp_message
+		LoadString(hInstance, IDS_SOULSPHERE_NO_ARTS, disp_message, sizeof(disp_message));
+		//puts it on screen
+		display->DisplayMessage(disp_message);
+		
+	}
+	// checks if successfully accepted and casts on target
+	else if (success) {
+		//use the art
+		PeaceAuraHelper(PA_skill, PA_castid);
+		player->EvokedFX().Activate(Arts::PEACE_AURA, false);
+		
+	}
+
+	return;
+}
+
+
+//final clear n clean of art..
 void cArts::EndPeaceAura(void)
 {
+	// checks neighbor list
 	cNeighbor* n = cp->SelectedNeighbor();
+	//if actor isnt present, or if it's an invalid target
 	if ((n == NO_ACTOR) || !(actors->ValidNeighbor(n)))
 	{
 		this->DisplayNeighborBailed(Arts::PEACE_AURA);
+		//does not allow art to imp
 		this->ArtFinished(false);
 		return;
 	} 
-
+	
 	// only works for AOE
 	if (!(player->GuildRank(Guild::ECLIPSE) >= Guild::INITIATE))
 	{
@@ -7068,37 +7144,63 @@ void cArts::EndPeaceAura(void)
 		this->ArtFinished(false);
 		return;
 	}
-
+	
+	//makes a temp token or points to one for comparison
 	cItem* power_tokens[Lyra::INVENTORY_MAX];
+	//counts number of them in casters inventory
 	int num_tokens = CountPowerTokens((cItem**)power_tokens, Guild::ECLIPSE);
 
+	// if number of tokens is less than requirement
 	if (num_tokens < HOUSE_ART_PTS)
 	{
+		//load string IDS_MUST_HAVE_POWER_TOKENS string into message
 		LoadString (hInstance, IDS_MUST_HAVE_POWER_TOKENS, message, sizeof(message));
+		//fills in %t variables for string. and places it in disp_message
 		_stprintf(disp_message, message, HOUSE_ART_PTS, GuildName(Guild::ECLIPSE), arts->Descrip(Arts::PEACE_AURA));
-		display->DisplayMessage(disp_message); 
+		// displays msg
+		display->DisplayMessage(disp_message);
+		//doesnt allow imp
 		this->ArtFinished(false);
 		return;
 	}
 
+	//if neighbor is a monster (target)
 	if (n->IsMonster())
 	{
+		//load string IDS_PEACE_AURA_MARES, and stuff it in disp_message
 		LoadString (hInstance, IDS_PEACE_AURA_MARES, disp_message, sizeof(disp_message));
-		display->DisplayMessage(disp_message); 
+		//display disp_message
+		display->DisplayMessage(disp_message);
+		//no imp
 		this->ArtFinished(false);
 		return;
 	}
 
+	//if casting on self.
 	if (n->ID() == player->ID())
+	{
+		//apply peace aura
 		this->ApplyPeaceAura(player->Skill(Arts::PEACE_AURA), player->ID());
-	else gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::PEACE_AURA,
+		//display casted on self
+		DisplayUsedByOther(n, Arts::PEACE_AURA);
+	}
+	else 
+	{
+		//send gameserver to send player to cast art on target at casters skill
+		gs->SendPlayerMessage(n->ID(), RMsg_PlayerMsg::PEACE_AURA, 
 			player->Skill(Arts::PEACE_AURA), 0);
-	
+		
+		//display on screen used on other
+		DisplayUsedOnOther(n, Arts::PEACE_AURA);
+	}
+	//use the power token.
 	this->UsePowerTokens(power_tokens, HOUSE_ART_PTS);
-
+	//allow imp
 	this->ArtFinished(true);
 	return;
 }
+
+
 
 //////////////////////////////////////////////////////////////////
 // Sable Shield

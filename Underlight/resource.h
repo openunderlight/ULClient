@@ -3047,6 +3047,7 @@
 #define IDS_DISTRESS_CALL_UNS           4499
 #define IDS_STRING19                    4500
 #define IDS_ITEM_GIVEN_TO               4500
+#define IDS_QUERY_PEACE_AURA            4501
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

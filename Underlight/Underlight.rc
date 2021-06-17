@@ -2774,6 +2774,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_RALLY_NO_SS         "Rally cannot work on a soulsphere!\n"
+    IDS_QUERY_PEACE_AURA    "You are being offered %s by %s. Do you accept?"
     IDS_NO_ACCESS_REGISTRY  "Cannot access registry"
     IDS_0                   "0"
     IDS_1                   "1"
