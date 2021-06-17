@@ -63,7 +63,7 @@ private:
 	bool fDoingNewlies;
 	bool fDoingMares;
 	bool fDoingSense;
-	int PA_Caster_ID, PA_SKILL; // peace aura int's for passing to next function
+	int PA_castid, PA_skill; //pa helper vars
 
 	// random state variables used by arts
 	TCHAR knight_name[Lyra::PLAYERNAME_MAX];
@@ -321,6 +321,7 @@ public:
 	void EndExpel(void);
 	void StartPeaceAura(void);
 	void ApplyPeaceAura(int skill, lyra_id_t caster_id);
+	void PeaceAuraHelper(int skill, lyra_id_t caster_id);
 	void GotPeaceAura(void* value); //added for new function
 	void EndPeaceAura(void);
 	void StartSableShield(void);

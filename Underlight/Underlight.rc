@@ -2774,6 +2774,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_RALLY_NO_SS         "Rally cannot work on a soulsphere!\n"
+    IDS_QUERY_PEACE_AURA    "You are being offered %s by %s. Do you accept?"
     IDS_NO_ACCESS_REGISTRY  "Cannot access registry"
     IDS_0                   "0"
     IDS_1                   "1"
@@ -3931,8 +3932,8 @@ BEGIN
     IDS_DSERR_BUFFERLOST    "DSERR_BUFFERLOST"
     IDS_DSERR_OTHERAPPHASPRIO "DSERR_OTHERAPPHASPRIO"
     IDS_DSERR_UNINITIALIZED "DSERR_UNINITIALIZED"
-    IDS_LIVE_GAME_SERVER_IP "ulsrv1.openunderlight.org"
-    IDS_DEV_GAME_SERVER_IP1 "ulsrv1.openunderlight.org"
+    IDS_LIVE_GAME_SERVER_IP "192.168.1.246"
+    IDS_DEV_GAME_SERVER_IP1 "192.168.1.246"
     IDS_GAME_MANUAL_URL     "http://wiki.underlight.com"
     IDS_BILLING_URL         "http://forums.underlight.com/viewtopic.php?f=2&t=78"
     IDS_FIREWALL_FAQ_URL    "http://www.underlight.com/"
@@ -3940,8 +3941,8 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_DEV_GAME_SERVER_IP2 "ulsrv1.openunderlight.org"
-    IDS_CUSTOM_IP_DEFAULT   "127.0.0.1"
+    IDS_DEV_GAME_SERVER_IP2 "192.168.1.246"
+    IDS_CUSTOM_IP_DEFAULT   "192.168.1.246"
     IDS_ONCE_HIDDEN_ALWAYS_HIDDEN "\nOnce you go INVIS, you cannot go back!\n"
 END
 
