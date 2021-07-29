@@ -4,7 +4,8 @@
 // Copyright Lyra LLC, 1997. All rights reserved. 
 
 #include <winsock2.h>
-#include "shared/amsg.h"
+#include "Amsg.h"
+
 
 //////////////////////////////////////////////////////////////////
 // Constants
@@ -40,10 +41,12 @@ class cClient
 	   BOOL logged_in;
 	   TCHAR username[Lyra::PLAYERNAME_MAX];
 	   TCHAR	password[Lyra::PASSWORD_MAX];
-	   void (*msg_callback)(amsg_t &amsg); 
+
+	   void (*msg_callback)(AMsg &amsg); 
 
    public:
-      cClient(HWND hWindow, void (*amsg_callback)(amsg_t &amsg));
+      cClient(HWND hWindow, void (*amsg_callback)(AMsg &amsg));
+
 	  ~cClient(void);
 	  void Connect(char *server, TCHAR *agent_username, TCHAR *agent_password);
 	  BOOL Login(void);

@@ -36,6 +36,8 @@
 #include "cAgentBox.h"
 #include "LmStats.h"
 #include "LmXPTable.h"
+#include "./MeHelper.h" //added helper class for MouseEvent
+
 extern xp_entry lyra_xp_table[];
 
 
@@ -94,6 +96,7 @@ extern cAgentBox *agentbox;
 extern HWND hwnd_acceptreject;
 extern unsigned long last_mumble_message;
 extern ppoint_t pp; // personality points use tracker
+
 const int guild_levels[NUM_GUILDS] = {
 	17,18,21,22,23,24,25,26
 };
@@ -114,6 +117,7 @@ cPlayer::cPlayer(short viewport_height) :
 	vertical_tilt_float = (float)vertical_tilt_origin;
 	collapse_time = 0;
 	checksum_incorrect = attempting_teleport = false;
+
 
 	for (int i = 0; i < COLLAPSES_TRACKED; i++)
 	{
@@ -297,7 +301,8 @@ bool cPlayer::Update(void)
 		const float brightness_rate = 0.005f;
 
 		shader->SetGlobalBrightness(brightness);
-		brightness += timing->nmsecs *  brightness_rate;
+		brightness += timing->nmsecs * brightness_rate;
+
 		if (brightness > 1.1)
 		{
 			shader->SetGlobalBrightness(1.0);
@@ -337,7 +342,9 @@ bool cPlayer::Update(void)
 
 	if (!options.network ||
 		((options.welcome_ai || (gs && gs->LoggedIntoGame())) &&
+
 		((gs && gs->LoggedIntoLevel()) || (level->ID() == START_LEVEL_ID))))
+
 		move = true;
 
 	if ((flags & ACTOR_PARALYZED))//  || (cp->DragItem() != NO_ITEM))
@@ -425,29 +432,34 @@ bool cPlayer::Update(void)
 			step_frame = avatar_poses[WALKING].start_frame;
 	}
 
+	//declare and initialize mouse for raw input from our helper
+	MouseEvent mouse = MeHelper::GetME();
+
 	if (move)
 	{
 		if (!spin && keyboard[Keystates::STRAFE]) // disregard
 			keyboard[Keystates::STRAFE] = 0;
-		if ((keyboard[Keystates::STRAFE] || forced_move.strafe) &&
-			(keyboard[Keystates::TURN_RIGHT] || mouse_move.right || keyboard[Keystates::TURN_LEFT]
-				|| mouse_move.left || forced_move.right || forced_move.left)) // strafing?
+		if ((keyboard[Keystates::STRAFE] || forced_move.strafe) &&(keyboard[Keystates::TURN_RIGHT] || keyboard[Keystates::TURN_LEFT]
+				|| forced_move.right || forced_move.left || mouse.MouseXorYOverThree())) // strafing?
 		{
-			if (keyboard[Keystates::TURN_RIGHT] || mouse_move.right || forced_move.right)
+			if (keyboard[Keystates::TURN_RIGHT] /* || mouse_move.right*/ || forced_move.right)
 			{ // handle angles for combined strafe / forwards / backwards move
-				if (keyboard[Keystates::MOVE_FORWARD] || mouse_move.forward || forced_move.forward)
+				if (keyboard[Keystates::MOVE_FORWARD] /* || mouse_move.forward */ || forced_move.forward)
 					moveangle = FixAngle(angle + Angle_45);
-				else if (keyboard[Keystates::MOVE_BACKWARD] || mouse_move.backward || forced_move.backward)
+				else if (keyboard[Keystates::MOVE_BACKWARD] /* || mouse_move.backward*/ || forced_move.backward)
+
 					moveangle = FixAngle(angle - Angle_45);
 				else moveangle = FixAngle(angle + Angle_90);
 				strafe = STRAFE_RIGHT;
 			}
 
-			if (keyboard[Keystates::TURN_LEFT] || mouse_move.left || forced_move.left)
+
+			if (keyboard[Keystates::TURN_LEFT] /* || mouse_move.left*/ || forced_move.left)
 			{ // handle angles for combined strafe / forwards / backwards move
-				if (keyboard[Keystates::MOVE_FORWARD] || mouse_move.forward || forced_move.forward)
+				if (keyboard[Keystates::MOVE_FORWARD] /* || mouse_move.forward*/ || forced_move.forward)
 					moveangle = FixAngle(angle - Angle_45);
-				else if (keyboard[Keystates::MOVE_BACKWARD] || mouse_move.backward || forced_move.backward)
+				else if (keyboard[Keystates::MOVE_BACKWARD] /* || mouse_move.backward*/ || forced_move.backward)
+
 					moveangle = FixAngle(angle + Angle_45);
 				else moveangle = FixAngle(angle - Angle_90);
 				strafe = STRAFE_LEFT;
@@ -455,39 +467,44 @@ bool cPlayer::Update(void)
 		}
 		else if (keyboard[Keystates::SIDESTEP_LEFT] || keyboard[Keystates::SIDESTEP_RIGHT]) // sidestep keys
 		{
+
+
 			//			INFO("SSL");
 							// allow turns in combination with sidesteps
-			if (keyboard[Keystates::TURN_RIGHT] || mouse_move.right || mouse_look.right || forced_move.right)
+			//resorted so it makes a little more sense ~christy 7/11/21
+			if (keyboard[Keystates::TURN_RIGHT])
 			{
-				if (mouse_look.looking)
-					turnrate += (timing->nticks*speed*options.turnrate*mouse_look.xratio);
-				else if (mouse_move.moving)
-					turnrate += (timing->nticks*speed*options.turnrate*mouse_move.xratio);
-				else
-					turnrate += (timing->nticks*speed*options.turnrate);
+					turnrate += (timing->nticks * speed * options.turnrate);
 			}
-			else if (keyboard[Keystates::TURN_LEFT] || mouse_move.left || mouse_look.left || forced_move.left)
+			else if (keyboard[Keystates::TURN_LEFT] )
 			{
-				if (mouse_look.looking)
-					turnrate -= (timing->nticks*speed*options.turnrate*mouse_look.xratio);
-				else if (mouse_move.moving)
-					turnrate -= (timing->nticks*speed*options.turnrate*mouse_move.xratio);
-				else
-					turnrate -= (timing->nticks*speed*options.turnrate);
+					turnrate -= (timing->nticks * speed * options.turnrate);
+			}
+			else if (mouse_look.looking) //if key for mouselook is pressed
+			{
+				if (mouse.MouseXorYOverThree()) // and house relative cords are equal or over 3
+				{
+					turnrate -= (timing->nticks * speed * options.turnrate/2 * -mouse.GetPosX()); //get turn rate
+					mouse.MouseXorYBoolSet(false); //manually set bool for mouse check to false;
+					mouse.SetPosX(0); // set cord back to zero
+				}
 			}
 
-			if (turnrate > (options.turnrate*speed))
-				turnrate = options.turnrate*speed;
-			else if (turnrate < -(options.turnrate*speed))
-				turnrate = -options.turnrate*speed;
+			if (turnrate > (options.turnrate * speed))
+				turnrate = options.turnrate * speed;
+			else if (turnrate < -(options.turnrate * speed))
+				turnrate = -options.turnrate * speed;
+
 			angle = FixAngle(angle + (int)(turnrate));
 			moveangle = angle;
 
 			if (keyboard[Keystates::SIDESTEP_RIGHT])
 			{ // handle angles for combined strafe / forwards / backwards move
-				if (keyboard[Keystates::MOVE_FORWARD] || mouse_move.forward || forced_move.forward)
+
+				if (keyboard[Keystates::MOVE_FORWARD] /* || mouse_move.forward */ || forced_move.forward)
 					moveangle = FixAngle(angle + Angle_45);
-				else if (keyboard[Keystates::MOVE_BACKWARD] || mouse_move.backward || forced_move.backward)
+				else if (keyboard[Keystates::MOVE_BACKWARD] /* || mouse_move.backward*/ || forced_move.backward)
+
 					moveangle = FixAngle(moveangle - Angle_45);
 				else moveangle = FixAngle(moveangle + Angle_90);
 				strafe = STRAFE_RIGHT;
@@ -495,9 +512,11 @@ bool cPlayer::Update(void)
 
 			if (keyboard[Keystates::SIDESTEP_LEFT])
 			{ // handle angles for combined strafe / forwards / backwards move
-				if (keyboard[Keystates::MOVE_FORWARD] || mouse_move.forward || forced_move.forward)
+
+				if (keyboard[Keystates::MOVE_FORWARD] /* || mouse_move.forward */ || forced_move.forward)
 					moveangle = FixAngle(angle - Angle_45);
-				else if (keyboard[Keystates::MOVE_BACKWARD] || mouse_move.backward || forced_move.backward)
+				else if (keyboard[Keystates::MOVE_BACKWARD] /* || mouse_move.backward */ || forced_move.backward)
+
 					moveangle = FixAngle(moveangle + Angle_45);
 				else moveangle = FixAngle(moveangle - Angle_90);
 				strafe = STRAFE_LEFT;
@@ -509,46 +528,52 @@ bool cPlayer::Update(void)
 			if (!spin)
 				keyboard[Keystates::TURN_RIGHT] = 0;
 
-			if (keyboard[Keystates::TURN_RIGHT] || mouse_move.right || mouse_look.right || forced_move.right)
+
+			//check if mousekey is pressed, and equal or over 3 relative cords
+			if (mouse_look.looking && mouse.MouseXorYOverThree())/* || mouse_move.right || mouse_look.right*/
 			{
-				if (mouse_look.looking)
-					turnrate += (timing->nticks*speed*options.turnrate*mouse_look.xratio);
-				else if (mouse_move.moving)
-					turnrate += (timing->nticks*speed*options.turnrate*mouse_move.xratio);
-				else
-					turnrate += (timing->nticks*speed*options.turnrate);
+				//calc turn rate
+					turnrate += (timing->nticks * speed * options.turnrate/2 * mouse.GetPosX());
+					//clean up mouse bool=false cord = 0;
+					mouse.MouseXorYBoolSet(false);
+					mouse.SetPosX(0);
+			}
+			else if (keyboard[Keystates::TURN_RIGHT] || forced_move.right)
+			{
+				turnrate += (timing->nticks * speed * options.turnrate);
+			}
+			else if (keyboard[Keystates::TURN_LEFT] || forced_move.left) /* || mouse_move.left || mouse_look.left */
+			{
+				turnrate -= (timing->nticks * speed * options.turnrate);
+			}
+			else 
+			{
+				turnrate = 0;
 			}
 
-			else if (keyboard[Keystates::TURN_LEFT] || mouse_move.left || mouse_look.left || forced_move.left)
-			{
-				if (mouse_look.looking)
-					turnrate -= (timing->nticks*speed*options.turnrate*mouse_look.xratio);
-				else if (mouse_move.moving)
-					turnrate -= (timing->nticks*speed*options.turnrate*mouse_move.xratio);
-				else
-					turnrate -= (timing->nticks*speed*options.turnrate);
-			}
+			if (turnrate > (options.turnrate * speed))
+				turnrate = options.turnrate * speed;
+			else if (turnrate < -(options.turnrate * speed))
+				turnrate = -options.turnrate * speed;
 
-			if (turnrate > (options.turnrate*speed))
-				turnrate = options.turnrate*speed;
-			else if (turnrate < -(options.turnrate*speed))
-				turnrate = -options.turnrate*speed;
 			angle = FixAngle(angle + (int)(turnrate));
 			moveangle = angle;
 		}
 	}
 
 
-	if (move && (keyboard[Keystates::MOVE_FORWARD] || mouse_move.forward || forced_move.forward))
+
+	if (move && (keyboard[Keystates::MOVE_FORWARD] /* || mouse_move.forward */ || forced_move.forward))
 		velocity = MAXWALK;
-	else if (move && (keyboard[Keystates::MOVE_BACKWARD] || mouse_move.backward || forced_move.backward))
+	else if (move && (keyboard[Keystates::MOVE_BACKWARD] /* || mouse_move.backward */ || forced_move.backward))
 		velocity = -MAXWALK;
 	else if (move && ((keyboard[Keystates::SIDESTEP_RIGHT] || keyboard[Keystates::SIDESTEP_LEFT]) ||
 		((keyboard[Keystates::STRAFE] || forced_move.strafe) &&
-		(keyboard[Keystates::TURN_RIGHT] || mouse_move.right || forced_move.right
-			|| keyboard[Keystates::TURN_LEFT] || mouse_move.left || forced_move.left))))
+			(keyboard[Keystates::TURN_RIGHT] /* || mouse_move.right*/ || forced_move.right
+				|| keyboard[Keystates::TURN_LEFT] /*||  mouse_move.left */ || forced_move.left))))
 		velocity = MAXSTRAFE;
-	else if ((z > xheight - (0.1*physht)) && (z < xheight + (0.1*physht)))
+	else if ((z > xheight - (0.1 * physht)) && (z < xheight + (0.1 * physht)))
+
 	{
 		if (velocity > 0)
 		{
@@ -570,11 +595,13 @@ bool cPlayer::Update(void)
 		move_result_t res;
 		if (strafe != NO_STRAFE)
 		{ // make sure deceleration doesn't drag player forward after a strafe
+
 			MoveActor(this, moveangle, velocity*timing->nticks*speed, MOVE_NORMAL, &res);
 			velocity = 0.0f;
 		}
 		else
 			MoveActor(this, moveangle, velocity*timing->nticks*speed, MOVE_NORMAL, &res);
+
 		if (flags & ACTOR_FLY)
 		{
 			if (res.hit == HIT_FLOOR || res.hit == HIT_WALL || res.hit == HIT_CEILING || res.hit == HIT_ACTOR)
@@ -630,7 +657,9 @@ bool cPlayer::Update(void)
 		gs->SendPositionUpdate(TRIGGER_MOVE);
 
 	if (!was_in_water && this->InWater() && !(flags & ACTOR_SOULSPHERE) &&
-		((z > xheight - (.1*physht)) && (z < xheight + (.1*physht))))
+
+		((z > xheight - (.1 * physht)) && (z < xheight + (.1 * physht))))
+
 		cDS->PlaySound(LyraSound::ENTER_WATER, x, y, false);
 
 	if (keyboard[Keystates::TRIP] && move)
@@ -651,31 +680,37 @@ bool cPlayer::Update(void)
 			vertical_tilt_float = (float)(vertical_tilt_origin);
 		}
 	}
-	else if (move && (keyboard[Keystates::LOOK_DOWN] || mouse_look.down)) // look down
-	{
-		if (mouse_look.down && mouse_look.looking)
-			vertical_tilt_float -= timing->nticks*(float)UPDOWNVEL*mouse_look.yratio;
-		else
-			vertical_tilt_float -= timing->nticks*(float)UPDOWNVEL;
 
-		if (vertical_tilt_float < -physht)
+	else if (move && (keyboard[Keystates::LOOK_DOWN]))// look down //simplified ~christy 7/11/21
+	{
+		vertical_tilt_float -= timing->nticks * (float)UPDOWNVEL;
+	}
+	else if (move && (keyboard[Keystates::LOOK_UP]))
+	{
+		vertical_tilt_float += timing->nticks * (float)UPDOWNVEL;
+	}
+
+	else if (move && mouse_look.looking) //if movement is possible and mosuelook key is still true
+	{
+		if (mouse.MouseXorYOverThree()) //check mouse relative cords
 		{
-			vertical_tilt_float = (-physht);
+			//set tilt to up or down based on ticks value for updown, and mosue pos y
+			vertical_tilt_float -= timing->nticks * (float)UPDOWNVEL * mouse.GetPosY();
+			mouse.SetPosY(0); // reset pos 0
+			mouse.MouseXorYBoolSet(false); // reset bool for mouse over/under 2
 		}
 	}
-	else if (move && (keyboard[Keystates::LOOK_UP] || mouse_look.up)) // || (reset_speed  == -1)) // look up
+	
+	if (vertical_tilt_float < -physht)
 	{
-		if (mouse_look.up && mouse_look.looking)
-			vertical_tilt_float += timing->nticks*(float)UPDOWNVEL*mouse_look.yratio;
-		else
-			vertical_tilt_float += timing->nticks*(float)UPDOWNVEL;
-
-		if (vertical_tilt_float > max_vertical_tilt + physht)
-		{
-			vertical_tilt_float = max_vertical_tilt + physht; // ????
-			reset_speed = 0.0f;
-		}
+		vertical_tilt_float = (-physht);
 	}
+	else if (vertical_tilt_float > max_vertical_tilt + physht)
+	{
+		vertical_tilt_float = max_vertical_tilt + physht; // ????
+		reset_speed = 0.0f;
+	}
+	
 	vertical_tilt = (long)vertical_tilt_float;
 
 	if ((z > xheight - (.1*physht)) && ((z < xheight + (.1*physht)) || (flags & ACTOR_FLY)) &&

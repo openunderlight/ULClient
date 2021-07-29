@@ -674,58 +674,61 @@ void convert_hton(T x, void* ptr) {
 
 void FASTCALL LyraItem::ConvertStateToNetwork(void* ssptr)
 {
+
+    //initializing before switch
+    lyra_item_ward_t ward{};
+    lyra_item_missile_t missile{};
+    lyra_item_amulet_t amulet{};
+    lyra_item_area_effect_t area_effect{};
+    lyra_item_support_t support{};
+    lyra_item_essence_t essence{};
+    lyra_item_meta_essence_t meta_essence{};
+    lyra_item_scroll_t scroll{};
+    lyra_item_teleporter_t teleporter{};
+    lyra_item_train_support_t train_support{};
+    lyra_item_gratitude_t gratitude{};
+    lyra_item_meta_essence_nexus_t nexus{};
+    lyra_item_portkey_t portkey{};
+
   // switch on function, convert if necessary
   switch (StateFunction(ssptr)) {
-  case WARD_FUNCTION:
-    lyra_item_ward_t ward;
-    convert_hton(ward, ssptr);
-    break;
-  case MISSILE_FUNCTION:
-    lyra_item_missile_t missile;
+  case WARD_FUNCTION:      
+      convert_hton(ward, ssptr);
+      break;
+  case MISSILE_FUNCTION:    
     convert_hton(missile, ssptr);
     break;
-  case AMULET_FUNCTION:
-    lyra_item_amulet_t amulet;
+  case AMULET_FUNCTION:    
     convert_hton(amulet, ssptr);
     break;
-  case AREA_EFFECT_FUNCTION:
-    lyra_item_area_effect_t area_effect;
+  case AREA_EFFECT_FUNCTION:    
     convert_hton(area_effect, ssptr);
     break;
   case ESSENCE_FUNCTION:
-    lyra_item_essence_t essence;
     convert_hton(essence, ssptr);
     break;
   case SUPPORT_FUNCTION:
-    lyra_item_support_t support;
     convert_hton(support, ssptr);
     break;
   case META_ESSENCE_FUNCTION:
-    lyra_item_meta_essence_t meta_essence;
     convert_hton(meta_essence, ssptr);
     break;
-  case SCROLL_FUNCTION:
-    lyra_item_scroll_t scroll;
+  case SCROLL_FUNCTION:    
     convert_hton(scroll, ssptr);
     break;
-  case TELEPORTER_FUNCTION:
-    lyra_item_teleporter_t teleporter;
+  case TELEPORTER_FUNCTION:    
     convert_hton(teleporter, ssptr);
     break;
-  case SUPPORT_TRAIN_FUNCTION:
-    lyra_item_train_support_t train_support;
+  case SUPPORT_TRAIN_FUNCTION:    
     convert_hton(train_support, ssptr);
     break;
   case GRATITUDE_FUNCTION:
-	lyra_item_gratitude_t gratitude;
 	convert_hton(gratitude, ssptr);
 	break;
   case META_ESSENCE_NEXUS_FUNCTION:
-	lyra_item_meta_essence_nexus_t nexus;
 	convert_hton(nexus, ssptr);
 	break;
   case PORTKEY_FUNCTION:
-	  lyra_item_portkey_t portkey;
 	  convert_hton(portkey, ssptr);
 	  break;
   case NO_FUNCTION: // should be an error

@@ -22,6 +22,10 @@
 #include "cPostQuest.h"
 #include "cReportGoal.h"
 #include "Interface.h"
+#include <string>
+#include <memory>
+#include "Mouse/MouseClass.h"
+
 //#include "RogerWilco.h"
 
 /////////////////////////////////////////////////
@@ -47,6 +51,43 @@ extern bool IsLyraColors;
 extern bool show_splash;
 const int MIN_FRAME_TIMER = WM_USER + 9234;
 extern unsigned int show_splash_end_time;
+//initialise base mouseclass
+static MouseClass mouse;
+
+// function for finding mouse:)
+bool WindowContainer() 
+{
+	//generic bool for if mouse is found
+	static bool raw_input_initialized = false;
+	//if it hasn't been found yet.
+	if (!raw_input_initialized)
+	{
+		// make default raw input device
+		RAWINPUTDEVICE rid;
+
+		//assign basic info to device info
+		rid.usUsagePage = 0x01; //typical usage group for input
+		rid.usUsage = 0x02; // mouse
+		rid.dwFlags = 0; //default
+		rid.hwndTarget = NULL; // default
+
+		//register device with windows, see if it finds it.
+		if (RegisterRawInputDevices(&rid, 1, sizeof(rid)) == FALSE)
+		{
+			DebugOut("Failed to register raw input devices");
+			exit(-1);
+			//registration failled. call GetLastError for cause of error
+		}
+		else
+		{
+			//otherwise we found it! yay
+			raw_input_initialized = true;
+			DebugOut("Mouse should be initiatilzed");
+		}
+		//return the mouse
+		return raw_input_initialized;
+	}
+}
 
 /////////////////////////////////////////////////
 // Functions
@@ -80,6 +121,9 @@ int PASCAL WinMain( HINSTANCE hInst, HINSTANCE hPrevInstance,
 	show_splash = true;
 	show_splash_end_time = LyraTime() + 4600;
 
+	//go get the mouse ready
+	WindowContainer();
+
 	for (;;)
 	{
 		// process messages until they're gone
@@ -100,6 +144,27 @@ int PASCAL WinMain( HINSTANCE hInst, HINSTANCE hPrevInstance,
 				case WM_MOUSEMOVE:
 					last_keystroke = LyraTime();
 					break;
+				case WM_INPUT: //rawmouse mesg worker
+				{
+					//check all msgs
+					while (!mouse.EventBufferIsEmpty())
+					{
+						//make a mosue event from mouseclass raw input
+						MouseEvent me = mouse.ReadEvent();
+						if (me.GetType() == MouseEvent::EventType::RAW_MOVE) //if msg is actually a raw movement
+						{
+							//set our helper to this mouse event for use later
+							MeHelper::SetME(me);
+							// rest of this is to spam the debug chat window in visualstudio the relative cords.
+							std::string outmsg = "x: " + std::to_string(me.GetPosX());
+							outmsg += ", Y: " + std::to_string(me.GetPosY());
+							outmsg += "\n";
+							OutputDebugStringA(outmsg.c_str());
+							
+						}
+					}
+				break;
+				}
 			}
 
 			if (!IsLyraDialogMessage(&msg) &&
@@ -110,6 +175,7 @@ int PASCAL WinMain( HINSTANCE hInst, HINSTANCE hPrevInstance,
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
+
 		}
 		else // no messages, or frame timer 
 			CreateFrame();
@@ -118,6 +184,7 @@ int PASCAL WinMain( HINSTANCE hInst, HINSTANCE hPrevInstance,
 
 LRESULT WINAPI WindowProc ( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
+
 	static HCURSOR hCursor = LoadCursor(NULL,IDC_ARROW); // for cursor reset
 
 	if (exiting) // ignore game messages while exiting
@@ -154,6 +221,29 @@ LRESULT WINAPI WindowProc ( HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			CreateFrame();
 		break;
 
+
+	case WM_INPUT:
+	{
+		UINT dataSize = 0;
+
+		GetRawInputData(reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT, NULL, &dataSize, sizeof(RAWINPUTHEADER));
+
+		if (dataSize > 0)
+		{
+			std::unique_ptr<BYTE[]> rawdata = std::make_unique<BYTE[]>(dataSize);
+				if (GetRawInputData(reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT, rawdata.get(), &dataSize, sizeof(RAWINPUTHEADER)) == dataSize)
+				{
+					RAWINPUT* raw = reinterpret_cast<RAWINPUT*>(rawdata.get());
+					if (raw->header.dwType == RIM_TYPEMOUSE)
+					{
+						mouse.OnMouseMoveRaw(raw->data.mouse.lLastX, raw->data.mouse.lLastY);
+					}
+				}
+		}
+
+		return DefWindowProc(hWnd, message, wParam, lParam);
+		break;
+	}
 #ifndef AGENT
 	case WM_QUERYOPEN:
 		if (!IsLyraColors)

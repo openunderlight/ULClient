@@ -98,6 +98,7 @@ class cPlayer : public cActor
 
 	   enum { INVALID_PLAYERID = -1 };
 
+
    protected:
 	   lyra_id_t playerID;
 	   TCHAR upper_name[Lyra::PLAYERNAME_MAX];

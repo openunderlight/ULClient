@@ -143,7 +143,9 @@ struct bbox_t {
 	int BreakupSectors(file_vertex* verts, int num_sectors, int num_verts, int num_lines);
 	int CreateHull(int sector_num, int line_num, int hull_num, int num_lines);
 	int CombineHulls(int num_hulls, file_vertex* verts, int sector_num, int num_lines);
-	FixBaseLines(int num_hulls, file_vertex* verts, int sector_num, bool floor, int line, bool facing_flag);
+
+	int FixBaseLines(int num_hulls, file_vertex* verts, int sector_num, bool floor, int line, bool facing_flag);
+
 	void CreateEdgeSet(int v0_start, int v1_start, int v1_end, int hull_index,
 						   hull_t& new_hull, bool first_from, bool first_to, int sec1, int sec2, int new_sec);
 	void InitBBox(hull_t& hull, bbox_t& bbox, file_vertex* verts);

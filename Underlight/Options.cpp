@@ -37,6 +37,10 @@
 #include "cEffects.h"
 #include "LoginOptions.h"
 #include "base64.h"
+#include <iostream>
+
+using namespace std;
+
 /////////////////////////////////////////////////
 // External Global Variables
 
@@ -541,7 +545,7 @@ void LoadJSONOptionValues(char* charName)
 			cJSON* nameNode = cJSON_GetObjectItem(jsonFiles[i], "name");
 			if (!nameNode)
 				continue;
-			if (stricmp(nameNode->valuestring, charName) == 0) {
+			if (_stricmp(nameNode->valuestring, charName) == 0) {
 				local = jsonFiles[i];
 				break;
 			}
@@ -624,7 +628,7 @@ void LoadParsedJSONOptions(cJSON* json)
 	{
 		char* lastVal = cJSON_GetStringValue(last);
 		for (int i = 0; i < MAX_STORED_ACCOUNTS; i++) {
-			if (stricmp(options.username[i], lastVal) == 0) {
+			if (_stricmp(options.username[i], lastVal) == 0) {
 				options.account_index = i;
 				break;
 			}
@@ -695,7 +699,7 @@ void LoadParsedJSONOptions(cJSON* json)
 			size_t out;
 			unsigned char* kmbytes = base64_decode((const unsigned char*)cJSON_GetStringValue(km), strlen(cJSON_GetStringValue(km)), &out);
 			if (kmbytes)
-				memcpy(map, kmbytes, out);
+				std::memcpy(map, kmbytes, out);
 			keymap->Init(numKeys->valueint, map);
 		}
 	}

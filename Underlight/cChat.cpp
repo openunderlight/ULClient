@@ -449,7 +449,9 @@ bool cChat::HandleReturn(TCHAR* sentence)
 		for (int i = 0; i < NUM_SLASH_COMMANDS; i++)
 		{
 			slash_command_t sc = slash_commands[i];
-			if (strnicmp(sc.command, sentence, strlen(sc.command)) == 0)
+
+			if (_strnicmp(sc.command, sentence, strlen(sc.command)) == 0)
+
 			{
 				speech_callback_t callback = sc.handler;
 				sentence += strlen(sc.command);
@@ -944,7 +946,9 @@ void cChat::OnTabKeypress()
 		if (prevBreak != 0)
 			prevBreak++;
 		strncpy(textToComplete, sentence + prevBreak, (nextBreak - prevBreak) + 1);
-		if (prevPrevBreak == 0 && strnicmp("/whisper", sentence, 8) == 0)
+
+		if (prevPrevBreak == 0 && _strnicmp("/whisper", sentence, 8) == 0)
+
 			autocompleteNeedsQuoting = true;
 		
 		cNeighbor* n;
@@ -952,7 +956,9 @@ void cChat::OnTabKeypress()
 		{
 			if ((n->Avatar().Hidden()) && (player->ID() != n->ID()))
 				continue;
-			if (strnicmp(textToComplete, n->Name(), strlen(textToComplete)) == 0)
+
+			if (_strnicmp(textToComplete, n->Name(), strlen(textToComplete)) == 0)
+
 			{				
 				if (autocompleteNeedsQuoting && strchr(n->Name(), ' '))
 					sprintf(names[autocompleteChoices], "\"%s\"", n->Name());

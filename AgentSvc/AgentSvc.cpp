@@ -13,7 +13,8 @@
 #include <process.h>    /* _beginthread, _endthread */
 #include <stddef.h>
 
-#include "AgentSvc_i.c"
+//#include "AgentSvc_i.c"
+
 
 #include <stdio.h>
 

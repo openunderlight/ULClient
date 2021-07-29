@@ -5,7 +5,7 @@
 #ifndef CPALETTES_H
 #define CPALETTES_H
 
-#define STRICT
+
 
 #include <windows.h>
 #include "Central.h"
