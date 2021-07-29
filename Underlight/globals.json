@@ -1,0 +1,10 @@
+{
+	"account_index":	0,
+	"bind_local_tcp":	0,
+	"bind_local_udp":	9599,
+	"dev_server":	1,
+	"custom_ip":	"127.0.0.1",
+	"debug":	0,
+	"network":	0,
+	"last_username":	""
+}

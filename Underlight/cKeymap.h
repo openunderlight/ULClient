@@ -191,16 +191,19 @@ const keymap_t default_keymap[default_num_keys] =
 	{',', LyraKeyboard::SHOW_NEXT, Arts::NONE},
 	{'.', LyraKeyboard::SHOW_PREV, Arts::NONE},
 	{'R', LyraKeyboard::RESET_EYELEVEL, Arts::NONE},
-	{'A', LyraKeyboard::TOGGLE_SOUND, Arts::NONE},
+
+	{'=', LyraKeyboard::TOGGLE_SOUND, Arts::NONE},
 	{'T', LyraKeyboard::TALK, Arts::NONE},
 	{222, LyraKeyboard::LEAVE_PARTY, Arts::NONE}, // (apostrophe)
-	{'W', LyraKeyboard::WHO_NEARBY, Arts::NONE},
+	{VK_UP, LyraKeyboard::WHO_NEARBY, Arts::NONE},
+
 	{'C', LyraKeyboard::ACTIVE_EFFECTS, Arts::NONE},
 	{'X', LyraKeyboard::SHOW_XP, Arts::NONE},
 	{VK_HOME, LyraKeyboard::LOOK_DOWN, Arts::NONE},
 	{VK_END, LyraKeyboard::LOOK_UP, Arts::NONE},
-	{VK_UP, LyraKeyboard::MOVE_FORWARD, Arts::NONE},
-	{VK_DOWN, LyraKeyboard::MOVE_BACKWARD, Arts::NONE},
+	{'W', LyraKeyboard::MOVE_FORWARD, Arts::NONE},
+	{'S', LyraKeyboard::MOVE_BACKWARD, Arts::NONE},
+
 	{VK_LEFT, LyraKeyboard::TURN_LEFT, Arts::NONE},
 	{VK_RIGHT, LyraKeyboard::TURN_RIGHT, Arts::NONE},
 	{VK_CONTROL, LyraKeyboard::USE, Arts::NONE},
@@ -211,7 +214,9 @@ const keymap_t default_keymap[default_num_keys] =
 	{VK_MBUTTON, LyraKeyboard::MOUSE_LOOK, Arts::NONE},
 	{VK_RBUTTON, LyraKeyboard::JUMP, Arts::NONE},
 	{0xdc, LyraKeyboard::MOUSE_LOOK, Arts::NONE}, // (backslash)
-	{'S', LyraKeyboard::SIDESTEP_LEFT, Arts::NONE},
+
+	{'A', LyraKeyboard::SIDESTEP_LEFT, Arts::NONE},
+
 	{'K', LyraKeyboard::SHOW_RANKS, Arts::NONE},
 	{VK_PRIOR, LyraKeyboard::SCROLL_UP, Arts::NONE},
 	{VK_NEXT, LyraKeyboard::SCROLL_DOWN, Arts::NONE},

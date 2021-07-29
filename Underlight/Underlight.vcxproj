@@ -52,69 +52,92 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F427253E-F158-4722-B7E1-27761AE6C921}</ProjectGuid>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Master|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='QA Player|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Gamemaster|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='QA GM|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev Player|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Pmare|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='QA Pmare|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev Pmare|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -245,6 +268,9 @@
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='QA Pmare|Win32'">$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">
+    <VcpkgConfiguration>Release</VcpkgConfiguration>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev Pmare|Win32'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -259,7 +285,7 @@
       <Optimization>MinSpace</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>PMARE;UL_DEV;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PMARE;UL_DEV;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -275,6 +301,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;PMARE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -316,7 +344,8 @@
       <Optimization>MinSpace</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T</PreprocessorDefinitions>
+
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -334,6 +363,9 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -375,7 +407,7 @@
       <Optimization>MinSpace</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;PMARE;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;PMARE;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -391,6 +423,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;PMARE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -432,7 +466,7 @@
       <Optimization>MinSpace</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;QA;PMARE;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;QA;PMARE;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -448,6 +482,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;QA;PMARE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -488,7 +524,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;_DEBUG;GAME_LYR;UNICODE;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;_DEBUG;GAME_LYR;UNICODE;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;USE_32BIT_TIME_T;_USE_32BIT_TIME_T</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\Unicode/Underlight.pch</PrecompiledHeaderOutputFile>
@@ -505,6 +541,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -546,7 +584,7 @@
       <Optimization>MinSpace</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;UL_MASTER;UL_PLAYER_DEV;UL_DEV;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;UL_MASTER;UL_PLAYER_DEV;UL_DEV;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -564,6 +602,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -605,7 +645,7 @@
       <Optimization>MinSpace</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;GAMEMASTER_FULL;GAMEMASTER;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;GAMEMASTER_FULL;GAMEMASTER;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -621,6 +661,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -660,7 +702,8 @@
       <Optimization>MinSpace</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;QA;GAMEMASTER_FULL;GAMEMASTER;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;QA;GAMEMASTER_FULL;GAMEMASTER;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T</PreprocessorDefinitions>
+
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -676,6 +719,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;QA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -714,7 +759,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>GAME_CLI;_DEBUG;UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;VORBIS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GAME_CLI;_DEBUG;UL_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;VORBIS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\Debug/Underlight.pch</PrecompiledHeaderOutputFile>
@@ -731,6 +776,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -771,7 +818,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_DEBUG;UL_DEBUG;LIVE_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;VORBIS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;UL_DEBUG;LIVE_DEBUG;GAMEMASTER_FULL;GAMEMASTER;UL_DEBUG_MASTER;UL_DEV;GAME_LYR;WIN32;_WINDOWS;USE_INLINE;ENGLISH;VORBIS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\Debug/Underlight.pch</PrecompiledHeaderOutputFile>
@@ -788,6 +835,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -829,7 +878,7 @@
       <Optimization>MinSpace</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;UL_MASTER;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;UL_MASTER;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -847,6 +896,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -888,7 +939,7 @@
       <Optimization>MinSpace</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\OggVorbis\include;..\MessageMaker;..\AgentMessages;..\AgentSvr;..\Underlight;..\DXSDK\SDK\inc;..\RWSDK\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;QA;UL_MASTER;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;QA;UL_MASTER;GAME_CLI;WIN32;_WINDOWS;USE_INLINE;ENGLISH;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_USE_32BIT_TIME_T</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -906,6 +957,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <OmitFramePointers>true</OmitFramePointers>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;QA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -1195,6 +1248,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="cClient.cpp" />
     <ClCompile Include="cControlPanel.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -2261,6 +2315,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="MeHelper.cpp" />
     <ClCompile Include="Mouse.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -2287,6 +2342,8 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Unicode|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Mouse\MouseClass.cpp" />
+    <ClCompile Include="Mouse\MouseEvent.cpp" />
     <ClCompile Include="Move.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Live Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -2574,7 +2631,10 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LanguageFilter.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="MeHelper.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Mouse\MouseClass.h" />
+    <ClInclude Include="Mouse\MouseEvent.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="Realm.h" />

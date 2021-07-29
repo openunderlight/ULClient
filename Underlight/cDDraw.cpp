@@ -348,8 +348,10 @@ bool cDDraw::EraseSurface(int id)
 {
 	 DDBLTFX 	 ddbltfx;
 	LPDIRECTDRAWSURFACE7	 lpDDSSurface;
+
 	RECT rect;
 	POINT wndpt;
+
 	int xoff=0,yoff=0; // offsets for running in a window
 
 	if (id == PRIMARY)

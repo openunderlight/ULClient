@@ -34,7 +34,6 @@ const int num_keystates = 15;
 void __cdecl InitKeyboard(void);
 void __cdecl DeInitKeyboard(void);
 
-
 //////////////////////////////////////////////////////////////////
 // Keyboard message handlers
 

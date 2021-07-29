@@ -5,6 +5,7 @@
 #define STRICT
 
 #include "Central.h"
+#include <string>
 #include <windows.h>
 #include <windowsx.h>
 #include "cDDraw.h"
@@ -1288,7 +1289,18 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	case LyraKeyboard::STRAFE: keyboard[Keystates::STRAFE] = 1; break;
 	case LyraKeyboard::SIDESTEP_LEFT: keyboard[Keystates::SIDESTEP_LEFT] = 1; break;
 	case LyraKeyboard::SIDESTEP_RIGHT: keyboard[Keystates::SIDESTEP_RIGHT] = 1; break;
-	case LyraKeyboard::MOUSE_LOOK: mouselooking = !options.mouselook; break;
+
+	case LyraKeyboard::MOUSE_LOOK: 
+	{
+		//flip the mouse looking sign if false to true , if true to false.
+		mouse_look.looking = !mouse_look.looking;
+		//if mouselook is on, display msg
+		if (mouse_look.looking) { display->DisplayMessage("Mouse Look Enabled.", false); }
+		//if mouselooks is off tell user via dsp msg
+		else { display->DisplayMessage("Mouse look Disabled.", false); }
+		break; 
+	}
+
 	case LyraKeyboard::WAVE: player->SetWaving(true);	break;
 		
 		}
@@ -1735,7 +1747,8 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		cp->SetUsing(false);
 		break;
 	case LyraKeyboard::MOUSE_LOOK:
-		mouselooking = options.mouselook;
+
+		mouselooking = !mouselooking;
 		SaveInGameRegistryOptionValues();
 		break;
 	case LyraKeyboard::SHOW_RANKS:
