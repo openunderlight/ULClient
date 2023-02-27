@@ -3056,6 +3056,25 @@ bool cPlayer::PersonalVaultAccessible()
 	if (level->ID() != 20)
 		return false;
 
+	bool primeFound = false;
+	cItem* item;
+#ifndef GAMEMASTER
+	// peons can't Translocate with a prime
+	for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
+		if ((item->Status() == ITEM_OWNED) && (item->AlwaysDrop()))
+		{
+			primeFound = true;
+			break;
+		}
+	actors->IterateItems(DONE);
+
+	if (primeFound)
+	{
+		// THOU SHALT NOT TRANSLOCATE WITH A PRIME
+		return false;
+	}
+#endif
+
 	return true;
 }
 
