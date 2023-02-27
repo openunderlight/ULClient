@@ -8,6 +8,8 @@
 #include "4dx.h"
 #include "Central.h"
 
+unsigned char *BitmapTextOut(TCHAR *str, LOGFONT &font, int &width, int &height);
+
 class cNameTag
 {
 private:

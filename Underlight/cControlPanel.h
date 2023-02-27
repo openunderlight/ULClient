@@ -15,6 +15,7 @@
 #include "SharedConstants.h"
 #include "LyraDefs.h"
 #include "Effects.h"
+#include "cPlayer.h"
 
 //////////////////////////////////////////////////////////////////
 // Constants
@@ -90,6 +91,7 @@ private:
 	HWND hwnd_meta; 
 	HWND hwnd_give;
 	HWND hwnd_invcounter;
+	HWND hwnd_effects;
 
 	HWND hwnd_usepp;
 	HWND hwnd_grantpp;
@@ -141,7 +143,8 @@ private:
 	HBITMAP give_bitmap[2];
 	HBITMAP usepp_bitmap[2];
 	HBITMAP grantpp_bitmap[2];
-
+	effects_pretty_t defensive;
+	effects_pretty_t offensive;
 	// handles for listview buttons
 	HBITMAP listview_buttons_bitmaps[NUM_LISTVIEWS][NUM_LV_BUTTONS][2];
 	
@@ -187,7 +190,7 @@ public:
 	cItem* GetLastItem(void);
 	cItem* GetNextItem(cItem *last, bool lv_ok = false);
 	cItem* GetPrevItem(cItem *first, bool lv_ok = false);
-
+	void ShowEffectsHUD(bool showIt);
 	// add/remove neighbors from control panel
 	int AddNeighbor(cNeighbor* n);
 	void DeleteNeighbor(cNeighbor* n, int type = SHOW_NEXT);
@@ -222,6 +225,7 @@ public:
 
 	// update displays
 	void UpdateStats(void);
+	void UpdateEffects(void);
 	void UpdateArt(lyra_id_t art);
 	void UpdateInvCount(void);
 	void FillInArtString(lyra_id_t art, TCHAR *buffer);
@@ -280,7 +284,7 @@ private:
 	friend int CALLBACK CompareNeighbors(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort); 
 	friend int CALLBACK CompareArts(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort); 
 	friend BOOL CALLBACK AvatarWndProc(HWND hWnd, UINT Message, WPARAM wParam, LPARAM lParam);
-
+	friend LRESULT WINAPI EffectsWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 #ifdef CHECK_INVARIANTS
 	void CheckInvariants(int line, TCHAR *file);

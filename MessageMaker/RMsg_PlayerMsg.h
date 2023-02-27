@@ -141,7 +141,9 @@ public:
 	// sound triggers deprecated - put into real time packets instead
     //TRIGGER_SOUND = 200, // sound id, not used
 
-    NEWBIE_ENTERED       // new player has entered recruiting area
+    NEWBIE_ENTERED,       // new player has entered recruiting area
+	PERSONAL_VAULT,		// C->S request to enter PV
+	PERSONAL_VAULT_ACK, // S->C success,reason (if fail)
   };
 
 public:

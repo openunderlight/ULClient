@@ -512,6 +512,7 @@ void cGameServer::HandleMessage(void)
 		(msgheader.MessageType() <= RMsg::MAX) &&
 		(msgheader.MessageType() != RMsg::LOGINACK) &&
 		(msgheader.MessageType() != RMsg::SPEECH) &&
+		!player->InPersonalVault() &&
 		!logged_into_level)
 		return; // ignore non-loginack rs messages when not in a level
 
@@ -1800,7 +1801,11 @@ void cGameServer::HandleMessage(void)
 			switch (room_loginack_msg.Status())
 			{
 				case RMsg_RoomLoginAck::LOGIN_OK:
+				{
+					if (player->InPersonalVault())
+						player->SetInPersonalVault(false);
 					break;
+				}
 				case RMsg_RoomLoginAck::LOGIN_ROOMFULL:
 					if (player->LastLocValid())
 					{
@@ -2952,8 +2957,7 @@ void cGameServer::HandleMessage(void)
 
 				case RMsg_PlayerMsg::DEMOTE_ACK:
 					arts->ResponseDemote(true, player_msg.SenderID(), player_msg.State1(), player_msg.State2());
-					break;
-
+					break;													
 				case RMsg_PlayerMsg::DEMOTE_FAIL:
 					arts->ResponseDemote(false, player_msg.SenderID(), player_msg.State1(), player_msg.State2());
 					break;
@@ -2982,7 +2986,20 @@ void cGameServer::HandleMessage(void)
 					LoadString (hInstance, IDS_GOT_PP, disp_message, sizeof(disp_message));
 					display->DisplayMessage(disp_message);					
 					break;
-
+				case RMsg_PlayerMsg::PERSONAL_VAULT_ACK:					
+					if (player_msg.State1())
+					{
+						player->SetPersonalVaultReturn(player->x, player->y, player->angle, level->ID());
+						player->Teleport(0, 0, 0, PERSONAL_VAULT_FLAG);					
+						logged_into_level = true;
+						logged_into_room = true;
+					}
+					else
+					{
+						_stprintf(disp_message, "You are unable to access your personal vault at this time");
+						display->DisplayMessage(disp_message);
+					}
+					break;
 				case RMsg_PlayerMsg::UNKNOWN:
 
 				default:

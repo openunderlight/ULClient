@@ -3047,6 +3047,8 @@
 #define IDS_DISTRESS_CALL_UNS           4499
 #define IDS_STRING19                    4500
 #define IDS_ITEM_GIVEN_TO               4500
+#define IDS_PERSONAL_VAULT              4501
+#define IDS_TOGGLE_HUD                  4502
 #define IDC_NUKE_PARTICLES              4802
 #define IDC_PARTICLE_RELOAD             4803
 #define IDC_AVATAR_COMBO                16666

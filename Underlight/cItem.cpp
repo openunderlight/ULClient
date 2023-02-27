@@ -218,7 +218,6 @@ bool cItem::WithinReach(cActor *actor)
 
 }
 
-
 //  try to pick up item on left click
 bool cItem::LeftClick(void)
 {

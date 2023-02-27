@@ -1556,6 +1556,7 @@ cTimedEffects::cTimedEffects(void)
 
 	i = LyraEffect::NONE;
 	LoadString(hInstance, IDS_NONE, name[i], sizeof(name[i]));
+	_tcscpy(shortName[i], "");
 	
 	// Now set up effect descriptions, expirations, and corresponding flags
 
@@ -1567,6 +1568,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_INVISIBLE;
 	related_art[i] = Arts::INVISIBILITY;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "INV");
 	default_duration[i] = 3; 
 	harmful[i] = false;
 
@@ -1578,6 +1580,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_CHAMELED;
 	related_art[i] = Arts::CHAMELE;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "CHM");
 	default_duration[i] = 13; // 1 min
 	harmful[i] = false;
 
@@ -1592,6 +1595,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_CURSED;
 	related_art[i] = Arts::CURSE;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "CRS");
 	default_duration[i] = 13; // 1 min
 	harmful[i] = true;
 
@@ -1605,6 +1609,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_BLINDED;
 	related_art[i] = Arts::BLIND;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "BLN");
 	default_duration[i] = 5;
 	harmful[i] = true;
 
@@ -1618,6 +1623,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_DEAFENED;
 	related_art[i] = Arts::DEAFEN;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "DF");
 	default_duration[i] = 9; // 30 sec
 	harmful[i] = true;
 
@@ -1632,6 +1638,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_DRUNK;  
 	related_art[i] = Arts::STAGGER;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "ST");
 	default_duration[i] = 3; 
 	harmful[i] = true;
 
@@ -1645,6 +1652,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_SCARED; 
 	related_art[i] = Arts::SCARE;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "SC");
 	default_duration[i] = 7; // 15 sec
 	harmful[i] = true;
 
@@ -1656,6 +1664,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_PARALYZED; 
 	related_art[i] = Arts::PARALYZE;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "PRA");
 	default_duration[i] = 3; // 3 sec
 	harmful[i] = true;
 
@@ -1669,6 +1678,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_POISONED;
 	related_art[i] = Arts::POISON;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "PN");
 	default_duration[i] = 13; // 1 min
 	harmful[i] = true;
 
@@ -1680,6 +1690,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_DETECT_INVIS;
 	related_art[i] = Arts::VISION;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "VS");
 	default_duration[i] = 18; // 5 min
 	harmful[i] = false;
 
@@ -1691,6 +1702,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_PROT_FEAR;
 	related_art[i] = Arts::RESIST_FEAR;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "RF");
 	default_duration[i] = 18; // 5 min
 	harmful[i] = false;
 
@@ -1702,6 +1714,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_PROT_CURSE;
 	related_art[i] = Arts::PROTECTION;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "PR");
 	default_duration[i] = 18; // 5 min
 	harmful[i] = false;
 
@@ -1713,6 +1726,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_FREE_ACTION;
 	related_art[i] = Arts::FREE_ACTION;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "FA");
 	default_duration[i] = 18; // 5 min
 	harmful[i] = false;
 
@@ -1724,6 +1738,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_MEDITATING;	
 	related_art[i] = Arts::MEDITATION;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "MD");
 	default_duration[i]=15; 
 	harmful[i] = false;
 
@@ -1735,6 +1750,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_TRAILING;	
 	related_art[i] = Arts::TRAIL;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "TR");
 	default_duration[i]=23; 
 	harmful[i] = false;
 
@@ -1746,6 +1762,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_SOULEVOKE;	
 	related_art[i] = Arts::SOULEVOKE;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "SE");
 	default_duration[i]=23; 
 	harmful[i] = false;
 
@@ -1757,6 +1774,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_BLENDED;	
 	related_art[i] = Arts::BLEND;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "BND");
 	default_duration[i]=6; 
 	harmful[i] = false;
 
@@ -1768,6 +1786,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_RECALL;	
 	related_art[i] = Arts::RECALL;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "RC");
 	default_duration[i]=25; 
 	harmful[i] = false;
 	abjurable[i] = false;
@@ -1780,6 +1799,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_RETURN;	
 	related_art[i] = Arts::RETURN;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "RT");
 	default_duration[i]=23; 
 	harmful[i] = false;
 
@@ -1791,6 +1811,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_TRANSFORMED;	
 	related_art[i] = Arts::NIGHTMARE_FORM;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "NMF");
 	default_duration[i]=6; 
 	harmful[i] = false;
 
@@ -1802,6 +1823,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_MIND_BLANKED;	
 	related_art[i] = Arts::MIND_BLANK;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "MB");
 	default_duration[i]=18; 
 	harmful[i] = false;
 
@@ -1813,6 +1835,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_REGENERATING;	
 	related_art[i] = Arts::NONE;
 	LoadString(hInstance, IDS_REGENERATE, name[i], sizeof(name[i]));
+	_tcscpy(shortName[i], "RG");
 	default_duration[i]=9; 
 	harmful[i] = false;
 
@@ -1825,6 +1848,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_SOUL_SHIELDED;	
 	related_art[i] = Arts::SOUL_SHIELD;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "SS");
 	default_duration[i]=18; 
 	harmful[i] = false;
 
@@ -1836,6 +1860,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_REFLECT;
 	related_art[i] = Arts::REFLECT;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "RFL");
 	default_duration[i]=9; // 30 sec
 	harmful[i] = false;
 
@@ -1847,6 +1872,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_NO_POISON;
 	related_art[i] = Arts::SABLE_SHIELD;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "SBL");
 	default_duration[i]=12; // 45 sec
 	harmful[i] = false;
 
@@ -1859,6 +1885,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_PEACE_AURA;
 	related_art[i] = Arts::PEACE_AURA;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "PA");
 	default_duration[i]=9; // 30 sec
 	harmful[i] = false;
 	abjurable[i] = false;
@@ -1872,6 +1899,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_NO_PARTY;
 	related_art[i] = Arts::BREAK_COVENANT;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "BC");
 	default_duration[i]=9; // 30 sec
 	harmful[i] = false;
 
@@ -1885,6 +1913,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_SPIN; 
 	related_art[i] = Arts::CHAOTIC_VORTEX;
 	_tcscpy(name[i], arts->Descrip(related_art[i]));
+	_tcscpy(shortName[i], "CV");
 	default_duration[i] = 3; // 3 sec
 	harmful[i] = true;
 
@@ -1898,6 +1927,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_BLEED;
 	related_art[i] = Arts::RAZORWIND;
 	LoadString(hInstance, IDS_BLEED, name[i], sizeof(name[i]));
+	_tcscpy(shortName[i], "BLD");
 	default_duration[i] = 7; // 15 seconds
 	harmful[i] = true;
 
@@ -1909,6 +1939,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_CRIPPLE;
 	related_art[i] = Arts::FATESENDER;
 	LoadString(hInstance, IDS_CRIPPLE, name[i], sizeof(name[i]));
+	_tcscpy(shortName[i], "CRP");
 	default_duration[i] = 3; // 3 secs
 	harmful[i] = true;
 
@@ -1920,6 +1951,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_SHIELD;
 	related_art[i] = Arts::SOULMASTER;
 	LoadString(hInstance, IDS_AVATAR_SHIELD, name[i], sizeof(name[i]));
+	_tcscpy(shortName[i], "SHL");
 	default_duration[i] = 3; // 3 secs
 	harmful[i] = false;
 
@@ -1931,6 +1963,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_GKSHIELD;
 	related_art[i] = Arts::BULWARK;
 	LoadString(hInstance, IDS_GKSHIELD, name[i], sizeof(name[i]));
+	_tcscpy(shortName[i], "BUL");
 	default_duration[i] = 13; // 3 secs
 	harmful[i] = false;
 	LoadString(hInstance, IDS_BULWARK_MORE, disp_message, sizeof(disp_message));
@@ -1944,6 +1977,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_FLY;
 	related_art[i] = Arts::NONE;
 	LoadString(hInstance, IDS_FLIGHT, name[i], sizeof(name[i]));
+	_tcscpy(shortName[i], "FLY");
 	default_duration[i] = 13; // 3 secs
 	harmful[i] = false;
 
@@ -1957,6 +1991,7 @@ cTimedEffects::cTimedEffects(void)
 	actor_flag[i] = ACTOR_WALK;
 	related_art[i] = Arts::ENFEEBLEMENT;
 	LoadString(hInstance, IDS_ENFEEBLEMENT, name[i], sizeof(name[i]));
+	_tcscpy(shortName[i], "WLK");
 	default_duration[i] = 3; // 15 sec
 	harmful[i] = true;
 
@@ -1967,6 +2002,7 @@ cTimedEffects::cTimedEffects(void)
 	more_descrip[i] = _strdup(disp_message);
 	LoadString(hInstance, IDS_PLAYER_SPRINT_OFF, disp_message, DEFAULT_MESSAGE_SIZE);
 	expire_descrip[i] = _strdup(disp_message);
+	_tcscpy(shortName[i], "RUN");
 	actor_flag[i] = ACTOR_SPRINT;
 	related_art[i] = Arts::SPRINT;
 	LoadString(hInstance, IDS_SPRINT, name[i], sizeof(name[i]));

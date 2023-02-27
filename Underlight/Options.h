@@ -62,6 +62,7 @@ struct options_t {
 	char game_server[64]; // IP address of game server
 	int  server_port; // port of game server
 	BOOL welcome_ai;
+	BOOL show_effects_hud;
 //	BOOL create_character;
 	int entrypoint; // which starting pos
 

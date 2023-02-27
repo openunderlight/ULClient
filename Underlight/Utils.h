@@ -74,6 +74,7 @@ class cTimedEffects { // timed effects
 	   TCHAR *more_descrip[NUM_TIMED_EFFECTS];
 	   TCHAR *expire_descrip[NUM_TIMED_EFFECTS];
 	   TCHAR name[NUM_TIMED_EFFECTS][20];
+	   TCHAR shortName[NUM_TIMED_EFFECTS][5];
 	   __int64 actor_flag[NUM_TIMED_EFFECTS]; // holds the actor flag corresponding to the effect
 	   short related_art[NUM_TIMED_EFFECTS];
 	   short default_duration[NUM_TIMED_EFFECTS]; // duration for when caused by item

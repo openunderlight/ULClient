@@ -47,7 +47,7 @@ extern bool metadlg;
 extern bool talkdlg;
 extern bool avatardlg;
 extern ppoint_t pp; // personality points use tracker
-
+extern timing_t* timing;
 
 extern options_t options;
 //extern cBanner *banner; 
@@ -55,6 +55,7 @@ extern mouse_look_t mouse_look;
 extern mouse_move_t mouse_move;
 extern HFONT display_font[MAX_RESOLUTIONS]; 
 extern HFONT bold_font[MAX_RESOLUTIONS]; 
+extern HFONT effects_font;
 
 extern int MAX_LV_ITEMS;
 
@@ -111,6 +112,9 @@ const struct window_pos_t tabPos[MAX_RESOLUTIONS] =
 // position for inventory counter, relative to tab control
 const struct window_pos_t invcountPos[MAX_RESOLUTIONS] =
 { { 60, 20, 40, 12}, { 75, 30, 50, 16}, {96, 40, 64, 20 } };
+
+const struct window_pos_t effectsPos[MAX_RESOLUTIONS] =
+{ { 45, 258, 98, 24 }, { 55, 323, 112, 32 }, { 70, 413, 160, 38 } };
 
 // position for main control panel bitmap, relative to main window
 const struct window_pos_t mainPos[MAX_RESOLUTIONS] = 
@@ -200,6 +204,43 @@ struct stats_t cp_stats[NUM_PLAYER_STATS] =
 // position for orbit static control
 const struct window_pos_t orbitPos[MAX_RESOLUTIONS] = 
 { { 97, 297, 40, 16 }, { 121, 374, 50, 20 }, { 155, 477, 64, 25 } };
+
+namespace rich_edit {
+	CHARFORMAT get_char_fmt(HWND hwnd, DWORD range = SCF_DEFAULT) {
+		CHARFORMAT cf;
+		SendMessage(hwnd, EM_GETCHARFORMAT, range, (LPARAM)&cf);
+		return cf;
+	}
+	void set_char_fmt(HWND hwnd, const CHARFORMAT& cf, DWORD range = SCF_SELECTION) {
+		SendMessage(hwnd, EM_SETCHARFORMAT, range, (LPARAM)&cf);
+	}
+	void replace_sel(HWND hwnd, const char* str) {
+		SendMessage(hwnd, EM_REPLACESEL, 0, (LPARAM)str);
+	}
+	void cursor_to_bottom(HWND hwnd) {
+		SendMessage(hwnd, EM_SETSEL, -1, -1);
+	}
+
+	void clear(HWND hwnd) {
+		SendMessage(hwnd, EM_SETSEL, 0, -1);
+		replace_sel(hwnd, "");
+	}
+
+	// this function is used to output text in different color
+	void append(HWND hwnd, COLORREF clr, const char* str) {
+		cursor_to_bottom(hwnd); // move cursor to bottom
+
+		CHARFORMAT cf = get_char_fmt(hwnd); // get default char format
+		cf.cbSize = sizeof(cf);
+		cf.dwMask = CFM_COLOR; // change color
+		cf.crTextColor = clr;
+		cf.dwEffects = 0;
+		set_char_fmt(hwnd, cf); // set default char format
+
+		replace_sel(hwnd, str); // code from google
+	}
+}
+
 
 /////////////////////////////////////////////////////////////////
 // Class Defintion
@@ -427,11 +468,23 @@ cControlPanel::cControlPanel(void)
 		hwnd_tab,
 		NULL, hInstance, NULL);
 	SendMessage(hwnd_invcounter, WM_SETFONT, WPARAM(bold_font[cDD->Res()]), 0);
+
+	hwnd_effects = CreateWindowEx(ES_MULTILINE,
+		_T("RICHEDIT"), _T(""), WS_CHILD,
+		//effectsPos[cDD->Res()].x, effectsPos[cDD->Res()].y,
+		10, 10,
+		effectsPos[cDD->Res()].width, effectsPos[cDD->Res()].height,
+		//hwnd_cp,
+		cDD->Hwnd_Main(),
+		NULL, hInstance, NULL);
 	
-
-
+	WNDPROC lpfnEffects = SubclassWindow(hwnd_effects, EffectsWProc);
+	SendMessage(hwnd_effects, WM_PASSPROC, 0, (LPARAM)lpfnEffects);
+	COLORREF BGColor = RGB(0,0,0);	
+	SendMessage(hwnd_effects, WM_SETFONT, WPARAM(effects_font), 0);
+	SendMessage(hwnd_effects, EM_SETBKGNDCOLOR, (WPARAM)FALSE, (LPARAM)BGColor);
     // create orbit static control
-	hwnd_orbit = CreateWindowEx(WS_EX_TRANSPARENT,
+	hwnd_orbit = CreateWindowEx(WS_EX_TRANSPARENT, 
 						_T("static"), NULL,
 						WS_CHILD ,
 						orbitPos[cDD->Res()].x, orbitPos[cDD->Res()].y, 
@@ -542,6 +595,16 @@ BOOL cControlPanel::HandlePaint(HWND hwnd)
 	return FALSE;
 }
 
+void cControlPanel::ShowEffectsHUD(bool showIt)
+{
+	if (!showIt)
+	{
+		if (IsWindowVisible(hwnd_effects))
+			ShowWindow(hwnd_effects, SW_HIDE);
+	}
+	else
+		ShowWindow(hwnd_effects, SW_SHOW);
+}
 
 void cControlPanel::BlitBitmap(HWND hwnd, HBITMAP bitmap, RECT *region)
 {
@@ -1716,6 +1779,25 @@ void cControlPanel::UpdateArt(lyra_id_t art)
 	return;
 }
 
+void cControlPanel::UpdateEffects(void)
+{
+	if (timing->lastFrame > (timing->lastEffectRender + 2000))
+	{
+		player->GetTimedEffectsPretty(&defensive, &offensive);
+		rich_edit::clear(hwnd_effects);
+		rich_edit::append(hwnd_effects, RED, defensive.red);
+		rich_edit::append(hwnd_effects, YELLOW, defensive.yellow);
+		rich_edit::append(hwnd_effects, GREEN, defensive.green);
+	}
+	
+	RECT region;
+	region.left = effectsPos[cDD->Res()].x;
+	region.top = effectsPos[cDD->Res()].y;
+	region.right = effectsPos[cDD->Res()].x + effectsPos[cDD->Res()].width;
+	region.bottom = effectsPos[cDD->Res()].y + effectsPos[cDD->Res()].height;
+	InvalidateRect(hwnd_tab, &region, FALSE);
+}
+
 // update display of inventory counter
 void cControlPanel::UpdateInvCount(void)
 {
@@ -2868,6 +2950,57 @@ int CALLBACK CompareArts(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 	_tcscpy(buf2, arts->Descrip(lParam2));
 	return (_tcscmp(buf1, buf2));
 }
+
+// Subclassed window procedure for the rich edit control
+LRESULT WINAPI EffectsWProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	static WNDPROC lpfn_wproc;
+	LPDRAWITEMSTRUCT lpdis;
+	// HDC dc; 
+	int j;
+
+	switch (message)
+	{
+	case WM_PASSPROC:
+		lpfn_wproc = (WNDPROC)lParam;
+		return (LRESULT)0;
+
+	case WM_SETFOCUS:   // Ensures that the focus is never here
+	case WM_KILLFOCUS:
+		return 0;
+	case WM_KEYUP:
+	case WM_KEYDOWN: // send the key to the main window
+	case WM_CHAR:
+		SendMessage(cDD->Hwnd_Main(), message,
+			(WPARAM)wParam, (LPARAM)lParam);
+	case WM_LBUTTONDOWN:
+	case WM_RBUTTONDOWN:
+		SendMessage(cDD->Hwnd_Main(), WM_ACTIVATE,
+			(WPARAM)WA_CLICKACTIVE, (LPARAM)cDD->Hwnd_Main());
+		return (LRESULT)0;
+	case WM_MOUSEMOVE:
+		if (mouse_look.looking || mouse_move.moving)
+		{
+			StopMouseMove();
+			StopMouseLook();
+		}
+		break;
+	
+	case WM_COMMAND:	
+		SendMessage(cDD->Hwnd_Main(), WM_ACTIVATE, (WPARAM)WA_CLICKACTIVE, (LPARAM)cDD->Hwnd_Main());
+		break;	
+	case WM_SETCURSOR:
+		return 0;
+	case WM_MOUSEWHEEL: {
+		Realm_OnMouseWheelScroll(hwnd, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), (short)HIWORD(wParam));
+		return (LRESULT)0;
+	}
+						break;
+	}
+
+	return CallWindowProc(lpfn_wproc, hwnd, message, wParam, lParam);	
+}
+
 
 // Check invariants
 

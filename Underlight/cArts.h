@@ -143,6 +143,7 @@ public:
 	void SoulEvoke(void);
 	void NightmareForm(void);
 	void Recall(void);
+	void PersonalVault(void);
 	void Bulwark(void);
 	void Return(void);
 	void Reflect(void);

@@ -68,7 +68,7 @@ struct LyraKeyboard {
 		SHOW_DST_TIME,
 		TOGGLE_MUSIC,
 		SHOW_PARTY,
-		RESERVED_12,
+		TOGGLE_EFFECTS_HUD,
 		RESERVED_13,
 		RESERVED_14,
 		RESERVED_15,
@@ -147,7 +147,7 @@ const keymap_name_t keymap_names[NUMBER_MAPPABLE_FUNCTIONS] =
 	{IDS_DST},  // was {"Break Telepathy"}, // Jared 2-26-00 (Not yet implemented)
 	{IDS_BACKGROUNDMUSIC},
 	{IDS_SHOW_PARTY},
-	{IDS_RESERVED},
+	{IDS_TOGGLE_HUD},
 	{IDS_RESERVED},
 	{IDS_RESERVED},
 	{IDS_RESERVED},
@@ -177,7 +177,7 @@ const int NULL_MAPPING = 9999;
 const int MAPPING_NOT_FOUND = -1;
 
 const int default_num_keys = 57;
-const keymap_t default_keymap[default_num_keys] = 
+const keymap_t default_keymap[default_num_keys] =
 {
 	{'1', LyraKeyboard::ART, Arts::SENSE_DREAMERS},
 	{'2', LyraKeyboard::WAVE, Arts::NONE},
@@ -231,9 +231,10 @@ const keymap_t default_keymap[default_num_keys] =
 	{0xbf, LyraKeyboard::ART, Arts::KNOW}, // (is also the ? key!)
 	{'Z', LyraKeyboard::SHOW_LEARNABLE_ARTS, Arts::NONE},
 	{0xc0, LyraKeyboard::TOGGLE_AUTORUN, Arts::NONE}, // Jared 2-26-00
-	{'-', LyraKeyboard::TOGGLE_ADULT_FILTER, Arts::NONE}, 
-	{'[', LyraKeyboard::TIME_ONLINE, Arts::NONE}, 	
-	{']', LyraKeyboard::SHOW_DST_TIME, Arts::NONE}, 	
+	{'-', LyraKeyboard::TOGGLE_ADULT_FILTER, Arts::NONE},
+	{'[', LyraKeyboard::TIME_ONLINE, Arts::NONE},
+	{']', LyraKeyboard::SHOW_DST_TIME, Arts::NONE},
+	{'=', LyraKeyboard::TOGGLE_EFFECTS_HUD, Arts::NONE},
 //	{'-', LyraKeyboard::BREAK_TELEPATHY, Arts::NONE}, // Jared 2-26-00 (Not yet implemented)
 };
 

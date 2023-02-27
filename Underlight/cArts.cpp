@@ -290,6 +290,7 @@ unsigned long art_chksum[NUM_ARTS] =
 0x5F5C, // Enfeeblement
 0x81BB, // DW Evoke
 0xA4C7, // distress call
+0xC010, // perosnal vault
 };
 
 art_t art_info[NUM_ARTS] = // 		  			    Evoke
@@ -486,6 +487,7 @@ art_t art_info[NUM_ARTS] = // 		  			    Evoke
 {IDS_ENFEEBLEMENT,					Stats::LUCIDITY,	35, 20, 13, 2, 	 2, LEARN | FOCUS | NEIGH },
 {IDS_DREAMWIDE_EVOKE,				Stats::NO_STAT, 0, 0, 0, 0, -1, SANCT},
 {IDS_DISTRESS_CALL,					Stats::DREAMSOUL, 0, 10, 0, 1, 2, SANCT | LEARN | NEED_ITEM },
+{IDS_PERSONAL_VAULT,				Stats::DREAMSOUL, 0, 15, 0, 15, -1, SANCT | LEARN }
 };
 
 
@@ -1311,7 +1313,7 @@ void cArts::ApplyArt(void)
 	case Arts::ENFEEBLEMENT: method = &cArts::StartEnfeeblement; break;
 	case Arts::DREAMWIDE_EVOKE: method = &cArts::DreamwideEvoke; break;
 	case Arts::DISTRESS_CALL: method = &cArts::DistressCall; break;
-
+	case Arts::PERSONAL_VAULT: method = &cArts::PersonalVault; break;
 //		case Arts::NP_SYMBOL: method = &cArts::W; break;
 
 	}
@@ -1375,8 +1377,9 @@ bool cArts::IncreaseSkill(int art_id, int chance_increase)
 			return false;
 	}
 
-	if	(	(skill < player->Orbit())	// cannot go above orbit
-		&&	((skill%10) != 9)				// cannot platue
+	if	((skill < player->Orbit())	// cannot go above orbit
+		&& (skill < 39 || (skill%10) != 9)
+		&& (skill + 1 <= MaxSkill(art_id))
 		&&	(skill < Stats::SKILL_MAX)	// cannot go above game max
 		)
 	{
@@ -2752,6 +2755,18 @@ void cArts::Recall(void)
 	return;
 }
 
+void cArts::PersonalVault(void)
+{
+	if (!player->PersonalVaultAccessible())
+	{
+		_stprintf(disp_message, "Planar energies interfere with your ability to teleport");
+		display->DisplayMessage(disp_message);
+		this->ArtFinished(true);
+		return;		
+	}
+	gs->SendPlayerMessage(player->ID(), RMsg_PlayerMsg::PERSONAL_VAULT, 0, 0);
+	this->ArtFinished(true);
+}
 ///////////////////////////////////////////////////////////////////
 // Bulwark
 void cArts::Bulwark(void)

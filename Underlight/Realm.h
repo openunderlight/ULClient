@@ -72,6 +72,7 @@ struct timing_t
 	int	lastDragScrollCheck;
 	int	frameCount;
 	int	lastInvCountUpdate;
+	int lastEffectRender;
 
 	inline timing_t() { memset(this,0,sizeof(timing_t));}
 

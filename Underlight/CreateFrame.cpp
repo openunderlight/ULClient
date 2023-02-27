@@ -96,7 +96,7 @@ const unsigned int MAX_IDLE_TIME = 1200000;
 
 #ifndef AGENT
 void RenderMap(unsigned char *viewBuffer, bool show_players_position);
-
+void RenderEffects(unsigned char* viewBuffer);
 void RenderView(void)
 {
   if (cDD) 
@@ -124,6 +124,7 @@ void RenderView(void)
 
   }		
 }
+
 #endif
 
 //#define FRAME_DEBUG
@@ -423,6 +424,14 @@ _tprintf(disp_message);
 		}
 */
 // draw the item off the viewport
+   if (options.show_effects_hud)
+   {
+	   cp->ShowEffectsHUD(true);
+	   cp->UpdateEffects();
+   }
+   else
+	   cp->ShowEffectsHUD(false);
+   
    if (!goals->Active() && !quests->Active())
 		BlitView(); // always blit, unless we're in goal posting mode
 
@@ -436,6 +445,13 @@ _tprintf(disp_message);
 		timing->lastInvCountUpdate = timing->lastFrame;
 		cp->UpdateInvCount();
 	}
+	/*
+	if (timing->lastFrame > timing->lastEffectRender + 2000)
+	{
+		timing->lastEffectRender = timing->lastFrame;
+		cp->UpdateEffects();
+	}
+	*/
 #endif
 	
    timing->frames++;

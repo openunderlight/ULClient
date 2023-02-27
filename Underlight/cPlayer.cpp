@@ -21,6 +21,7 @@
 #include "cItem.h"
 #include "cOrnament.h"
 #include "cArts.h"
+#include "cNameTag.h"
 #include "cParty.h"
 #include "Realm.h"
 #include "Move.h"
@@ -28,6 +29,7 @@
 #include "Dialogs.h"
 #include "Mouse.h"
 #include "Options.h"
+#include "RLE.h"
 #include "cPlayer.h"
 #include "cPalettes.h"
 #include "Utils.h"
@@ -114,7 +116,7 @@ cPlayer::cPlayer(short viewport_height) :
 	vertical_tilt_float = (float)vertical_tilt_origin;
 	collapse_time = 0;
 	checksum_incorrect = attempting_teleport = false;
-
+	personal_vault = false; 
 	for (int i = 0; i < COLLAPSES_TRACKED; i++)
 	{
 		collapses[i].collapser_id = Lyra::ID_UNKNOWN;
@@ -1191,6 +1193,14 @@ unsigned int cPlayer::GetAccountType(void)
 	return avatar.AccountType();
 }
 
+void cPlayer::ReturnFromPersonalVault(void)
+{
+	if (InPersonalVault())
+	{
+		if (this->Teleport(pvault_x, pvault_y, pvault_angle, pvault_level))
+			SetInPersonalVault(false);
+	}
+}
 
 void cPlayer::RemoveTimedEffect(int effect)
 {
@@ -2948,6 +2958,73 @@ void cPlayer::DisplayTimedEffects(void)
 	return;
 }
 
+void cPlayer::GetTimedEffectsPretty(effects_pretty_t* defensive, effects_pretty_t* offensive)
+{
+	defensive->red[0] = 0;
+	defensive->yellow[0] = 0;
+	defensive->green[0] = 0;
+	offensive->red[0] = 0;
+	offensive->yellow[0] = 0;
+	offensive->green[0] = 0;
+
+	for (int i = 1; i < NUM_TIMED_EFFECTS; i++)
+		if (timed_effects->actor_flag[i] & flags)
+		{
+			// Do not show curse as an active effect (requested by Balthiir)
+			if (i != LyraEffect::PLAYER_CURSED) 
+			{
+				if (i == LyraEffect::PLAYER_RETURN)
+					printf("I'm here!");
+
+				// Just load the string at the beginning - Jared
+				//if (num_effects == 0)
+				//		LoadString (hInstance, IDS_ACTIVE_EFFECTS, message, sizeof(message));
+				int duration = (timed_effects->expires[i] - LyraTime()) / 1000;
+				if (duration < 120)
+				{
+					if (timed_effects->harmful[i])
+					{
+						_tcscat(offensive->red, timed_effects->shortName[i]);
+						_tcscat(offensive->red, " ");
+					}
+					else
+					{
+						_tcscat(defensive->red, timed_effects->shortName[i]);
+						_tcscat(defensive->red, " ");
+					}
+				}
+				else if (duration < 600)
+				{
+					if (timed_effects->harmful[i])
+					{
+						_tcscat(offensive->yellow, timed_effects->shortName[i]);
+						_tcscat(offensive->yellow, " ");
+					}
+					else
+					{
+						_tcscat(defensive->yellow, timed_effects->shortName[i]);
+						_tcscat(defensive->yellow, " ");
+					}
+				}
+				else
+				{
+					if (timed_effects->harmful[i])
+					{
+						_tcscat(offensive->green, timed_effects->shortName[i]);
+						_tcscat(offensive->green, " ");
+					}
+					else
+					{
+						_tcscat(defensive->green, timed_effects->shortName[i]);
+						_tcscat(defensive->green, " ");
+					}
+				}
+			}
+		}
+
+}
+
+
 void cPlayer::MarkLastLocation(void)
 {
 	if (options.network && gs && gs->LoggedIntoLevel())
@@ -2970,6 +3047,17 @@ bool cPlayer::CanUseChatMacros()
 	return IsKnight() || IsRuler() || IsTeacher();
 }
 
+bool cPlayer::PersonalVaultAccessible()
+{
+	if (InPersonalVault())
+		return false;
+
+	// Only in thresh? I dunno, sure.
+	if (level->ID() != 20)
+		return false;
+
+	return true;
+}
 
 POINT cPlayer::BladePos(void)
 {
@@ -3054,9 +3142,17 @@ bool cPlayer::Teleport(float x, float y, int facing_angle, int level_id, int sou
 {
 
 	VERIFY_XY(x, y);
+	bool pvault = false;
+	if (level_id == PERSONAL_VAULT_FLAG)
+	{
+		x = -934;
+		y = 10588;
+		facing_angle = 566;
+		level_id = ACTUAL_PERSONAL_VAULT_LEVEL;
+		pvault = true;
+	}
 
 	tportx = x; tporty = y; tport_angle = facing_angle; tport_level = level_id; tport_sound = sound_id;
-
 	bool level_change = false;
 
 	int	last_room = Room();
@@ -3087,7 +3183,6 @@ bool cPlayer::Teleport(float x, float y, int facing_angle, int level_id, int sou
 	}
 
 	bool trigger_redirect = false;
-
 	// check if we're going to redirect the player elsewhere
 	if (level_id == NO_LEVEL && LastLevel() == TP_REDIRECT_LEVEL)
 	{
@@ -3112,6 +3207,10 @@ bool cPlayer::Teleport(float x, float y, int facing_angle, int level_id, int sou
 	{
 		trigger_redirect = true;
 	}
+	else if (pvault)
+	{
+		level_change = true;
+	}
 
 	if (trigger_redirect)
 	{
@@ -3128,7 +3227,7 @@ bool cPlayer::Teleport(float x, float y, int facing_angle, int level_id, int sou
 	// play sound for teleport
 	cDS->PlaySound(sound_id, old_x, old_y);
 
-	if ((level_id != NO_LEVEL) && (level_id != level->ID()))
+	if (pvault || ((level_id != NO_LEVEL) && (level_id != level->ID())))
 	{ // go to new level, if it's reasonable
 		if (!level->IsValidLevel(level_id))
 		{
@@ -3139,11 +3238,10 @@ bool cPlayer::Teleport(float x, float y, int facing_angle, int level_id, int sou
 		if ((options.network) && gs && gs->LoggedIntoGame())
 			gs->LevelLogout(RMsg_Logout::LOGOUT);
 
-		if (options.network)
+		if (!pvault && options.network)
 			cDD->ShowIntroBitmap();
 
 		level->Load(level_id);
-
 		level_change = true;
 
 #ifdef GAMEMASTER
@@ -3185,8 +3283,16 @@ bool cPlayer::Teleport(float x, float y, int facing_angle, int level_id, int sou
 	if (level_change)
 	{
 		if (options.network)
-			gs->LevelLogin();
-
+		{
+			if (!pvault)
+				gs->LevelLogin();
+			else
+			{
+				player->SetInPersonalVault(true);
+				player->SetRoom(tportx, tporty);
+				gs->SetLoggedIntoRoom(true);
+			}
+		}
 		// remove the avatar shield upon level change
 		player->RemoveTimedEffect(LyraEffect::PLAYER_SHIELD);
 

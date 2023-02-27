@@ -15,6 +15,8 @@
 // Constants
 
 const int NO_LEVEL = -1;
+const int PERSONAL_VAULT_FLAG = -2;
+const int ACTUAL_PERSONAL_VAULT_LEVEL = 3; // Upper Basin I guess
 const int MAX_LEVELS = 100;
 const int MAX_AGENT_TYPES = 10;
 

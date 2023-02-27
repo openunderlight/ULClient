@@ -132,6 +132,7 @@ bool show_training_messages = false; // supplements options.welcome_ai
 DWORD last_keystroke;
 HFONT display_font[MAX_RESOLUTIONS] = {NULL, NULL, NULL};
 HFONT bold_font[MAX_RESOLUTIONS] = {NULL, NULL, NULL}; 
+HFONT effects_font = NULL;
 float scale_x = 1.0f; // x scale factor for dialog boxes
 float scale_y = 1.0f; // y scale factor for dialog boxes
 long time_offset = 0; // used to work around Windows bug that returns negative system time on ME
@@ -506,6 +507,10 @@ bool __cdecl Init_Game(void)
 	// 1024x768 stat font
 	logFont.lfHeight = 25;
 	bold_font[2] = CreateFontIndirect(&logFont);
+
+	logFont.lfHeight = 14;
+	logFont.lfWeight = 400;
+	effects_font = CreateFontIndirect(&logFont);
 
 	HWND hDlg = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_DUMMY), NULL, (DLGPROC)DummyDlgProc);
 

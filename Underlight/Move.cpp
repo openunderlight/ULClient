@@ -1812,6 +1812,7 @@ static int PlayerTripLine(linedef *aLine)
 		// since we can only do one item iteration at a time, we
 		// make a list of all the amulet keys we have, and then
 		// check them against the wards
+		
 		bool has_proper_amulet;
 		lyra_item_ward_t ward;
 		lyra_item_amulet_t amulet;
@@ -1820,6 +1821,13 @@ static int PlayerTripLine(linedef *aLine)
 		int num_amulets = 0;
 		const void* state;
 		bool perma_warded = IsPortalLocked(aLine);
+
+		// quick circumvent if in PV
+		if (player->InPersonalVault())
+		{
+			player->ReturnFromPersonalVault();
+			return TELEPORTED;
+		}
 
 		for (item = actors->IterateItems(INIT); item != NO_ACTOR; item = actors->IterateItems(NEXT))
 			if ((item->BitmapID() == LyraBitmap::AMULET) && (item->Status() == ITEM_OWNED))

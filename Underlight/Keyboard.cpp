@@ -1349,7 +1349,11 @@ void Realm_OnKey(HWND hWnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		display->DisplayMessage (message, false);
 		SaveInGameRegistryOptionValues();
 		break;
-
+	case LyraKeyboard::TOGGLE_EFFECTS_HUD:
+		options.show_effects_hud = !options.show_effects_hud;
+		cp->ShowEffectsHUD(options.show_effects_hud);		
+		SaveInGameRegistryOptionValues();
+		break;
 	case LyraKeyboard::TIME_ONLINE: 
 	{	
 		int minutes, seconds;

@@ -87,6 +87,13 @@ struct player_collapse_t
 	DWORD		time;
 };
 
+struct effects_pretty_t
+{
+	TCHAR red[64];
+	TCHAR yellow[64];
+	TCHAR green[64];
+};
+
 //////////////////////////////////////////////////////////////////
 // Class Definition
 
@@ -103,9 +110,9 @@ class cPlayer : public cActor
 	   TCHAR upper_name[Lyra::PLAYERNAME_MAX];
 	   LmAvatar avatar;
 	   LmAvatar transformed_avatar; // temporary avatar
-	   int start_angle, start_level, return_angle;
-	   int last_level, return_level, recall_angle, recall_level;
-	   float start_x, start_y, return_x, return_y;
+	   int start_angle, start_level, return_angle, pvault_angle;
+	   int last_level, return_level, recall_angle, recall_level, pvault_level;
+	   float start_x, start_y, return_x, return_y, pvault_x, pvault_y;
 	   float last_x, last_y, recall_x, recall_y;
 	   bool last_loc_valid;
 	   short room; // current room the player is in
@@ -152,7 +159,7 @@ class cPlayer : public cActor
 	   player_collapse_t collapses[COLLAPSES_TRACKED]; // record last 100 collapses
 	   lyra_id_t last_poisoner,last_bleeder;
 	   DWORD next_heal,next_poison,next_bleed,next_trail,next_nightmare_check,next_regeneration,next_sector_tag;
-
+	   bool personal_vault;
 	   int   vertical_tilt;
 	   int   vertical_tilt_origin;
 	   float vertical_tilt_float;
@@ -287,7 +294,9 @@ class cPlayer : public cActor
 	  inline lyra_id_t GamesiteID() const { return gamesite_id; };
 	  inline long SessionID() const { return session_id; };
 	  inline bool AttemptingTeleport() const { return attempting_teleport; };
-
+	  inline bool InPersonalVault() const { return personal_vault; };
+	  inline void SetInPersonalVault(bool inVault) { personal_vault = inVault; };
+	  bool PersonalVaultAccessible(void);
 		void  SetUsingBlade(bool new_val) { using_blade = new_val; };
 		bool  UsingBlade(void) {return using_blade;};
 		POINT BladePos(void);
@@ -320,10 +329,13 @@ class cPlayer : public cActor
 	  inline void SetChannelTarget(lyra_id_t value) { channelTarget = value; };
 		inline void SetLastChannelTarget(lyra_id_t value) { lastChannelTarget = value; };
 	  inline void SetTeleporting(bool value) { teleporting = value; };
+	  void GetTimedEffectsPretty(effects_pretty_t* def, effects_pretty_t* off);
 	  inline void SetFreeMoves(int value) { free_moves = value; };
 	  inline void SetSkillNeedsUpdate(int art_id, bool value) { skills[art_id].needs_update = value; };
 	  inline void SetReturn(float x, float y, int angle, int level_id) { return_x = x; return_y = y; return_angle = angle; return_level = level_id; };
 	  inline void SetRecall(float x, float y, int angle, int level_id) { recall_x = x; recall_y = y; recall_angle = angle; recall_level = level_id; };
+	  inline void SetPersonalVaultReturn(float x, float y, int angle, int level_id) { pvault_x = x; pvault_y = y; pvault_angle = angle; pvault_level = level_id; };
+	  void ReturnFromPersonalVault(void);
 	  inline void SetJumped(bool value) { jumped = value; }; 
 	  void SetHeadID(int value, bool update = true);
 	  bool SetActiveShield(cItem *value);

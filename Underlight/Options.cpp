@@ -379,6 +379,7 @@ cJSON* __cdecl WriteJSONOptionValues()
 	ADDNUM(bg_color);
 	ADDNUM(fullscreen);
 	ADDNUM(classic_chat);
+	ADDNUM(show_effects_hud);
 	ADDNUM(autorun);
 	ADDNUM(adult_filter);
 
@@ -605,6 +606,7 @@ void LoadParsedJSONOptions(cJSON* json)
 	GETNUM(bg_color);
 	GETNUM(reverse);
 	GETNUM(autorun);
+	GETNUM(show_effects_hud);
 	GETNUM(adult_filter);
 	GETNUM(pmare_type);
 	GETNUM(pmare_start_type);
@@ -738,6 +740,7 @@ void LoadDefaultOptionValues()
 	options.mouselook = FALSE;
 	options.invertmouse = FALSE;
 	options.log_chat = TRUE;
+	options.show_effects_hud = FALSE;
 	options.turnrate = default_turnrate;
 	options.effects_volume = default_volume;
 	options.music_volume = default_volume;
