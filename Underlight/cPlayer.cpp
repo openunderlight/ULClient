@@ -2958,6 +2958,12 @@ void cPlayer::DisplayTimedEffects(void)
 	return;
 }
 
+#define APPEND(Type, Color) \
+	do { \
+		_tcscat(##Type->##Color, timed_effects->shortName[i]); \
+		_tcscat(##Type->##Color, " "); \
+	} while(0)
+
 void cPlayer::GetTimedEffectsPretty(effects_pretty_t* defensive, effects_pretty_t* offensive)
 {
 	defensive->red[0] = 0;
@@ -2973,9 +2979,6 @@ void cPlayer::GetTimedEffectsPretty(effects_pretty_t* defensive, effects_pretty_
 			// Do not show curse as an active effect (requested by Balthiir)
 			if (i != LyraEffect::PLAYER_CURSED) 
 			{
-				if (i == LyraEffect::PLAYER_RETURN)
-					printf("I'm here!");
-
 				// Just load the string at the beginning - Jared
 				//if (num_effects == 0)
 				//		LoadString (hInstance, IDS_ACTIVE_EFFECTS, message, sizeof(message));
@@ -2984,39 +2987,33 @@ void cPlayer::GetTimedEffectsPretty(effects_pretty_t* defensive, effects_pretty_
 				{
 					if (timed_effects->harmful[i])
 					{
-						_tcscat(offensive->red, timed_effects->shortName[i]);
-						_tcscat(offensive->red, " ");
+						APPEND(offensive, red);
 					}
 					else
 					{
-						_tcscat(defensive->red, timed_effects->shortName[i]);
-						_tcscat(defensive->red, " ");
+						APPEND(defensive, red);
 					}
 				}
 				else if (duration < 600)
 				{
 					if (timed_effects->harmful[i])
 					{
-						_tcscat(offensive->yellow, timed_effects->shortName[i]);
-						_tcscat(offensive->yellow, " ");
+						APPEND(offensive, yellow);
 					}
 					else
 					{
-						_tcscat(defensive->yellow, timed_effects->shortName[i]);
-						_tcscat(defensive->yellow, " ");
+						APPEND(defensive, yellow);
 					}
 				}
 				else
 				{
 					if (timed_effects->harmful[i])
 					{
-						_tcscat(offensive->green, timed_effects->shortName[i]);
-						_tcscat(offensive->green, " ");
+						APPEND(offensive, green);
 					}
 					else
 					{
-						_tcscat(defensive->green, timed_effects->shortName[i]);
-						_tcscat(defensive->green, " ");
+						APPEND(defensive, green);
 					}
 				}
 			}

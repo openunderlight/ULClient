@@ -748,6 +748,14 @@ void cArts::BeginArt(int art_id, bool bypass)
 		return;
 	}
 
+	if (player->InPersonalVault() && (art_id != Arts::IDENTIFY
+		&& art_id != Arts::DESTROY_ITEM
+		&& art_id != Arts::WRITE_SCROLL))
+	{
+		display->DisplayMessage("You may not evoke arts while in your personal vault!");
+		return;
+	}
+
 	if (player->flags & ACTOR_MEDITATING) // expire meditation on evoke
 		player->RemoveTimedEffect(LyraEffect::PLAYER_MEDITATING);
 

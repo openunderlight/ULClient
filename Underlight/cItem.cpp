@@ -584,6 +584,12 @@ void cItem::Use(void)
 		return;
 	}
 
+	if (player->InPersonalVault())
+	{
+		display->DisplayMessage("You may not use items while in your personal vault!");
+		return;
+	}
+
 	// Make absolutely sure no one can use items while in NMF or as a pmare
 	//  Not sure why this isn't active, but putting it here to be sure
 
